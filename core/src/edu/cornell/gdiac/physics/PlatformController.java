@@ -102,7 +102,8 @@ public class PlatformController extends WorldController implements ContactListen
 		momoTexture = new TextureRegion(directory.getEntry("platform:momo",Texture.class));
 		momoUpTexture = new TextureRegion(directory.getEntry("platform:momoUp",Texture.class));
 		chiyoTexture = new TextureRegion(directory.getEntry("platform:chiyo",Texture.class));
-		chiyoUpTexture = new TextureRegion(directory.getEntry("platform:chiyoUp",Texture.class));
+		chiyoUpTexture = new TextureRegion(directory.getEntry("platform:chiyo" +
+				"Up",Texture.class));
 		barrierTexture = new TextureRegion(directory.getEntry("platform:barrier",Texture.class));
 		bulletTexture = new TextureRegion(directory.getEntry("platform:bullet",Texture.class));
 		bridgeTexture = new TextureRegion(directory.getEntry("platform:rope",Texture.class));
