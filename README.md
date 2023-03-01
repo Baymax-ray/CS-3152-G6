@@ -1,2 +1,8 @@
 # CS-3152-G6
-The code of Group 6
+
+## EUDAEMON
+
+WIP Game
+
+CURRENT BUGS
+- player can be caught in a jump in one direction unable to change direction
