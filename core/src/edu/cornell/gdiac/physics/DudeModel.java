@@ -28,7 +28,7 @@ public class DudeModel extends CapsuleObstacle {
 	/** The initializing data (to avoid magic numbers) */
 	private final JsonValue data;
 
-	//FINAL PLAYER VARIABLES
+	//<editor-fold desc="FINAL PLAYER VARIABLES">
 	/** The factor to multiply by the input */
 	private final float force;
 	/** The amount to slow the character down */
@@ -43,8 +43,11 @@ public class DudeModel extends CapsuleObstacle {
 	private final int jumpLimit;
 	/** Cooldown (in animation frames) for shooting */
 	private final int shotLimit;
+	/** Cache for internal force calculations */
+	private final Vector2 forceCache = new Vector2();
+	//</editor-fold>
 
-	//CHANGING PLAYER VARIABLES
+	//<editor-fold desc="CHANGING PLAYER VARIABLES">
 	/** The player's form: 0 is Momo, 1 is Chiyo */
 	private int form;
 	/** The number of hearts */
@@ -67,11 +70,9 @@ public class DudeModel extends CapsuleObstacle {
 	private boolean isShooting;
 	/** The physics shape of this object */
 	private PolygonShape sensorShape;
-	
-	/** Cache for internal force calculations */
-	private final Vector2 forceCache = new Vector2();
+	//</editor-fold>
 
-	//GETTERS AND SETTERS
+	//<editor-fold desc="GETTERS AND SETTERS">
 	/**
 	 * Returns the number of hearts the player has remaining
 	 *
@@ -248,6 +249,7 @@ public class DudeModel extends CapsuleObstacle {
 	public boolean isFacingRight() {
 		return faceRight;
 	}
+	//</editor-fold>
 
 	//CONSTRUCTOR
 	/**

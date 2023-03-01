@@ -25,14 +25,23 @@
                 }
             }
         },
-        "rocket:right": {
-            "file" : "rocket/flames-right.png",
+        "chiyo:swordAttack": {
+            "file" : "platform/swordSpriteSheet.png",
             "sprites" : {
                 "fire": {
                     "rows": 1,
-                    "cols": 4
+                    "cols": 6
                 }
             }
+        },
+        "rocket:right": {
+          "file" : "rocket/flames-right.png",
+          "sprites" : {
+            "fire": {
+              "rows": 1,
+              "cols": 4
+            }
+          }
         },
         "rocket:crate01": "rocket/crate01.png",
         "rocket:crate02": "rocket/crate02.png",
