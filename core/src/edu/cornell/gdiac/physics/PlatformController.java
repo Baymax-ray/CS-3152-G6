@@ -19,6 +19,7 @@ import com.badlogic.gdx.physics.box2d.*;
 
 import edu.cornell.gdiac.assets.AssetDirectory;
 import edu.cornell.gdiac.physics.obstacle.*;
+import edu.cornell.gdiac.util.FilmStrip;
 
 /**
  * Gameplay specific controller for the platformer game.  
@@ -44,6 +45,8 @@ public class PlatformController extends WorldController implements ContactListen
 	private TextureRegion barrierTexture;
 	/** Texture asset for the bullet */
 	private TextureRegion bulletTexture;
+	/** Texture asset for the sword attack */
+	private FilmStrip swordSpriteSheet;
 	/** Texture asset for the bridge plank */
 	private TextureRegion bridgeTexture;
 	//</editor-fold>
@@ -114,6 +117,9 @@ public class PlatformController extends WorldController implements ContactListen
 
 		constants = directory.getEntry( "platform:constants", JsonValue.class );
 		super.gatherAssets(directory);
+
+		//ANIMATIONS
+		swordSpriteSheet = directory.getEntry( "chiyo:swordAttack", FilmStrip.class );
 	}
 	
 	/**
