@@ -54,6 +54,10 @@ public class DudeModel extends CapsuleObstacle {
 	private int hearts;
 	/** The maximum number of hearts */
 	private final int maxHearts;
+	/** The amount of spirit */
+	private float spirit;
+	/** The maximum amount of spirit */
+	private final float maxSpirit;
 	/** The current horizontal movement of the character */
 	private float movement;
 	/** Which direction is the character facing */
@@ -95,7 +99,28 @@ public class DudeModel extends CapsuleObstacle {
 			hearts = maxHearts;
 		}
 	}
+	/**
+	 * Returns the amount of spirit the player has
+	 *
+	 * @return spirit variable
+	 */
+	public float getSpirit() {
+		return spirit;
+	}
 
+	/**
+	 * Sets the number of hearts the player has
+	 *
+	 * @param value amount of spirit
+	 */
+	public void setSpirit(float value) {
+		if (value <= maxSpirit){
+			spirit = value;
+		}
+		else {
+			spirit = maxSpirit;
+		}
+	}
 	/**
 	 * Returns the player's current form (0: Momo) (1: Chiyo)
 	 *
@@ -274,6 +299,8 @@ public class DudeModel extends CapsuleObstacle {
 		setFixedRotation(true);
 
 		maxHearts = data.getInt("maxHearts", 0);
+		maxSpirit = 10.0f;
+		spirit = maxSpirit;
 		hearts = maxHearts;
 		maxspeed = data.getFloat("maxspeed", 0);
 		damping = data.getFloat("damping", 0);
