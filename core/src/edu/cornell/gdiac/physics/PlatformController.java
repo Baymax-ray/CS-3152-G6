@@ -120,6 +120,7 @@ public class PlatformController extends WorldController implements ContactListen
 
 		//ANIMATIONS
 		swordSpriteSheet = directory.getEntry( "chiyo:swordAttack", FilmStrip.class );
+
 	}
 	
 	/**
@@ -325,6 +326,7 @@ public class PlatformController extends WorldController implements ContactListen
 	    bullet.setName("bullet");
 		bullet.setDensity(bulletjv.getFloat("density", 0));
 	    bullet.setDrawScale(scale);
+
 	    bullet.setTexture(bulletTexture);
 	    bullet.setBullet(true);
 	    bullet.setGravityScale(0);
