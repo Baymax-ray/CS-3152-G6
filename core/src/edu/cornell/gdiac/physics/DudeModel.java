@@ -146,7 +146,7 @@ public class DudeModel extends CapsuleObstacle {
 
 	/**
 	 * Returns left/right movement of this character.
-	 * 
+	 *
 	 * This is the result of input times dude force.
 	 *
 	 * @return left/right movement of this character.
@@ -154,16 +154,16 @@ public class DudeModel extends CapsuleObstacle {
 	public float getMovement() {
 		return movement;
 	}
-	
+
 	/**
 	 * Sets left/right movement of this character.
-	 * 
+	 *
 	 * This is the result of input times dude force.
 	 *
 	 * @param value left/right movement of this character.
 	 */
 	public void setMovement(float value) {
-		movement = value; 
+		movement = value;
 		// Change facing if appropriate
 		if (movement < 0) {
 			faceRight = false;
@@ -171,7 +171,7 @@ public class DudeModel extends CapsuleObstacle {
 			faceRight = true;
 		}
 	}
-	
+
 	/**
 	 * Returns true if the dude is actively firing.
 	 *
@@ -180,14 +180,30 @@ public class DudeModel extends CapsuleObstacle {
 	public boolean isShooting() {
 		return isShooting && shootCooldown <= 0;
 	}
-	
+
 	/**
 	 * Sets whether the dude is actively firing.
 	 *
 	 * @param value whether the dude is actively firing.
 	 */
 	public void setShooting(boolean value) {
-		isShooting = value; 
+		isShooting = value;
+	}
+	/**
+	 * Returns true if the dude is actively looking up.
+	 *
+	 * @return true if the dude is actively looking up.
+	 */
+	public boolean isLookUp() {
+		return isLookUp;
+	}
+	/**
+	 * Sets whether the dude is actively looking up.
+	 *
+	 * @param value whether the dude is actively looking up.
+	 */
+	public void setLookUp(boolean value) {
+		isLookUp = value;
 	}
 	/**
 	 * Returns true if the dude is actively looking up.
@@ -220,7 +236,7 @@ public class DudeModel extends CapsuleObstacle {
 	 * @param value whether the dude is actively jumping.
 	 */
 	public void setJumping(boolean value) {
-		isJumping = value; 
+		isJumping = value;
 	}
 
 	/**
@@ -231,14 +247,14 @@ public class DudeModel extends CapsuleObstacle {
 	public boolean isGrounded() {
 		return isGrounded;
 	}
-	
+
 	/**
 	 * Sets whether the dude is on the ground.
 	 *
 	 * @param value whether the dude is on the ground.
 	 */
 	public void setGrounded(boolean value) {
-		isGrounded = value; 
+		isGrounded = value;
 	}
 
 	/**
@@ -260,7 +276,7 @@ public class DudeModel extends CapsuleObstacle {
 	public float getDamping() {
 		return damping;
 	}
-	
+
 	/**
 	 * Returns the upper limit on dude left-right movement.  
 	 *
@@ -279,7 +295,7 @@ public class DudeModel extends CapsuleObstacle {
 	 *
 	 * @return the name of the ground sensor
 	 */
-	public String getSensorName() { 
+	public String getSensorName() {
 		return sensorName;
 	}
 
@@ -311,7 +327,7 @@ public class DudeModel extends CapsuleObstacle {
 				data.get("pos").getFloat(1),
 				width*data.get("shrink").getFloat( 0 ),
 				height*data.get("shrink").getFloat( 1 ));
-        setDensity(data.getFloat("density", 0));
+		setDensity(data.getFloat("density", 0));
 		setFriction(data.getFloat("friction", 0));  /// HE WILL STICK TO WALLS IF YOU FORGET
 		setFixedRotation(true);
 
@@ -333,7 +349,7 @@ public class DudeModel extends CapsuleObstacle {
 		isShooting = false;
 		isJumping = false;
 		faceRight = true;
-		
+
 		shootCooldown = 0;
 		jumpCooldown = 0;
 		setName("dude");
@@ -369,16 +385,16 @@ public class DudeModel extends CapsuleObstacle {
 		sensorShape = new PolygonShape();
 		JsonValue sensorjv = data.get("sensor");
 		sensorShape.setAsBox(sensorjv.getFloat("shrink",0)*getWidth()/2.0f,
-								 sensorjv.getFloat("height",0), sensorCenter, 0.0f);
+				sensorjv.getFloat("height",0), sensorCenter, 0.0f);
 		sensorDef.shape = sensorShape;
 
 		// Ground sensor to represent our feet
 		Fixture sensorFixture = body.createFixture( sensorDef );
 		sensorFixture.setUserData(getSensorName());
-		
+
 		return true;
 	}
-	
+
 
 	/**
 	 * Applies the force to the body of this dude
@@ -389,13 +405,13 @@ public class DudeModel extends CapsuleObstacle {
 		if (!isActive()) {
 			return;
 		}
-		
+
 		// Don't want to be moving. Damp out player motion
 		if (getMovement() == 0f) {
 			forceCache.set(-getDamping()*getVX(),0);
 			body.applyForce(forceCache,getPosition(),true);
 		}
-		
+
 		// Velocity too high, clamp it
 		if (Math.abs(getVX()) >= getMaxSpeed()) {
 			setVX(Math.signum(getVX())*getMaxSpeed());
@@ -410,7 +426,7 @@ public class DudeModel extends CapsuleObstacle {
 			body.applyLinearImpulse(forceCache,getPosition(),true);
 		}
 	}
-	
+
 	/**
 	 * Updates the object's physics state (NOT GAME LOGIC).
 	 *
@@ -431,7 +447,7 @@ public class DudeModel extends CapsuleObstacle {
 		} else {
 			shootCooldown = Math.max(0, shootCooldown - 1);
 		}
-		
+
 		super.update(dt);
 	}
 
@@ -444,7 +460,7 @@ public class DudeModel extends CapsuleObstacle {
 		float effect = faceRight ? 1.0f : -1.0f;
 		canvas.draw(texture,Color.WHITE,origin.x,origin.y,getX()*drawScale.x,getY()*drawScale.y,getAngle(),effect,1.0f);
 	}
-	
+
 	/**
 	 * Draws the outline of the physics body.
 	 *
