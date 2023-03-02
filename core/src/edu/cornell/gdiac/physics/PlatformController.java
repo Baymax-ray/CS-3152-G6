@@ -333,7 +333,7 @@ public class PlatformController extends WorldController implements ContactListen
 			bullet = new WheelObstacle(avatar.getX() + offset, avatar.getY(), radius);
 		}
 
-		bullet.setName("bullet");
+	  bullet.setName("bullet");
 		bullet.setDensity(bulletjv.getFloat("density", 0));
 		bullet.setDrawScale(scale);
 
