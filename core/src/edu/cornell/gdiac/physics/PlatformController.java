@@ -291,6 +291,7 @@ public class PlatformController extends WorldController implements ContactListen
 
 		// Changes avatar if looking up
 		if (InputController.getInstance().getUp()) {
+			avatar.setLookUp(true);
 			if (avatar.getForm() == 0){
 				avatar.setTexture(momoUpTexture);
 			}
@@ -299,11 +300,14 @@ public class PlatformController extends WorldController implements ContactListen
 			}
 		}
 		else {
-			if (avatar.getForm() == 0){
-				avatar.setTexture(momoTexture);
-			}
-			else {
-				avatar.setTexture(chiyoTexture);
+			if (avatar.isLookUp()){
+				avatar.setLookUp(false);
+				if (avatar.getForm() == 0){
+					avatar.setTexture(momoTexture);
+				}
+				else {
+					avatar.setTexture(chiyoTexture);
+				}
 			}
 		}
 		
@@ -321,8 +325,14 @@ public class PlatformController extends WorldController implements ContactListen
 		float offset = bulletjv.getFloat("offset",0);
 		offset *= (avatar.isFacingRight() ? 1 : -1);
 		float radius = bulletTexture.getRegionWidth()/(2.0f*scale.x);
-		WheelObstacle bullet = new WheelObstacle(avatar.getX()+offset, avatar.getY(), radius);
-		
+		WheelObstacle bullet;
+		if (avatar.isLookUp()){
+			bullet = new WheelObstacle(avatar.getX() , avatar.getY()+ offset, radius);
+		}
+		else {
+			bullet = new WheelObstacle(avatar.getX() + offset, avatar.getY(), radius);
+		}
+
 	    bullet.setName("bullet");
 		bullet.setDensity(bulletjv.getFloat("density", 0));
 	    bullet.setDrawScale(scale);
@@ -330,11 +340,10 @@ public class PlatformController extends WorldController implements ContactListen
 	    bullet.setTexture(bulletTexture);
 	    bullet.setBullet(true);
 	    bullet.setGravityScale(0);
-		
 		// Compute position and velocity
-		float speed = bulletjv.getFloat( "speed", 0 );
-		speed  *= (avatar.isFacingRight() ? 1 : -1);
-		bullet.setVX(speed);
+//		float speed = bulletjv.getFloat( "speed", 0 );
+//		speed  *= (avatar.isFacingRight() ? 1 : -1);
+//		bullet.setVX(speed);
 		addQueuedObject(bullet);
 
 		fireId = playSound( fireSound, fireId );
