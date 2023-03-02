@@ -204,6 +204,7 @@ public class DudeModel extends CapsuleObstacle {
 	 */
 	public void setLookUp(boolean value) {
 		isLookUp = value;
+
 	}
 	/**
 	 * Returns true if the dude is actively looking up.

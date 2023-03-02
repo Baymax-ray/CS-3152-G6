@@ -122,7 +122,7 @@ public class PlatformController extends WorldController implements ContactListen
 		swordSpriteSheet = directory.getEntry( "chiyo:swordAttack", FilmStrip.class );
 
 	}
-	
+
 	/**
 	 * Resets the status of the game so that we can play again.
 	 *
@@ -130,14 +130,14 @@ public class PlatformController extends WorldController implements ContactListen
 	 */
 	public void reset() {
 		Vector2 gravity = new Vector2(world.getGravity() );
-		
+
 		for(Obstacle obj : objects) {
 			obj.deactivatePhysics(world);
 		}
 		objects.clear();
 		addQueue.clear();
 		world.dispose();
-		
+
 		world = new World(gravity,false);
 		world.setContactListener(this);
 		setComplete(false);
@@ -166,12 +166,12 @@ public class PlatformController extends WorldController implements ContactListen
 		goalDoor.setName("goal");
 		addObject(goalDoor);
 
-	    String wname = "wall";
-	    JsonValue walljv = constants.get("walls");
-	    JsonValue defaults = constants.get("defaults");
-	    for (int ii = 0; ii < walljv.size; ii++) {
-	        PolygonObstacle obj;
-	    	obj = new PolygonObstacle(walljv.get(ii).asFloatArray(), 0, 0);
+		String wname = "wall";
+		JsonValue walljv = constants.get("walls");
+		JsonValue defaults = constants.get("defaults");
+		for (int ii = 0; ii < walljv.size; ii++) {
+			PolygonObstacle obj;
+			obj = new PolygonObstacle(walljv.get(ii).asFloatArray(), 0, 0);
 			obj.setBodyType(BodyDef.BodyType.StaticBody);
 			obj.setDensity(defaults.getFloat( "density", 0.0f ));
 			obj.setFriction(defaults.getFloat( "friction", 0.0f ));
@@ -180,13 +180,13 @@ public class PlatformController extends WorldController implements ContactListen
 			obj.setTexture(earthTile);
 			obj.setName(wname+ii);
 			addObject(obj);
-	    }
-	    
-	    String pname = "platform";
+		}
+
+		String pname = "platform";
 		JsonValue platjv = constants.get("platforms");
-	    for (int ii = 0; ii < platjv.size; ii++) {
-	        PolygonObstacle obj;
-	    	obj = new PolygonObstacle(platjv.get(ii).asFloatArray(), 0, 0);
+		for (int ii = 0; ii < platjv.size; ii++) {
+			PolygonObstacle obj;
+			obj = new PolygonObstacle(platjv.get(ii).asFloatArray(), 0, 0);
 			obj.setBodyType(BodyDef.BodyType.StaticBody);
 			obj.setDensity(defaults.getFloat( "density", 0.0f ));
 			obj.setFriction(defaults.getFloat( "friction", 0.0f ));
@@ -195,9 +195,9 @@ public class PlatformController extends WorldController implements ContactListen
 			obj.setTexture(earthTile);
 			obj.setName(pname+ii);
 			addObject(obj);
-	    }
+		}
 
-	    // This world is heavier
+		// This world is heavier
 		world.setGravity( new Vector2(0,defaults.getFloat("gravity",0)) );
 
 		// Create dude
@@ -215,7 +215,7 @@ public class PlatformController extends WorldController implements ContactListen
 		bridge.setTexture(bridgeTexture);
 		bridge.setDrawScale(scale);
 		addObject(bridge);
-		
+
 		// Create spinning platform
 		dwidth  = barrierTexture.getRegionWidth()/scale.x;
 		dheight = barrierTexture.getRegionHeight()/scale.y;
@@ -226,7 +226,7 @@ public class PlatformController extends WorldController implements ContactListen
 
 		volume = constants.getFloat("volume", 1.0f);
 	}
-	
+
 	/**
 	 * Returns whether to process the update loop
 	 *
@@ -235,19 +235,19 @@ public class PlatformController extends WorldController implements ContactListen
 	 * normally.
 	 *
 	 * @param dt	Number of seconds since last animation frame
-	 * 
+	 *
 	 * @return whether to process the update loop
 	 */
 	public boolean preUpdate(float dt) {
 		if (!super.preUpdate(dt)) {
 			return false;
 		}
-		
+
 		if (!isFailure() && avatar.getY() < -1) {
 			setFailure(true);
 			return false;
 		}
-		
+
 		return true;
 	}
 
@@ -310,11 +310,11 @@ public class PlatformController extends WorldController implements ContactListen
 				}
 			}
 		}
-		
+
 		avatar.applyForce();
-	    if (avatar.isJumping()) {
-	    	jumpId = playSound( jumpSound, jumpId, volume );
-	    }
+		if (avatar.isJumping()) {
+			jumpId = playSound( jumpSound, jumpId, volume );
+		}
 	}
 
 	/**
@@ -333,13 +333,13 @@ public class PlatformController extends WorldController implements ContactListen
 			bullet = new WheelObstacle(avatar.getX() + offset, avatar.getY(), radius);
 		}
 
-	    bullet.setName("bullet");
+	  bullet.setName("bullet");
 		bullet.setDensity(bulletjv.getFloat("density", 0));
-	    bullet.setDrawScale(scale);
+		bullet.setDrawScale(scale);
 
-	    bullet.setTexture(bulletTexture);
-	    bullet.setBullet(true);
-	    bullet.setGravityScale(0);
+		bullet.setTexture(bulletTexture);
+		bullet.setBullet(true);
+		bullet.setGravityScale(0);
 		// Compute position and velocity
 //		float speed = bulletjv.getFloat( "speed", 0 );
 //		speed  *= (avatar.isFacingRight() ? 1 : -1);
@@ -348,18 +348,18 @@ public class PlatformController extends WorldController implements ContactListen
 
 		fireId = playSound( fireSound, fireId );
 	}
-	
+
 	/**
 	 * Remove a new bullet from the world.
 	 *
 	 * @param  bullet   the bullet to remove
 	 */
 	public void removeBullet(Obstacle bullet) {
-	    bullet.markRemoved(true);
-	    plopId = playSound( plopSound, plopId );
+		bullet.markRemoved(true);
+		plopId = playSound( plopSound, plopId );
 	}
 
-	
+
 	/**
 	 * Callback method for the start of a collision
 	 *
@@ -378,30 +378,30 @@ public class PlatformController extends WorldController implements ContactListen
 
 		Object fd1 = fix1.getUserData();
 		Object fd2 = fix2.getUserData();
-		
+
 		try {
 			Obstacle bd1 = (Obstacle)body1.getUserData();
 			Obstacle bd2 = (Obstacle)body2.getUserData();
 
 			// Test bullet collision with world
 			if (bd1.getName().equals("bullet") && bd2 != avatar) {
-		        removeBullet(bd1);
+				removeBullet(bd1);
 			}
 
 			if (bd2.getName().equals("bullet") && bd1 != avatar) {
-		        removeBullet(bd2);
+				removeBullet(bd2);
 			}
 
 			// See if we have landed on the ground.
 			if ((avatar.getSensorName().equals(fd2) && avatar != bd1) ||
-				(avatar.getSensorName().equals(fd1) && avatar != bd2)) {
+					(avatar.getSensorName().equals(fd1) && avatar != bd2)) {
 				avatar.setGrounded(true);
 				sensorFixtures.add(avatar == bd1 ? fix2 : fix1); // Could have more than one ground
 			}
-			
+
 			// Check for win condition
 			if ((bd1 == avatar   && bd2 == goalDoor) ||
-				(bd1 == goalDoor && bd2 == avatar)) {
+					(bd1 == goalDoor && bd2 == avatar)) {
 				setComplete(true);
 			}
 		} catch (Exception e) {
@@ -416,7 +416,7 @@ public class PlatformController extends WorldController implements ContactListen
 	 * This method is called when two objects cease to touch.  The main use of this method
 	 * is to determine when the characer is NOT on the ground.  This is how we prevent
 	 * double jumping.
-	 */ 
+	 */
 	public void endContact(Contact contact) {
 		Fixture fix1 = contact.getFixtureA();
 		Fixture fix2 = contact.getFixtureB();
@@ -426,19 +426,19 @@ public class PlatformController extends WorldController implements ContactListen
 
 		Object fd1 = fix1.getUserData();
 		Object fd2 = fix2.getUserData();
-		
+
 		Object bd1 = body1.getUserData();
 		Object bd2 = body2.getUserData();
 
 		if ((avatar.getSensorName().equals(fd2) && avatar != bd1) ||
-			(avatar.getSensorName().equals(fd1) && avatar != bd2)) {
+				(avatar.getSensorName().equals(fd1) && avatar != bd2)) {
 			sensorFixtures.remove(avatar == bd1 ? fix2 : fix1);
 			if (sensorFixtures.size == 0) {
 				avatar.setGrounded(false);
 			}
 		}
 	}
-	
+
 	/** Unused ContactListener method */
 	public void postSolve(Contact contact, ContactImpulse impulse) {}
 	/** Unused ContactListener method */
