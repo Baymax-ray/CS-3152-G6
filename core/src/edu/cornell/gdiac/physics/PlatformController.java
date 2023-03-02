@@ -278,7 +278,7 @@ public class PlatformController extends WorldController implements ContactListen
 		}
 
 		// Switches form if switch button is pressed
-		if (switchTicks == 0 && InputController.getInstance().getSwitch()) {
+		if (switchTicks == 0 && InputController.getInstance().getSwitch() && avatar.getSpirit() > 0.0f) {
 			avatar.setForm();
 			if (avatar.getForm() == 0){
 				avatar.setTexture(momoTexture);
@@ -327,19 +327,21 @@ public class PlatformController extends WorldController implements ContactListen
 		float radius = bulletTexture.getRegionWidth()/(2.0f*scale.x);
 		WheelObstacle bullet;
 		if (avatar.isLookUp()){
-			bullet = new WheelObstacle(avatar.getX() , avatar.getY()+ offset, radius);
+			bullet = new SwordWheelObstacle(avatar.getX(), avatar.getY()+ offset, radius, avatar, 2);
 		}
 		else {
-			bullet = new WheelObstacle(avatar.getX() + offset, avatar.getY(), radius);
+			bullet = new SwordWheelObstacle(avatar.getX()+ offset, avatar.getY(), radius, avatar, 2);
 		}
 
-	  bullet.setName("bullet");
+	  	bullet.setName("bullet");
 		bullet.setDensity(bulletjv.getFloat("density", 0));
 		bullet.setDrawScale(scale);
 
 		bullet.setTexture(bulletTexture);
 		bullet.setBullet(true);
 		bullet.setGravityScale(0);
+		bullet.setBodyType(BodyDef.BodyType.KinematicBody);
+		bullet.setSensor(true);
 		// Compute position and velocity
 //		float speed = bulletjv.getFloat( "speed", 0 );
 //		speed  *= (avatar.isFacingRight() ? 1 : -1);

@@ -317,8 +317,8 @@ public class DudeModel extends CapsuleObstacle {
 		setFixedRotation(true);
 
 		maxHearts = data.getInt("maxHearts", 0);
-		maxSpirit = 10.0f;
-		spirit = maxSpirit;
+		maxSpirit = data.getInt("maxSpirit", 0);
+		spirit = 1.0f;
 		hearts = maxHearts;
 		maxspeed = data.getFloat("maxspeed", 0);
 		damping = data.getFloat("damping", 0);

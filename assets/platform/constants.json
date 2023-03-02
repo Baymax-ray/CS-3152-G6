@@ -20,6 +20,7 @@
 		"density": 1.0,
 		"friction": 0.0,
 		"maxHearts": 3,
+		"maxSpirit": 10.0,
 		"maxspeed": 5.0,
 		"jump_force": 5.5,
 		"jump_cool": 30,
@@ -42,7 +43,7 @@
 		"radius": 0.1
 	},
     "bullet": {
-    	"offset" : 0.2,
+    	"offset" : 0.6,
     	"speed"  : 20.0,
 		"density": 10.0
     },
