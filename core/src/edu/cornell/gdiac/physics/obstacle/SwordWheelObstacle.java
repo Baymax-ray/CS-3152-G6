@@ -1,5 +1,8 @@
 package edu.cornell.gdiac.physics.obstacle;
 
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.physics.box2d.BodyDef;
 import edu.cornell.gdiac.physics.DudeModel;
 import com.badlogic.gdx.utils.Timer;
 
@@ -30,9 +33,18 @@ public class SwordWheelObstacle extends WheelObstacle {
     }
     //</editor-fold>
 
-    public SwordWheelObstacle(float x, float y, float radius, DudeModel avatar, int lifespan) {
+    public SwordWheelObstacle(float x, float y, float radius, DudeModel avatar, float lifespan, float density, Vector2 scale, TextureRegion texture) {
         super(x,y,radius);
         this.avatar = avatar;
+
+        setName("bullet");
+        setDensity(density);
+        setDrawScale(scale);
+        setTexture(texture);
+        setBullet(true);
+        setGravityScale(0);
+        setBodyType(BodyDef.BodyType.KinematicBody);
+        setSensor(true);
 
         // Schedule a task to destroy this object after lifespan seconds
         Timer.schedule(new Timer.Task() {
@@ -47,5 +59,19 @@ public class SwordWheelObstacle extends WheelObstacle {
     private void destroy() {
         // Code to destroy this object
         this.markRemoved(true);
+    }
+
+    /**
+     * Updates the object's physics state (NOT GAME LOGIC).
+     *
+     * We use this method to reset cooldowns.
+     *
+     * @param dt	Number of seconds since last animation frame
+     */
+    public void update(float dt) {
+        this.setLinearVelocity(avatar.getLinearVelocity());
+
+
+        super.update(dt);
     }
 }
