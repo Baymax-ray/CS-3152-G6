@@ -68,9 +68,9 @@ public class DudeModel extends CapsuleObstacle {
 	private boolean isJumping;
 	/** Whether the player is looking up */
 	private boolean isLookUp;
-	/**
-	 * Flag indicating whether the character is currently attacking.
-	 */
+	/** Flag indicating whether the player is currently looking down.*/
+	private boolean isLookingDown;
+	/** Flag indicating whether the character is currently attacking. */
 	private boolean isAttacking;
 	/** How long until we can shoot again */
 	private int shootCooldown;
@@ -192,6 +192,21 @@ public class DudeModel extends CapsuleObstacle {
 	 */
 	public void setShooting(boolean value) {
 		isShooting = value;
+	}
+	/**
+	 * Returns whether the player is currently looking down.
+	 * @return True if the player is looking down, false otherwise.
+	 */
+	public boolean isLookingDown() {
+		return isLookingDown;
+	}
+
+	/**
+	 * Sets whether the player is currently looking down.
+	 * @param lookingDown True to indicate that the player is looking down, false otherwise.
+	 */
+	public void setLookingDown(boolean lookingDown) {
+		isLookingDown = lookingDown;
 	}
 	/**
 	 * Returns true if the dude is actively looking up.

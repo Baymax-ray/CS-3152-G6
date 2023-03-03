@@ -26,7 +26,7 @@ public class SwordWheelObstacle extends WheelObstacle {
     //</editor-fold>
 
     public SwordWheelObstacle(float x, float y, float radius, final DudeModel avatar, float lifespan, float density, Vector2 scale, TextureRegion texture) {
-        super(x,y,radius);
+        super(x,y,radius * 3.0f);
         this.avatar = avatar;
 
         avatar.setAttacking(true);
@@ -64,7 +64,6 @@ public class SwordWheelObstacle extends WheelObstacle {
      */
     public void update(float dt) {
         this.setLinearVelocity(avatar.getLinearVelocity());
-
 
         super.update(dt);
     }

@@ -47,8 +47,10 @@
         "rocket:crate02": "rocket/crate02.png",
         "platform:momo":  "platform/momo.png",
         "platform:momoUp":  "platform/momoUp.png",
+        "platform:momoDown":  "platform/momoDown.png",
         "platform:chiyo":  "platform/chiyo.png",
         "platform:chiyoUp":  "platform/chiyoUp.png",
+        "platform:chiyoDown":  "platform/chiyoDown.png",
         "platform:rope":  "platform/ropebridge.png",
         "platform:barrier": "platform/barrier.png",
         "platform:bullet":  "platform/bullet.png"

@@ -54,6 +54,8 @@ public class InputController {
 	private boolean switchPressed;
 	/** Whether the look-up button is pressed */
 	private boolean upPressed;
+	/** Whether the look-down button is pressed */
+	private boolean downPressed;
 	private boolean resetPrevious;
 	/** Whether the button to advanced worlds was pressed. */
 	private boolean nextPressed;
@@ -128,6 +130,15 @@ public class InputController {
 	 */
 	public boolean getUp() {
 		return upPressed;
+	}
+
+	/**
+	 * Returns if the down button was pressed
+	 *
+	 * @return downPressed boolean
+	 */
+	public boolean getDown() {
+		return downPressed;
 	}
 	
 	/**
@@ -328,6 +339,7 @@ public class InputController {
 		actionPressed = (secondary && actionPressed) || Gdx.input.isButtonPressed(Input.Buttons.LEFT);
 		switchPressed = (secondary && switchPressed) || Gdx.input.isButtonPressed(Input.Buttons.RIGHT);
 		upPressed = (secondary && upPressed) || (Gdx.input.isKeyPressed(Input.Keys.W));
+		downPressed = (secondary && downPressed) || (Gdx.input.isKeyPressed(Input.Keys.S));
 
 				// Menu Actions
 		exitPressed  = (secondary && exitPressed) || (Gdx.input.isKeyPressed(Input.Keys.ESCAPE));

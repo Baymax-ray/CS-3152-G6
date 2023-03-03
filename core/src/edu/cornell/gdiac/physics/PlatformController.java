@@ -37,10 +37,14 @@ public class PlatformController extends WorldController implements ContactListen
 	private TextureRegion momoTexture;
 	/** Texture asset for momo avatar looking up*/
 	private TextureRegion momoUpTexture;
+	/** Texture asset for momo avatar looking down*/
+	private TextureRegion momoDownTexture;
 	/** Texture asset for chiyo avatar */
 	private TextureRegion chiyoTexture;
 	/** Texture asset for chiyo avatar looking up*/
 	private TextureRegion chiyoUpTexture;
+	/** Texture asset for chiyo avatar looking down*/
+	private TextureRegion chiyoDownTexture;
 	/** Texture asset for the spinning barrier */
 	private TextureRegion barrierTexture;
 	/** Texture asset for the bullet */
@@ -104,9 +108,10 @@ public class PlatformController extends WorldController implements ContactListen
 	public void gatherAssets(AssetDirectory directory) {
 		momoTexture = new TextureRegion(directory.getEntry("platform:momo",Texture.class));
 		momoUpTexture = new TextureRegion(directory.getEntry("platform:momoUp",Texture.class));
+		momoDownTexture = new TextureRegion(directory.getEntry("platform:momoDown",Texture.class));
 		chiyoTexture = new TextureRegion(directory.getEntry("platform:chiyo",Texture.class));
-		chiyoUpTexture = new TextureRegion(directory.getEntry("platform:chiyo" +
-				"Up",Texture.class));
+		chiyoUpTexture = new TextureRegion(directory.getEntry("platform:chiyoUp",Texture.class));
+		chiyoDownTexture = new TextureRegion(directory.getEntry("platform:chiyoDown",Texture.class));
 		barrierTexture = new TextureRegion(directory.getEntry("platform:barrier",Texture.class));
 		bulletTexture = new TextureRegion(directory.getEntry("platform:bullet",Texture.class));
 		bridgeTexture = new TextureRegion(directory.getEntry("platform:rope",Texture.class));
@@ -274,7 +279,7 @@ public class PlatformController extends WorldController implements ContactListen
 
 		// Add a bullet if we fire
 		if (avatar.getForm() == 1 && avatar.isShooting() && !avatar.isAttacking()) {
-			createBullet();
+			createSword();
 		}
 
 		// Switches form if switch button is pressed
@@ -289,8 +294,9 @@ public class PlatformController extends WorldController implements ContactListen
 			switchTicks = 60;
 		}
 
-		// Changes avatar if looking up
-		if (InputController.getInstance().getUp()) {
+		// Changes avatar if looking up or looking down
+		if (InputController.getInstance().getUp() && InputController.getInstance().getDown()){}
+		else if (InputController.getInstance().getUp()) {
 			avatar.setLookUp(true);
 			if (avatar.getForm() == 0){
 				avatar.setTexture(momoUpTexture);
@@ -299,9 +305,27 @@ public class PlatformController extends WorldController implements ContactListen
 				avatar.setTexture(chiyoUpTexture);
 			}
 		}
+		else if (InputController.getInstance().getDown()) {
+			avatar.setLookingDown(true);
+			if (avatar.getForm() == 0){
+				avatar.setTexture(momoDownTexture);
+			}
+			else {
+				avatar.setTexture(chiyoDownTexture);
+			}
+		}
 		else {
-			if (avatar.isLookUp()){
+			if (avatar.isLookUp() && !InputController.getInstance().getUp()){
 				avatar.setLookUp(false);
+				if (avatar.getForm() == 0){
+					avatar.setTexture(momoTexture);
+				}
+				else {
+					avatar.setTexture(chiyoTexture);
+				}
+			}
+			else if (avatar.isLookingDown() && !InputController.getInstance().getDown()){
+				avatar.setLookingDown(false);
 				if (avatar.getForm() == 0){
 					avatar.setTexture(momoTexture);
 				}
@@ -320,21 +344,24 @@ public class PlatformController extends WorldController implements ContactListen
 	/**
 	 * Add a new bullet to the world and send it in the right direction.
 	 */
-	private void createBullet() {
-		JsonValue bulletjv = constants.get("bullet");
-		float offset = bulletjv.getFloat("offset",0);
+	private void createSword() {
+		JsonValue swordjv = constants.get("bullet");
+		float offset = swordjv.getFloat("offset",0);
 		offset *= (avatar.isFacingRight() ? 1 : -1);
 		float radius = bulletTexture.getRegionWidth()/(2.0f*scale.x);
-		SwordWheelObstacle bullet;
-		float density = bulletjv.getFloat("density", 0);
+		SwordWheelObstacle sword;
+		float density = swordjv.getFloat("density", 0);
 		if (avatar.isLookUp()){
-			bullet = new SwordWheelObstacle(avatar.getX(), avatar.getY()+ offset, radius, avatar, 1.0f, density, scale, bulletTexture);
+			sword = new SwordWheelObstacle(avatar.getX(), avatar.getY()+ offset, radius, avatar, 1.0f, density, scale, bulletTexture);
+		}
+		else if (!avatar.isGrounded() && avatar.isLookingDown()){
+			sword = new SwordWheelObstacle(avatar.getX(), avatar.getY()-offset, radius, avatar, 1.0f, density, scale, bulletTexture);
 		}
 		else {
-			bullet = new SwordWheelObstacle(avatar.getX()+ offset, avatar.getY(), radius, avatar, 1.0f, density, scale, bulletTexture);
+			sword = new SwordWheelObstacle(avatar.getX()+ offset, avatar.getY(), radius, avatar, 1.0f, density, scale, bulletTexture);
 		}
 
-		addQueuedObject(bullet);
+		addQueuedObject(sword);
 
 		fireId = playSound( fireSound, fireId );
 	}
