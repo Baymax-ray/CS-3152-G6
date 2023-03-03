@@ -273,7 +273,7 @@ public class PlatformController extends WorldController implements ContactListen
 		}
 
 		// Add a bullet if we fire
-		if (avatar.getForm() == 1 && avatar.isShooting()) {
+		if (avatar.getForm() == 1 && avatar.isShooting() && !avatar.isAttacking()) {
 			createBullet();
 		}
 

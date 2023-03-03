@@ -11,7 +11,7 @@ public class SwordWheelObstacle extends WheelObstacle {
     /**
      * The avatar of this object.
      */
-    private DudeModel avatar;
+    private final DudeModel avatar;
 
     //<editor-fold desc="GETTERS AND SETTERS">
     /**
@@ -23,20 +23,13 @@ public class SwordWheelObstacle extends WheelObstacle {
         return avatar;
     }
 
-    /**
-     * Sets the avatar of this object.
-     *
-     * @param avatar The new avatar to set.
-     */
-    public void setAvatar(DudeModel avatar) {
-        this.avatar = avatar;
-    }
     //</editor-fold>
 
-    public SwordWheelObstacle(float x, float y, float radius, DudeModel avatar, float lifespan, float density, Vector2 scale, TextureRegion texture) {
+    public SwordWheelObstacle(float x, float y, float radius, final DudeModel avatar, float lifespan, float density, Vector2 scale, TextureRegion texture) {
         super(x,y,radius);
         this.avatar = avatar;
 
+        avatar.setAttacking(true);
         setName("bullet");
         setDensity(density);
         setDrawScale(scale);
@@ -50,6 +43,7 @@ public class SwordWheelObstacle extends WheelObstacle {
         Timer.schedule(new Timer.Task() {
             @Override
             public void run() {
+                avatar.setAttacking(false);
                 // Destroy this object
                 destroy();
             }

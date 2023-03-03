@@ -68,6 +68,10 @@ public class DudeModel extends CapsuleObstacle {
 	private boolean isJumping;
 	/** Whether the player is looking up */
 	private boolean isLookUp;
+	/**
+	 * Flag indicating whether the character is currently attacking.
+	 */
+	private boolean isAttacking;
 	/** How long until we can shoot again */
 	private int shootCooldown;
 	/** Whether our feet are on the ground */
@@ -223,7 +227,21 @@ public class DudeModel extends CapsuleObstacle {
 	public void setJumping(boolean value) {
 		isJumping = value;
 	}
+	/**
+	 * Returns whether the character is currently attacking.
+	 * @return True if the character is attacking, false otherwise.
+	 */
+	public boolean isAttacking() {
+		return isAttacking;
+	}
 
+	/**
+	 * Sets whether the character is currently attacking.
+	 * @param attacking True to indicate that the character is attacking, false otherwise.
+	 */
+	public void setAttacking(boolean attacking) {
+		isAttacking = attacking;
+	}
 	/**
 	 * Returns true if the dude is on the ground.
 	 *
