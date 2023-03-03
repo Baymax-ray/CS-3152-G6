@@ -19,7 +19,7 @@ import edu.cornell.gdiac.physics.*;
 import edu.cornell.gdiac.physics.obstacle.*;
 
 /**
- * Player avatar for the plaform game.
+ * Player avatar for the platform game.
  *
  * Note that this class returns to static loading.  That is because there are
  * no other subclasses that we might loop through.
