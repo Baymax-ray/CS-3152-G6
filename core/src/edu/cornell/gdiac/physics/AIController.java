@@ -94,6 +94,7 @@ public class AIController {
     }
     public int getMoveAlongPathToGoal(){
         //ToDo
+        return 0;
     }
     public boolean canAttack(){
         //ToDo
