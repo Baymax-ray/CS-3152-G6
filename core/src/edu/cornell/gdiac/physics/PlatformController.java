@@ -77,6 +77,8 @@ public class PlatformController extends WorldController implements ContactListen
 	private JsonValue constants;
 	/** Reference to the character avatar */
 	private DudeModel avatar;
+	/** EXAMPLE ENEMY */
+	private EnemyModel enemy;
 	/** Reference to the goalDoor (for collision detection) */
 	private BoxObstacle goalDoor;
 
@@ -216,6 +218,15 @@ public class PlatformController extends WorldController implements ContactListen
 		avatar.setDrawScale(scale);
 		avatar.setTexture(momoTexture);
 		addObject(avatar);
+
+		// Create enemy
+		dwidth  = momoTexture.getRegionWidth()/scale.x;
+		dheight = momoTexture.getRegionHeight()/scale.y;
+		enemy = new EnemyModel(constants.get("dude"), dwidth, dheight);
+		enemy.setDrawScale(scale);
+		enemy.setTexture(momoTexture);
+		addObject(enemy);
+
 
 		// Create rope bridge
 		dwidth  = bridgeTexture.getRegionWidth()/scale.x;
