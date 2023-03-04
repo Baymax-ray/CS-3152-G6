@@ -97,6 +97,7 @@ public class AIController {
     }
     public boolean canAttack(){
         //ToDo
+        return false;
     }
     /**
      * If this enemy can detection the character
