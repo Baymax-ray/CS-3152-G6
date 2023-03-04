@@ -40,7 +40,8 @@ public class AIController {
     public AIController(EnemyModel enemy, Board board){
         this.enemy = enemy;
         this.board = board;
-        this.platform = board.query(enemy);
+        //TODO?
+        this.platform = board.StandOn(enemy.getX(), enemy.getY()-0.5f);
         this.move = CONTROL_NO_ACTION;
         this.state = FSMState.SPAWN;
     }
