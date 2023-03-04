@@ -1,5 +1,7 @@
 package edu.cornell.gdiac.physics;
 
+import java.util.Random;
+
 public class AIController {
 
     /** How close a target must be for us to attack it */
@@ -10,7 +12,8 @@ public class AIController {
     public static final int CONTROL_MOVE_LEFT  = 0x01;
     /** Move to the right */
     public static final int CONTROL_MOVE_RIGHT = 0x02;
-
+    /** Attack */
+    public static final int CONTROL_FIRE 	   = 0x10;
     /**The enemy that this AIController is controlling*/
     private EnemyModel enemy;
     /**The game board to communicate map information, such as if there is a wall ahead*/
@@ -21,6 +24,10 @@ public class AIController {
     private int move; // A ControlCode
     /** The enemy's current state in the FSM */
     private FSMState state;
+    /** The number of ticks since we started this controller */
+    private long ticks;
+    /** index of this enemy*/
+    private int id;
 
     /**
      * The FSMState SHOULD control whether the AI is in wandering, chasing,
@@ -37,13 +44,14 @@ public class AIController {
         ATTACK
     }
 
-    public AIController(EnemyModel enemy, Board board){
+    public AIController(EnemyModel enemy, Board board,int id){
         this.enemy = enemy;
         this.board = board;
-        //TODO?
-        this.platform = board.StandOn(enemy.getX(), enemy.getY()-0.5f);
+        this.platform = board.StandOn(enemy.getX(), enemy.getY()-0.3f);
         this.move = CONTROL_NO_ACTION;
         this.state = FSMState.SPAWN;
+        this.ticks=0;
+        this.id=id;
     }
 
     /**
@@ -60,12 +68,34 @@ public class AIController {
      * @return the action selected by this InputController
      */
     public int getAction() {
+        ticks++;
+        if ((id + ticks) % 10 == 0) {
+            // Process the FSM
+            changeStateIfApplicable();
+
+            // Pathfinding
+            markGoalTiles();
+            move = getMoveAlongPathToGoalTile();
+        }
+
         int action = move;
 
-
+        // If we're attacking someone and we can shoot him now, then do so.
+        if (state == FSMState.ATTACK && canShootTarget()) {
+            action |= CONTROL_FIRE;
+        }
         return action;
     }
 
+    public void wander(){
+
+    }
+
+    /**
+     * If this enemy can detection the character
+     * @return true if can see the character
+     */
+    public boolean checkDetection(){return false;}
     /**
      * Change the state of the ship.
      *
@@ -76,7 +106,21 @@ public class AIController {
      * target gets out of range.
      */
     private void changeStateIfApplicable() {
-        //TODO
+        //Working on!
+        Random rand = new Random();
+        int randomInt;
+        switch (state) {
+            case SPAWN:
+                if (ticks>60){state=FSMState.WANDER;}
+            case WANDER:
+                if (checkDetection()){
+                    state=FSMState.CHASE;
+                }
+            case CHASE:
+                break;
+            case ATTACK:
+                break;
+        }
 
     }
 
