@@ -82,6 +82,7 @@ public class PlatformController extends WorldController implements ContactListen
 
 	/** Mark set to handle more sophisticated collision callbacks */
 	protected ObjectSet<Fixture> sensorFixtures;
+	private Board platforms;
 
 	/**
 	 * Creates and initialize a new instance of the platformer game
@@ -95,6 +96,7 @@ public class PlatformController extends WorldController implements ContactListen
 		setFailure(false);
 		world.setContactListener(this);
 		sensorFixtures = new ObjectSet<Fixture>();
+		platforms=new Board(DEFAULT_WIDTH,DEFAULT_HEIGHT);
 	}
 
 	/**
@@ -185,6 +187,7 @@ public class PlatformController extends WorldController implements ContactListen
 			obj.setTexture(earthTile);
 			obj.setName(wname+ii);
 			addObject(obj);
+			platforms.Add(walljv.get(ii).asFloatArray());
 		}
 
 		String pname = "platform";
@@ -200,6 +203,7 @@ public class PlatformController extends WorldController implements ContactListen
 			obj.setTexture(earthTile);
 			obj.setName(pname+ii);
 			addObject(obj);
+			platforms.Add(platjv.get(ii).asFloatArray());
 		}
 
 		// This world is heavier
