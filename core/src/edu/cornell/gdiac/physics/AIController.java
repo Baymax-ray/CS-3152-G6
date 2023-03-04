@@ -5,8 +5,8 @@ public class AIController {
     /** How close a target must be for us to attack it */
     private static final int ATTACK_DIST = 4;
 
-    /**The unique id specifying which AI this controller is assigned to*/
-    private int id;
+    /**The enemy that this AIController is controlling*/
+    private EnemyModel enemy;
     /**The game board to communicate map information, such as if there is a wall ahead*/
     private Board board;
 
@@ -18,8 +18,8 @@ public class AIController {
 
     }
 
-    public AIController(int id, Board board){
-        this.id = id;
+    public AIController(EnemyModel enemy, Board board){
+        this.enemy = enemy;
         this.board = board;
     }
 
