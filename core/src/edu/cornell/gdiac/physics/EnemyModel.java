@@ -1,10 +1,7 @@
 /*
- * DudeModel.java
+ * EnemyModel.java
  *
- * You SHOULD NOT need to modify this file.  However, you may learn valuable lessons
- * for the rest of the lab by looking at it.
- *
- * Author: Walker M. White
+ * Author: Walker M. White, The Great CS3152-SP23 Team 6
  * Based on original PhysicsDemo Lab by Don Holden, 2007
  * Updated asset version, 2/6/2021
  */
@@ -347,7 +344,8 @@ public class EnemyModel extends CapsuleObstacle {
                 width*data.get("shrink").getFloat( 0 ),
                 height*data.get("shrink").getFloat( 1 ));
         setDensity(data.getFloat("density", 0));
-        setFriction(data.getFloat("friction", 0));  /// HE WILL STICK TO WALLS IF YOU FORGET
+        setFriction(data.getFloat("friction", 0));
+        /// HE WILL STICK TO WALLS IF YOU FORGET
         setFixedRotation(true);
 
         maxHearts = data.getInt("maxHearts", 0);
