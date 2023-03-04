@@ -37,14 +37,15 @@ public class EnemyModel extends CapsuleObstacle {
     private final float maxspeed;
     /** Identifier to allow us to track the sensor in ContactListener */
     private final String sensorName;
-    /** The impulse for the character jump */
-    private final float jump_force;
-    /** Cooldown (in animation frames) for jumping */
-    private final int jumpLimit;
+
     /** Cooldown (in animation frames) for shooting */
     private final int shotLimit;
     /** Cache for internal force calculations */
     private final Vector2 forceCache = new Vector2();
+//    /** The impulse for the character jump */
+//    private final float jump_force;
+//    /** Cooldown (in animation frames) for jumping */
+//    private final int jumpLimit;
     //</editor-fold>
 
     //<editor-fold desc="CHANGING PLAYER VARIABLES">
@@ -62,12 +63,6 @@ public class EnemyModel extends CapsuleObstacle {
     private float movement;
     /** Which direction is the character facing */
     private boolean faceRight;
-    /** How long until we can jump again */
-    private int jumpCooldown;
-    /** Whether we are actively jumping */
-    private boolean isJumping;
-    /** Whether the player is looking up */
-    private boolean isLookUp;
     /** Flag indicating whether the player is currently looking down.*/
     private boolean isLookingDown;
     /** Flag indicating whether the character is currently attacking. */
@@ -80,6 +75,12 @@ public class EnemyModel extends CapsuleObstacle {
     private boolean isShooting;
     /** The physics shape of this object */
     private PolygonShape sensorShape;
+//    /** How long until we can jump again */
+//    private int jumpCooldown;
+//    /** Whether we are actively jumping */
+//    private boolean isJumping;
+//    /** Whether the player is looking up */
+//    private boolean isLookUp;
     //</editor-fold>
 
     //<editor-fold desc="GETTERS AND SETTERS">
@@ -208,40 +209,40 @@ public class EnemyModel extends CapsuleObstacle {
     public void setLookingDown(boolean lookingDown) {
         isLookingDown = lookingDown;
     }
-    /**
-     * Returns true if the dude is actively looking up.
-     *
-     * @return true if the dude is actively looking up.
-     */
-    public boolean isLookUp() {
-        return isLookUp;
-    }
-    /**
-     * Sets whether the dude is actively looking up.
-     *
-     * @param value whether the dude is actively looking up.
-     */
-    public void setLookUp(boolean value) {
-        isLookUp = value;
-
-    }
-
-    /**
-     * Returns true if the dude is actively jumping.
-     *
-     * @return true if the dude is actively jumping.
-     */
-    public boolean isJumping() {
-        return isJumping && isGrounded && jumpCooldown <= 0;
-    }
-    /**
-     * Sets whether the dude is actively jumping.
-     *
-     * @param value whether the dude is actively jumping.
-     */
-    public void setJumping(boolean value) {
-        isJumping = value;
-    }
+//    /**
+//     * Returns true if the dude is actively looking up.
+//     *
+//     * @return true if the dude is actively looking up.
+//     */
+//    public boolean isLookUp() {
+//        return isLookUp;
+//    }
+//    /**
+//     * Sets whether the dude is actively looking up.
+//     *
+//     * @param value whether the dude is actively looking up.
+//     */
+//    public void setLookUp(boolean value) {
+//        isLookUp = value;
+//
+//    }
+//
+//    /**
+//     * Returns true if the dude is actively jumping.
+//     *
+//     * @return true if the dude is actively jumping.
+//     */
+//    public boolean isJumping() {
+//        return isJumping && isGrounded && jumpCooldown <= 0;
+//    }
+//    /**
+//     * Sets whether the dude is actively jumping.
+//     *
+//     * @param value whether the dude is actively jumping.
+//     */
+//    public void setJumping(boolean value) {
+//        isJumping = value;
+//    }
     /**
      * Returns whether the character is currently attacking.
      * @return True if the character is attacking, false otherwise.
@@ -356,8 +357,8 @@ public class EnemyModel extends CapsuleObstacle {
         maxspeed = data.getFloat("maxspeed", 0);
         damping = data.getFloat("damping", 0);
         force = data.getFloat("force", 0);
-        jump_force = data.getFloat( "jump_force", 0 );
-        jumpLimit = data.getInt( "jump_cool", 0 );
+//        jump_force = data.getFloat( "jump_force", 0 );
+//        jumpLimit = data.getInt( "jump_cool", 0 );
         shotLimit = data.getInt( "shot_cool", 0 );
         sensorName = "DudeGroundSensor";
         this.data = data;
@@ -365,11 +366,11 @@ public class EnemyModel extends CapsuleObstacle {
         // Gameplay attributes
         isGrounded = false;
         isShooting = false;
-        isJumping = false;
+//        isJumping = false;
         faceRight = true;
 
         shootCooldown = 0;
-        jumpCooldown = 0;
+//        jumpCooldown = 0;
         setName("dude");
     }
 
@@ -437,12 +438,11 @@ public class EnemyModel extends CapsuleObstacle {
             forceCache.set(getMovement(),0);
             body.applyForce(forceCache,getPosition(),true);
         }
-
-        // Jump!
-        if (isJumping()) {
-            forceCache.set(0, jump_force);
-            body.applyLinearImpulse(forceCache,getPosition(),true);
-        }
+//        // Jump!
+//        if (isJumping()) {
+//            forceCache.set(0, jump_force);
+//            body.applyLinearImpulse(forceCache,getPosition(),true);
+//        }
     }
 
     /**
@@ -454,11 +454,11 @@ public class EnemyModel extends CapsuleObstacle {
      */
     public void update(float dt) {
         // Apply cooldowns
-        if (isJumping()) {
-            jumpCooldown = jumpLimit;
-        } else {
-            jumpCooldown = Math.max(0, jumpCooldown - 1);
-        }
+//        if (isJumping()) {
+//            jumpCooldown = jumpLimit;
+//        } else {
+//            jumpCooldown = Math.max(0, jumpCooldown - 1);
+//        }
 
         if (isShooting()) {
             shootCooldown = shotLimit;
