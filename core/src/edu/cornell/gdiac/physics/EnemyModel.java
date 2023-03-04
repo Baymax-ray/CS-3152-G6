@@ -341,8 +341,8 @@ public class EnemyModel extends CapsuleObstacle {
      */
     public EnemyModel(JsonValue data, float width, float height) {
         // The shrink factors fit the image to a tigher hitbox
-        super(	data.get("pos").getFloat(0),
-                data.get("pos").getFloat(1),
+        super(	data.get("posEnemy").getFloat(0),
+                data.get("posEnemy").getFloat(1),
                 width*data.get("shrink").getFloat( 0 ),
                 height*data.get("shrink").getFloat( 1 ));
         setDensity(data.getFloat("density", 0));
