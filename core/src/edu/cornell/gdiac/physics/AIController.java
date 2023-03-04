@@ -28,6 +28,8 @@ public class AIController {
     private long ticks;
     /** index of this enemy*/
     private int id;
+    /** the goal to move*/
+    private float[] goal;
 
     /**
      * The FSMState SHOULD control whether the AI is in wandering, chasing,
@@ -55,7 +57,7 @@ public class AIController {
     }
 
     /**
-     * Returns the action selected by this InputController
+     * Returns the action selected by this AIController
      *
      * The returned int is a bit-vector of more than one possible input
      * option. This is why we do not use an enumeration of Control Codes;
@@ -74,23 +76,28 @@ public class AIController {
             changeStateIfApplicable();
 
             // Pathfinding
-            markGoalTiles();
-            move = getMoveAlongPathToGoalTile();
+            markGoal();
+            move = getMoveAlongPathToGoal();
         }
 
         int action = move;
 
         // If we're attacking someone and we can shoot him now, then do so.
-        if (state == FSMState.ATTACK && canShootTarget()) {
+        if (state == FSMState.ATTACK && canAttack()) {
             action |= CONTROL_FIRE;
         }
         return action;
     }
 
-    public void wander(){
-
+    public void markGoal(){
+        //ToDo
     }
-
+    public int getMoveAlongPathToGoal(){
+        //ToDo
+    }
+    public boolean canAttack(){
+        //ToDo
+    }
     /**
      * If this enemy can detection the character
      * @return true if can see the character
