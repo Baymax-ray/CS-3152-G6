@@ -34,7 +34,7 @@ public class AIController{
     private long ticks;
     /** index of this enemy*/
     private int id;
-    /** the goal to move*/
+    /** the goal to move,[x,y]*/
     private int[] goal;
 
     /**
@@ -60,6 +60,7 @@ public class AIController{
         this.state = FSMState.SPAWN;
         this.ticks=0;
         this.id=id;
+        this.goal=new int[2];
     }
 
     /**
@@ -125,6 +126,7 @@ public class AIController{
             case SPAWN:
                 goal[0]= (int) enemy.getX();
                 goal[1]= (int) enemy.getY();
+                System.out.println("SPAWN");
                 break;
             case WANDER:
                 float[] est= extremeValuePoints(platform,0);
@@ -145,6 +147,7 @@ public class AIController{
                     goal[0]=(int)enemy.getX();
                     goal[1]=(int)enemy.getY();
                 }
+                System.out.println("WANDER");
                 break;
             case CHASE:
                 break;
