@@ -287,9 +287,9 @@ public class DudeModel extends CapsuleObstacle {
 	}
 
 	/**
-	 * Returns ow hard the brakes are applied to get a dude to stop moving
+	 * Returns how hard the brakes are applied to get a dude to stop moving
 	 *
-	 * @return ow hard the brakes are applied to get a dude to stop moving
+	 * @return how hard the brakes are applied to get a dude to stop moving
 	 */
 	public float getDamping() {
 		return damping;

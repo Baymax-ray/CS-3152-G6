@@ -299,6 +299,7 @@ public class PlatformController extends WorldController implements ContactListen
 	public void update(float dt) {
 		//Update Enemy
 		enemy.setMovement(enemyController.getAction()*enemy.getForce());
+		enemy.applyForce();
 		
 
 		// Process actions in object model
