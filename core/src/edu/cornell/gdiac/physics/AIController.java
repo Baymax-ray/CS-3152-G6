@@ -167,10 +167,6 @@ public class AIController{
         int sy=(int)enemy.getX();
         int dx=sx-goal[0];
         if (dx==0){return CONTROL_NO_ACTION;}
-<<<<<<< Updated upstream
-        else if (dx>0){return CONTROL_MOVE_LEFT;}
-        else if (dx<0){return CONTROL_MOVE_RIGHT;}
-=======
         else if (dx<0){
             if(direction == CONTROL_MOVE_RIGHT){
                 return CONTROL_MOVE_LEFT;
@@ -179,7 +175,6 @@ public class AIController{
         else if (dx>0){
             return CONTROL_MOVE_RIGHT;
         }
->>>>>>> Stashed changes
         return CONTROL_NO_ACTION;
     }
 
