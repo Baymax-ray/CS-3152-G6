@@ -291,15 +291,15 @@ public class PlatformController extends WorldController implements ContactListen
 	public void update(float dt) {
 		// Process actions in object model
 		avatar.setMovement(InputController.getInstance().getHorizontal() *avatar.getForce());
-//		avatar.setJumping(InputController.getInstance().didPrimary());
-		if (InputController.getInstance().didPrimary()){
-			avatar.setJumping(true);
-		}
-		else{
-			if (avatar.isGrounded()){
-				avatar.setJumping(false);
-			}
-		}
+		avatar.setJumping(InputController.getInstance().didPrimary());
+//		if (InputController.getInstance().didPrimary()){
+//			avatar.setJumping(true);
+//		}
+//		else{
+//			if (avatar.isGrounded()){
+//				avatar.setJumping(false);
+//			}
+//		}
 		avatar.setShooting(InputController.getInstance().didSecondary());
 
 		// Switch Tick Decrement
@@ -354,7 +354,7 @@ public class PlatformController extends WorldController implements ContactListen
 					avatar.setTexture(chiyoTexture);
 				}
 			}
-			else if (avatar.isLookingDown() && !InputController.getInstance().getDown()){
+			if (avatar.isLookingDown() && !InputController.getInstance().getDown()){
 				avatar.setLookingDown(false);
 				if (avatar.getForm() == 0){
 					avatar.setTexture(momoTexture);
@@ -502,9 +502,11 @@ public class PlatformController extends WorldController implements ContactListen
 		if ((avatar.getSensorName().equals(fd2) && avatar != bd1) ||
 				(avatar.getSensorName().equals(fd1) && avatar != bd2)) {
 			sensorFixtures.remove(avatar == bd1 ? fix2 : fix1);
-			if (sensorFixtures.size == 0) {
-				avatar.setGrounded(false);
-			}
+			//Changed from original (below) to this because of glitch
+			avatar.setGrounded(false);
+//			if (sensorFixtures.size == 0) {
+//				avatar.setGrounded(false);
+//			}
 		}
 	}
 
