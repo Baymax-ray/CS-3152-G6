@@ -72,6 +72,8 @@ public class PlatformController extends WorldController implements ContactListen
 	//</editor-fold>
 
 	//OTHER VARIABLES
+	/** boolean if in dev mode or not */
+	private boolean devMode;
 	/** Tick Counter for switching */
 	private int switchTicks;
 	// Physics objects for the game
@@ -101,6 +103,9 @@ public class PlatformController extends WorldController implements ContactListen
 		world.setContactListener(this);
 		sensorFixtures = new ObjectSet<Fixture>();
 		platforms=new Board(DEFAULT_WIDTH,DEFAULT_HEIGHT);
+
+		// True for dev work, set false for game
+		devMode = true;
 	}
 
 	/**
@@ -525,10 +530,10 @@ public class PlatformController extends WorldController implements ContactListen
 	 *
 	 */
 	private void handleInput() {
-		if (Gdx.input.isKeyPressed(Input.Keys.O)) {
+		if (devMode && Gdx.input.isKeyPressed(Input.Keys.O)) {
 			canvas.getCamera().zoom += 0.02;
 		}
-		if (Gdx.input.isKeyPressed(Input.Keys.I)) {
+		if (devMode && Gdx.input.isKeyPressed(Input.Keys.I)) {
 			canvas.getCamera().zoom -= 0.02;
 		}
 //		if (Gdx.input.isKeyPressed(Input.Keys.LEFT)) {
