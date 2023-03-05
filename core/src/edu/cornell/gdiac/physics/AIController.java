@@ -1,8 +1,14 @@
 package edu.cornell.gdiac.physics;
 
+import com.badlogic.gdx.physics.box2d.Contact;
+import com.badlogic.gdx.physics.box2d.ContactImpulse;
+import com.badlogic.gdx.physics.box2d.ContactListener;
+import com.badlogic.gdx.physics.box2d.Manifold;
+import edu.cornell.gdiac.physics.obstacle.SwordWheelObstacle;
+
 import java.util.Random;
 
-public class AIController {
+public class AIController{
 
     /** How close a target must be for us to attack it */
     private static final int ATTACK_DIST = 4;
@@ -195,7 +201,5 @@ public class AIController {
         }
 
     }
-
-
 
 }

@@ -21,7 +21,7 @@ import edu.cornell.gdiac.physics.obstacle.*;
  * Note that this class returns to static loading.  That is because there are
  * no other subclasses that we might loop through.
  */
-public class EnemyModel extends CapsuleObstacle {
+public class EnemyModel extends CapsuleObstacle implements ContactListener{
     /** The initializing data (to avoid magic numbers) */
     private final JsonValue data;
 
@@ -351,7 +351,7 @@ public class EnemyModel extends CapsuleObstacle {
         maxHearts = data.getInt("maxHearts", 0);
         maxSpirit = data.getInt("maxSpirit", 0);
         spirit = 1.0f;
-        hearts = maxHearts;
+        hearts = 1;
         maxspeed = data.getFloat("maxspeed", 0);
         damping = data.getFloat("damping", 0);
         force = data.getFloat("force", 0);
@@ -444,6 +444,19 @@ public class EnemyModel extends CapsuleObstacle {
     }
 
     /**
+     * Called when this enemy is hit by a sword.
+     *
+     * This method decrements the number of hearts for this enemy by 1. If the number of hearts
+     * reaches 0, this method destroys the enemy
+     */
+    public void hitBySword() {
+        hearts--;
+        if (hearts <= 0) {
+            this.markRemoved(true);
+        }
+    }
+
+    /**
      * Updates the object's physics state (NOT GAME LOGIC).
      *
      * We use this method to reset cooldowns.
@@ -488,4 +501,59 @@ public class EnemyModel extends CapsuleObstacle {
         super.drawDebug(canvas);
         canvas.drawPhysics(sensorShape,Color.RED,getX(),getY(),getAngle(),drawScale.x,drawScale.y);
     }
+
+    //<editor-fold desc="COLLISION">
+    /** This method is called when two objects start colliding **/
+    @Override
+    public void beginContact(Contact contact) {
+        Fixture fix1 = contact.getFixtureA();
+        Fixture fix2 = contact.getFixtureB();
+
+        Body body1 = fix1.getBody();
+        Body body2 = fix2.getBody();
+
+        Object fd1 = fix1.getUserData();
+        Object fd2 = fix2.getUserData();
+
+        Object bd1 = body1.getUserData();
+        Object bd2 = body2.getUserData();
+
+        System.out.println(bd1.getClass());
+        System.out.println(bd2.getClass());
+        // Check if the two objects colliding are an instance of EnemyModel and SwordWheelObstacle
+        if ((bd1 instanceof EnemyModel
+                && bd2 instanceof SwordWheelObstacle)
+                || (bd2 instanceof EnemyModel
+                && bd1 instanceof SwordWheelObstacle)) {
+
+            // Get references to the EnemyModel and SwordWheelObstacle objects involved in the collision
+            EnemyModel enemy = null;
+            SwordWheelObstacle obstacle = null;
+            if (bd1 instanceof EnemyModel) {
+                enemy = (EnemyModel) bd1;
+                obstacle = (SwordWheelObstacle) bd2;
+            } else {
+                enemy = (EnemyModel) bd2;
+                obstacle = (SwordWheelObstacle)bd1;
+            }
+            // Call a method in EnemyModel to handle the collisions
+            enemy.hitBySword();
+        }
+    }
+
+    @Override
+    public void endContact(Contact contact) {
+
+    }
+
+    @Override
+    public void preSolve(Contact contact, Manifold oldManifold) {
+
+    }
+
+    @Override
+    public void postSolve(Contact contact, ContactImpulse impulse) {
+
+    }
+    //</editor-fold>
 }

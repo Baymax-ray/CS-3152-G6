@@ -24,8 +24,8 @@
 		"maxSpirit": 10.0,
 		"maxspeed": 5.0,
 		"jump_force": 5.5,
-		"jump_cool": 30,
-		"shot_cool": 40,
+		"jump_cool": 20,
+		"shot_cool": 20,
 		"sensor": {
 			"shrink" : 0.6,
 			"height" : 0.05

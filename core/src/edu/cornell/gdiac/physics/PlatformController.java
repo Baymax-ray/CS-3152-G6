@@ -480,14 +480,14 @@ public class PlatformController extends WorldController implements ContactListen
 			Obstacle bd1 = (Obstacle)body1.getUserData();
 			Obstacle bd2 = (Obstacle)body2.getUserData();
 
-			// Test bullet collision with world
-			if (bd1.getName().equals("bullet") && bd2 != avatar) {
-				removeBullet(bd1);
-			}
-
-			if (bd2.getName().equals("bullet") && bd1 != avatar) {
-				removeBullet(bd2);
-			}
+//			// Test bullet collision with world
+//			if (bd1.getName().equals("bullet") && bd2 != avatar) {
+//				removeBullet(bd1);
+//			}
+//
+//			if (bd2.getName().equals("bullet") && bd1 != avatar) {
+//				removeBullet(bd2);
+//			}
 
 			// See if we have landed on the ground.
 			if ((avatar.getSensorName().equals(fd2) && avatar != bd1) ||
