@@ -96,9 +96,6 @@ public class GameCanvas {
 	/** Cache object to handle raw textures */
 	private TextureRegion holder;
 
-	private final float gameWorldWidth = 1920;
-
-	private final float gameWorldHeight = 1080;
 
 	/**
 	 * Creates a new GameCanvas determined by the application configuration.
@@ -118,6 +115,7 @@ public class GameCanvas {
 		camera = new OrthographicCamera(getWidth()/2.0f,getHeight()/2.0f);
 		camera.setToOrtho(false);
 		camera.position.set(getWidth()/2.0f,getHeight()/2.0f,0);
+
 
 
 
