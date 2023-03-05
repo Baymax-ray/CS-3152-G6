@@ -163,8 +163,8 @@ public class AIController{
         int sy=(int)enemy.getX();
         int dx=sx-goal[0];
         if (dx==0){return CONTROL_NO_ACTION;}
-        else if (dx<0){return CONTROL_MOVE_LEFT;}
-        else if (dx>0){return CONTROL_MOVE_RIGHT;}
+        else if (dx>0){return CONTROL_MOVE_LEFT;}
+        else if (dx<0){return CONTROL_MOVE_RIGHT;}
         return CONTROL_NO_ACTION;
     }
 
