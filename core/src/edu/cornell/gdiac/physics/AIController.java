@@ -13,11 +13,11 @@ public class AIController{
     /** How close a target must be for us to attack it */
     private static final int ATTACK_DIST = 4;
     /** Do not do anything */
-    public static final int CONTROL_NO_ACTION  = 0x00;
+    public static final int CONTROL_NO_ACTION  = 0;
     /** Move to the left */
-    public static final int CONTROL_MOVE_LEFT  = 0x01;
+    public static final int CONTROL_MOVE_LEFT  = -1;
     /** Move to the right */
-    public static final int CONTROL_MOVE_RIGHT = 0x02;
+    public static final int CONTROL_MOVE_RIGHT = 1;
     /** Attack */
     public static final int CONTROL_FIRE 	   = 0x10;
     /**The enemy that this AIController is controlling*/
