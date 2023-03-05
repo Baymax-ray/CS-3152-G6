@@ -157,7 +157,19 @@ public class InputController {
 	}
 
 	/**
-	 * Returns true if the primary action button was pressed.
+	 * Returns true if the jump button was pressed.
+	 *
+	 * This is a one-press button. It only returns true at the moment it was
+	 * pressed, and returns false at any frame afterwards.
+	 *
+	 * @return true if the jump button was pressed.
+	 */
+	public boolean didJump() {
+		return jumpPressed && !primePrevious;
+	}
+
+	/**
+	 * Returns true if the primary action button was pressed (attack or dash).
 	 *
 	 * This is a one-press button. It only returns true at the moment it was
 	 * pressed, and returns false at any frame afterwards.
@@ -165,31 +177,7 @@ public class InputController {
 	 * @return true if the primary action button was pressed.
 	 */
 	public boolean didPrimary() {
-		return jumpPressed && !primePrevious;
-	}
-
-	/**
-	 * Returns true if the secondary action button was pressed.
-	 *
-	 * This is a one-press button. It only returns true at the moment it was
-	 * pressed, and returns false at any frame afterwards.
-	 *
-	 * @return true if the secondary action button was pressed.
-	 */
-	public boolean didSecondary() {
 		return actionPressed && !secondPrevious;
-	}
-
-	/**
-	 * Returns true if the tertiary action button was pressed.
-	 *
-	 * This is a sustained button. It will returns true as long as the player
-	 * holds it down.
-	 *
-	 * @return true if the secondary action button was pressed.
-	 */
-	public boolean didTertiary() {
-		return tertiaryPressed;
 	}
 
 	/**
@@ -309,7 +297,6 @@ public class InputController {
 		actionPressed = xbox.getRightTrigger() > 0.6f;
 		
 		// Move the crosshairs with the right stick.
-		tertiaryPressed = xbox.getA();
 		crosscache.set(xbox.getLeftX(), xbox.getLeftY());
 		if (crosscache.len2() > GP_THRESHOLD) {
 			momentum += GP_ACCELERATE;

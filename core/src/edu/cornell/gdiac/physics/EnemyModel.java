@@ -343,8 +343,12 @@ public class EnemyModel extends CapsuleObstacle implements ContactListener{
                 data.get("posEnemy").getFloat(1),
                 width*data.get("shrink").getFloat( 0 ),
                 height*data.get("shrink").getFloat( 1 ));
-        setDensity(data.getFloat("density", 0));
-        setFriction(data.getFloat("friction", 0));
+        //setDensity(data.getFloat("density", 0));
+        //ORIGIN: 1.0
+        setDensity(10);
+        //setFriction(data.getFloat("friction", 0));
+        //ORIGIN: 0.0
+        setFriction(1);
         /// HE WILL STICK TO WALLS IF YOU FORGET
         setFixedRotation(true);
 
@@ -353,8 +357,12 @@ public class EnemyModel extends CapsuleObstacle implements ContactListener{
         spirit = 1.0f;
         hearts = 1;
         maxspeed = data.getFloat("maxspeed", 0);
-        damping = data.getFloat("damping", 0);
-        force = data.getFloat("force", 0);
+        //damping = data.getFloat("damping", 0);
+        //ORIGIN: 10.0
+        damping = 100f;
+        //force = data.getFloat("force", 0);
+        //ORIGIN: 20.0
+        force = 200f;
 //        jump_force = data.getFloat( "jump_force", 0 );
 //        jumpLimit = data.getInt( "jump_cool", 0 );
         shotLimit = data.getInt( "shot_cool", 0 );

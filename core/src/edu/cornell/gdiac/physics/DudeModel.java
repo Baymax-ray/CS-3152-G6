@@ -15,7 +15,6 @@ import com.badlogic.gdx.graphics.*;
 import com.badlogic.gdx.physics.box2d.*;
 
 import com.badlogic.gdx.utils.JsonValue;
-import edu.cornell.gdiac.physics.*;
 import edu.cornell.gdiac.physics.obstacle.*;
 
 /**
@@ -190,7 +189,7 @@ public class DudeModel extends CapsuleObstacle {
 	 *
 	 * @param value whether the dude is actively firing.
 	 */
-	public void setShooting(boolean value) {
+	public void setAttackPressed(boolean value) {
 		isShooting = value;
 	}
 	/**
@@ -287,9 +286,9 @@ public class DudeModel extends CapsuleObstacle {
 	}
 
 	/**
-	 * Returns ow hard the brakes are applied to get a dude to stop moving
+	 * Returns how hard the brakes are applied to get a dude to stop moving
 	 *
-	 * @return ow hard the brakes are applied to get a dude to stop moving
+	 * @return how hard the brakes are applied to get a dude to stop moving
 	 */
 	public float getDamping() {
 		return damping;

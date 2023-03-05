@@ -309,20 +309,13 @@ public class PlatformController extends WorldController implements ContactListen
 	public void update(float dt) {
 		//Update Enemy
 		enemy.setMovement(enemyController.getAction()*enemy.getForce());
+		enemy.applyForce();
 		
 
 		// Process actions in object model
 		avatar.setMovement(InputController.getInstance().getHorizontal() *avatar.getForce());
-		avatar.setJumping(InputController.getInstance().didPrimary());
-//		if (InputController.getInstance().didPrimary()){
-//			avatar.setJumping(true);
-//		}
-//		else{
-//			if (avatar.isGrounded()){
-//				avatar.setJumping(false);
-//			}
-//		}
-		avatar.setShooting(InputController.getInstance().didSecondary());
+		avatar.setJumping(InputController.getInstance().didJump());
+		avatar.setAttackPressed(InputController.getInstance().didPrimary());
 
 		// Switch Tick Decrement
 		if (switchTicks > 0){

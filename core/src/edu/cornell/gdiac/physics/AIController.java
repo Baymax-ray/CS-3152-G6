@@ -36,6 +36,8 @@ public class AIController{
     private int id;
     /** the goal to move,[x,y]*/
     private int[] goal;
+    /** The direction stating whether the character IS moving left or right. */
+    private int direction;
 
     /**
      * The FSMState SHOULD control whether the AI is in wandering, chasing,
@@ -78,14 +80,14 @@ public class AIController{
      */
     public int getAction() {
         ticks++;
-        if ((id + ticks) % 10 == 0) {
-            // Process the FSM
-            changeStateIfApplicable();
 
-            // Pathfinding
-            markGoal();
-            move = getMoveAlongPathToGoal();
-        }
+        // Process the FSM
+        changeStateIfApplicable();
+
+        // Pathfinding
+        markGoal();
+        move = getMoveAlongPathToGoal();
+
 
         int action = move;
 
@@ -126,18 +128,22 @@ public class AIController{
             case SPAWN:
                 goal[0]= (int) enemy.getX();
                 goal[1]= (int) enemy.getY();
-                System.out.println("SPAWN");
+                //System.out.println("SPAWN");
                 break;
             case WANDER:
                 float[] est= extremeValuePoints(platform,0);
+                //min (to left edge)
                 float dist1 = Math.abs(enemy.getX() - est[0]);
+                //max (to right edge)
                 float dist2 = Math.abs(enemy.getX() - est[1]);
-                if(dist1 <= dist2 && dist1 >= 1){
+                if(dist1 <= dist2 && dist1 >= 0.5){
+                    this.direction = CONTROL_MOVE_LEFT;
                     // go left
                     goal[0]=(int)enemy.getX()-1;
                     goal[1]=(int)enemy.getY();
                 }
-                else if(dist2 >= 1){
+                else if(dist2 >= 0.5){
+                    this.direction = CONTROL_MOVE_RIGHT;
                     //go right
                     goal[0]=(int)enemy.getX()+1;
                     goal[1]=(int)enemy.getY();
@@ -147,7 +153,7 @@ public class AIController{
                     goal[0]=(int)enemy.getX();
                     goal[1]=(int)enemy.getY();
                 }
-                System.out.println("WANDER");
+                //System.out.println("WANDER");
                 break;
             case CHASE:
                 break;
@@ -161,8 +167,14 @@ public class AIController{
         int sy=(int)enemy.getX();
         int dx=sx-goal[0];
         if (dx==0){return CONTROL_NO_ACTION;}
-        else if (dx<0){return CONTROL_MOVE_LEFT;}
-        else if (dx>0){return CONTROL_MOVE_RIGHT;}
+        else if (dx<0){
+            if(direction == CONTROL_MOVE_RIGHT){
+                return CONTROL_MOVE_LEFT;
+            }else return CONTROL_MOVE_RIGHT;
+        }
+        else if (dx>0){
+            return CONTROL_MOVE_RIGHT;
+        }
         return CONTROL_NO_ACTION;
     }
 
@@ -175,7 +187,10 @@ public class AIController{
      * If this enemy can detect the character
      * @return true if can see the character
      */
-    public boolean checkDetection(){return false;}
+    public boolean checkDetection(){
+        //TODO
+        return false;
+    }
 
     /**
      * Change the state of the ship.
@@ -192,14 +207,18 @@ public class AIController{
         int randomInt;
         switch (state) {
             case SPAWN:
-                if (ticks>60){state=FSMState.WANDER;}
+                if (ticks>60){
+                    state=FSMState.WANDER;
+                }
             case WANDER:
                 if (checkDetection()){
                     state=FSMState.CHASE;
                 }
             case CHASE:
+                //TODO
                 break;
             case ATTACK:
+                //TODO
                 break;
         }
 
