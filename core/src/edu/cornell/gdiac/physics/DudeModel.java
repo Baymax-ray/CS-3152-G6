@@ -15,7 +15,6 @@ import com.badlogic.gdx.graphics.*;
 import com.badlogic.gdx.physics.box2d.*;
 
 import com.badlogic.gdx.utils.JsonValue;
-import edu.cornell.gdiac.physics.*;
 import edu.cornell.gdiac.physics.obstacle.*;
 
 /**
@@ -190,7 +189,7 @@ public class DudeModel extends CapsuleObstacle {
 	 *
 	 * @param value whether the dude is actively firing.
 	 */
-	public void setShooting(boolean value) {
+	public void setAttackPressed(boolean value) {
 		isShooting = value;
 	}
 	/**
