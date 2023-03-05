@@ -29,7 +29,7 @@ public class AIController {
     /** index of this enemy*/
     private int id;
     /** the goal to move*/
-    private float[] goal;
+    private int[] goal;
 
     /**
      * The FSMState SHOULD control whether the AI is in wandering, chasing,
@@ -89,12 +89,70 @@ public class AIController {
         return action;
     }
 
+    /**
+     * the extreme value of a coordinate of a list of points
+     * @param points
+     * @param xy 0 for x and 1 for y
+     * @return [min,max]
+     */
+    public float[] extremeValuePoints(float[][] points, int xy){
+        float smallest = Float.MAX_VALUE;
+        float largest = Float.MIN_VALUE;
+
+        for (int i = 0; i < points.length; i++) {
+            float x = points[i][xy];
+            if (x < smallest) {
+                smallest = x;
+            }
+            if (x>largest){
+                largest=x;
+            }
+        }
+        float [] result=new float[2];
+        result[0] = smallest;
+        result[1] = largest;
+        return result;
+    }
     public void markGoal(){
-        //ToDo
+        switch (state) {
+            case SPAWN:
+                goal[0]= (int) enemy.getX();
+                goal[1]= (int) enemy.getY();
+                break;
+            case WANDER:
+                float[] est= extremeValuePoints(platform,0);
+                float dist1 = Math.abs(enemy.getX() - est[0]);
+                float dist2 = Math.abs(enemy.getX() - est[1]);
+                if(dist1 <= dist2 && dist1 >= 1){
+                    // go left
+                    goal[0]=(int)enemy.getX()-1;
+                    goal[1]=(int)enemy.getY();
+                }
+                else if(dist2 >= 1){
+                    //go right
+                    goal[0]=(int)enemy.getX()+1;
+                    goal[1]=(int)enemy.getY();
+                }
+                else {
+                    //stay
+                    goal[0]=(int)enemy.getX();
+                    goal[1]=(int)enemy.getY();
+                }
+                break;
+            case CHASE:
+                break;
+            case ATTACK:
+                break;
+        }
     }
     public int getMoveAlongPathToGoal(){
-        //ToDo
-        return 0;
+        int sx=(int)enemy.getX();
+        int sy=(int)enemy.getX();
+        int dx=sx-goal[0];
+        if (dx==0){return CONTROL_NO_ACTION;}
+        else if (dx<0){return CONTROL_MOVE_LEFT;}
+        else if (dx>0){return CONTROL_MOVE_RIGHT;}
+        return CONTROL_NO_ACTION;
     }
     public boolean canAttack(){
         //ToDo

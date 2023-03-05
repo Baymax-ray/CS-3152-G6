@@ -55,7 +55,7 @@ public class Board {
 
 
     /**
-     * The platform I am on
+     * The platform I stand on
      */
     public float[][] StandOn(float x, float y){
         for (int ii=0; ii< arrays.size();ii++){
