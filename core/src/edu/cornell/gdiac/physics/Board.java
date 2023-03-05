@@ -55,10 +55,8 @@ public class Board {
             }
 
             float xIntersect = (y - p1[1]) * (p2[0] - p1[0]) / (p2[1] - p1[1]) + p1[0];
-            if (xIntersect > x) { // the line intersects the ray
-                if (p1[1] > p2[1]) { // the line is going down
-                    intersections++;
-                }
+            if (xIntersect > x &&p1[1]>=y&&p2[1]<=y) { // the line intersects the ray and the line is going down
+                intersections++;
             }
         }
         return intersections % 2 == 1;
@@ -70,6 +68,7 @@ public class Board {
      */
     public float[][] StandOn(float x, float y){
         for (int ii=0; ii< platformArrays.size();ii++){
+            //System.out.println(platformArrays.get(ii)[0][0]);
             if (isPointInsidePolygon(x,y, platformArrays.get(ii))){
                 return platformArrays.get(ii);
             }
