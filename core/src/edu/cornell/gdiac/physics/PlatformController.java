@@ -397,6 +397,9 @@ public class PlatformController extends WorldController implements ContactListen
 
 
 		//moves the camera
+		JsonValue dude = constants.get("dude");
+		float camZone_x = dude.getFloat("camZone_x");
+		float camZone_y = dude.getFloat("camZone_y");
 		if (Math.abs(canvas.getCamera().position.x - avatar.getX() *32) > 120){
 			if (canvas.getCamera().position.x > avatar.getX() *32)
 				canvas.getCamera().position.set(avatar.getX() * 32 + 120, canvas.getCamera().position.y,0);
