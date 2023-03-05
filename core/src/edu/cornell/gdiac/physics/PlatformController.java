@@ -253,7 +253,7 @@ public class PlatformController extends WorldController implements ContactListen
 		enemy.setDrawScale(scale);
 		enemy.setTexture(momoTexture);
 		addObject(enemy);
-		//enemyController = new AIController(enemy, gameBoard, 0);
+		enemyController = new AIController(enemy, gameBoard, 0);
 
 
 		// Create rope bridge
@@ -311,7 +311,7 @@ public class PlatformController extends WorldController implements ContactListen
 	 */
 	public void update(float dt) {
 		//Update Enemy
-		//enemyController.getAction();
+		enemyController.getAction();
 
 
 		// Process actions in object model
