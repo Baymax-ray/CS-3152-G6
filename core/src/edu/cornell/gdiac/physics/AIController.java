@@ -36,8 +36,6 @@ public class AIController{
     private int id;
     /** the goal to move,[x,y]*/
     private int[] goal;
-    /** The direction stating whether the character IS moving left or right. */
-    private int direction;
     /** if need a new goal*/
     private boolean needgoal=true;
 
@@ -59,7 +57,7 @@ public class AIController{
     public AIController(EnemyModel enemy, Board board,int id){
         this.enemy = enemy;
         this.board = board;
-        this.platform = board.StandOn(enemy.getX(), enemy.getY()-0.3f);
+        this.platform = board.StandOn(enemy.getX(), enemy.getY()-0.6f);
         this.move = CONTROL_NO_ACTION;
         this.state = FSMState.SPAWN;
         this.ticks=0;
@@ -134,24 +132,34 @@ public class AIController{
                 break;
             case WANDER:
                 float[] est= extremeValuePoints(platform,0);
-                //min
+                //left
                 float dist1 = Math.abs(enemy.getX() - est[0]);
-                //max
+                //right
                 float dist2 = Math.abs(enemy.getX() - est[1]);
-                if(dist1 <= dist2 && dist1 >= 0.5){
+                if (needgoal){
+                    if(dist1 <= dist2 && dist1 >= 1){
                     // go left
-                    goal[0]=(int)enemy.getX()-1;
+                    goal[0]=(int)est[0];
                     goal[1]=(int)enemy.getY();
-                }
-                else if(dist2 >= 0.5){
+                    needgoal=false;
+                    }
+                    else if(dist2 >= 1){
                     //go right
-                    goal[0]=(int)enemy.getX()+1;
+                    goal[0]=(int)est[1];
                     goal[1]=(int)enemy.getY();
-                }
-                else {
-                    //stay
-                    goal[0]=(int)enemy.getX();
-                    goal[1]=(int)enemy.getY();
+                    needgoal=false;
+                    }
+                }else{
+                    if(dist1 < 1 &&goal[0]<=enemy.getX()){
+                        System.out.println(dist1);
+                        System.out.println(goal[0]);
+                        goal[0]=(int)est[1];
+                        goal[1]=(int)enemy.getY();
+                    }
+                    else if (dist2<1&&goal[0]>=enemy.getX()){
+                        goal[0]=(int)est[0];
+                        goal[1]=(int)enemy.getY();
+                    }
                 }
                 //System.out.println("WANDER");
                 break;
@@ -160,13 +168,17 @@ public class AIController{
             case ATTACK:
                 break;
         }
+        if (needgoal){
+            goal[0]= (int) enemy.getX();
+            goal[1]= (int) enemy.getY();
+        }
     }
 
     public int getMoveAlongPathToGoal(){
-        int sx=(int)enemy.getX();
-        int sy=(int)enemy.getX();
-        int dx=sx-goal[0];
-        if (dx==0){return CONTROL_NO_ACTION;}
+        float sx=enemy.getX();
+        float sy=enemy.getX();
+        float dx=sx-goal[0];
+        if (dx>=-0.1&&dx<=0.1){return CONTROL_NO_ACTION;}
         else if (dx>0){return CONTROL_MOVE_LEFT;}
         else if (dx<0){return CONTROL_MOVE_RIGHT;}
         return CONTROL_NO_ACTION;

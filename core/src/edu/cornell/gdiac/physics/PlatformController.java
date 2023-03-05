@@ -398,6 +398,8 @@ public class PlatformController extends WorldController implements ContactListen
 		//handles input such as zoom in/out and look up/down
 		handleInput();
 
+		handleSpirit();
+
 	}
 
 
@@ -566,6 +568,48 @@ public class PlatformController extends WorldController implements ContactListen
 //		if (Gdx.input.isKeyPressed(Input.Keys.E)) {
 //			camera.rotate(0.5f, 0, 0, 1);
 //		}
+	}
+
+
+	/**
+	 * Called in update to increase spirit when Momo is adjacent to enemies
+	 *
+	 * Not completed yet
+	 */
+	private void handleSpirit(){
+		JsonValue dude = constants.get("dude");
+		float minDist = dude.getFloat("spiritIncreaseDist");
+		float increaseRate = dude.getFloat("spiritIncreaseRate");
+		float decreaseRate = dude.getFloat("spiritDecreaseRate");
+		float maxSpirit = dude.getFloat("maxSpirit");
+
+		System.out.println();
+		System.out.println("Spirit: "+avatar.getSpirit());
+		//check if the character is Momo
+		//decrease spirit if Chiyo, transform to Momo is spirit is 0
+		if (avatar.getForm() == 1) {
+			if (avatar.getSpirit() - decreaseRate > 0)
+				avatar.setSpirit(avatar.getSpirit() - decreaseRate);
+			else avatar.setSpirit(0);
+
+			if (avatar.getSpirit() <= 0) {
+				avatar.setTexture(momoTexture);
+				avatar.setForm();
+			}
+			return;
+		}
+
+		//calculate the distance between the character and the enemy
+		double dist = Math.sqrt(Math.pow((avatar.getX() - enemy.getX()),2) +
+				Math.pow((avatar.getY() - enemy.getY()),2));
+		System.out.println("Distance: "+dist);
+
+		//increase spirit if they are adjacent to each other
+		if (dist < minDist) {
+			if (avatar.getSpirit() < maxSpirit)
+				avatar.setSpirit(avatar.getSpirit() + increaseRate);
+			else avatar.setSpirit(maxSpirit);
+		}
 	}
 
 }
