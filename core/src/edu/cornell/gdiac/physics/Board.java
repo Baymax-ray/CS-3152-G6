@@ -55,7 +55,6 @@ public class Board {
             }
 
             float xIntersect = (y - p1[1]) * (p2[0] - p1[0]) / (p2[1] - p1[1]) + p1[0];
-            System.out.println(xIntersect);
             if (xIntersect > x &&p1[1]>=y&&p2[1]<=y) { // the line intersects the ray and the line is going down
                 intersections++;
             }

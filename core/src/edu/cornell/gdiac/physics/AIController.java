@@ -36,6 +36,8 @@ public class AIController{
     private int id;
     /** the goal to move,[x,y]*/
     private int[] goal;
+    /** if need a new goal*/
+    private boolean needgoal=true;
 
     /**
      * The FSMState SHOULD control whether the AI is in wandering, chasing,
@@ -55,7 +57,7 @@ public class AIController{
     public AIController(EnemyModel enemy, Board board,int id){
         this.enemy = enemy;
         this.board = board;
-        this.platform = board.StandOn(enemy.getX(), enemy.getY()-0.3f);
+        this.platform = board.StandOn(enemy.getX(), enemy.getY()-0.6f);
         this.move = CONTROL_NO_ACTION;
         this.state = FSMState.SPAWN;
         this.ticks=0;
@@ -134,20 +136,23 @@ public class AIController{
                 float dist1 = Math.abs(enemy.getX() - est[0]);
                 //max
                 float dist2 = Math.abs(enemy.getX() - est[1]);
-                if(dist1 <= dist2 && dist1 >= 0.5){
+                System.out.println(dist1);
+                if (dist1<0.6|dist2<0.6){needgoal=true;}
+                if (needgoal){
+                if(dist1 <= dist2 && dist1 >= 0.6){
                     // go left
-                    goal[0]=(int)enemy.getX()-1;
+                    goal[0]=(int)est[0];
                     goal[1]=(int)enemy.getY();
+                    needgoal=false;
                 }
-                else if(dist2 >= 0.5){
+                else if(dist2 >= 0.6){
                     //go right
-                    goal[0]=(int)enemy.getX()+1;
+                    goal[0]=(int)est[1];
                     goal[1]=(int)enemy.getY();
+                    needgoal=false;
+
                 }
-                else {
-                    //stay
-                    goal[0]=(int)enemy.getX();
-                    goal[1]=(int)enemy.getY();
+
                 }
                 //System.out.println("WANDER");
                 break;
@@ -155,6 +160,10 @@ public class AIController{
                 break;
             case ATTACK:
                 break;
+        }
+        if (needgoal){
+            goal[0]= (int) enemy.getX();
+            goal[1]= (int) enemy.getY();
         }
     }
 
