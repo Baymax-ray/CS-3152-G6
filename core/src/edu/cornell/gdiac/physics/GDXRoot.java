@@ -14,6 +14,7 @@
  package edu.cornell.gdiac.physics;
 
 import com.badlogic.gdx.*;
+import com.badlogic.gdx.graphics.OrthographicCamera;
 import edu.cornell.gdiac.util.*;
 import edu.cornell.gdiac.assets.*;
 
@@ -37,7 +38,8 @@ public class GDXRoot extends Game implements ScreenListener {
 	private int current;
 	/** List of all WorldControllers */
 	private WorldController[] controllers;
-	
+
+
 	/**
 	 * Creates a new game from the configuration settings.
 	 *
@@ -55,7 +57,6 @@ public class GDXRoot extends Game implements ScreenListener {
 	public void create() {
 		canvas  = new GameCanvas();
 		loading = new LoadingMode("assets.json",canvas,1);
-
 		// Initialize the three game worlds
 		controllers = new WorldController[3];
 //		controllers[0] = new RocketController();
@@ -67,6 +68,8 @@ public class GDXRoot extends Game implements ScreenListener {
 		loading.setScreenListener(this);
 		setScreen(loading);
 	}
+
+
 
 	/** 
 	 * Called when the Application is destroyed. 

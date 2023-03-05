@@ -10,6 +10,8 @@
  */
 package edu.cornell.gdiac.physics;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.math.*;
 import com.badlogic.gdx.utils.*;
 import com.badlogic.gdx.audio.*;
@@ -362,7 +364,30 @@ public class PlatformController extends WorldController implements ContactListen
 		if (avatar.isJumping()) {
 			jumpId = playSound( jumpSound, jumpId, volume );
 		}
+
+		System.out.println("Cam: " + canvas.getCamera().position.x);
+		System.out.println("Dude; "+avatar.getX());
+		System.out.println();
+
+		if (Math.abs(canvas.getCamera().position.x - avatar.getX() *32) > 120){
+			if (canvas.getCamera().position.x > avatar.getX() *32)
+				canvas.getCamera().position.set(avatar.getX() * 32 + 120, canvas.getCamera().position.y,0);
+
+			else canvas.getCamera().position.set(avatar.getX() * 32 - 120, canvas.getCamera().position.y,0);
+		}
+
+
+		if (Math.abs(canvas.getCamera().position.y - avatar.getY() *32) > 60){
+			if (canvas.getCamera().position.y > avatar.getY() *32)
+				canvas.getCamera().position.set(canvas.getCamera().position.x, avatar.getY() * 32 + 60,0);
+
+			else canvas.getCamera().position.set(canvas.getCamera().position.x, avatar.getY() * 32 - 60,0);
+		}
+
+		handleInput();
+
 	}
+
 
 	/**
 	 * Add a new bullet to the world and send it in the right direction.
@@ -495,4 +520,33 @@ public class PlatformController extends WorldController implements ContactListen
 		plopSound.stop(plopId);
 		fireSound.stop(fireId);
 	}
+
+	private void handleInput() {
+		if (Gdx.input.isKeyPressed(Input.Keys.O)) {
+			canvas.getCamera().zoom += 0.02;
+		}
+		if (Gdx.input.isKeyPressed(Input.Keys.I)) {
+			canvas.getCamera().zoom -= 0.02;
+		}
+//		if (Gdx.input.isKeyPressed(Input.Keys.LEFT)) {
+//			camera.translate(-3, 0, 0);
+//		}
+//		if (Gdx.input.isKeyPressed(Input.Keys.RIGHT)) {
+//			camera.translate(3, 0, 0);
+//		}
+		if (Gdx.input.isKeyPressed(Input.Keys.S)) {
+			canvas.getCamera().translate(0, -3, 0);
+		}
+		if (Gdx.input.isKeyPressed(Input.Keys.W)) {
+			canvas.getCamera().translate(0, 3, 0);
+		}
+
+//		if (Gdx.input.isKeyPressed(Input.Keys.W)) {
+//			camera.rotate(-0.5f, 0, 0, 1);
+//		}
+//		if (Gdx.input.isKeyPressed(Input.Keys.E)) {
+//			camera.rotate(0.5f, 0, 0, 1);
+//		}
+	}
+
 }

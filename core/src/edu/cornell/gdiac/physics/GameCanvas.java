@@ -18,6 +18,9 @@
 package edu.cornell.gdiac.physics;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
+import com.badlogic.gdx.Input.Keys;
+import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.math.*;
 import com.badlogic.gdx.graphics.*;
 import com.badlogic.gdx.graphics.g2d.*;
@@ -32,6 +35,9 @@ import com.badlogic.gdx.physics.box2d.*;
  * that mode must be done in a separate begin/end pass.
  */
 public class GameCanvas {
+
+
+
 	/** Enumeration to track which pass we are in */
 	private enum DrawPass {
 		/** We are not drawing */
@@ -90,6 +96,10 @@ public class GameCanvas {
 	/** Cache object to handle raw textures */
 	private TextureRegion holder;
 
+	private final float gameWorldWidth = 1920;
+
+	private final float gameWorldHeight = 1080;
+
 	/**
 	 * Creates a new GameCanvas determined by the application configuration.
 	 * 
@@ -98,13 +108,20 @@ public class GameCanvas {
 	 * of the necessary graphics objects.
 	 */
 	public GameCanvas() {
+
 		active = DrawPass.INACTIVE;
 		spriteBatch = new PolygonSpriteBatch();
 		debugRender = new ShapeRenderer();
+
 		
 		// Set the projection matrix (for proper scaling)
-		camera = new OrthographicCamera(getWidth(),getHeight());
-		camera.setToOrtho(false);
+		camera = new OrthographicCamera(getWidth()/2.0f,getHeight()/2.0f);
+		//camera.setToOrtho(false);
+		camera.position.set(getWidth()/2.0f,getHeight()/2.5f,0);
+
+
+
+
 		spriteBatch.setProjectionMatrix(camera.combined);
 		debugRender.setProjectionMatrix(camera.combined);
 
@@ -364,9 +381,10 @@ public class GameCanvas {
 	 * Nothing is flushed to the graphics card until the method end() is called.
 	 */
     public void begin() {
-		spriteBatch.setProjectionMatrix(camera.combined);
-    	spriteBatch.begin();
-    	active = DrawPass.STANDARD;
+	    camera.update();
+	    spriteBatch.setProjectionMatrix(camera.combined);
+	    spriteBatch.begin();
+	    active = DrawPass.STANDARD;
     }
 
 	/**
@@ -1151,4 +1169,13 @@ public class GameCanvas {
 		local.scale(sx,sy);
 		local.translate(-ox,-oy);
 	}
+
+	public OrthographicCamera getCamera(){
+		return camera;
+	}
+
+
+
+
+
 }
