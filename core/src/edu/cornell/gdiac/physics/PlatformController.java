@@ -23,6 +23,9 @@ import edu.cornell.gdiac.assets.AssetDirectory;
 import edu.cornell.gdiac.physics.obstacle.*;
 import edu.cornell.gdiac.util.FilmStrip;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Gameplay specific controller for the platformer game.  
  *
@@ -81,6 +84,11 @@ public class PlatformController extends WorldController implements ContactListen
 	private JsonValue constants;
 	/** Reference to the character avatar */
 	private DudeModel avatar;
+	/** Reference to the character hearts */
+	private float hearts;
+	/** Reference to the character spirit */
+	private float spirit;
+
 	/** Reference to the goalDoor (for collision detection) */
 	private BoxObstacle goalDoor;
 
@@ -230,6 +238,8 @@ public class PlatformController extends WorldController implements ContactListen
 		avatar = new DudeModel(constants.get("dude"), dwidth, dheight);
 		avatar.setDrawScale(scale);
 		avatar.setTexture(momoTexture);
+		hearts = avatar.getHearts();
+		spirit = avatar.getSpirit();
 		addObject(avatar);
 
 
@@ -408,6 +418,7 @@ public class PlatformController extends WorldController implements ContactListen
 	}
 
 
+
 	/**
 	 * Add a new bullet to the world and send it in the right direction.
 	 */
@@ -524,6 +535,19 @@ public class PlatformController extends WorldController implements ContactListen
 //			}
 		}
 	}
+	/**
+	 * Bridges the gap between PlatformController's dude and the display of hearts in world controller
+	 */
+	public float getDudeHearts(){
+		return hearts;
+	}
+	/**
+	 * Bridges the gap between PlatformController's dude and the display of spirit in world controller
+	 */
+	public float getDudeSpirit(){
+		return spirit;
+	}
+
 
 	/** Unused ContactListener method */
 	public void postSolve(Contact contact, ContactImpulse impulse) {}

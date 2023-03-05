@@ -91,6 +91,8 @@ public abstract class WorldController implements Screen {
 	protected Rectangle bounds;
 	/** The world scale */
 	protected Vector2 scale;
+	/** Physics constants for initialization */
+	private JsonValue constants;
 	
 	/** Whether or not this is an active controller */
 	private boolean active;
@@ -102,6 +104,10 @@ public abstract class WorldController implements Screen {
 	private boolean debug;
 	/** Countdown active for winning or losing */
 	private int countdown;
+
+	/** PlatformController for displaying player info*/
+
+	private PlatformController platformController;
 
 	/**
 	 * Returns true if debug mode is active.
@@ -288,6 +294,7 @@ public abstract class WorldController implements Screen {
 		earthTile = new TextureRegion(directory.getEntry( "shared:earth", Texture.class ));
 		goalTile  = new TextureRegion(directory.getEntry( "shared:goal", Texture.class ));
 		displayFont = directory.getEntry( "shared:retro" ,BitmapFont.class);
+		platformController = new PlatformController();
 	}
 
 	/**
@@ -456,6 +463,11 @@ public abstract class WorldController implements Screen {
 		for(Obstacle obj : objects) {
 			obj.draw(canvas);
 		}
+		String heartLevel = "Current hearts: "+ String.valueOf(platformController.getDudeHearts());
+		String spiritLevel = "Current spirit: "+ String.valueOf(platformController.getDudeSpirit());
+		displayFont.getData().setScale(0.3F);
+		canvas.drawText(heartLevel, displayFont, canvas.getCamera().position.x-500, canvas.getCamera().position.y+280);
+		canvas.drawText(spiritLevel, displayFont, canvas.getCamera().position.x-500, canvas.getCamera().position.y+260);
 		canvas.end();
 		
 		if (debug) {
