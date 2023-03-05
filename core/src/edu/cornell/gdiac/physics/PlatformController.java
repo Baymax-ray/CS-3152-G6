@@ -84,8 +84,7 @@ public class PlatformController extends WorldController implements ContactListen
 	/** Reference to the goalDoor (for collision detection) */
 	private BoxObstacle goalDoor;
 
-	/** THE GAME BOARD, THAT CONTROLS THE MAP INFO*/
-	private Board gameBoard;
+
 	/** EXAMPLE ENEMY */
 	private EnemyModel enemy;
 	/** EXAMPLE ENEMY's CONTROLLER*/
@@ -93,6 +92,7 @@ public class PlatformController extends WorldController implements ContactListen
 
 	/** Mark set to handle more sophisticated collision callbacks */
 	protected ObjectSet<Fixture> sensorFixtures;
+	/** THE GAME BOARD, THAT CONTROLS THE MAP INFO*/
 	private Board platforms;
 
 	/**
@@ -201,25 +201,11 @@ public class PlatformController extends WorldController implements ContactListen
 			obj.setTexture(earthTile);
 			obj.setName(wname+ii);
 			addObject(obj);
-			platforms.Add(walljv.get(ii).asFloatArray());
 		}
 
 		/**Wow! platjv is an array of platforms, which are arrays of platform points.*/
 		JsonValue platjv = constants.get("platforms");
-
-		//Create board
-		gameBoard = new Board(0, 0);
-		/**INITIATE THE BOARD USING DATA FROM CONSTANTS.JSON.
-		 * This should be a separate method.
-		 * */
-		for (int ii = 0; ii < platjv.size; ii++) {
-			float[] platform = platjv.get(ii).asFloatArray();
-			gameBoard.Add(platform);
-			System.out.println(platform);
-		}
-
 		String pname = "platform";
-
 		for (int ii = 0; ii < platjv.size; ii++) {
 			PolygonObstacle obj;
 			obj = new PolygonObstacle(platjv.get(ii).asFloatArray(), 0, 0);
@@ -231,6 +217,7 @@ public class PlatformController extends WorldController implements ContactListen
 			obj.setTexture(earthTile);
 			obj.setName(pname+ii);
 			addObject(obj);
+			//add platform to board
 			platforms.Add(platjv.get(ii).asFloatArray());
 		}
 
@@ -253,7 +240,7 @@ public class PlatformController extends WorldController implements ContactListen
 		enemy.setDrawScale(scale);
 		enemy.setTexture(momoTexture);
 		addObject(enemy);
-		enemyController = new AIController(enemy, gameBoard, 0);
+		enemyController = new AIController(enemy, platforms, 0);
 
 
 		// Create rope bridge
@@ -311,8 +298,8 @@ public class PlatformController extends WorldController implements ContactListen
 	 */
 	public void update(float dt) {
 		//Update Enemy
-		int move = enemyController.getAction();
-
+		enemy.setMovement(enemyController.getAction()*enemy.getForce());
+		
 
 		// Process actions in object model
 		avatar.setMovement(InputController.getInstance().getHorizontal() *avatar.getForce());
