@@ -36,6 +36,8 @@ public class AIController{
     private int id;
     /** the goal to move,[x,y]*/
     private int[] goal;
+    /** The direction stating whether the character IS moving left or right. */
+    private int direction;
 
     /**
      * The FSMState SHOULD control whether the AI is in wandering, chasing,
@@ -130,16 +132,18 @@ public class AIController{
                 break;
             case WANDER:
                 float[] est= extremeValuePoints(platform,0);
-                //min
+                //min (to left edge)
                 float dist1 = Math.abs(enemy.getX() - est[0]);
-                //max
+                //max (to right edge)
                 float dist2 = Math.abs(enemy.getX() - est[1]);
                 if(dist1 <= dist2 && dist1 >= 0.5){
+                    this.direction = CONTROL_MOVE_LEFT;
                     // go left
                     goal[0]=(int)enemy.getX()-1;
                     goal[1]=(int)enemy.getY();
                 }
                 else if(dist2 >= 0.5){
+                    this.direction = CONTROL_MOVE_RIGHT;
                     //go right
                     goal[0]=(int)enemy.getX()+1;
                     goal[1]=(int)enemy.getY();
@@ -163,8 +167,14 @@ public class AIController{
         int sy=(int)enemy.getX();
         int dx=sx-goal[0];
         if (dx==0){return CONTROL_NO_ACTION;}
-        else if (dx<0){return CONTROL_MOVE_LEFT;}
-        else if (dx>0){return CONTROL_MOVE_RIGHT;}
+        else if (dx<0){
+            if(direction == CONTROL_MOVE_RIGHT){
+                return CONTROL_MOVE_LEFT;
+            }else return CONTROL_MOVE_RIGHT;
+        }
+        else if (dx>0){
+            return CONTROL_MOVE_RIGHT;
+        }
         return CONTROL_NO_ACTION;
     }
 
