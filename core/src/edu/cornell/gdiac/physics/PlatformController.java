@@ -400,19 +400,19 @@ public class PlatformController extends WorldController implements ContactListen
 		JsonValue dude = constants.get("dude");
 		float camZone_x = dude.getFloat("camZone_x");
 		float camZone_y = dude.getFloat("camZone_y");
-		if (Math.abs(canvas.getCamera().position.x - avatar.getX() *32) > 120){
+		if (Math.abs(canvas.getCamera().position.x - avatar.getX() *32) > camZone_x){
 			if (canvas.getCamera().position.x > avatar.getX() *32)
-				canvas.getCamera().position.set(avatar.getX() * 32 + 120, canvas.getCamera().position.y,0);
+				canvas.getCamera().position.set(avatar.getX() * 32 + camZone_x, canvas.getCamera().position.y,0);
 
-			else canvas.getCamera().position.set(avatar.getX() * 32 - 120, canvas.getCamera().position.y,0);
+			else canvas.getCamera().position.set(avatar.getX() * 32 - camZone_x, canvas.getCamera().position.y,0);
 		}
 
 
-		if (Math.abs(canvas.getCamera().position.y - avatar.getY() *32) > 60){
+		if (Math.abs(canvas.getCamera().position.y - avatar.getY() *32) > camZone_y){
 			if (canvas.getCamera().position.y > avatar.getY() *32)
-				canvas.getCamera().position.set(canvas.getCamera().position.x, avatar.getY() * 32 + 60,0);
+				canvas.getCamera().position.set(canvas.getCamera().position.x, avatar.getY() * 32 + camZone_y,0);
 
-			else canvas.getCamera().position.set(canvas.getCamera().position.x, avatar.getY() * 32 - 60,0);
+			else canvas.getCamera().position.set(canvas.getCamera().position.x, avatar.getY() * 32 - camZone_y,0);
 		}
 
 		//handles input such as zoom in/out and look up/down
@@ -558,6 +558,7 @@ public class PlatformController extends WorldController implements ContactListen
 	/**
 	 * Called in update to handle input such as zoom in/out and look up/down
 	 *
+	 * Not completed yet
 	 */
 	private void handleInput() {
 		if (devMode && Gdx.input.isKeyPressed(Input.Keys.O)) {
