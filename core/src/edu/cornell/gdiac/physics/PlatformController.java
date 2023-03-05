@@ -298,8 +298,12 @@ public class PlatformController extends WorldController implements ContactListen
 	 */
 	public void update(float dt) {
 		//Update Enemy
-		enemy.setMovement(enemyController.getAction()*enemy.getForce());
-		
+		int act=enemyController.getAction();
+		System.out.println(act);
+		float force=enemy.getForce();
+		System.out.println(force);
+		enemy.setMovement(act*force);
+
 
 		// Process actions in object model
 		avatar.setMovement(InputController.getInstance().getHorizontal() *avatar.getForce());

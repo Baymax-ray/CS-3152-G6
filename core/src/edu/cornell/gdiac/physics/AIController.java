@@ -126,7 +126,7 @@ public class AIController{
             case SPAWN:
                 goal[0]= (int) enemy.getX();
                 goal[1]= (int) enemy.getY();
-                System.out.println("SPAWN");
+                //System.out.println("SPAWN");
                 break;
             case WANDER:
                 float[] est= extremeValuePoints(platform,0);
@@ -147,7 +147,7 @@ public class AIController{
                     goal[0]=(int)enemy.getX();
                     goal[1]=(int)enemy.getY();
                 }
-                System.out.println("WANDER");
+                //System.out.println("WANDER");
                 break;
             case CHASE:
                 break;
