@@ -365,10 +365,8 @@ public class PlatformController extends WorldController implements ContactListen
 			jumpId = playSound( jumpSound, jumpId, volume );
 		}
 
-		System.out.println("Cam: " + canvas.getCamera().position.x);
-		System.out.println("Dude; "+avatar.getX());
-		System.out.println();
 
+		//moves the camera
 		if (Math.abs(canvas.getCamera().position.x - avatar.getX() *32) > 120){
 			if (canvas.getCamera().position.x > avatar.getX() *32)
 				canvas.getCamera().position.set(avatar.getX() * 32 + 120, canvas.getCamera().position.y,0);
@@ -384,6 +382,7 @@ public class PlatformController extends WorldController implements ContactListen
 			else canvas.getCamera().position.set(canvas.getCamera().position.x, avatar.getY() * 32 - 60,0);
 		}
 
+		//handles input such as zoom in/out and look up/down
 		handleInput();
 
 	}
@@ -521,6 +520,10 @@ public class PlatformController extends WorldController implements ContactListen
 		fireSound.stop(fireId);
 	}
 
+	/**
+	 * Called in update to handle input such as zoom in/out and look up/down
+	 *
+	 */
 	private void handleInput() {
 		if (Gdx.input.isKeyPressed(Input.Keys.O)) {
 			canvas.getCamera().zoom += 0.02;
