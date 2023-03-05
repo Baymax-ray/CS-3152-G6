@@ -159,7 +159,7 @@ public class AIController {
         return false;
     }
     /**
-     * If this enemy can detection the character
+     * If this enemy can detect the character
      * @return true if can see the character
      */
     public boolean checkDetection(){return false;}
