@@ -65,6 +65,8 @@ public class DudeModel extends CapsuleObstacle {
 	private int jumpCooldown;
 	/** Whether we are actively jumping */
 	private boolean isJumping;
+	/** Whether the player is currently dashing or not. */
+	private boolean isDashing;
 	/** Whether the player is looking up */
 	private boolean isLookUp;
 	/** Flag indicating whether the player is currently looking down.*/
@@ -240,6 +242,23 @@ public class DudeModel extends CapsuleObstacle {
 	 */
 	public void setJumping(boolean value) {
 		isJumping = value;
+	}
+	/**
+	 * Returns true if the player is currently dashing, or false otherwise.
+	 *
+	 * @return true if the player is dashing, or false otherwise
+	 */
+	public boolean isDashing() {
+		return isDashing;
+	}
+
+	/**
+	 * Sets whether the player is currently dashing or not.
+	 *
+	 * @param isDashing true if the player should be dashing, or false otherwise
+	 */
+	public void setDashing(boolean isDashing) {
+		this.isDashing = isDashing;
 	}
 	/**
 	 * Returns whether the character is currently attacking.
