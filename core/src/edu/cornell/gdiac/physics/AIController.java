@@ -113,6 +113,7 @@ public class AIController {
         result[1] = largest;
         return result;
     }
+
     public void markGoal(){
         switch (state) {
             case SPAWN:
@@ -145,6 +146,7 @@ public class AIController {
                 break;
         }
     }
+
     public int getMoveAlongPathToGoal(){
         int sx=(int)enemy.getX();
         int sy=(int)enemy.getX();
@@ -154,15 +156,18 @@ public class AIController {
         else if (dx>0){return CONTROL_MOVE_RIGHT;}
         return CONTROL_NO_ACTION;
     }
+
     public boolean canAttack(){
         //ToDo
         return false;
     }
+
     /**
      * If this enemy can detect the character
      * @return true if can see the character
      */
     public boolean checkDetection(){return false;}
+
     /**
      * Change the state of the ship.
      *

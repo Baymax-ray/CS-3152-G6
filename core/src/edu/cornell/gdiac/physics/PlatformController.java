@@ -81,10 +81,15 @@ public class PlatformController extends WorldController implements ContactListen
 	private JsonValue constants;
 	/** Reference to the character avatar */
 	private DudeModel avatar;
-	/** EXAMPLE ENEMY */
-	private EnemyModel enemy;
 	/** Reference to the goalDoor (for collision detection) */
 	private BoxObstacle goalDoor;
+
+	/** THE GAME BOARD, THAT CONTROLS THE MAP INFO*/
+	private Board gameBoard;
+	/** EXAMPLE ENEMY */
+	private EnemyModel enemy;
+	/** EXAMPLE ENEMY's CONTROLLER*/
+	private AIController enemyController;
 
 	/** Mark set to handle more sophisticated collision callbacks */
 	protected ObjectSet<Fixture> sensorFixtures;
@@ -199,8 +204,22 @@ public class PlatformController extends WorldController implements ContactListen
 			platforms.Add(walljv.get(ii).asFloatArray());
 		}
 
-		String pname = "platform";
+		/**Wow! platjv is an array of platforms, which are arrays of platform points.*/
 		JsonValue platjv = constants.get("platforms");
+
+		//Create board
+		gameBoard = new Board(0, 0);
+		/**INITIATE THE BOARD USING DATA FROM CONSTANTS.JSON.
+		 * This should be a separate method.
+		 * */
+		for (int ii = 0; ii < platjv.size; ii++) {
+			float[] platform = platjv.get(ii).asFloatArray();
+			gameBoard.Add(platform);
+			System.out.println(platform);
+		}
+
+		String pname = "platform";
+
 		for (int ii = 0; ii < platjv.size; ii++) {
 			PolygonObstacle obj;
 			obj = new PolygonObstacle(platjv.get(ii).asFloatArray(), 0, 0);
@@ -226,6 +245,7 @@ public class PlatformController extends WorldController implements ContactListen
 		avatar.setTexture(momoTexture);
 		addObject(avatar);
 
+
 		// Create enemy
 		dwidth  = momoTexture.getRegionWidth()/scale.x;
 		dheight = momoTexture.getRegionHeight()/scale.y;
@@ -233,6 +253,7 @@ public class PlatformController extends WorldController implements ContactListen
 		enemy.setDrawScale(scale);
 		enemy.setTexture(momoTexture);
 		addObject(enemy);
+		//enemyController = new AIController(enemy, gameBoard, 0);
 
 
 		// Create rope bridge
@@ -289,6 +310,10 @@ public class PlatformController extends WorldController implements ContactListen
 	 * @param dt	Number of seconds since last animation frame
 	 */
 	public void update(float dt) {
+		//Update Enemy
+		//enemyController.getAction();
+
+
 		// Process actions in object model
 		avatar.setMovement(InputController.getInstance().getHorizontal() *avatar.getForce());
 		avatar.setJumping(InputController.getInstance().didPrimary());
