@@ -51,6 +51,7 @@
         "platform:chiyo":  "platform/chiyo.png",
         "platform:chiyoUp":  "platform/chiyoUp.png",
         "platform:chiyoDown":  "platform/chiyoDown.png",
+        "platform:worm":  "platform/worm.png",
         "platform:rope":  "platform/ropebridge.png",
         "platform:barrier": "platform/barrier.png",
         "platform:bullet":  "platform/bullet.png"

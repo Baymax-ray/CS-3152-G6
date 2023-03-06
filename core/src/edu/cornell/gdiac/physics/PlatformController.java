@@ -50,6 +50,8 @@ public class PlatformController extends WorldController implements ContactListen
 	private TextureRegion chiyoUpTexture;
 	/** Texture asset for chiyo avatar looking down*/
 	private TextureRegion chiyoDownTexture;
+	/** The texture region for the enemy. */
+	private TextureRegion enemyTexture;
 	/** Texture asset for the spinning barrier */
 	private TextureRegion barrierTexture;
 	/** Texture asset for the bullet */
@@ -139,7 +141,7 @@ public class PlatformController extends WorldController implements ContactListen
 		barrierTexture = new TextureRegion(directory.getEntry("platform:barrier",Texture.class));
 		bulletTexture = new TextureRegion(directory.getEntry("platform:bullet",Texture.class));
 		bridgeTexture = new TextureRegion(directory.getEntry("platform:rope",Texture.class));
-
+		enemyTexture = new TextureRegion(directory.getEntry("platform:worm",Texture.class));
 		jumpSound = directory.getEntry( "platform:jump", Sound.class );
 		fireSound = directory.getEntry( "platform:pew", Sound.class );
 		plopSound = directory.getEntry( "platform:plop", Sound.class );
@@ -234,7 +236,7 @@ public class PlatformController extends WorldController implements ContactListen
 
 		// Edit camera setting
 //		canvas.getCamera().zoom = constants.getFloat("camZoom");
-		canvas.getCamera().zoom = 0.7f;
+		canvas.getCamera().zoom = 1.0f;
 
 				// Create dude
 		dwidth  = momoTexture.getRegionWidth()/scale.x;
@@ -250,7 +252,7 @@ public class PlatformController extends WorldController implements ContactListen
 		// Create enemy
 		dwidth  = momoTexture.getRegionWidth()/scale.x;
 		dheight = momoTexture.getRegionHeight()/scale.y;
-		enemy = new EnemyModel(constants.get("enemy"), dwidth, dheight);
+		enemy = new EnemyModel(constants.get("enemy"), dwidth, dheight, enemyTexture, scale);
 		enemy.setDrawScale(scale);
 		enemy.setTexture(momoTexture);
 		addObject(enemy);

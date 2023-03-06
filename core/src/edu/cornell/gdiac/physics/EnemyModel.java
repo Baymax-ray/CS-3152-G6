@@ -7,6 +7,7 @@
  */
 package edu.cornell.gdiac.physics;
 
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.*;
 import com.badlogic.gdx.graphics.*;
 import com.badlogic.gdx.physics.box2d.*;
@@ -25,7 +26,7 @@ public class EnemyModel extends CapsuleObstacle implements ContactListener{
     /** The initializing data (to avoid magic numbers) */
     private final JsonValue data;
 
-    //<editor-fold desc="FINAL PLAYER VARIABLES">
+    //<editor-fold desc="FINAL ENEMY VARIABLES">
     /** The factor to multiply by the input */
     private final float force;
     /** The amount to slow the character down */
@@ -37,6 +38,8 @@ public class EnemyModel extends CapsuleObstacle implements ContactListener{
 
     /** Cooldown (in animation frames) for shooting */
     private final int shotLimit;
+    /** The texture region for the enemy. */
+    private TextureRegion enemyTexture;
     /** Cache for internal force calculations */
     private final Vector2 forceCache = new Vector2();
 //    /** The impulse for the character jump */
@@ -45,7 +48,7 @@ public class EnemyModel extends CapsuleObstacle implements ContactListener{
 //    private final int jumpLimit;
     //</editor-fold>
 
-    //<editor-fold desc="CHANGING PLAYER VARIABLES">
+    //<editor-fold desc="CHANGING ENEMY VARIABLES">
     /** The player's form: 0 is Momo, 1 is Chiyo */
     private int form;
     /** The number of hearts */
@@ -327,7 +330,7 @@ public class EnemyModel extends CapsuleObstacle implements ContactListener{
 
     //CONSTRUCTOR
     /**
-     * Creates a new dude avatar with the given physics data
+     * Creates a new enemy avatar with the given physics data
      *
      * The size is expressed in physics units NOT pixels.  In order for
      * drawing to work properly, you MUST set the drawScale. The drawScale
@@ -337,8 +340,8 @@ public class EnemyModel extends CapsuleObstacle implements ContactListener{
      * @param width		The object width in physics units
      * @param height	The object width in physics units
      */
-    public EnemyModel(JsonValue data, float width, float height) {
-        // The shrink factors fit the image to a tigher hitbox
+    public EnemyModel(JsonValue data, float width, float height, TextureRegion enemy, Vector2 scale) {
+        // The shrink factors fit the image to a tighter hitbox
         super(	data.get("posEnemy").getFloat(0),
                 data.get("posEnemy").getFloat(1),
                 width*data.get("shrink").getFloat( 0 ),
@@ -348,7 +351,6 @@ public class EnemyModel extends CapsuleObstacle implements ContactListener{
         setFriction(data.getFloat("friction", 0));
         /// HE WILL STICK TO WALLS IF YOU FORGET
         setFixedRotation(true);
-
         maxHearts = data.getInt("maxHearts", 0);
         maxSpirit = data.getInt("maxSpirit", 0);
         spirit = 1.0f;
@@ -361,7 +363,9 @@ public class EnemyModel extends CapsuleObstacle implements ContactListener{
         shotLimit = data.getInt( "shot_cool", 0 );
         sensorName = "DudeGroundSensor";
         this.data = data;
-
+        this.enemyTexture = enemy;
+//        enemyTexture.setRegion(1, 1, 1,1);
+//        this.setDrawScale(scale);
         // Gameplay attributes
         isGrounded = false;
         isShooting = false;
@@ -370,7 +374,7 @@ public class EnemyModel extends CapsuleObstacle implements ContactListener{
 
         shootCooldown = 0;
 //        jumpCooldown = 0;
-        setName("dude");
+        setName("enemy");
     }
 
     /**
@@ -487,8 +491,8 @@ public class EnemyModel extends CapsuleObstacle implements ContactListener{
      * @param canvas Drawing context
      */
     public void draw(GameCanvas canvas) {
-        float effect = faceRight ? 1.0f : -1.0f;
-        canvas.draw(texture,Color.WHITE,origin.x,origin.y,getX()*drawScale.x,getY()*drawScale.y,getAngle(),effect,1.0f);
+        float effect = -(faceRight ? 1.0f : -1.0f);
+        canvas.draw(enemyTexture,Color.WHITE,origin.x,origin.y,getX()*drawScale.x-15*effect,getY()*drawScale.y-16,getAngle(),effect * 0.03f,0.03f);
     }
 
     /**
