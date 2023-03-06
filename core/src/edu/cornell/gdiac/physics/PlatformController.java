@@ -457,7 +457,7 @@ public class PlatformController extends WorldController implements ContactListen
 	/**
 	 * Callback method for the start of a collision
 	 *
-	 * This method is called when we first get a collision between two objects.  We use 
+	 * This method is called when we first get a collision between two objects.  We use
 	 * this method to test if it is the "right" kind of collision.  In particular, we
 	 * use it to test if we made it to the win door.
 	 *
@@ -600,9 +600,10 @@ public class PlatformController extends WorldController implements ContactListen
 
 
 	/**
-	 * Called in update to increase spirit when Momo is adjacent to enemies
+	 * This method is called when in update to increase Momo's spirit when she is adjacent
+	 * to enemies
 	 *
-	 * Not completed yet
+	 * @param dist The distance between Momo and enemy
 	 */
 	private void handleSpirit(double dist){
 		JsonValue dude = constants.get("dude");
@@ -638,6 +639,16 @@ public class PlatformController extends WorldController implements ContactListen
 
 	}
 
+	/**
+	 * This method is called when in update to handle collisions between the character and the
+	 * enemies. The character will be hit by the enemy and lose one heart if she is too close to
+	 * the enemies. After being hit by an enemy, the character will be knocked up and cannot be
+	 * hit again in the next 200 frames.
+	 *
+	 * The character will kill the enemy if she is Chiyo and is attacking.
+	 *
+	 * @param dist The distance between Momo and enemy
+	 */
 	private void checkCollision(double dist){
 		JsonValue dude = constants.get("dude");
 		float hitDist = dude.getFloat("hit_dist");
