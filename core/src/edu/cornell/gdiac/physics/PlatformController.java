@@ -548,7 +548,9 @@ public class PlatformController extends WorldController implements ContactListen
 	 * Bridges the gap between PlatformController's dude and the display of spirit in world controller
 	 */
 	public float getDudeSpirit(){
-		return spirit;
+		if(avatar != null) {
+			return avatar.getSpirit();
+		}else return 10f;
 	}
 
 

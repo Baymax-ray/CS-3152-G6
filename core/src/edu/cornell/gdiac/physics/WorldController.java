@@ -107,8 +107,6 @@ public abstract class WorldController implements Screen {
 
 	/** PlatformController for displaying player info*/
 
-	private PlatformController platformController;
-
 	/**
 	 * Returns true if debug mode is active.
 	 *
@@ -294,7 +292,6 @@ public abstract class WorldController implements Screen {
 		earthTile = new TextureRegion(directory.getEntry( "shared:earth", Texture.class ));
 		goalTile  = new TextureRegion(directory.getEntry( "shared:goal", Texture.class ));
 		displayFont = directory.getEntry( "shared:retro" ,BitmapFont.class);
-		platformController = new PlatformController();
 	}
 
 	/**
@@ -463,11 +460,16 @@ public abstract class WorldController implements Screen {
 		for(Obstacle obj : objects) {
 			obj.draw(canvas);
 		}
-		String heartLevel = "Current hearts: "+ String.valueOf(platformController.getDudeHearts());
-		String spiritLevel = "Current spirit: "+ String.valueOf(platformController.getDudeSpirit());
-		displayFont.getData().setScale(0.3F);
-		canvas.drawText(heartLevel, displayFont, canvas.getCamera().position.x-500, canvas.getCamera().position.y+280);
-		canvas.drawText(spiritLevel, displayFont, canvas.getCamera().position.x-500, canvas.getCamera().position.y+260);
+
+		if (this instanceof PlatformController) {
+			PlatformController temp = (PlatformController) this;
+			String heartLevel = "Current hearts: " + String.valueOf(temp.getDudeHearts());
+			String spiritLevel = "Current spirit: " + String.valueOf(temp.getDudeSpirit());
+			displayFont.getData().setScale(0.3F);
+			displayFont.setColor(Color.WHITE);
+			canvas.drawText(heartLevel, displayFont, canvas.getCamera().position.x - 500, canvas.getCamera().position.y + 280);
+			canvas.drawText(spiritLevel, displayFont, canvas.getCamera().position.x - 500, canvas.getCamera().position.y + 260);
+		}
 		canvas.end();
 		
 		if (debug) {
