@@ -38,10 +38,14 @@ public class DudeModel extends CapsuleObstacle {
 	private final String sensorName;
 	/** The impulse for the character jump */
 	private final float jump_force;
+	/** The impulse for the character being hit by enemies */
+	private final float hit_force;
 	/** Cooldown (in animation frames) for jumping */
 	private final int jumpLimit;
 	/** Cooldown (in animation frames) for shooting */
 	private final int shotLimit;
+	/** Cooldown (in animation frames) for being hit by an enemy */
+	private final int hitLimit;
 	/** Cache for internal force calculations */
 	private final Vector2 forceCache = new Vector2();
 	//</editor-fold>
@@ -67,6 +71,8 @@ public class DudeModel extends CapsuleObstacle {
 	private boolean isJumping;
 	/** Whether the player is currently dashing or not. */
 	private boolean isDashing;
+	/** Whether we are hit by an enemy */
+	private boolean isHit;
 	/** Whether the player is looking up */
 	private boolean isLookUp;
 	/** Flag indicating whether the player is currently looking down.*/
@@ -81,6 +87,8 @@ public class DudeModel extends CapsuleObstacle {
 	private boolean isShooting;
 	/** The physics shape of this object */
 	private PolygonShape sensorShape;
+	/** How long until we can be hit by an enemy again */
+	private int hitCooldown;
 	//</editor-fold>
 
 	//<editor-fold desc="GETTERS AND SETTERS">
@@ -343,6 +351,23 @@ public class DudeModel extends CapsuleObstacle {
 	public boolean isFacingRight() {
 		return faceRight;
 	}
+
+	/**
+	 * Returns true if the dude is actively jumping.
+	 *
+	 * @return true if the dude is actively jumping.
+	 */
+	public boolean isHit() {
+		return isHit && hitCooldown <= 0;
+	}
+	/**
+	 * Sets whether the dude is actively jumping.
+	 *
+	 * @param value whether the dude is actively jumping.
+	 */
+	public void setHit(boolean value) {
+		isHit = value;
+	}
 	//</editor-fold>
 
 	//CONSTRUCTOR
@@ -375,8 +400,10 @@ public class DudeModel extends CapsuleObstacle {
 		damping = data.getFloat("damping", 0);
 		force = data.getFloat("force", 0);
 		jump_force = data.getFloat( "jump_force", 0 );
+		hit_force = data.getFloat( "hit_force", 0 );
 		jumpLimit = data.getInt( "jump_cool", 0 );
 		shotLimit = data.getInt( "shot_cool", 0 );
+		hitLimit = data.getInt( "hit_cool", 0 );
 		sensorName = "DudeGroundSensor";
 		this.data = data;
 
@@ -384,6 +411,7 @@ public class DudeModel extends CapsuleObstacle {
 		isGrounded = false;
 		isShooting = false;
 		isJumping = false;
+		isHit = false;
 		faceRight = true;
 
 		shootCooldown = 0;
@@ -484,6 +512,13 @@ public class DudeModel extends CapsuleObstacle {
 			shootCooldown = Math.max(0, shootCooldown - 1);
 		}
 
+		if (isHit()) {
+			hitCooldown = hitLimit;
+		} else {
+			hitCooldown = Math.max(0, hitCooldown - 1);
+			if (hitCooldown == 0) setHit(false);
+		}
+
 		super.update(dt);
 	}
 
@@ -507,5 +542,25 @@ public class DudeModel extends CapsuleObstacle {
 	public void drawDebug(GameCanvas canvas) {
 		super.drawDebug(canvas);
 		canvas.drawPhysics(sensorShape,Color.RED,getX(),getY(),getAngle(),drawScale.x,drawScale.y);
+	}
+
+	/**
+	 * Called when the character is hit by an enemy.
+	 *
+	 * This method decrements the number of hearts for the character by 1. If the number of hearts
+	 * reaches 0, this method destroys the character
+	 */
+	public void hitByEnemy() {
+
+		if (isHit() && hearts > 0){
+			hearts--;
+
+			if (hearts > 0) {
+				forceCache.set(0, hit_force);
+				body.applyLinearImpulse(forceCache,getPosition(),true);
+			}
+			else this.markRemoved(true);
+		}
+
 	}
 }

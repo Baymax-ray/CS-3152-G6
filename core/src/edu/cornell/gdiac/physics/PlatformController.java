@@ -405,10 +405,15 @@ public class PlatformController extends WorldController implements ContactListen
 			else canvas.getCamera().position.set(canvas.getCamera().position.x, avatar.getY() * 32 - camZone_y,0);
 		}
 
+		//calculate the distance between the character and the enemy
+		double dist = Math.sqrt(Math.pow((avatar.getX() - enemy.getX()),2) +
+				Math.pow((avatar.getY() - enemy.getY()),2));
+
 		//handles input such as zoom in/out and look up/down
 		handleInput();
 
-		handleSpirit();
+		handleSpirit(dist);
+		checkCollision(dist);
 
 	}
 
@@ -600,15 +605,15 @@ public class PlatformController extends WorldController implements ContactListen
 	 *
 	 * Not completed yet
 	 */
-	private void handleSpirit(){
+	private void handleSpirit(double dist){
 		JsonValue dude = constants.get("dude");
 		float minDist = dude.getFloat("spiritIncreaseDist");
 		float increaseRate = dude.getFloat("spiritIncreaseRate");
 		float decreaseRate = dude.getFloat("spiritDecreaseRate");
 		float maxSpirit = dude.getFloat("maxSpirit");
 
-		System.out.println();
-		System.out.println("Spirit: "+avatar.getSpirit());
+
+		//System.out.println("Spirit: "+avatar.getSpirit());
 		//check if the character is Momo
 		//decrease spirit if Chiyo, transform to Momo is spirit is 0
 		if (avatar.getForm() == 1) {
@@ -623,16 +628,23 @@ public class PlatformController extends WorldController implements ContactListen
 			return;
 		}
 
-		//calculate the distance between the character and the enemy
-		double dist = Math.sqrt(Math.pow((avatar.getX() - enemy.getX()),2) +
-				Math.pow((avatar.getY() - enemy.getY()),2));
-		System.out.println("Distance: "+dist);
+
 
 		//increase spirit if they are adjacent to each other
 		if (dist < minDist) {
 			if (avatar.getSpirit() < maxSpirit)
 				avatar.setSpirit(avatar.getSpirit() + increaseRate);
 			else avatar.setSpirit(maxSpirit);
+		}
+
+	}
+
+	private void checkCollision(double dist){
+		JsonValue dude = constants.get("dude");
+		float hitDist = dude.getFloat("hit_dist");
+		if (dist < hitDist) {
+			avatar.setHit(true);
+			avatar.hitByEnemy();
 		}
 	}
 
