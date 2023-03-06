@@ -41,6 +41,34 @@
 		"spiritDecreaseRate": 0.01,
 		"spiritIncreaseDist": 3
 	},
+	"enemy" : {
+		"pos": [2.5, 5.0],
+		"posEnemy": [20.0, 13.0],
+		"shrink": [0.7, 0.95],
+		"force": 200.0,
+		"damping": 100.0,
+		"density": 10.0,
+		"friction": 1.0,
+		"maxHearts": 3,
+		"maxSpirit": 10.0,
+		"maxspeed": 5.0,
+		"jump_force": 5.5,
+		"jump_cool": 20,
+		"shot_cool": 20,
+		"hit_cool": 200,
+		"hit_dist": 0.75,
+		"hit_force": 5.5,
+		"attack_dist": 1.5,
+		"sensor": {
+			"shrink" : 0.6,
+			"height" : 0.05
+		},
+		"camZone_x": 80,
+		"camZone_y": 60,
+		"spiritIncreaseRate": 0.01,
+		"spiritDecreaseRate": 0.01,
+		"spiritIncreaseDist": 3
+	},
 	"bridge" : {
 		"pos": [9.0, 3.8],
 	    "width": 14.0,
