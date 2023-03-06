@@ -256,22 +256,7 @@ public class PlatformController extends WorldController implements ContactListen
 		addObject(enemy);
 		enemyController = new AIController(enemy, platforms, 0);
 
-
-		// Create rope bridge
-		dwidth  = bridgeTexture.getRegionWidth()/scale.x;
-		dheight = bridgeTexture.getRegionHeight()/scale.y;
-		RopeBridge bridge = new RopeBridge(constants.get("bridge"), dwidth, dheight);
-		bridge.setTexture(bridgeTexture);
-		bridge.setDrawScale(scale);
-		addObject(bridge);
-
-		// Create spinning platform
-		dwidth  = barrierTexture.getRegionWidth()/scale.x;
-		dheight = barrierTexture.getRegionHeight()/scale.y;
-		Spinner spinPlatform = new Spinner(constants.get("spinner"),dwidth,dheight);
-		spinPlatform.setDrawScale(scale);
-		spinPlatform.setTexture(barrierTexture);
-		addObject(spinPlatform);
+		
 
 		volume = constants.getFloat("volume", 1.0f);
 	}
