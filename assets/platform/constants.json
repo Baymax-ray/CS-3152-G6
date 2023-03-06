@@ -69,18 +69,7 @@
 		"spiritDecreaseRate": 0.01,
 		"spiritIncreaseDist": 3
 	},
-	"bridge" : {
-		"pos": [9.0, 3.8],
-	    "width": 14.0,
-		"density": 1.0,
-		"pin_radius": 0.1
-	},
-	"spinner" : {
-		"pos": [13.0,12.5],
-		"low_density" : 0.0,
-		"high_density": 10.0,
-		"radius": 0.1
-	},
+	
     "bullet": {
     	"offset" : 0.6,
     	"speed"  : 20.0,
