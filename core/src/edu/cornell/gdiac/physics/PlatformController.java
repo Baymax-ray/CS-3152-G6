@@ -647,7 +647,12 @@ public class PlatformController extends WorldController implements ContactListen
 			avatar.hitByEnemy();
 		}
 
-		if (avatar.isAttacking() && dist < attDist) enemy.hitBySword();
+		if (avatar.isAttacking() && dist < attDist) {
+			if (avatar.isFacingRight() && avatar.getX() < enemy.getX())
+				enemy.hitBySword();
+			else if (!avatar.isFacingRight() && avatar.getX() > enemy.getX())
+				enemy.hitBySword();
+		}
 	}
 
 }
