@@ -62,7 +62,7 @@
 			"height" : 0.05
 		},
 		"camZone_x": 80,
-		"camZone_y": 60,
+		"camZone_y": 60
 	},
 	
     "bullet": {
