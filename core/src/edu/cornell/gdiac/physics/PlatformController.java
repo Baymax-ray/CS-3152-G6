@@ -250,7 +250,7 @@ public class PlatformController extends WorldController implements ContactListen
 		// Create enemy
 		dwidth  = momoTexture.getRegionWidth()/scale.x;
 		dheight = momoTexture.getRegionHeight()/scale.y;
-		enemy = new EnemyModel(constants.get("dude"), dwidth, dheight);
+		enemy = new EnemyModel(constants.get("enemy"), dwidth, dheight);
 		enemy.setDrawScale(scale);
 		enemy.setTexture(momoTexture);
 		addObject(enemy);
