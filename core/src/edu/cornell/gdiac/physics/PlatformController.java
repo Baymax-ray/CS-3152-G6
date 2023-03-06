@@ -414,7 +414,6 @@ public class PlatformController extends WorldController implements ContactListen
 
 		handleSpirit(dist);
 		checkCollision(dist);
-
 	}
 
 
@@ -642,10 +641,13 @@ public class PlatformController extends WorldController implements ContactListen
 	private void checkCollision(double dist){
 		JsonValue dude = constants.get("dude");
 		float hitDist = dude.getFloat("hit_dist");
+		float attDist = dude.getFloat("attack_dist");
 		if (dist < hitDist) {
 			avatar.setHit(true);
 			avatar.hitByEnemy();
 		}
+
+		if (avatar.isAttacking() && dist < attDist) enemy.hitBySword();
 	}
 
 }
