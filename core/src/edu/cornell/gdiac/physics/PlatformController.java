@@ -256,7 +256,7 @@ public class PlatformController extends WorldController implements ContactListen
 		addObject(enemy);
 		enemyController = new AIController(enemy, platforms, 0);
 
-		
+
 
 		volume = constants.getFloat("volume", 1.0f);
 	}
