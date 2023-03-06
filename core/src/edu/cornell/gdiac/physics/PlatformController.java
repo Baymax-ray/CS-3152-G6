@@ -405,11 +405,15 @@ public class PlatformController extends WorldController implements ContactListen
 			else canvas.getCamera().position.set(canvas.getCamera().position.x, avatar.getY() * 32 - camZone_y,0);
 		}
 
+		//calculate the distance between the character and the enemy
+		double dist = Math.sqrt(Math.pow((avatar.getX() - enemy.getX()),2) +
+				Math.pow((avatar.getY() - enemy.getY()),2));
+
 		//handles input such as zoom in/out and look up/down
 		handleInput();
 
-		handleSpirit();
-
+		handleSpirit(dist);
+		checkCollision(dist);
 	}
 
 
@@ -453,7 +457,7 @@ public class PlatformController extends WorldController implements ContactListen
 	/**
 	 * Callback method for the start of a collision
 	 *
-	 * This method is called when we first get a collision between two objects.  We use 
+	 * This method is called when we first get a collision between two objects.  We use
 	 * this method to test if it is the "right" kind of collision.  In particular, we
 	 * use it to test if we made it to the win door.
 	 *
@@ -596,19 +600,20 @@ public class PlatformController extends WorldController implements ContactListen
 
 
 	/**
-	 * Called in update to increase spirit when Momo is adjacent to enemies
+	 * This method is called when in update to increase Momo's spirit when she is adjacent
+	 * to enemies
 	 *
-	 * Not completed yet
+	 * @param dist The distance between Momo and enemy
 	 */
-	private void handleSpirit(){
+	private void handleSpirit(double dist){
 		JsonValue dude = constants.get("dude");
 		float minDist = dude.getFloat("spiritIncreaseDist");
 		float increaseRate = dude.getFloat("spiritIncreaseRate");
 		float decreaseRate = dude.getFloat("spiritDecreaseRate");
 		float maxSpirit = dude.getFloat("maxSpirit");
 
-		System.out.println();
-		System.out.println("Spirit: "+avatar.getSpirit());
+
+		//System.out.println("Spirit: "+avatar.getSpirit());
 		//check if the character is Momo
 		//decrease spirit if Chiyo, transform to Momo is spirit is 0
 		if (avatar.getForm() == 1) {
@@ -623,16 +628,41 @@ public class PlatformController extends WorldController implements ContactListen
 			return;
 		}
 
-		//calculate the distance between the character and the enemy
-		double dist = Math.sqrt(Math.pow((avatar.getX() - enemy.getX()),2) +
-				Math.pow((avatar.getY() - enemy.getY()),2));
-		System.out.println("Distance: "+dist);
+
 
 		//increase spirit if they are adjacent to each other
 		if (dist < minDist) {
 			if (avatar.getSpirit() < maxSpirit)
 				avatar.setSpirit(avatar.getSpirit() + increaseRate);
 			else avatar.setSpirit(maxSpirit);
+		}
+
+	}
+
+	/**
+	 * This method is called when in update to handle collisions between the character and the
+	 * enemies. The character will be hit by the enemy and lose one heart if she is too close to
+	 * the enemies. After being hit by an enemy, the character will be knocked up and cannot be
+	 * hit again in the next 200 frames.
+	 *
+	 * The character will kill the enemy if she is Chiyo and is attacking.
+	 *
+	 * @param dist The distance between Momo and enemy
+	 */
+	private void checkCollision(double dist){
+		JsonValue dude = constants.get("dude");
+		float hitDist = dude.getFloat("hit_dist");
+		float attDist = dude.getFloat("attack_dist");
+		if (dist < hitDist) {
+			avatar.setHit(true);
+			avatar.hitByEnemy();
+		}
+
+		if (avatar.isAttacking() && dist < attDist) {
+			if (avatar.isFacingRight() && avatar.getX() < enemy.getX())
+				enemy.hitBySword();
+			else if (!avatar.isFacingRight() && avatar.getX() > enemy.getX())
+				enemy.hitBySword();
 		}
 	}
 
