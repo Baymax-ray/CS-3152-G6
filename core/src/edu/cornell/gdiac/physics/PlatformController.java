@@ -306,6 +306,7 @@ public class PlatformController extends WorldController implements ContactListen
 		avatar.setJumping(InputController.getInstance().didJump());
 		avatar.setAttackPressed(InputController.getInstance().didPrimary());
 
+
 		// Switch Tick Decrement
 		if (switchTicks > 0){
 			switchTicks--;
@@ -398,6 +399,8 @@ public class PlatformController extends WorldController implements ContactListen
 
 			else canvas.getCamera().position.set(canvas.getCamera().position.x, avatar.getY() * 32 - camZone_y,0);
 		}
+
+
 
 		//calculate the distance between the character and the enemy
 		double dist = Math.sqrt(Math.pow((avatar.getX() - enemy.getX()),2) +
@@ -528,11 +531,16 @@ public class PlatformController extends WorldController implements ContactListen
 //			}
 		}
 	}
+
 	/**
 	 * Bridges the gap between PlatformController's dude and the display of hearts in world controller
 	 */
 	public float getDudeHearts(){
-		return hearts;
+		//System.out.println("get heart is called");
+		if(avatar != null) {
+			//System.out.println("avatar is initialized");
+			return avatar.getHearts();
+		}else return 10f;
 	}
 	/**
 	 * Bridges the gap between PlatformController's dude and the display of spirit in world controller
