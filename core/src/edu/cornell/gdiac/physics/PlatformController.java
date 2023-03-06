@@ -316,6 +316,11 @@ public class PlatformController extends WorldController implements ContactListen
 			createSword();
 		}
 
+		// Dash if we're Momo and the attack button is pressed
+		if (avatar.getForm() == 0 && avatar.isShooting() && !avatar.isAttacking()) {
+			avatar.dash();
+		}
+
 		// Switches form if switch button is pressed
 		if (switchTicks == 0 && InputController.getInstance().getSwitch() && avatar.getSpirit() > 0.0f) {
 			avatar.setForm();

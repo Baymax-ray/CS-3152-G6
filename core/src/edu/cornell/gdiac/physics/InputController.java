@@ -323,12 +323,12 @@ public class InputController {
 		// Give priority to gamepad results
 
 		// Keyboard Actions
-		actionPressed = (secondary && actionPressed) || Gdx.input.isButtonPressed(Input.Buttons.LEFT);
-		switchPressed = (secondary && switchPressed) || Gdx.input.isButtonPressed(Input.Buttons.RIGHT);
+		actionPressed = (secondary && actionPressed) || Gdx.input.isButtonPressed(Input.Buttons.RIGHT);
+		switchPressed = (secondary && switchPressed) || Gdx.input.isButtonPressed(Input.Buttons.LEFT);
 		upPressed = (secondary && upPressed) || (Gdx.input.isKeyPressed(Input.Keys.W));
 		downPressed = (secondary && downPressed) || (Gdx.input.isKeyPressed(Input.Keys.S));
 
-				// Menu Actions
+		// Menu Actions
 		exitPressed  = (secondary && exitPressed) || (Gdx.input.isKeyPressed(Input.Keys.ESCAPE));
 
 		// Debug Actions

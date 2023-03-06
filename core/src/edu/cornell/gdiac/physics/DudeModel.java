@@ -563,4 +563,18 @@ public class DudeModel extends CapsuleObstacle {
 		}
 
 	}
+
+	/**
+	 * Dash, Momo, Dash
+	 *
+	 * This method is now very immature. It just makes Momo to flash forward.
+	 * */
+	public void dash(){
+		int direction = faceRight? 1: -1;
+		forceCache.set(hit_force * this.data.getFloat("dash", 2000) * direction, 0);
+		body.applyForce(forceCache, getPosition(), true);
+	}
+
+
+
 }

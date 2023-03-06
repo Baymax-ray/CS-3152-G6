@@ -29,6 +29,7 @@
 		"hit_cool": 200,
 		"hit_dist": 0.75,
 		"hit_force": 5.5,
+		"dash": 2000.0,
 		"attack_dist": 1.5,
 		"sensor": {
 			"shrink" : 0.6,
