@@ -391,6 +391,8 @@ public class DudeModel extends CapsuleObstacle {
 		setDensity(data.getFloat("density", 0));
 		setFriction(data.getFloat("friction", 0));  /// HE WILL STICK TO WALLS IF YOU FORGET
 		setFixedRotation(true);
+		setHearts(3.0f);
+		setSpirit(5.0f);
 
 		maxHearts = data.getInt("maxHearts", 0);
 		maxSpirit = data.getInt("maxSpirit", 0);
