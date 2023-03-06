@@ -232,7 +232,11 @@ public class PlatformController extends WorldController implements ContactListen
 		// This world is heavier
 		world.setGravity( new Vector2(0,defaults.getFloat("gravity",0)) );
 
-		// Create dude
+		// Edit camera setting
+//		canvas.getCamera().zoom = constants.getFloat("camZoom");
+		canvas.getCamera().zoom = 0.7f;
+
+				// Create dude
 		dwidth  = momoTexture.getRegionWidth()/scale.x;
 		dheight = momoTexture.getRegionHeight()/scale.y;
 		avatar = new DudeModel(constants.get("dude"), dwidth, dheight);
