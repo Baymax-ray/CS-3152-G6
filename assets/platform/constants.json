@@ -52,8 +52,6 @@
 		"maxHearts": 3,
 		"maxSpirit": 10.0,
 		"maxspeed": 5.0,
-		"jump_force": 5.5,
-		"jump_cool": 20,
 		"shot_cool": 20,
 		"hit_cool": 200,
 		"hit_dist": 0.75,
@@ -65,9 +63,6 @@
 		},
 		"camZone_x": 80,
 		"camZone_y": 60,
-		"spiritIncreaseRate": 0.01,
-		"spiritDecreaseRate": 0.01,
-		"spiritIncreaseDist": 3
 	},
 	
     "bullet": {
