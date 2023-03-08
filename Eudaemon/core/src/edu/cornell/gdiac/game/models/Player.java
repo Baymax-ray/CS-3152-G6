@@ -2,6 +2,7 @@ package edu.cornell.gdiac.game.models;
 
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.JsonValue;
+import edu.cornell.gdiac.assets.AssetDirectory;
 
 public class Player {
 
@@ -54,7 +55,7 @@ public class Player {
     //#endregion
 
 
-    public Player(JsonValue json) {
+    public Player(JsonValue json, AssetDirectory assets) {
         throw new UnsupportedOperationException("Not implemented");
     }
 

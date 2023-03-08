@@ -1,6 +1,7 @@
 package edu.cornell.gdiac.game.models;
 
 import com.badlogic.gdx.utils.JsonValue;
+import edu.cornell.gdiac.assets.AssetDirectory;
 
 public class Level {
 
@@ -51,6 +52,17 @@ public class Level {
 
     //#endregion
 
+    //#region GETTERS & SETTERS
+
+    public float getGravity() {
+        return gravity;
+    }
+
+    public Enemy[] getEnemies() {
+        return enemies;
+    }
+
+    //#endregion
 
     /**
      * presumably useful classes for AI
@@ -80,8 +92,10 @@ public class Level {
     }
 
 
-    public Level(JsonValue json) {
+    public Level(JsonValue json, AssetDirectory assets) {
+        this.player = new Player(json.get("player"), assets);
         throw new UnsupportedOperationException("Not implemented");
+
     }
 
 }
