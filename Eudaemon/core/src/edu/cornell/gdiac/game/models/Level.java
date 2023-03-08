@@ -9,8 +9,13 @@ public class Level {
     private final Player player;
     private final Enemy[] enemies;
 
-    private final float levelWidth;
-    private final float levelHeight;
+    private final int[][] tilemap; // value represents the index of the tile in the tiles array
+    private final Tile[] tiles;
+
+    /**
+     * In level coordinates (not pixels), the width and height of a single tile.
+     */
+    private final float tileSize;
 
     /**
      * In level coordinates, the width of the region the camera displays
@@ -46,6 +51,33 @@ public class Level {
 
     //#endregion
 
+
+    /**
+     * presumably useful classes for AI
+     *
+     * @param x the x coordinate of the point in level coordinates
+     * @param y the y coordinate of the point in level coordinates
+     * @return
+     */
+    public Tile tileAt(float x, float y) {
+        return tiles[tilemap[toTileCoordinates(x)][toTileCoordinates(y)]];
+    }
+
+    /**
+     * presumably useful classes for AI
+     *
+     * @param x the x coordinate of the point in level coordinates
+     * @param y the y coordinate of the point in level coordinates
+     * @return whether the point is in an air tile.
+     */
+    public boolean isAirAt(float x, float y) {
+        return tilemap[toTileCoordinates(x)][toTileCoordinates(y)] == 0;
+    }
+
+
+    public int toTileCoordinates(float levelCoordinate) {
+        return (int) Math.floor(levelCoordinate / this.tileSize);
+    }
 
 
     public Level(JsonValue json) {
