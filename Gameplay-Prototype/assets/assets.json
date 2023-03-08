@@ -54,7 +54,8 @@
         "platform:worm":  "platform/worm.png",
         "platform:rope":  "platform/ropebridge.png",
         "platform:barrier": "platform/barrier.png",
-        "platform:bullet":  "platform/bullet.png"
+        "platform:bullet":  "platform/bullet.png",
+        "platform:heart": "platform/heart.png"
     },
     "jsons"  : {
         "rocket:constants":  "rocket/constants.json",

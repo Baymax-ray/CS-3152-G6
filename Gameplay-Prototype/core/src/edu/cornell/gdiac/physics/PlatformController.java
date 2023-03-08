@@ -553,7 +553,6 @@ public class PlatformController extends WorldController implements ContactListen
 		}else return 10f;
 	}
 
-
 	/** Unused ContactListener method */
 	public void postSolve(Contact contact, ContactImpulse impulse) {}
 	/** Unused ContactListener method */

@@ -16,10 +16,13 @@
  */
 package edu.cornell.gdiac.physics;
 
+import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.List;
 
 import com.badlogic.gdx.*;
 import com.badlogic.gdx.audio.*;
+import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.math.*;
 import com.badlogic.gdx.utils.*;
 import com.badlogic.gdx.assets.*;
@@ -105,7 +108,8 @@ public abstract class WorldController implements Screen {
 	/** Countdown active for winning or losing */
 	private int countdown;
 
-	/** PlatformController for displaying player info*/
+	/** Texture for hearts*/
+	private Texture heartRegion;
 
 	/**
 	 * Returns true if debug mode is active.
@@ -292,6 +296,7 @@ public abstract class WorldController implements Screen {
 		earthTile = new TextureRegion(directory.getEntry( "shared:earth", Texture.class ));
 		goalTile  = new TextureRegion(directory.getEntry( "shared:goal", Texture.class ));
 		displayFont = directory.getEntry( "shared:retro" ,BitmapFont.class);
+		heartRegion = directory.getEntry("platform:heart", Texture.class);
 	}
 
 	/**
@@ -463,12 +468,18 @@ public abstract class WorldController implements Screen {
 
 		if (this instanceof PlatformController) {
 			PlatformController temp = (PlatformController) this;
-			String heartLevel = "Current hearts: " + String.valueOf(temp.getDudeHearts());
+			float OFFSET = 5;
+			float xPos = canvas.getCamera().position.x - 270;
+			for(int i=0; i < temp.getDudeHearts(); i++){
+				canvas.draw(heartRegion, Color.WHITE, xPos,canvas.getCamera().position.y + 240, 42, 35 );
+				xPos += (42 + OFFSET);
+			}
+			String heartLevel = "Current hearts: ";
 			String spiritLevel = "Current spirit: " + String.valueOf(temp.getDudeSpirit());
 			displayFont.getData().setScale(0.3F);
 			displayFont.setColor(Color.WHITE);
-			canvas.drawText(heartLevel, displayFont, canvas.getCamera().position.x - 500, canvas.getCamera().position.y + 280);
-			canvas.drawText(spiritLevel, displayFont, canvas.getCamera().position.x - 500, canvas.getCamera().position.y + 260);
+			canvas.drawText(heartLevel, displayFont, canvas.getCamera().position.x - 500, canvas.getCamera().position.y + 265);
+			canvas.drawText(spiritLevel, displayFont, canvas.getCamera().position.x - 500, canvas.getCamera().position.y + 230);
 		}
 		canvas.end();
 		
