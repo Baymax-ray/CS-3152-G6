@@ -526,11 +526,9 @@ public class PlatformController extends WorldController implements ContactListen
 		if ((avatar.getSensorName().equals(fd2) && avatar != bd1) ||
 				(avatar.getSensorName().equals(fd1) && avatar != bd2)) {
 			sensorFixtures.remove(avatar == bd1 ? fix2 : fix1);
-			//Changed from original (below) to this because of glitch
-			avatar.setGrounded(false);
-//			if (sensorFixtures.size == 0) {
-//				avatar.setGrounded(false);
-//			}
+			if (sensorFixtures.size == 0) {
+				avatar.setGrounded(false);
+			}
 		}
 	}
 
