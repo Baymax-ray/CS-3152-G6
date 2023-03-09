@@ -128,6 +128,8 @@ public class Level {
                 canvas.draw(tile.getTexture(), Color.WHITE, 0, 0, tileToLevelCoordinatesX(x), tileToLevelCoordinatesY(y), 0, tileSize / tile.getTexture().getRegionWidth(), tileSize / tile.getTexture().getRegionHeight());
             }
         }
+
+        player.draw(canvas);
     }
 
 
@@ -155,7 +157,7 @@ public class Level {
 //        this.backgroundTexture = assets.get(backgroundAsset);
 
         //TODO: null := bad
-        this.player = null;
+        this.player = new Player(json.get("player"), assets);
         this.enemies = new Enemy[0];
     }
 

@@ -20,7 +20,24 @@
         [ -1, -1, -1,  0,  0 ],
         [ -1,  0, -1, -1, -1 ],
         [  0,  0,  0,  0,  0 ]
-      ]
+      ],
+      "player": {
+        "momoTextureAsset": "platform:momo",
+        "momoImageWidth": 50,
+        "momoImageHeight": 50,
+        "startX": 100,
+        "startY": 200,
+        "maxHearts": 3,
+        "initialHearts": 3,
+        "maxSpirit": 10,
+        "initialSpirit": 0,
+        "spiritPerSecond": 1,
+        "attackPower": 1,
+        "startsFacingRight": true,
+        "dashCooldown": 0.4,
+        "attackCooldown": 0.2,
+        "hitCooldown": 1.0
+      }
     }
-  ],
+  ]
 }

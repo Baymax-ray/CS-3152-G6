@@ -112,3 +112,6 @@ Thumbs.db
 /ios/xcode/native/
 /ios/IOSLauncher.app
 /ios/IOSLauncher.app.dSYM
+Eudaemon/core/build/tmp/compileJava/previous-compilation-data.bin
+*.bin
+Eudaemon/desktop/build/resources/main/constants.json
