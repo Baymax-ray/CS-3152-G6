@@ -24,7 +24,7 @@
 		"maxSpirit": 10.0,
 		"maxspeed": 5.0,
 		"jump_force": 5.5,
-		"jump_cool": 5,
+		"jump_cool": 21,
 		"shot_cool": 10,
 		"hit_cool": 200,
 		"hit_dist": 0.75,
@@ -40,7 +40,8 @@
 		"camZoom": 0.7,
 		"spiritIncreaseRate": 0.01,
 		"spiritDecreaseRate": 0.01,
-		"spiritIncreaseDist": 3
+		"spiritIncreaseDist": 3,
+		"coyoteTime": 20
 	},
 	"enemy" : {
 		"pos": [2.5, 5.0],

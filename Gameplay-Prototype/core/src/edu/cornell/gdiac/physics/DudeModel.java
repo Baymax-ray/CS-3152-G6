@@ -83,12 +83,18 @@ public class DudeModel extends CapsuleObstacle {
 	private int shootCooldown;
 	/** Whether our feet are on the ground */
 	private boolean isGrounded;
+	/** Whether we can coyote jump */
+	private boolean canCoyote;
 	/** Whether we are actively shooting */
 	private boolean isShooting;
 	/** The physics shape of this object */
 	private PolygonShape sensorShape;
 	/** How long until we can be hit by an enemy again */
 	private int hitCooldown;
+	/** Number of frames we can jump after leaving a platform */
+	private final int coyoteLimit;
+	/** Number of frames after we left a platform */
+	private int coyoteCooldown;
 	//</editor-fold>
 
 	//<editor-fold desc="GETTERS AND SETTERS">
@@ -241,7 +247,10 @@ public class DudeModel extends CapsuleObstacle {
 	 * @return true if the dude is actively jumping.
 	 */
 	public boolean isJumping() {
-		return isJumping && isGrounded && jumpCooldown <= 0;
+		if (isGrounded) return isJumping && jumpCooldown <= 0;
+		else return isJumping && coyoteCooldown > 0 && jumpCooldown <= 0;
+//		return isJumping && isGrounded && jumpCooldown <= 0 ||
+//				isJumping && coyoteCooldown >= 0 && jumpCooldown <= 0;
 	}
 	/**
 	 * Sets whether the dude is actively jumping.
@@ -406,6 +415,7 @@ public class DudeModel extends CapsuleObstacle {
 		jumpLimit = data.getInt( "jump_cool", 0 );
 		shotLimit = data.getInt( "shot_cool", 0 );
 		hitLimit = data.getInt( "hit_cool", 0 );
+		coyoteLimit = data.getInt( "coyoteTime", 0 );
 		sensorName = "DudeGroundSensor";
 		this.data = data;
 
@@ -521,6 +531,11 @@ public class DudeModel extends CapsuleObstacle {
 			if (hitCooldown == 0) setHit(false);
 		}
 
+		if (isGrounded) coyoteCooldown = coyoteLimit;
+		else {
+			coyoteCooldown = Math.max(0, coyoteCooldown - 1);
+		}
+
 		super.update(dt);
 	}
 
@@ -576,6 +591,12 @@ public class DudeModel extends CapsuleObstacle {
 		forceCache.set(hit_force * this.data.getFloat("dash", 2000) * direction, 0);
 		body.applyForce(forceCache, getPosition(), true);
 	}
+
+	public int getCoyote() {
+		return coyoteCooldown;
+	}
+
+
 
 
 

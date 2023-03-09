@@ -413,6 +413,7 @@ public class PlatformController extends WorldController implements ContactListen
 
 		handleSpirit(dist);
 		checkCollision(dist);
+
 	}
 
 
@@ -604,7 +605,7 @@ public class PlatformController extends WorldController implements ContactListen
 
 	/**
 	 * This method is called when in update to increase Momo's spirit when she is adjacent
-	 * to enemies
+	 * to enemies, decrease Chiyo's spirit and transform back to Momo when spirit is 0
 	 *
 	 * @param dist The distance between Momo and enemy
 	 */
@@ -615,10 +616,8 @@ public class PlatformController extends WorldController implements ContactListen
 		float decreaseRate = dude.getFloat("spiritDecreaseRate");
 		float maxSpirit = dude.getFloat("maxSpirit");
 
-
-		//System.out.println("Spirit: "+avatar.getSpirit());
 		//check if the character is Momo
-		//decrease spirit if Chiyo, transform to Momo is spirit is 0
+		//decrease spirit if Chiyo, transform to Momo if spirit is 0
 		if (avatar.getForm() == 1) {
 			if (avatar.getSpirit() - decreaseRate > 0)
 				avatar.setSpirit(avatar.getSpirit() - decreaseRate);
@@ -643,7 +642,7 @@ public class PlatformController extends WorldController implements ContactListen
 	}
 
 	/**
-	 * This method is called when in update to handle collisions between the character and the
+	 * This method is called in update to handle collisions between the character and the
 	 * enemies. The character will be hit by the enemy and lose one heart if she is too close to
 	 * the enemies. After being hit by an enemy, the character will be knocked up and cannot be
 	 * hit again in the next 200 frames.
