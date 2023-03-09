@@ -13,7 +13,10 @@ public class LevelScreen implements Screen {
 
     private boolean active;
 
+    private Level level;
+
     private ScreenListener listener;
+    private GameCanvas canvas;
 
     private InputController inputController;
     private EnumSet<Action> playerAction;
@@ -26,9 +29,12 @@ public class LevelScreen implements Screen {
     private World world;
     private CollisionController collisionController;
 
-    public LevelScreen(Level level, ActionBindings actionBindings) {
+    public LevelScreen(Level level, ActionBindings actionBindings, GameCanvas canvas) {
+        this.level = level;
+
         this.active = false;
         this.inputController = new InputController(actionBindings);
+        this.playerAction = EnumSet.noneOf(Action.class);
         this.aiControllers = new Array<>(level.getEnemies().length);
         this.enemyActions = new Array<>(level.getEnemies().length);
 
@@ -43,11 +49,11 @@ public class LevelScreen implements Screen {
         world = new World(new Vector2(0, level.getGravity()), true);
         collisionController = new CollisionController(level);
         world.setContactListener(collisionController);
+        this.setCanvas(canvas);
     }
 
 
     public void update(float delta) {
-
         inputController.setPlayerAction(playerAction);
         for (int i = 0; i < aiControllers.size; i++) {
             aiControllers.get(i).setEnemyAction(enemyActions.get(i));
@@ -56,7 +62,10 @@ public class LevelScreen implements Screen {
     }
 
     public void draw(float delta) {
-
+        canvas.clear();
+        canvas.begin();
+        this.level.draw(canvas);
+        canvas.end();
     }
 
 
@@ -66,6 +75,10 @@ public class LevelScreen implements Screen {
             update(delta);
             draw(delta);
         }
+    }
+
+    public void setCanvas(GameCanvas canvas) {
+        this.canvas = canvas;
     }
 
     @Override
