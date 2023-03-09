@@ -469,16 +469,16 @@ public abstract class WorldController implements Screen {
 		if (this instanceof PlatformController) {
 			PlatformController temp = (PlatformController) this;
 			float OFFSET = 5;
-			float xPos = canvas.getCamera().position.x - 270;
+			float xPos = canvas.getCamera().position.x - 500;
 			for(int i=0; i < temp.getDudeHearts(); i++){
-				canvas.draw(heartRegion, Color.WHITE, xPos,canvas.getCamera().position.y + 240, 42, 35 );
+				canvas.draw(heartRegion, Color.WHITE, xPos,canvas.getCamera().position.y + 240, 38.4F, 32 );
 				xPos += (42 + OFFSET);
 			}
-			String heartLevel = "Current hearts: ";
+//			String heartLevel = "Current hearts: ";
 			String spiritLevel = "Current spirit: " + String.valueOf(temp.getDudeSpirit());
 			displayFont.getData().setScale(0.3F);
 			displayFont.setColor(Color.WHITE);
-			canvas.drawText(heartLevel, displayFont, canvas.getCamera().position.x - 500, canvas.getCamera().position.y + 265);
+//			canvas.drawText(heartLevel, displayFont, canvas.getCamera().position.x - 500, canvas.getCamera().position.y + 265);
 			canvas.drawText(spiritLevel, displayFont, canvas.getCamera().position.x - 500, canvas.getCamera().position.y + 230);
 		}
 		canvas.end();
