@@ -1,0 +1,26 @@
+{
+  "numTiles": 1,
+  "numLevels": 1,
+  "tiles": [
+    {
+      "textureAsset": "shared:earth"
+    }
+  ],
+  "levels": [
+    {
+      "widthInTiles": 5,
+      "heightInTiles": 5,
+      "tileSize": 100,
+      "cameraWidth": 500,
+      "cameraHeight": 500,
+      "gravity": -10,
+      "tilemap": [
+        [  0, -1, -1, -1, -1 ],
+        [  0,  0, -1, -1,  0 ],
+        [ -1, -1, -1,  0,  0 ],
+        [ -1,  0, -1, -1, -1 ],
+        [  0,  0,  0,  0,  0 ]
+      ]
+    }
+  ],
+}
