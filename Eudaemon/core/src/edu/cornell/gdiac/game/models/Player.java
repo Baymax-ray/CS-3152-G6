@@ -4,6 +4,7 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.physics.box2d.*;
 import com.badlogic.gdx.utils.JsonValue;
 import edu.cornell.gdiac.assets.AssetDirectory;
 import edu.cornell.gdiac.game.GameCanvas;
@@ -33,12 +34,15 @@ public class Player {
     private final float momoImageWidth;
     private final float momoImageHeight;
 
+    private final BodyDef bodyDef;
+    private final FixtureDef fixtureDef;
+
     //#endregion
 
 
     //#region NONFINAL FIELDS
 
-    private float x, y; // temporary
+    private Body body;
 
     private int hearts;
     private float spirit;
@@ -62,15 +66,37 @@ public class Player {
 
 
     public float getX() {
-        return startX; // need to implement with body
+        return body.getPosition().x;
     }
 
     public float getY() {
-        return startY; // need to implement with body
+        return body.getPosition().y;
     }
 
     public void draw(GameCanvas canvas) {
-        canvas.draw(currentTexture, Color.WHITE, 0, 0, x, y, 0, momoImageWidth / currentTexture.getRegionWidth(), momoImageHeight / currentTexture.getRegionHeight());
+        canvas.draw(currentTexture, Color.WHITE, 0, 0, getX(), getY(), 0, momoImageWidth / currentTexture.getRegionWidth(), momoImageHeight / currentTexture.getRegionHeight());
+    }
+
+    public void activatePhysics(World world) {
+        bodyDef.active = true;
+        body = world.createBody(bodyDef);
+        body.setUserData(this);
+
+        PolygonShape hitbox = new PolygonShape();
+        hitbox.set(new float[]{
+                0,              0,
+                momoImageWidth, 0,
+                momoImageWidth, momoImageHeight,
+                0,              momoImageHeight,
+
+        });
+
+        fixtureDef.shape = hitbox;
+        body.createFixture(fixtureDef);
+
+        //create fixtures for collisions
+
+        // ^ fixtures here
     }
 
     public Player(JsonValue json, AssetDirectory assets) {
@@ -111,8 +137,13 @@ public class Player {
 
         this.currentTexture = momoTexture;
 
-        this.x = startX;
-        this.y = startY;
+        this.bodyDef = new BodyDef();
+        bodyDef.active = false;
+        bodyDef.type = BodyDef.BodyType.DynamicBody;
+        bodyDef.position.x  = startX;
+        bodyDef.position.y  = startY;
+
+        this.fixtureDef = new FixtureDef();
     }
 
 }

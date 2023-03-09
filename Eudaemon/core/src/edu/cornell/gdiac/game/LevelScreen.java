@@ -49,6 +49,7 @@ public class LevelScreen implements Screen {
         world = new World(new Vector2(0, level.getGravity()), true);
         collisionController = new CollisionController(level);
         world.setContactListener(collisionController);
+        level.activatePhysics(world);
         this.setCanvas(canvas);
     }
 
@@ -59,6 +60,8 @@ public class LevelScreen implements Screen {
             aiControllers.get(i).setEnemyAction(enemyActions.get(i));
         }
         actionController.resolveActions(playerAction, enemyActions);
+        // TODO: pull magic numbers below to json
+        world.step(delta, 6, 2);
     }
 
     public void draw(float delta) {

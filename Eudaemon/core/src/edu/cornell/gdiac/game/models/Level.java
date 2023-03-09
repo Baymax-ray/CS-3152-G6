@@ -1,6 +1,7 @@
 package edu.cornell.gdiac.game.models;
 
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.physics.box2d.*;
 import com.badlogic.gdx.utils.JsonValue;
 import edu.cornell.gdiac.assets.AssetDirectory;
 import edu.cornell.gdiac.game.GameCanvas;
@@ -18,6 +19,9 @@ public class Level {
     private final int[][] tilemap; // value represents the index of the tile in the tiles array
 
     private final Tile[] tiles;
+
+    private final BodyDef bodyDef;
+    private final FixtureDef fixtureDef;
 
 //    private final TextureRegion backgroundTexture;
 
@@ -132,6 +136,35 @@ public class Level {
         player.draw(canvas);
     }
 
+    public void activatePhysics(World world) {
+        for (int y = 0; y < tilemap.length; y++) {
+            int[] row = tilemap[y];
+            for (int x = 0; x < tilemap.length; x++) {
+                int tileId = row[x];
+                if (tileId < 0) continue;
+                Tile tile = tiles[tileId];
+                bodyDef.position.x = tileToLevelCoordinatesX(x);
+                bodyDef.position.y = tileToLevelCoordinatesY(y);
+                bodyDef.active = true;
+                Body body = world.createBody(bodyDef);
+                body.setUserData(tile);
+
+                PolygonShape shape = new PolygonShape();
+                shape.set(new float[]{
+                        0,        0,
+                        tileSize, 0,
+                        tileSize, tileSize,
+                        0,        tileSize,
+                });
+
+                fixtureDef.shape = shape;
+                body.createFixture(fixtureDef);
+            }
+        }
+        player.activatePhysics(world);
+        //TODO: enemies activate too
+    }
+
 
     public Level(JsonValue json, Tile[] tiles, AssetDirectory assets) {
         this.tiles = tiles;
@@ -156,9 +189,17 @@ public class Level {
 //        String backgroundAsset = json.getString("backgroundAsset");
 //        this.backgroundTexture = assets.get(backgroundAsset);
 
-        //TODO: null := bad
+
         this.player = new Player(json.get("player"), assets);
+
+        // TODO: need more than 0, ideally
         this.enemies = new Enemy[0];
+
+        this.bodyDef = new BodyDef();
+        this.bodyDef.type = BodyDef.BodyType.StaticBody;
+        this.bodyDef.active = false;
+
+        this.fixtureDef = new FixtureDef();
     }
 
 }
