@@ -44,7 +44,7 @@ public class Player {
 
     private Body body;
 
-    private int hearts;
+    private float hearts;
     private float spirit;
 
     private boolean isDashing;
@@ -61,6 +61,8 @@ public class Player {
     private float hitCooldownRemaining;
 
     private TextureRegion currentTexture;
+    /** The player's form: 0 is Momo, 1 is Chiyo */
+    private int form;
 
     //#endregion
 
@@ -72,6 +74,70 @@ public class Player {
     public float getY() {
         return body.getPosition().y;
     }
+    /**
+     * Returns the number of hearts the player has remaining
+     *
+     * @return number of hearts remaining.
+     */
+    public float getHearts() {
+        return hearts;
+    }
+
+    /**
+     * Sets the number of hearts the player has
+     *
+     * @param value number of hearts.
+     */
+    public void setHearts(int value) {
+        if (value <= maxHearts) {
+            hearts = value;
+        } else {
+            hearts = maxHearts;
+        }
+    }
+    /**
+     * Returns the amount of spirit the player has
+     *
+     * @return spirit variable
+     */
+    public float getSpirit() {
+        return spirit;
+    }
+
+    /**
+     * Sets the number of hearts the player has
+     *
+     * @param value amount of spirit
+     */
+    public void setSpirit(float value) {
+        if (value <= maxSpirit){
+            spirit = value;
+        }
+        else {
+            spirit = maxSpirit;
+        }
+    }
+    /**
+     * Returns the player's current form (0: Momo) (1: Chiyo)
+     *
+     * @return the player's current form.
+     */
+    public float getForm() {
+        return form;
+    }
+
+    /**
+     * Changes the players form
+     */
+    public void setForm() {
+        if (form == 0){
+            form = 1;
+        }
+        else {
+            form = 0;
+        }
+    }
+
 
     public void draw(GameCanvas canvas) {
         canvas.draw(currentTexture, Color.WHITE, 0, 0, getX(), getY(), 0, momoImageWidth / currentTexture.getRegionWidth(), momoImageHeight / currentTexture.getRegionHeight());
