@@ -111,6 +111,12 @@ public abstract class WorldController implements Screen {
 	/** Texture for hearts*/
 	private Texture heartRegion;
 
+	/** Texture for empty spirit bar*/
+	private Texture emptySpiritBar;
+	/** Texture for filled spirit bar*/
+	private Texture filledSpiritBar;
+
+
 	/**
 	 * Returns true if debug mode is active.
 	 *
@@ -297,6 +303,8 @@ public abstract class WorldController implements Screen {
 		goalTile  = new TextureRegion(directory.getEntry( "shared:goal", Texture.class ));
 		displayFont = directory.getEntry( "shared:retro" ,BitmapFont.class);
 		heartRegion = directory.getEntry("platform:heart", Texture.class);
+		emptySpiritBar = directory.getEntry("platform:emptyspirit", Texture.class);
+		filledSpiritBar = directory.getEntry("platform:filledspirit", Texture.class);
 	}
 
 	/**
@@ -474,12 +482,16 @@ public abstract class WorldController implements Screen {
 				canvas.draw(heartRegion, Color.WHITE, xPos,canvas.getCamera().position.y + 240, 38.4F, 32 );
 				xPos += (42 + OFFSET);
 			}
-//			String heartLevel = "Current hearts: ";
-			String spiritLevel = "Current spirit: " + String.valueOf(temp.getDudeSpirit());
-			displayFont.getData().setScale(0.3F);
-			displayFont.setColor(Color.WHITE);
-//			canvas.drawText(heartLevel, displayFont, canvas.getCamera().position.x - 500, canvas.getCamera().position.y + 265);
-			canvas.drawText(spiritLevel, displayFont, canvas.getCamera().position.x - 500, canvas.getCamera().position.y + 230);
+			canvas.draw(emptySpiritBar, Color.WHITE,canvas.getCamera().position.x - 515, canvas.getCamera().position.y + 210, 271, 25 );
+			float spiritPercentage = temp.getDudeSpirit() / 10F;
+			int barWidth = (int)(filledSpiritBar.getWidth() * spiritPercentage);
+			int barHeight = filledSpiritBar.getHeight();
+			TextureRegion croppedBar = new TextureRegion(filledSpiritBar, 0, 0, barWidth, barHeight);
+			canvas.draw(croppedBar, Color.WHITE, canvas.getCamera().position.x - 515, canvas.getCamera().position.y + 204, 271 * spiritPercentage, 32);
+//			String spiritLevel = "Current spirit: " + String.valueOf(temp.getDudeSpirit());
+//			displayFont.getData().setScale(0.3F);
+//			displayFont.setColor(Color.WHITE);
+//			canvas.drawText(spiritLevel, displayFont, canvas.getCamera().position.x - 500, canvas.getCamera().position.y + 130);
 		}
 		canvas.end();
 		

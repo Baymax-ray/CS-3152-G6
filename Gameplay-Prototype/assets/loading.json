@@ -3,7 +3,7 @@
         "background": "shared/loading.png",
 		"play": "shared/play.png",
         "progress": {
-            "file":      "shared/progressbar.png",
+            "file": "shared/progressbar.png",
             "atlas":     {
                 "background" : [16,   0, 216, 30],
                 "backleft"   : [0,    0,  15, 30],
