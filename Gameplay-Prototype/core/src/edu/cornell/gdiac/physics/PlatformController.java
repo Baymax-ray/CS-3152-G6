@@ -57,7 +57,7 @@ public class PlatformController extends WorldController implements ContactListen
 	/** Texture asset for the bullet */
 	private TextureRegion bulletTexture;
 	/** Texture asset for the sword attack */
-	private FilmStrip swordSpriteSheet;
+	private TextureRegion swordSpriteSheet;
 	/** Texture asset for the bridge plank */
 	private TextureRegion bridgeTexture;
 	//</editor-fold>
@@ -150,7 +150,7 @@ public class PlatformController extends WorldController implements ContactListen
 		super.gatherAssets(directory);
 
 		//ANIMATIONS
-		swordSpriteSheet = directory.getEntry( "chiyo:swordAttack", FilmStrip.class );
+		swordSpriteSheet = new TextureRegion(directory.getEntry( "chiyo:swordAttack", Texture.class));
 
 	}
 
@@ -429,13 +429,13 @@ public class PlatformController extends WorldController implements ContactListen
 		SwordWheelObstacle sword;
 		float density = swordjv.getFloat("density", 0);
 		if (avatar.isLookUp()){
-			sword = new SwordWheelObstacle(avatar.getX(), avatar.getY()+ offset, radius, avatar, 1.0f, density, scale, bulletTexture);
+			sword = new SwordWheelObstacle(avatar.getX(), avatar.getY()+ offset, radius, avatar, 0.4f, density, scale, swordSpriteSheet);
 		}
 		else if (!avatar.isGrounded() && avatar.isLookingDown()){
-			sword = new SwordWheelObstacle(avatar.getX(), avatar.getY()-offset, radius, avatar, 1.0f, density, scale, bulletTexture);
+			sword = new SwordWheelObstacle(avatar.getX(), avatar.getY()-offset, radius, avatar, 0.4f, density, scale, swordSpriteSheet);
 		}
 		else {
-			sword = new SwordWheelObstacle(avatar.getX()+ offset, avatar.getY(), radius, avatar, 1.0f, density, scale, bulletTexture);
+			sword = new SwordWheelObstacle(avatar.getX()+ offset, avatar.getY(), radius, avatar, 0.4f, density, scale, swordSpriteSheet);
 		}
 
 		addQueuedObject(sword);

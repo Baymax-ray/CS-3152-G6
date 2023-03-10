@@ -1,0 +1,43 @@
+{
+  "numTiles": 1,
+  "numLevels": 1,
+  "tiles": [
+    {
+      "textureAsset": "shared:earth"
+    }
+  ],
+  "levels": [
+    {
+      "widthInTiles": 5,
+      "heightInTiles": 5,
+      "tileSize": 1,
+      "cameraWidth": 5,
+      "cameraHeight": 5,
+      "gravity": -1,
+      "tilemap": [
+        [  0, -1, -1, -1, -1 ],
+        [  0,  0, -1, -1,  0 ],
+        [ -1, -1, -1,  0,  0 ],
+        [ -1,  0, -1, -1, -1 ],
+        [  0,  0,  0,  0,  0 ]
+      ],
+      "player": {
+        "momoTextureAsset": "platform:momo",
+        "momoImageWidth": 0.5,
+        "momoImageHeight": 0.5,
+        "startX": 3,
+        "startY": 4,
+        "maxHearts": 3,
+        "initialHearts": 3,
+        "maxSpirit": 10,
+        "initialSpirit": 0,
+        "spiritPerSecond": 1,
+        "attackPower": 1,
+        "startsFacingRight": true,
+        "dashCooldown": 0.4,
+        "attackCooldown": 0.2,
+        "hitCooldown": 1.0
+      }
+    }
+  ]
+}
