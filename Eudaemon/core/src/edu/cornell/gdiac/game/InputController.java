@@ -29,28 +29,28 @@ public class InputController {
 
         //Checking for jumps
         if (Gdx.input.isKeyPressed(inputMap.get("jump"))){
-            System.out.println("jump");
+            playerAction.add(Action.JUMP);
         }
         if (Gdx.input.isKeyPressed(inputMap.get("up"))){
-            System.out.println("up");
+            playerAction.add(Action.LOOK_UP);
         }
         if (Gdx.input.isKeyPressed(inputMap.get("down"))){
-            System.out.println("down");
+            playerAction.add(Action.LOOK_DOWN);
         }
         if (Gdx.input.isKeyPressed(inputMap.get("left"))){
-            System.out.println("left");
+            playerAction.add(Action.MOVE_LEFT);
         }
         if (Gdx.input.isKeyPressed(inputMap.get("right"))){
-            System.out.println("right");
+            playerAction.add(Action.MOVE_RIGHT);
         }
         if (Gdx.input.isButtonPressed(inputMap.get("transform"))){
-            System.out.println("transform");
+            playerAction.add(Action.TRANSFORM);
         }
         if (Gdx.input.isButtonPressed(inputMap.get("attack"))){
-            System.out.println("attack");
+            playerAction.add(Action.ATTACK);
         }
         if (Gdx.input.isButtonPressed(inputMap.get("dash"))){
-            System.out.println("dash");
+            playerAction.add(Action.DASH);
         }
     }
 }
