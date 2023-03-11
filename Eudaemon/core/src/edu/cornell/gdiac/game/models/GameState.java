@@ -1,6 +1,7 @@
 package edu.cornell.gdiac.game.models;
 
 import com.badlogic.gdx.utils.JsonValue;
+import com.badlogic.gdx.utils.Json;
 import edu.cornell.gdiac.assets.AssetDirectory;
 
 public class GameState {
@@ -20,6 +21,8 @@ public class GameState {
     public GameState(AssetDirectory assets) {
 
         JsonValue json = assets.getEntry("constants",  JsonValue.class);
+
+        bindings = new ActionBindings(assets.getEntry("inputMappings", JsonValue.class));
 
         int numTiles = json.getInt("numTiles");
         tiles = new Tile[numTiles];

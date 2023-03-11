@@ -34,7 +34,8 @@
         "platform:spirit10": "platform/spirit10.png"
     },
     "jsons"  : {
-        "constants": "constants.json"
+        "constants": "constants.json",
+        "inputMappings": "inputMapping.json"
     },
     "sounds" : {
         "platform:jump" : "platform/jump.mp3",
