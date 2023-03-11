@@ -1,0 +1,81 @@
+{
+	"textures": {
+        "shared:earth" : {
+            "file":  "shared/earthtile.png",
+            "wrapU": "repeated",
+            "wrapV": "repeated"
+        },
+        "shared:goal":   "shared/goaldoor.png",
+        "rocket:rocket": "rocket/rocket.png",
+        "rocket:main":  {
+            "file" : "rocket/flames.png",
+            "sprites" : {
+                "fire": {
+                    "rows": 1,
+                    "cols": 4
+                }
+            }
+        },
+        "rocket:left": {
+            "file" : "rocket/flames-left.png",
+            "sprites" : {
+                "fire": {
+                    "rows": 1,
+                    "cols": 4
+                }
+            }
+        },
+        "chiyo:swordAttack": {
+            "file" : "platform/swordSpriteSheet.png",
+            "sprites" : {
+                "fire": {
+                    "rows": 1,
+                    "cols": 6
+                }
+            }
+        },
+        "rocket:right": {
+          "file" : "rocket/flames-right.png",
+          "sprites" : {
+            "fire": {
+              "rows": 1,
+              "cols": 4
+            }
+          }
+        },
+        "rocket:crate01": "rocket/crate01.png",
+        "rocket:crate02": "rocket/crate02.png",
+        "platform:momo":  "platform/momo.png",
+        "platform:momoUp":  "platform/momoUp.png",
+        "platform:momoDown":  "platform/momoDown.png",
+        "platform:chiyo":  "platform/chiyo.png",
+        "platform:chiyoUp":  "platform/chiyoUp.png",
+        "platform:chiyoDown":  "platform/chiyoDown.png",
+        "platform:worm":  "platform/worm.png",
+        "platform:rope":  "platform/ropebridge.png",
+        "platform:barrier": "platform/barrier.png",
+        "platform:bullet":  "platform/bullet.png",
+        "platform:heart": "platform/heart.png",
+        "platform:emptyspirit": "platform/emptyspirit.png",
+        "platform:filledspirit": "platform/filledspirit.png"
+    },
+    "jsons"  : {
+        "rocket:constants":  "rocket/constants.json",
+        "platform:constants": "platform/constants.json"
+    },
+    "sounds" : {
+        "rocket:bump" : "rocket/bump.mp3",
+        "rocket:mainburn" : "rocket/afterburner.mp3",
+        "rocket:leftburn" : "rocket/sideburner-left.mp3",
+        "rocket:rightburn": "rocket/sideburner-right.mp3",
+        "platform:jump" : "platform/jump.mp3",
+        "platform:pew"  : "platform/pew.mp3",
+        "platform:plop" : "platform/plop.mp3"
+    },
+    "fonts": {
+        "shared:retro": {
+            "file": "shared/RetroGame.ttf",
+            "size": 64
+        }
+    }
+}

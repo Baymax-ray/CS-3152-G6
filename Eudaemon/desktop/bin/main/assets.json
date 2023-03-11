@@ -1,0 +1,51 @@
+{
+	"textures": {
+        "shared:earth" : {
+            "file":  "shared/earthtile.png",
+            "wrapU": "repeated",
+            "wrapV": "repeated"
+        },
+        "shared:goal":   "shared/goaldoor.png",
+        "chiyo:swordAttack": {
+            "file" : "platform/swordSpriteSheet.png",
+            "sprites" : {
+                "fire": {
+                    "rows": 1,
+                    "cols": 6
+                }
+            }
+        },
+        "platform:momo":  "platform/momo.png",
+        "platform:momoUp":  "platform/momoUp.png",
+        "platform:momoDown":  "platform/momoDown.png",
+        "platform:chiyo":  "platform/chiyo.png",
+        "platform:chiyoUp":  "platform/chiyoUp.png",
+        "platform:chiyoDown":  "platform/chiyoDown.png",
+        "platform:worm":  "platform/worm.png",
+        "platform:rope":  "platform/ropebridge.png",
+        "platform:barrier": "platform/barrier.png",
+        "platform:bullet":  "platform/bullet.png",
+        "platform:heart": "platform/heart.png",
+        "platform:emptyspirit": "platform/emptyspirit.png",
+        "platform:spirit2": "platform/spirit2.png",
+        "platform:spirit4": "platform/spirit4.png",
+        "platform:spirit6": "platform/spirit6.png",
+        "platform:spirit8": "platform/spirit8.png",
+        "platform:spirit10": "platform/spirit10.png"
+    },
+    "jsons"  : {
+        "constants": "constants.json",
+        "inputMappings": "inputMapping.json"
+    },
+    "sounds" : {
+        "platform:jump" : "platform/jump.mp3",
+        "platform:pew"  : "platform/pew.mp3",
+        "platform:plop" : "platform/plop.mp3"
+    },
+    "fonts": {
+        "shared:retro": {
+            "file": "shared/RetroGame.ttf",
+            "size": 64
+        }
+    }
+}
