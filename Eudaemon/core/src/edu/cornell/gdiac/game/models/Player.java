@@ -67,155 +67,18 @@ public class Player {
     private boolean isLookingUp;
     private boolean isLookingDown;
 
-    private float dashCooldownRemaining;
-    private float attackCooldownRemaining;
-    private float hitCooldownRemaining;
+    private int dashCooldownRemaining;
+    /**
+     * The remaining time in seconds until the player can attack again.
+     */
+    private int attackCooldownRemaining;
+    private int hitCooldownRemaining;
 
     private TextureRegion currentTexture;
     /** The player's form: 0 is Momo, 1 is Chiyo */
     private int form;
 
     //#endregion
-
-    //#region ACTION SET FIELDS
-    private boolean jumpPressed;
-    private boolean dashPressed;
-    private boolean attackPressed;
-    private boolean leftPressed;
-    private boolean rightPressed;
-    private boolean upPressed;
-    private boolean downPressed;
-//#endregion
-
-    //#region ACTION SET GETTERS AND SETTERS
-    /**
-     * Returns whether the jump button is currently pressed.
-     *
-     * @return true if the jump button is currently pressed, false otherwise
-     */
-    public boolean isJumpPressed() {
-        return jumpPressed;
-    }
-
-    /**
-     * Sets whether the jump button is currently pressed.
-     *
-     * @param jumpPressed true if the jump button is currently pressed, false otherwise
-     */
-    public void setJumpPressed(boolean jumpPressed) {
-        this.jumpPressed = jumpPressed;
-
-    }
-
-    /**
-     * Returns whether the dash button is currently pressed.
-     *
-     * @return true if the dash button is currently pressed, false otherwise
-     */
-    public boolean isDashPressed() {
-        return dashPressed;
-    }
-
-    /**
-     * Sets whether the dash button is currently pressed.
-     *
-     * @param dashPressed true if the dash button is currently pressed, false otherwise
-     */
-    public void setDashPressed(boolean dashPressed) {
-        this.dashPressed = dashPressed;
-    }
-
-    /**
-     * Returns whether the attack button is currently pressed.
-     *
-     * @return true if the attack button is currently pressed, false otherwise
-     */
-    public boolean isAttackPressed() {
-        return attackPressed;
-    }
-
-    /**
-     * Sets whether the attack button is currently pressed.
-     *
-     * @param attackPressed true if the attack button is currently pressed, false otherwise
-     */
-    public void setAttackPressed(boolean attackPressed) {
-        this.attackPressed = attackPressed;
-    }
-
-    /**
-     * Returns whether the left button is currently pressed.
-     *
-     * @return true if the left button is currently pressed, false otherwise
-     */
-    public boolean isLeftPressed() {
-        return leftPressed;
-    }
-
-    /**
-     * Sets whether the left button is currently pressed.
-     *
-     * @param leftPressed true if the left button is currently pressed, false otherwise
-     */
-    public void setLeftPressed(boolean leftPressed) {
-        this.leftPressed = leftPressed;
-    }
-
-    /**
-     * Returns whether the right button is currently pressed.
-     *
-     * @return true if the right button is currently pressed, false otherwise
-     */
-    public boolean isRightPressed() {
-        return rightPressed;
-    }
-
-    /**
-     * Sets whether the right button is currently pressed.
-     *
-     * @param rightPressed true if the right button is currently pressed, false otherwise
-     */
-    public void setRightPressed(boolean rightPressed) {
-        this.rightPressed = rightPressed;
-    }
-
-    /**
-     * Returns whether the up button is currently pressed.
-     *
-     * @return true if the up button is currently pressed, false otherwise
-     */
-    public boolean isUpPressed() {
-        return upPressed;
-    }
-
-    /**
-     * Sets whether the up button is currently pressed.
-     *
-     * @param upPressed true if the up button is currently pressed, false otherwise
-     */
-    public void setUpPressed(boolean upPressed) {
-        this.upPressed = upPressed;
-    }
-
-    /**
-     * Returns whether the down button is currently pressed.
-     *
-     * @return true if the down button is currently pressed, false otherwise
-     */
-    public boolean isDownPressed() {
-        return downPressed;
-    }
-
-    /**
-     * Sets whether the down button is currently pressed.
-     *
-     * @param downPressed true if the down button is currently pressed, false otherwise
-     */
-    public void setDownPressed(boolean downPressed) {
-        this.downPressed = downPressed;
-    }
-
-//#endregion
 
     //#region GETTERS AND SETTERS
     public float getX() {
@@ -342,6 +205,48 @@ public class Player {
             form = 0;
         }
     }
+    /**
+     * Sets the remaining time in seconds until the player can attack again.
+     * @param attackCooldownRemaining the remaining time in seconds
+     */
+    public void setAttackCooldownRemaining(int attackCooldownRemaining) {
+        this.attackCooldownRemaining = attackCooldownRemaining;
+    }
+
+    /**
+     * Returns the remaining time in seconds until the player can attack again.
+     * @return the remaining time in seconds
+     */
+    public int getAttackCooldownRemaining() {
+        return attackCooldownRemaining;
+    }
+    //#endregion
+
+    //#region Other Helper Functions
+    /**
+     * Add a new sword attack to the world and send it in the right direction.
+     */
+//    private void createSword() {
+//        JsonValue swordjv = constants.get("bullet");
+//        float offset = swordjv.getFloat("offset",0);
+//        offset *= (avatar.isFacingRight() ? 1 : -1);
+//        float radius = bulletTexture.getRegionWidth()/(2.0f*scale.x);
+//        SwordWheelObstacle sword;
+//        float density = swordjv.getFloat("density", 0);
+//        if (avatar.isLookUp()){
+//            sword = new SwordWheelObstacle(avatar.getX(), avatar.getY()+ offset, radius, avatar, 0.4f, density, scale, swordSpriteSheet);
+//        }
+//        else if (!avatar.isGrounded() && avatar.isLookingDown()){
+//            sword = new SwordWheelObstacle(avatar.getX(), avatar.getY()-offset, radius, avatar, 0.4f, density, scale, swordSpriteSheet);
+//        }
+//        else {
+//            sword = new SwordWheelObstacle(avatar.getX()+ offset, avatar.getY(), radius, avatar, 0.4f, density, scale, swordSpriteSheet);
+//        }
+//
+//        addQueuedObject(sword);
+//
+//        fireId = playSound( fireSound, fireId );
+//    }
     //#endregion
 
     public void draw(GameCanvas canvas) {
@@ -364,7 +269,7 @@ public class Player {
 
         fixtureDef.shape = hitbox;
         body.createFixture(fixtureDef);
-        body.setGravityScale(0.0f);
+        body.setGravityScale(2.0f);
         //create fixtures for collisions
 
         // ^ fixtures here

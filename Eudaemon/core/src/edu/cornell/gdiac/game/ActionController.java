@@ -31,6 +31,7 @@ public class ActionController {
      * @param playerAction the set of player actions to resolve
      */
     private void resolvePlayerActions(EnumSet<Action> playerAction){
+        //#region Button Inputs
         boolean jumpPressed = playerAction.contains(Action.JUMP);
         boolean attackPressed = playerAction.contains(Action.ATTACK);
         boolean dashPressed = playerAction.contains(Action.DASH);
@@ -38,14 +39,17 @@ public class ActionController {
         boolean upPressed = playerAction.contains(Action.LOOK_UP);
         boolean rightPressed = playerAction.contains(Action.MOVE_RIGHT);
         boolean leftPressed = playerAction.contains(Action.MOVE_LEFT);
+        //#endregion
 
-        //Gravity
-//        if (player )
+        //#region Timers
+        int attackCooldown = player.getAttackCooldownRemaining();
+        if (attackCooldown > 0){
+            player.setAttackCooldownRemaining(attackCooldown - 1);
+        }
+        //#endregion
 
-
-        // Right Left Movement
+        //#region Right Left Movement
         float y = player.getBodyVelocityY();
-//        float y = -10.0f;
         float x = player.getBodyVelocityX();;
         float max_speed = player.getMaxSpeed();
         float h_acc = player.getHorizontalAcceleration();
@@ -77,5 +81,12 @@ public class ActionController {
             }
         }
         player.setVelocity(x,y);
+        //#endregion
+
+        //#region Sword Attack
+        if (attackPressed && player.getAttackCooldownRemaining() == 0){
+            player.setAttackCooldownRemaining(30);
+        }
+        //#endregion
     }
 }
