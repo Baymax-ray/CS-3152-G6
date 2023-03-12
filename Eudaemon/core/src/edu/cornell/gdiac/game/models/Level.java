@@ -1,10 +1,13 @@
 package edu.cornell.gdiac.game.models;
 
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.physics.box2d.*;
 import com.badlogic.gdx.utils.JsonValue;
 import edu.cornell.gdiac.assets.AssetDirectory;
 import edu.cornell.gdiac.game.GameCanvas;
+import edu.cornell.gdiac.game.obstacle.Obstacle;
+import edu.cornell.gdiac.util.PooledList;
 
 public class Level {
 
@@ -46,7 +49,8 @@ public class Level {
 
 
     //#region NONFINAL FIELDS
-
+    /** Queue for adding objects */
+    protected PooledList<Obstacle> addQueue = new PooledList<Obstacle>();
     /**
      * Whether this level has been completed
      */
@@ -124,8 +128,41 @@ public class Level {
         return (tilemap.length - 1 - y) * this.tileSize;
     }
 
+    //#region Other Methods
+    /**
+     *
+     * Adds a physics object in to the insertion queue.
+     *
+     * Objects on the queue are added just before collision processing.  We do this to
+     * control object creation.
+     *
+     * param obj The object to add
+     */
+    public void addQueuedObject(Obstacle obj) {
+        assert inBounds(obj) : "Object is not in bounds";
+        addQueue.add(obj);
+    }
+    /**
+     * Returns true if the object is in bounds.
+     *
+     * This assertion is useful for debugging the physics.
+     *
+     * @param obj The object to check.
+     *
+     * @return true if the object is in bounds.
+     */
+    public boolean inBounds(Obstacle obj) {
+        float boundsX = tilemap[0].length * tileSize;
+        float boundsY = tilemap.length * tileSize;
+        boolean horiz = (obj.getX() >= 0 && obj.getX() <= boundsX);
+        boolean vert  = (obj.getY() >= 0 && obj.getY() <= boundsY);
+        return horiz && vert;
+    }
+    //#endregion
 
+    public void update(float delta){
 
+    }
 
     public void draw(GameCanvas canvas) {
         canvas.getCamera().position.setZero(); // set to some other position to follow player;

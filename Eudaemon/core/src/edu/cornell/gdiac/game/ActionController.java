@@ -8,12 +8,14 @@ import java.util.EnumSet;
 
 public class ActionController {
 
-    Enemy[] enemies;
-    Player player;
+    private Level level;
+    private Enemy[] enemies;
+    private Player player;
 
     public ActionController(Level level) {
         enemies = level.getEnemies();
         player = level.getPlayer();
+        this.level = level;
     }
 
     /**
@@ -48,6 +50,10 @@ public class ActionController {
         if (attackCooldownRemaining > 0){
             player.setAttackCooldownRemaining(attackCooldownRemaining - 1);
         }
+        //#endregion
+
+        //#region Direction
+
         //#endregion
 
         //#region Right Left Movement
@@ -104,7 +110,7 @@ public class ActionController {
         float x = player.getX() + currOffset;
         float y = player.getY();
         SwordWheelObstacle sword = new SwordWheelObstacle(x, y, player.getSwordRadius(), player, player.getAttackLifespan(), 10.0f, player.getScale(), player.getSwordSpriteSheet());
-//        addQueuedObject(sword);
+        level.addQueuedObject(sword);
     }
     //#endregion
 }

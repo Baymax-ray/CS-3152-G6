@@ -62,6 +62,7 @@ public class LevelScreen implements Screen {
         actionController.resolveActions(playerAction, enemyActions);
         // TODO: pull magic numbers below to json
         world.step(delta, 6, 2);
+        level.update(delta);
     }
 
     public void draw(float delta) {
