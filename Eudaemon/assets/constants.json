@@ -37,7 +37,8 @@
         "attackPower": 1,
         "startsFacingRight": true,
         "dashCooldown": 0.4,
-        "attackCooldown": 0.2,
+        "attackCooldown": 30,
+        "attackOffset": 0.6,
         "hitCooldown": 1.0
       }
     }

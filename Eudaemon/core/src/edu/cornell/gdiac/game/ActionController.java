@@ -60,10 +60,16 @@ public class ActionController {
             if (x < max_speed){
                 x = Math.min(x+h_acc, max_speed);
             }
+            if (!player.isFacingRight()){
+                player.setFacingRight(true);
+            }
         }
         else if (leftPressed){
             if (x > -max_speed){
                 x = Math.max(x-h_acc, -max_speed);
+            }
+            if (player.isFacingRight()){
+                player.setFacingRight(false);
             }
         }
         else {

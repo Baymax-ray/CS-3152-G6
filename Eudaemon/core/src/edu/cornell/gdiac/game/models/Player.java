@@ -8,8 +8,9 @@ import com.badlogic.gdx.physics.box2d.*;
 import com.badlogic.gdx.utils.JsonValue;
 import edu.cornell.gdiac.assets.AssetDirectory;
 import edu.cornell.gdiac.game.GameCanvas;
+import edu.cornell.gdiac.game.obstacle.BoxObstacle;
 
-public class Player {
+public class Player{
 
     //#region FINAL FIELDS
 
@@ -27,6 +28,10 @@ public class Player {
 
     private final int dashCooldown;
     private final int attackCooldown;
+    /**
+     * The distance the center of the attack is offset from the player
+     */
+    private final float attackOffset;
     private final int hitCooldown;
 
     // TODO: Add texture fields (FilmStrip?)
@@ -89,6 +94,14 @@ public class Player {
         return body.getPosition().y;
     }
     /**
+     * Gets the attack offset.
+     *
+     * @return the attack offset as a float value
+     */
+    public float getAttackOffset() {
+        return attackOffset;
+    }
+    /**
      * Gets the attack cooldown in seconds.
      *
      * @return the attack cooldown
@@ -149,7 +162,23 @@ public class Player {
     public float getHorizontalAcceleration() {
         return horizontalAcceleration;
     }
+    /**
+     * Returns whether the player is facing right.
+     *
+     * @return true if the player is facing right, false otherwise
+     */
+    public boolean isFacingRight() {
+        return isFacingRight;
+    }
 
+    /**
+     * Sets whether the player is facing right.
+     *
+     * @param isFacingRight true if the player should face right, false otherwise
+     */
+    public void setFacingRight(boolean isFacingRight) {
+        this.isFacingRight = isFacingRight;
+    }
     /**
      * Returns the number of hearts the player has remaining
      *
@@ -237,7 +266,7 @@ public class Player {
     private void createSword() {
 //        JsonValue swordjv = constants.get("bullet");
 //        float offset = swordjv.getFloat("offset",0);
-//        offset *= (avatar.isFacingRight() ? 1 : -1);
+        float currOffset = attackOffset * (this.isFacingRight() ? 1 : -1);
 //        float radius = bulletTexture.getRegionWidth()/(2.0f*scale.x);
 //        SwordWheelObstacle sword;
 //        float density = swordjv.getFloat("density", 0);
@@ -258,7 +287,13 @@ public class Player {
     //#endregion
 
     public void draw(GameCanvas canvas) {
-        canvas.draw(currentTexture, Color.WHITE, 0, 0, getX(), getY(), 0, momoImageWidth / currentTexture.getRegionWidth(), momoImageHeight / currentTexture.getRegionHeight());
+        float effect = this.isFacingRight() ? 1.0f : -1.0f;
+        if (this.isFacingRight()){
+            canvas.draw(currentTexture, Color.WHITE, 0, 0, getX(), getY(), 0, momoImageWidth / currentTexture.getRegionWidth(), momoImageHeight / currentTexture.getRegionHeight());
+        }
+        else{
+            canvas.draw(currentTexture, Color.WHITE, 0, 0, getX()+momoImageWidth, getY(), 0, -1 * momoImageWidth / currentTexture.getRegionWidth(), momoImageHeight / currentTexture.getRegionHeight());
+        }
     }
 
     public void activatePhysics(World world) {
@@ -296,15 +331,18 @@ public class Player {
         maxSpeed = json.getFloat("maxSpeed");
         horizontalAcceleration = json.getFloat("horizontalAcceleration");
 
+        //Attacking
+        this.attackPower = json.getInt("attackPower");
+        this.attackCooldown = json.getInt("attackCooldown");
+        this.attackOffset = json.getFloat("attackOffset");
+
         //Other Information
         this.maxHearts = json.getInt("maxHearts");
         this.initialHearts = json.getInt("initialHearts");
         this.maxSpirit = json.getFloat("maxSpirit");
         this.initialSpirit = json.getFloat("initialSpirit");
         this.spiritPerSecond = json.getFloat("spiritPerSecond");
-        this.attackPower = json.getInt("attackPower");
         this.startsFacingRight = json.getBoolean("startsFacingRight");
-        this.attackCooldown = json.getInt("attackCooldown");
         this.hitCooldown = json.getInt("hitCooldown");
 
         this.isChiyo = false;
