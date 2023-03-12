@@ -38,6 +38,15 @@ public class Player{
     private final TextureRegion momoTexture;
     private final float momoImageWidth;
     private final float momoImageHeight;
+    /**
+     * The multiplier used to calculate the width of the hitbox.
+     */
+    private final float hitboxWidthMult;
+
+    /**
+     * The multiplier used to calculate the height of the hitbox.
+     */
+    private final float hitboxHeightMult;
 
     private final BodyDef bodyDef;
     private final FixtureDef fixtureDef;
@@ -287,13 +296,9 @@ public class Player{
     //#endregion
 
     public void draw(GameCanvas canvas) {
-        float effect = this.isFacingRight() ? 1.0f : -1.0f;
-        if (this.isFacingRight()){
-            canvas.draw(currentTexture, Color.WHITE, 0, 0, getX(), getY(), 0, momoImageWidth / currentTexture.getRegionWidth(), momoImageHeight / currentTexture.getRegionHeight());
-        }
-        else{
-            canvas.draw(currentTexture, Color.WHITE, 0, 0, getX()+momoImageWidth, getY(), 0, -1 * momoImageWidth / currentTexture.getRegionWidth(), momoImageHeight / currentTexture.getRegionHeight());
-        }
+        float x = isFacingRight ? getX() : getX()+momoImageWidth;
+        float sx = isFacingRight ? momoImageWidth / currentTexture.getRegionWidth() : -1 * momoImageWidth / currentTexture.getRegionWidth();
+        canvas.draw(currentTexture, Color.WHITE, 0, 0, x, getY(), 0, sx, momoImageHeight / currentTexture.getRegionHeight());
     }
 
     public void activatePhysics(World world) {
@@ -303,11 +308,10 @@ public class Player{
 
         PolygonShape hitbox = new PolygonShape();
         hitbox.set(new float[]{
-                0,              0,
-                momoImageWidth, 0,
-                momoImageWidth, momoImageHeight,
-                0,              momoImageHeight,
-
+                momoImageWidth * (1-hitboxWidthMult),              0,
+                momoImageWidth * hitboxWidthMult, 0,
+                momoImageWidth * hitboxWidthMult, momoImageHeight * hitboxHeightMult,
+                momoImageWidth * (1-hitboxWidthMult), momoImageHeight * hitboxHeightMult,
         });
 
         fixtureDef.shape = hitbox;
@@ -330,6 +334,8 @@ public class Player{
         this.dashCooldown = json.getInt("dashCooldown");
         maxSpeed = json.getFloat("maxSpeed");
         horizontalAcceleration = json.getFloat("horizontalAcceleration");
+        hitboxWidthMult = json.getFloat("hitboxWidthMult");
+        hitboxHeightMult = json.getFloat("hitboxHeightMult");
 
         //Attacking
         this.attackPower = json.getInt("attackPower");
