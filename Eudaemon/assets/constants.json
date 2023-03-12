@@ -29,7 +29,7 @@
         "hitboxHeightMult": 0.9,
         "startX": 3,
         "startY": 4,
-        "maxSpeed": 3.0,
+        "maxSpeed": 2.5,
         "horizontalAcceleration": 0.05,
         "maxHearts": 3,
         "initialHearts": 3,

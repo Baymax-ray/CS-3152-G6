@@ -308,8 +308,8 @@ public class Player{
 
         PolygonShape hitbox = new PolygonShape();
         hitbox.set(new float[]{
-                momoImageWidth * (1-hitboxWidthMult),              0,
-                momoImageWidth * hitboxWidthMult, 0,
+                momoImageWidth * (1-hitboxWidthMult), momoImageHeight * (1-hitboxHeightMult),
+                momoImageWidth * hitboxWidthMult, momoImageHeight * (1-hitboxHeightMult),
                 momoImageWidth * hitboxWidthMult, momoImageHeight * hitboxHeightMult,
                 momoImageWidth * (1-hitboxWidthMult), momoImageHeight * hitboxHeightMult,
         });

@@ -53,8 +53,19 @@ public class ActionController {
         float x = player.getBodyVelocityX();;
         float max_speed = player.getMaxSpeed();
         float h_acc = player.getHorizontalAcceleration();
-        if (rightPressed && leftPressed){
-
+        if (rightPressed && leftPressed || (!rightPressed && !leftPressed)){
+            if (x > 0.0f){
+                x = Math.max(x-h_acc, 0);
+                if (x < 0.0f){
+                    x = 0.0f;
+                }
+            }
+            else if (x < 0.0f){
+                x = Math.min(x+h_acc, 0);
+                if (x > 0.0f){
+                    x = 0.0f;
+                }
+            }
         }
         else if (rightPressed){
             if (x < max_speed){
@@ -70,20 +81,6 @@ public class ActionController {
             }
             if (player.isFacingRight()){
                 player.setFacingRight(false);
-            }
-        }
-        else {
-            if (x > 0.0f){
-                x = Math.min(x-h_acc, 0);
-                if (x < 0.0f){
-                    x = 0.0f;
-                }
-            }
-            else if (x < 0.0f){
-                x = Math.max(x+h_acc, 0);
-                if (x > 0.0f){
-                    x = 0.0f;
-                }
             }
         }
         player.setVelocity(x,y);
