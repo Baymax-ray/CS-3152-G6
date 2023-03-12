@@ -74,6 +74,15 @@ public class Level {
         return enemies;
     }
 
+    /**
+     * Returns the player associated with this level instance.
+     *
+     * @return the player associated with this level instance
+     */
+    public Player getPlayer() {
+        return player;
+    }
+
     //#endregion
 
     /**

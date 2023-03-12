@@ -27,6 +27,8 @@
         "momoImageHeight": 0.5,
         "startX": 3,
         "startY": 4,
+        "maxSpeed": 3.0,
+        "horizontalAcceleration": 0.05,
         "maxHearts": 3,
         "initialHearts": 3,
         "maxSpirit": 10,

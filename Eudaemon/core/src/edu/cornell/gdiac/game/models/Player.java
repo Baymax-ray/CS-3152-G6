@@ -39,7 +39,6 @@ public class Player {
 
     //#endregion
 
-
     //#region NONFINAL FIELDS
 
     private Body body;
@@ -47,12 +46,24 @@ public class Player {
     private float hearts;
     private float spirit;
 
+    /**
+     * The maximum horizontal speed that the object can reach.
+     */
+    private float maxSpeed;
+
+    /**
+     * The horizontal acceleration of the object.
+     */
+    private float horizontalAcceleration;
+
     private boolean isDashing;
     private boolean isJumping;
     private boolean isChiyo;
     private boolean isHit;
     private boolean isGrounded;
     private boolean isFacingRight;
+    private boolean isMovingRight;
+    private boolean isMovingLeft;
     private boolean isLookingUp;
     private boolean isLookingDown;
 
@@ -66,7 +77,147 @@ public class Player {
 
     //#endregion
 
+    //#region ACTION SET FIELDS
+    private boolean jumpPressed;
+    private boolean dashPressed;
+    private boolean attackPressed;
+    private boolean leftPressed;
+    private boolean rightPressed;
+    private boolean upPressed;
+    private boolean downPressed;
+//#endregion
 
+    //#region ACTION SET GETTERS AND SETTERS
+    /**
+     * Returns whether the jump button is currently pressed.
+     *
+     * @return true if the jump button is currently pressed, false otherwise
+     */
+    public boolean isJumpPressed() {
+        return jumpPressed;
+    }
+
+    /**
+     * Sets whether the jump button is currently pressed.
+     *
+     * @param jumpPressed true if the jump button is currently pressed, false otherwise
+     */
+    public void setJumpPressed(boolean jumpPressed) {
+        this.jumpPressed = jumpPressed;
+
+    }
+
+    /**
+     * Returns whether the dash button is currently pressed.
+     *
+     * @return true if the dash button is currently pressed, false otherwise
+     */
+    public boolean isDashPressed() {
+        return dashPressed;
+    }
+
+    /**
+     * Sets whether the dash button is currently pressed.
+     *
+     * @param dashPressed true if the dash button is currently pressed, false otherwise
+     */
+    public void setDashPressed(boolean dashPressed) {
+        this.dashPressed = dashPressed;
+    }
+
+    /**
+     * Returns whether the attack button is currently pressed.
+     *
+     * @return true if the attack button is currently pressed, false otherwise
+     */
+    public boolean isAttackPressed() {
+        return attackPressed;
+    }
+
+    /**
+     * Sets whether the attack button is currently pressed.
+     *
+     * @param attackPressed true if the attack button is currently pressed, false otherwise
+     */
+    public void setAttackPressed(boolean attackPressed) {
+        this.attackPressed = attackPressed;
+    }
+
+    /**
+     * Returns whether the left button is currently pressed.
+     *
+     * @return true if the left button is currently pressed, false otherwise
+     */
+    public boolean isLeftPressed() {
+        return leftPressed;
+    }
+
+    /**
+     * Sets whether the left button is currently pressed.
+     *
+     * @param leftPressed true if the left button is currently pressed, false otherwise
+     */
+    public void setLeftPressed(boolean leftPressed) {
+        this.leftPressed = leftPressed;
+    }
+
+    /**
+     * Returns whether the right button is currently pressed.
+     *
+     * @return true if the right button is currently pressed, false otherwise
+     */
+    public boolean isRightPressed() {
+        return rightPressed;
+    }
+
+    /**
+     * Sets whether the right button is currently pressed.
+     *
+     * @param rightPressed true if the right button is currently pressed, false otherwise
+     */
+    public void setRightPressed(boolean rightPressed) {
+        this.rightPressed = rightPressed;
+    }
+
+    /**
+     * Returns whether the up button is currently pressed.
+     *
+     * @return true if the up button is currently pressed, false otherwise
+     */
+    public boolean isUpPressed() {
+        return upPressed;
+    }
+
+    /**
+     * Sets whether the up button is currently pressed.
+     *
+     * @param upPressed true if the up button is currently pressed, false otherwise
+     */
+    public void setUpPressed(boolean upPressed) {
+        this.upPressed = upPressed;
+    }
+
+    /**
+     * Returns whether the down button is currently pressed.
+     *
+     * @return true if the down button is currently pressed, false otherwise
+     */
+    public boolean isDownPressed() {
+        return downPressed;
+    }
+
+    /**
+     * Sets whether the down button is currently pressed.
+     *
+     * @param downPressed true if the down button is currently pressed, false otherwise
+     */
+    public void setDownPressed(boolean downPressed) {
+        this.downPressed = downPressed;
+    }
+
+//#endregion
+
+    //#region GETTERS AND SETTERS
     public float getX() {
         return body.getPosition().x;
     }
@@ -74,6 +225,60 @@ public class Player {
     public float getY() {
         return body.getPosition().y;
     }
+    /**
+     * Returns the x-component of the current linear velocity of the body.
+     *
+     * @return the x-component of the current linear velocity in meters per second
+     */
+    public float getBodyVelocityX() {
+        return body.getLinearVelocity().x;
+    }
+
+    /**
+     * Returns the y-component of the current linear velocity of the body.
+     *
+     * @return the y-component of the current linear velocity in meters per second
+     */
+    public float getBodyVelocityY() {
+        return body.getLinearVelocity().y;
+    }
+    /**
+     * Sets the linear velocity of the kinematic body.
+     *
+     * @param velocityX the x-component of the linear velocity in meters per second
+     * @param velocityY the y-component of the linear velocity in meters per second
+     */
+    public void setVelocity(float velocityX, float velocityY) {
+        body.setLinearVelocity(velocityX, velocityY);
+    }
+
+    /**
+     * Returns the maximum horizontal speed that the object can reach.
+     *
+     * @return the maximum horizontal speed in meters per second
+     */
+    public float getMaxSpeed() {
+        return maxSpeed;
+    }
+
+    /**
+     * Sets the maximum horizontal speed that the object can reach.
+     *
+     * @param maxSpeed the maximum horizontal speed in meters per second
+     */
+    public void setMaxSpeed(float maxSpeed) {
+        this.maxSpeed = maxSpeed;
+    }
+
+    /**
+     * Returns the horizontal acceleration of the object.
+     *
+     * @return the horizontal acceleration in meters per second squared
+     */
+    public float getHorizontalAcceleration() {
+        return horizontalAcceleration;
+    }
+
     /**
      * Returns the number of hearts the player has remaining
      *
@@ -137,7 +342,7 @@ public class Player {
             form = 0;
         }
     }
-
+    //#endregion
 
     public void draw(GameCanvas canvas) {
         canvas.draw(currentTexture, Color.WHITE, 0, 0, getX(), getY(), 0, momoImageWidth / currentTexture.getRegionWidth(), momoImageHeight / currentTexture.getRegionHeight());
@@ -159,7 +364,7 @@ public class Player {
 
         fixtureDef.shape = hitbox;
         body.createFixture(fixtureDef);
-
+        body.setGravityScale(0.0f);
         //create fixtures for collisions
 
         // ^ fixtures here
@@ -171,9 +376,14 @@ public class Player {
         this.momoImageWidth = json.getFloat("momoImageWidth");
         this.momoImageHeight = json.getFloat("momoImageHeight");
 
+        //Position and Movement
         this.startX = json.getFloat("startX");
         this.startY = json.getFloat("startY");
+        this.dashCooldown = json.getFloat("dashCooldown");
+        maxSpeed = json.getFloat("maxSpeed");
+        horizontalAcceleration = json.getFloat("horizontalAcceleration");
 
+        //Other Information
         this.maxHearts = json.getInt("maxHearts");
         this.initialHearts = json.getInt("initialHearts");
         this.maxSpirit = json.getFloat("maxSpirit");
@@ -181,9 +391,9 @@ public class Player {
         this.spiritPerSecond = json.getFloat("spiritPerSecond");
         this.attackPower = json.getInt("attackPower");
         this.startsFacingRight = json.getBoolean("startsFacingRight");
-        this.dashCooldown = json.getFloat("dashCooldown");
         this.attackCooldown = json.getFloat("attackCooldown");
         this.hitCooldown = json.getFloat("hitCooldown");
+
         this.isChiyo = false;
 
         this.hearts = initialHearts;
