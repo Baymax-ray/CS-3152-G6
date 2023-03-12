@@ -25,9 +25,9 @@ public class Player {
 
     private final boolean startsFacingRight;
 
-    private final float dashCooldown;
-    private final float attackCooldown;
-    private final float hitCooldown;
+    private final int dashCooldown;
+    private final int attackCooldown;
+    private final int hitCooldown;
 
     // TODO: Add texture fields (FilmStrip?)
     private final TextureRegion momoTexture;
@@ -87,6 +87,14 @@ public class Player {
 
     public float getY() {
         return body.getPosition().y;
+    }
+    /**
+     * Gets the attack cooldown in seconds.
+     *
+     * @return the attack cooldown
+     */
+    public int getAttackCooldown() {
+        return attackCooldown;
     }
     /**
      * Returns the x-component of the current linear velocity of the body.
@@ -226,7 +234,7 @@ public class Player {
     /**
      * Add a new sword attack to the world and send it in the right direction.
      */
-//    private void createSword() {
+    private void createSword() {
 //        JsonValue swordjv = constants.get("bullet");
 //        float offset = swordjv.getFloat("offset",0);
 //        offset *= (avatar.isFacingRight() ? 1 : -1);
@@ -246,7 +254,7 @@ public class Player {
 //        addQueuedObject(sword);
 //
 //        fireId = playSound( fireSound, fireId );
-//    }
+    }
     //#endregion
 
     public void draw(GameCanvas canvas) {
@@ -284,7 +292,7 @@ public class Player {
         //Position and Movement
         this.startX = json.getFloat("startX");
         this.startY = json.getFloat("startY");
-        this.dashCooldown = json.getFloat("dashCooldown");
+        this.dashCooldown = json.getInt("dashCooldown");
         maxSpeed = json.getFloat("maxSpeed");
         horizontalAcceleration = json.getFloat("horizontalAcceleration");
 
@@ -296,8 +304,8 @@ public class Player {
         this.spiritPerSecond = json.getFloat("spiritPerSecond");
         this.attackPower = json.getInt("attackPower");
         this.startsFacingRight = json.getBoolean("startsFacingRight");
-        this.attackCooldown = json.getFloat("attackCooldown");
-        this.hitCooldown = json.getFloat("hitCooldown");
+        this.attackCooldown = json.getInt("attackCooldown");
+        this.hitCooldown = json.getInt("hitCooldown");
 
         this.isChiyo = false;
 

@@ -42,9 +42,9 @@ public class ActionController {
         //#endregion
 
         //#region Timers
-        int attackCooldown = player.getAttackCooldownRemaining();
-        if (attackCooldown > 0){
-            player.setAttackCooldownRemaining(attackCooldown - 1);
+        int attackCooldownRemaining = player.getAttackCooldownRemaining();
+        if (attackCooldownRemaining > 0){
+            player.setAttackCooldownRemaining(attackCooldownRemaining - 1);
         }
         //#endregion
 
@@ -85,7 +85,7 @@ public class ActionController {
 
         //#region Sword Attack
         if (attackPressed && player.getAttackCooldownRemaining() == 0){
-            player.setAttackCooldownRemaining(30);
+            player.setAttackCooldownRemaining(player.getAttackCooldown());
         }
         //#endregion
     }
