@@ -94,6 +94,10 @@ public class Player{
     private boolean isHit;
     private boolean isGrounded;
     private boolean isFacingRight;
+    /**
+     * The angle at which the entity is facing, in degrees.
+     */
+    private int angleFacing;
     private boolean isMovingRight;
     private boolean isMovingLeft;
     private boolean isLookingUp;
@@ -256,6 +260,27 @@ public class Player{
      */
     public float getHearts() {
         return hearts;
+    }
+
+    /**
+     * Sets the angle at which the entity is facing.
+     * @param angle the angle at which the entity is facing, in degrees
+     */
+    public void setAngleFacing(int angle) {
+        if (angle % 45 == 0){
+            this.angleFacing = angle;
+        }
+        else{
+            throw new IllegalArgumentException("Invalid direction angle");
+        }
+    }
+
+    /**
+     * Gets the angle at which the entity is facing.
+     * @return the angle at which the entity is facing, in degrees
+     */
+    public int getAngleFacing() {
+        return angleFacing;
     }
 
     /**

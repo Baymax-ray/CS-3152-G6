@@ -53,6 +53,38 @@ public class ActionController {
         //#endregion
 
         //#region Direction
+        if ((rightPressed && !leftPressed && !upPressed && !downPressed) || (rightPressed && !leftPressed && upPressed && downPressed)){
+            player.setAngleFacing(0);
+            player.setFacingRight(true);
+        }
+        else if ((rightPressed && !leftPressed && upPressed && !downPressed)){
+            player.setAngleFacing(45);
+            player.setFacingRight(true);
+        }
+        else if ((rightPressed && leftPressed && upPressed && !downPressed) || (!rightPressed && !leftPressed && upPressed && !downPressed)){
+            player.setAngleFacing(90);
+        }
+        else if ((!rightPressed && leftPressed && upPressed && !downPressed)){
+            player.setAngleFacing(135);
+            player.setFacingRight(false);
+        }
+        else if ((!rightPressed && leftPressed && !upPressed && !downPressed) || (!rightPressed && leftPressed && upPressed && downPressed)){
+            player.setAngleFacing(180);
+            player.setFacingRight(false);
+        }
+        else if ((!rightPressed && leftPressed && !upPressed && downPressed)){
+            player.setAngleFacing(225);
+            player.setFacingRight(false);
+        }
+        else if ((!rightPressed && !leftPressed && !upPressed && downPressed) || (rightPressed && leftPressed && !upPressed && downPressed)){
+            player.setAngleFacing(270);
+        }
+        else if ((rightPressed && !leftPressed && !upPressed && downPressed)){
+            player.setAngleFacing(315);
+            player.setFacingRight(true);
+        }
+
+
 
         //#endregion
 
@@ -79,16 +111,10 @@ public class ActionController {
             if (x < max_speed){
                 x = Math.min(x+h_acc, max_speed);
             }
-            if (!player.isFacingRight()){
-                player.setFacingRight(true);
-            }
         }
         else if (leftPressed){
             if (x > -max_speed){
                 x = Math.max(x-h_acc, -max_speed);
-            }
-            if (player.isFacingRight()){
-                player.setFacingRight(false);
             }
         }
         player.setVelocity(x,y);
@@ -107,8 +133,37 @@ public class ActionController {
      */
     private void createSword() {
         float currOffset = player.getAttackOffset() * (player.isFacingRight() ? 1 : -1);
+        int angleFacing = player.getAngleFacing();
         float x = player.getX() + currOffset;
         float y = player.getY();
+        if (angleFacing == 45){
+            x = player.getX() + 0.71f * currOffset;
+            y = player.getY() + 0.71f * currOffset;
+        }
+        else if (angleFacing == 90){
+            x = player.getX();
+            y = player.getY() + currOffset;
+        }
+        else if (angleFacing == 135){
+            x = player.getX() - 0.71f * currOffset;
+            y = player.getY() + 0.71f * currOffset;
+        }
+        else if (angleFacing == 180){
+            x = player.getX() - currOffset;
+            y = player.getY();
+        }
+        else if (angleFacing == 225){
+            x = player.getX() - 0.71f * currOffset;
+            y = player.getY() - 0.71f * currOffset;
+        }
+        else if (angleFacing == 270){
+            x = player.getX();
+            y = player.getY()- currOffset;
+        }
+        else if (angleFacing == 315){
+            x = player.getX() + 0.71f * currOffset;
+            y = player.getY() - 0.71f * currOffset;
+        }
         SwordWheelObstacle sword = new SwordWheelObstacle(x, y, player.getSwordRadius(), player, player.getAttackLifespan(), 10.0f, player.getScale(), player.getSwordSpriteSheet());
         level.addQueuedObject(sword);
     }
