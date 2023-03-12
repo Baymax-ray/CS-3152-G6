@@ -25,36 +25,43 @@
                 }
             }
         },
-        "rocket:right": {
-            "file" : "rocket/flames-right.png",
+        "chiyo:swordAttack": {
+            "file" : "platform/swordSpriteSheet.png",
             "sprites" : {
                 "fire": {
                     "rows": 1,
-                    "cols": 4
+                    "cols": 6
                 }
             }
         },
+        "rocket:right": {
+          "file" : "rocket/flames-right.png",
+          "sprites" : {
+            "fire": {
+              "rows": 1,
+              "cols": 4
+            }
+          }
+        },
         "rocket:crate01": "rocket/crate01.png",
         "rocket:crate02": "rocket/crate02.png",
-        "platform:dude":  "platform/dude.png",
+        "platform:momo":  "platform/momo.png",
+        "platform:momoUp":  "platform/momoUp.png",
+        "platform:momoDown":  "platform/momoDown.png",
+        "platform:chiyo":  "platform/chiyo.png",
+        "platform:chiyoUp":  "platform/chiyoUp.png",
+        "platform:chiyoDown":  "platform/chiyoDown.png",
+        "platform:worm":  "platform/worm.png",
         "platform:rope":  "platform/ropebridge.png",
         "platform:barrier": "platform/barrier.png",
         "platform:bullet":  "platform/bullet.png",
-        "ragdoll:bubble": "ragdoll/bubble.png",
-        "ragdoll:torso":  "ragdoll/tux_body.png",
-        "ragdoll:head":   "ragdoll/ProfWhite.png",
-        "ragdoll:thigh":  "ragdoll/tux_thigh.png",
-        "ragdoll:shin":   "ragdoll/tux_shin.png",
-        "ragdoll:arm":    "ragdoll/tux_arm.png",
-        "ragdoll:forearm":    "ragdoll/tux_forearm.png",
-        "ragdoll:crosshair":  "ragdoll/crosshair.png",
-        "ragdoll:foreground": "ragdoll/foreground.png",
-        "ragdoll:background": "ragdoll/background.png"
+        "platform:heart": "platform/heart.png",
+        "platform:emptyspirit": "platform/emptyspirit.png",
+        "platform:filledspirit": "platform/filledspirit.png"
     },
     "jsons"  : {
         "rocket:constants":  "rocket/constants.json",
-        "platform:constants": "platform/constants.json",
-        "ragdoll:constants":  "ragdoll/constants.json"
+        "platform:constants": "platform/constants.json"
     },
     "sounds" : {
         "rocket:bump" : "rocket/bump.mp3",
@@ -63,11 +70,7 @@
         "rocket:rightburn": "rocket/sideburner-right.mp3",
         "platform:jump" : "platform/jump.mp3",
         "platform:pew"  : "platform/pew.mp3",
-        "platform:plop" : "platform/plop.mp3",
-        "ragdoll:glub1" : "ragdoll/bubble01.mp3",
-        "ragdoll:glub2" : "ragdoll/bubble02.mp3",
-        "ragdoll:glub3" : "ragdoll/bubble03.mp3",
-        "ragdoll:glub4" : "ragdoll/bubble04.mp3"
+        "platform:plop" : "platform/plop.mp3"
     },
     "fonts": {
         "shared:retro": {

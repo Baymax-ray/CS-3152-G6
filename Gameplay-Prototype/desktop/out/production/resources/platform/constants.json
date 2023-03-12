@@ -14,34 +14,61 @@
     },
 	"dude" : {
 		"pos": [2.5, 5.0],
+		"posEnemy": [20.0, 13.0],
 		"shrink": [0.7, 0.95],
 		"force": 20.0,
 		"damping": 10.0,
 		"density": 1.0,
 		"friction": 0.0,
+		"maxHearts": 3,
+		"maxSpirit": 10.0,
 		"maxspeed": 5.0,
 		"jump_force": 5.5,
-		"jump_cool": 30,
-		"shot_cool": 40,
+		"jump_cool": 21,
+		"shot_cool": 10,
+		"hit_cool": 200,
+		"hit_dist": 0.75,
+		"hit_force": 5.5,
+		"dash": 2000.0,
+		"attack_dist": 1.5,
 		"sensor": {
 			"shrink" : 0.6,
 			"height" : 0.05
-		}
+		},
+		"camZone_x": 80,
+		"camZone_y": 60,
+		"camZoom": 0.7,
+		"spiritIncreaseRate": 0.01,
+		"spiritDecreaseRate": 0.01,
+		"spiritIncreaseDist": 3,
+		"coyoteTime": 20
 	},
-	"bridge" : {
-		"pos": [9.0, 3.8],
-	    "width": 14.0,
-		"density": 1.0,
-		"pin_radius": 0.1
+	"enemy" : {
+		"pos": [2.5, 5.0],
+		"posEnemy": [20.0, 13.0],
+		"shrink": [0.7, 0.95],
+		"force": 200.0,
+		"damping": 100.0,
+		"density": 10.0,
+		"friction": 1.0,
+		"maxHearts": 3,
+		"maxSpirit": 10.0,
+		"maxspeed": 5.0,
+		"shot_cool": 20,
+		"hit_cool": 200,
+		"hit_dist": 0.75,
+		"hit_force": 5.5,
+		"attack_dist": 1.5,
+		"sensor": {
+			"shrink" : 0.6,
+			"height" : 0.05
+		},
+		"camZone_x": 80,
+		"camZone_y": 60
 	},
-	"spinner" : {
-		"pos": [13.0,12.5],
-		"low_density" : 0.0,
-		"high_density": 10.0,
-		"radius": 0.1
-	},
+	
     "bullet": {
-    	"offset" : 0.2,
+    	"offset" : 0.6,
     	"speed"  : 20.0,
 		"density": 10.0
     },
@@ -61,6 +88,8 @@
 						[29.0,10.0,31.0,10.0,31.0, 9.5,29.0, 9.5],
 						[23.0,11.5,27.0,11.5,27.0,11.0,23.0,11.0],
 						[19.0,12.5,23.0,12.5,23.0,12.0,19.0,12.0],
-						[ 1.0,12.5, 7.0,12.5, 7.0,12.0, 1.0,12.0]
+						[ 1.0,12.5, 7.0,12.5, 7.0,12.0, 1.0,12.0],
+						[8.0,11.0,18.0,11.0,18.0,12.0,8.0,12.0],
+						[ 11.0, 3.0, 22.5, 3.0, 22.5, 2.5, 11.0, 2.5]
 					]
 }
