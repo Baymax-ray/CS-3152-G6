@@ -41,7 +41,11 @@
         "dashCooldown": 0.4,
         "attackCooldown": 30,
         "attackOffset": 0.6,
-        "hitCooldown": 1.0
+        "swordRadius": 0.2,
+        "attackLifespan": 0.4,
+        "hitCooldown": 1.0,
+        "drawScaleX": 32,
+        "drawScaleY": 32
       }
     }
   ]

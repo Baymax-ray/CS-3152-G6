@@ -428,6 +428,8 @@ public class PlatformController extends WorldController implements ContactListen
 		float radius = bulletTexture.getRegionWidth()/(2.0f*scale.x);
 		SwordWheelObstacle sword;
 		float density = swordjv.getFloat("density", 0);
+		System.out.println(scale.x);
+		System.out.println(scale.y);
 		if (avatar.isLookUp()){
 			sword = new SwordWheelObstacle(avatar.getX(), avatar.getY()+ offset, radius, avatar, 0.4f, density, scale, swordSpriteSheet);
 		}

@@ -9,6 +9,7 @@ import com.badlogic.gdx.utils.JsonValue;
 import edu.cornell.gdiac.assets.AssetDirectory;
 import edu.cornell.gdiac.game.GameCanvas;
 import edu.cornell.gdiac.game.obstacle.BoxObstacle;
+import edu.cornell.gdiac.game.obstacle.SwordWheelObstacle;
 
 public class Player{
 
@@ -47,6 +48,23 @@ public class Player{
      * The multiplier used to calculate the height of the hitbox.
      */
     private final float hitboxHeightMult;
+    /**
+     * The radius of the sword used by the player.
+     */
+    private final float swordRadius;
+    /**
+     * The sprite sheet containing the sword attack animation frames.
+     */
+    private final TextureRegion swordSpriteSheet;
+
+    /**
+     * The lifespan of the sword attack animation in seconds.
+     */
+    private final float attackLifespan;
+    /**
+     * The scaling factor for the sprite.
+     */
+    private final Vector2 scale;
 
     private final BodyDef bodyDef;
     private final FixtureDef fixtureDef;
@@ -95,6 +113,40 @@ public class Player{
     //#endregion
 
     //#region GETTERS AND SETTERS
+    /**
+     * Gets the radius of the sword hitbox.
+     *
+     * @return the radius of the sword hitbox
+     */
+    public float getSwordRadius() {
+        return swordRadius;
+    }
+
+    /**
+     * Gets the scale of the sword sprite.
+     *
+     * @return the scale of the sword sprite
+     */
+    public Vector2 getScale() {
+        return scale;
+    }
+
+    /**
+     * Gets the sprite sheet containing the sword animation frames.
+     *
+     * @return the sprite sheet containing the sword animation frames
+     */
+    public TextureRegion getSwordSpriteSheet() {
+        return swordSpriteSheet;
+    }
+    /**
+     * Gets the lifespan of the sword attack animation in seconds.
+     *
+     * @return the sword attack animation lifespan
+     */
+    public float getAttackLifespan() {
+        return attackLifespan;
+    }
     public float getX() {
         return body.getPosition().x;
     }
@@ -143,6 +195,15 @@ public class Player{
      */
     public void setVelocity(float velocityX, float velocityY) {
         body.setLinearVelocity(velocityX, velocityY);
+    }
+
+    /**
+     * Gets the linear velocity of the given body.
+     *
+     * @return the velocity of the body
+     */
+    public Vector2 getBodyVelocity() {
+        return body.getLinearVelocity();
     }
 
     /**
@@ -268,33 +329,6 @@ public class Player{
     }
     //#endregion
 
-    //#region Other Helper Functions
-    /**
-     * Add a new sword attack to the world and send it in the right direction.
-     */
-    private void createSword() {
-//        JsonValue swordjv = constants.get("bullet");
-//        float offset = swordjv.getFloat("offset",0);
-        float currOffset = attackOffset * (this.isFacingRight() ? 1 : -1);
-//        float radius = bulletTexture.getRegionWidth()/(2.0f*scale.x);
-//        SwordWheelObstacle sword;
-//        float density = swordjv.getFloat("density", 0);
-//        if (avatar.isLookUp()){
-//            sword = new SwordWheelObstacle(avatar.getX(), avatar.getY()+ offset, radius, avatar, 0.4f, density, scale, swordSpriteSheet);
-//        }
-//        else if (!avatar.isGrounded() && avatar.isLookingDown()){
-//            sword = new SwordWheelObstacle(avatar.getX(), avatar.getY()-offset, radius, avatar, 0.4f, density, scale, swordSpriteSheet);
-//        }
-//        else {
-//            sword = new SwordWheelObstacle(avatar.getX()+ offset, avatar.getY(), radius, avatar, 0.4f, density, scale, swordSpriteSheet);
-//        }
-//
-//        addQueuedObject(sword);
-//
-//        fireId = playSound( fireSound, fireId );
-    }
-    //#endregion
-
     public void draw(GameCanvas canvas) {
         float x = isFacingRight ? getX() : getX()+momoImageWidth;
         float sx = isFacingRight ? momoImageWidth / currentTexture.getRegionWidth() : -1 * momoImageWidth / currentTexture.getRegionWidth();
@@ -327,6 +361,7 @@ public class Player{
         this.momoTexture = new TextureRegion(assets.getEntry(momoTextureAsset, Texture.class));
         this.momoImageWidth = json.getFloat("momoImageWidth");
         this.momoImageHeight = json.getFloat("momoImageHeight");
+        this.scale = new Vector2(json.getFloat("drawScaleX"), json.getFloat("drawScaleY"));
 
         //Position and Movement
         this.startX = json.getFloat("startX");
@@ -341,6 +376,10 @@ public class Player{
         this.attackPower = json.getInt("attackPower");
         this.attackCooldown = json.getInt("attackCooldown");
         this.attackOffset = json.getFloat("attackOffset");
+        this.swordRadius = json.getFloat("swordRadius");
+        this.attackLifespan = json.getFloat("attackLifespan");
+        this.swordSpriteSheet = new TextureRegion(assets.getEntry( "chiyo:swordAttack", Texture.class));
+
 
         //Other Information
         this.maxHearts = json.getInt("maxHearts");

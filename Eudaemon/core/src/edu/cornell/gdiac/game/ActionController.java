@@ -2,6 +2,7 @@ package edu.cornell.gdiac.game;
 
 import com.badlogic.gdx.utils.Array;
 import edu.cornell.gdiac.game.models.*;
+import edu.cornell.gdiac.game.obstacle.SwordWheelObstacle;
 
 import java.util.EnumSet;
 
@@ -25,6 +26,7 @@ public class ActionController {
         resolvePlayerActions(playerAction);
     }
 
+    //#region Player Actions
     /**
      * Resolves the set of player actions
      *
@@ -89,7 +91,22 @@ public class ActionController {
         //#region Sword Attack
         if (attackPressed && player.getAttackCooldownRemaining() == 0){
             player.setAttackCooldownRemaining(player.getAttackCooldown());
+            createSword();
         }
         //#endregion
     }
+
+    /**
+     * Add a new sword attack to the world and send it in the right direction.
+     */
+    private void createSword() {
+        float currOffset = player.getAttackOffset() * (player.isFacingRight() ? 1 : -1);
+        float x = player.getX() + currOffset;
+        float y = player.getY();
+        SwordWheelObstacle sword = new SwordWheelObstacle(x, y, player.getSwordRadius(), player, player.getAttackLifespan(), 10.0f, player.getScale(), player.getSwordSpriteSheet());
+//        addQueuedObject(sword);
+    }
+    //#endregion
 }
+
+
