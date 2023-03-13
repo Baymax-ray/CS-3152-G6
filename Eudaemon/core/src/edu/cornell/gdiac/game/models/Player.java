@@ -28,17 +28,19 @@ public class Player extends BoxObstacle {
     private final boolean startsFacingRight;
 
     private final int dashCooldown;
+    /**
+     * The amount of ticks before the palyer can attack again
+     */
     private final int attackCooldown;
+    /**
+     * The amount of ticks before the palyer can transform again
+     */
+    private final int transformCooldown;
     /**
      * The distance the center of the attack is offset from the player
      */
     private final float attackOffset;
     private final int hitCooldown;
-
-    // TODO: Add texture fields (FilmStrip?)
-    private final TextureRegion momoTexture;
-    private final float momoImageWidth;
-    private final float momoImageHeight;
     /**
      * The multiplier used to calculate the width of the hitbox.
      */
@@ -53,11 +55,6 @@ public class Player extends BoxObstacle {
      */
     private final float swordRadius;
     /**
-     * The sprite sheet containing the sword attack animation frames.
-     */
-    private final TextureRegion swordSpriteSheet;
-
-    /**
      * The lifespan of the sword attack animation in seconds.
      */
     private final float attackLifespan;
@@ -66,6 +63,20 @@ public class Player extends BoxObstacle {
      */
     private final Vector2 scale;
 
+    //#endregion
+
+    //#region TEXTURES
+    // TODO: Add texture fields (FilmStrip?)
+    private final TextureRegion momoTexture;
+    private final float momoImageWidth;
+    private final float momoImageHeight;
+    private final TextureRegion chiyoTexture;
+    private final float chiyoImageWidth;
+    private final float chiyoImageHeight;
+    /**
+     * The sprite sheet containing the sword attack animation frames.
+     */
+    private final TextureRegion swordSpriteSheet;
     //#endregion
 
     //#region NONFINAL FIELDS
@@ -103,11 +114,42 @@ public class Player extends BoxObstacle {
      * The remaining time in seconds until the player can attack again.
      */
     private int attackCooldownRemaining;
+    /**
+     * The remaining time in seconds until the player can transform again.
+     */
+    private int transformCooldownRemaining;
     private int hitCooldownRemaining;
 
     /** The player's form: 0 is Momo, 1 is Chiyo */
     private int form;
 
+    //#endregion
+
+    //#region TEXTURE GETTERS AND SETTERS
+    /**
+     * Returns the {@link com.badlogic.gdx.graphics.g2d.TextureRegion} of the Momo texture.
+     *
+     * @return the {@link com.badlogic.gdx.graphics.g2d.TextureRegion} of the Momo texture.
+     */
+    public TextureRegion getMomoTexture() {
+        return momoTexture;
+    }
+    /**
+     * Returns the {@link com.badlogic.gdx.graphics.g2d.TextureRegion} of the Chiyo texture.
+     *
+     * @return the {@link com.badlogic.gdx.graphics.g2d.TextureRegion} of the Chiyo texture.
+     */
+    public TextureRegion getChiyoTexture() {
+        return chiyoTexture;
+    }
+    /**
+     * Gets the sprite sheet containing the sword animation frames.
+     *
+     * @return the sprite sheet containing the sword animation frames
+     */
+    public TextureRegion getSwordSpriteSheet() {
+        return swordSpriteSheet;
+    }
     //#endregion
 
     //#region GETTERS AND SETTERS
@@ -127,15 +169,6 @@ public class Player extends BoxObstacle {
      */
     public Vector2 getScale() {
         return scale;
-    }
-
-    /**
-     * Gets the sprite sheet containing the sword animation frames.
-     *
-     * @return the sprite sheet containing the sword animation frames
-     */
-    public TextureRegion getSwordSpriteSheet() {
-        return swordSpriteSheet;
     }
     /**
      * Gets the lifespan of the sword attack animation in seconds.
@@ -167,6 +200,14 @@ public class Player extends BoxObstacle {
      */
     public int getAttackCooldown() {
         return attackCooldown;
+    }
+    /**
+     * Gets the transform cooldown in seconds.
+     *
+     * @return the attack cooldown
+     */
+    public int getTransformCooldown() {
+        return transformCooldown;
     }
     /**
      * Returns the x-component of the current linear velocity of the body.
@@ -340,6 +381,21 @@ public class Player extends BoxObstacle {
     }
 
     /**
+     * Returns the remaining time in seconds until the player can transform again.
+     * @return the remaining time in seconds
+     */
+    public int getTransformCooldownRemaining() {
+        return transformCooldownRemaining;
+    }
+    /**
+     * Sets the remaining time in seconds until the player can transform again.
+     * @param transformCooldownRemaining the remaining time in seconds
+     */
+    public void setTransformCooldownRemaining(int transformCooldownRemaining) {
+        this.transformCooldownRemaining = transformCooldownRemaining;
+    }
+
+    /**
      * Returns the remaining time in seconds until the player can attack again.
      * @return the remaining time in seconds
      */
@@ -386,6 +442,9 @@ public class Player extends BoxObstacle {
         this.momoTexture = new TextureRegion(assets.getEntry(momoTextureAsset, Texture.class));
         this.momoImageWidth = json.getFloat("momoImageWidth");
         this.momoImageHeight = json.getFloat("momoImageHeight");
+        this.chiyoTexture = new TextureRegion(assets.getEntry(json.getString("chiyoTextureAsset"), Texture.class));
+        this.chiyoImageWidth = json.getFloat("chiyoImageWidth");
+        this.chiyoImageHeight = json.getFloat("chiyoImageHeight");
         this.scale = new Vector2(json.getFloat("drawScaleX"), json.getFloat("drawScaleY"));
 
         //Position and Movement
@@ -400,6 +459,7 @@ public class Player extends BoxObstacle {
         //Attacking
         this.attackPower = json.getInt("attackPower");
         this.attackCooldown = json.getInt("attackCooldown");
+        this.transformCooldown = json.getInt("transformCooldown");
         this.attackOffset = json.getFloat("attackOffset");
         this.swordRadius = json.getFloat("swordRadius");
         this.attackLifespan = json.getFloat("attackLifespan");
