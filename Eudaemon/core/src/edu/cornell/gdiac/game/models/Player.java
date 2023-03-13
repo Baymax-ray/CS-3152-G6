@@ -403,7 +403,7 @@ public class Player extends BoxObstacle {
         this.attackOffset = json.getFloat("attackOffset");
         this.swordRadius = json.getFloat("swordRadius");
         this.attackLifespan = json.getFloat("attackLifespan");
-        this.swordSpriteSheet = new TextureRegion(assets.getEntry( "platform:heart", Texture.class));
+        this.swordSpriteSheet = new TextureRegion(assets.getEntry( "chiyo:swordAttack", Texture.class));
 
 
         //Other Information
