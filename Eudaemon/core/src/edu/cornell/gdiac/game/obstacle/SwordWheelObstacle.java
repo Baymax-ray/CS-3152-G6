@@ -1,10 +1,12 @@
 package edu.cornell.gdiac.game.obstacle;
 
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.utils.Timer;
+import edu.cornell.gdiac.game.GameCanvas;
 import edu.cornell.gdiac.game.models.Player;
 
 public class SwordWheelObstacle extends WheelObstacle {
@@ -39,7 +41,7 @@ public class SwordWheelObstacle extends WheelObstacle {
     //</editor-fold>
 
     public SwordWheelObstacle(float x, float y, float radius, final Player player, float lifespan, float density, Vector2 scale, TextureRegion spriteSheet) {
-        super(x,y,radius * 3.0f);
+        super(x,y,radius);
         this.player = player;
 
         setName("sword");
@@ -92,5 +94,12 @@ public class SwordWheelObstacle extends WheelObstacle {
             TextureRegion current = animation.getKeyFrame(currentFrame); // Gets the current frame of the animation
             setTexture(current);
         }
+    }
+
+    @Override
+    public void draw(GameCanvas canvas) {
+        float sx = 2*getRadius()/this.texture.getRegionWidth(); // size in world coordinates / texture coordinates
+        float sy = 2*getRadius()/this.texture.getRegionHeight();
+        canvas.draw(texture, Color.WHITE, origin.x, origin.y, getX(), getY(), getAngle(), sx, sy);
     }
 }
