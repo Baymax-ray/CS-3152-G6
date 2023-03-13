@@ -39,6 +39,7 @@ public class ActionController {
         boolean jumpPressed = playerAction.contains(Action.JUMP);
         boolean attackPressed = playerAction.contains(Action.ATTACK);
         boolean dashPressed = playerAction.contains(Action.DASH);
+        boolean transformPressed = playerAction.contains(Action.TRANSFORM);
         boolean downPressed = playerAction.contains(Action.LOOK_DOWN);
         boolean upPressed = playerAction.contains(Action.LOOK_UP);
         boolean rightPressed = playerAction.contains(Action.MOVE_RIGHT);
@@ -50,9 +51,19 @@ public class ActionController {
         if (attackCooldownRemaining > 0){
             player.setAttackCooldownRemaining(attackCooldownRemaining - 1);
         }
+        int transformCooldownRemaining = player.getTransformCooldownRemaining();
+        if (transformCooldownRemaining > 0){
+            player.setTransformCooldownRemaining(transformCooldownRemaining - 1);
+        }
         //#endregion
 
         //#region Direction
+        if (player.isFacingRight()){
+            player.setAngleFacing(0);
+        }
+        else{
+            player.setAngleFacing(180);
+        }
         if ((rightPressed && !leftPressed && !upPressed && !downPressed) || (rightPressed && !leftPressed && upPressed && downPressed)){
             player.setAngleFacing(0);
             player.setFacingRight(true);
@@ -83,9 +94,6 @@ public class ActionController {
             player.setAngleFacing(315);
             player.setFacingRight(true);
         }
-
-
-
         //#endregion
 
         //#region Right Left Movement
@@ -120,10 +128,26 @@ public class ActionController {
         player.setVelocity(x,y);
         //#endregion
 
+        //#region Form Switching
+        if (transformPressed && player.getTransformCooldownRemaining() == 0){
+            player.setTransformCooldownRemaining(player.getTransformCooldown());
+            player.setForm();
+        }
+        //#endregion
+
         //#region Sword Attack
-        if (attackPressed && player.getAttackCooldownRemaining() == 0){
+        if (attackPressed && player.getForm() == 1 && player.getAttackCooldownRemaining() == 0){
             player.setAttackCooldownRemaining(player.getAttackCooldown());
             createSword();
+        }
+        //#endregion
+
+        //#region Textures and Animation
+        if (player.getForm() == 0){
+            player.setTexture(player.getMomoTexture());
+        }
+        else{
+            player.setTexture(player.getChiyoTexture());
         }
         //#endregion
     }
