@@ -156,7 +156,8 @@ public class ActionController {
      * Add a new sword attack to the world and send it in the right direction.
      */
     private void createSword() {
-        float currOffset = player.getAttackOffset() * (player.isFacingRight() ? 1 : -1);
+//        float currOffset = player.getAttackOffset() * (player.isFacingRight() ? 1 : -1);
+        float currOffset = player.getAttackOffset();
         int angleFacing = player.getAngleFacing();
         float x = player.getX() + currOffset;
         float y = player.getY();
@@ -192,6 +193,7 @@ public class ActionController {
         level.addQueuedObject(sword);
     }
     //#endregion
+
     /**
      * Bridges the gap between ActionController's player and the display of hearts in UIOverlay
      */
