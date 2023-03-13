@@ -2,12 +2,15 @@ package edu.cornell.gdiac.game.models;
 
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.math.Rectangle;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
 import com.badlogic.gdx.utils.JsonValue;
 import edu.cornell.gdiac.assets.AssetDirectory;
 import edu.cornell.gdiac.game.GameCanvas;
 import edu.cornell.gdiac.game.obstacle.Obstacle;
 import edu.cornell.gdiac.util.PooledList;
+
+import java.util.Iterator;
 
 public class Level {
 
@@ -49,8 +52,13 @@ public class Level {
 
 
     //#region NONFINAL FIELDS
+    private World world;
+
     /** Queue for adding objects */
-    protected PooledList<Obstacle> addQueue = new PooledList<Obstacle>();
+    private PooledList<Obstacle> addQueue;
+
+    private PooledList<Obstacle> objects;
+
     /**
      * Whether this level has been completed
      */
@@ -69,6 +77,11 @@ public class Level {
     //#endregion
 
     //#region GETTERS & SETTERS
+
+
+    public World getWorld() {
+        return world;
+    }
 
     public float getGravity() {
         return gravity;
@@ -142,6 +155,18 @@ public class Level {
         assert inBounds(obj) : "Object is not in bounds";
         addQueue.add(obj);
     }
+
+
+    /**
+     * Immediately adds the object to the physics world
+     *
+     * param obj The object to add
+     */
+    public void addObject(Obstacle obj) {
+        assert inBounds(obj) : "Object is not in bounds";
+        objects.add(obj);
+        obj.activatePhysics(world);
+    }
     /**
      * Returns true if the object is in bounds.
      *
@@ -161,12 +186,34 @@ public class Level {
     //#endregion
 
     public void update(float delta){
+        while (!addQueue.isEmpty()) {
+            addObject(addQueue.poll());
+        }
 
+
+        world.step(delta, 6, 2);
+
+        // Garbage collect the deleted objects.
+        // Note how we use the linked list nodes to delete O(1) in place.
+        // This is O(n) without copying.
+        Iterator<PooledList<Obstacle>.Entry> iterator = objects.entryIterator();
+        while (iterator.hasNext()) {
+            PooledList<Obstacle>.Entry entry = iterator.next();
+            Obstacle obj = entry.getValue();
+            if (obj.isRemoved()) {
+                obj.deactivatePhysics(world);
+                entry.remove();
+            } else {
+                // Note that update is called last!
+                obj.update(delta);
+            }
+        }
     }
 
     public void draw(GameCanvas canvas) {
         canvas.getCamera().position.setZero(); // set to some other position to follow player;
         canvas.getCamera().setToOrtho(false, cameraWidth, cameraHeight);
+
 //        canvas.draw(backgroundTexture, 0, 0);
 
         for (int y = 0; y < tilemap.length; y++) {
@@ -180,9 +227,12 @@ public class Level {
         }
 
         player.draw(canvas);
+        for (Obstacle obj : objects) {
+            obj.draw(canvas);
+        }
     }
 
-    public void activatePhysics(World world) {
+    public void activatePhysics() {
         for (int y = 0; y < tilemap.length; y++) {
             int[] row = tilemap[y];
             for (int x = 0; x < tilemap.length; x++) {
@@ -235,8 +285,9 @@ public class Level {
 //        String backgroundAsset = json.getString("backgroundAsset");
 //        this.backgroundTexture = assets.get(backgroundAsset);
 
-
+        this.world = new World(new Vector2(0, gravity), true);
         this.player = new Player(json.get("player"), assets);
+
 
         // TODO: need more than 0, ideally
         this.enemies = new Enemy[0];
@@ -246,6 +297,9 @@ public class Level {
         this.bodyDef.active = false;
 
         this.fixtureDef = new FixtureDef();
+
+        this.addQueue = new PooledList<>();
+        this.objects = new PooledList<>();
     }
 
 }

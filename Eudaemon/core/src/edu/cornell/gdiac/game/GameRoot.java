@@ -16,7 +16,9 @@ public class GameRoot extends Game implements ScreenListener {
 	public void create() {
 		this.canvas = new GameCanvas();
 		this.state = loadState();
-		this.levelScreen = new LevelScreen(this.state.getLevel(0), this.state.getActionBindings(), canvas);
+		this.levelScreen = new LevelScreen(this.state.getLevel(0), this.state.getActionBindings());
+		levelScreen.setScreenListener(this);
+		levelScreen.setCanvas(canvas);
 		setScreen(levelScreen);
 	}
 

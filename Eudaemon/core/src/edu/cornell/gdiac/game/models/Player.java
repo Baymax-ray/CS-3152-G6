@@ -9,9 +9,9 @@ import com.badlogic.gdx.utils.JsonValue;
 import edu.cornell.gdiac.assets.AssetDirectory;
 import edu.cornell.gdiac.game.GameCanvas;
 import edu.cornell.gdiac.game.obstacle.BoxObstacle;
-import edu.cornell.gdiac.game.obstacle.SwordWheelObstacle;
+import edu.cornell.gdiac.game.obstacle.CapsuleObstacle;
 
-public class Player{
+public class Player extends BoxObstacle {
 
     //#region FINAL FIELDS
 
@@ -66,14 +66,9 @@ public class Player{
      */
     private final Vector2 scale;
 
-    private final BodyDef bodyDef;
-    private final FixtureDef fixtureDef;
-
     //#endregion
 
     //#region NONFINAL FIELDS
-
-    private Body body;
 
     private float hearts;
     private float spirit;
@@ -110,7 +105,6 @@ public class Player{
     private int attackCooldownRemaining;
     private int hitCooldownRemaining;
 
-    private TextureRegion currentTexture;
     /** The player's form: 0 is Momo, 1 is Chiyo */
     private int form;
 
@@ -355,33 +349,39 @@ public class Player{
     //#endregion
 
     public void draw(GameCanvas canvas) {
-        float x = isFacingRight ? getX() : getX()+momoImageWidth;
-        float sx = isFacingRight ? momoImageWidth / currentTexture.getRegionWidth() : -1 * momoImageWidth / currentTexture.getRegionWidth();
-        canvas.draw(currentTexture, Color.WHITE, 0, 0, x, getY(), 0, sx, momoImageHeight / currentTexture.getRegionHeight());
+        float x = getX();
+        float y = getY();
+
+        float ox = this.texture.getRegionWidth()/2;
+        float oy = this.texture.getRegionHeight()/2;
+
+        float sx = (isFacingRight ? 1 : -1) * momoImageWidth / this.texture.getRegionWidth();
+        float sy = momoImageHeight / this.texture.getRegionHeight();
+
+        canvas.draw(this.texture, Color.WHITE, ox, oy, x, y, 0, sx, sy);
     }
 
-    public void activatePhysics(World world) {
-        bodyDef.active = true;
-        body = world.createBody(bodyDef);
-        body.setUserData(this);
-
-        PolygonShape hitbox = new PolygonShape();
-        hitbox.set(new float[]{
-                momoImageWidth * (1-hitboxWidthMult), momoImageHeight * (1-hitboxHeightMult),
-                momoImageWidth * hitboxWidthMult, momoImageHeight * (1-hitboxHeightMult),
-                momoImageWidth * hitboxWidthMult, momoImageHeight * hitboxHeightMult,
-                momoImageWidth * (1-hitboxWidthMult), momoImageHeight * hitboxHeightMult,
-        });
-
-        fixtureDef.shape = hitbox;
-        body.createFixture(fixtureDef);
+    public boolean activatePhysics(World world) {
+        if (!super.activatePhysics(world)) return false;
+//        body = world.createBody(bodyDef);
+//        body.setUserData(this);
+//
+//        PolygonShape hitbox = new PolygonShape();
+//        hitbox.set(new float[]{
+//                momoImageWidth * (1-hitboxWidthMult), momoImageHeight * (1-hitboxHeightMult),
+//                momoImageWidth * hitboxWidthMult, momoImageHeight * (1-hitboxHeightMult),
+//                momoImageWidth * hitboxWidthMult, momoImageHeight * hitboxHeightMult,
+//                momoImageWidth * (1-hitboxWidthMult), momoImageHeight * hitboxHeightMult,
+//        });
+//
+//        fixtureDef.shape = hitbox;
+//        body.createFixture(fixtureDef);
         body.setGravityScale(2.0f);
-        //create fixtures for collisions
-
-        // ^ fixtures here
+        return true;
     }
 
     public Player(JsonValue json, AssetDirectory assets) {
+        super(json.getFloat("startX"), json.getFloat("startY"), json.getFloat("hitboxWidth"), json.getFloat("hitboxHeight"));
         String momoTextureAsset = json.getString("momoTextureAsset");
         this.momoTexture = new TextureRegion(assets.getEntry(momoTextureAsset, Texture.class));
         this.momoImageWidth = json.getFloat("momoImageWidth");
@@ -403,7 +403,7 @@ public class Player{
         this.attackOffset = json.getFloat("attackOffset");
         this.swordRadius = json.getFloat("swordRadius");
         this.attackLifespan = json.getFloat("attackLifespan");
-        this.swordSpriteSheet = new TextureRegion(assets.getEntry( "chiyo:swordAttack", Texture.class));
+        this.swordSpriteSheet = new TextureRegion(assets.getEntry( "platform:heart", Texture.class));
 
 
         //Other Information
@@ -432,15 +432,7 @@ public class Player{
         this.attackCooldownRemaining = 0;
         this.hitCooldownRemaining = 0;
 
-        this.currentTexture = momoTexture;
-
-        this.bodyDef = new BodyDef();
-        bodyDef.active = false;
-        bodyDef.type = BodyDef.BodyType.DynamicBody;
-        bodyDef.position.x  = startX;
-        bodyDef.position.y  = startY;
-
-        this.fixtureDef = new FixtureDef();
+        this.texture = momoTexture;
     }
 
 }

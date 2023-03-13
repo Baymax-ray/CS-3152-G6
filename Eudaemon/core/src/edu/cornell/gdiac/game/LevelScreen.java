@@ -26,10 +26,9 @@ public class LevelScreen implements Screen {
 
     private ActionController actionController;
 
-    private World world;
     private CollisionController collisionController;
 
-    public LevelScreen(Level level, ActionBindings actionBindings, GameCanvas canvas) {
+    public LevelScreen(Level level, ActionBindings actionBindings) {
         this.level = level;
 
         this.active = false;
@@ -46,11 +45,9 @@ public class LevelScreen implements Screen {
 
         actionController = new ActionController(level);
 
-        world = new World(new Vector2(0, level.getGravity()), true);
         collisionController = new CollisionController(level);
-        world.setContactListener(collisionController);
-        level.activatePhysics(world);
-        this.setCanvas(canvas);
+        level.getWorld().setContactListener(collisionController);
+        level.activatePhysics();
     }
 
 
@@ -60,8 +57,7 @@ public class LevelScreen implements Screen {
             aiControllers.get(i).setEnemyAction(enemyActions.get(i));
         }
         actionController.resolveActions(playerAction, enemyActions);
-        // TODO: pull magic numbers below to json
-        world.step(delta, 6, 2);
+
         level.update(delta);
     }
 
