@@ -446,6 +446,7 @@ public class Player extends BoxObstacle {
         this.chiyoImageWidth = json.getFloat("chiyoImageWidth");
         this.chiyoImageHeight = json.getFloat("chiyoImageHeight");
         this.scale = new Vector2(json.getFloat("drawScaleX"), json.getFloat("drawScaleY"));
+        this.swordSpriteSheet = new TextureRegion(assets.getEntry( "chiyo:swordAttack", Texture.class));
 
         //Position and Movement
         this.startX = json.getFloat("startX");
@@ -463,7 +464,6 @@ public class Player extends BoxObstacle {
         this.attackOffset = json.getFloat("attackOffset");
         this.swordRadius = json.getFloat("swordRadius");
         this.attackLifespan = json.getFloat("attackLifespan");
-        this.swordSpriteSheet = new TextureRegion(assets.getEntry( "platform:heart", Texture.class));
 
 
         //Other Information

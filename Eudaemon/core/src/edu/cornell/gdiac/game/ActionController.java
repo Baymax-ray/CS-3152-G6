@@ -133,9 +133,10 @@ public class ActionController {
             player.setTransformCooldownRemaining(player.getTransformCooldown());
             player.setForm();
         }
+        //#endregion
 
         //#region Sword Attack
-        if (attackPressed && player.getAttackCooldownRemaining() == 0){
+        if (attackPressed && player.getForm() == 1 && player.getAttackCooldownRemaining() == 0){
             player.setAttackCooldownRemaining(player.getAttackCooldown());
             createSword();
         }
