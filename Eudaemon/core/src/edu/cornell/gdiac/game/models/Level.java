@@ -1,12 +1,14 @@
 package edu.cornell.gdiac.game.models;
 
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
 import com.badlogic.gdx.utils.JsonValue;
 import edu.cornell.gdiac.assets.AssetDirectory;
 import edu.cornell.gdiac.game.GameCanvas;
+import edu.cornell.gdiac.game.UIOverlay;
 import edu.cornell.gdiac.game.obstacle.Obstacle;
 import edu.cornell.gdiac.util.PooledList;
 
@@ -47,6 +49,8 @@ public class Level {
     private final float cameraHeight;
 
     private final float gravity;
+
+    private UIOverlay uiElements;
 
     //#endregion
 
@@ -210,7 +214,7 @@ public class Level {
         }
     }
 
-    public void draw(GameCanvas canvas) {
+    public void draw(GameCanvas canvas, float dt) {
         canvas.getCamera().position.setZero(); // set to some other position to follow player;
         canvas.getCamera().setToOrtho(false, cameraWidth, cameraHeight);
 
@@ -225,8 +229,8 @@ public class Level {
                 canvas.draw(tile.getTexture(), Color.WHITE, 0, 0, tileToLevelCoordinatesX(x), tileToLevelCoordinatesY(y), 0, tileSize / tile.getTexture().getRegionWidth(), tileSize / tile.getTexture().getRegionHeight());
             }
         }
-
         player.draw(canvas);
+        uiElements.draw(dt, canvas);
         for (Obstacle obj : objects) {
             obj.draw(canvas);
         }
@@ -287,6 +291,8 @@ public class Level {
 
         this.world = new World(new Vector2(0, gravity), true);
         this.player = new Player(json.get("player"), assets);
+        this.uiElements = new UIOverlay(json.get("player"), assets, player.getHearts(), player.getSpirit());
+
 
 
         // TODO: need more than 0, ideally

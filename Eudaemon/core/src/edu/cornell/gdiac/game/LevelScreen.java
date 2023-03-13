@@ -1,9 +1,14 @@
 package edu.cornell.gdiac.game;
 
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Array;
+import com.badlogic.gdx.utils.JsonValue;
+import edu.cornell.gdiac.assets.AssetDirectory;
 import edu.cornell.gdiac.game.models.*;
 import edu.cornell.gdiac.util.ScreenListener;
 
@@ -27,6 +32,13 @@ public class LevelScreen implements Screen {
     private ActionController actionController;
 
     private CollisionController collisionController;
+    /** Texture for hearts*/
+    private TextureRegion heartRegion;
+
+    /** Texture for empty spirit bar*/
+    private TextureRegion emptySpiritBar;
+    /** Texture for filled spirit bar*/
+    private TextureRegion filledSpiritBar;
 
     public LevelScreen(Level level, ActionBindings actionBindings) {
         this.level = level;
@@ -64,7 +76,7 @@ public class LevelScreen implements Screen {
     public void draw(float delta) {
         canvas.clear();
         canvas.begin();
-        this.level.draw(canvas);
+        this.level.draw(canvas, delta);
         canvas.end();
     }
 

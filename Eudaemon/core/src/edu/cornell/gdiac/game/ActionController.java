@@ -192,6 +192,24 @@ public class ActionController {
         level.addQueuedObject(sword);
     }
     //#endregion
+    /**
+     * Bridges the gap between ActionController's player and the display of hearts in UIOverlay
+     */
+    public float getPlayerHearts(){
+        //System.out.println("get heart is called");
+        if(player != null) {
+            //System.out.println("avatar is initialized");
+            return player.getHearts();
+        }else return 10f;
+    }
+    /**
+     * Bridges the gap between ActionController's player and the display of spirit in UIOverlay
+     */
+    public float getPlayerSpirit(){
+        if(player != null) {
+            return player.getSpirit();
+        }else return 10f;
+    }
 }
 
 

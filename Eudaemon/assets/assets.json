@@ -27,11 +27,7 @@
         "platform:bullet":  "platform/bullet.png",
         "platform:heart": "platform/heart.png",
         "platform:emptyspirit": "platform/emptyspirit.png",
-        "platform:spirit2": "platform/spirit2.png",
-        "platform:spirit4": "platform/spirit4.png",
-        "platform:spirit6": "platform/spirit6.png",
-        "platform:spirit8": "platform/spirit8.png",
-        "platform:spirit10": "platform/spirit10.png"
+        "platform:filledspirit": "platform/filledspirit.png"
     },
     "jsons"  : {
         "constants": "constants.json",
