@@ -41,15 +41,9 @@ public class GoombaAI extends AIController{
         // Pathfinding
         markGoal();
         MoveAlongPathToGoal();
-        switch(move){
-            case STAY:
-                break;
-            case MOVE_LEFT:
-                
-                break;
-            case MOVE_RIGHT:
-                break;
-        }
+
+        this.enemy.setMovement(move);
+        this.enemy.applyForce();
 
     }
     public boolean checkDetection(){
