@@ -115,9 +115,9 @@ public class GameCanvas {
 
 		
 		// Set the projection matrix (for proper scaling)
-		camera = new OrthographicCamera(getWidth(),getHeight());
+		camera = new OrthographicCamera(getWidth()/2.0f,getHeight()/2.0f);
 		camera.setToOrtho(false);
-
+		camera.position.set(getWidth()/2.0f,getHeight()/2.0f,0);
 
 
 
@@ -261,7 +261,7 @@ public class GameCanvas {
 	 * This method raises an IllegalStateException if called while drawing is
 	 * active (e.g. in-between a begin-end pair).
 	 *
-	 * @param fullscreen Whether this canvas should change to fullscreen.
+	 * @param value Whether this canvas should change to fullscreen.
 	 * @param desktop 	 Whether to use the current desktop resolution
 	 */	 
 	public void setFullscreen(boolean value, boolean desktop) {
@@ -386,6 +386,19 @@ public class GameCanvas {
 	    active = DrawPass.STANDARD;
     }
 
+	public void setGameplayCamera(float x, float y, float width, float height) {
+		getCamera().position.set(x, y, 0); // set to some other position to follow player;
+		getCamera().setToOrtho(false, width, height);
+		spriteBatch.setProjectionMatrix(camera.combined);
+	}
+
+	public void setOverlayCamera() {
+		getCamera().position.set(getWidth() / 2, getHeight() / 2, 0); // set to some other position to follow player;
+		getCamera().setToOrtho(false, getWidth(), getHeight());
+		spriteBatch.setProjectionMatrix(camera.combined);
+	}
+
+
 	/**
 	 * Ends a drawing sequence, flushing textures to the graphics card.
 	 */
@@ -405,7 +418,6 @@ public class GameCanvas {
 	 * at the given coordinates.
 	 *
 	 * @param image The texture to draw
-	 * @param tint  The color tint
 	 * @param x 	The x-coordinate of the bottom left corner
 	 * @param y 	The y-coordinate of the bottom left corner
 	 */
@@ -558,7 +570,6 @@ public class GameCanvas {
 	 * at the given coordinates.
 	 *
 	 * @param region The texture to draw
-	 * @param tint  The color tint
 	 * @param x 	The x-coordinate of the bottom left corner
 	 * @param y 	The y-coordinate of the bottom left corner
 	 */
@@ -583,7 +594,7 @@ public class GameCanvas {
 	 * the texture will be unscaled.  The bottom left of the texture will be positioned
 	 * at the given coordinates.
 	 *region
-	 * @param image The texture to draw
+	 * @param region The texture to draw
 	 * @param tint  The color tint
 	 * @param x 	The x-coordinate of the bottom left corner
 	 * @param y 	The y-coordinate of the bottom left corner
@@ -685,11 +696,11 @@ public class GameCanvas {
 	 * The local transformations in this method are applied in the following order: 
 	 * scaling, then rotation, then translation (e.g. placement at (sx,sy)).
 	 *
-	 * @param image The region to draw
+	 * @param region The region to draw
 	 * @param tint  The color tint
 	 * @param ox 	The x-coordinate of texture origin (in pixels)
 	 * @param oy 	The y-coordinate of texture origin (in pixels)
-	 * @param transform  The image transform
+	 * @param affine  The image transform
 	 */	
 	public void draw(TextureRegion region, Color tint, float ox, float oy, Affine2 affine) {
 		if (active != DrawPass.STANDARD) {
@@ -720,7 +731,6 @@ public class GameCanvas {
 	 * scaling, then rotation, then translation (e.g. placement at (sx,sy)).
 	 *
 	 * @param region The polygon to draw
-	 * @param tint  The color tint
 	 * @param x 	The x-coordinate of the bottom left corner
 	 * @param y 	The y-coordinate of the bottom left corner
 	 */	
@@ -865,7 +875,7 @@ public class GameCanvas {
 	 * @param tint  The color tint
 	 * @param ox 	The x-coordinate of texture origin (in pixels)
 	 * @param oy 	The y-coordinate of texture origin (in pixels)
-	 * @param transform  The image transform
+	 * @param affine  The image transform
 	 */	
 	public void draw(PolygonRegion region, Color tint, float ox, float oy, Affine2 affine) {
 		if (active != DrawPass.STANDARD) {

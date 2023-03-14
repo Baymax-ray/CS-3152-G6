@@ -1,5 +1,7 @@
 package edu.cornell.gdiac.game;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.utils.Array;
 import edu.cornell.gdiac.game.models.*;
 import edu.cornell.gdiac.game.obstacle.SwordWheelObstacle;
@@ -36,7 +38,7 @@ public class ActionController {
      */
     private void resolvePlayerActions(EnumSet<Action> playerAction){
         //#region Button Inputs
-        boolean jumpPressed = playerAction.contains(Action.JUMP);
+        boolean jumpPressed = Gdx.input.isKeyPressed(Input.Keys.SPACE);
         boolean attackPressed = playerAction.contains(Action.ATTACK);
         boolean dashPressed = playerAction.contains(Action.DASH);
         boolean transformPressed = playerAction.contains(Action.TRANSFORM);
@@ -117,12 +119,14 @@ public class ActionController {
         }
         else if (rightPressed){
             if (x < max_speed){
-                x = Math.min(x+h_acc, max_speed);
+                //x = Math.min(x+h_acc, max_speed);
+                x = Math.min(x+h_acc, 1.5f);
             }
         }
         else if (leftPressed){
             if (x > -max_speed){
-                x = Math.max(x-h_acc, -max_speed);
+                //x = Math.max(x-h_acc, -max_speed);
+                x = Math.max(x-h_acc, -1.5f);
             }
         }
         player.setVelocity(x,y);
@@ -150,6 +154,11 @@ public class ActionController {
             player.setTexture(player.getChiyoTexture());
         }
         //#endregion
+
+        //jump
+        if (jumpPressed) {
+            player.setVelocity(player.getBodyVelocityX(), 1);
+        }
     }
 
     /**
