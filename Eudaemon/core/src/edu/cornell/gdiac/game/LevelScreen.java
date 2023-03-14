@@ -46,11 +46,11 @@ public class LevelScreen implements Screen {
         this.active = false;
         this.inputController = new InputController(actionBindings);
         this.playerAction = EnumSet.noneOf(Action.class);
-        this.aiControllers = new Array<>(level.getEnemies().length);
-        this.enemyActions = new Array<>(level.getEnemies().length);
-
-        for (int i = 0; i < level.getEnemies().length; i++) {
-            aiControllers.add(new AIController(i, level));
+        Enemy[] enemies=level.getEnemies();
+        this.aiControllers = new Array<>(enemies.length);
+        this.enemyActions = new Array<>(enemies.length);
+        for (int i = 0; i < enemies.length; i++) {
+            if (enemies[i].getType()=="Goomba"){aiControllers.add(new GoombaAI(i, level));}
             // initializes an empty enumset with the right type
             enemyActions.add(EnumSet.noneOf(EnemyAction.class));
         }

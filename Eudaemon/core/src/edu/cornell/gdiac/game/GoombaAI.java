@@ -6,14 +6,13 @@ import edu.cornell.gdiac.game.models.Level;
 
 import java.util.EnumSet;
 
-public abstract class AIController {
+public class GoombaAI extends AIController{
     private Enemy enemy;
     private Level level;
-
-    public AIController(int ii, Level level) {
-        this.enemy = level.getEnemies()[ii];
-        this.level = level;
+    public GoombaAI(int ii, Level level) {
+        super(ii,level);
     }
+    public void setEnemyAction(EnumSet<EnemyAction> enemyAction){
 
-    public abstract void setEnemyAction(EnumSet<EnemyAction> enemyAction);
+    }
 }

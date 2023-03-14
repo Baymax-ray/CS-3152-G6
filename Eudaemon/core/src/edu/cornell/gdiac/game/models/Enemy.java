@@ -11,7 +11,7 @@ import edu.cornell.gdiac.game.obstacle.CapsuleObstacle;
 public class Enemy extends CapsuleObstacle implements ContactListener {
 
     //#region FINAL FIELDS
-
+    private final String type;
     private final float startX;
     private final float startY;
 
@@ -48,6 +48,9 @@ public class Enemy extends CapsuleObstacle implements ContactListener {
     //TODO: Add texture fields
 
     //#endregion
+    public String getType() {
+        return type;
+    }
 
 
     public Enemy(JsonValue json) {
