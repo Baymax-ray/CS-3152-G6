@@ -402,6 +402,10 @@ public class Player extends BoxObstacle {
     public int getAttackCooldownRemaining() {
         return attackCooldownRemaining;
     }
+
+    public boolean isGrounded() {return isGrounded;}
+
+    public void setGrounded(boolean value) {isGrounded = value;}
     //#endregion
 
     public void draw(GameCanvas canvas) {
