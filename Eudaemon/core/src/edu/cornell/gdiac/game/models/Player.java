@@ -131,6 +131,14 @@ public class Player extends BoxObstacle {
     /** The amount by which the player should move when dashing*/
     private final float dash;
 
+    private final JsonValue data;
+
+    /** The physics shape of this object */
+    private PolygonShape sensorShape;
+
+    /** Identifier to allow us to track the sensor in ContactListener */
+    private final String sensorName;
+
     //#endregion
 
     //#region TEXTURE GETTERS AND SETTERS
@@ -414,6 +422,17 @@ public class Player extends BoxObstacle {
     public boolean isGrounded() {return isGrounded;}
 
     public void setGrounded(boolean value) {isGrounded = value;}
+
+    /**
+     * Returns the name of the ground sensor
+     *
+     * This is used by ContactListener
+     *
+     * @return the name of the ground sensor
+     */
+    public String getSensorName() {
+        return sensorName;
+    }
     //#endregion
 
     public void draw(GameCanvas canvas) {
@@ -427,6 +446,7 @@ public class Player extends BoxObstacle {
         float sy = momoImageHeight / this.texture.getRegionHeight();
 
         canvas.draw(this.texture, Color.WHITE, ox, oy, x, y, 0, sx, sy);
+        System.out.println(isGrounded());
     }
 
     public boolean activatePhysics(World world) {
@@ -445,6 +465,20 @@ public class Player extends BoxObstacle {
 //        fixtureDef.shape = hitbox;
 //        body.createFixture(fixtureDef);
         body.setGravityScale(2.0f);
+        Vector2 sensorCenter = new Vector2(0, -getHeight() / 2);
+        FixtureDef sensorDef = new FixtureDef();
+        sensorDef.density = data.getFloat("density",0);
+        sensorDef.isSensor = true;
+        sensorShape = new PolygonShape();
+        JsonValue sensorjv = data.get("sensor");
+        sensorShape.setAsBox(0.6f*getWidth()/2.0f,
+                0.05f, sensorCenter, 0.0f);
+        sensorDef.shape = sensorShape;
+
+        // Ground sensor to represent our feet
+        Fixture sensorFixture = body.createFixture( sensorDef );
+        sensorFixture.setUserData(getSensorName());
+
         return true;
     }
 
@@ -519,6 +553,8 @@ public class Player extends BoxObstacle {
         this.hitCooldownRemaining = 0;
 
         this.texture = momoTexture;
+        this.data = json;
+        sensorName = "PlayerGroundSensor";
     }
 
 }
