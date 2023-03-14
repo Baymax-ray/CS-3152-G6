@@ -63,6 +63,9 @@ public class Player extends BoxObstacle {
      */
     private final Vector2 scale;
 
+    /** Cache for internal force calculations */
+    private final Vector2 forceCache = new Vector2();
+
     //#endregion
 
     //#region TEXTURES
@@ -122,6 +125,11 @@ public class Player extends BoxObstacle {
 
     /** The player's form: 0 is Momo, 1 is Chiyo */
     private int form;
+
+    /** The impulse for the character being hit by enemies */
+    private final float hit_force;
+    /** The amount by which the player should move when dashing*/
+    private final float dash;
 
     //#endregion
 
@@ -440,6 +448,18 @@ public class Player extends BoxObstacle {
         return true;
     }
 
+    /**
+     * Dash, Momo, Dash
+     *
+     * This method is now very immature. It just makes Momo to flash forward.
+     * */
+    public void dash(){
+        int direction = isFacingRight? 1: -1;
+        forceCache.set(hit_force * dash * direction, 0);
+        body.applyForce(forceCache, getPosition(), true);
+    }
+
+
     public Player(JsonValue json, AssetDirectory assets) {
         super(json.getFloat("startX"), json.getFloat("startY"), json.getFloat("hitboxWidth"), json.getFloat("hitboxHeight"));
         String momoTextureAsset = json.getString("momoTextureAsset");
@@ -460,6 +480,8 @@ public class Player extends BoxObstacle {
         horizontalAcceleration = json.getFloat("horizontalAcceleration");
         hitboxWidthMult = json.getFloat("hitboxWidthMult");
         hitboxHeightMult = json.getFloat("hitboxHeightMult");
+        hit_force = json.getFloat( "hit_force");
+        dash = json.getFloat("dash", 2000);
 
         //Attacking
         this.attackPower = json.getInt("attackPower");

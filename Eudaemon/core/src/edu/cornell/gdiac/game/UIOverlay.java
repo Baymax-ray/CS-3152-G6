@@ -2,7 +2,9 @@ package edu.cornell.gdiac.game;
 
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.graphics.g2d.freetype.FreeType;
 import com.badlogic.gdx.utils.JsonValue;
 import edu.cornell.gdiac.assets.AssetDirectory;
 import edu.cornell.gdiac.game.models.Action;
@@ -16,7 +18,7 @@ public class UIOverlay {
     /** Texture for filled spirit bar*/
     private Texture filledSpiritBar;
 
-    private GameCanvas canvas;
+    //private GameCanvas canvas;
 
     private float heartLevel;
     private float spiritLevel;
@@ -29,7 +31,7 @@ public class UIOverlay {
         this.spiritLevel = playerSpirit;
     }
 
-    public void draw(float delta, GameCanvas canvas) {
+    public void draw(GameCanvas canvas) {
         float xPos = canvas.getCamera().position.x - 500;
         for(int i=0; i < heartLevel; i++){
             canvas.draw(heartRegion, Color.WHITE, xPos,canvas.getCamera().position.y + 240, 38.4F, 32 );
