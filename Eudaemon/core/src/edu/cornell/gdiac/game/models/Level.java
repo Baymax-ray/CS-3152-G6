@@ -212,11 +212,30 @@ public class Level {
                 obj.update(delta);
             }
         }
+
+
     }
 
     public void draw(GameCanvas canvas, float dt) {
-        canvas.setGameplayCamera(0, 0, cameraWidth, cameraHeight);
-
+        canvas.getCamera().position.setZero(); // set to some other position to follow player;
+        canvas.getCamera().setToOrtho(false, cameraWidth, cameraHeight);
+        float camZone_x = 80;
+        float camZone_y = 60;
+        canvas.getCamera().zoom = 1.0f;
+//        if (Math.abs(canvas.getCamera().position.x - player.getX() *32) > camZone_x){
+//            if (canvas.getCamera().position.x > player.getX() *32)
+//                canvas.getCamera().position.set(player.getX() * 32 + camZone_x, canvas.getCamera().position.y,0);
+//
+//            else canvas.getCamera().position.set(player.getX() * 32 - camZone_x, canvas.getCamera().position.y,0);
+//        }
+//
+//
+//        if (Math.abs(canvas.getCamera().position.y - player.getY() *32) > camZone_y){
+//            if (canvas.getCamera().position.y > player.getY() *32)
+//                canvas.getCamera().position.set(canvas.getCamera().position.x, player.getY() * 32 + camZone_y,0);
+//
+//            else canvas.getCamera().position.set(canvas.getCamera().position.x, player.getY() * 32 - camZone_y,0);
+//        }
 
 //        canvas.draw(backgroundTexture, 0, 0);
 
@@ -230,13 +249,10 @@ public class Level {
             }
         }
         player.draw(canvas);
+        uiElements.draw(dt, canvas);
         for (Obstacle obj : objects) {
-
-
             obj.draw(canvas);
         }
-        canvas.setOverlayCamera();
-        uiElements.draw(dt, canvas);
     }
 
     public void activatePhysics() {

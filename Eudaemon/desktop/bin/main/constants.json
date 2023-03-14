@@ -25,8 +25,20 @@
         "momoTextureAsset": "platform:momo",
         "momoImageWidth": 0.5,
         "momoImageHeight": 0.5,
+        "chiyoTextureAsset": "platform:chiyo",
+        "chiyoImageWidth": 0.5,
+        "chiyoImageHeight": 0.5,
+        "hitboxWidthMult": 0.75,
+        "hitboxHeightMult": 0.9,
         "startX": 3,
         "startY": 4,
+        "heart": "platform:heart",
+        "emptyspirit": "platform:emptyspirit",
+        "filledspirit": "platform:filledspirit",
+        "hitboxWidth": 0.5,
+        "hitboxHeight": 0.5,
+        "maxSpeed": 2.5,
+        "horizontalAcceleration": 0.12,
         "maxHearts": 3,
         "initialHearts": 3,
         "maxSpirit": 10,
@@ -35,8 +47,14 @@
         "attackPower": 1,
         "startsFacingRight": true,
         "dashCooldown": 0.4,
-        "attackCooldown": 0.2,
-        "hitCooldown": 1.0
+        "attackCooldown": 30,
+        "transformCooldown": 15,
+        "attackOffset": 0.23,
+        "swordRadius": 0.2,
+        "attackLifespan": 0.4,
+        "hitCooldown": 1.0,
+        "drawScaleX": 32,
+        "drawScaleY": 32
       }
     }
   ]

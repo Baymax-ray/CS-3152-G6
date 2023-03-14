@@ -115,8 +115,9 @@ public class GameCanvas {
 
 		
 		// Set the projection matrix (for proper scaling)
-		camera = new OrthographicCamera(getWidth(),getHeight());
+		camera = new OrthographicCamera(getWidth()/2.0f,getHeight()/2.0f);
 		camera.setToOrtho(false);
+		camera.position.set(getWidth()/2.0f,getHeight()/2.0f,0);
 
 
 
