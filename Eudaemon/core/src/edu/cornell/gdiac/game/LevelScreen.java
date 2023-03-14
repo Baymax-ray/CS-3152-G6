@@ -32,13 +32,6 @@ public class LevelScreen implements Screen {
     private ActionController actionController;
 
     private CollisionController collisionController;
-    /** Texture for hearts*/
-    private TextureRegion heartRegion;
-
-    /** Texture for empty spirit bar*/
-    private TextureRegion emptySpiritBar;
-    /** Texture for filled spirit bar*/
-    private TextureRegion filledSpiritBar;
 
     public LevelScreen(Level level, ActionBindings actionBindings) {
         this.level = level;
@@ -76,7 +69,7 @@ public class LevelScreen implements Screen {
     public void draw(float delta) {
         canvas.clear();
         canvas.begin();
-        this.level.draw(canvas, delta);
+        this.level.draw(canvas);
         canvas.end();
     }
 

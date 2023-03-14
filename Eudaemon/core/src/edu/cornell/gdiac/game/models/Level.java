@@ -1,8 +1,6 @@
 package edu.cornell.gdiac.game.models;
 
 import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
 import com.badlogic.gdx.utils.JsonValue;
@@ -216,7 +214,7 @@ public class Level {
 
     }
 
-    public void draw(GameCanvas canvas, float dt) {
+    public void draw(GameCanvas canvas) {
         canvas.getCamera().position.setZero(); // set to some other position to follow player;
         canvas.getCamera().setToOrtho(false, cameraWidth, cameraHeight);
         float camZone_x = 80;
@@ -249,10 +247,10 @@ public class Level {
             }
         }
         player.draw(canvas);
-        uiElements.draw(dt, canvas);
         for (Obstacle obj : objects) {
             obj.draw(canvas);
         }
+        uiElements.draw(canvas);
     }
 
     public void activatePhysics() {
