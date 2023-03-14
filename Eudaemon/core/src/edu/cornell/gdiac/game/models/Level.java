@@ -215,8 +215,8 @@ public class Level {
     }
 
     public void draw(GameCanvas canvas, float dt) {
-        canvas.getCamera().position.setZero(); // set to some other position to follow player;
-        canvas.getCamera().setToOrtho(false, cameraWidth, cameraHeight);
+        canvas.setGameplayCamera(0, 0, cameraWidth, cameraHeight);
+
 
 //        canvas.draw(backgroundTexture, 0, 0);
 
@@ -230,10 +230,13 @@ public class Level {
             }
         }
         player.draw(canvas);
-        uiElements.draw(dt, canvas);
         for (Obstacle obj : objects) {
+
+
             obj.draw(canvas);
         }
+        canvas.setOverlayCamera();
+        uiElements.draw(dt, canvas);
     }
 
     public void activatePhysics() {
