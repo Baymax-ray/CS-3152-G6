@@ -257,8 +257,8 @@ public class Level {
             obj.draw(canvas);
         }
 
-        //canvas.setOverlayCamera();
-        //uiElements.draw(canvas);
+        canvas.setOverlayCamera();
+        uiElements.draw(canvas);
     }
 
     public void activatePhysics() {
