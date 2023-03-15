@@ -18,6 +18,7 @@
 package edu.cornell.gdiac.game;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
@@ -395,6 +396,7 @@ public class GameCanvas {
 	public void setGameplayCamera(float x, float y, float width, float height) {
 		getCamera().setToOrtho(false, width, height);
 		getCamera().position.set(x, y, 0); // set to some other position to follow player;
+
 		getCamera().update();
 		spriteBatch.setProjectionMatrix(camera.combined);
 	}

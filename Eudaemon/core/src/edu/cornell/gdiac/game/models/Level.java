@@ -1,5 +1,7 @@
 package edu.cornell.gdiac.game.models;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
@@ -219,13 +221,19 @@ public class Level {
 //        canvas.getCamera().position.setZero(); // set to some other position to follow player;
 //        canvas.getCamera().setToOrtho(false, cameraWidth, cameraHeight);
         canvas.setGameplayCamera(player.getX(), player.getY(), cameraWidth, cameraHeight);
+        if (Gdx.input.isKeyPressed(Input.Keys.O)) {
+            canvas.getCamera().zoom += 0.02;
+        }
+        if (Gdx.input.isKeyPressed(Input.Keys.I)) {
+            canvas.getCamera().zoom -= 0.02;
+        }
 
 
 
 
         float camZone_x = 80;
         float camZone_y = 60;
-        canvas.getCamera().zoom = 1.0f;
+
 //        if (Math.abs(canvas.getCamera().position.x - player.getX() *32) > camZone_x){
 //            if (canvas.getCamera().position.x > player.getX() *32)
 //                canvas.getCamera().position.set(player.getX() * 32 + camZone_x, canvas.getCamera().position.y,0);
@@ -334,5 +342,7 @@ public class Level {
         this.addQueue = new PooledList<>();
         this.objects = new PooledList<>();
     }
+
+
 
 }
