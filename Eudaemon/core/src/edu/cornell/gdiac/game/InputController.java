@@ -11,9 +11,12 @@ import java.util.HashMap;
 public class InputController {
 
     private final HashMap<String, Integer> inputMap;
+    private EnumSet<Action> prevAction;
+
 
     public InputController(ActionBindings bindings) {
         inputMap = bindings.getInputMap();
+        prevAction = EnumSet.noneOf(Action.class);
     }
 
     /**
@@ -23,7 +26,11 @@ public class InputController {
      * @param playerAction the current {@link EnumSet} of {@link Action} representing the player's actions
      */
     public void setPlayerAction(EnumSet<Action> playerAction) {
-        //TODO: Actually update action thx
+
+        //set previous action to the passed in actions
+        prevAction.clear();
+        prevAction.addAll(playerAction);
+
         //Clearing action set of previous actions
         playerAction.clear();
 
@@ -51,6 +58,11 @@ public class InputController {
         }
         if (Gdx.input.isButtonPressed(inputMap.get("dash"))){
             playerAction.add(Action.DASH);
+        }
+
+        //Only apply the action on the rising edge.
+        if (!prevAction.contains(Action.DEBUG) && Gdx.input.isKeyPressed(inputMap.get("debug"))) {
+            playerAction.add(Action.DEBUG);
         }
     }
 }
