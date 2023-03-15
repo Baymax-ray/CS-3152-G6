@@ -54,8 +54,38 @@
         "attackLifespan": 0.4,
         "hitCooldown": 1.0,
         "drawScaleX": 32,
-        "drawScaleY": 32
-      }
+        "drawScaleY": 32,
+        "hit_force": 5.5,
+        "dash": 2000.0
+      },
+      "enemyOne":{
+      "type":"Goomba",
+      "TextureAsset": "platform:worm",
+      "ImageWidth": 0.5,
+      "ImageHeight": 0.5,
+      "hitboxWidthMult": 0.75,
+      "hitboxHeightMult": 0.9,
+      "startX": 4,
+      "startY": 4,
+      "hitboxWidth": 0.5,
+      "hitboxHeight": 0.5,
+      "maxSpeed": 2.5,
+      "horizontalAcceleration": 0.12,
+      "maxHearts": 1,
+      "initialHearts": 1,
+      "attackPower": 1,
+      "startsFacingRight": true,
+      "dashCooldown": 0.4,
+      "attackCooldown": 30,
+      "attackOffset": 0.23,
+      "swordRadius": 0.2,
+      "attackLifespan": 0.4,
+      "hitCooldown": 1.0,
+      "drawScaleX": 32,
+      "drawScaleY": 32,
+      "hit_force": 5.5,
+      "dash": 2000.0
+    }
     }
   ]
 }
