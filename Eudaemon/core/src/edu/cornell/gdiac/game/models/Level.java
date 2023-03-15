@@ -212,12 +212,16 @@ public class Level {
         }
 
 
+
     }
 
     public void draw(GameCanvas canvas) {
 //        canvas.getCamera().position.setZero(); // set to some other position to follow player;
 //        canvas.getCamera().setToOrtho(false, cameraWidth, cameraHeight);
-        canvas.setGameplayCamera(0, 0, cameraWidth, cameraHeight);
+        canvas.setGameplayCamera(player.getX(), player.getY(), cameraWidth, cameraHeight);
+
+
+
 
         float camZone_x = 80;
         float camZone_y = 60;
@@ -253,8 +257,8 @@ public class Level {
             obj.draw(canvas);
         }
 
-        canvas.setOverlayCamera();
-        uiElements.draw(canvas);
+        //canvas.setOverlayCamera();
+        //uiElements.draw(canvas);
     }
 
     public void activatePhysics() {

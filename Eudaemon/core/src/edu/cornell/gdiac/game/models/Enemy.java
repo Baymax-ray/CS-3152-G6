@@ -23,9 +23,9 @@ public class Enemy extends CapsuleObstacle implements ContactListener {
     private final int attackPower;
 
     private final boolean startsFacingRight;
-    //TODO: these are just temporary values
-    private final float maxDashCooldown=3;
-    private final float maxAttackCooldown=3;
+
+    //private final float maxDashCooldown;
+    //private final float maxAttackCooldown;
 
     // TODO: Add texture fields (FilmStrip?)
 
@@ -61,8 +61,7 @@ public class Enemy extends CapsuleObstacle implements ContactListener {
     public Enemy(JsonValue json, AssetDirectory assets) {
         super(json.getFloat("startX"), json.getFloat("startY"), json.getFloat("hitboxWidth"), json.getFloat("hitboxHeight"));
         String TextureAsset = json.getString("TextureAsset");
-
-//        this.texture = new TextureRegion(assets.getEntry(TextureAsset, Texture.class));
+        this.texture = new TextureRegion(assets.getEntry(TextureAsset, Texture.class));
 //        this.momoImageWidth = json.getFloat("momoImageWidth");
 //        this.momoImageHeight = json.getFloat("momoImageHeight");
 //        this.chiyoTexture = new TextureRegion(assets.getEntry(json.getString("chiyoTextureAsset"), Texture.class));
@@ -70,18 +69,18 @@ public class Enemy extends CapsuleObstacle implements ContactListener {
 //        this.chiyoImageHeight = json.getFloat("chiyoImageHeight");
 //        this.scale = new Vector2(json.getFloat("drawScaleX"), json.getFloat("drawScaleY"));
 //        this.swordSpriteSheet = new TextureRegion(assets.getEntry( "chiyo:swordAttack", Texture.class));
-//
-//        //Position and Movement
+
+        //Position and Movement
         this.startX = json.getFloat("startX");
         this.startY = json.getFloat("startY");
-//        this.dashCooldown = json.getInt("dashCooldown");
+        this.dashCooldown = json.getInt("dashCooldown");
 //        this.maxSpeed = json.getFloat("maxSpeed");
 //        hitboxWidthMult = json.getFloat("hitboxWidthMult");
 //        hitboxHeightMult = json.getFloat("hitboxHeightMult");
 //        hit_force = json.getFloat( "hit_force");
 //        dash = json.getFloat("dash", 2000);
-//
-//        //Attacking
+
+        //Attacking
         this.attackPower = json.getInt("attackPower");
         this.attackCooldown = json.getInt("attackCooldown");
 //        this.attackOffset = json.getFloat("attackOffset");

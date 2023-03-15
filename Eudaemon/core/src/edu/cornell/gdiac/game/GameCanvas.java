@@ -119,8 +119,6 @@ public class GameCanvas {
 		camera.setToOrtho(false);
 		camera.position.set(getWidth()/2.0f,getHeight()/2.0f,0);
 
-
-
 		spriteBatch.setProjectionMatrix(camera.combined);
 		debugRender.setProjectionMatrix(camera.combined);
 
@@ -395,8 +393,9 @@ public class GameCanvas {
 	 * @param height the height in level coordinates that the window should display vertically
 	 */
 	public void setGameplayCamera(float x, float y, float width, float height) {
-		getCamera().position.set(x, y, 0); // set to some other position to follow player;
 		getCamera().setToOrtho(false, width, height);
+		getCamera().position.set(x, y, 0); // set to some other position to follow player;
+		getCamera().update();
 		spriteBatch.setProjectionMatrix(camera.combined);
 	}
 

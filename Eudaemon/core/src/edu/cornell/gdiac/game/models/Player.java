@@ -446,7 +446,6 @@ public class Player extends BoxObstacle {
         float sy = momoImageHeight / this.texture.getRegionHeight();
 
         canvas.draw(this.texture, Color.WHITE, ox, oy, x, y, 0, sx, sy);
-        System.out.println(isGrounded());
     }
 
     public boolean activatePhysics(World world) {
