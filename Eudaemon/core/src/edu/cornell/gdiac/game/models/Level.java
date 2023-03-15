@@ -218,36 +218,8 @@ public class Level {
     }
 
     public void draw(GameCanvas canvas) {
-//        canvas.getCamera().position.setZero(); // set to some other position to follow player;
-//        canvas.getCamera().setToOrtho(false, cameraWidth, cameraHeight);
-        canvas.setGameplayCamera(player.getX(), player.getY(), cameraWidth, cameraHeight);
-        if (Gdx.input.isKeyPressed(Input.Keys.O)) {
-            canvas.getCamera().zoom += 0.02;
-        }
-        if (Gdx.input.isKeyPressed(Input.Keys.I)) {
-            canvas.getCamera().zoom -= 0.02;
-        }
 
-
-
-
-        float camZone_x = 80;
-        float camZone_y = 60;
-
-//        if (Math.abs(canvas.getCamera().position.x - player.getX() *32) > camZone_x){
-//            if (canvas.getCamera().position.x > player.getX() *32)
-//                canvas.getCamera().position.set(player.getX() * 32 + camZone_x, canvas.getCamera().position.y,0);
-//
-//            else canvas.getCamera().position.set(player.getX() * 32 - camZone_x, canvas.getCamera().position.y,0);
-//        }
-//
-//
-//        if (Math.abs(canvas.getCamera().position.y - player.getY() *32) > camZone_y){
-//            if (canvas.getCamera().position.y > player.getY() *32)
-//                canvas.getCamera().position.set(canvas.getCamera().position.x, player.getY() * 32 + camZone_y,0);
-//
-//            else canvas.getCamera().position.set(canvas.getCamera().position.x, player.getY() * 32 - camZone_y,0);
-//        }
+        handleGameplayCamera(canvas);
 
 //        canvas.draw(backgroundTexture, 0, 0);
 
@@ -265,8 +237,8 @@ public class Level {
             obj.draw(canvas);
         }
 
-        canvas.setOverlayCamera();
-        uiElements.draw(canvas);
+//        canvas.setOverlayCamera();
+//        uiElements.draw(canvas);
     }
 
     public void activatePhysics() {
@@ -343,6 +315,32 @@ public class Level {
         this.objects = new PooledList<>();
     }
 
+    public void handleGameplayCamera(GameCanvas canvas) {
+        if (Gdx.input.isKeyPressed(Input.Keys.O)) {
+            canvas.getCamera().zoom += 0.02;
+        }
+        if (Gdx.input.isKeyPressed(Input.Keys.I)) {
+            canvas.getCamera().zoom -= 0.02;
+        }
+
+        float camZone_x = 1;
+        float camZone_y = 1;
+
+        if (Math.abs(canvas.getCamera().position.x - player.getX()) > camZone_x) {
+            if (canvas.getCamera().position.x > player.getX())
+                canvas.setGameplayCamera(player.getX()+camZone_x, canvas.getCamera().position.y, cameraWidth, cameraHeight);
+
+            else canvas.setGameplayCamera(player.getX()-camZone_x, canvas.getCamera().position.y, cameraWidth, cameraHeight);
+        }
+
+        if (Math.abs(canvas.getCamera().position.y - player.getY()) > camZone_y) {
+            if (canvas.getCamera().position.y > player.getY())
+                canvas.setGameplayCamera(canvas.getCamera().position.x, player.getY()+camZone_y, cameraWidth, cameraHeight);
+
+            else canvas.setGameplayCamera(canvas.getCamera().position.x, player.getY()-camZone_y, cameraWidth, cameraHeight);
+        }
+
+    }
 
 
 }
