@@ -314,8 +314,8 @@ public class Level {
 
         // TODO: need more than 1 ideally
         //this is a temporary code!!
-        this.enemies = new Enemy[1];
-        this.enemies[0]=new Enemy(json.get("enemyOne"),assets);
+        this.enemies = new Enemy[0];
+        //this.enemies[0]=new Enemy(json.get("enemyOne"),assets);
 
         this.bodyDef = new BodyDef();
         this.bodyDef.type = BodyDef.BodyType.StaticBody;
