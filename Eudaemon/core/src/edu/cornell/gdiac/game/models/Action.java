@@ -8,5 +8,6 @@ public enum Action {
     ATTACK,
     TRANSFORM,
     LOOK_UP,
-    LOOK_DOWN
+    LOOK_DOWN,
+    DEBUG
 }
