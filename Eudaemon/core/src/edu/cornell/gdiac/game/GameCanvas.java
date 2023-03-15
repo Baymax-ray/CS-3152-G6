@@ -386,12 +386,24 @@ public class GameCanvas {
 	    active = DrawPass.STANDARD;
     }
 
+
+	/**
+	 * Sets the projection matrix to draw objects in a level
+	 * @param x the x-coordinate of the center of the camera in level coordinates
+	 * @param y the y-coordinate of the center of the camera in level coordinates
+	 * @param width the width in level coordinates that the window should display horizontally
+	 * @param height the height in level coordinates that the window should display vertically
+	 */
 	public void setGameplayCamera(float x, float y, float width, float height) {
 		getCamera().position.set(x, y, 0); // set to some other position to follow player;
 		getCamera().setToOrtho(false, width, height);
 		spriteBatch.setProjectionMatrix(camera.combined);
 	}
 
+
+	/**
+	 * Sets the projection matrix to draw overlay and menu elements
+	 */
 	public void setOverlayCamera() {
 		getCamera().position.set(getWidth() / 2, getHeight() / 2, 0); // set to some other position to follow player;
 		getCamera().setToOrtho(false, getWidth(), getHeight());
