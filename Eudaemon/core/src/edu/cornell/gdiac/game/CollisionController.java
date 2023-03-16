@@ -28,11 +28,20 @@ public class CollisionController implements ContactListener {
         Body body1 = fix1.getBody();
         Body body2 = fix2.getBody();
 
-        if ((body1.getUserData().toString().contains("Tile") && level.getPlayer() != body1.getUserData()) ||
-                (body2.getUserData().toString().contains("Tile") && level.getPlayer() != body2.getUserData())) {
-            level.getPlayer().setGrounded(true);
-            sensorFixtures.add(level.getPlayer() == body1.getUserData() ? fix2 : fix1); // Could have more than one ground
+
+        try {
+            if ((body1.getUserData().toString().contains("Tile") && fix2.getUserData().equals(
+                    level.getPlayer().getSensorName())) ||
+                    (body2.getUserData().toString().contains("Tile") && fix1.getUserData().equals(
+                            level.getPlayer().getSensorName()))) {
+                level.getPlayer().setGrounded(true);
+                sensorFixtures.add(level.getPlayer() == body1.getUserData() ? fix2 : fix1);
+            }
+        } catch (Exception e) {
+
         }
+
+
 
 
     }
@@ -44,6 +53,7 @@ public class CollisionController implements ContactListener {
 
         Body body1 = fix1.getBody();
         Body body2 = fix2.getBody();
+
 
 
         if ((body1.getUserData().toString().contains("Tile") && level.getPlayer() != body1.getUserData()) ||

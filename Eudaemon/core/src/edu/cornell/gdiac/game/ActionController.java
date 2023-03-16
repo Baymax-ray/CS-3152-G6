@@ -162,7 +162,7 @@ public class ActionController {
         //#endregion
 
         //jump
-        if (jumpPressed) {
+        if (jumpPressed && player.isGrounded()) {
             player.setVelocity(player.getBodyVelocityX(), 1);
         }
     }
