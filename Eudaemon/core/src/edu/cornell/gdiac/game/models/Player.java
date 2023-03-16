@@ -156,6 +156,9 @@ public class Player extends BoxObstacle {
     /** Identifier to allow us to track the sensor in ContactListener */
     private final String sensorName;
 
+    private final int jumpTime;
+    private int jumpTimeRemaining;
+
     //#endregion
 
     //#region TEXTURE GETTERS AND SETTERS
@@ -533,7 +536,13 @@ public class Player extends BoxObstacle {
 
     public boolean getIsJumping() { return isJumping; }
 
-    public void setIsJumping(boolean value) {isJumping = value; }
+    public void setIsJumping(boolean value) {isJumping = value;}
+
+    public int getJumpTime() { return jumpTime; }
+
+    public int getJumpTimeRemaining() {return jumpTimeRemaining; }
+
+    public void setJumpTimeRemaining(int value) { jumpTimeRemaining = value; }
     //#endregion
 
     public void draw(GameCanvas canvas) {
@@ -637,6 +646,7 @@ public class Player extends BoxObstacle {
         this.jumpCooldown = json.getInt("jumpCooldown");
         this.coyoteFrames = json.getInt("coyoteTime");
         this.jumpTolerance = json.getInt("jumpTolerance");
+        this.jumpTime = json.getInt("jumpTime");
 
         this.isChiyo = false;
 
@@ -658,6 +668,7 @@ public class Player extends BoxObstacle {
         this.jumpCooldownRemaining = 0;
         this.coyoteFramesRemaining = 0;
         this.jumpToleranceRemaining = 0;
+        this.jumpTimeRemaining = 0;
 
         this.texture = momoTexture;
         this.data = json;

@@ -38,7 +38,8 @@ public class ActionController {
      */
     private void resolvePlayerActions(EnumSet<Action> playerAction){
         //#region Button Inputs
-        boolean jumpPressed = Gdx.input.isKeyPressed(Input.Keys.SPACE);
+        boolean jumpPressed = Gdx.input.isKeyJustPressed(Input.Keys.SPACE);
+        boolean jumpHold = Gdx.input.isKeyPressed(Input.Keys.SPACE);
         boolean attackPressed = playerAction.contains(Action.ATTACK);
         boolean dashPressed = playerAction.contains(Action.DASH);
         boolean transformPressed = playerAction.contains(Action.TRANSFORM);
@@ -167,14 +168,23 @@ public class ActionController {
         if ((jumpPressed && player.isGrounded() && player.getJumpCooldownRemaining()==0) ||
                 (jumpPressed && player.getCoyoteFramesRemaining() > 0 && player.getJumpCooldownRemaining()==0) ||
                 (player.getJumpPressedInAir() && player.getJumpCooldownRemaining()==0 && player.isGrounded())) {
-            player.setVelocity(player.getBodyVelocityX(), 3.5f);
+            player.setVelocity(player.getBodyVelocityX(), 2.0f);
             player.setJumpCooldownRemaining(player.getJumpCooldown());
+            player.setJumpTimeRemaining(player.getJumpTime());
             player.setIsJumping(true);
         }
         else if (player.isGrounded() && player.getBodyVelocityY() == 0) {
             player.setIsJumping(false);
         }
         else player.setJumpCooldownRemaining(Math.max(0, player.getJumpCooldownRemaining()-1));
+
+        if (player.getIsJumping()) player.setJumpTimeRemaining(player.getJumpTimeRemaining() - 1);
+
+        if (jumpHold && player.getIsJumping() && player.getJumpTimeRemaining() > 0) {
+            player.setVelocity(player.getBodyVelocityX(), 2.0f);
+        }
+
+        if (!jumpHold) player.setIsJumping(false);
 
         //calculate coyote time
         if (player.isGrounded()) {

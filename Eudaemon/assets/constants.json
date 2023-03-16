@@ -59,7 +59,8 @@
         "dash": 2000.0,
         "jumpCooldown": 30,
         "coyoteTime": 20,
-        "jumpTolerance": 20
+        "jumpTolerance": 20,
+        "jumptime": 30
       },
       "enemyOne":{
       "type":"Goomba",
