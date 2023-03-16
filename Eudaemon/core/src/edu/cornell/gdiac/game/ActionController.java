@@ -203,10 +203,6 @@ public class ActionController {
             if (player.getJumpToleranceRemaining()==0) player.setJumpPressedInAir(false);
         }
 
-
-
-        System.out.println(player.getIsJumping());
-
     }
 
     /**

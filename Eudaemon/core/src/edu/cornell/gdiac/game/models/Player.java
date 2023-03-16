@@ -534,15 +534,41 @@ public class Player extends BoxObstacle {
      */
     public void setJumpToleranceRemaining(int value) { jumpToleranceRemaining = value; }
 
+    /**
+     * Returns whether the player is jumping.
+     *
+     * @return true if the player is jumping (holding the jump key), false otherwise
+     */
     public boolean getIsJumping() { return isJumping; }
 
+    /**
+     * Sets whether the player jumping.
+     *
+     * @param value true if the player is jumping, false otherwise
+     */
     public void setIsJumping(boolean value) {isJumping = value;}
 
+    /**
+     * Returns the number of frames player can ascend by holding the jump key
+     *
+     * @return the time in frames
+     */
     public int getJumpTime() { return jumpTime; }
 
+    /**
+     * Returns the remaining number of frames that the player can ascend by holding the jump key
+     *
+     * @return the remaining time in frames
+     */
     public int getJumpTimeRemaining() {return jumpTimeRemaining; }
 
+    /**
+     * Sets the remaining time in frames that the player can ascend by holding the jump key
+     *
+     * @param value the remaining time in frames
+     */
     public void setJumpTimeRemaining(int value) { jumpTimeRemaining = value; }
+
     //#endregion
 
     public void draw(GameCanvas canvas) {
