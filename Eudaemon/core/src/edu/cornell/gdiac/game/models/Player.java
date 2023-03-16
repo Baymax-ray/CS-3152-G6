@@ -560,7 +560,7 @@ public class Player extends BoxObstacle {
 //
 //        fixtureDef.shape = hitbox;
 //        body.createFixture(fixtureDef);
-        body.setGravityScale(2.0f);
+        body.setGravityScale(5.0f);
         Vector2 sensorCenter = new Vector2(0, -getHeight() / 2);
         FixtureDef sensorDef = new FixtureDef();
         sensorDef.density = data.getFloat("density",0);

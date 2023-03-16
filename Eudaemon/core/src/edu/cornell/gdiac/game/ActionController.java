@@ -167,7 +167,7 @@ public class ActionController {
         if ((jumpPressed && player.isGrounded() && player.getJumpCooldownRemaining()==0) ||
                 (jumpPressed && player.getCoyoteFramesRemaining() > 0 && player.getJumpCooldownRemaining()==0) ||
                 (player.getJumpPressedInAir() && player.getJumpCooldownRemaining()==0 && player.isGrounded())) {
-            player.setVelocity(player.getBodyVelocityX(), 2.3f);
+            player.setVelocity(player.getBodyVelocityX(), 3.5f);
             player.setJumpCooldownRemaining(player.getJumpCooldown());
         }
         else player.setJumpCooldownRemaining(Math.max(0, player.getJumpCooldownRemaining()-1));
