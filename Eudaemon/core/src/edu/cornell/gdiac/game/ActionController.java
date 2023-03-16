@@ -163,8 +163,10 @@ public class ActionController {
 
         //jump
         if (jumpPressed && player.isGrounded()) {
-            player.setVelocity(player.getBodyVelocityX(), 1);
+            player.setVelocity(player.getBodyVelocityX(), 2.3f);
         }
+
+
     }
 
     /**

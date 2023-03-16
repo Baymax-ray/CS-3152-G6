@@ -56,7 +56,9 @@
         "drawScaleX": 32,
         "drawScaleY": 32,
         "hit_force": 5.5,
-        "dash": 2000.0
+        "dash": 2000.0,
+        "jumpCooldown": 30,
+        "coyoteTime": 20
       },
       "enemyOne":{
       "type":"Goomba",

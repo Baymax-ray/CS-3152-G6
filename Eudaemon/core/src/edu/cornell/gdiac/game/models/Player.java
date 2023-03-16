@@ -36,6 +36,19 @@ public class Player extends BoxObstacle {
      * The amount of ticks before the palyer can transform again
      */
     private final int transformCooldown;
+
+    /**
+     * The amount of ticks before the palyer can jump again
+     */
+    private final int jumpCooldown;
+    private int jumpCooldownRemaining;
+
+    /**
+     * The amount of ticks before the palyer can jump when they leave a platform
+     */
+    private final int coyoteFrames;
+    private int coyoteFramesRemaining;
+
     /**
      * The distance the center of the attack is offset from the player
      */
@@ -433,6 +446,14 @@ public class Player extends BoxObstacle {
     public String getSensorName() {
         return sensorName;
     }
+
+    public int getJumpCooldown() { return jumpCooldown; }
+    public int getJumpCooldownRemaining() { return jumpCooldownRemaining; }
+    public void setJumpCooldownRemaining(int value) { jumpCooldownRemaining = value; }
+
+    public int getCoyoteFrames() { return coyoteFrames; }
+    public int getCoyoteFramesRemaining() { return coyoteFramesRemaining; }
+    public void setCoyoteFramesRemaining(int value) { coyoteFramesRemaining = value; }
     //#endregion
 
     public void draw(GameCanvas canvas) {
@@ -533,6 +554,8 @@ public class Player extends BoxObstacle {
         this.spiritPerSecond = json.getFloat("spiritPerSecond");
         this.startsFacingRight = json.getBoolean("startsFacingRight");
         this.hitCooldown = json.getInt("hitCooldown");
+        this.jumpCooldown = json.getInt("jumpCooldown");
+        this.coyoteFrames = json.getInt("coyoteTime");
 
         this.isChiyo = false;
 
@@ -550,6 +573,8 @@ public class Player extends BoxObstacle {
         this.dashCooldownRemaining = 0;
         this.attackCooldownRemaining = 0;
         this.hitCooldownRemaining = 0;
+        this.jumpCooldownRemaining = 0;
+        this.coyoteFramesRemaining = 0;
 
         this.texture = momoTexture;
         this.data = json;
