@@ -49,6 +49,9 @@ public class Player extends BoxObstacle {
     private final int coyoteFrames;
     private int coyoteFramesRemaining;
 
+    private final int jumpTolerance;
+    private int jumpToleranceRemaining;
+
     /**
      * The distance the center of the attack is offset from the player
      */
@@ -124,6 +127,7 @@ public class Player extends BoxObstacle {
     private boolean isMovingLeft;
     private boolean isLookingUp;
     private boolean isLookingDown;
+    private boolean jumpPressedInAir;
 
     private int dashCooldownRemaining;
     /**
@@ -454,6 +458,11 @@ public class Player extends BoxObstacle {
     public int getCoyoteFrames() { return coyoteFrames; }
     public int getCoyoteFramesRemaining() { return coyoteFramesRemaining; }
     public void setCoyoteFramesRemaining(int value) { coyoteFramesRemaining = value; }
+    public boolean getJumpPressedInAir() { return jumpPressedInAir; }
+    public void setJumpPressedInAir(boolean value) { jumpPressedInAir = value; }
+    public int getJumpTolerance() { return jumpTolerance; }
+    public int getJumpToleranceRemaining() { return jumpToleranceRemaining; }
+    public void setJumpToleranceRemaining(int value) { jumpToleranceRemaining = value; }
     //#endregion
 
     public void draw(GameCanvas canvas) {
@@ -556,6 +565,7 @@ public class Player extends BoxObstacle {
         this.hitCooldown = json.getInt("hitCooldown");
         this.jumpCooldown = json.getInt("jumpCooldown");
         this.coyoteFrames = json.getInt("coyoteTime");
+        this.jumpTolerance = json.getInt("jumpTolerance");
 
         this.isChiyo = false;
 
@@ -570,11 +580,13 @@ public class Player extends BoxObstacle {
         this.isFacingRight = startsFacingRight;
         this.isLookingUp = false;
         this.isLookingDown = false;
+        this.jumpPressedInAir = false;
         this.dashCooldownRemaining = 0;
         this.attackCooldownRemaining = 0;
         this.hitCooldownRemaining = 0;
         this.jumpCooldownRemaining = 0;
         this.coyoteFramesRemaining = 0;
+        this.jumpToleranceRemaining = 0;
 
         this.texture = momoTexture;
         this.data = json;

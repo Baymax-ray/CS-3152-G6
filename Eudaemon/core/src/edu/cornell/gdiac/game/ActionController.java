@@ -162,8 +162,9 @@ public class ActionController {
         //#endregion
 
         //jump
-        if (jumpPressed && player.isGrounded() && player.getJumpCooldownRemaining()==0 ||
-                jumpPressed && player.getCoyoteFramesRemaining() > 0 && player.getJumpCooldownRemaining()==0) {
+        if ((jumpPressed && player.isGrounded() && player.getJumpCooldownRemaining()==0) ||
+                (jumpPressed && player.getCoyoteFramesRemaining() > 0 && player.getJumpCooldownRemaining()==0) ||
+                (player.getJumpPressedInAir() && player.getJumpCooldownRemaining()==0 && player.isGrounded())) {
             player.setVelocity(player.getBodyVelocityX(), 2.3f);
             player.setJumpCooldownRemaining(player.getJumpCooldown());
         }
@@ -173,6 +174,15 @@ public class ActionController {
         else {
             player.setCoyoteFramesRemaining(Math.max(0, player.getCoyoteFramesRemaining()-1));
         }
+
+        if (jumpPressed && !player.isGrounded()) {
+            player.setJumpToleranceRemaining(player.getJumpTolerance());
+            player.setJumpPressedInAir(true);
+        } else if (!player.isGrounded()) {
+            player.setJumpToleranceRemaining(Math.max(0, player.getJumpToleranceRemaining()-1));
+            if (player.getJumpToleranceRemaining()==0) player.setJumpPressedInAir(false);
+        }
+
     }
 
     /**
