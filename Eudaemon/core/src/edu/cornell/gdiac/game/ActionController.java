@@ -169,11 +169,17 @@ public class ActionController {
                 (player.getJumpPressedInAir() && player.getJumpCooldownRemaining()==0 && player.isGrounded())) {
             player.setVelocity(player.getBodyVelocityX(), 3.5f);
             player.setJumpCooldownRemaining(player.getJumpCooldown());
+            player.setIsJumping(true);
+        }
+        else if (player.isGrounded() && player.getBodyVelocityY() == 0) {
+            player.setIsJumping(false);
         }
         else player.setJumpCooldownRemaining(Math.max(0, player.getJumpCooldownRemaining()-1));
 
         //calculate coyote time
-        if (player.isGrounded()) player.setCoyoteFramesRemaining(player.getCoyoteFrames());
+        if (player.isGrounded()) {
+            player.setCoyoteFramesRemaining(player.getCoyoteFrames());
+        }
         else {
             player.setCoyoteFramesRemaining(Math.max(0, player.getCoyoteFramesRemaining()-1));
         }
@@ -186,6 +192,10 @@ public class ActionController {
             player.setJumpToleranceRemaining(Math.max(0, player.getJumpToleranceRemaining()-1));
             if (player.getJumpToleranceRemaining()==0) player.setJumpPressedInAir(false);
         }
+
+
+
+        System.out.println(player.getIsJumping());
 
     }
 

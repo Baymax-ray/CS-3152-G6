@@ -530,6 +530,10 @@ public class Player extends BoxObstacle {
      * @param value the remaining time in frames
      */
     public void setJumpToleranceRemaining(int value) { jumpToleranceRemaining = value; }
+
+    public boolean getIsJumping() { return isJumping; }
+
+    public void setIsJumping(boolean value) {isJumping = value; }
     //#endregion
 
     public void draw(GameCanvas canvas) {
