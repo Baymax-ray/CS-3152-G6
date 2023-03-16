@@ -6,5 +6,6 @@
   "jump": "SPACE",
   "dash": "LEFT",
   "attack": "LEFT",
-  "transform": "RIGHT"
+  "transform": "RIGHT",
+  "debug":  "T"
 }
