@@ -30,7 +30,7 @@
         "chiyoImageHeight": 0.5,
         "hitboxWidthMult": 0.75,
         "hitboxHeightMult": 0.9,
-        "startX": 3,
+        "startX": 3.5,
         "startY": 4,
         "heart": "platform:heart",
         "emptyspirit": "platform:emptyspirit",
