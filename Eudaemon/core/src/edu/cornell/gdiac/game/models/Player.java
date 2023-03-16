@@ -436,8 +436,18 @@ public class Player extends BoxObstacle {
         return attackCooldownRemaining;
     }
 
+    /**
+     * Returns whether the player is standing on the ground.
+     *
+     * @return true if the player is standing on the ground, false otherwise
+     */
     public boolean isGrounded() {return isGrounded;}
 
+    /**
+     * Sets whether the player is standing on the ground.
+     *
+     * @param value true if the player is standing on the ground, false otherwise
+     */
     public void setGrounded(boolean value) {isGrounded = value;}
 
     /**
@@ -451,17 +461,74 @@ public class Player extends BoxObstacle {
         return sensorName;
     }
 
+    /**
+     * Returns the number of frames player can jump again after they jump.
+     * @return the time in frames
+     */
     public int getJumpCooldown() { return jumpCooldown; }
+
+    /**
+     * Returns the remaining number of frames until the player can jump again.
+     * @return the remaining time in frames
+     */
     public int getJumpCooldownRemaining() { return jumpCooldownRemaining; }
+
+    /**
+     * Sets the remaining time in frames until the player can jump again.
+     * @param value the remaining time in frames
+     */
     public void setJumpCooldownRemaining(int value) { jumpCooldownRemaining = value; }
 
+    /**
+     * Returns the number of frames player can jump after they leave a platform
+     * @return the time in frames
+     */
     public int getCoyoteFrames() { return coyoteFrames; }
+    /**
+     * Returns the remaining number of frames that the player can jump after the leave a platform.
+     * @return the remaining time in frames
+     */
     public int getCoyoteFramesRemaining() { return coyoteFramesRemaining; }
+
+    /**
+     * Sets the remaining time in frames that the player can jump after they leave a platform.
+     * @param value the remaining time in frames
+     */
     public void setCoyoteFramesRemaining(int value) { coyoteFramesRemaining = value; }
+
+    /**
+     * Returns whether the player pressed jump in air.
+     *
+     * @return true if the player pressed jump in air, false otherwise
+     */
     public boolean getJumpPressedInAir() { return jumpPressedInAir; }
+
+    /**
+     * Sets whether the player pressed jump in air.
+     *
+     * @param value true if the player pressed jump in air, false otherwise
+     */
     public void setJumpPressedInAir(boolean value) { jumpPressedInAir = value; }
+
+    /**
+     * Returns the number of frames player can jump after they touch the ground if they press jump
+     * if the air
+     * @return the time in frames
+     */
     public int getJumpTolerance() { return jumpTolerance; }
+
+    /**
+     * Returns the remaining number of frames that the player can jump when they touch the ground,
+     * if they press jump in the air.
+     * @return the remaining time in frames
+     */
     public int getJumpToleranceRemaining() { return jumpToleranceRemaining; }
+
+    /**
+     * Sets the remaining time in frames that the player can jump after they touch the ground if
+     * they press jump in the air.
+     * @param value the remaining time in frames
+     */
     public void setJumpToleranceRemaining(int value) { jumpToleranceRemaining = value; }
     //#endregion
 
