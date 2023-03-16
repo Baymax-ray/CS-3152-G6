@@ -162,11 +162,17 @@ public class ActionController {
         //#endregion
 
         //jump
-        if (jumpPressed && player.isGrounded()) {
+        if (jumpPressed && player.isGrounded() && player.getJumpCooldownRemaining()==0 ||
+                jumpPressed && player.getCoyoteFramesRemaining() > 0 && player.getJumpCooldownRemaining()==0) {
             player.setVelocity(player.getBodyVelocityX(), 2.3f);
+            player.setJumpCooldownRemaining(player.getJumpCooldown());
         }
+        else player.setJumpCooldownRemaining(Math.max(0, player.getJumpCooldownRemaining()-1));
 
-
+        if (player.isGrounded()) player.setCoyoteFramesRemaining(player.getCoyoteFrames());
+        else {
+            player.setCoyoteFramesRemaining(Math.max(0, player.getCoyoteFramesRemaining()-1));
+        }
     }
 
     /**
