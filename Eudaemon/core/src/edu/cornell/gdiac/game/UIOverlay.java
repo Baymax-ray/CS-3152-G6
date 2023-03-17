@@ -39,7 +39,7 @@ public class UIOverlay {
 //        float xPos = canvas.getCamera().position.x - 500;
         float testXPos = canvas.getCamera().position.x - 47;
         for(int i=0; i < heartLevel; i++){
-            canvas.draw(heartRegion, Color.WHITE, testXPos,canvas.getCamera().position.y, 500, 500);
+            canvas.draw(heartRegion, Color.WHITE, testXPos,canvas.getCamera().position.y, 0.01F, 0.01F);
             testXPos += 47;
         }
 //        canvas.draw(emptySpiritBar, Color.WHITE,canvas.getCamera().position.x - 515, canvas.getCamera().position.y + 210, 271, 25 );

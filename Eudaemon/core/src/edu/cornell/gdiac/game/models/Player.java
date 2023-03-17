@@ -579,6 +579,7 @@ public class Player extends BoxObstacle {
         float oy = this.texture.getRegionHeight()/2;
 
         float sx = (isFacingRight ? 1 : -1) * momoImageWidth / this.texture.getRegionWidth();
+        System.out.println(momoImageWidth / this.texture.getRegionWidth());
         float sy = momoImageHeight / this.texture.getRegionHeight();
 
         canvas.draw(this.texture, Color.WHITE, ox, oy, x, y, 0, sx, sy);
@@ -620,11 +621,33 @@ public class Player extends BoxObstacle {
     /**
      * Dash, Momo, Dash
      *
-     * This method is now very immature. It just makes Momo to flash forward.
+     * Implemented 8 directional dash
      * */
     public void dash(){
-        int direction = isFacingRight? 1: -1;
-        forceCache.set(hit_force * dash * direction, 0);
+        if(angleFacing == 0){
+            forceCache.set(hit_force * dash * 1, 0);
+        }
+        else if (angleFacing == 45){
+            forceCache.set(hit_force * dash * 1, hit_force * dash * 1);
+        }
+        else if (angleFacing == 90){
+            forceCache.set(0, hit_force * dash * 1);
+        }
+        else if (angleFacing == 135){
+            forceCache.set(hit_force * dash * -1, hit_force * dash * 1);
+        }
+        else if (angleFacing == 180){
+            forceCache.set(hit_force * dash * -1, 0);
+        }
+        else if (angleFacing == 225){
+            forceCache.set(hit_force * dash * -1, hit_force * dash * -1);
+        }
+        else if (angleFacing == 270){
+            forceCache.set(0, hit_force * dash * -1);
+        }
+        else if (angleFacing == 315){
+            forceCache.set(hit_force * dash * 1, hit_force * dash * -1);
+        }
         body.applyForce(forceCache, getPosition(), true);
     }
 

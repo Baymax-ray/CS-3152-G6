@@ -204,7 +204,6 @@ public class ActionController {
         }
 
     }
-
     /**
      * Add a new sword attack to the world and send it in the right direction.
      */
