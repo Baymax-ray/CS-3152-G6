@@ -61,7 +61,7 @@ public class InputController {
         }
 
         //Only apply the action on the rising edge.
-        if (!prevAction.contains(Action.DEBUG) && Gdx.input.isKeyPressed(inputMap.get("debug"))) {
+        if (!prevAction.contains(Action.DEBUG) && Gdx.input.isKeyJustPressed(inputMap.get("debug"))) {
             playerAction.add(Action.DEBUG);
         }
     }

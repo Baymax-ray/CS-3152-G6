@@ -69,9 +69,7 @@ public class LevelScreen implements Screen {
 
     public void draw(float delta) {
         canvas.clear();
-        canvas.begin();
         this.level.draw(canvas);
-        canvas.end();
     }
 
 

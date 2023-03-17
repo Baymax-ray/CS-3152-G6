@@ -69,6 +69,11 @@ public class Level {
     private boolean isCompleted;
 
     /**
+     * Whether we are in debug mode or not.
+     */
+    private boolean debug;
+
+    /**
      * The x position of the camera in level coordinates
      */
     private float cameraX;
@@ -102,6 +107,14 @@ public class Level {
      */
     public Player getPlayer() {
         return player;
+    }
+
+    public boolean isDebug() {
+        return debug;
+    }
+
+    public void setDebug(boolean debug) {
+        this.debug = debug;
     }
 
     //#endregion
@@ -218,6 +231,7 @@ public class Level {
     }
 
     public void draw(GameCanvas canvas) {
+        canvas.begin();
 
         handleGameplayCamera(canvas);
 
@@ -229,12 +243,23 @@ public class Level {
                 int tileId = row[x];
                 if (tileId < 0) continue;
                 Tile tile = tiles[tileId];
-                canvas.draw(tile.getTexture(), Color.WHITE, 0, 0, tileToLevelCoordinatesX(x), tileToLevelCoordinatesY(y), 0, tileSize / tile.getTexture().getRegionWidth(), tileSize / tile.getTexture().getRegionHeight());
+                float sx = tileSize / tile.getTexture().getRegionWidth();
+                float sy = tileSize / tile.getTexture().getRegionHeight();
+                canvas.draw(tile.getTexture(), Color.WHITE, 0, 0, tileToLevelCoordinatesX(x), tileToLevelCoordinatesY(y), 0, sx, sy);
             }
         }
-        player.draw(canvas);
+
         for (Obstacle obj : objects) {
             obj.draw(canvas);
+        }
+        canvas.end();
+
+        if (debug) {
+            canvas.beginDebug(1, 1);
+            for(Obstacle obj : objects) {
+                obj.drawDebug(canvas);
+            }
+            canvas.endDebug();
         }
 
 //        canvas.setOverlayCamera();
@@ -266,7 +291,8 @@ public class Level {
                 body.createFixture(fixtureDef);
             }
         }
-        player.activatePhysics(world);
+
+        addObject(player);
         //TODO: enemies activate too
     }
 
@@ -313,6 +339,8 @@ public class Level {
 
         this.addQueue = new PooledList<>();
         this.objects = new PooledList<>();
+
+        this.debug = false;
     }
 
     public void handleGameplayCamera(GameCanvas canvas) {

@@ -28,6 +28,7 @@ public class ActionController {
      */
     public void resolveActions(EnumSet<Action> playerAction, Array<EnumSet<EnemyAction>> enemyActions) {
         resolvePlayerActions(playerAction);
+
     }
 
     //#region Player Actions
@@ -46,6 +47,7 @@ public class ActionController {
         boolean upPressed = playerAction.contains(Action.LOOK_UP);
         boolean rightPressed = playerAction.contains(Action.MOVE_RIGHT);
         boolean leftPressed = playerAction.contains(Action.MOVE_LEFT);
+        boolean debugPressed = playerAction.contains(Action.DEBUG);
         //#endregion
 
         //#region Timers
@@ -164,6 +166,10 @@ public class ActionController {
         //jump
         if (jumpPressed) {
             player.setVelocity(player.getBodyVelocityX(), 1);
+        }
+
+        if (debugPressed) {
+            level.setDebug(!level.isDebug());
         }
     }
 
