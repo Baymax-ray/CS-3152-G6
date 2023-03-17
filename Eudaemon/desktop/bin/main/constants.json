@@ -30,7 +30,7 @@
         "chiyoImageHeight": 0.5,
         "hitboxWidthMult": 0.75,
         "hitboxHeightMult": 0.9,
-        "startX": 3,
+        "startX": 3.5,
         "startY": 4,
         "heart": "platform:heart",
         "emptyspirit": "platform:emptyspirit",
@@ -56,7 +56,11 @@
         "drawScaleX": 32,
         "drawScaleY": 32,
         "hit_force": 5.5,
-        "dash": 2000.0
+        "dash": 2000.0,
+        "jumpCooldown": 30,
+        "coyoteTime": 20,
+        "jumpTolerance": 20,
+        "jumptime": 30
       },
       "enemyOne":{
       "type":"Goomba",

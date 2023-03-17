@@ -36,6 +36,22 @@ public class Player extends BoxObstacle {
      * The amount of ticks before the palyer can transform again
      */
     private final int transformCooldown;
+
+    /**
+     * The amount of ticks before the palyer can jump again
+     */
+    private final int jumpCooldown;
+    private int jumpCooldownRemaining;
+
+    /**
+     * The amount of ticks before the palyer can jump when they leave a platform
+     */
+    private final int coyoteFrames;
+    private int coyoteFramesRemaining;
+
+    private final int jumpTolerance;
+    private int jumpToleranceRemaining;
+
     /**
      * The distance the center of the attack is offset from the player
      */
@@ -111,6 +127,7 @@ public class Player extends BoxObstacle {
     private boolean isMovingLeft;
     private boolean isLookingUp;
     private boolean isLookingDown;
+    private boolean jumpPressedInAir;
 
     private int dashCooldownRemaining;
     /**
@@ -138,6 +155,9 @@ public class Player extends BoxObstacle {
 
     /** Identifier to allow us to track the sensor in ContactListener */
     private final String sensorName;
+
+    private final int jumpTime;
+    private int jumpTimeRemaining;
 
     //#endregion
 
@@ -419,8 +439,18 @@ public class Player extends BoxObstacle {
         return attackCooldownRemaining;
     }
 
+    /**
+     * Returns whether the player is standing on the ground.
+     *
+     * @return true if the player is standing on the ground, false otherwise
+     */
     public boolean isGrounded() {return isGrounded;}
 
+    /**
+     * Sets whether the player is standing on the ground.
+     *
+     * @param value true if the player is standing on the ground, false otherwise
+     */
     public void setGrounded(boolean value) {isGrounded = value;}
 
     /**
@@ -433,6 +463,112 @@ public class Player extends BoxObstacle {
     public String getSensorName() {
         return sensorName;
     }
+
+    /**
+     * Returns the number of frames player can jump again after they jump.
+     * @return the time in frames
+     */
+    public int getJumpCooldown() { return jumpCooldown; }
+
+    /**
+     * Returns the remaining number of frames until the player can jump again.
+     * @return the remaining time in frames
+     */
+    public int getJumpCooldownRemaining() { return jumpCooldownRemaining; }
+
+    /**
+     * Sets the remaining time in frames until the player can jump again.
+     * @param value the remaining time in frames
+     */
+    public void setJumpCooldownRemaining(int value) { jumpCooldownRemaining = value; }
+
+    /**
+     * Returns the number of frames player can jump after they leave a platform
+     * @return the time in frames
+     */
+    public int getCoyoteFrames() { return coyoteFrames; }
+    /**
+     * Returns the remaining number of frames that the player can jump after the leave a platform.
+     * @return the remaining time in frames
+     */
+    public int getCoyoteFramesRemaining() { return coyoteFramesRemaining; }
+
+    /**
+     * Sets the remaining time in frames that the player can jump after they leave a platform.
+     * @param value the remaining time in frames
+     */
+    public void setCoyoteFramesRemaining(int value) { coyoteFramesRemaining = value; }
+
+    /**
+     * Returns whether the player pressed jump in air.
+     *
+     * @return true if the player pressed jump in air, false otherwise
+     */
+    public boolean getJumpPressedInAir() { return jumpPressedInAir; }
+
+    /**
+     * Sets whether the player pressed jump in air.
+     *
+     * @param value true if the player pressed jump in air, false otherwise
+     */
+    public void setJumpPressedInAir(boolean value) { jumpPressedInAir = value; }
+
+    /**
+     * Returns the number of frames player can jump after they touch the ground if they press jump
+     * if the air
+     * @return the time in frames
+     */
+    public int getJumpTolerance() { return jumpTolerance; }
+
+    /**
+     * Returns the remaining number of frames that the player can jump when they touch the ground,
+     * if they press jump in the air.
+     * @return the remaining time in frames
+     */
+    public int getJumpToleranceRemaining() { return jumpToleranceRemaining; }
+
+    /**
+     * Sets the remaining time in frames that the player can jump after they touch the ground if
+     * they press jump in the air.
+     * @param value the remaining time in frames
+     */
+    public void setJumpToleranceRemaining(int value) { jumpToleranceRemaining = value; }
+
+    /**
+     * Returns whether the player is jumping.
+     *
+     * @return true if the player is jumping (holding the jump key), false otherwise
+     */
+    public boolean getIsJumping() { return isJumping; }
+
+    /**
+     * Sets whether the player jumping.
+     *
+     * @param value true if the player is jumping, false otherwise
+     */
+    public void setIsJumping(boolean value) {isJumping = value;}
+
+    /**
+     * Returns the number of frames player can ascend by holding the jump key
+     *
+     * @return the time in frames
+     */
+    public int getJumpTime() { return jumpTime; }
+
+    /**
+     * Returns the remaining number of frames that the player can ascend by holding the jump key
+     *
+     * @return the remaining time in frames
+     */
+    public int getJumpTimeRemaining() {return jumpTimeRemaining; }
+
+    /**
+     * Sets the remaining time in frames that the player can ascend by holding the jump key
+     *
+     * @param value the remaining time in frames
+     */
+    public void setJumpTimeRemaining(int value) { jumpTimeRemaining = value; }
+
     //#endregion
 
     public void draw(GameCanvas canvas) {
@@ -443,6 +579,7 @@ public class Player extends BoxObstacle {
         float oy = this.texture.getRegionHeight()/2;
 
         float sx = (isFacingRight ? 1 : -1) * momoImageWidth / this.texture.getRegionWidth();
+        System.out.println(momoImageWidth / this.texture.getRegionWidth());
         float sy = momoImageHeight / this.texture.getRegionHeight();
 
         canvas.draw(this.texture, Color.WHITE, ox, oy, x, y, 0, sx, sy);
@@ -463,7 +600,7 @@ public class Player extends BoxObstacle {
 //
 //        fixtureDef.shape = hitbox;
 //        body.createFixture(fixtureDef);
-        body.setGravityScale(2.0f);
+        body.setGravityScale(5.0f);
         Vector2 sensorCenter = new Vector2(0, -getHeight() / 2);
         FixtureDef sensorDef = new FixtureDef();
         sensorDef.density = data.getFloat("density",0);
@@ -484,11 +621,33 @@ public class Player extends BoxObstacle {
     /**
      * Dash, Momo, Dash
      *
-     * This method is now very immature. It just makes Momo to flash forward.
+     * Implemented 8 directional dash
      * */
     public void dash(){
-        int direction = isFacingRight? 1: -1;
-        forceCache.set(hit_force * dash * direction, 0);
+        if(angleFacing == 0){
+            forceCache.set(hit_force * dash * 1, 0);
+        }
+        else if (angleFacing == 45){
+            forceCache.set(hit_force * dash * 1, hit_force * dash * 1);
+        }
+        else if (angleFacing == 90){
+            forceCache.set(0, hit_force * dash * 1);
+        }
+        else if (angleFacing == 135){
+            forceCache.set(hit_force * dash * -1, hit_force * dash * 1);
+        }
+        else if (angleFacing == 180){
+            forceCache.set(hit_force * dash * -1, 0);
+        }
+        else if (angleFacing == 225){
+            forceCache.set(hit_force * dash * -1, hit_force * dash * -1);
+        }
+        else if (angleFacing == 270){
+            forceCache.set(0, hit_force * dash * -1);
+        }
+        else if (angleFacing == 315){
+            forceCache.set(hit_force * dash * 1, hit_force * dash * -1);
+        }
         body.applyForce(forceCache, getPosition(), true);
     }
 
@@ -533,6 +692,10 @@ public class Player extends BoxObstacle {
         this.spiritPerSecond = json.getFloat("spiritPerSecond");
         this.startsFacingRight = json.getBoolean("startsFacingRight");
         this.hitCooldown = json.getInt("hitCooldown");
+        this.jumpCooldown = json.getInt("jumpCooldown");
+        this.coyoteFrames = json.getInt("coyoteTime");
+        this.jumpTolerance = json.getInt("jumpTolerance");
+        this.jumpTime = json.getInt("jumpTime");
 
         this.isChiyo = false;
 
@@ -547,9 +710,14 @@ public class Player extends BoxObstacle {
         this.isFacingRight = startsFacingRight;
         this.isLookingUp = false;
         this.isLookingDown = false;
+        this.jumpPressedInAir = false;
         this.dashCooldownRemaining = 0;
         this.attackCooldownRemaining = 0;
         this.hitCooldownRemaining = 0;
+        this.jumpCooldownRemaining = 0;
+        this.coyoteFramesRemaining = 0;
+        this.jumpToleranceRemaining = 0;
+        this.jumpTimeRemaining = 0;
 
         this.texture = momoTexture;
         this.data = json;

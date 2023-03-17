@@ -8,6 +8,7 @@ import java.util.EnumSet;
 import java.util.Random;
 
 public class GoombaAI extends AIController{
+    public static final int maxWait = 10;
     private Enemy enemy;
     private Level level;
     private int ticks=0;
@@ -42,8 +43,7 @@ public class GoombaAI extends AIController{
         markGoal();
         MoveAlongPathToGoal();
 
-        this.enemy.setMovement(move);
-        this.enemy.applyForce();
+        enemyAction.add(move);
 
     }
     public boolean checkDetection(){
@@ -69,8 +69,6 @@ public class GoombaAI extends AIController{
         return false;
     }
     private void changeStateIfApplicable() {
-        Random rand = new Random();
-        int randomInt;
         switch (state) {
             case SPAWN:
                 if (ticks>60){
@@ -90,7 +88,7 @@ public class GoombaAI extends AIController{
                 }
                 else if (!checkDetection()){
                     WanderWait++;
-                    if (WanderWait>10){
+                    if (WanderWait>maxWait){
                         WanderWait=0;
                         state=FSMState.TOWANDER;
                     }
