@@ -25,6 +25,7 @@ public class UIOverlay {
 
     public UIOverlay(JsonValue json, AssetDirectory assets, float playerHearts, float playerSpirit){
         this.heartRegion = assets.getEntry(json.getString("heart"), Texture.class);
+        System.out.println(heartRegion);
         this.emptySpiritBar = assets.getEntry(json.getString("emptyspirit"), Texture.class);
 //        this.filledSpiritBar = assets.get(json.getString("filledspirit"), Texture.class);
         this.heartLevel = playerHearts;
@@ -32,12 +33,16 @@ public class UIOverlay {
     }
 
     public void draw(GameCanvas canvas) {
-        float xPos = canvas.getCamera().position.x - 500;
+        BitmapFont font = new BitmapFont();
+        font.getData().setScale(0.1F);
+        canvas.drawText("hey", font, canvas.getCamera().position.x, canvas.getCamera().position.y);
+//        float xPos = canvas.getCamera().position.x - 500;
+        float testXPos = canvas.getCamera().position.x - 47;
         for(int i=0; i < heartLevel; i++){
-            canvas.draw(heartRegion, Color.WHITE, xPos,canvas.getCamera().position.y + 240, 38.4F, 32 );
-            xPos += 47;
+            canvas.draw(heartRegion, Color.WHITE, testXPos,canvas.getCamera().position.y, 500, 500);
+            testXPos += 47;
         }
-        canvas.draw(emptySpiritBar, Color.WHITE,canvas.getCamera().position.x - 515, canvas.getCamera().position.y + 210, 271, 25 );
+//        canvas.draw(emptySpiritBar, Color.WHITE,canvas.getCamera().position.x - 515, canvas.getCamera().position.y + 210, 271, 25 );
 //        float spiritPercentage = spiritLevel / 10F;
 //        int barWidth = (int)(filledSpiritBar.getWidth() * spiritPercentage);
 //        int barHeight = filledSpiritBar.getHeight();

@@ -33,6 +33,7 @@ public class LevelScreen implements Screen {
 
     private CollisionController collisionController;
 
+
     public LevelScreen(Level level, ActionBindings actionBindings) {
         this.level = level;
 

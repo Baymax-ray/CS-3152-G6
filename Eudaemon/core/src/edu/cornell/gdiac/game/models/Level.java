@@ -3,6 +3,8 @@ package edu.cornell.gdiac.game.models;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
 import com.badlogic.gdx.utils.JsonValue;
@@ -77,6 +79,7 @@ public class Level {
      * The y position of the camera in level coordinates
      */
     private float cameraY;
+
 
     //#endregion
 
@@ -236,9 +239,13 @@ public class Level {
         for (Obstacle obj : objects) {
             obj.draw(canvas);
         }
+//        BitmapFont font = new BitmapFont();
+//        font.getData().setScale(0.1F);
+//        canvas.drawText("hey", font, canvas.getCamera().position.x, canvas.getCamera().position.y);
 
 //        canvas.setOverlayCamera();
-//        uiElements.draw(canvas);
+
+        uiElements.draw(canvas);
     }
 
     public void activatePhysics() {
@@ -296,7 +303,7 @@ public class Level {
 
         this.world = new World(new Vector2(0, gravity), true);
         this.player = new Player(json.get("player"), assets);
-        this.uiElements = new UIOverlay(json.get("player"), assets, player.getHearts(), player.getSpirit());
+        uiElements = new UIOverlay(json.get("player"), assets, player.getHearts(), player.getSpirit());
 
 
 
