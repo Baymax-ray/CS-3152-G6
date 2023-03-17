@@ -32,9 +32,10 @@ public class UIOverlay {
     }
 
     public void draw(GameCanvas canvas) {
-        float xPos = canvas.getCamera().position.x - 500;
+        float xPos = 20; //replace with actual positions
+        float yPos = canvas.getHeight() - 40; // replace with actual positions
         for(int i=0; i < heartLevel; i++){
-            canvas.draw(heartRegion, Color.WHITE, xPos,canvas.getCamera().position.y + 240, 38.4F, 32 );
+            canvas.draw(heartRegion, Color.WHITE, xPos, yPos, 38.4F, 32 );
             xPos += 47;
         }
         canvas.draw(emptySpiritBar, Color.WHITE,canvas.getCamera().position.x - 515, canvas.getCamera().position.y + 210, 271, 25 );
