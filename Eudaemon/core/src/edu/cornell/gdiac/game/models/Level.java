@@ -242,7 +242,7 @@ public class Level {
 
         for (int y = 0; y < tilemap.length; y++) {
             int[] row = tilemap[y];
-            for (int x = 0; x < tilemap.length; x++) {
+            for (int x = 0; x < row.length; x++) {
                 int tileId = row[x];
                 if (tileId < 0) continue;
                 Tile tile = tiles[tileId];
@@ -274,7 +274,7 @@ public class Level {
     public void activatePhysics() {
         for (int y = 0; y < tilemap.length; y++) {
             int[] row = tilemap[y];
-            for (int x = 0; x < tilemap.length; x++) {
+            for (int x = 0; x < row.length; x++) {
                 int tileId = row[x];
                 if (tileId < 0) continue;
                 Tile tile = tiles[tileId];
