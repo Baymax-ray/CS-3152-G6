@@ -22,7 +22,6 @@ public class FlyAI extends AIController{
     private enum FSMState {
         /** The enemy just spawned */
         SPAWN,
-
         /** The enemy is patrolling around without a target */
         WANDER,
         /** The enemy has a target, but must get closer */
