@@ -14,18 +14,6 @@ import edu.cornell.gdiac.game.obstacle.*;
 public class Enemy extends CapsuleObstacle implements ContactListener {
 
     //#region FINAL FIELDS
-    private final String type;
-    private final float startX;
-    private final float startY;
-
-    private final int maxHearts;
-    private final int initialHearts;
-    private final int attackPower;
-
-    private final boolean startsFacingRight;
-
-    //private final float maxDashCooldown;
-    //private final float maxAttackCooldown;
 
     // TODO: Add texture fields (FilmStrip?)
 
@@ -39,16 +27,111 @@ public class Enemy extends CapsuleObstacle implements ContactListener {
 
     private int hearts;
 
-    private boolean isDashing;
-    private boolean isJumping;
     private boolean isHit;
     private boolean isGrounded;
     private boolean isFacingRight;
 
-    private float dashCooldown;
     private float attackCooldown;
     private float movement;
     private final Vector2 forceCache = new Vector2();
+
+    private final float startX;
+    private final float startY;
+
+    private final int maxHearts;
+    private final int initialHearts;
+
+    private final int attackPower;
+
+    private final boolean startsFacingRight;
+
+    /**
+     * The amount of ticks before the palyer can attack again
+     */
+    private final int attackCooldown;
+
+    /**
+     * The distance the center of the attack is offset from the player
+     */
+    private final float attackOffset;
+    private final int hitCooldown;
+    /**
+     * The multiplier used to calculate the width of the hitbox.
+     */
+    private final float hitboxWidthMult;
+
+    /**
+     * The multiplier used to calculate the height of the hitbox.
+     */
+    private final float hitboxHeightMult;
+
+    /**
+     * The scaling factor for the sprite.
+     */
+    private final Vector2 scale;
+
+    /** Cache for internal force calculations */
+    private final Vector2 forceCache = new Vector2();
+
+    //#endregion
+
+    //#region TEXTURES
+    // TODO: Add texture fields (FilmStrip?)
+    private final TextureRegion momoTexture;
+    private final float momoImageWidth;
+    private final float momoImageHeight;
+    private final TextureRegion chiyoTexture;
+    private final float chiyoImageWidth;
+    private final float chiyoImageHeight;
+    //#endregion
+
+    //#region NONFINAL FIELDS
+
+    private float hearts;
+    /**
+     * The maximum horizontal speed that the object can reach.
+     */
+    private float maxSpeed;
+
+    /**
+     * The horizontal acceleration of the object.
+     */
+    private float horizontalAcceleration;
+
+    private boolean isChiyo;
+    private boolean isHit;
+    private boolean isGrounded;
+    private boolean isFacingRight;
+    /**
+     * The angle at which the entity is facing, in degrees.
+     */
+    private int angleFacing;
+    private boolean isMovingRight;
+    private boolean isMovingLeft;
+    private boolean isLookingUp;
+    private boolean isLookingDown;
+
+    /**
+     * The remaining time in seconds until the player can attack again.
+     */
+    private int attackCooldownRemaining;
+
+    private int hitCooldownRemaining;
+
+    /** The player's form: 0 is Momo, 1 is Chiyo */
+    private int form;
+
+    /** The impulse for the character being hit by enemies */
+    private final float hit_force;
+    private final JsonValue data;
+
+    /** The physics shape of this object */
+    private PolygonShape sensorShape;
+
+    /** Identifier to allow us to track the sensor in ContactListener */
+    private final String sensorName;
+
+
 
     //TODO: Add texture fields
 
@@ -68,23 +151,19 @@ public class Enemy extends CapsuleObstacle implements ContactListener {
 //        this.chiyoImageWidth = json.getFloat("chiyoImageWidth");
 //        this.chiyoImageHeight = json.getFloat("chiyoImageHeight");
 //        this.scale = new Vector2(json.getFloat("drawScaleX"), json.getFloat("drawScaleY"));
-//        this.swordSpriteSheet = new TextureRegion(assets.getEntry( "chiyo:swordAttack", Texture.class));
 
         //Position and Movement
         this.startX = json.getFloat("startX");
         this.startY = json.getFloat("startY");
-        this.dashCooldown = json.getInt("dashCooldown");
 //        this.maxSpeed = json.getFloat("maxSpeed");
 //        hitboxWidthMult = json.getFloat("hitboxWidthMult");
 //        hitboxHeightMult = json.getFloat("hitboxHeightMult");
 //        hit_force = json.getFloat( "hit_force");
-//        dash = json.getFloat("dash", 2000);
 
         //Attacking
         this.attackPower = json.getInt("attackPower");
         this.attackCooldown = json.getInt("attackCooldown");
 //        this.attackOffset = json.getFloat("attackOffset");
-//        this.swordRadius = json.getFloat("swordRadius");
 //        this.attackLifespan = json.getFloat("attackLifespan");
 
 
@@ -96,8 +175,6 @@ public class Enemy extends CapsuleObstacle implements ContactListener {
 
         this.startsFacingRight = json.getBoolean("startsFacingRight");
 
-        this.isDashing = false;
-        this.isJumping = false;
         this.isHit = false;
         this.isGrounded = true;
         this.isFacingRight = startsFacingRight;

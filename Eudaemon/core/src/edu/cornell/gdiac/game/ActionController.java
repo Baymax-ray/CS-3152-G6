@@ -28,6 +28,7 @@ public class ActionController {
      */
     public void resolveActions(EnumSet<Action> playerAction, Array<EnumSet<EnemyAction>> enemyActions) {
         resolvePlayerActions(playerAction);
+        resolveEnemyActions(enemyActions);
 
     }
 
@@ -210,6 +211,16 @@ public class ActionController {
         }
     }
     /**
+     * Resolves the set of enemy actions
+     *
+     * @param enemyActions an array of sets of enemy actions to resolve, each set representing
+     *                     the actions of one enemy
+     */
+    public void resolveEnemyActions(Array<EnumSet<EnemyAction>> enemyActions){
+
+    }
+
+    /**
      * Add a new sword attack to the world and send it in the right direction.
      */
     private void createSword() {
@@ -249,6 +260,8 @@ public class ActionController {
         SwordWheelObstacle sword = new SwordWheelObstacle(x, y, player.getSwordRadius(), player, player.getAttackLifespan(), 10.0f, player.getScale(), player.getSwordSpriteSheet());
         level.addQueuedObject(sword);
     }
+
+
     //#endregion
 }
 
