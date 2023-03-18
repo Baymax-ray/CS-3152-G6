@@ -62,7 +62,8 @@
         "jumpTolerance": 20,
         "jumptime": 30
       },
-      "enemyOne":{
+      "enemy":[
+        {
       "type":"Goomba",
       "TextureAsset": "platform:worm",
       "ImageWidth": 0.5,
@@ -90,6 +91,7 @@
       "hit_force": 5.5,
       "dash": 2000.0
     }
+  ]
     }
   ]
 }
