@@ -1,0 +1,8 @@
+What is AIController doing:
+
+1. How do we tell when we should turn back?
+    1. All vertical collision with a wall, a bump, or the player should be handled by physical engine.
+    2. To detect if we're reaching the edge of a platform, our current logic is that while initializing
+        the AIController, we should know the current platform that the enemy we're controlling is standing
+        on. Since our enemy can only move horizontally and the platform won't change (notice the precon-
+        dition), we can handle this by simply comparing the position of the enemy to the edge of the platform.
