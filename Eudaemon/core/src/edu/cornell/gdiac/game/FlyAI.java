@@ -24,8 +24,10 @@ public class FlyAI extends AIController{
         SPAWN,
         /** The enemy is patrolling around without a target */
         WANDER,
-        /** The enemy has a target, but must get closer */
+        /** The enemy has a target, but must get closer (not in the same cell)*/
         CHASE,
+        /** The enemy has a target(in the same cell), but must get closer*/
+        CHASE_close,
         /** The enemy has a target and is attacking it */
         ATTACK
     }
@@ -46,7 +48,7 @@ public class FlyAI extends AIController{
         enemyAction.add(move);
 
     }
-    public boolean checkDetection(){
+    private boolean checkDetection(){
         float py=level.getPlayer().getY();
         float px=level.getPlayer().getX();
         float ey=enemy.getY();
@@ -58,7 +60,8 @@ public class FlyAI extends AIController{
             return false;
         }
     }
-    public boolean canAttack(){
+
+    private boolean canAttack(){
         //ToDo
         return false;
     }
@@ -92,7 +95,7 @@ public class FlyAI extends AIController{
         }
 
     }
-    public void markGoal(){
+    private void markGoal(){
         float ex=enemy.getX();
         float ey=enemy.getY();
         Random rand = new Random();
@@ -119,7 +122,7 @@ public class FlyAI extends AIController{
                 goal[1]=level.getPlayer().getY();
                 break;
         }}
-    public void MoveAlongPathToGoal(){
+    private void MoveAlongPathToGoal(){
         float ex=enemy.getX();
         float ey=enemy.getY();
 
