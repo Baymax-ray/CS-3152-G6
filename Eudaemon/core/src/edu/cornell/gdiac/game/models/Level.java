@@ -78,7 +78,7 @@ public class Level {
      * The y position of the camera in level coordinates
      */
     private float cameraY;
-    
+
     //#endregion
 
     //#region GETTERS & SETTERS

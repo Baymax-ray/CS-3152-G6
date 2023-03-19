@@ -135,10 +135,15 @@ public class Enemy extends BoxObstacle implements ContactListener {
         //Query the type of this enemy, then query the corresponding data in enemyConstants.json
         this.type=json.getString("type");
         if(this.type == "Goomba"){
+            System.out.println("enemy creating");
             this.enemyData = assets.getEntry("sharedConstants", JsonValue.class).get("Goomba");
-        }else {
-            //Current: Enemy can only be Fly
+        }else if (this.type=="Fly"){
             this.enemyData = assets.getEntry("sharedConstants", JsonValue.class).get("Fly");
+        }
+        else{
+            //should never reach here
+            this.enemyData=null;
+            throw new IllegalArgumentException("Enemy can only be Fly or Goomba");
         }
         this.setWidth(enemyData.getFloat("hitboxWidth"));
         this.setHeight(enemyData.getFloat("hitboxHeight"));
