@@ -271,6 +271,7 @@ public class Level {
 
 
 
+
     }
 
     public void draw(GameCanvas canvas) {
@@ -383,12 +384,17 @@ public class Level {
         for (int i = 0; i < enemies.length; i++) {
             double dist = Math.sqrt(Math.pow(player.getX()-enemies[i].getX(),2) + Math.pow(player.getY()-enemies[i].getY(),2));
             if (dist < shortestDist) shortestDist = dist;
+
+            if (dist < player.getHitDist()) {
+                player.setHit(true);
+                player.hitByEnemy();
+            }
         }
 
         if (shortestDist < player.getSpiritIncreaseDist() && player.getForm()==0)
             player.increaseSpirit();
 
-        System.out.println(player.getSpirit());
+        System.out.println(player.getHearts());
     }
 
 

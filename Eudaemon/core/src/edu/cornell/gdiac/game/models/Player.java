@@ -86,6 +86,8 @@ public class Player extends BoxObstacle {
     /** Cache for internal force calculations */
     private final Vector2 forceCache = new Vector2();
 
+    private final float hitDist;
+
     //#endregion
 
     //#region TEXTURES
@@ -579,6 +581,11 @@ public class Player extends BoxObstacle {
     public void decreaseSpirit() { setSpirit(Math.max(getSpirit() - getSpiritDecreaseRate(), 0)); }
     public float getSpiritIncreaseDist() { return spiritIncreaseDist; }
 
+    public boolean isHit() { return isHit; }
+    public void setHit(boolean value) { isHit = value; }
+
+    public float getHitDist() {return hitDist; }
+
     //#endregion
 
     public void draw(GameCanvas canvas) {
@@ -661,6 +668,23 @@ public class Player extends BoxObstacle {
         body.applyForce(forceCache, getPosition(), true);
     }
 
+    /**
+     * Called when the character is hit by an enemy.
+     *
+     * This method decrements the number of hearts for the character by 1. If the number of hearts
+     * reaches 0, this method destroys the character
+     */
+    public void hitByEnemy() {
+
+        if (isHit() && hearts > 0){
+            hearts--;
+            if (hearts > 0)
+                setVelocity(getBodyVelocityX(), 2.0f);
+            else this.markRemoved(true);
+        }
+
+    }
+
 
     public Player(JsonValue json, AssetDirectory assets) {
         super(json.getFloat("startX"), json.getFloat("startY"), json.getFloat("hitboxWidth"), json.getFloat("hitboxHeight"));
@@ -709,6 +733,7 @@ public class Player extends BoxObstacle {
         this.spiritIncreaseRate = json.getFloat("spiritIncreaseRate");
         this.spiritDecreaseRate = json.getFloat("spiritDecreaseRate");
         this.spiritIncreaseDist = json.getFloat("spiritIncreaseDist");
+        this.hitDist = json.getFloat("hit_dist");
 
         this.isChiyo = false;
 
