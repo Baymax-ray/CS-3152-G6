@@ -218,9 +218,6 @@ public class ActionController {
             if (player.getAttackLifespanRemaining()==0) player.setAttacking(false);
         }
 
-        System.out.println(player.isAttacking());
-
-
         if (debugPressed) {
             level.setDebug(!level.isDebug());
         }

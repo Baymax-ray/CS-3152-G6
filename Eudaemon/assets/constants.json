@@ -65,6 +65,7 @@
         "spiritDecreaseRate": 0.01,
         "spiritIncreaseDist": 1.5,
         "hit_dist": 0.75,
+        "attack_dist": 1,
         "iFrames": 200,
         "sensor": {
           "shrink" : 0.6,

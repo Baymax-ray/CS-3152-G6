@@ -90,6 +90,8 @@ public class Player extends BoxObstacle {
 
     private final int iFrames;
 
+    private final float attackDist;
+
     //#endregion
 
     //#region TEXTURES
@@ -602,6 +604,8 @@ public class Player extends BoxObstacle {
     public boolean isAttacking() { return isAttacking;}
     public void setAttacking(boolean value) { isAttacking = value; }
 
+    public float getAttackDist() { return attackDist; }
+
     //#endregion
 
     public void draw(GameCanvas canvas) {
@@ -754,6 +758,7 @@ public class Player extends BoxObstacle {
         this.spiritIncreaseDist = json.getFloat("spiritIncreaseDist");
         this.hitDist = json.getFloat("hit_dist");
         this.iFrames = json.getInt("iFrames");
+        this.attackDist = json.getFloat("attack_dist");
 
         this.isChiyo = false;
 

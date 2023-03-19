@@ -20,7 +20,7 @@ public class Level {
 
     //#region FINAL FIELDS
     private final Player player;
-    private final Enemy[] enemies;
+    private Enemy[] enemies;
 
     // NOTE: the natural way of viewing a 2d array is flipped for the map. tilemap[0] is the top of the map. need fancy
     // conversions between the two spaces
@@ -390,13 +390,36 @@ public class Level {
                 player.hitByEnemy();
             }
 
+            if (player.isAttacking() && dist < player.getAttackDist() &&
+                    (player.isFacingRight() && player.getX() < enemies[i].getX() ||
+                    !player.isFacingRight() && player.getX() > enemies[i].getX())) {
+                enemies[i].hitBySword();
+                enemies = removeEnemy(enemies,i);
+            }
+
         }
 
         if (shortestDist < player.getSpiritIncreaseDist() && player.getForm()==0)
             player.increaseSpirit();
 
+    }
 
-
+    /**
+     * Helper method that removes an enemy
+     * Intended to fix the bug where players still gain soul after an enemy is killed
+     *
+     * @return the new array of enemies where a given enemy is removed
+     */
+    private Enemy[] removeEnemy(Enemy[] arr, int index) {
+        if (arr == null || index < 0 || index > arr.length) return arr;
+        Enemy[] result = new Enemy[arr.length-1];
+        for (int i = 0, k = 0; i < arr.length; i++) {
+            if (i == index) {
+                continue;
+            }
+            result[k++] = arr[i];
+        }
+        return result;
     }
 
 
