@@ -19,21 +19,16 @@ import java.util.Iterator;
 public class Level {
 
     //#region FINAL FIELDS
-
     private final Player player;
     private final Enemy[] enemies;
-
 
     // NOTE: the natural way of viewing a 2d array is flipped for the map. tilemap[0] is the top of the map. need fancy
     // conversions between the two spaces
     private final int[][] tilemap; // value represents the index of the tile in the tiles array
-
     private final Tile[] tiles;
-
     private final BodyDef bodyDef;
     private final FixtureDef fixtureDef;
-
-//    private final TextureRegion backgroundTexture;
+    //private final TextureRegion backgroundTexture;
 
     /**
      * In level coordinates (not pixels), the width and height of a single tile.
@@ -52,12 +47,11 @@ public class Level {
 
     private final float gravity;
 
-    private UIOverlay uiElements;
-
     //#endregion
 
 
     //#region NONFINAL FIELDS
+    private UIOverlay uiElements;
     private World world;
 
     /** Queue for adding objects */
@@ -84,13 +78,10 @@ public class Level {
      * The y position of the camera in level coordinates
      */
     private float cameraY;
-
-
+    
     //#endregion
 
     //#region GETTERS & SETTERS
-
-
     public World getWorld() {
         return world;
     }
@@ -121,6 +112,53 @@ public class Level {
     }
 
     //#endregion
+
+    public Level(JsonValue json, Tile[] tiles, AssetDirectory assets) {
+        this.tiles = tiles;
+
+        int widthInTiles = json.getInt("widthInTiles");
+        int heightInTiles = json.getInt("heightInTiles");
+
+        this.tilemap = new int[heightInTiles][widthInTiles];
+        for (int y = 0; y < heightInTiles; y++) {
+            JsonValue row = json.get("tilemap").get(y);
+            for (int x = 0; x < widthInTiles; x++) {
+                tilemap[y][x] = row.getInt(x);
+            }
+        }
+
+        this.tileSize = json.getFloat("tileSize");
+        this.cameraWidth = json.getFloat("cameraWidth");
+        this.cameraHeight = json.getFloat("cameraHeight");
+        this.gravity = json.getFloat("gravity");
+
+
+//        String backgroundAsset = json.getString("backgroundAsset");
+//        this.backgroundTexture = assets.get(backgroundAsset);
+
+        this.world = new World(new Vector2(0, gravity), true);
+        this.player = new Player(json.get("player"), assets);
+        uiElements = new UIOverlay(json.get("player"), assets, player.getHearts(), player.getSpirit());
+
+
+
+        // TODO: need more than 1 ideally
+        //this is a temporary code!!
+        this.enemies = new Enemy[1];
+        //System.out.println(json.get("enemy").get(0).toString());
+        this.enemies[0]=new Enemy(json.get("enemy").get(0),assets);
+
+        this.bodyDef = new BodyDef();
+        this.bodyDef.type = BodyDef.BodyType.StaticBody;
+        this.bodyDef.active = false;
+
+        this.fixtureDef = new FixtureDef();
+
+        this.addQueue = new PooledList<>();
+        this.objects = new PooledList<>();
+
+        this.debug = false;
+    }
 
     /**
      * presumably useful classes for AI
@@ -305,52 +343,6 @@ public class Level {
     }
 
 
-    public Level(JsonValue json, Tile[] tiles, AssetDirectory assets) {
-        this.tiles = tiles;
-
-        int widthInTiles = json.getInt("widthInTiles");
-        int heightInTiles = json.getInt("heightInTiles");
-
-        this.tilemap = new int[heightInTiles][widthInTiles];
-        for (int y = 0; y < heightInTiles; y++) {
-            JsonValue row = json.get("tilemap").get(y);
-            for (int x = 0; x < widthInTiles; x++) {
-                tilemap[y][x] = row.getInt(x);
-            }
-        }
-
-        this.tileSize = json.getFloat("tileSize");
-        this.cameraWidth = json.getFloat("cameraWidth");
-        this.cameraHeight = json.getFloat("cameraHeight");
-        this.gravity = json.getFloat("gravity");
-
-
-//        String backgroundAsset = json.getString("backgroundAsset");
-//        this.backgroundTexture = assets.get(backgroundAsset);
-
-        this.world = new World(new Vector2(0, gravity), true);
-        this.player = new Player(json.get("player"), assets);
-        uiElements = new UIOverlay(json.get("player"), assets, player.getHearts(), player.getSpirit());
-
-
-
-        // TODO: need more than 1 ideally
-        //this is a temporary code!!
-        this.enemies = new Enemy[1];
-        //System.out.println(json.get("enemy").get(0).toString());
-        this.enemies[0]=new Enemy(json.get("enemy").get(0),assets);
-
-        this.bodyDef = new BodyDef();
-        this.bodyDef.type = BodyDef.BodyType.StaticBody;
-        this.bodyDef.active = false;
-
-        this.fixtureDef = new FixtureDef();
-
-        this.addQueue = new PooledList<>();
-        this.objects = new PooledList<>();
-
-        this.debug = false;
-    }
 
     public void handleGameplayCamera(GameCanvas canvas) {
         if (Gdx.input.isKeyPressed(Input.Keys.O)) {
