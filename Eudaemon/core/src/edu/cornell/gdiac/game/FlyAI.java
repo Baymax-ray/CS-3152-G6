@@ -155,6 +155,7 @@ public class FlyAI extends AIController{
         float ey = enemy.getY();
 
         switch (state) {
+            case WANDER:
             case CHASE_close:
                 float dx=goal[0]-ex;
                 float dy=goal[1]-ey;
@@ -242,6 +243,7 @@ public class FlyAI extends AIController{
                         }
                     }
                 }
+                this.move=EnemyAction.STAY; //do not move if cannot find a path
                 break;
         }
     }
