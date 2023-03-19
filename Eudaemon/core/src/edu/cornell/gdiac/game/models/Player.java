@@ -169,6 +169,9 @@ public class Player extends BoxObstacle {
 
     private int iFramesRemaining;
 
+    private boolean isAttacking;
+    private int attackLifespanRemaining;
+
     //#endregion
 
     //#region TEXTURE GETTERS AND SETTERS
@@ -224,6 +227,8 @@ public class Player extends BoxObstacle {
     public float getAttackLifespan() {
         return attackLifespan;
     }
+    public float getAttackLifespanRemaining() { return attackLifespanRemaining; }
+    public void setAttackLifespanRemaining(int value) {attackLifespanRemaining = value;}
     public float getX() {
         return body.getPosition().x;
     }
@@ -594,6 +599,9 @@ public class Player extends BoxObstacle {
     public int getiFramesRemaining() { return iFramesRemaining; }
     public void setiFramesRemaining(int value) { iFramesRemaining = value; }
 
+    public boolean isAttacking() { return isAttacking;}
+    public void setAttacking(boolean value) { isAttacking = value; }
+
     //#endregion
 
     public void draw(GameCanvas canvas) {
@@ -761,6 +769,7 @@ public class Player extends BoxObstacle {
         this.isLookingUp = false;
         this.isLookingDown = false;
         this.jumpPressedInAir = false;
+        this.isAttacking = false;
         this.dashCooldownRemaining = 0;
         this.attackCooldownRemaining = 0;
         this.hitCooldownRemaining = 0;
@@ -769,6 +778,7 @@ public class Player extends BoxObstacle {
         this.jumpToleranceRemaining = 0;
         this.jumpTimeRemaining = 0;
         this.iFramesRemaining = 0;
+        this.attackLifespanRemaining = 0;
 
         this.texture = momoTexture;
         this.data = json;

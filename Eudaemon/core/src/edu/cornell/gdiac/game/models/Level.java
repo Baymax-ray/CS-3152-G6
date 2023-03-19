@@ -395,6 +395,8 @@ public class Level {
         if (shortestDist < player.getSpiritIncreaseDist() && player.getForm()==0)
             player.increaseSpirit();
 
+
+
     }
 
 

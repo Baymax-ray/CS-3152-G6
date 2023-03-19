@@ -146,6 +146,8 @@ public class ActionController {
         //#region Sword Attack
         if (attackPressed && player.getForm() == 1 && player.getAttackCooldownRemaining() == 0){
             player.setAttackCooldownRemaining(player.getAttackCooldown());
+            player.setAttacking(true);
+            player.setAttackLifespanRemaining((int) (player.getAttackLifespan()/(1/60)));
             createSword();
         }
         //#endregion
@@ -210,6 +212,13 @@ public class ActionController {
             player.setiFramesRemaining(Math.max(player.getiFramesRemaining()-1,0));
             if (player.getiFramesRemaining()==0) player.setHit(false);
         }
+
+        if (player.getAttackLifespanRemaining() > 0) {
+            player.setAttackLifespanRemaining(Math.max(player.getAttackCooldownRemaining()-1,0));
+            if (player.getAttackLifespanRemaining()==0) player.setAttacking(false);
+        }
+
+        System.out.println(player.isAttacking());
 
 
         if (debugPressed) {
