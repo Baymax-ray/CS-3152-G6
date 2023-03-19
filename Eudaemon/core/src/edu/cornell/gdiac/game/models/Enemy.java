@@ -64,6 +64,9 @@ public class Enemy extends CapsuleObstacle implements ContactListener {
     /** Cache for internal force calculations */
     private final Vector2 forceCache = new Vector2();
 
+    /** The amount to slow the character down */
+    private final float damping;
+
     //#endregion
 
     //#region TEXTURES
@@ -125,20 +128,10 @@ public class Enemy extends CapsuleObstacle implements ContactListener {
     }
     private String getSensorName() {return this.sensorName;}
 
-    /**
-     * @param enemyName: the name of this enemy so as to query its image width and height in json,
-     *                 MUST BE IN LOWERCASE!
-     *
-     * */
-    public Enemy(JsonValue json, AssetDirectory assets, String enemyName) {
+    public Enemy(JsonValue json, AssetDirectory assets) {
         super(json.getFloat("startX"), json.getFloat("startY"), json.getFloat("hitboxWidth"), json.getFloat("hitboxHeight"));
         String TextureAsset = json.getString("TextureAsset");
-        this.enemyTexture = new TextureRegion(assets.getEntry(TextureAsset, Texture.class));
-
-        //Position and Movement. These two values are stored in constants.json
-        this.startX = json.getFloat("startX");
-        this.startY = json.getFloat("startY");
-
+        System.out.println("trying to initialize");
         //Query the type of this enemy, then query the corresponding data in enemyConstants.json
         this.type=json.getString("type");
         if(this.type == "Goomba"){
@@ -147,16 +140,26 @@ public class Enemy extends CapsuleObstacle implements ContactListener {
             //Current: Enemy can only be Fly
             this.enemyData = assets.getEntry("sharedConstants", JsonValue.class).get("Fly");
         }
+        this.setWidth(enemyData.getFloat("hitboxWidth"));
+        this.setHeight(enemyData.getFloat("hitboxHeight"));
+
+
+        this.enemyTexture = new TextureRegion(assets.getEntry(TextureAsset, Texture.class));
+
+        //Position and Movement. These two values are stored in constants.json
+        this.startX = json.getFloat("startX");
+        this.startY = json.getFloat("startY");
 
         //Size
-        this.enemyImageWidth = enemyData.getFloat(enemyName+"ImageWidth");
-        this.enemyImageHeight = enemyData.getFloat(enemyName+"ImageHeight");
+        this.enemyImageWidth = enemyData.getFloat("ImageWidth");
+        this.enemyImageHeight = enemyData.getFloat("ImageHeight");
         this.scale = new Vector2(enemyData.getFloat("drawScaleX"), enemyData.getFloat("drawScaleY"));
 
 
         this.maxSpeed = enemyData.getFloat("maxSpeed");
         this.hitboxWidthMult = enemyData.getFloat("hitboxWidthMult");
         this.hitboxHeightMult = enemyData.getFloat("hitboxHeightMult");
+        this.damping = enemyData.getFloat("damping");
 
         //Attacking
         this.attackPower = enemyData.getInt("attackPower");
@@ -190,23 +193,16 @@ public class Enemy extends CapsuleObstacle implements ContactListener {
         }
     }
     public float getMovement(){return movement;}
-    public void applyForce() {
-        if (!isActive()) {
-            return;
-        }
-        // Don't want to be moving. Damp out player motion
-//        if (getMovement() == 0f) {
-//            forceCache.set(-getDamping() * getVX(), 0);
-//            body.applyForce(forceCache, getPosition(), true);
-//        }
-//
-//        // Velocity too high, clamp it
-//        if (Math.abs(getVX()) >= getMaxSpeed()) {
-//            setVX(Math.signum(getVX()) * getMaxSpeed());
-//        } else {
-//            forceCache.set(getMovement(), 0);
-//            body.applyForce(forceCache, getPosition(), true);
-//        }
+
+    /**
+     * Draws the physics object.
+     *
+     * @param canvas Drawing context
+     */
+    public void draw(GameCanvas canvas) {
+        //System.out.println("trying to draaw");
+        float effect = -(isFacingRight ? 1.0f : -1.0f);
+        canvas.draw(enemyTexture,Color.WHITE,origin.x,origin.y,getX()*drawScale.x-15*effect,getY()*drawScale.y-16,getAngle(),effect * 0.03f,0.03f);
     }
 
 
@@ -251,11 +247,87 @@ public class Enemy extends CapsuleObstacle implements ContactListener {
         return true;
     }
 
+    /**
+     * Applies the force to the body of this dude
+     *
+     * This method should be called after the force attribute is set.
+     */
+    public void applyForce() {
+        if (!isActive()) {
+            return;
+        }
+
+        // Don't want to be moving. Damp out player motion
+        if (getMovement() == 0f) {
+            forceCache.set(-this.damping*getVX(),0);
+            body.applyForce(forceCache,getPosition(),true);
+        }
+
+        // Velocity too high, clamp it
+        if (Math.abs(getVX()) >= this.maxSpeed) {
+            setVX(Math.signum(getVX())*this.maxSpeed);
+        } else {
+            forceCache.set(getMovement(),0);
+            body.applyForce(forceCache,getPosition(),true);
+        }
+//        // Jump!
+//        if (isJumping()) {
+//            forceCache.set(0, jump_force);
+//            body.applyLinearImpulse(forceCache,getPosition(),true);
+//        }
+    }
 
 
+    //<editor-fold desc="COLLISION">
+    /** This method is called when two objects start colliding **/
     @Override
     public void beginContact(Contact contact) {
+        Fixture fix1 = contact.getFixtureA();
+        Fixture fix2 = contact.getFixtureB();
 
+        Body body1 = fix1.getBody();
+        Body body2 = fix2.getBody();
+
+        Object fd1 = fix1.getUserData();
+        Object fd2 = fix2.getUserData();
+
+        Object bd1 = body1.getUserData();
+        Object bd2 = body2.getUserData();
+
+        //System.out.println(bd1.getClass());
+        //System.out.println(bd2.getClass());
+        // Check if the two objects colliding are an instance of EnemyModel and SwordWheelObstacle
+        if ((bd1 instanceof Enemy
+                && bd2 instanceof SwordWheelObstacle)
+                || (bd2 instanceof Enemy
+                && bd1 instanceof SwordWheelObstacle)) {
+
+            // Get references to the EnemyModel and SwordWheelObstacle objects involved in the collision
+            Enemy enemy = null;
+            SwordWheelObstacle obstacle = null;
+            if (bd1 instanceof Enemy) {
+                enemy = (Enemy) bd1;
+                obstacle = (SwordWheelObstacle) bd2;
+            } else {
+                enemy = (Enemy) bd2;
+                obstacle = (SwordWheelObstacle)bd1;
+            }
+            // Call a method in EnemyModel to handle the collisions
+            enemy.hitBySword();
+        }
+    }
+
+    /**
+     * Called when this enemy is hit by a sword.
+     *
+     * This method decrements the number of hearts for this enemy by 1. If the number of hearts
+     * reaches 0, this method destroys the enemy
+     */
+    public void hitBySword() {
+        hearts--;
+        if (hearts <= 0) {
+            this.markRemoved(true);
+        }
     }
 
     @Override
@@ -272,4 +344,5 @@ public class Enemy extends CapsuleObstacle implements ContactListener {
     public void postSolve(Contact contact, ContactImpulse impulse) {
 
     }
+    //</editor-fold>
 }

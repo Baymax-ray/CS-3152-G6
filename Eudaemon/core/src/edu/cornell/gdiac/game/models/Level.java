@@ -299,6 +299,9 @@ public class Level {
 
         addObject(player);
         //TODO: enemies activate too
+        for(int i = 0; i < enemies.length; i++){
+            addObject(enemies[i]);
+        }
     }
 
 
@@ -333,8 +336,9 @@ public class Level {
 
         // TODO: need more than 1 ideally
         //this is a temporary code!!
-        this.enemies = new Enemy[0];
-        //this.enemies[0]=new Enemy(json.get("enemy").get(1),assets);
+        this.enemies = new Enemy[1];
+        //System.out.println(json.get("enemy").get(0).toString());
+        this.enemies[0]=new Enemy(json.get("enemy").get(0),assets);
 
         this.bodyDef = new BodyDef();
         this.bodyDef.type = BodyDef.BodyType.StaticBody;

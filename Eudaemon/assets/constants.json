@@ -30,7 +30,7 @@
         "chiyoImageHeight": 0.5,
         "hitboxWidthMult": 0.75,
         "hitboxHeightMult": 0.9,
-        "startX": 3.5,
+        "startX": 3.0,
         "startY": 4,
         "heart": "platform:heart",
         "emptyspirit": "platform:emptyspirit",
@@ -68,11 +68,13 @@
       },
       "enemy":[
         {
-      "type":"Goomba",
-      "TextureAsset": "platform:worm",
-      "startX": 4,
-      "startY": 4
-    }
+          "type":"Goomba",
+          "TextureAsset": "platform:worm",
+          "startX": 4,
+          "startY": 5,
+          "hitboxWidth": 0.5,
+          "hitboxHeight": 0.5
+        }
   ]
     }
   ]

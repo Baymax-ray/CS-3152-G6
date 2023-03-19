@@ -579,7 +579,7 @@ public class Player extends BoxObstacle {
         float oy = this.texture.getRegionHeight()/2;
 
         float sx = (isFacingRight ? 1 : -1) * momoImageWidth / this.texture.getRegionWidth();
-        System.out.println(momoImageWidth / this.texture.getRegionWidth());
+        //System.out.println(momoImageWidth / this.texture.getRegionWidth());
         float sy = momoImageHeight / this.texture.getRegionHeight();
 
         canvas.draw(this.texture, Color.WHITE, ox, oy, x, y, 0, sx, sy);

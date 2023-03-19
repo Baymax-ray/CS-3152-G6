@@ -282,9 +282,10 @@ public class CapsuleObstacle extends SimpleObstacle {
 	    cap2 = null;
 	    orient = o;
 	    seamEpsilon = DEFAULT_EPSILON;
-
 		// Initialize
-		resize(width, height);	
+		//Question is here.
+		resize(width, height);
+
 	}
 	
 	/**
@@ -356,6 +357,7 @@ public class CapsuleObstacle extends SimpleObstacle {
 		vertices[5] = center.y+center.height;
 		vertices[6] = center.x+center.width;
 		vertices[7] = center.y;
+		//TODO
 		shape.set(vertices);
 		end1.setRadius(r);
 		end2.setRadius(r);
