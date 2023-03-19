@@ -11,7 +11,7 @@ import edu.cornell.gdiac.game.obstacle.CapsuleObstacle;
 import edu.cornell.gdiac.game.*;
 import edu.cornell.gdiac.game.obstacle.*;
 
-public class Enemy extends CapsuleObstacle implements ContactListener {
+public class Enemy extends BoxObstacle implements ContactListener {
 
     //#region FINAL FIELDS
 
@@ -145,6 +145,7 @@ public class Enemy extends CapsuleObstacle implements ContactListener {
 
 
         this.enemyTexture = new TextureRegion(assets.getEntry(TextureAsset, Texture.class));
+        this.texture = this.enemyTexture;
 
         //Position and Movement. These two values are stored in constants.json
         this.startX = json.getFloat("startX");
@@ -201,8 +202,17 @@ public class Enemy extends CapsuleObstacle implements ContactListener {
      */
     public void draw(GameCanvas canvas) {
         //System.out.println("trying to draaw");
-        float effect = -(isFacingRight ? 1.0f : -1.0f);
-        canvas.draw(enemyTexture,Color.WHITE,origin.x,origin.y,getX()*drawScale.x-15*effect,getY()*drawScale.y-16,getAngle(),effect * 0.03f,0.03f);
+        float x = getX();
+        float y = getY();
+
+        float ox = this.texture.getRegionWidth()/2;
+        float oy = this.texture.getRegionHeight()/2;
+
+        float sx = (isFacingRight ? 1 : -1) * enemyImageWidth / this.texture.getRegionWidth();
+        //System.out.println(momoImageWidth / this.texture.getRegionWidth());
+        float sy = enemyImageHeight / this.texture.getRegionHeight();
+
+        canvas.draw(this.texture, Color.WHITE, ox, oy, x, y, 0, sx, sy);
     }
 
 
