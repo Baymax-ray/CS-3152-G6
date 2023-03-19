@@ -32,7 +32,7 @@
     "jsons"  : {
         "constants": "constants.json",
         "inputMappings": "inputMapping.json",
-        "enemtConstants": "enemyConstants.json"
+        "sharedConstants": "sharedConstants.json"
     },
     "sounds" : {
         "platform:jump" : "platform/jump.mp3",

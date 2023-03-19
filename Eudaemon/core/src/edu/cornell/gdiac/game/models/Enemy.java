@@ -123,7 +123,7 @@ public class Enemy extends CapsuleObstacle implements ContactListener {
     public String getType() {
         return type;
     }
-
+    private String getSensorName() {return this.sensorName;}
 
     /**
      * @param enemyName: the name of this enemy so as to query its image width and height in json,
@@ -142,10 +142,10 @@ public class Enemy extends CapsuleObstacle implements ContactListener {
         //Query the type of this enemy, then query the corresponding data in enemyConstants.json
         this.type=json.getString("type");
         if(this.type == "Goomba"){
-            this.enemyData = assets.getEntry("enemyConstants", JsonValue.class).get("Goomba");
+            this.enemyData = assets.getEntry("sharedConstants", JsonValue.class).get("Goomba");
         }else {
             //Current: Enemy can only be Fly
-            this.enemyData = assets.getEntry("enemyConstants", JsonValue.class).get("Fly");
+            this.enemyData = assets.getEntry("sharedConstants", JsonValue.class).get("Fly");
         }
 
         //Size
@@ -208,7 +208,52 @@ public class Enemy extends CapsuleObstacle implements ContactListener {
 //            body.applyForce(forceCache, getPosition(), true);
 //        }
     }
-        @Override
+
+
+    /**
+     * TODO: change this function to cater for Flying Enemy!
+     * Creates the physics Body(s) for this object, adding them to the world.
+     *
+     * This method overrides the base method to keep your ship from spinning.
+     *
+     * @param world Box2D world to store body
+     *
+     * @return true if object allocation succeeded
+     */
+    public boolean activatePhysics(World world) {
+        // create the box from our superclass
+        if (!super.activatePhysics(world)) {
+            return false;
+        }
+
+        // Ground Sensor
+        // -------------
+        // We only allow the dude to jump when he's on the ground.
+        // Double jumping is not allowed.
+        //
+        // To determine whether or not the dude is on the ground,
+        // we create a thin sensor under his feet, which reports
+        // collisions with the world but has no collision response.
+        Vector2 sensorCenter = new Vector2(0, -getHeight() / 2);
+        FixtureDef sensorDef = new FixtureDef();
+        sensorDef.density = enemyData.getFloat("density",0);
+        sensorDef.isSensor = true;
+        sensorShape = new PolygonShape();
+        JsonValue sensorjv = enemyData.get("sensor");
+        sensorShape.setAsBox(sensorjv.getFloat("shrink",0)*getWidth()/2.0f,
+                sensorjv.getFloat("height",0), sensorCenter, 0.0f);
+        sensorDef.shape = sensorShape;
+
+        // Ground sensor to represent our feet
+        Fixture sensorFixture = body.createFixture( sensorDef );
+        sensorFixture.setUserData(getSensorName());
+
+        return true;
+    }
+
+
+
+    @Override
     public void beginContact(Contact contact) {
 
     }
