@@ -1,10 +1,12 @@
 package edu.cornell.gdiac.game;
 
+import com.badlogic.gdx.utils.Queue;
 import edu.cornell.gdiac.game.models.Enemy;
 import edu.cornell.gdiac.game.models.EnemyAction;
 import edu.cornell.gdiac.game.models.Level;
 
 import java.util.EnumSet;
+import java.util.HashSet;
 import java.util.Random;
 
 public class FlyAI extends AIController{
@@ -24,9 +26,9 @@ public class FlyAI extends AIController{
         SPAWN,
         /** The enemy is patrolling around without a target */
         WANDER,
-        /** The enemy has a target, but must get closer (not in the same cell)*/
+        /** The enemy has a target, but must get closer (not in the same tile)*/
         CHASE,
-        /** The enemy has a target(in the same cell), but must get closer*/
+        /** The enemy has a target(in the same tile), but must get closer*/
         CHASE_close,
         /** The enemy has a target and is attacking it */
         ATTACK
@@ -62,10 +64,10 @@ public class FlyAI extends AIController{
     }
 
     private boolean sameCell(){
-        float py=level.getPlayer().getY();
-        float px=level.getPlayer().getX();
-        float ey=enemy.getY();
-        float ex=enemy.getX();
+        int py=level.levelToTileCoordinatesY(level.getPlayer().getY());
+        int px=level.levelToTileCoordinatesX(level.getPlayer().getX());
+        int ey=level.levelToTileCoordinatesY(enemy.getY());
+        int ex=level.levelToTileCoordinatesX(enemy.getX());
         if (Math.abs(py-ey)<1&&Math.abs(px-ex)<1){
             return true;
         }
@@ -138,9 +140,9 @@ public class FlyAI extends AIController{
                 goal[1]=ny;
                 break;
             case CHASE:
-                // only need to fly to the same cell
-                goal[0]=(float) Math.round(level.getPlayer().getX());
-                goal[1]=(float) Math.round(level.getPlayer().getY());
+                // only need to fly to the same tile
+                goal[0]=(float) level.levelToTileCoordinatesX(level.getPlayer().getX());
+                goal[1]=(float) level.levelToTileCoordinatesX(level.getPlayer().getY());
                 break;
             case CHASE_close:
                 goal[0]=level.getPlayer().getX();
@@ -172,7 +174,29 @@ public class FlyAI extends AIController{
                 }
                 break;
             default:
-            break;
+                int gy=level.levelToTileCoordinatesY(goal[0]);
+                int gx=level.levelToTileCoordinatesX(goal[0]);
+                int cy=level.levelToTileCoordinatesY(ey);
+                int cx=level.levelToTileCoordinatesX(ex);
+                Queue<int[]> boundary= new Queue<>();
+                HashSet<int[]>visited= new HashSet<>();
+                if
+                break;
         }
+    }
+    private class Coord {
+        private int x;
+        private int y;
+        private int d;
+        public Coord(int x, int y,EnemyAction direction){
+            this.x=x;
+            this.y=y;
+            this.d=direction;
+        }
+
+        public int getX(){return x;}
+        public int getY(){return y;}
+        public EnemyAction getDirection(){return d;}
+
     }
 }
