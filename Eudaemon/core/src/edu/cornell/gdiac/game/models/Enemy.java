@@ -25,16 +25,7 @@ public class Enemy extends CapsuleObstacle implements ContactListener {
     private Vector2 pos;
     private Vector2 vel;
 
-    private int hearts;
-
-    private boolean isHit;
-    private boolean isGrounded;
-    private boolean isFacingRight;
-
-    private float attackCooldown;
     private float movement;
-    private final Vector2 forceCache = new Vector2();
-
     private final float startX;
     private final float startY;
 
@@ -46,12 +37,12 @@ public class Enemy extends CapsuleObstacle implements ContactListener {
     private final boolean startsFacingRight;
 
     /**
-     * The amount of ticks before the palyer can attack again
+     * The amount of ticks before the enemy can attack again
      */
     private final int attackCooldown;
 
     /**
-     * The distance the center of the attack is offset from the player
+     * The distance the center of the attack is offset from the enemy
      */
     private final float attackOffset;
     private final int hitCooldown;
@@ -77,12 +68,9 @@ public class Enemy extends CapsuleObstacle implements ContactListener {
 
     //#region TEXTURES
     // TODO: Add texture fields (FilmStrip?)
-    private final TextureRegion momoTexture;
-    private final float momoImageWidth;
-    private final float momoImageHeight;
-    private final TextureRegion chiyoTexture;
-    private final float chiyoImageWidth;
-    private final float chiyoImageHeight;
+    private final TextureRegion enemyTexture;
+    private final float enemyImageWidth;
+    private final float enemyImageHeight;
     //#endregion
 
     //#region NONFINAL FIELDS
@@ -112,7 +100,7 @@ public class Enemy extends CapsuleObstacle implements ContactListener {
     private boolean isLookingDown;
 
     /**
-     * The remaining time in seconds until the player can attack again.
+     * The remaining time in seconds until the enemy can attack again.
      */
     private int attackCooldownRemaining;
 
@@ -141,15 +129,17 @@ public class Enemy extends CapsuleObstacle implements ContactListener {
     }
 
 
-    public Enemy(JsonValue json, AssetDirectory assets) {
+    /**
+     * @param enemyName: the name of this enemy so as to query its image width and height in json,
+     *                 MUST BE IN LOWERCASE!
+     *
+     * */
+    public Enemy(JsonValue json, AssetDirectory assets, String enemyName) {
         super(json.getFloat("startX"), json.getFloat("startY"), json.getFloat("hitboxWidth"), json.getFloat("hitboxHeight"));
         String TextureAsset = json.getString("TextureAsset");
         this.texture = new TextureRegion(assets.getEntry(TextureAsset, Texture.class));
-//        this.momoImageWidth = json.getFloat("momoImageWidth");
-//        this.momoImageHeight = json.getFloat("momoImageHeight");
-//        this.chiyoTexture = new TextureRegion(assets.getEntry(json.getString("chiyoTextureAsset"), Texture.class));
-//        this.chiyoImageWidth = json.getFloat("chiyoImageWidth");
-//        this.chiyoImageHeight = json.getFloat("chiyoImageHeight");
+        this.enemyImageWidth = json.getFloat(enemyName+"ImageWidth");
+        this.enemyImageHeight = json.getFloat(enemyName+"ImageHeight");
 //        this.scale = new Vector2(json.getFloat("drawScaleX"), json.getFloat("drawScaleY"));
 
         //Position and Movement
