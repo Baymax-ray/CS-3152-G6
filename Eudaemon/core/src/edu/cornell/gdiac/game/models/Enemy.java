@@ -86,7 +86,6 @@ public class Enemy extends CapsuleObstacle implements ContactListener {
      */
     private float horizontalAcceleration;
 
-    private boolean isChiyo;
     private boolean isHit;
     private boolean isGrounded;
     private boolean isFacingRight;
@@ -96,8 +95,6 @@ public class Enemy extends CapsuleObstacle implements ContactListener {
     private int angleFacing;
     private boolean isMovingRight;
     private boolean isMovingLeft;
-    private boolean isLookingUp;
-    private boolean isLookingDown;
 
     /**
      * The remaining time in seconds until the enemy can attack again.
@@ -106,18 +103,17 @@ public class Enemy extends CapsuleObstacle implements ContactListener {
 
     private int hitCooldownRemaining;
 
-    /** The player's form: 0 is Momo, 1 is Chiyo */
-    private int form;
-
-    /** The impulse for the character being hit by enemies */
-    private final float hit_force;
-    private final JsonValue data;
 
     /** The physics shape of this object */
     private PolygonShape sensorShape;
 
     /** Identifier to allow us to track the sensor in ContactListener */
     private final String sensorName;
+
+    /**the type of this enemy. currently: goombaAI or fly.*/
+    private final String type;
+
+    private final JsonValue enemyData;
 
 
 
@@ -137,33 +133,46 @@ public class Enemy extends CapsuleObstacle implements ContactListener {
     public Enemy(JsonValue json, AssetDirectory assets, String enemyName) {
         super(json.getFloat("startX"), json.getFloat("startY"), json.getFloat("hitboxWidth"), json.getFloat("hitboxHeight"));
         String TextureAsset = json.getString("TextureAsset");
-        this.texture = new TextureRegion(assets.getEntry(TextureAsset, Texture.class));
-        this.enemyImageWidth = json.getFloat(enemyName+"ImageWidth");
-        this.enemyImageHeight = json.getFloat(enemyName+"ImageHeight");
-//        this.scale = new Vector2(json.getFloat("drawScaleX"), json.getFloat("drawScaleY"));
+        this.enemyTexture = new TextureRegion(assets.getEntry(TextureAsset, Texture.class));
 
-        //Position and Movement
+        //Position and Movement. These two values are stored in constants.json
         this.startX = json.getFloat("startX");
         this.startY = json.getFloat("startY");
-//        this.maxSpeed = json.getFloat("maxSpeed");
-//        hitboxWidthMult = json.getFloat("hitboxWidthMult");
-//        hitboxHeightMult = json.getFloat("hitboxHeightMult");
-//        hit_force = json.getFloat( "hit_force");
+
+        //Query the type of this enemy, then query the corresponding data in enemyConstants.json
+        this.type=json.getString("type");
+        if(this.type == "Goomba"){
+            this.enemyData = assets.getEntry("enemyConstants", JsonValue.class).get("Goomba");
+        }else {
+            //Current: Enemy can only be Fly
+            this.enemyData = assets.getEntry("enemyConstants", JsonValue.class).get("Fly");
+        }
+
+        //Size
+        this.enemyImageWidth = enemyData.getFloat(enemyName+"ImageWidth");
+        this.enemyImageHeight = enemyData.getFloat(enemyName+"ImageHeight");
+        this.scale = new Vector2(enemyData.getFloat("drawScaleX"), enemyData.getFloat("drawScaleY"));
+
+
+        this.maxSpeed = enemyData.getFloat("maxSpeed");
+        this.hitboxWidthMult = enemyData.getFloat("hitboxWidthMult");
+        this.hitboxHeightMult = enemyData.getFloat("hitboxHeightMult");
 
         //Attacking
-        this.attackPower = json.getInt("attackPower");
-        this.attackCooldown = json.getInt("attackCooldown");
-//        this.attackOffset = json.getFloat("attackOffset");
-//        this.attackLifespan = json.getFloat("attackLifespan");
+        this.attackPower = enemyData.getInt("attackPower");
+        this.attackCooldown = enemyData.getInt("attackCooldown");
+        this.attackOffset = enemyData.getFloat("attackOffset");
+        this.hitCooldown = enemyData.getInt("hitCooldown");
 
+        //Sensor. Wtf is this?
+        this.sensorName = "PlayerGroundSensor";
 
         //Other Information
-        this.type=json.getString("type");
-        this.maxHearts = json.getInt("maxHearts");
-        this.initialHearts = json.getInt("initialHearts");
+        this.maxHearts = enemyData.getInt("maxHearts");
+        this.initialHearts = enemyData.getInt("initialHearts");
         this.hearts = initialHearts;
 
-        this.startsFacingRight = json.getBoolean("startsFacingRight");
+        this.startsFacingRight = enemyData.getBoolean("startsFacingRight");
 
         this.isHit = false;
         this.isGrounded = true;

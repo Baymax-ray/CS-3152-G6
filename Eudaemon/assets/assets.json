@@ -31,7 +31,8 @@
     },
     "jsons"  : {
         "constants": "constants.json",
-        "inputMappings": "inputMapping.json"
+        "inputMappings": "inputMapping.json",
+        "enemtConstants": "enemyConstants.json"
     },
     "sounds" : {
         "platform:jump" : "platform/jump.mp3",
