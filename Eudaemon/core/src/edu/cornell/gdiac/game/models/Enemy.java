@@ -134,15 +134,16 @@ public class Enemy extends BoxObstacle implements ContactListener {
         System.out.println("trying to initialize");
         //Query the type of this enemy, then query the corresponding data in enemyConstants.json
         this.type=json.getString("type");
-        if(this.type == "Goomba"){
+        if(this.type.equals("Goomba")){
             System.out.println("enemy creating");
             this.enemyData = assets.getEntry("sharedConstants", JsonValue.class).get("Goomba");
-        }else if (this.type=="Fly"){
+        }else if (this.type.equals("Fly")){
             this.enemyData = assets.getEntry("sharedConstants", JsonValue.class).get("Fly");
         }
         else{
             //should never reach here
             this.enemyData=null;
+            System.out.println(this.type);
             throw new IllegalArgumentException("Enemy can only be Fly or Goomba");
         }
         this.setWidth(enemyData.getFloat("hitboxWidth"));
