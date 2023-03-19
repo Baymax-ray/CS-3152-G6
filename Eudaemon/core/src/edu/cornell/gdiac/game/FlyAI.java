@@ -178,16 +178,77 @@ public class FlyAI extends AIController{
                 int gx=level.levelToTileCoordinatesX(goal[0]);
                 int cy=level.levelToTileCoordinatesY(ey);
                 int cx=level.levelToTileCoordinatesX(ex);
-                Queue<int[]> boundary= new Queue<>();
+                Queue<Coord> boundary= new Queue<>();
                 HashSet<int[]>visited= new HashSet<>();
-                if
+                if (level.isAirAt(level.tileToLevelCoordinatesX(cx-1),level.tileToLevelCoordinatesY(cy))){
+                    Coord L=new Coord(cx-1,cy,EnemyAction.FLY_LEFT);
+                    boundary.addLast(L);
+                    visited.add(new int[] {cx-1, cy});
+                }
+                if (level.isAirAt(level.tileToLevelCoordinatesX(cx+1),level.tileToLevelCoordinatesY(cy))){
+                    Coord R=new Coord(cx+1,cy,EnemyAction.FLY_RIGHT);
+                    boundary.addLast(R);
+                    visited.add(new int[] {cx+1, cy});
+                }
+                if (level.isAirAt(level.tileToLevelCoordinatesX(cx),level.tileToLevelCoordinatesY(cy-1))){
+                    Coord D=new Coord(cx,cy-1,EnemyAction.FLY_DOWN);
+                    boundary.addLast(D);
+                    visited.add(new int[] {cx,cy-1});
+                }
+                if (level.isAirAt(level.tileToLevelCoordinatesX(cx),level.tileToLevelCoordinatesY(cy+1))){
+                    Coord U=new Coord(cx,cy+1,EnemyAction.FLY_UP);
+                    boundary.addLast(U);
+                    visited.add(new int[] {cx,cy+1});
+                }
+                if (cx==gx&&cy==gy){
+                    this.move= EnemyAction.STAY;
+                    return;}
+                else{
+                    while(!boundary.isEmpty()){
+                        Coord co=boundary.removeFirst();
+                        int x=co.getX();
+                        int y=co.getY();
+                        if (x==gx&&y==gy){
+                            this.move= co.getDirection();
+                            return;
+                        }
+                        if (level.isAirAt(level.tileToLevelCoordinatesX(x-1),level.tileToLevelCoordinatesY(y))){
+                            Coord L=new Coord(x-1,y,co.getDirection());
+                            if(!visited.contains(new int[] {x - 1, y})) {
+                                boundary.addLast(L);
+                                visited.add(new int[]{x - 1, y});
+                            }
+                        }
+                        if (level.isAirAt(level.tileToLevelCoordinatesX(x+1),level.tileToLevelCoordinatesY(y))){
+                            Coord R=new Coord(x-1,y,co.getDirection());
+                            if(!visited.contains(new int[] {x + 1, y})) {
+                                boundary.addLast(R);
+                                visited.add(new int[]{x + 1, y});
+                            }
+                        }
+                        if (level.isAirAt(level.tileToLevelCoordinatesX(x),level.tileToLevelCoordinatesY(y-1))){
+                            Coord D=new Coord(x,y-1,co.getDirection());
+                            if(!visited.contains(new int[] {x, y-1})) {
+                                boundary.addLast(D);
+                                visited.add(new int[]{x, y-1});
+                            }
+                        }
+                        if (level.isAirAt(level.tileToLevelCoordinatesX(x),level.tileToLevelCoordinatesY(y+1))){
+                            Coord U=new Coord(x,y+1,co.getDirection());
+                            if(!visited.contains(new int[] {x, y+1})) {
+                                boundary.addLast(U);
+                                visited.add(new int[]{x, y+1});
+                            }
+                        }
+                    }
+                }
                 break;
         }
     }
     private class Coord {
         private int x;
         private int y;
-        private int d;
+        private EnemyAction d;
         public Coord(int x, int y,EnemyAction direction){
             this.x=x;
             this.y=y;
