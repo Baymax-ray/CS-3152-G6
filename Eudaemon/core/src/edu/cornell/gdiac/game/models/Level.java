@@ -267,6 +267,8 @@ public class Level {
             }
         }
 
+        handleSpirit();
+
 
 
     }
@@ -303,7 +305,7 @@ public class Level {
             canvas.endDebug();
         }
 
-        canvas.setOverlayCamera();
+        //canvas.setOverlayCamera();
         canvas.begin();
         uiElements.draw(canvas);
         canvas.end();
@@ -369,6 +371,24 @@ public class Level {
             else canvas.setGameplayCamera(canvas.getCamera().position.x, player.getY()-camZone_y, cameraWidth, cameraHeight);
         }
 
+    }
+
+    public void handleSpirit() {
+        if (player.getForm()==1) {
+            player.decreaseSpirit();
+            if (player.getSpirit()==0) player.setForm();
+        }
+
+        double shortestDist = 99999;
+        for (int i = 0; i < enemies.length; i++) {
+            double dist = Math.sqrt(Math.pow(player.getX()-enemies[i].getX(),2) + Math.pow(player.getY()-enemies[i].getY(),2));
+            if (dist < shortestDist) shortestDist = dist;
+        }
+
+        if (shortestDist < player.getSpiritIncreaseDist() && player.getForm()==0)
+            player.increaseSpirit();
+
+        System.out.println(player.getSpirit());
     }
 
 

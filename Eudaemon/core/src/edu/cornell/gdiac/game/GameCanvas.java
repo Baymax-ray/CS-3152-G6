@@ -30,6 +30,9 @@ import com.badlogic.gdx.math.Matrix4;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.CircleShape;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
+import com.badlogic.gdx.utils.viewport.ExtendViewport;
+import com.badlogic.gdx.utils.viewport.ScreenViewport;
+import com.badlogic.gdx.utils.viewport.Viewport;
 
 /**
  * Primary view class for the game, abstracting the basic graphics calls.
@@ -85,6 +88,8 @@ public class GameCanvas {
 	
 	/** Camera for the underlying SpriteBatch */
 	private OrthographicCamera camera;
+
+	private Viewport viewport;
 	
 	/** Value to cache window width (if we are currently full screen) */
 	int width;
@@ -116,9 +121,12 @@ public class GameCanvas {
 
 		
 		// Set the projection matrix (for proper scaling)
-		camera = new OrthographicCamera(getWidth()/2.0f,getHeight()/2.0f);
+		camera = new OrthographicCamera();
 		camera.setToOrtho(false);
 		camera.position.set(getWidth()/2.0f,getHeight()/2.0f,0);
+		viewport = new ExtendViewport(getWidth(), getHeight(), camera);
+		viewport.setScreenBounds(0,0,getWidth(),getHeight());
+		viewport.apply();
 
 		spriteBatch.setProjectionMatrix(camera.combined);
 		debugRender.setProjectionMatrix(camera.combined);
@@ -283,6 +291,7 @@ public class GameCanvas {
 	 */
 	 public void resize() {
 		// Resizing screws up the spriteBatch projection matrix
+		 viewport.update(getWidth()/2,getHeight()/2);
 		spriteBatch.getProjectionMatrix().setToOrtho2D(0, 0, getWidth(), getHeight());
 	}
 	

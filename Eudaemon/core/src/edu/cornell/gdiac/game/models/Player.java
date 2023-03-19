@@ -52,6 +52,10 @@ public class Player extends BoxObstacle {
     private final int jumpTolerance;
     private int jumpToleranceRemaining;
 
+    private final float spiritIncreaseRate;
+    private final float spiritDecreaseRate;
+    private final float spiritIncreaseDist;
+
     /**
      * The distance the center of the attack is offset from the player
      */
@@ -569,6 +573,12 @@ public class Player extends BoxObstacle {
      */
     public void setJumpTimeRemaining(int value) { jumpTimeRemaining = value; }
 
+    public float getSpiritIncreaseRate() { return spiritIncreaseRate; }
+    public void increaseSpirit() { setSpirit(Math.min(getSpirit() + getSpiritIncreaseRate(), maxSpirit)); }
+    public float getSpiritDecreaseRate() { return spiritDecreaseRate; }
+    public void decreaseSpirit() { setSpirit(Math.max(getSpirit() - getSpiritDecreaseRate(), 0)); }
+    public float getSpiritIncreaseDist() { return spiritIncreaseDist; }
+
     //#endregion
 
     public void draw(GameCanvas canvas) {
@@ -696,6 +706,9 @@ public class Player extends BoxObstacle {
         this.coyoteFrames = json.getInt("coyoteTime");
         this.jumpTolerance = json.getInt("jumpTolerance");
         this.jumpTime = json.getInt("jumpTime");
+        this.spiritIncreaseRate = json.getFloat("spiritIncreaseRate");
+        this.spiritDecreaseRate = json.getFloat("spiritDecreaseRate");
+        this.spiritIncreaseDist = json.getFloat("spiritIncreaseDist");
 
         this.isChiyo = false;
 
