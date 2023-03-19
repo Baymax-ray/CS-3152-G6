@@ -206,6 +206,12 @@ public class ActionController {
             if (player.getJumpToleranceRemaining()==0) player.setJumpPressedInAir(false);
         }
 
+        if (player.getiFramesRemaining() > 0) {
+            player.setiFramesRemaining(Math.max(player.getiFramesRemaining()-1,0));
+            if (player.getiFramesRemaining()==0) player.setHit(false);
+        }
+
+
         if (debugPressed) {
             level.setDebug(!level.isDebug());
         }

@@ -88,6 +88,8 @@ public class Player extends BoxObstacle {
 
     private final float hitDist;
 
+    private final int iFrames;
+
     //#endregion
 
     //#region TEXTURES
@@ -164,6 +166,8 @@ public class Player extends BoxObstacle {
 
     private final int jumpTime;
     private int jumpTimeRemaining;
+
+    private int iFramesRemaining;
 
     //#endregion
 
@@ -586,6 +590,10 @@ public class Player extends BoxObstacle {
 
     public float getHitDist() {return hitDist; }
 
+    public int getIFrames() { return iFrames; }
+    public int getiFramesRemaining() { return iFramesRemaining; }
+    public void setiFramesRemaining(int value) { iFramesRemaining = value; }
+
     //#endregion
 
     public void draw(GameCanvas canvas) {
@@ -678,8 +686,11 @@ public class Player extends BoxObstacle {
 
         if (isHit() && hearts > 0){
             hearts--;
-            if (hearts > 0)
+            if (hearts > 0) {
                 setVelocity(getBodyVelocityX(), 2.0f);
+                setiFramesRemaining(getIFrames());
+            }
+
             else this.markRemoved(true);
         }
 
@@ -734,6 +745,7 @@ public class Player extends BoxObstacle {
         this.spiritDecreaseRate = json.getFloat("spiritDecreaseRate");
         this.spiritIncreaseDist = json.getFloat("spiritIncreaseDist");
         this.hitDist = json.getFloat("hit_dist");
+        this.iFrames = json.getInt("iFrames");
 
         this.isChiyo = false;
 
@@ -756,6 +768,7 @@ public class Player extends BoxObstacle {
         this.coyoteFramesRemaining = 0;
         this.jumpToleranceRemaining = 0;
         this.jumpTimeRemaining = 0;
+        this.iFramesRemaining = 0;
 
         this.texture = momoTexture;
         this.data = json;
