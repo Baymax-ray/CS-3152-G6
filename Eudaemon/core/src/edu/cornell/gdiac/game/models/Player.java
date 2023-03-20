@@ -713,13 +713,13 @@ public class Player extends BoxObstacle {
 
     public Player(JsonValue json, AssetDirectory assets) {
         super(json.getFloat("startX"), json.getFloat("startY"), json.getFloat("hitboxWidth"), json.getFloat("hitboxHeight"));
-        String momoTextureAsset = json.getString("momoTextureAsset");
+        String momoTextureAsset = json.getString("momo:TextureAsset");
         this.momoTexture = new TextureRegion(assets.getEntry(momoTextureAsset, Texture.class));
-        this.momoImageWidth = json.getFloat("momoImageWidth");
-        this.momoImageHeight = json.getFloat("momoImageHeight");
-        this.chiyoTexture = new TextureRegion(assets.getEntry(json.getString("chiyoTextureAsset"), Texture.class));
-        this.chiyoImageWidth = json.getFloat("chiyoImageWidth");
-        this.chiyoImageHeight = json.getFloat("chiyoImageHeight");
+        this.momoImageWidth = json.getFloat("momo:ImageWidth");
+        this.momoImageHeight = json.getFloat("momo:ImageHeight");
+        this.chiyoTexture = new TextureRegion(assets.getEntry(json.getString("chiyo:TextureAsset"), Texture.class));
+        this.chiyoImageWidth = json.getFloat("chiyo:ImageWidth");
+        this.chiyoImageHeight = json.getFloat("chiyo:ImageHeight");
         this.scale = new Vector2(json.getFloat("drawScaleX"), json.getFloat("drawScaleY")); //only gets used in sword attack
         this.swordSpriteSheet = new TextureRegion(assets.getEntry( "chiyo:swordAttack", Texture.class));
 
