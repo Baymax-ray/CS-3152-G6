@@ -246,11 +246,9 @@ public class ActionController {
                         //TODO
                     }
                 }
-                if (enemyAction.contains(EnemyAction.DASH)) {
-                    System.out.println("yes!");
-                }
+
                 if (enemyAction.contains(EnemyAction.STAY)) {
-                    System.out.println("yes!");
+//                    System.out.println("yes!");
                 }
             }
 

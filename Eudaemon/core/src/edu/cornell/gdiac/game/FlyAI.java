@@ -132,6 +132,9 @@ public class FlyAI extends AIController{
     private void markGoal(){
         float ex=enemy.getX();
         float ey=enemy.getY();
+        int tx=level.levelToTileCoordinatesX(ex);
+        int ty=level.levelToTileCoordinatesY(ey);
+
         Random rand = new Random();
         int randomInt;
         switch (state) {
@@ -141,20 +144,20 @@ public class FlyAI extends AIController{
                 break;
 
             case WANDER:
-                float nx=ex;
-                float ny=ex;
+                int nx=tx;
+                int ny=ty;
                 randomInt = rand.nextInt();
-                if(randomInt%4==0&& level.isAirAt(ex,ey-1)){ny=ey-1;}
-                else if (randomInt%4==1&&level.isAirAt(ex,ey+1)){ny=ey+1;}
-                else if (randomInt%4==2&&level.isAirAt(ex-1,ey)){nx=ex-1;}
-                else if (randomInt%4==3&&level.isAirAt(ex+1,ey)){nx=ex=1;}
-                goal[0]=nx;
-                goal[1]=ny;
+                if(randomInt%4==0&& level.isAirAt(tx,ty-1)){ny=ty-1;}
+                else if (randomInt%4==1&&level.isAirAt(tx,ty+1)){ny=ty+1;}
+                else if (randomInt%4==2&&level.isAirAt(tx-1,ty)){nx=tx-1;}
+                else if (randomInt%4==3&&level.isAirAt(tx+1,ty)){nx=tx+1;}
+                goal[0]=level.tileToLevelCoordinatesX(nx);
+                goal[1]=level.tileToLevelCoordinatesY(ny);
                 break;
             case CHASE:
                 // only need to fly to the same tile
-                goal[0]=(float) level.levelToTileCoordinatesX(level.getPlayer().getX());
-                goal[1]=(float) level.levelToTileCoordinatesX(level.getPlayer().getY());
+                goal[0]=level.tileToLevelCoordinatesX( level.levelToTileCoordinatesX(level.getPlayer().getX()));
+                goal[1]=level.tileToLevelCoordinatesY( level.levelToTileCoordinatesY(level.getPlayer().getY()));
                 break;
             case CHASE_close:
                 goal[0]=level.getPlayer().getX();

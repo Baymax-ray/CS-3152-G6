@@ -183,7 +183,8 @@ public class Level {
         int ncol = tilemap[0].length;
         int nx=levelToTileCoordinatesX(x);
         int ny=levelToTileCoordinatesY(y);
-        if (nx<0 || nx>ncol ||ny<0 || ny>nrow ){
+
+        if (nx<0 || nx>(ncol-1) ||ny<0 || ny>(nrow-1) ){
             return false;
         }
         return tilemap[ny][nx] < 0;
@@ -191,7 +192,7 @@ public class Level {
     public boolean isAirAt(int x, int y){
         int nrow = tilemap.length;
         int ncol = tilemap[0].length;
-        if (x<0 || x>ncol ||y<0 || y>nrow ){
+        if (x<0 || x>(ncol-1) ||y<0 || y>(nrow-1) ){
             return false;
         }
         return tilemap[y][x] < 0;
