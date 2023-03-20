@@ -48,8 +48,9 @@
         "jumpCooldown": 30,
         "coyoteTime": 30,
         "jumpTolerance": 20,
-        "jumptime": 20,
-        "maxJumpyVelocity": 3.0,
+        "jumptime": 15,
+        "maxJumpyVelocity": 3.5,
+        "playerGravity": 6.0,
         "spiritIncreaseRate": 0.01,
         "spiritDecreaseRate": 0.01,
         "spiritIncreaseDist": 1.5,
@@ -65,10 +66,10 @@
         {
           "type":"Goomba",
           "TextureAsset": "platform:worm",
-          "startX": 5,
-          "startY": 6,
-          "hitboxWidth": 0.5,
-          "hitboxHeight": 0.5
+          "startX": 10,
+          "startY": 8,
+          "hitboxWidth": 1.0,
+          "hitboxHeight": 1.0
         }
   ]
     }

@@ -167,6 +167,10 @@ public class Player extends BoxObstacle {
      * A float representing the max jump velocity of a game object.
      */
     private float maxJumpVelocity;
+    /**
+     * A final float representing the gravity affecting the player.
+     */
+    private final float playerGravity;
 
     //#endregion
 
@@ -198,6 +202,14 @@ public class Player extends BoxObstacle {
     //#endregion
 
     //#region GETTERS AND SETTERS
+    /**
+     * Returns the gravity value affecting the player.
+     *
+     * @return A float representing the player's gravity.
+     */
+    public float getPlayerGravity() {
+        return playerGravity;
+    }
     /**
      * Returns the jump velocity of the game object.
      *
@@ -636,7 +648,7 @@ public class Player extends BoxObstacle {
 //
 //        fixtureDef.shape = hitbox;
 //        body.createFixture(fixtureDef);
-        body.setGravityScale(5.0f);
+        body.setGravityScale(playerGravity);
         Vector2 sensorCenter = new Vector2(0, -getHeight() / 2);
         FixtureDef sensorDef = new FixtureDef();
         sensorDef.density = data.getFloat("density",0);
@@ -751,6 +763,7 @@ public class Player extends BoxObstacle {
         this.jumpTolerance = json.getInt("jumpTolerance");
         this.jumpTime = json.getInt("jumpTime");
         this.maxJumpVelocity = json.getInt("maxJumpyVelocity");
+        this.playerGravity = json.getFloat("playerGravity");
         this.spiritIncreaseRate = json.getFloat("spiritIncreaseRate");
         this.spiritDecreaseRate = json.getFloat("spiritDecreaseRate");
         this.spiritIncreaseDist = json.getFloat("spiritIncreaseDist");
