@@ -59,6 +59,9 @@ public class InputController {
         if (Gdx.input.isButtonPressed(inputMap.get("dash"))){
             playerAction.add(Action.DASH);
         }
+        if (Gdx.input.isKeyPressed(inputMap.get("reset"))) {
+            playerAction.add(Action.RESET);
+        }
 
         //Only apply the action on the rising edge.
         if (!prevAction.contains(Action.DEBUG) && Gdx.input.isKeyJustPressed(inputMap.get("debug"))) {

@@ -9,5 +9,6 @@ public enum Action {
     TRANSFORM,
     LOOK_UP,
     LOOK_DOWN,
-    DEBUG
+    DEBUG,
+    RESET
 }

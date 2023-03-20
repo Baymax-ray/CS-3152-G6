@@ -7,5 +7,6 @@
   "dash": "LEFT",
   "attack": "LEFT",
   "transform": "RIGHT",
-  "debug":  "T"
+  "debug":  "T",
+  "reset": "R"
 }

@@ -2,6 +2,7 @@ package edu.cornell.gdiac.game;
 
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Screen;
+import edu.cornell.gdiac.ExitCode;
 import edu.cornell.gdiac.assets.AssetDirectory;
 import edu.cornell.gdiac.game.models.GameState;
 import edu.cornell.gdiac.util.ScreenListener;
@@ -34,10 +35,21 @@ public class GameRoot extends Game implements ScreenListener {
 		if (screen == loadingScreen) {
 			assets = loadingScreen.getAssets();
 			state = new GameState(assets);
-			this.levelScreen = new LevelScreen(this.state.getLevel(0), this.state.getActionBindings());
+			this.levelScreen = new LevelScreen(this.state.getCurrentLevel(), this.state.getActionBindings());
 			levelScreen.setScreenListener(this);
 			levelScreen.setCanvas(canvas);
 			setScreen(levelScreen);
+		}
+
+		if (screen instanceof LevelScreen) {
+			if (exitCode == ExitCode.RESET) {
+				screen.pause();
+				this.state.resetCurrentLevel();
+				levelScreen = new LevelScreen(this.state.getCurrentLevel(), this.state.getActionBindings());
+				levelScreen.setScreenListener(this);
+				levelScreen.setCanvas(canvas);
+				setScreen(levelScreen);
+			}
 		}
 	}
 }

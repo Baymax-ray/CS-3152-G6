@@ -5,10 +5,21 @@ import com.badlogic.gdx.utils.Json;
 import edu.cornell.gdiac.assets.AssetDirectory;
 
 public class GameState {
+    private AssetDirectory assets;
     private ActionBindings bindings;
     //other global settings go here
     private Tile[] tiles;
     private Level[] levels;
+    private int currentLevelId;
+
+    public Level getCurrentLevel() {
+        return levels[currentLevelId];
+    }
+
+    public void resetCurrentLevel() {
+        JsonValue constants = assets.getEntry("constants", JsonValue.class);
+        this.levels[currentLevelId] = new Level(constants.get("levels").get(currentLevelId), tiles, assets);
+    }
 
     public Level getLevel(int i) {
         return levels[i];
@@ -19,8 +30,11 @@ public class GameState {
     }
 
     public GameState(AssetDirectory assets) {
+        this.currentLevelId = 0;
 
-        JsonValue json = assets.getEntry("constants",  JsonValue.class);
+        this.assets = assets;
+
+        JsonValue constants = assets.getEntry("constants",  JsonValue.class);
 
         bindings = new ActionBindings(assets.getEntry("inputMappings", JsonValue.class));
 
@@ -32,12 +46,13 @@ public class GameState {
             tiles[i] = new Tile(assets);
         }
 
-        int numLevels = json.getInt("numLevels");
+        int numLevels = constants.getInt("numLevels");
         this.levels = new Level[numLevels];
         for (int i = 0; i < numLevels; i++) {
-            levels[i] = new Level(json.get("levels").get(i), tiles, assets);
+            levels[i] = new Level(constants.get("levels").get(i), tiles, assets);
         }
 
         //TODO: bindings etc.
+
     }
 }
