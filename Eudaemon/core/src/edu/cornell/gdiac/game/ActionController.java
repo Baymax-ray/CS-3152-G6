@@ -159,10 +159,11 @@ public class ActionController {
         //#endregion
 
         //#region Dash
-        if(player.getForm() == 0 && dashPressed && player.isGrounded() && player.getDashCooldownRemaining() == 0 || player.getForm() == 0 && dashPressed && player.getJumpVelocity() > 0 && player.getDashCooldownRemaining() == 0){
+        if(player.getForm() == 0 && dashPressed && player.isGrounded() && player.getDashCooldownRemaining() == 0 && !player.isDashing()
+                || player.getForm() == 0 && dashPressed && player.getJumpVelocity() > 0 && player.getDashCooldownRemaining() == 0 && !player.isDashing()){
             player.setDashCooldownRemaining(player.getDashCooldown());
             player.setDashing(true);
-            player.setAttackLifespanRemaining((int) (player.getDashLifespan()/(1/60)));
+            player.setDashLifespanRemaining((int) (player.getDashLifespan()/(1/60)));
             float currOffset = player.getAttackOffset();
             int angleFacing = player.getAngleFacing();
             float dashX = player.getX() + currOffset;
@@ -212,6 +213,7 @@ public class ActionController {
         }
         //#endregion
 
+        //#region jump
         //jump!
         //include all three situations
         //normal jump, coyote, and jump pressed in air
@@ -253,6 +255,7 @@ public class ActionController {
             player.setJumpToleranceRemaining(Math.max(0, player.getJumpToleranceRemaining()-1));
             if (player.getJumpToleranceRemaining()==0) player.setJumpPressedInAir(false);
         }
+        //#endregion
 
         if (player.getiFramesRemaining() > 0) {
             player.setiFramesRemaining(Math.max(player.getiFramesRemaining()-1,0));
@@ -269,6 +272,11 @@ public class ActionController {
             if(player.getDashLifespanRemaining() == 0){
                 player.setDashing(false);
             }
+        }
+
+        if (player.isDashing()) {
+            player.setDashCooldownRemaining(Math.max(player.getDashCooldownRemaining()-1,0));
+            if (player.getDashLifespanRemaining()==0) player.setDashing(false);
         }
 
         if (debugPressed) {

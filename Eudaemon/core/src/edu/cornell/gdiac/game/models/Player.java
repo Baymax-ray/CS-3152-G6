@@ -784,7 +784,7 @@ public class Player extends BoxObstacle {
         //Position and Movement
         this.startX = json.getFloat("startX");
         this.startY = json.getFloat("startY");
-        this.dashCooldown = json.getInt("dashCooldown");
+        this.dashCooldown = json.getInt("dashCooldownInFrames");
         maxSpeed = json.getFloat("maxSpeed");
         horizontalAcceleration = json.getFloat("horizontalAcceleration");
         hit_force = json.getFloat( "hit_force");

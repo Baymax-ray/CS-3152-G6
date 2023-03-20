@@ -37,6 +37,7 @@
         "attackPower": 1,
         "startsFacingRight": true,
         "dashCooldown": 0.4,
+        "dashCooldownInFrames": 100,
         "attackCooldown": 30,
         "transformCooldown": 15,
         "attackOffset": 0.46,
