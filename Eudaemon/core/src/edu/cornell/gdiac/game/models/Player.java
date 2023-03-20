@@ -61,15 +61,8 @@ public class Player extends BoxObstacle {
      */
     private final float attackOffset;
     private final int hitCooldown;
-    /**
-     * The multiplier used to calculate the width of the hitbox.
-     */
-    private final float hitboxWidthMult;
 
-    /**
-     * The multiplier used to calculate the height of the hitbox.
-     */
-    private final float hitboxHeightMult;
+
     /**
      * The radius of the sword used by the player.
      */
@@ -646,17 +639,9 @@ public class Player extends BoxObstacle {
         sensorDef.isSensor = true;
         sensorShape = new PolygonShape();
         JsonValue sensorjv = data.get("sensor");
-//        sensorShape.set(new float[]{
-//                momoImageWidth * (1-hitboxWidthMult), momoImageHeight * (1-hitboxHeightMult),
-//                momoImageWidth * hitboxWidthMult, momoImageHeight * (1-hitboxHeightMult),
-//                momoImageWidth * hitboxWidthMult, momoImageHeight * hitboxHeightMult,
-//                momoImageWidth * (1-hitboxWidthMult), momoImageHeight * hitboxHeightMult,
-//        });
         System.out.println("true");
         sensorShape.setAsBox(0.6f*getWidth()/2.0f,
                 0.05f, sensorCenter, 0.0f);
-//        sensorShape.setAsBox(momoImageWidth * hitboxWidthMult/2.0f,
-//                momoImageHeight * hitboxHeightMult/2.0f, sensorCenter, 0.0f);
         sensorDef.shape = sensorShape;
 
         // Ground sensor to represent our feet
@@ -738,8 +723,6 @@ public class Player extends BoxObstacle {
         this.dashCooldown = json.getInt("dashCooldown");
         maxSpeed = json.getFloat("maxSpeed");
         horizontalAcceleration = json.getFloat("horizontalAcceleration");
-        hitboxWidthMult = json.getFloat("hitboxWidthMult");
-        hitboxHeightMult = json.getFloat("hitboxHeightMult");
         hit_force = json.getFloat( "hit_force");
         dash = json.getFloat("dash", 2000);
 
