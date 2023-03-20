@@ -34,7 +34,11 @@ public class GoombaAI extends AIController{
         this.state=FSMState.SPAWN;
         this.move=EnemyAction.STAY;
         this.goal=new float[2];
-        System.out.println("GoombaAI created");
+        this.level=super.level;
+        this.enemy=super.enemy
+
+        System.out.println(this.level==null);
+
 
     }
     public void setEnemyAction(EnumSet<EnemyAction> enemyAction){

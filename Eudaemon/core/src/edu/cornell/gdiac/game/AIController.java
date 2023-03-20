@@ -7,8 +7,8 @@ import edu.cornell.gdiac.game.models.Level;
 import java.util.EnumSet;
 
 public abstract class AIController {
-    private Enemy enemy;
-    private Level level;
+    protected Enemy enemy;
+    protected Level level;
 
     public AIController(int ii, Level level) {
         this.enemy = level.getEnemies()[ii];
