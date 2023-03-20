@@ -164,15 +164,17 @@ public class GoombaAI extends AIController{
     private void MoveAlongPathToGoal(){
         float ex=enemy.getX();
         float ey=enemy.getY();
+        int tx=level.levelToTileCoordinatesX(ex);
+        int ty=level.levelToTileCoordinatesY(ey);
 
         if(ex<=goal[0]+0.1||ex>=goal[0]-0.1){this.move=EnemyAction.STAY;}
         else if (ex<goal[0]){
             this.move=EnemyAction.MOVE_RIGHT;
-            if(level.isAirAt(ex+1,ey-1)){this.move=EnemyAction.STAY;}
+            if(level.isAirAt(tx+1,ty-1)){this.move=EnemyAction.STAY;}
         }
         else if (ex>goal[0]){
             this.move=EnemyAction.MOVE_LEFT;
-            if(level.isAirAt(ex-1,ey-1)){this.move=EnemyAction.STAY;}
+            if(level.isAirAt(tx-1,ty-1)){this.move=EnemyAction.STAY;}
         }
         }
     }
