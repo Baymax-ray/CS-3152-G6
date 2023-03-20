@@ -24,10 +24,12 @@ public class GameState {
 
         bindings = new ActionBindings(assets.getEntry("inputMappings", JsonValue.class));
 
-        int numTiles = json.getInt("numTiles");
+        JsonValue levelJson = assets.getEntry("levelTest",  JsonValue.class);
+//        int numTiles = levelJson.getInt("height") * levelJson.getInt("width") ; // bugging for height
+        int numTiles = 20 * levelJson.getInt("width") ;
         tiles = new Tile[numTiles];
         for (int i = 0; i < numTiles; i++) {
-            tiles[i] = new Tile(json.get("tiles").get(i), assets);
+            tiles[i] = new Tile(assets);
         }
 
         int numLevels = json.getInt("numLevels");

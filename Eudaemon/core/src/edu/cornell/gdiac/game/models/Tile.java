@@ -9,15 +9,17 @@ import edu.cornell.gdiac.game.obstacle.Obstacle;
 import edu.cornell.gdiac.game.obstacle.PolygonObstacle;
 
 public class Tile {
-    private final TextureRegion texture;
+    private TextureRegion texture;
 
     public TextureRegion getTexture() {
         return texture;
     }
 
-    public Tile (JsonValue json, AssetDirectory assets) {
-        String textureAsset = json.getString("textureAsset");
-        this.texture = new TextureRegion(assets.getEntry(textureAsset, Texture.class));
+    public void setTexture(TextureRegion newTexture){texture = newTexture;}
+
+    public Tile (AssetDirectory assets) {
+
+        this.texture = new TextureRegion(assets.getEntry("shared:earth", Texture.class));
     }
 
 }

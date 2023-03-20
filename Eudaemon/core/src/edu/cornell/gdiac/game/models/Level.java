@@ -5,6 +5,7 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
 import com.badlogic.gdx.utils.JsonValue;
@@ -14,6 +15,7 @@ import edu.cornell.gdiac.game.UIOverlay;
 import edu.cornell.gdiac.game.obstacle.Obstacle;
 import edu.cornell.gdiac.util.PooledList;
 
+import java.util.HashMap;
 import java.util.Iterator;
 
 public class Level {
@@ -29,6 +31,13 @@ public class Level {
     private final BodyDef bodyDef;
     private final FixtureDef fixtureDef;
     //private final TextureRegion backgroundTexture;
+
+    /**
+     * A HashMap that stores texture paths with integer keys.
+     * Key: Integer representing the texture ID.
+     * Value: String representing the path to the texture file.
+     */
+    private HashMap<Integer, TextureRegion> texturePaths;
 
     /**
      * In level coordinates (not pixels), the width and height of a single tile.
@@ -115,15 +124,43 @@ public class Level {
 
     public Level(JsonValue json, Tile[] tiles, AssetDirectory assets) {
         this.tiles = tiles;
-
-        int widthInTiles = json.getInt("widthInTiles");
-        int heightInTiles = json.getInt("heightInTiles");
-
+        JsonValue levelJson = assets.getEntry("levelTest",  JsonValue.class);
+        int widthInTiles = levelJson.getInt("width");
+//        int heightInTiles = json.getInt("height");
+        int heightInTiles = 20;
+        JsonValue layers = levelJson.get("layers").get("data");
         this.tilemap = new int[heightInTiles][widthInTiles];
         for (int y = 0; y < heightInTiles; y++) {
-            JsonValue row = json.get("tilemap").get(y);
             for (int x = 0; x < widthInTiles; x++) {
-                tilemap[y][x] = row.getInt(x);
+                tilemap[y][x] = layers.getInt(y*widthInTiles + x) - 1;
+            }
+        }
+//        int widthInTiles = json.getInt("widthInTiles");
+//        int heightInTiles = json.getInt("heightInTiles");
+//
+//        this.tilemap = new int[heightInTiles][widthInTiles];
+//        for (int y = 0; y < heightInTiles; y++) {
+//            JsonValue row = json.get("tilemap").get(y);
+//            for (int x = 0; x < widthInTiles; x++) {
+//                tilemap[y][x] = row.getInt(x);
+//            }
+//        }
+        texturePaths = new HashMap<>();
+        JsonValue tileset = assets.getEntry("tileset",  JsonValue.class);
+        JsonValue tileList = tileset.get("tiles");
+        int tileListLength = tileset.getInt("tileCount");
+        for (int i= 0; i < tileListLength; i++) {
+            JsonValue t = tileList.get(i);
+            TextureRegion tileTexture = new TextureRegion(assets.getEntry("tiles:" + t.getString("image"), Texture.class));
+            texturePaths.put(t.getInt("id"),tileTexture);
+        }
+
+        for (int y = 0; y < tilemap.length; y++) {
+            int[] row = tilemap[y];
+            for (int x = 0; x < row.length; x++) {
+                int tileId = row[x];
+                if (tileId <= 0) continue;
+                tiles[tileId].setTexture(texturePaths.get(tileId));
             }
         }
 
@@ -187,7 +224,7 @@ public class Level {
         if (nx<0 || nx>(ncol-1) ||ny<0 || ny>(nrow-1) ){
             return false;
         }
-        return tilemap[ny][nx] < 0;
+        return tilemap[ny][nx] <= 0;
     }
     public boolean isAirAt(int x, int y){
         int nrow = tilemap.length;
@@ -195,7 +232,7 @@ public class Level {
         if (x<0 || x>(ncol-1) ||y<0 || y>(nrow-1) ){
             return false;
         }
-        return tilemap[y][x] < 0;
+        return tilemap[y][x] <= 0;
 
     }
 
@@ -302,8 +339,11 @@ public class Level {
             int[] row = tilemap[y];
             for (int x = 0; x < row.length; x++) {
                 int tileId = row[x];
-                if (tileId < 0) continue;
+                if (tileId <= 0) continue;
                 Tile tile = tiles[tileId];
+                if (tile.getTexture() == null){ //running into glitch
+                    continue;
+                }
                 float sx = tileSize / tile.getTexture().getRegionWidth();
                 float sy = tileSize / tile.getTexture().getRegionHeight();
                 canvas.draw(tile.getTexture(), Color.WHITE, 0, 0, tileToLevelCoordinatesX(x), tileToLevelCoordinatesY(y), 0, sx, sy);
@@ -334,7 +374,7 @@ public class Level {
             int[] row = tilemap[y];
             for (int x = 0; x < row.length; x++) {
                 int tileId = row[x];
-                if (tileId < 0) continue;
+                if (tileId <= 0) continue;
                 Tile tile = tiles[tileId];
                 bodyDef.position.x = tileToLevelCoordinatesX(x);
                 bodyDef.position.y = tileToLevelCoordinatesY(y);
