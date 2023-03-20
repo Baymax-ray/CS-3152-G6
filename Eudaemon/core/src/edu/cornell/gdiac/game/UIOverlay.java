@@ -18,6 +18,8 @@ public class UIOverlay {
     /** Texture for filled spirit bar*/
     private Texture filledSpiritBar;
 
+    private Texture uiOutline;
+
     //private GameCanvas canvas;
 
     private float heartLevel;
@@ -30,13 +32,15 @@ public class UIOverlay {
 //        this.filledSpiritBar = assets.get(json.getString("filledspirit"), Texture.class);
         this.heartLevel = playerHearts;
         this.spiritLevel = playerSpirit;
+//        this.uiOutline = assets.getEntry(json.getString("uioutline"), Texture.class);
     }
 
     public void draw(GameCanvas canvas) {
-        BitmapFont font = new BitmapFont();
-        font.getData().setScale(0.1F);
-        canvas.drawText("hey", font, canvas.getCamera().position.x, canvas.getCamera().position.y);
+//        BitmapFont font = new BitmapFont();
+//        font.getData().setScale(0.1F);
+//        canvas.drawText("hey", font, canvas.getCamera().position.x, canvas.getCamera().position.y);
 //        float xPos = canvas.getCamera().position.x - 500;
+//        canvas.draw(uiOutline, Color.WHITE, canvas.getWidth()/2, canvas.getHeight()/2, 200, 200);
         float testXPos = canvas.getCamera().position.x - 47;
         for(int i=0; i < heartLevel; i++){
             canvas.draw(heartRegion, Color.WHITE, testXPos,canvas.getCamera().position.y, 0.01F, 0.01F);

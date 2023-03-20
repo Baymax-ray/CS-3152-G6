@@ -9,6 +9,7 @@
   "levels": [
     {
       "widthInTiles": 10,
+      "uioutline": "platform:uioutline",
       "heightInTiles": 5,
       "tileSize": 1,
       "cameraWidth": 5,
