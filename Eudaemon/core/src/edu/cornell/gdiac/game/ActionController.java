@@ -62,6 +62,11 @@ public class ActionController {
         if (transformCooldownRemaining > 0){
             player.setTransformCooldownRemaining(transformCooldownRemaining - 1);
         }
+
+        int dashCooldownRemaining = player.getDashCooldownRemaining();
+        if (dashCooldownRemaining > 0){
+            player.setDashCooldownRemaining(dashCooldownRemaining - 1);
+        }
         //#endregion
 
         //#region Direction
@@ -154,7 +159,10 @@ public class ActionController {
         //#endregion
 
         //#region Dash
-        if(player.getForm() == 0 && dashPressed && player.isGrounded() || player.getForm() == 0 && dashPressed && player.getJumpVelocity() > 0){
+        if(player.getForm() == 0 && dashPressed && player.isGrounded() && player.getDashCooldownRemaining() == 0 || player.getForm() == 0 && dashPressed && player.getJumpVelocity() > 0 && player.getDashCooldownRemaining() == 0){
+            player.setDashCooldownRemaining(player.getDashCooldown());
+            player.setDashing(true);
+            player.setAttackLifespanRemaining((int) (player.getDashLifespan()/(1/60)));
             float currOffset = player.getAttackOffset();
             int angleFacing = player.getAngleFacing();
             float dashX = player.getX() + currOffset;
@@ -188,7 +196,7 @@ public class ActionController {
                 dashY = player.getY() - 0.71f * currOffset;
             }
             Vector2 scale = new Vector2(10f,10f);
-            SwordWheelObstacle dashAnimate = new SwordWheelObstacle(dashX, dashY, player.getDashSpriteSheet().getRegionWidth()/100, player, player.getAttackLifespan(), 0.01f, scale, player.getDashSpriteSheet());
+            SwordWheelObstacle dashAnimate = new SwordWheelObstacle(dashX, dashY, player.getDashSpriteSheet().getRegionWidth()/100, player, player.getDashLifespan(), 0.01f, scale, player.getDashSpriteSheet());
             level.addQueuedObject(dashAnimate);
             player.dash();
             player.setVelocity(player.getBodyVelocityX(), 0);
@@ -254,6 +262,13 @@ public class ActionController {
         if (player.getAttackLifespanRemaining() > 0) {
             player.setAttackLifespanRemaining(Math.max(player.getAttackCooldownRemaining()-1,0));
             if (player.getAttackLifespanRemaining()==0) player.setAttacking(false);
+        }
+
+        if(player.getDashLifespanRemaining() > 0){
+            player.setDashLifespanRemaining(Math.max(player.getDashCooldownRemaining()-1, 0));
+            if(player.getDashLifespanRemaining() == 0){
+                player.setDashing(false);
+            }
         }
 
         if (debugPressed) {

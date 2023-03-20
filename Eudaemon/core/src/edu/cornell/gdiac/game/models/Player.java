@@ -32,6 +32,7 @@ public class Player extends BoxObstacle {
      * The amount of ticks before the palyer can attack again
      */
     private final int attackCooldown;
+
     /**
      * The amount of ticks before the palyer can transform again
      */
@@ -71,6 +72,8 @@ public class Player extends BoxObstacle {
      * The lifespan of the sword attack animation in seconds.
      */
     private final float attackLifespan;
+
+    private final float dashLifespan;
 
     /** Cache for internal force calculations */
     private final Vector2 forceCache = new Vector2();
@@ -167,6 +170,7 @@ public class Player extends BoxObstacle {
 
     private boolean isAttacking;
     private int attackLifespanRemaining;
+    private int dashLifespanRemaining;
 
     /**
      * A float representing the max jump velocity of a game object.
@@ -251,6 +255,12 @@ public class Player extends BoxObstacle {
     }
     public float getAttackLifespanRemaining() { return attackLifespanRemaining; }
     public void setAttackLifespanRemaining(int value) {attackLifespanRemaining = value;}
+
+    public float getDashLifespan() {
+        return dashLifespan;
+    }
+    public float getDashLifespanRemaining() { return dashLifespanRemaining; }
+    public void setDashLifespanRemaining(int value) {dashLifespanRemaining = value;}
     public float getX() {
         return body.getPosition().x;
     }
@@ -273,6 +283,14 @@ public class Player extends BoxObstacle {
      */
     public int getAttackCooldown() {
         return attackCooldown;
+    }
+    /**
+     * Gets the dash cooldown in seconds.
+     *
+     * @return the dash cooldown
+     */
+    public int getDashCooldown() {
+        return dashCooldown;
     }
     /**
      * Gets the transform cooldown in seconds.
@@ -452,6 +470,13 @@ public class Player extends BoxObstacle {
     public void setAttackCooldownRemaining(int attackCooldownRemaining) {
         this.attackCooldownRemaining = attackCooldownRemaining;
     }
+    /**
+     * Sets the remaining time in seconds until the player can dash again.
+     * @param dashCooldownRemaining the remaining time in seconds
+     */
+    public void setDashCooldownRemaining(int dashCooldownRemaining) {
+        this.dashCooldownRemaining = dashCooldownRemaining;
+    }
 
     /**
      * Returns the remaining time in seconds until the player can transform again.
@@ -474,6 +499,13 @@ public class Player extends BoxObstacle {
      */
     public int getAttackCooldownRemaining() {
         return attackCooldownRemaining;
+    }
+    /**
+     * Returns the remaining time in seconds until the player can dash again.
+     * @return the remaining time in seconds
+     */
+    public int getDashCooldownRemaining() {
+        return dashCooldownRemaining;
     }
 
     /**
@@ -623,6 +655,9 @@ public class Player extends BoxObstacle {
 
     public boolean isAttacking() { return isAttacking;}
     public void setAttacking(boolean value) { isAttacking = value; }
+    public boolean isDashing() { return isDashing;}
+    public void setDashing(boolean value) { isDashing = value; }
+
 
     public float getAttackDist() { return attackDist; }
 
@@ -754,6 +789,7 @@ public class Player extends BoxObstacle {
         horizontalAcceleration = json.getFloat("horizontalAcceleration");
         hit_force = json.getFloat( "hit_force");
         dash = json.getFloat("dash", 2000);
+        this.dashLifespan = json.getFloat("dashLifespan");
 
         //Attacking
         this.attackPower = json.getInt("attackPower");
@@ -809,6 +845,7 @@ public class Player extends BoxObstacle {
         this.jumpTimeRemaining = 0;
         this.iFramesRemaining = 0;
         this.attackLifespanRemaining = 0;
+        this.dashLifespanRemaining = 0;
 
         this.texture = momoTexture;
         this.data = json;
