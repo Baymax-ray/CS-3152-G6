@@ -62,11 +62,6 @@ public class ActionController {
         if (transformCooldownRemaining > 0){
             player.setTransformCooldownRemaining(transformCooldownRemaining - 1);
         }
-
-        int dashCooldownRemaining = player.getDashCooldownRemaining();
-        if(dashCooldownRemaining > 0){
-            player.setDashCooldownRemaining(dashCooldownRemaining - 1);
-        }
         //#endregion
 
         //#region Direction

@@ -95,6 +95,11 @@ public class Player extends BoxObstacle {
      * The sprite sheet containing the sword attack animation frames.
      */
     private final TextureRegion swordSpriteSheet;
+
+    /**
+     * The sprite sheet containing the dash attack animation frames.
+     */
+    private final TextureRegion dashSpriteSheet;
     //#endregion
 
     //#region NONFINAL FIELDS
@@ -198,6 +203,14 @@ public class Player extends BoxObstacle {
      */
     public TextureRegion getSwordSpriteSheet() {
         return swordSpriteSheet;
+    }
+    /**
+     * Gets the sprite sheet containing the dash animation frames.
+     *
+     * @return the sprite sheet containing the dash animation frames
+     */
+    public TextureRegion getDashSpriteSheet() {
+        return dashSpriteSheet;
     }
     //#endregion
 
@@ -731,6 +744,7 @@ public class Player extends BoxObstacle {
         this.chiyoImageWidth = json.getFloat("chiyo:ImageWidth");
         this.chiyoImageHeight = json.getFloat("chiyo:ImageHeight");
         this.swordSpriteSheet = new TextureRegion(assets.getEntry( "chiyo:swordAttack", Texture.class));
+        this.dashSpriteSheet = new TextureRegion(assets.getEntry( "chiyo:dash", Texture.class));
 
         //Position and Movement
         this.startX = json.getFloat("startX");
