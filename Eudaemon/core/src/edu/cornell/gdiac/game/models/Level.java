@@ -422,12 +422,12 @@ public class Level {
 
         if (Math.abs(canvas.getCamera().position.x - player.getX()) > camZone_x) {
             if (canvas.getCamera().position.x > player.getX()) {
-                System.out.println("left");
+
                 canvas.setGameplayCamera(player.getX()+camZone_x, canvas.getCamera().position.y, cameraWidth, cameraHeight);
             }
 
             else {
-                System.out.println("right");
+
                 canvas.setGameplayCamera(player.getX()-camZone_x, canvas.getCamera().position.y, cameraWidth, cameraHeight);
             }
         }

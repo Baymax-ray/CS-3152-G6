@@ -103,6 +103,7 @@ public class LevelScreen implements Screen {
     public void resize(int width, int height) {
         // IGNORE FOR NOW
         // TODO: probably just update canvas and camera with new size
+        canvas.getViewport().update(width, height);
     }
 
     @Override

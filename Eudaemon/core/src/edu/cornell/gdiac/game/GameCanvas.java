@@ -31,6 +31,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.CircleShape;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
+import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 
@@ -124,7 +125,7 @@ public class GameCanvas {
 		camera = new OrthographicCamera();
 		camera.setToOrtho(false);
 		//camera.position.set(getWidth()/2.0f,getHeight()/2.0f,0);
-		viewport = new ExtendViewport(getWidth(), getHeight(), camera);
+		viewport = new ExtendViewport(getWidth(),getHeight(),camera);
 		viewport.setScreenBounds(0,0,getWidth(),getHeight());
 		viewport.apply();
 
@@ -182,6 +183,7 @@ public class GameCanvas {
 		if (!isFullscreen()) {
 			Gdx.graphics.setWindowedMode(width, getHeight());
 		}
+		viewport.update(width,height);
 		resize();
 	}
 	
@@ -213,6 +215,7 @@ public class GameCanvas {
 		if (!isFullscreen()) {
 			Gdx.graphics.setWindowedMode(getWidth(), height);	
 		}
+		viewport.update(width,height);
 		resize();
 	}
 	
@@ -244,6 +247,7 @@ public class GameCanvas {
 		if (!isFullscreen()) {
 			Gdx.graphics.setWindowedMode(width, height);
 		}
+		viewport.update(width,height);
 		resize();
 
 	}
@@ -291,7 +295,7 @@ public class GameCanvas {
 	 */
 	 public void resize() {
 		// Resizing screws up the spriteBatch projection matrix
-		 viewport.update(getWidth(),getHeight());
+		 System.out.println("resized!");
 		spriteBatch.getProjectionMatrix().setToOrtho2D(0, 0, getWidth(), getHeight());
 	}
 	
@@ -1204,6 +1208,8 @@ public class GameCanvas {
 	public OrthographicCamera getCamera(){
 		return camera;
 	}
+
+	public Viewport getViewport() { return viewport; }
 
 
 
