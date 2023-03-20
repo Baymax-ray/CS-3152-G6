@@ -71,10 +71,6 @@ public class Player extends BoxObstacle {
      * The lifespan of the sword attack animation in seconds.
      */
     private final float attackLifespan;
-    /**
-     * The scaling factor for the sprite.
-     */
-    private final Vector2 scale;
 
     /** Cache for internal force calculations */
     private final Vector2 forceCache = new Vector2();
@@ -206,14 +202,6 @@ public class Player extends BoxObstacle {
         return swordRadius;
     }
 
-    /**
-     * Gets the scale of the sword sprite.
-     *
-     * @return the scale of the sword sprite
-     */
-    public Vector2 getScale() {
-        return scale;
-    }
     /**
      * Gets the lifespan of the sword attack animation in seconds.
      *
@@ -714,7 +702,6 @@ public class Player extends BoxObstacle {
         this.chiyoTexture = new TextureRegion(assets.getEntry(json.getString("chiyo:TextureAsset"), Texture.class));
         this.chiyoImageWidth = json.getFloat("chiyo:ImageWidth");
         this.chiyoImageHeight = json.getFloat("chiyo:ImageHeight");
-        this.scale = new Vector2(json.getFloat("drawScaleX"), json.getFloat("drawScaleY")); //only gets used in sword attack
         this.swordSpriteSheet = new TextureRegion(assets.getEntry( "chiyo:swordAttack", Texture.class));
 
         //Position and Movement

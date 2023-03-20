@@ -2,6 +2,7 @@ package edu.cornell.gdiac.game;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
 import edu.cornell.gdiac.game.models.*;
 import edu.cornell.gdiac.game.obstacle.SwordWheelObstacle;
@@ -124,13 +125,13 @@ public class ActionController {
         else if (rightPressed){
             if (x < max_speed){
                 //x = Math.min(x+h_acc, max_speed);
-                x = Math.min(x+h_acc, 1.5f);
+                x = Math.min(x+h_acc, max_speed);
             }
         }
         else if (leftPressed){
             if (x > -max_speed){
                 //x = Math.max(x-h_acc, -max_speed);
-                x = Math.max(x-h_acc, -1.5f);
+                x = Math.max(x-h_acc, -max_speed);
             }
         }
         player.setVelocity(x,y);
@@ -292,7 +293,8 @@ public class ActionController {
             x = player.getX() + 0.71f * currOffset;
             y = player.getY() - 0.71f * currOffset;
         }
-        SwordWheelObstacle sword = new SwordWheelObstacle(x, y, player.getSwordRadius(), player, player.getAttackLifespan(), 10.0f, player.getScale(), player.getSwordSpriteSheet());
+        Vector2 scale = new Vector2(32.0f,32.0f); //only gets used in sword attack
+        SwordWheelObstacle sword = new SwordWheelObstacle(x, y, player.getSwordRadius(), player, player.getAttackLifespan(), 10.0f, scale, player.getSwordSpriteSheet());
         level.addQueuedObject(sword);
     }
 
