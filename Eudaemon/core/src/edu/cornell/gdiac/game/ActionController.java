@@ -154,7 +154,7 @@ public class ActionController {
         //#endregion
 
         //#region Dash
-        if(player.getForm() == 0 && dashPressed && player.isGrounded()){
+        if(player.getForm() == 0 && dashPressed && player.isGrounded() || player.getForm() == 0 && dashPressed && player.getJumpVelocity() > 0){
             float currOffset = player.getAttackOffset();
             int angleFacing = player.getAngleFacing();
             float dashX = player.getX() + currOffset;
@@ -191,6 +191,7 @@ public class ActionController {
             SwordWheelObstacle dashAnimate = new SwordWheelObstacle(dashX, dashY, player.getDashSpriteSheet().getRegionWidth()/100, player, player.getAttackLifespan(), 0.01f, scale, player.getDashSpriteSheet());
             level.addQueuedObject(dashAnimate);
             player.dash();
+            player.setVelocity(player.getBodyVelocityX(), 0);
         }
         //#endregion
 
