@@ -79,8 +79,6 @@ public class Level {
      */
     private float cameraY;
 
-    private Texture uiOutline;
-
     //#endregion
 
     //#region GETTERS & SETTERS
@@ -141,7 +139,6 @@ public class Level {
         this.world = new World(new Vector2(0, gravity), true);
         this.player = new Player(json.get("player"), assets);
         uiElements = new UIOverlay(json.get("player"), assets, player.getHearts(), player.getSpirit());
-        this.uiOutline = assets.getEntry(json.getString("uioutline"), Texture.class);
 
 
 
@@ -309,9 +306,8 @@ public class Level {
             canvas.endDebug();
         }
 
-        //canvas.setOverlayCamera();
+        canvas.setOverlayCamera();
         canvas.begin();
-        canvas.draw(uiOutline, Color.WHITE, player.getX(), player.getY(), 200, 200);
         uiElements.draw(canvas);
         canvas.end();
     }
