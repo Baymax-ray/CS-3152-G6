@@ -123,7 +123,7 @@ public class GameCanvas {
 		// Set the projection matrix (for proper scaling)
 		camera = new OrthographicCamera();
 		camera.setToOrtho(false);
-		camera.position.set(getWidth()/2.0f,getHeight()/2.0f,0);
+		//camera.position.set(getWidth()/2.0f,getHeight()/2.0f,0);
 		viewport = new ExtendViewport(getWidth(), getHeight(), camera);
 		viewport.setScreenBounds(0,0,getWidth(),getHeight());
 		viewport.apply();
@@ -405,7 +405,6 @@ public class GameCanvas {
 	public void setGameplayCamera(float x, float y, float width, float height) {
 		getCamera().setToOrtho(false, width, height);
 		getCamera().position.set(x, y, 0); // set to some other position to follow player;
-
 		getCamera().update();
 		spriteBatch.setProjectionMatrix(camera.combined);
 	}
@@ -415,7 +414,7 @@ public class GameCanvas {
 	 * Sets the projection matrix to draw overlay and menu elements
 	 */
 	public void setOverlayCamera() {
-		getCamera().position.set(getWidth() / 2, getHeight() / 2, 0); // set to some other position to follow player;
+		//getCamera().position.set(getWidth() / 2, getHeight() / 2, 0); // set to some other position to follow player;
 		getCamera().setToOrtho(false, getWidth(), getHeight());
 		getCamera().update();
 		spriteBatch.setProjectionMatrix(camera.combined);

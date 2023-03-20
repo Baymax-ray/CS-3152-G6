@@ -317,9 +317,13 @@ public class Level {
     }
 
     public void draw(GameCanvas canvas) {
+
         canvas.begin();
 
         handleGameplayCamera(canvas);
+        float cam_x = canvas.getCamera().position.x;
+        float cam_y = canvas.getCamera().position.y;
+
 
         canvas.draw(background, 0, 0);
 //        canvas.draw(background, Color.CLEAR, background.getRegionWidth()/2, background.getRegionHeight()/2, 0, 0, 1 / background.getRegionWidth(), 1/ background.getRegionHeight());
@@ -356,6 +360,9 @@ public class Level {
         canvas.begin();
         uiElements.draw(canvas, player.getHearts(), player.getSpirit());
         canvas.end();
+
+        canvas.setGameplayCamera(cam_x,cam_y, cameraWidth, cameraHeight);
+
     }
 
     public void activatePhysics() {
@@ -401,14 +408,22 @@ public class Level {
             canvas.getCamera().zoom -= 0.02;
         }
 
-        float camZone_x = 1;
-        float camZone_y = 1;
+        float camZone_x = 5;
+        float camZone_y = 5;
+
+//        System.out.println("camera: "+canvas.getCamera().position.x+" "+canvas.getCamera().position.y);
+//        System.out.println("player: "+player.getX()+" "+player.getY());
 
         if (Math.abs(canvas.getCamera().position.x - player.getX()) > camZone_x) {
-            if (canvas.getCamera().position.x > player.getX())
+            if (canvas.getCamera().position.x > player.getX()) {
+                System.out.println("left");
                 canvas.setGameplayCamera(player.getX()+camZone_x, canvas.getCamera().position.y, cameraWidth, cameraHeight);
+            }
 
-            else canvas.setGameplayCamera(player.getX()-camZone_x, canvas.getCamera().position.y, cameraWidth, cameraHeight);
+            else {
+                System.out.println("right");
+                canvas.setGameplayCamera(player.getX()-camZone_x, canvas.getCamera().position.y, cameraWidth, cameraHeight);
+            }
         }
 
         if (Math.abs(canvas.getCamera().position.y - player.getY()) > camZone_y) {
@@ -417,6 +432,11 @@ public class Level {
 
             else canvas.setGameplayCamera(canvas.getCamera().position.x, player.getY()-camZone_y, cameraWidth, cameraHeight);
         }
+
+        //System.out.println("camera: "+canvas.getCamera().position.x+" "+canvas.getCamera().position.y);
+        //System.out.println("player: "+player.getX()+" "+player.getY());
+
+        System.out.println();
 
     }
 
