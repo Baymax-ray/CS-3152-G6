@@ -179,6 +179,13 @@ public class Level {
      * @return whether the point is in an air tile.
      */
     public boolean isAirAt(float x, float y) {
+        int nrow = tilemap.length;
+        int ncol = tilemap[0].length;
+        int nx=levelToTileCoordinatesX(x);
+        int ny=levelToTileCoordinatesY(y);
+        if (nx<0 || nx>=ncol ||ny<0 || ny>=nrow ){
+            return false;
+        }
         return tilemap[levelToTileCoordinatesX(x)][levelToTileCoordinatesY(y)] < 0;
     }
 

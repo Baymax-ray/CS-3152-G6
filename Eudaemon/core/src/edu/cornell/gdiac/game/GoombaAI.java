@@ -33,6 +33,10 @@ public class GoombaAI extends AIController{
         super(ii,level);
         this.state=FSMState.SPAWN;
         this.move=EnemyAction.STAY;
+        this.goal=new float[2];
+        //this.level=level;
+        //this.enemy = level.getEnemies()[ii];
+
     }
     public void setEnemyAction(EnumSet<EnemyAction> enemyAction){
         ticks=ticks+1;
