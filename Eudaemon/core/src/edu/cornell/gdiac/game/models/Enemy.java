@@ -14,8 +14,6 @@ import edu.cornell.gdiac.game.obstacle.*;
 public class Enemy extends BoxObstacle implements ContactListener {
 
     //#region FINAL FIELDS
-    //#endregion
-    //#region NONFINAL FIELDS
 
     private Vector2 pos;
     private Vector2 vel;
@@ -61,6 +59,9 @@ public class Enemy extends BoxObstacle implements ContactListener {
 
     /** The amount to slow the character down */
     private final float damping;
+
+    /** The factor to multiply to the movement */
+    private final float force;
 
     //#endregion
 
@@ -126,10 +127,10 @@ public class Enemy extends BoxObstacle implements ContactListener {
     public Enemy(JsonValue json, AssetDirectory assets) {
         super(json.getFloat("startX"), json.getFloat("startY"), json.getFloat("hitboxWidth"), json.getFloat("hitboxHeight"));
         String TextureAsset = json.getString("TextureAsset");
+
         //Query the type of this enemy, then query the corresponding data in enemyConstants.json
         this.type=json.getString("type");
         if(this.type.equals("Goomba")){
-            System.out.println("enemy creating");
             this.enemyData = assets.getEntry("sharedConstants", JsonValue.class).get("Goomba");
         }else if (this.type.equals("Fly")){
             this.enemyData = assets.getEntry("sharedConstants", JsonValue.class).get("Fly");
@@ -137,13 +138,12 @@ public class Enemy extends BoxObstacle implements ContactListener {
         else{
             //should never reach here
             this.enemyData=null;
-            System.out.println(this.type);
             throw new IllegalArgumentException("Enemy can only be Fly or Goomba");
         }
         this.setWidth(enemyData.getFloat("hitboxWidth"));
         this.setHeight(enemyData.getFloat("hitboxHeight"));
 
-
+        //Texture
         this.enemyTexture = new TextureRegion(assets.getEntry(TextureAsset, Texture.class));
         this.texture = this.enemyTexture;
 
@@ -156,8 +156,8 @@ public class Enemy extends BoxObstacle implements ContactListener {
         this.enemyImageHeight = enemyData.getFloat("ImageHeight");
         this.scale = new Vector2(enemyData.getFloat("drawScaleX"), enemyData.getFloat("drawScaleY"));
 
-
         this.maxSpeed = enemyData.getFloat("maxSpeed");
+        this.force = enemyData.getFloat("force");
         this.hitboxWidthMult = enemyData.getFloat("hitboxWidthMult");
         this.hitboxHeightMult = enemyData.getFloat("hitboxHeightMult");
         this.damping = enemyData.getFloat("damping");
@@ -189,6 +189,7 @@ public class Enemy extends BoxObstacle implements ContactListener {
         if (move==EnemyAction.MOVE_RIGHT){movement=-1;}
         else if (move==EnemyAction.MOVE_LEFT){movement=1;}
         else if (move == EnemyAction.STAY){movement = 0;}
+        movement *= this.force;
         // Change facing if appropriate
         if (movement < 0) {
             isFacingRight = false;
@@ -204,7 +205,6 @@ public class Enemy extends BoxObstacle implements ContactListener {
      * @param canvas Drawing context
      */
     public void draw(GameCanvas canvas) {
-        //System.out.println("trying to draaw");
         float x = getX();
         float y = getY();
 
@@ -212,7 +212,6 @@ public class Enemy extends BoxObstacle implements ContactListener {
         float oy = this.texture.getRegionHeight()/2;
 
         float sx = (isFacingRight ? 1 : -1) * enemyImageWidth / this.texture.getRegionWidth();
-        //System.out.println(momoImageWidth / this.texture.getRegionWidth());
         float sy = enemyImageHeight / this.texture.getRegionHeight();
 
         canvas.draw(this.texture, Color.WHITE, ox, oy, x, y, 0, sx, sy);
@@ -302,8 +301,6 @@ public class Enemy extends BoxObstacle implements ContactListener {
         Object bd1 = body1.getUserData();
         Object bd2 = body2.getUserData();
 
-        //System.out.println(bd1.getClass());
-        //System.out.println(bd2.getClass());
         // Check if the two objects colliding are an instance of EnemyModel and SwordWheelObstacle
         if ((bd1 instanceof Enemy
                 && bd2 instanceof SwordWheelObstacle)

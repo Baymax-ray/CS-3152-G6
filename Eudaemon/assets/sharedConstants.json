@@ -64,6 +64,7 @@
     "drawScaleX": 32,
     "drawScaleY": 32,
     "hit_force": 5.5,
+    "force": 20.0,
     "dash": 2000.0,
     "damping": 100.0,
     "sensor": {
@@ -93,6 +94,7 @@
     "drawScaleX": 32,
     "drawScaleY": 32,
     "hit_force": 5.5,
+    "force": 200.0,
     "dash": 2000.0,
     "damping": 100.0,
     "sensor": {
