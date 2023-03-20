@@ -78,7 +78,7 @@
           "type":"Goomba",
           "TextureAsset": "platform:worm",
           "startX": 4,
-          "startY": 5,
+          "startY": 4,
           "hitboxWidth": 0.5,
           "hitboxHeight": 0.5
         }

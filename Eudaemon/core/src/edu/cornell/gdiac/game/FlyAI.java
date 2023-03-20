@@ -37,6 +37,10 @@ public class FlyAI extends AIController{
         super(ii,level);
         this.state= FSMState.SPAWN;
         this.move=EnemyAction.STAY;
+        this.goal=new float[2];
+        this.level=super.level;
+        this.enemy=super.enemy;
+
     }
     public void setEnemyAction(EnumSet<EnemyAction> enemyAction){
         ticks=ticks+1;
@@ -53,9 +57,13 @@ public class FlyAI extends AIController{
     private boolean checkDetection(){
         float py=level.getPlayer().getY();
         float px=level.getPlayer().getX();
+        int tpy=level.levelToTileCoordinatesY(py);
+        int tpx=level.levelToTileCoordinatesX(px);
         float ey=enemy.getY();
         float ex=enemy.getX();
-        if (Math.abs(py-ey)+Math.abs(px-ex)<=detectDistance){
+        int ty=level.levelToTileCoordinatesY(ey);
+        int tx=level.levelToTileCoordinatesX(ex);
+        if (Math.abs(tpy-ty)+Math.abs(tpx-tx)<=detectDistance){
             return true;
         }
         else{
@@ -64,11 +72,15 @@ public class FlyAI extends AIController{
     }
 
     private boolean sameCell(){
-        int py=level.levelToTileCoordinatesY(level.getPlayer().getY());
-        int px=level.levelToTileCoordinatesX(level.getPlayer().getX());
-        int ey=level.levelToTileCoordinatesY(enemy.getY());
-        int ex=level.levelToTileCoordinatesX(enemy.getX());
-        if (Math.abs(py-ey)<1&&Math.abs(px-ex)<1){
+        float py=level.getPlayer().getY();
+        float px=level.getPlayer().getX();
+        int tpy=level.levelToTileCoordinatesY(py);
+        int tpx=level.levelToTileCoordinatesX(px);
+        float ey=enemy.getY();
+        float ex=enemy.getX();
+        int ty=level.levelToTileCoordinatesY(ey);
+        int tx=level.levelToTileCoordinatesX(ex);
+        if (tpy==ty && tpx==tx){
             return true;
         }
         else{
