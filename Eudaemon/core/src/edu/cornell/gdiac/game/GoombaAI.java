@@ -35,7 +35,7 @@ public class GoombaAI extends AIController{
         this.move=EnemyAction.STAY;
         this.goal=new float[2];
         this.level=super.level;
-        this.enemy=super.enemy
+        this.enemy=super.enemy;
 
         System.out.println(this.level==null);
 
