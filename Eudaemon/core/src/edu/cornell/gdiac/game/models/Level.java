@@ -8,6 +8,7 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
+import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.JsonValue;
 import edu.cornell.gdiac.assets.AssetDirectory;
 import edu.cornell.gdiac.game.GameCanvas;
@@ -15,6 +16,7 @@ import edu.cornell.gdiac.game.UIOverlay;
 import edu.cornell.gdiac.game.obstacle.Obstacle;
 import edu.cornell.gdiac.util.PooledList;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 
@@ -22,7 +24,7 @@ public class Level {
 
     //#region FINAL FIELDS
     private final Player player;
-    private Enemy[] enemies;
+    private ArrayList<Enemy> enemies ;
 
     // NOTE: the natural way of viewing a 2d array is flipped for the map. tilemap[0] is the top of the map. need fancy
     // conversions between the two spaces
@@ -101,7 +103,7 @@ public class Level {
         return gravity;
     }
 
-    public Enemy[] getEnemies() {
+    public ArrayList<Enemy> getEnemies() {
         return enemies;
     }
 
@@ -173,9 +175,12 @@ public class Level {
 
         // TODO: need more than 1 ideally
         //this is a temporary code!!
-        this.enemies = new Enemy[1];
+        this.enemies = new ArrayList<Enemy>();
         //System.out.println(json.get("enemy").get(0).toString());
-        this.enemies[0]=new Enemy(json.get("enemy").get(0),assets);
+        JsonValue.JsonIterator enemyIterator = json.get("enemy").iterator();
+        while(enemyIterator.hasNext()){
+            enemies.add(new Enemy(enemyIterator.next(), assets));
+        }
 
         this.bodyDef = new BodyDef();
         this.bodyDef.type = BodyDef.BodyType.StaticBody;
@@ -393,8 +398,8 @@ public class Level {
 
         addObject(player);
         //TODO: enemies activate too
-        for(int i = 0; i < enemies.length; i++){
-            addObject(enemies[i]);
+        for(int i = 0; i < enemies.size(); i++){
+            addObject(enemies.get(i));
         }
     }
 
@@ -445,8 +450,8 @@ public class Level {
 
         //TODO: What is this number?
         double shortestDist = 99999;
-        for (int i = 0; i < enemies.length; i++) {
-            double dist = Math.sqrt(Math.pow(player.getX()-enemies[i].getX(),2) + Math.pow(player.getY()-enemies[i].getY(),2));
+        for (int i = 0; i < enemies.size(); i++) {
+            double dist = Math.sqrt(Math.pow(player.getX()-enemies.get(i).getX(),2) + Math.pow(player.getY()-enemies.get(i).getY(),2));
             if (dist < shortestDist) shortestDist = dist;
 
             if (dist < player.getHitDist() && !player.isHit()) {
@@ -455,9 +460,9 @@ public class Level {
             }
 
             if (player.isAttacking() && dist < player.getAttackDist() &&
-                    (player.isFacingRight() && player.getX() < enemies[i].getX() ||
-                    !player.isFacingRight() && player.getX() > enemies[i].getX())) {
-                enemies[i].hitBySword();
+                    (player.isFacingRight() && player.getX() < enemies.get(i).getX() ||
+                    !player.isFacingRight() && player.getX() > enemies.get(i).getX())) {
+                enemies.get(i).hitBySword();
                 enemies = removeEnemy(enemies,i);
             }
 
@@ -474,14 +479,14 @@ public class Level {
      *
      * @return the new array of enemies where a given enemy is removed
      */
-    private Enemy[] removeEnemy(Enemy[] arr, int index) {
-        if (arr == null || index < 0 || index > arr.length) return arr;
-        Enemy[] result = new Enemy[arr.length-1];
-        for (int i = 0, k = 0; i < arr.length; i++) {
+    private ArrayList<Enemy> removeEnemy(ArrayList<Enemy> arr, int index) {
+        if (arr == null || index < 0 || index > arr.size()) return arr;
+        ArrayList<Enemy> result = new ArrayList<Enemy>();
+        for (int i = 0, k = 0; i < arr.size(); i++) {
             if (i == index) {
                 continue;
             }
-            result[k++] = arr[i];
+            result.set(k++, arr.get(i));
         }
         return result;
     }

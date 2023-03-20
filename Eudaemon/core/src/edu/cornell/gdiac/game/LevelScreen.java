@@ -43,7 +43,7 @@ public class LevelScreen implements Screen {
         this.playerAction = EnumSet.noneOf(Action.class);
 
         //POPULATE ENEMIES
-        Enemy[] enemies=level.getEnemies();
+        Enemy[] enemies= level.getEnemies();
         this.aiControllers = new Array<>(enemies.length);
         this.enemyActions = new Array<>(enemies.length);
         for (int i = 0; i < enemies.length; i++) {
