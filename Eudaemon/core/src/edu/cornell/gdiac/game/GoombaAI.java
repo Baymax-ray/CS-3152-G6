@@ -49,7 +49,8 @@ public class GoombaAI extends AIController{
 
         enemyAction.add(move);
         if (enemyAction.size()>1){
-        System.out.println(enemyAction.size());}
+            System.out.println(enemyAction.size());
+        }
 
     }
     private boolean checkDetection(){
@@ -107,7 +108,7 @@ public class GoombaAI extends AIController{
                 }
                 break;
             case ATTACK:
-                //TODO
+                //TODO: is this already handled by the HandleSpirit() in Level.java?
                 break;
         }
 
@@ -167,7 +168,8 @@ public class GoombaAI extends AIController{
         int tx=level.levelToTileCoordinatesX(ex);
         int ty=level.levelToTileCoordinatesY(ey);
 
-        if(ex<=goal[0]+0.1||ex>=goal[0]-0.1){this.move=EnemyAction.STAY;}
+        //TODO: this should be && not ||
+        if(ex<=goal[0]+0.1 && ex>=goal[0]-0.1){this.move=EnemyAction.STAY;}
         else if (ex<goal[0]){
             this.move=EnemyAction.MOVE_RIGHT;
             if(level.isAirAt(tx+1,ty-1)){this.move=EnemyAction.STAY;}

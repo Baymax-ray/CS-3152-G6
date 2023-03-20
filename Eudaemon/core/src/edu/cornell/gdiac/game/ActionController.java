@@ -238,13 +238,13 @@ public class ActionController {
             if (!enemy.isRemoved()) {
                 for (EnemyAction action : enemyAction) {
                     if (action == EnemyAction.ATTACK) {
-                        //TODO
+                        //TODO: is this already handled by the HandleSpirit() in Level.java?
                     }
-                    if (action == EnemyAction.MOVE_LEFT) {
+                    if (action == EnemyAction.MOVE_LEFT || action == EnemyAction.MOVE_RIGHT
+                        || action == EnemyAction.STAY) {
                         //TODO
-                    }
-                    if (action == EnemyAction.MOVE_RIGHT) {
-                        //TODO
+                        enemy.setMovement(action);
+                        enemy.applyForce();
                     }
                 }
 

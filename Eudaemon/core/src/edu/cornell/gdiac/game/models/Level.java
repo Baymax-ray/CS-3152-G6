@@ -302,7 +302,6 @@ public class Level {
             addObject(addQueue.poll());
         }
 
-
         world.step(delta, 6, 2);
 
         // Garbage collect the deleted objects.
@@ -322,9 +321,6 @@ public class Level {
         }
 
         handleSpirit();
-
-
-
 
     }
 
@@ -437,6 +433,7 @@ public class Level {
             if (player.getSpirit()==0) player.setForm();
         }
 
+        //TODO: What is this number?
         double shortestDist = 99999;
         for (int i = 0; i < enemies.length; i++) {
             double dist = Math.sqrt(Math.pow(player.getX()-enemies[i].getX(),2) + Math.pow(player.getY()-enemies[i].getY(),2));
