@@ -233,10 +233,8 @@ public class ActionController {
         // TODO: 2023/3/19
         for (int i=0;i<enemies.length;i++){
             EnumSet<EnemyAction> enemyAction=enemyActions.get(i);
-<<<<<<< Updated upstream
             if(enemyAction.contains(EnemyAction.STAY)){
                 System.out.println("yes!");
-=======
             Enemy enemy = enemies[i];
             if(!enemy.isRemoved()){
                 for(EnemyAction action:enemyAction){
@@ -253,7 +251,6 @@ public class ActionController {
                 if(enemyAction.contains(EnemyAction.DASH)){
                     System.out.println("yes!");
                 }
->>>>>>> Stashed changes
             }
         }
     }
