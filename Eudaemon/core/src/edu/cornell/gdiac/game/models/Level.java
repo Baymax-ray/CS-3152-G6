@@ -435,9 +435,6 @@ public class Level {
 
         //System.out.println("camera: "+canvas.getCamera().position.x+" "+canvas.getCamera().position.y);
         //System.out.println("player: "+player.getX()+" "+player.getY());
-
-        System.out.println();
-
     }
 
     public void handleSpirit() {

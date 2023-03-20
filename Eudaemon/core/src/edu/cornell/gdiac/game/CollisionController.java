@@ -61,7 +61,6 @@ public class CollisionController implements ContactListener {
             System.out.println(sensorFixtures.size);
             sensorFixtures.remove(level.getPlayer() == body1.getUserData() ? fix2 : fix1);
             System.out.println(sensorFixtures.size);
-            System.out.println();
             if (sensorFixtures.size == 0) {
                 level.getPlayer().setGrounded(false);
             }

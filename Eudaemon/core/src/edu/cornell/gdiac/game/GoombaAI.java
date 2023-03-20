@@ -39,6 +39,7 @@ public class GoombaAI extends AIController{
 
     }
     public void setEnemyAction(EnumSet<EnemyAction> enemyAction){
+        if(this.enemy.isRemoved()) return;
         ticks=ticks+1;
         // Process the FSM
         changeStateIfApplicable();
@@ -48,14 +49,13 @@ public class GoombaAI extends AIController{
         MoveAlongPathToGoal();
 
         enemyAction.add(move);
-        int movement=-2;
-        if (move==EnemyAction.MOVE_RIGHT){movement=1;}
-        else if (move==EnemyAction.MOVE_LEFT){movement=-1;}
-        else if (move == EnemyAction.STAY){movement = 0;}
-        System.out.println("movement from ai: "+movement);
+//        int movement=-2;
+//        if (move==EnemyAction.MOVE_RIGHT){movement=1;}
+//        else if (move==EnemyAction.MOVE_LEFT){movement=-1;}
+//        else if (move == EnemyAction.STAY){movement = 0;}
 
         if (enemyAction.size()>1){
-            System.out.println(enemyAction.size());
+            System.out.println("more than one action." + enemyAction.size());
         }
 
     }

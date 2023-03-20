@@ -191,7 +191,6 @@ public class Enemy extends BoxObstacle implements ContactListener {
         if (move==EnemyAction.MOVE_RIGHT){movement=1;}
         else if (move==EnemyAction.MOVE_LEFT){movement=-1;}
         else if (move == EnemyAction.STAY){movement = 0;}
-        System.out.println("movement from enemy: "+movement);
         movement *= this.force;
         // Change facing if appropriate
         if (movement < 0) {
@@ -214,7 +213,7 @@ public class Enemy extends BoxObstacle implements ContactListener {
         float ox = this.texture.getRegionWidth()/2;
         float oy = this.texture.getRegionHeight()/2;
 
-        float sx = (isFacingRight ? 1 : -1) * enemyImageWidth / this.texture.getRegionWidth();
+        float sx = (isFacingRight ? -1 : 1) * enemyImageWidth / this.texture.getRegionWidth();
         float sy = enemyImageHeight / this.texture.getRegionHeight();
 
         canvas.draw(this.texture, Color.WHITE, ox, oy, x, y, 0, sx, sy);
@@ -337,6 +336,7 @@ public class Enemy extends BoxObstacle implements ContactListener {
         hearts--;
         if (hearts <= 0) {
             this.markRemoved(true);
+            this.setActive(false);
         }
     }
 

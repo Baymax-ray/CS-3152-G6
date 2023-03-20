@@ -43,6 +43,7 @@ public class FlyAI extends AIController{
 
     }
     public void setEnemyAction(EnumSet<EnemyAction> enemyAction){
+        if(this.enemy.isRemoved()) return;
         ticks=ticks+1;
         // Process the FSM
         changeStateIfApplicable();
