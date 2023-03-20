@@ -154,9 +154,41 @@ public class ActionController {
         //#endregion
 
         //#region Dash
-        if(player.getForm() == 0 && dashPressed){
+        if(player.getForm() == 0 && dashPressed && player.isGrounded()){
+            float currOffset = player.getAttackOffset();
+            int angleFacing = player.getAngleFacing();
+            float dashX = player.getX() + currOffset;
+            float dashY = player.getY();
+            if (angleFacing == 45){
+                dashX = player.getX() + 0.71f * currOffset;
+                dashY = player.getY() + 0.71f * currOffset;
+            }
+            else if (angleFacing == 90){
+                dashX = player.getX();
+                dashY = player.getY() + currOffset;
+            }
+            else if (angleFacing == 135){
+                dashX = player.getX() - 0.71f * currOffset;
+                dashY = player.getY() + 0.71f * currOffset;
+            }
+            else if (angleFacing == 180){
+                dashX = player.getX() - currOffset;
+                dashY = player.getY();
+            }
+            else if (angleFacing == 225){
+                dashX = player.getX() - 0.71f * currOffset;
+                dashY = player.getY() - 0.71f * currOffset;
+            }
+            else if (angleFacing == 270){
+                dashX = player.getX();
+                dashY = player.getY()- currOffset;
+            }
+            else if (angleFacing == 315){
+                dashX = player.getX() + 0.71f * currOffset;
+                dashY = player.getY() - 0.71f * currOffset;
+            }
             Vector2 scale = new Vector2(10f,10f);
-            SwordWheelObstacle dashAnimate = new SwordWheelObstacle(player.getX(), player.getY(), player.getDashSpriteSheet().getRegionWidth()/100, player, player.getAttackLifespan(), 0.01f, scale, player.getDashSpriteSheet());
+            SwordWheelObstacle dashAnimate = new SwordWheelObstacle(dashX, dashY, player.getDashSpriteSheet().getRegionWidth()/100, player, player.getAttackLifespan(), 0.01f, scale, player.getDashSpriteSheet());
             level.addQueuedObject(dashAnimate);
             player.dash();
         }

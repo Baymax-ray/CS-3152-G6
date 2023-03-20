@@ -119,6 +119,7 @@ public class Enemy extends BoxObstacle implements ContactListener {
     //TODO: Add texture fields
 
     //#endregion
+    
     public String getType() {
         return type;
     }
@@ -183,6 +184,7 @@ public class Enemy extends BoxObstacle implements ContactListener {
         this.isGrounded = true;
         this.isFacingRight = startsFacingRight;
 
+        if(this.type.equals("Fly")){this.setGravityScale(0);}
     }
 
     public void setMovement(EnemyAction move) {
@@ -301,6 +303,8 @@ public class Enemy extends BoxObstacle implements ContactListener {
 
         Object bd1 = body1.getUserData();
         Object bd2 = body2.getUserData();
+
+        //TODO: whatif two enemies collide
 
         // Check if the two objects colliding are an instance of EnemyModel and SwordWheelObstacle
         if ((bd1 instanceof Enemy
