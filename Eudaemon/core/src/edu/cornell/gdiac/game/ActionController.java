@@ -233,7 +233,7 @@ public class ActionController {
         // TODO: 2023/3/19
         for (int i=0;i<enemies.length;i++){
             EnumSet<EnemyAction> enemyAction=enemyActions.get(i);
-            if(enemyAction.contains(EnemyAction.DASH)){
+            if(enemyAction.contains(EnemyAction.STAY)){
                 System.out.println("yes!");
             }
 

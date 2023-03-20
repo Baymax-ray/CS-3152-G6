@@ -37,9 +37,6 @@ public class GoombaAI extends AIController{
         this.level=super.level;
         this.enemy=super.enemy;
 
-        System.out.println(this.level==null);
-
-
     }
     public void setEnemyAction(EnumSet<EnemyAction> enemyAction){
         ticks=ticks+1;
@@ -51,7 +48,8 @@ public class GoombaAI extends AIController{
         MoveAlongPathToGoal();
 
         enemyAction.add(move);
-        System.out.println(enemyAction.size());
+        if (enemyAction.size()>1){
+        System.out.println(enemyAction.size());}
 
     }
     private boolean checkDetection(){
@@ -112,6 +110,9 @@ public class GoombaAI extends AIController{
     private void markGoal(){
         float ex=enemy.getX();
         float ey=enemy.getY();
+        int tx=level.levelToTileCoordinatesX(ex);
+        int ty=level.levelToTileCoordinatesY(ey);
+
         int a;
         switch (state) {
             case SPAWN:
@@ -123,11 +124,11 @@ public class GoombaAI extends AIController{
                 goal[1]=ey;
                 a=1;
                 while(c){
-                    if(level.isAirAt(ex+a,ey-1)){
-                        goal[0]=ex+a;
+                    if(level.isAirAt(tx+a,ty-1)){
+                        goal[0]=level.tileToLevelCoordinatesX(tx+a);
                         c=false;
-                    } else if (level.isAirAt(ex-a,ey-1)) {
-                        goal[0]=ex-a;
+                    } else if (level.isAirAt(tx-a,ty-1)) {
+                        goal[0]=level.tileToLevelCoordinatesX(tx-a);
                         c=false;
                     }
                     a++;
@@ -135,23 +136,23 @@ public class GoombaAI extends AIController{
                 break;
             case WANDER:
                 // turn if the ground of next cell is air or next cell is not air
-                if (goal[0]>ex && (level.isAirAt(ex+1,ey-1)||!level.isAirAt(ex+1,ey))){
+                if (goal[0]>=ex && (level.isAirAt(tx+1,ty-1)||!level.isAirAt(tx+1,ty))){
                     boolean cl=true;
                     a=1;
                     while(cl){
-                        if (level.isAirAt(ex-a,ey-1)) {
-                            goal[0]=ex-a;
+                        if (level.isAirAt(tx-a,ty-1)&& !level.isAirAt(tx-a,ty)) {
+                            goal[0]=level.tileToLevelCoordinatesX(tx-a)-1;
                             cl=false;
                         }
                         a++;
                     }
                 }
-                else if(goal[0]<ex && (level.isAirAt(ex-1,ey-1)||!level.isAirAt(ex-1,ey))){
+                else if(goal[0]<ex && (level.isAirAt(tx-1,ty-1)||!level.isAirAt(tx-1,ty))){
                     boolean cr=true;
                     a=1;
                     while(cr){
-                        if (level.isAirAt(ex+a,ey-1)) {
-                            goal[0]=ex-a;
+                        if (level.isAirAt(tx+a,ty-1)&& !level.isAirAt(tx+a,ty)) {
+                            goal[0]=level.tileToLevelCoordinatesX(tx+a)+1;
                             cr=false;
                         }
                         a++;
@@ -161,7 +162,10 @@ public class GoombaAI extends AIController{
             case CHASE:
                 goal[0]=level.getPlayer().getX();
                 break;
-    }}
+        }
+        System.out.println(goal[0]);
+
+    }
     private void MoveAlongPathToGoal(){
         float ex=enemy.getX();
         float ey=enemy.getY();

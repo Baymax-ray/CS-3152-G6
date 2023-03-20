@@ -168,7 +168,7 @@ public class Level {
      * @return
      */
     public Tile tileAt(float x, float y) {
-        return tiles[tilemap[levelToTileCoordinatesX(x)][levelToTileCoordinatesY(y)]];
+        return tiles[tilemap[levelToTileCoordinatesY(y)][levelToTileCoordinatesX(x)]];
     }
 
     /**
@@ -183,10 +183,19 @@ public class Level {
         int ncol = tilemap[0].length;
         int nx=levelToTileCoordinatesX(x);
         int ny=levelToTileCoordinatesY(y);
-        if (nx<0 || nx>=ncol ||ny<0 || ny>=nrow ){
+        if (nx<0 || nx>ncol ||ny<0 || ny>nrow ){
             return false;
         }
-        return tilemap[levelToTileCoordinatesX(x)][levelToTileCoordinatesY(y)] < 0;
+        return tilemap[ny][nx] < 0;
+    }
+    public boolean isAirAt(int x, int y){
+        int nrow = tilemap.length;
+        int ncol = tilemap[0].length;
+        if (x<0 || x>ncol ||y<0 || y>nrow ){
+            return false;
+        }
+        return tilemap[y][x] < 0;
+
     }
 
 
