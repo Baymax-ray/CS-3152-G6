@@ -103,8 +103,9 @@ public class Level {
         return gravity;
     }
 
-    public ArrayList<Enemy> getEnemies() {
-        return enemies;
+    public Enemy[] getEnemies() {
+        Enemy[] result = new Enemy[enemies.size()];
+        return enemies.toArray(result);
     }
 
     /**

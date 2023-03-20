@@ -16,7 +16,7 @@ public class ActionController {
     private Player player;
 
     public ActionController(Level level) {
-        enemies = (Enemy[])level.getEnemies().toArray();
+        enemies = level.getEnemies();
         player = level.getPlayer();
         this.level = level;
     }

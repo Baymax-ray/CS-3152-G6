@@ -11,7 +11,7 @@ public abstract class AIController {
     protected Level level;
 
     public AIController(int ii, Level level) {
-        this.enemy = level.getEnemies().get(ii);
+        this.enemy = level.getEnemies()[ii];
         this.level = level;
     }
 
