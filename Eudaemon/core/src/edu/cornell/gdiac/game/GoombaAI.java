@@ -176,15 +176,12 @@ public class GoombaAI extends AIController{
         System.out.println("tx/ty"+tx+" "+ty);
 
         //TODO: this should be && not ||
-        if(ex<=goal[0]+0.1 && ex>=goal[0]-0.1){
-            System.out.println("enemy stays.");
-            this.move=EnemyAction.STAY;
-        }
+        if(ex<=goal[0]+0.1 && ex>=goal[0]-0.1){this.move=EnemyAction.STAY;}
         else if (ex<goal[0]){
             this.move=EnemyAction.MOVE_RIGHT;
             System.out.println("enemy moves right");
             if(level.isAirAt(tx+1,ty+1)){
-                System.out.println("enemy stop, air!!");
+                System.out.println("enemy stop!!");
 
                 this.move=EnemyAction.STAY;}
         }
