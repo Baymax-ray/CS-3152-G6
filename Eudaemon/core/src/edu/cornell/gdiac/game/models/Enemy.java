@@ -14,12 +14,7 @@ import edu.cornell.gdiac.game.obstacle.*;
 public class Enemy extends BoxObstacle implements ContactListener {
 
     //#region FINAL FIELDS
-
-    // TODO: Add texture fields (FilmStrip?)
-
     //#endregion
-
-
     //#region NONFINAL FIELDS
 
     private Vector2 pos;
@@ -189,9 +184,11 @@ public class Enemy extends BoxObstacle implements ContactListener {
         this.isFacingRight = startsFacingRight;
 
     }
+
     public void setMovement(EnemyAction move) {
         if (move==EnemyAction.MOVE_RIGHT){movement=-1;}
         else if (move==EnemyAction.MOVE_LEFT){movement=1;}
+        else if (move == EnemyAction.STAY){movement = 0;}
         // Change facing if appropriate
         if (movement < 0) {
             isFacingRight = false;
@@ -286,11 +283,6 @@ public class Enemy extends BoxObstacle implements ContactListener {
             forceCache.set(getMovement(),0);
             body.applyForce(forceCache,getPosition(),true);
         }
-//        // Jump!
-//        if (isJumping()) {
-//            forceCache.set(0, jump_force);
-//            body.applyLinearImpulse(forceCache,getPosition(),true);
-//        }
     }
 
 
