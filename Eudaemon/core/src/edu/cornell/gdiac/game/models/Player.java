@@ -2,7 +2,6 @@ package edu.cornell.gdiac.game.models;
 
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
@@ -43,7 +42,6 @@ public class Player extends BoxObstacle {
      */
     private final int jumpCooldown;
     private int jumpCooldownRemaining;
-
 
     /**
      * The amount of ticks before the palyer can jump when they leave a platform
@@ -97,10 +95,6 @@ public class Player extends BoxObstacle {
      * The sprite sheet containing the sword attack animation frames.
      */
     private final TextureRegion swordSpriteSheet;
-    /**
-     * The sprite sheet containing the dash animation frames.
-     */
-    private final TextureRegion dashSpriteSheet;
     //#endregion
 
     //#region NONFINAL FIELDS
@@ -174,17 +168,9 @@ public class Player extends BoxObstacle {
      */
     private float maxJumpVelocity;
     /**
-     * Accumulates the ticks elapsed since the animation started.
+     * A final float representing the gravity affecting the player.
      */
-    int currentTicks;
-    /**
-     * Current frame of sword animation.
-     */
-    float currentFrame;
-    /**
-     * The animation object that represents a sequence of TextureRegions.
-     */
-    Animation<TextureRegion> animation;
+    private final float playerGravity;
 
     //#endregion
 
@@ -213,17 +199,17 @@ public class Player extends BoxObstacle {
     public TextureRegion getSwordSpriteSheet() {
         return swordSpriteSheet;
     }
-    /**
-     * Gets the sprite sheet containing the dash animation frames.
-     *
-     * @return the sprite sheet containing the dash animation frames
-     */
-    public TextureRegion getDashSpriteSheet() {
-        return dashSpriteSheet;
-    }
     //#endregion
 
     //#region GETTERS AND SETTERS
+    /**
+     * Returns the gravity value affecting the player.
+     *
+     * @return A float representing the player's gravity.
+     */
+    public float getPlayerGravity() {
+        return playerGravity;
+    }
     /**
      * Returns the jump velocity of the game object.
      *
@@ -274,14 +260,6 @@ public class Player extends BoxObstacle {
      */
     public int getAttackCooldown() {
         return attackCooldown;
-    }
-    /**
-     * Gets the dash cooldown in seconds.
-     *
-     * @return the dash cooldown
-     */
-    public int getDashCooldown(){
-        return dashCooldown;
     }
     /**
      * Gets the transform cooldown in seconds.
@@ -463,14 +441,6 @@ public class Player extends BoxObstacle {
     }
 
     /**
-     * Sets the remaining time in seconds until the player can dash again.
-     * @param dashCooldownRemaining the remaining time in seconds
-     */
-    public void setDashCooldownRemaining(int dashCooldownRemaining){
-        this.dashCooldownRemaining = dashCooldownRemaining;
-    }
-
-    /**
      * Returns the remaining time in seconds until the player can transform again.
      * @return the remaining time in seconds
      */
@@ -491,14 +461,6 @@ public class Player extends BoxObstacle {
      */
     public int getAttackCooldownRemaining() {
         return attackCooldownRemaining;
-    }
-    /**
-     * Returns the remaining time in seconds until the player can dash again.
-     * @return the remaining time in seconds
-     */
-
-    public int getDashCooldownRemaining(){
-        return dashCooldownRemaining;
     }
 
     /**
@@ -686,7 +648,7 @@ public class Player extends BoxObstacle {
 //
 //        fixtureDef.shape = hitbox;
 //        body.createFixture(fixtureDef);
-        body.setGravityScale(5.0f);
+        body.setGravityScale(playerGravity);
         Vector2 sensorCenter = new Vector2(0, -getHeight() / 2);
         FixtureDef sensorDef = new FixtureDef();
         sensorDef.density = data.getFloat("density",0);
@@ -769,7 +731,6 @@ public class Player extends BoxObstacle {
         this.chiyoImageWidth = json.getFloat("chiyo:ImageWidth");
         this.chiyoImageHeight = json.getFloat("chiyo:ImageHeight");
         this.swordSpriteSheet = new TextureRegion(assets.getEntry( "chiyo:swordAttack", Texture.class));
-        this.dashSpriteSheet = new TextureRegion(assets.getEntry( "chiyo:dash", Texture.class));
 
         //Position and Movement
         this.startX = json.getFloat("startX");
@@ -802,6 +763,7 @@ public class Player extends BoxObstacle {
         this.jumpTolerance = json.getInt("jumpTolerance");
         this.jumpTime = json.getInt("jumpTime");
         this.maxJumpVelocity = json.getInt("maxJumpyVelocity");
+        this.playerGravity = json.getFloat("playerGravity");
         this.spiritIncreaseRate = json.getFloat("spiritIncreaseRate");
         this.spiritDecreaseRate = json.getFloat("spiritDecreaseRate");
         this.spiritIncreaseDist = json.getFloat("spiritIncreaseDist");
