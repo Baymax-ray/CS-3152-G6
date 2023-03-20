@@ -125,6 +125,9 @@ public class GameCanvas {
 		camera = new OrthographicCamera();
 		camera.setToOrtho(false);
 		//camera.position.set(getWidth()/2.0f,getHeight()/2.0f,0);
+
+		float aspectRatio = (float)Gdx.graphics.getHeight() / (float)Gdx.graphics.getWidth();
+
 		viewport = new ExtendViewport(getWidth(),getHeight(),camera);
 		viewport.setScreenBounds(0,0,getWidth(),getHeight());
 		viewport.apply();

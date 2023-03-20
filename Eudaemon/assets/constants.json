@@ -9,7 +9,7 @@
   "levels": [
     {
       "tileSize": 1,
-      "cameraWidth": 15,
+      "cameraWidth": 26.69,
       "cameraHeight": 15,
       "gravity": -1,
       "player": {
