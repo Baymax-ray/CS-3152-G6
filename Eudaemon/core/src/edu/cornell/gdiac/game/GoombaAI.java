@@ -34,8 +34,7 @@ public class GoombaAI extends AIController{
         this.state=FSMState.SPAWN;
         this.move=EnemyAction.STAY;
         this.goal=new float[2];
-        //this.level=level;
-        //this.enemy = level.getEnemies()[ii];
+        System.out.println("GoombaAI created");
 
     }
     public void setEnemyAction(EnumSet<EnemyAction> enemyAction){
@@ -48,6 +47,7 @@ public class GoombaAI extends AIController{
         MoveAlongPathToGoal();
 
         enemyAction.add(move);
+        System.out.println(enemyAction.size());
 
     }
     private boolean checkDetection(){
@@ -82,6 +82,7 @@ public class GoombaAI extends AIController{
             case TOWANDER:
                 state=FSMState.WANDER;
             case WANDER:
+                System.out.println("Wander");
                 if (checkDetection()){
                     state=FSMState.CHASE;
                 }
