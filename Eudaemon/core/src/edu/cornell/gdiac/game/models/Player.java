@@ -646,8 +646,17 @@ public class Player extends BoxObstacle {
         sensorDef.isSensor = true;
         sensorShape = new PolygonShape();
         JsonValue sensorjv = data.get("sensor");
+//        sensorShape.set(new float[]{
+//                momoImageWidth * (1-hitboxWidthMult), momoImageHeight * (1-hitboxHeightMult),
+//                momoImageWidth * hitboxWidthMult, momoImageHeight * (1-hitboxHeightMult),
+//                momoImageWidth * hitboxWidthMult, momoImageHeight * hitboxHeightMult,
+//                momoImageWidth * (1-hitboxWidthMult), momoImageHeight * hitboxHeightMult,
+//        });
+        System.out.println("true");
         sensorShape.setAsBox(0.6f*getWidth()/2.0f,
                 0.05f, sensorCenter, 0.0f);
+//        sensorShape.setAsBox(momoImageWidth * hitboxWidthMult/2.0f,
+//                momoImageHeight * hitboxHeightMult/2.0f, sensorCenter, 0.0f);
         sensorDef.shape = sensorShape;
 
         // Ground sensor to represent our feet
