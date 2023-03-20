@@ -38,6 +38,8 @@ public class Level {
      * Value: String representing the path to the texture file.
      */
     private HashMap<Integer, TextureRegion> texturePaths;
+    /** Background texture for start-up */
+    private TextureRegion background;
 
     /**
      * In level coordinates (not pixels), the width and height of a single tile.
@@ -127,7 +129,7 @@ public class Level {
         JsonValue levelJson = assets.getEntry("levelTest",  JsonValue.class);
         int widthInTiles = levelJson.getInt("width");
 //        int heightInTiles = json.getInt("height");
-        int heightInTiles = 20;
+        int heightInTiles = 28;
         JsonValue layers = levelJson.get("layers").get("data");
         this.tilemap = new int[heightInTiles][widthInTiles];
         for (int y = 0; y < heightInTiles; y++) {
@@ -135,16 +137,6 @@ public class Level {
                 tilemap[y][x] = layers.getInt(y*widthInTiles + x) - 1;
             }
         }
-//        int widthInTiles = json.getInt("widthInTiles");
-//        int heightInTiles = json.getInt("heightInTiles");
-//
-//        this.tilemap = new int[heightInTiles][widthInTiles];
-//        for (int y = 0; y < heightInTiles; y++) {
-//            JsonValue row = json.get("tilemap").get(y);
-//            for (int x = 0; x < widthInTiles; x++) {
-//                tilemap[y][x] = row.getInt(x);
-//            }
-//        }
         texturePaths = new HashMap<>();
         JsonValue tileset = assets.getEntry("tileset",  JsonValue.class);
         JsonValue tileList = tileset.get("tiles");
@@ -168,7 +160,7 @@ public class Level {
         this.cameraWidth = json.getFloat("cameraWidth");
         this.cameraHeight = json.getFloat("cameraHeight");
         this.gravity = json.getFloat("gravity");
-
+        this.background = new TextureRegion(assets.getEntry("background:city", Texture.class));
 
 //        String backgroundAsset = json.getString("backgroundAsset");
 //        this.backgroundTexture = assets.get(backgroundAsset);
@@ -329,7 +321,8 @@ public class Level {
 
         handleGameplayCamera(canvas);
 
-//        canvas.draw(backgroundTexture, 0, 0);
+        canvas.draw(background, 0, 0);
+//        canvas.draw(background, Color.CLEAR, background.getRegionWidth()/2, background.getRegionHeight()/2, 0, 0, 1 / background.getRegionWidth(), 1/ background.getRegionHeight());
 
         for (int y = 0; y < tilemap.length; y++) {
             int[] row = tilemap[y];

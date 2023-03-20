@@ -175,7 +175,7 @@ public class ActionController {
         if ((jumpPressed && player.isGrounded() && player.getJumpCooldownRemaining()==0) ||
                 (jumpPressed && player.getCoyoteFramesRemaining() > 0 && player.getJumpCooldownRemaining()==0) ||
                 (player.getJumpPressedInAir() && player.getJumpCooldownRemaining()==0 && player.isGrounded())) {
-            player.setVelocity(player.getBodyVelocityX(), 2.0f);
+            player.setVelocity(player.getBodyVelocityX(), player.getJumpVelocity());
             player.setJumpCooldownRemaining(player.getJumpCooldown());
             player.setJumpTimeRemaining(player.getJumpTime());
             player.setIsJumping(true);
@@ -188,7 +188,7 @@ public class ActionController {
         if (player.getIsJumping()) player.setJumpTimeRemaining(player.getJumpTimeRemaining() - 1);
 
         if (jumpHold && player.getIsJumping() && player.getJumpTimeRemaining() > 0) {
-            player.setVelocity(player.getBodyVelocityX(), 2.0f);
+            player.setVelocity(player.getBodyVelocityX(), player.getJumpVelocity());
         }
 
         if (!jumpHold) player.setIsJumping(false);

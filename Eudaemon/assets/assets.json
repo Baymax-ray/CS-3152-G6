@@ -15,6 +15,7 @@
                 }
             }
         },
+        "background:city": "backgrounds/backgroundCityPlaceholder.png",
         "platform:momo":  "platform/momo.png",
         "platform:momoUp":  "platform/momoUp.png",
         "platform:momoDown":  "platform/momoDown.png",

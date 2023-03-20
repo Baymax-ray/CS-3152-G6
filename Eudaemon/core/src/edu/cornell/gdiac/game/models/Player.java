@@ -163,6 +163,11 @@ public class Player extends BoxObstacle {
     private boolean isAttacking;
     private int attackLifespanRemaining;
 
+    /**
+     * A float representing the max jump velocity of a game object.
+     */
+    private float maxJumpVelocity;
+
     //#endregion
 
     //#region TEXTURE GETTERS AND SETTERS
@@ -193,6 +198,15 @@ public class Player extends BoxObstacle {
     //#endregion
 
     //#region GETTERS AND SETTERS
+    /**
+     * Returns the jump velocity of the game object.
+     *
+     * @return A float representing the jump velocity.
+     */
+    public float getJumpVelocity() {
+        return maxJumpVelocity;
+    }
+
     /**
      * Gets the radius of the sword hitbox.
      *
@@ -587,6 +601,8 @@ public class Player extends BoxObstacle {
 
     public float getAttackDist() { return attackDist; }
 
+
+
     //#endregion
 
     public void draw(GameCanvas canvas) {
@@ -734,6 +750,7 @@ public class Player extends BoxObstacle {
         this.coyoteFrames = json.getInt("coyoteTime");
         this.jumpTolerance = json.getInt("jumpTolerance");
         this.jumpTime = json.getInt("jumpTime");
+        this.maxJumpVelocity = json.getInt("maxJumpyVelocity");
         this.spiritIncreaseRate = json.getFloat("spiritIncreaseRate");
         this.spiritDecreaseRate = json.getFloat("spiritDecreaseRate");
         this.spiritIncreaseDist = json.getFloat("spiritIncreaseDist");
