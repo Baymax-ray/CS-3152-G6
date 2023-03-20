@@ -2,6 +2,7 @@ package edu.cornell.gdiac.game.models;
 
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
@@ -42,6 +43,7 @@ public class Player extends BoxObstacle {
      */
     private final int jumpCooldown;
     private int jumpCooldownRemaining;
+
 
     /**
      * The amount of ticks before the palyer can jump when they leave a platform
@@ -95,6 +97,10 @@ public class Player extends BoxObstacle {
      * The sprite sheet containing the sword attack animation frames.
      */
     private final TextureRegion swordSpriteSheet;
+    /**
+     * The sprite sheet containing the dash animation frames.
+     */
+    private final TextureRegion dashSpriteSheet;
     //#endregion
 
     //#region NONFINAL FIELDS
@@ -167,6 +173,18 @@ public class Player extends BoxObstacle {
      * A float representing the max jump velocity of a game object.
      */
     private float maxJumpVelocity;
+    /**
+     * Accumulates the ticks elapsed since the animation started.
+     */
+    int currentTicks;
+    /**
+     * Current frame of sword animation.
+     */
+    float currentFrame;
+    /**
+     * The animation object that represents a sequence of TextureRegions.
+     */
+    Animation<TextureRegion> animation;
 
     //#endregion
 
@@ -194,6 +212,14 @@ public class Player extends BoxObstacle {
      */
     public TextureRegion getSwordSpriteSheet() {
         return swordSpriteSheet;
+    }
+    /**
+     * Gets the sprite sheet containing the dash animation frames.
+     *
+     * @return the sprite sheet containing the dash animation frames
+     */
+    public TextureRegion getDashSpriteSheet() {
+        return dashSpriteSheet;
     }
     //#endregion
 
@@ -248,6 +274,14 @@ public class Player extends BoxObstacle {
      */
     public int getAttackCooldown() {
         return attackCooldown;
+    }
+    /**
+     * Gets the dash cooldown in seconds.
+     *
+     * @return the dash cooldown
+     */
+    public int getDashCooldown(){
+        return dashCooldown;
     }
     /**
      * Gets the transform cooldown in seconds.
@@ -429,6 +463,14 @@ public class Player extends BoxObstacle {
     }
 
     /**
+     * Sets the remaining time in seconds until the player can dash again.
+     * @param dashCooldownRemaining the remaining time in seconds
+     */
+    public void setDashCooldownRemaining(int dashCooldownRemaining){
+        this.dashCooldownRemaining = dashCooldownRemaining;
+    }
+
+    /**
      * Returns the remaining time in seconds until the player can transform again.
      * @return the remaining time in seconds
      */
@@ -449,6 +491,14 @@ public class Player extends BoxObstacle {
      */
     public int getAttackCooldownRemaining() {
         return attackCooldownRemaining;
+    }
+    /**
+     * Returns the remaining time in seconds until the player can dash again.
+     * @return the remaining time in seconds
+     */
+
+    public int getDashCooldownRemaining(){
+        return dashCooldownRemaining;
     }
 
     /**
@@ -719,6 +769,7 @@ public class Player extends BoxObstacle {
         this.chiyoImageWidth = json.getFloat("chiyo:ImageWidth");
         this.chiyoImageHeight = json.getFloat("chiyo:ImageHeight");
         this.swordSpriteSheet = new TextureRegion(assets.getEntry( "chiyo:swordAttack", Texture.class));
+        this.dashSpriteSheet = new TextureRegion(assets.getEntry( "chiyo:dash", Texture.class));
 
         //Position and Movement
         this.startX = json.getFloat("startX");

@@ -62,6 +62,11 @@ public class ActionController {
         if (transformCooldownRemaining > 0){
             player.setTransformCooldownRemaining(transformCooldownRemaining - 1);
         }
+
+        int dashCooldownRemaining = player.getDashCooldownRemaining();
+        if(dashCooldownRemaining > 0){
+            player.setDashCooldownRemaining(dashCooldownRemaining - 1);
+        }
         //#endregion
 
         //#region Direction
@@ -155,6 +160,9 @@ public class ActionController {
 
         //#region Dash
         if(player.getForm() == 0 && dashPressed){
+            Vector2 scale = new Vector2(10f,10f);
+            SwordWheelObstacle dashAnimate = new SwordWheelObstacle(player.getX(), player.getY(), player.getDashSpriteSheet().getRegionWidth()/100, player, player.getAttackLifespan(), 0.01f, scale, player.getDashSpriteSheet());
+            level.addQueuedObject(dashAnimate);
             player.dash();
         }
         //#endregion
