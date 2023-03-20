@@ -54,9 +54,9 @@ public class GoombaAI extends AIController{
 //        else if (move==EnemyAction.MOVE_LEFT){movement=-1;}
 //        else if (move == EnemyAction.STAY){movement = 0;}
 
-        if (enemyAction.size()>1){
-            System.out.println("more than one action." + enemyAction.size());
-        }
+//        if (enemyAction.size()>1){
+//            System.out.println("more than one action." + enemyAction.size());
+//        }
 
     }
     private boolean checkDetection(){
@@ -165,7 +165,7 @@ public class GoombaAI extends AIController{
                 goal[0]=level.getPlayer().getX();
                 break;
         }
-        System.out.println("goal is "+goal[0]);
+//        System.out.println("goal is "+goal[0]);
 
     }
     private void MoveAlongPathToGoal(){
@@ -173,7 +173,7 @@ public class GoombaAI extends AIController{
         float ey=enemy.getY();
         int tx=level.levelToTileCoordinatesX(ex);
         int ty=level.levelToTileCoordinatesY(ey);
-        System.out.println("tx/ty"+tx+" "+ty);
+//        System.out.println("tx/ty"+tx+" "+ty);
 
         //TODO: this should be && not ||
         if(ex<=goal[0]+0.1 && ex>=goal[0]-0.1){this.move=EnemyAction.STAY;}

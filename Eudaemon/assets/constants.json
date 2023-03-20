@@ -21,7 +21,7 @@
         "chiyo:ImageWidth": 1.3,
         "chiyo:ImageHeight": 1.3,
         "startX": 7.0,
-        "startY": 9,
+        "startY": 15,
         "heart": "platform:heart",
         "emptyspirit": "platform:emptyspirit",
         "filled": "platform:filled",
@@ -67,12 +67,12 @@
           "type":"Goomba",
           "TextureAsset": "platform:worm",
           "startX": 10,
-          "startY": 8,
+          "startY": 15,
           "hitboxWidth": 1.0,
           "hitboxHeight": 1.0
         },
         {
-          "type":"Goomba",
+          "type":"Fly",
           "TextureAsset": "platform:worm",
           "startX": 12,
           "startY": 8,
@@ -83,7 +83,7 @@
           "type":"Goomba",
           "TextureAsset": "platform:worm",
           "startX": 14,
-          "startY": 8,
+          "startY": 15,
           "hitboxWidth": 1.0,
           "hitboxHeight": 1.0
         }

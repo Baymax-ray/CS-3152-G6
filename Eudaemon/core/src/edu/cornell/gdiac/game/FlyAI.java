@@ -165,7 +165,10 @@ public class FlyAI extends AIController{
                 goal[1]=level.getPlayer().getY();
                 break;
 
-        }}
+        }
+        System.out.println("goal is "+goal[0]+":"+goal[1]);
+
+    }
     private void MoveAlongPathToGoal() {
         float ex = enemy.getX();
         float ey = enemy.getY();
