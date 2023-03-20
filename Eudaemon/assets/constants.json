@@ -24,11 +24,11 @@
       "player": {
         "momoTextureAsset": "platform:momo",
         "momoImageWidth": 0.5,
-        "momoImageHeight": 0.5,
+        "momoImageHeight": 0.7,
         "uioutline": "platform:uioutline",
         "chiyoTextureAsset": "platform:chiyo",
         "chiyoImageWidth": 0.5,
-        "chiyoImageHeight": 0.5,
+        "chiyoImageHeight": 0.7,
         "hitboxWidthMult": 0.75,
         "hitboxHeightMult": 0.9,
         "startX": 3.0,

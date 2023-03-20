@@ -609,14 +609,16 @@ public class Player extends BoxObstacle {
     //#endregion
 
     public void draw(GameCanvas canvas) {
+        //tile of player character
         float x = getX();
         float y = getY();
 
+        //position of player in tile
         float ox = this.texture.getRegionWidth()/2;
-        float oy = this.texture.getRegionHeight()/2;
+        float oy = this.texture.getRegionHeight()/2 - 100;
 
+        // Scaling Factor of Player - Determined by momoImageWidth/momoImageHeight in constants.json
         float sx = (isFacingRight ? 1 : -1) * momoImageWidth / this.texture.getRegionWidth();
-        //System.out.println(momoImageWidth / this.texture.getRegionWidth());
         float sy = momoImageHeight / this.texture.getRegionHeight();
 
         canvas.draw(this.texture, Color.WHITE, ox, oy, x, y, 0, sx, sy);
@@ -718,7 +720,7 @@ public class Player extends BoxObstacle {
         this.chiyoTexture = new TextureRegion(assets.getEntry(json.getString("chiyoTextureAsset"), Texture.class));
         this.chiyoImageWidth = json.getFloat("chiyoImageWidth");
         this.chiyoImageHeight = json.getFloat("chiyoImageHeight");
-        this.scale = new Vector2(json.getFloat("drawScaleX"), json.getFloat("drawScaleY"));
+        this.scale = new Vector2(json.getFloat("drawScaleX"), json.getFloat("drawScaleY")); //only gets used in sword attack
         this.swordSpriteSheet = new TextureRegion(assets.getEntry( "chiyo:swordAttack", Texture.class));
 
         //Position and Movement
