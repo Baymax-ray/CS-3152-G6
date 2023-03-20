@@ -206,15 +206,15 @@ public class FlyAI extends AIController{
                     boundary.addLast(R);
                     visited.add(new int[] {cx+1, cy});
                 }
-                if (level.isAirAt(level.tileToLevelCoordinatesX(cx),level.tileToLevelCoordinatesY(cy-1))){
-                    Coord D=new Coord(cx,cy-1,EnemyAction.FLY_DOWN);
-                    boundary.addLast(D);
-                    visited.add(new int[] {cx,cy-1});
-                }
                 if (level.isAirAt(level.tileToLevelCoordinatesX(cx),level.tileToLevelCoordinatesY(cy+1))){
-                    Coord U=new Coord(cx,cy+1,EnemyAction.FLY_UP);
-                    boundary.addLast(U);
+                    Coord D=new Coord(cx,cy+1,EnemyAction.FLY_DOWN);
+                    boundary.addLast(D);
                     visited.add(new int[] {cx,cy+1});
+                }
+                if (level.isAirAt(level.tileToLevelCoordinatesX(cx),level.tileToLevelCoordinatesY(cy-1))){
+                    Coord U=new Coord(cx,cy-1,EnemyAction.FLY_UP);
+                    boundary.addLast(U);
+                    visited.add(new int[] {cx,cy-1});
                 }
                 if (cx==gx&&cy==gy){
                     this.move= EnemyAction.STAY;
@@ -242,18 +242,18 @@ public class FlyAI extends AIController{
                                 visited.add(new int[]{x + 1, y});
                             }
                         }
-                        if (level.isAirAt(level.tileToLevelCoordinatesX(x),level.tileToLevelCoordinatesY(y-1))){
+                        if (level.isAirAt(level.tileToLevelCoordinatesX(x),level.tileToLevelCoordinatesY(y+1))){
                             Coord D=new Coord(x,y-1,co.getDirection());
-                            if(!visited.contains(new int[] {x, y-1})) {
+                            if(!visited.contains(new int[] {x, y+1})) {
                                 boundary.addLast(D);
-                                visited.add(new int[]{x, y-1});
+                                visited.add(new int[]{x, y+1});
                             }
                         }
-                        if (level.isAirAt(level.tileToLevelCoordinatesX(x),level.tileToLevelCoordinatesY(y+1))){
+                        if (level.isAirAt(level.tileToLevelCoordinatesX(x),level.tileToLevelCoordinatesY(y-1))){
                             Coord U=new Coord(x,y+1,co.getDirection());
-                            if(!visited.contains(new int[] {x, y+1})) {
+                            if(!visited.contains(new int[] {x, y-1})) {
                                 boundary.addLast(U);
-                                visited.add(new int[]{x, y+1});
+                                visited.add(new int[]{x, y-1});
                             }
                         }
                     }
