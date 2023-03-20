@@ -18,28 +18,22 @@ public class UIOverlay {
 
     /** Texture for outline of bar/hearts*/
     private Texture uiOutline;
-    /** heartLevel of player*/
-    private float heartLevel;
-    /** spiritLevel of player*/
-    private float spiritLevel;
 
-    public UIOverlay(JsonValue json, AssetDirectory assets, float playerHearts, float playerSpirit){
+    public UIOverlay(JsonValue json, AssetDirectory assets){
         this.heartRegion = assets.getEntry(json.getString("heart"), Texture.class);
         this.filledSpiritBar = assets.getEntry(json.getString("filled"), Texture.class);
-        this.heartLevel = playerHearts;
-        this.spiritLevel = playerSpirit;
         this.uiOutline = assets.getEntry(json.getString("uioutline"), Texture.class);
     }
 
-    public void draw(GameCanvas canvas) {
+    public void draw(GameCanvas canvas, float playerHearts, float playerSpirit) {
         float xPos = 69;
         canvas.draw(uiOutline, Color.WHITE, 0, canvas.getHeight() - 62, 221, 52);
-        for(int i=0; i < heartLevel; i++){
+        for(int i=0; i < playerHearts; i++){
             canvas.draw(heartRegion, Color.WHITE, xPos,canvas.getHeight() - 32, 23, 20);
             xPos += 31.7F;
         }
 //        canvas.draw(filledSpiritBar, Color.WHITE, 71, canvas.getHeight() - 61, 137, 18.234F);
-        float spiritPercentage = spiritLevel / 10F;
+        float spiritPercentage = playerSpirit / 10F;
         int barWidth = (int)(filledSpiritBar.getWidth() * spiritPercentage);
         int barHeight = filledSpiritBar.getHeight();
         TextureRegion croppedBar = new TextureRegion(filledSpiritBar, 0, 0, barWidth, barHeight);

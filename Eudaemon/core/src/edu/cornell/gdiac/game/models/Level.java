@@ -167,7 +167,7 @@ public class Level {
 
         this.world = new World(new Vector2(0, gravity), true);
         this.player = new Player(json.get("player"), assets);
-        uiElements = new UIOverlay(json.get("player"), assets, player.getHearts(), player.getSpirit());
+        uiElements = new UIOverlay(json.get("player"), assets);
 
 
 
@@ -354,7 +354,7 @@ public class Level {
 
         canvas.setOverlayCamera();
         canvas.begin();
-        uiElements.draw(canvas);
+        uiElements.draw(canvas, player.getHearts(), player.getSpirit());
         canvas.end();
     }
 
