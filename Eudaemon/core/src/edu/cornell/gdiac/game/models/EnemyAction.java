@@ -5,7 +5,7 @@ public enum EnemyAction {
     MOVE_LEFT,
     MOVE_RIGHT,
     ATTACK,
-    DASH,
+//    DASH,
     FLY_LEFT,
     FLY_RIGHT,
     FLY_UP,
