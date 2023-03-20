@@ -74,7 +74,7 @@
           "hitboxHeight": 1.0
         },
         {
-          "type":"Fly",
+          "type":"Goomba",
           "TextureAsset": "platform:worm",
           "startX": 12,
           "startY": 8,
