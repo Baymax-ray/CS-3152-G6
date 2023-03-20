@@ -86,10 +86,10 @@ public class GoombaAI extends AIController{
                 }
                 break;
             case TOWANDER:
-                System.out.println("toWander");
+//                System.out.println("toWander");
                 state=FSMState.WANDER;
             case WANDER:
-                System.out.println("Wander");
+//                System.out.println("Wander");
                 if (checkDetection()){
                     state=FSMState.CHASE;
                 }
@@ -158,7 +158,7 @@ public class GoombaAI extends AIController{
                 goal[0]=level.getPlayer().getX();
                 break;
         }
-        System.out.println(goal[0]);
+//        System.out.println(goal[0]);
 
     }
     private void MoveAlongPathToGoal(){
