@@ -189,6 +189,7 @@ public class Enemy extends BoxObstacle implements ContactListener {
         if (move==EnemyAction.MOVE_RIGHT){movement=-1;}
         else if (move==EnemyAction.MOVE_LEFT){movement=1;}
         else if (move == EnemyAction.STAY){movement = 0;}
+        System.out.println("movement from enemy: "+movement);
         movement *= this.force;
         // Change facing if appropriate
         if (movement < 0) {

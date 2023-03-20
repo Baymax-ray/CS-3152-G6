@@ -242,6 +242,7 @@ public class ActionController {
                 for (EnemyAction action : enemyAction) {
                     if (action == EnemyAction.ATTACK) {
                         //TODO: is this already handled by the HandleSpirit() in Level.java?
+                        
                     }
                     if (action == EnemyAction.MOVE_LEFT || action == EnemyAction.MOVE_RIGHT
                         || action == EnemyAction.STAY) {
