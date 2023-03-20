@@ -229,29 +229,31 @@ public class ActionController {
      * @param enemyActions an array of sets of enemy actions to resolve, each set representing
      *                     the actions of one enemy
      */
-    public void resolveEnemyActions(Array<EnumSet<EnemyAction>> enemyActions){
+    public void resolveEnemyActions(Array<EnumSet<EnemyAction>> enemyActions) {
         // TODO: 2023/3/19
-        for (int i=0;i<enemies.length;i++){
-            EnumSet<EnemyAction> enemyAction=enemyActions.get(i);
-            if(enemyAction.contains(EnemyAction.STAY)){
-                System.out.println("yes!");
+        for (int i = 0; i < enemies.length; i++) {
+            EnumSet<EnemyAction> enemyAction = enemyActions.get(i);
             Enemy enemy = enemies[i];
-            if(!enemy.isRemoved()){
-                for(EnemyAction action:enemyAction){
-                    if(action == EnemyAction.ATTACK){
+            if (!enemy.isRemoved()) {
+                for (EnemyAction action : enemyAction) {
+                    if (action == EnemyAction.ATTACK) {
                         //TODO
                     }
-                    if(action == EnemyAction.MOVE_LEFT){
+                    if (action == EnemyAction.MOVE_LEFT) {
                         //TODO
                     }
-                    if(action == EnemyAction.MOVE_RIGHT){
+                    if (action == EnemyAction.MOVE_RIGHT) {
                         //TODO
                     }
                 }
-                if(enemyAction.contains(EnemyAction.DASH)){
+                if (enemyAction.contains(EnemyAction.DASH)) {
+                    System.out.println("yes!");
+                }
+                if (enemyAction.contains(EnemyAction.STAY)) {
                     System.out.println("yes!");
                 }
             }
+
         }
     }
 
