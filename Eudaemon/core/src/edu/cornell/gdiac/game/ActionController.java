@@ -170,6 +170,7 @@ public class ActionController {
         //jump!
         //include all three situations
         //normal jump, coyote, and jump pressed in air
+
         if ((jumpPressed && player.isGrounded() && player.getJumpCooldownRemaining()==0) ||
                 (jumpPressed && player.getCoyoteFramesRemaining() > 0 && player.getJumpCooldownRemaining()==0) ||
                 (player.getJumpPressedInAir() && player.getJumpCooldownRemaining()==0 && player.isGrounded())) {

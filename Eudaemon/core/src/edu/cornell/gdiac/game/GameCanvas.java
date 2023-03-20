@@ -291,7 +291,7 @@ public class GameCanvas {
 	 */
 	 public void resize() {
 		// Resizing screws up the spriteBatch projection matrix
-		 viewport.update(getWidth()/2,getHeight()/2);
+		 viewport.update(getWidth(),getHeight());
 		spriteBatch.getProjectionMatrix().setToOrtho2D(0, 0, getWidth(), getHeight());
 	}
 	
@@ -417,6 +417,7 @@ public class GameCanvas {
 	public void setOverlayCamera() {
 		getCamera().position.set(getWidth() / 2, getHeight() / 2, 0); // set to some other position to follow player;
 		getCamera().setToOrtho(false, getWidth(), getHeight());
+		getCamera().update();
 		spriteBatch.setProjectionMatrix(camera.combined);
 	}
 

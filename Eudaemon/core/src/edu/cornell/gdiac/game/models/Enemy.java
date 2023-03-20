@@ -174,7 +174,8 @@ public class Enemy extends BoxObstacle implements ContactListener {
         this.hitCooldown = enemyData.getInt("hitCooldown");
 
         //Sensor. Wtf is this?
-        this.sensorName = "PlayerGroundSensor";
+        //used for collision detection
+        this.sensorName = "EnemyGroundSensor";
 
         //Other Information
         this.maxHearts = enemyData.getInt("maxHearts");
