@@ -131,7 +131,6 @@ public class Enemy extends BoxObstacle implements ContactListener {
     public Enemy(JsonValue json, AssetDirectory assets) {
         super(json.getFloat("startX"), json.getFloat("startY"), json.getFloat("hitboxWidth"), json.getFloat("hitboxHeight"));
         String TextureAsset = json.getString("TextureAsset");
-        System.out.println("trying to initialize");
         //Query the type of this enemy, then query the corresponding data in enemyConstants.json
         this.type=json.getString("type");
         if(this.type.equals("Goomba")){
