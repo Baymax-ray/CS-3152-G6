@@ -7,8 +7,11 @@ import edu.cornell.gdiac.game.GameRoot;
 // Please note that on macOS your application needs to be started with the -XstartOnFirstThread JVM argument
 public class DesktopLauncher {
 	public static void main (String[] arg) {
+//		GDXAppSettings config = new GDXAppSettings();
 		Lwjgl3ApplicationConfiguration config = new Lwjgl3ApplicationConfiguration();
-		config.setWindowedMode(1025, 576);
+//		config.setWindowedMode(1025, 576);
+		config.setWindowedMode(576, 576);
+		config.setResizable(false);
 		config.setForegroundFPS(60);
 		config.setTitle("Eudaemon");
 		new Lwjgl3Application(new GameRoot(), config);
