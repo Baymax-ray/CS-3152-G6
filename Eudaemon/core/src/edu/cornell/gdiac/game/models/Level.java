@@ -468,13 +468,11 @@ public class Level {
                 enemies.get(i).hitBySword();
                 enemies = removeEnemy(enemies,i);
             }
-            if (shortestDist < player.getSpiritIncreaseDist() && player.getForm()==0 &&
-                    (player.isFacingRight() && player.getX() < enemies.get(i).getX() ||
-                            !player.isFacingRight() && player.getX() > enemies.get(i).getX()) ){
+            if (shortestDist < player.getSpiritIncreaseDist() && player.getForm()==0 ){
                 player.increaseSpirit();
                 Vector2 scale = new Vector2(0.5f,0.5f);
-                int xDirection = player.isFacingRight()? 1: -1;
-                SwordWheelObstacle spiritAnimate = new SwordWheelObstacle(player.getX() + (player.getSpiritIncreaseDist() * xDirection), player.getY(), player.getSpiritDrainSpriteSheet().getRegionWidth()/115F, player, player.getAttackLifespan(), 5f, scale, player.getSpiritDrainSpriteSheet());
+//            int direction = player.isFacingRight()? 1: -1;
+                SwordWheelObstacle spiritAnimate = new SwordWheelObstacle(enemies.get(i).getX(), player.getY(), player.getSpiritDrainSpriteSheet().getRegionWidth()/300F, player, player.getAttackLifespan(), 5f, scale, player.getSpiritDrainSpriteSheet());
                 addQueuedObject(spiritAnimate);
             }
 
@@ -483,8 +481,8 @@ public class Level {
 //        if (shortestDist < player.getSpiritIncreaseDist() && player.getForm()==0 ){
 //            player.increaseSpirit();
 //            Vector2 scale = new Vector2(0.5f,0.5f);
-//            int direction = player.isFacingRight()? 1: -1;
-//            SwordWheelObstacle spiritAnimate = new SwordWheelObstacle(player.getX() + (player.getSpiritIncreaseDist() * direction), player.getY(), player.getSpiritDrainSpriteSheet().getRegionWidth()/100F, player, player.getAttackLifespan(), 5f, scale, player.getSpiritDrainSpriteSheet());
+////            int direction = player.isFacingRight()? 1: -1;
+//            SwordWheelObstacle spiritAnimate = new SwordWheelObstacle(player.getX() + (player.getSpiritIncreaseDist()), player.getY(), player.getSpiritDrainSpriteSheet().getRegionWidth()/100F, player, player.getAttackLifespan(), 5f, scale, player.getSpiritDrainSpriteSheet());
 //            addQueuedObject(spiritAnimate);
 //        }
 

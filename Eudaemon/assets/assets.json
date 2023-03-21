@@ -43,7 +43,7 @@
           }
         },
         "chiyo:spiritDrain": {
-          "file" : "platform/spiritdrain3.png",
+          "file" : "platform/reversespiritdrain.png",
           "sprites" : {
             "fire": {
               "rows": 1,
