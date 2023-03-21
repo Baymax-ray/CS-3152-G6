@@ -140,6 +140,7 @@ public class Enemy extends CapsuleObstacle implements ContactListener {
     public Enemy(JsonValue json, AssetDirectory assets) {
         super(json.getFloat("startX"), json.getFloat("startY"), json.getFloat("hitboxWidth"), json.getFloat("hitboxHeight"));
         String TextureAsset = json.getString("TextureAsset");
+        System.out.println("init enemy");
 
         //Query the type of this enemy, then query the corresponding data in enemyConstants.json
         this.type=json.getString("type");
@@ -155,6 +156,7 @@ public class Enemy extends CapsuleObstacle implements ContactListener {
         }
         this.setWidth(json.getFloat("hitboxWidth"));
         this.setHeight(json.getFloat("hitboxHeight"));
+
 
         //Texture
         this.enemyTexture = new TextureRegion(assets.getEntry(TextureAsset, Texture.class));
@@ -195,6 +197,7 @@ public class Enemy extends CapsuleObstacle implements ContactListener {
         this.isFacingRight = startsFacingRight;
 
         if(this.type.equals("Fly")){this.setGravityScale(0);}
+        System.out.println("init enemy DONE");
     }
 
     /**

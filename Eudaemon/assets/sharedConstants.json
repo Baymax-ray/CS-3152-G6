@@ -74,7 +74,7 @@
     "ImageWidth": 0.5,
     "ImageHeight": 0.5,
     "hitboxWidth": 0.5,
-    "hitboxHeight": 0.5,
+    "hitboxHeight": 1.0,
     "maxSpeed": 2.5,
     "horizontalAcceleration": 0.12,
     "maxHearts": 1,
