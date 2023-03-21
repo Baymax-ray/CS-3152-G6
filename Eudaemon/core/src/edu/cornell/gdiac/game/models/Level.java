@@ -487,7 +487,7 @@ public class Level {
             if (i == index) {
                 continue;
             }
-            result.set(k++, arr.get(i));
+            result.add(arr.get(i));
         }
         return result;
     }
