@@ -208,7 +208,7 @@ public class FlyAI extends AIController{
                 }
                 break;
             default:
-                int gy=level.levelToTileCoordinatesY(goal[0]);
+                int gy=level.levelToTileCoordinatesY(goal[1]);
                 int gx=level.levelToTileCoordinatesX(goal[0]);
                 int cy=level.levelToTileCoordinatesY(ey);
                 int cx=level.levelToTileCoordinatesX(ex);
