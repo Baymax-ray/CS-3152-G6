@@ -351,6 +351,8 @@ public class ActionController {
             }
         }
         if (player.getForm() == 0){
+            player.setSxMult(1.0f);
+            player.setSyMult(1.0f);
             if (player.isDashing()){
                 TextureRegion current = (TextureRegion) (animations.get("momoDash")).getKeyFrame(currentFrame); // Gets the current frame of the animation
                 tickFrameSwitch = 10;
@@ -383,11 +385,15 @@ public class ActionController {
                 tickFrameSwitch = 4;
                 maxFrame = 7;
                 player.setTexture(current);
-                player.setOyOffset(-18);
+                player.setOyOffset(-25);
+                player.setSxMult(1.5f);
+                player.setSyMult(1.5f);
             }
             else{
                 player.setTexture(player.getChiyoTexture());
                 player.setOyOffset(-100);
+                player.setSxMult(1.0f);
+                player.setSyMult(1.0f);
             }
         }
         //#endregion
