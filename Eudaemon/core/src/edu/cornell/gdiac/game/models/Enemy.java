@@ -292,7 +292,7 @@ public class Enemy extends CapsuleObstacle implements ContactListener {
             setVY(Math.signum(getVY())*this.maxSpeed);
         }
         else {
-        if(this.type.equals("Fly")){this.movementV *= this.force; this.movementH *= this.force;}
+        //if(this.type.equals("Fly")){this.movementV *= this.force; this.movementH *= this.force;}
         forceCache.set(getMovementH(),getMovementV());
         body.applyForce(forceCache,getPosition(),true);
         }

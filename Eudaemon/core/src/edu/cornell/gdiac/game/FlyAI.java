@@ -211,8 +211,10 @@ public class FlyAI extends AIController{
 
                     // the reason why we call this a second time is we must change the Y coordinate back
                     // to normal cardinality
+
                     goal[0]=level.tileToLevelCoordinatesX(nx);
                     goal[1]=level.tileToLevelCoordinatesY(ny);
+
 
                 }
                 System.out.println("goal is "+goal[0]+":"+goal[1]);
