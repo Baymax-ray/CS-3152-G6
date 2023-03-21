@@ -341,7 +341,14 @@ public class ActionController {
         }
         if (player.getForm() == 0){
 
-            if (player.getBodyVelocityX() != 0){
+            if (player.isDashing()){
+                TextureRegion current = (TextureRegion) (animations.get("momoDash")).getKeyFrame(currentFrame); // Gets the current frame of the animation
+                tickFrameSwitch = 10;
+                maxFrame = 4;
+                player.setTexture(current);
+                player.setOyOffset(-30);
+            }
+            else if (player.getBodyVelocityX() != 0){
                 TextureRegion current = (TextureRegion) (animations.get("momoRun")).getKeyFrame(currentFrame); // Gets the current frame of the animation
                 tickFrameSwitch = 5;
                 maxFrame = 5;
