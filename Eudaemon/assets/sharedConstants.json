@@ -73,8 +73,6 @@
   "Fly": {
     "ImageWidth": 0.5,
     "ImageHeight": 0.5,
-    "hitboxWidthMult": 0.75,
-    "hitboxHeightMult": 0.9,
     "hitboxWidth": 0.5,
     "hitboxHeight": 0.5,
     "maxSpeed": 2.5,
