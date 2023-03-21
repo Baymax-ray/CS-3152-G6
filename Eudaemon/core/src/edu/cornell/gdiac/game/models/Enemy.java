@@ -7,7 +7,6 @@ import com.badlogic.gdx.physics.box2d.*;
 
 import com.badlogic.gdx.utils.JsonValue;
 import edu.cornell.gdiac.assets.AssetDirectory;
-import edu.cornell.gdiac.game.obstacle.CapsuleObstacle;
 import edu.cornell.gdiac.game.*;
 import edu.cornell.gdiac.game.obstacle.*;
 
@@ -18,7 +17,8 @@ public class Enemy extends BoxObstacle implements ContactListener {
     private Vector2 pos;
     private Vector2 vel;
 
-    private float movement;
+    private float movementH;
+    private float movementV=0;
     private final float startX;
     private final float startY;
 
@@ -70,6 +70,13 @@ public class Enemy extends BoxObstacle implements ContactListener {
     private final TextureRegion enemyTexture;
     private final float enemyImageWidth;
     private final float enemyImageHeight;
+    /** Identifier to allow us to track the sensor in ContactListener */
+    private final String sensorName;
+
+    /**the type of this enemy. currently: goombaAI or fly.*/
+    private final String type;
+    private final JsonValue enemyData;
+
     //#endregion
 
     //#region NONFINAL FIELDS
@@ -105,25 +112,40 @@ public class Enemy extends BoxObstacle implements ContactListener {
 
     /** The physics shape of this object */
     private PolygonShape sensorShape;
-
-    /** Identifier to allow us to track the sensor in ContactListener */
-    private final String sensorName;
-
-    /**the type of this enemy. currently: goombaAI or fly.*/
-    private final String type;
-
-    private final JsonValue enemyData;
-
-
-
-    //TODO: Add texture fields
-
     //#endregion
-    
+
+    //#region Getter and Setter
     public String getType() {
         return type;
     }
     private String getSensorName() {return this.sensorName;}
+
+    public void setMovement(EnemyAction move) {
+        if (move==EnemyAction.MOVE_RIGHT ||move==EnemyAction.FLY_RIGHT){
+            movementH =1;}
+        else if (move==EnemyAction.MOVE_LEFT ||move==EnemyAction.MOVE_LEFT){
+            movementH =-1;}
+        else if (move == EnemyAction.STAY){
+            movementH = 0;}
+        else if(move==EnemyAction.FLY_UP){
+            movementV=1;
+        }
+        else if (move==EnemyAction.FLY_DOWN){
+            movementV=-1;
+        }
+        movementV*= this.force;
+        movementH *= this.force;
+        // Change facing if appropriate
+        if (movementH < 0) {
+            isFacingRight = false;
+        } else if (movementH > 0) {
+            isFacingRight = true;
+        }
+    }
+    public float getMovementH(){return movementH;}
+    public float getMovementV(){return movementV;}
+    //#endregion
+
 
     public Enemy(JsonValue json, AssetDirectory assets) {
         super(json.getFloat("startX"), json.getFloat("startY"), json.getFloat("hitboxWidth"), json.getFloat("hitboxHeight"));
@@ -186,20 +208,6 @@ public class Enemy extends BoxObstacle implements ContactListener {
 
         if(this.type.equals("Fly")){this.setGravityScale(0);}
     }
-
-    public void setMovement(EnemyAction move) {
-        if (move==EnemyAction.MOVE_RIGHT){movement=1;}
-        else if (move==EnemyAction.MOVE_LEFT){movement=-1;}
-        else if (move == EnemyAction.STAY){movement = 0;}
-        movement *= this.force;
-        // Change facing if appropriate
-        if (movement < 0) {
-            isFacingRight = false;
-        } else if (movement > 0) {
-            isFacingRight = true;
-        }
-    }
-    public float getMovement(){return movement;}
 
     /**
      * Draws the physics object.
@@ -272,7 +280,7 @@ public class Enemy extends BoxObstacle implements ContactListener {
         }
 
         // Don't want to be moving. Damp out player motion
-        if (getMovement() == 0f) {
+        if (getMovementH() == 0f) {
             forceCache.set(-this.damping*getVX(),0);
             body.applyForce(forceCache,getPosition(),true);
         }
@@ -280,8 +288,11 @@ public class Enemy extends BoxObstacle implements ContactListener {
         // Velocity too high, clamp it
         if (Math.abs(getVX()) >= this.maxSpeed) {
             setVX(Math.signum(getVX())*this.maxSpeed);
-        } else {
-            forceCache.set(getMovement(),0);
+        }else if (Math.abs(getVY()) >= this.maxSpeed) {
+            setVY(Math.signum(getVX())*this.maxSpeed);
+        }
+        else {
+            forceCache.set(getMovementH(),getMovementV());
             body.applyForce(forceCache,getPosition(),true);
         }
     }

@@ -117,16 +117,23 @@ public class FlyAI extends AIController{
                     if (WanderWait>maxWait){
                         WanderWait=0;
                         state= FSMState.WANDER;
+                        System.out.println("return to wander");
                     }
                 }
                 break;
             case CHASE_close:
-                if(sameCell()){
+                if(!sameCell()){
                     state=FSMState.CHASE;
                 }
             case ATTACK:
                 //TODO
                 break;
+        }
+        if (state==FSMState.WANDER){
+            System.out.println("wander");
+        } else if (state==FSMState.CHASE) {
+            System.out.println("chase");
+
         }
 
     }
@@ -147,11 +154,18 @@ public class FlyAI extends AIController{
             case WANDER:
                 int nx=tx;
                 int ny=ty;
-                randomInt = rand.nextInt();
-                if(randomInt%4==0&& level.isAirAt(tx,ty-1)){ny=ty-1;}
-                else if (randomInt%4==1&&level.isAirAt(tx,ty+1)){ny=ty+1;}
-                else if (randomInt%4==2&&level.isAirAt(tx-1,ty)){nx=tx-1;}
-                else if (randomInt%4==3&&level.isAirAt(tx+1,ty)){nx=tx+1;}
+                if (ticks%10==0) {
+                    randomInt = rand.nextInt();
+                    if (randomInt % 4 == 0 && level.isAirAt(tx, ty - 1)) {
+                        ny = ty - 1;
+                    } else if (randomInt % 4 == 1 && level.isAirAt(tx, ty + 1)) {
+                        ny = ty + 1;
+                    } else if (randomInt % 4 == 2 && level.isAirAt(tx - 1, ty)) {
+                        nx = tx - 1;
+                    } else if (randomInt % 4 == 3 && level.isAirAt(tx + 1, ty)) {
+                        nx = tx + 1;
+                    }
+                }
                 goal[0]=level.tileToLevelCoordinatesX(nx);
                 goal[1]=level.tileToLevelCoordinatesY(ny);
                 break;
@@ -240,21 +254,21 @@ public class FlyAI extends AIController{
                             }
                         }
                         if (level.isAirAt(level.tileToLevelCoordinatesX(x+1),level.tileToLevelCoordinatesY(y))){
-                            Coord R=new Coord(x-1,y,co.getDirection());
+                            Coord R=new Coord(x+1,y,co.getDirection());
                             if(!visited.contains(new int[] {x + 1, y})) {
                                 boundary.addLast(R);
                                 visited.add(new int[]{x + 1, y});
                             }
                         }
                         if (level.isAirAt(level.tileToLevelCoordinatesX(x),level.tileToLevelCoordinatesY(y+1))){
-                            Coord D=new Coord(x,y-1,co.getDirection());
+                            Coord D=new Coord(x,y+1,co.getDirection());
                             if(!visited.contains(new int[] {x, y+1})) {
                                 boundary.addLast(D);
                                 visited.add(new int[]{x, y+1});
                             }
                         }
                         if (level.isAirAt(level.tileToLevelCoordinatesX(x),level.tileToLevelCoordinatesY(y-1))){
-                            Coord U=new Coord(x,y+1,co.getDirection());
+                            Coord U=new Coord(x,y-1,co.getDirection());
                             if(!visited.contains(new int[] {x, y-1})) {
                                 boundary.addLast(U);
                                 visited.add(new int[]{x, y-1});
