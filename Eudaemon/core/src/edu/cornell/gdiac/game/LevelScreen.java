@@ -1,15 +1,7 @@
 package edu.cornell.gdiac.game;
 
 import com.badlogic.gdx.Screen;
-import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Array;
-import com.badlogic.gdx.utils.JsonValue;
-import edu.cornell.gdiac.ExitCode;
-import edu.cornell.gdiac.assets.AssetDirectory;
 import edu.cornell.gdiac.game.models.*;
 import edu.cornell.gdiac.util.ScreenListener;
 
@@ -76,6 +68,10 @@ public class LevelScreen implements Screen {
 
     /** this function checks the player input and/or level state to determine whether to exit the screen */
     private void checkScreenTransitions() {
+        if (this.level.getPlayer().getHearts() == 0) {
+            listener.exitScreen(this, ExitCode.LOSE);
+        }
+
         if (playerAction.contains(Action.RESET)) {
             listener.exitScreen(this, ExitCode.RESET);
         }
