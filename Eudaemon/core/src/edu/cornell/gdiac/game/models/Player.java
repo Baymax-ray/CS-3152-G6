@@ -728,7 +728,7 @@ public class Player extends BoxObstacle {
             forceCache.set(hit_force * dash * 1, hit_force * dash * 1);
         }
         else if (angleFacing == 90){
-            forceCache.set(0, hit_force * dash * 1);
+            forceCache.set(0, 2 * hit_force * dash * 1);
         }
         else if (angleFacing == 135){
             forceCache.set(hit_force * dash * -1, hit_force * dash * 1);
