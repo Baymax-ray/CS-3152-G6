@@ -10,7 +10,7 @@ import edu.cornell.gdiac.assets.AssetDirectory;
 import edu.cornell.gdiac.game.*;
 import edu.cornell.gdiac.game.obstacle.*;
 
-public class Enemy extends BoxObstacle implements ContactListener {
+public class Enemy extends CapsuleObstacle implements ContactListener {
 
     //#region FINAL FIELDS
 

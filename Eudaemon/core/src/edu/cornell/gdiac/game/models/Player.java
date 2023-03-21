@@ -11,7 +11,7 @@ import edu.cornell.gdiac.game.GameCanvas;
 import edu.cornell.gdiac.game.obstacle.BoxObstacle;
 import edu.cornell.gdiac.game.obstacle.CapsuleObstacle;
 
-public class Player extends BoxObstacle {
+public class Player extends CapsuleObstacle {
 
     //#region FINAL FIELDS
 
