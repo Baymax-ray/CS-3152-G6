@@ -112,16 +112,21 @@ public class Enemy extends CapsuleObstacle implements ContactListener {
 
     public void setMovement(EnemyAction move) {
         if (move==EnemyAction.MOVE_RIGHT ||move==EnemyAction.FLY_RIGHT){
-            movementH =1;}
-        else if (move==EnemyAction.MOVE_LEFT ||move==EnemyAction.MOVE_LEFT){
-            movementH =-1;}
+            movementH =1;
+            movementV =0;}
+        else if (move==EnemyAction.MOVE_LEFT ||move==EnemyAction.FLY_LEFT){
+            movementH =-1;
+            movementV =0;}
         else if (move == EnemyAction.STAY){
-            movementH = 0;}
+            movementH = 0;
+            movementV =0;}
         else if(move==EnemyAction.FLY_UP){
-            movementV=1;
+            movementV =1;
+            movementH =0;
         }
         else if (move==EnemyAction.FLY_DOWN){
             movementV=-1;
+            movementH =0;
         }
         movementV*= this.force;
         movementH *= this.force;
@@ -275,6 +280,11 @@ public class Enemy extends CapsuleObstacle implements ContactListener {
             forceCache.set(-this.damping*getVX(),0);
             body.applyForce(forceCache,getPosition(),true);
         }
+        if (getMovementV() == 0f) {
+            forceCache.set(0,-this.damping*getVY());
+            body.applyForce(forceCache,getPosition(),true);
+        }
+
 
         // Velocity too high, clamp it
         if (Math.abs(getVX()) >= this.maxSpeed) {
