@@ -42,6 +42,15 @@
             }
           }
         },
+        "momo:jump": {
+          "file" : "animations/momoJump.png",
+          "sprites" : {
+            "fire": {
+              "rows": 1,
+              "cols": 6
+            }
+          }
+        },
         "chiyo:spiritDrain": {
           "file" : "platform/reversespiritdrain.png",
           "sprites" : {

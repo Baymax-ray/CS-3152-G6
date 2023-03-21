@@ -67,6 +67,7 @@ public class ActionController {
         //Creating a Dictionary of Textures
         addAnimations(player.getMomoRunSpriteSheet(), 6, 1, "momoRun");
         addAnimations(player.getMomoDashSpriteSheet(), 5, 1, "momoDash");
+        addAnimations(player.getMomoJumpSpriteSheet(), 6, 1, "momoJump");
     }
 
     /**
@@ -193,7 +194,7 @@ public class ActionController {
         //#endregion
 
         //#region Form Switching
-        if (transformPressed && player.getTransformCooldownRemaining() == 0){
+        if (transformPressed && player.getTransformCooldownRemaining() == 0 && player.getSpirit() > 1.0f){
             player.setTransformCooldownRemaining(player.getTransformCooldown());
             player.setForm();
         }
@@ -349,11 +350,17 @@ public class ActionController {
             }
         }
         if (player.getForm() == 0){
-
             if (player.isDashing()){
                 TextureRegion current = (TextureRegion) (animations.get("momoDash")).getKeyFrame(currentFrame); // Gets the current frame of the animation
                 tickFrameSwitch = 10;
                 maxFrame = 4;
+                player.setTexture(current);
+                player.setOyOffset(-30);
+            }
+            else if (player.getIsJumping()){
+                TextureRegion current = (TextureRegion) (animations.get("momoJump")).getKeyFrame(currentFrame); // Gets the current frame of the animation
+                tickFrameSwitch = 10;
+                maxFrame = 5;
                 player.setTexture(current);
                 player.setOyOffset(-30);
             }
@@ -371,6 +378,7 @@ public class ActionController {
         }
         else{
             player.setTexture(player.getChiyoTexture());
+            player.setOyOffset(-100);
         }
         //#endregion
         if (deltaX == 0 && !player.isGrounded() && (leftPressed || rightPressed)
