@@ -18,6 +18,10 @@ public class ActionController {
     private Enemy[] enemies;
     private Player player;
 
+    private float previousX;
+    private float currentX;
+    private boolean movedDuringLastFrame;
+
     /**
      * A HashMap storing 2D TextureRegion arrays with a String identifier.
      * Each key represents an animation name, and the associated value is a 2D TextureRegion array
@@ -56,6 +60,9 @@ public class ActionController {
         player = level.getPlayer();
         this.level = level;
         animations = new HashMap<>();
+        previousX = 0;
+        currentX = 0;
+        movedDuringLastFrame = false;
 
         //Creating a Dictionary of Textures
         addAnimations(player.getMomoRunSpriteSheet(), 6, 1, "momoRun");
@@ -81,6 +88,8 @@ public class ActionController {
      * @param playerAction the set of player actions to resolve
      */
     private void resolvePlayerActions(EnumSet<Action> playerAction){
+        currentX = player.getX();
+        float deltaX = previousX - currentX;
         //#region Button Inputs
         boolean jumpPressed = Gdx.input.isKeyJustPressed(Input.Keys.SPACE);
         boolean jumpHold = Gdx.input.isKeyPressed(Input.Keys.SPACE);
@@ -364,6 +373,12 @@ public class ActionController {
             player.setTexture(player.getChiyoTexture());
         }
         //#endregion
+        if (deltaX == 0 && !player.isGrounded() && (leftPressed || rightPressed)
+                && Math.abs(player.getBodyVelocityX())  == 0.5 && movedDuringLastFrame) {
+            player.setVelocity(0, player.getBodyVelocityY());
+        }
+        previousX = player.getX();
+        movedDuringLastFrame = leftPressed || rightPressed;
     }
     /**
      * Resolves the set of enemy actions
