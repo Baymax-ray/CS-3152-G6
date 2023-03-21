@@ -155,11 +155,11 @@ public class FlyAI extends AIController{
     private void markGoal(){
         float ex=enemy.getX();
         float ey=enemy.getY();
-        System.out.println("it is "+ex+":"+ey);
+        System.out.println("position is "+ex+":"+ey);
 
         int tx=level.levelToTileCoordinatesX(ex);
         int ty=level.levelToTileCoordinatesY(ey);
-        System.out.println("it is also"+tx+":"+ty);
+        System.out.println("position (after transform) is "+tx+":"+ty);
 
         Random rand = new Random();
         int randomInt;
@@ -184,7 +184,6 @@ public class FlyAI extends AIController{
                         nx = tx + 1;
                     }
                 }
-
                 goal[0]=nx;
                 goal[1]=ny;
                 break;
