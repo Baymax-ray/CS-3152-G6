@@ -336,6 +336,10 @@ public class Enemy extends CapsuleObstacle implements ContactListener {
             // Call a method in EnemyModel to handle the collisions
             enemy.hitBySword();
         }
+
+        if(bd1 instanceof Enemy && bd2 instanceof Enemy ){
+            System.out.println("WOW, from Enemy model!");
+        }
     }
 
     /**
