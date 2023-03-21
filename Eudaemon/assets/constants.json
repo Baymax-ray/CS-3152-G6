@@ -8,6 +8,8 @@
   ],
   "levels": [
     {
+      "level": "levelTestBox",
+      "levelHeight": 15,
       "tileSize": 1,
       "cameraWidth": 26.69,
       "cameraHeight": 15,
@@ -20,8 +22,8 @@
         "chiyo:TextureAsset": "platform:chiyo",
         "chiyo:ImageWidth": 1.3,
         "chiyo:ImageHeight": 1.3,
-        "startX": 7.0,
-        "startY": 15,
+        "startX": 3,
+        "startY": 3,
         "heart": "platform:heart",
         "emptyspirit": "platform:emptyspirit",
         "filled": "platform:filled",
@@ -69,8 +71,8 @@
         {
           "type":"Goomba",
           "TextureAsset": "platform:worm",
-          "startX": 12,
-          "startY": 8,
+          "startX": 5,
+          "startY": 4,
           "hitboxWidth": 1.0,
           "hitboxHeight": 2.0
         }

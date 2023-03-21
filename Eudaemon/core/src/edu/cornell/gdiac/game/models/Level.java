@@ -130,10 +130,11 @@ public class Level {
 
     public Level(JsonValue json, Tile[] tiles, AssetDirectory assets) {
         this.tiles = tiles;
-        JsonValue levelJson = assets.getEntry("levelTest",  JsonValue.class);
+        String levelName = json.getString("level");
+        JsonValue levelJson = assets.getEntry(levelName,  JsonValue.class);
         int widthInTiles = levelJson.getInt("width");
 //        int heightInTiles = json.getInt("height");
-        int heightInTiles = 28;
+        int heightInTiles = json.getInt("levelHeight");
         JsonValue layers = levelJson.get("layers").get("data");
         this.tilemap = new int[heightInTiles][widthInTiles];
         for (int y = 0; y < heightInTiles; y++) {

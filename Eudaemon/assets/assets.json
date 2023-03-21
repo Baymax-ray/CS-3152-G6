@@ -15,8 +15,8 @@
                 }
             }
         },
-        "chiyo:dash": {
-          "file" : "platform/dashSpriteSheet.png",
+        "momo:dashEffect": {
+          "file" : "animations/dashEffectSpriteSheet.png",
           "sprites" : {
             "fire": {
               "rows": 1,
@@ -103,6 +103,7 @@
         "inputMappings": "inputMapping.json",
         "sharedConstants": "sharedConstants.json",
         "levelTest": "levels/levelTest.json",
+        "levelTestBox": "levels/levelTestBox.json",
         "tileset": "tileset.json"
     },
     "sounds" : {

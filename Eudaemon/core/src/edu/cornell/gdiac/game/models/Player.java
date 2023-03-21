@@ -97,12 +97,12 @@ public class Player extends CapsuleObstacle {
     /**
      * The sprite sheet containing the sword attack animation frames.
      */
-    private final TextureRegion swordSpriteSheet;
+    private final TextureRegion swordEffectSpriteSheet;
 
     /**
      * The sprite sheet containing the dash attack animation frames.
      */
-    private final TextureRegion dashSpriteSheet;
+    private final TextureRegion dashEffectSpriteSheet;
 
     /**
      * The sprite sheet containing the spirit drain animation frames.
@@ -210,16 +210,16 @@ public class Player extends CapsuleObstacle {
      *
      * @return the sprite sheet containing the sword animation frames
      */
-    public TextureRegion getSwordSpriteSheet() {
-        return swordSpriteSheet;
+    public TextureRegion getSwordEffectSpriteSheet() {
+        return swordEffectSpriteSheet;
     }
     /**
      * Gets the sprite sheet containing the dash animation frames.
      *
      * @return the sprite sheet containing the dash animation frames
      */
-    public TextureRegion getDashSpriteSheet() {
-        return dashSpriteSheet;
+    public TextureRegion getDashEffectSpriteSheet() {
+        return dashEffectSpriteSheet;
     }
     /**
      * Gets the sprite sheet containing the spirit drain animation frames.
@@ -698,19 +698,6 @@ public class Player extends CapsuleObstacle {
 
     public boolean activatePhysics(World world) {
         if (!super.activatePhysics(world)) return false;
-//        body = world.createBody(bodyDef);
-//        body.setUserData(this);
-//
-//        PolygonShape hitbox = new PolygonShape();
-//        hitbox.set(new float[]{
-//                momoImageWidth * (1-hitboxWidthMult), momoImageHeight * (1-hitboxHeightMult),
-//                momoImageWidth * hitboxWidthMult, momoImageHeight * (1-hitboxHeightMult),
-//                momoImageWidth * hitboxWidthMult, momoImageHeight * hitboxHeightMult,
-//                momoImageWidth * (1-hitboxWidthMult), momoImageHeight * hitboxHeightMult,
-//        });
-//
-//        fixtureDef.shape = hitbox;
-//        body.createFixture(fixtureDef);
         body.setGravityScale(playerGravity);
         Vector2 sensorCenter = new Vector2(0, -getHeight() / 2);
         FixtureDef sensorDef = new FixtureDef();
@@ -786,15 +773,19 @@ public class Player extends CapsuleObstacle {
 
     public Player(JsonValue json, AssetDirectory assets) {
         super(json.getFloat("startX"), json.getFloat("startY"), json.getFloat("hitboxWidth"), json.getFloat("hitboxHeight"));
-        String momoTextureAsset = json.getString("momo:TextureAsset");
-        this.momoTexture = new TextureRegion(assets.getEntry(momoTextureAsset, Texture.class));
+
+        //Textures
+        this.momoTexture = new TextureRegion(assets.getEntry(json.getString("momo:TextureAsset"), Texture.class));
         this.momoImageWidth = json.getFloat("momo:ImageWidth");
         this.momoImageHeight = json.getFloat("momo:ImageHeight");
         this.chiyoTexture = new TextureRegion(assets.getEntry(json.getString("chiyo:TextureAsset"), Texture.class));
         this.chiyoImageWidth = json.getFloat("chiyo:ImageWidth");
         this.chiyoImageHeight = json.getFloat("chiyo:ImageHeight");
-        this.swordSpriteSheet = new TextureRegion(assets.getEntry( "chiyo:swordAttack", Texture.class));
-        this.dashSpriteSheet = new TextureRegion(assets.getEntry( "chiyo:dash", Texture.class));
+
+        //Amimations
+        this.swordEffectSpriteSheet = new TextureRegion(assets.getEntry( "chiyo:swordAttack", Texture.class));
+        this.dashEffectSpriteSheet = new TextureRegion(assets.getEntry( "momo:dashEffect", Texture.class));
+
         this.spiritDrainSpriteSheet = new TextureRegion(assets.getEntry("chiyo:spiritDrain", Texture.class));
 
         //Position and Movement

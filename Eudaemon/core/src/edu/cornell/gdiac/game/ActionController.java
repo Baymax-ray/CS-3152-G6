@@ -197,7 +197,7 @@ public class ActionController {
                 dashY = player.getY() - 0.71f * currOffset;
             }
             Vector2 scale = new Vector2(10f,10f);
-            SwordWheelObstacle dashAnimate = new SwordWheelObstacle(dashX, dashY, player.getDashSpriteSheet().getRegionWidth()/100, player, player.getDashLifespan(), 0.01f, scale, player.getDashSpriteSheet());
+            SwordWheelObstacle dashAnimate = new SwordWheelObstacle(dashX, dashY, player.getDashEffectSpriteSheet().getRegionWidth()/100, player, player.getDashLifespan(), 0.01f, scale, player.getDashEffectSpriteSheet());
             level.addQueuedObject(dashAnimate);
             player.dash();
             player.setVelocity(player.getBodyVelocityX(), 0);
@@ -351,7 +351,7 @@ public class ActionController {
             y = player.getY() - 0.71f * currOffset;
         }
         Vector2 scale = new Vector2(32.0f,32.0f); //only gets used in sword attack
-        SwordWheelObstacle sword = new SwordWheelObstacle(x, y, player.getSwordRadius(), player, player.getAttackLifespan(), 10.0f, scale, player.getSwordSpriteSheet());
+        SwordWheelObstacle sword = new SwordWheelObstacle(x, y, player.getSwordRadius(), player, player.getAttackLifespan(), 10.0f, scale, player.getSwordEffectSpriteSheet());
         level.addQueuedObject(sword);
     }
 
