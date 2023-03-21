@@ -392,11 +392,12 @@ public class ActionController {
         }
         //#endregion
         if (deltaX == 0 && !player.isGrounded() && (leftPressed || rightPressed)
-                && Math.abs(player.getBodyVelocityX())  == 0.5 && movedDuringLastFrame) {
+                && Math.abs(player.getBodyVelocityX()) == player.getHorizontalAcceleration() && movedDuringLastFrame) {
             player.setVelocity(0, player.getBodyVelocityY());
         }
         previousX = player.getX();
-        movedDuringLastFrame = leftPressed || rightPressed;
+        movedDuringLastFrame = (leftPressed || rightPressed) && deltaX > 0;
+
     }
     /**
      * Resolves the set of enemy actions
