@@ -37,6 +37,8 @@ public class CollisionController implements ContactListener {
                 level.getPlayer().setGrounded(true);
                 sensorFixtures.add(level.getPlayer() == body1.getUserData() ? fix2 : fix1);
             }
+
+
         } catch (Exception e) {
 
         }

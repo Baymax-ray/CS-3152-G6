@@ -93,8 +93,8 @@ public class ActionController {
         currentX = player.getX();
         float deltaX = previousX - currentX;
         //#region Button Inputs
-        boolean jumpPressed = Gdx.input.isKeyJustPressed(Input.Keys.SPACE);
-        boolean jumpHold = Gdx.input.isKeyPressed(Input.Keys.SPACE);
+        boolean jumpPressed = playerAction.contains(Action.JUMP);
+        boolean jumpHold = playerAction.contains(Action.HOLD_JUMP);
         boolean attackPressed = playerAction.contains(Action.ATTACK);
         boolean dashPressed = playerAction.contains(Action.DASH);
         boolean transformPressed = playerAction.contains(Action.TRANSFORM);

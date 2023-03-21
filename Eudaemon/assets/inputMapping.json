@@ -3,7 +3,7 @@
   "down": "S",
   "left": "A",
   "right": "D",
-  "jump": "SPACE",
+  "jump": "Space",
   "dash": "LEFT",
   "attack": "LEFT",
   "transform": "RIGHT",

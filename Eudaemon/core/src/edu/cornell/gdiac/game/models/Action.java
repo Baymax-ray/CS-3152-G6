@@ -4,6 +4,7 @@ public enum Action {
     MOVE_LEFT,
     MOVE_RIGHT,
     JUMP,
+    HOLD_JUMP,
     DASH,
     ATTACK,
     TRANSFORM,
