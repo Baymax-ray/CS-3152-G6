@@ -184,8 +184,9 @@ public class FlyAI extends AIController{
                         nx = tx + 1;
                     }
                 }
-                goal[0]=level.tileToLevelCoordinatesX(nx);
-                goal[1]=level.tileToLevelCoordinatesY(ny);
+
+                goal[0]=nx;
+                goal[1]=ny;
                 break;
             case CHASE:
                 // only need to fly to the same tile
