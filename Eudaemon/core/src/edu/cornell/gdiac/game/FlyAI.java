@@ -51,6 +51,21 @@ public class FlyAI extends AIController{
         // Pathfinding
         markGoal();
         MoveAlongPathToGoal();
+        if(move==EnemyAction.FLY_UP){
+            System.out.println("up");
+        }
+        else if (move==EnemyAction.FLY_DOWN){
+            System.out.println("down");
+        }
+        else if (move==EnemyAction.STAY){
+            System.out.println("stay");
+        }
+        else if (move==EnemyAction.FLY_RIGHT){
+            System.out.println("right");
+        }
+        else if (move==EnemyAction.FLY_LEFT){
+            System.out.println("left");
+        }
 
         enemyAction.add(move);
 
@@ -140,8 +155,11 @@ public class FlyAI extends AIController{
     private void markGoal(){
         float ex=enemy.getX();
         float ey=enemy.getY();
+        System.out.println("it is "+ex+":"+ey);
+
         int tx=level.levelToTileCoordinatesX(ex);
         int ty=level.levelToTileCoordinatesY(ey);
+        System.out.println("it is also"+tx+":"+ty);
 
         Random rand = new Random();
         int randomInt;
@@ -186,13 +204,16 @@ public class FlyAI extends AIController{
     private void MoveAlongPathToGoal() {
         float ex = enemy.getX();
         float ey = enemy.getY();
-
+        System.out.println("it is "+ex+":"+ey);
         switch (state) {
             case WANDER:
             case CHASE_close:
                 float dx=goal[0]-ex;
                 float dy=goal[1]-ey;
-                if (Math.abs(dx)>Math.abs(dy)){
+                if (Math.abs(dx)<=0.1 && Math.abs(dy)<=0.1){
+                    this.move=EnemyAction.STAY;
+                }
+                else if (Math.abs(dx)>Math.abs(dy)){
                     if (dx>0){
                         this.move=EnemyAction.FLY_RIGHT;
                     }else{
