@@ -707,7 +707,6 @@ public class Player extends CapsuleObstacle {
         sensorDef.isSensor = true;
         sensorShape = new PolygonShape();
         JsonValue sensorjv = data.get("sensor");
-        System.out.println("true");
         sensorShape.setAsBox(0.6f*getWidth()/2.0f,
                 0.05f, sensorCenter, 0.0f);
         sensorDef.shape = sensorShape;
@@ -765,6 +764,8 @@ public class Player extends CapsuleObstacle {
             if (hearts > 0) {
                 setVelocity(getBodyVelocityX(), 2.0f);
                 setiFramesRemaining(getIFrames());
+                if (isFacingRight) setVelocity(-10,0);
+                else setVelocity(10,0);
             }
 
             else this.markRemoved(true);
