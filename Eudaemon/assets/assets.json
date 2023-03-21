@@ -42,6 +42,15 @@
             }
           }
         },
+        "chiyo:spiritDrain": {
+          "file" : "platform/spiritdrain3.png",
+          "sprites" : {
+            "fire": {
+              "rows": 1,
+              "cols": 3
+            }
+          }
+        },
         "background:city": "backgrounds/backgroundCityPlaceholder.png",
         "platform:momo":  "platform/momo.png",
         "platform:momoUp":  "platform/momoUp.png",

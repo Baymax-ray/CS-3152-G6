@@ -14,6 +14,7 @@ import edu.cornell.gdiac.assets.AssetDirectory;
 import edu.cornell.gdiac.game.GameCanvas;
 import edu.cornell.gdiac.game.UIOverlay;
 import edu.cornell.gdiac.game.obstacle.Obstacle;
+import edu.cornell.gdiac.game.obstacle.SwordWheelObstacle;
 import edu.cornell.gdiac.util.PooledList;
 
 import java.util.ArrayList;
@@ -466,11 +467,25 @@ public class Level {
                 enemies.get(i).hitBySword();
                 enemies = removeEnemy(enemies,i);
             }
+            if (shortestDist < player.getSpiritIncreaseDist() && player.getForm()==0 &&
+                    (player.isFacingRight() && player.getX() < enemies.get(i).getX() ||
+                            !player.isFacingRight() && player.getX() > enemies.get(i).getX()) ){
+                player.increaseSpirit();
+                Vector2 scale = new Vector2(0.5f,0.5f);
+                int xDirection = player.isFacingRight()? 1: -1;
+                SwordWheelObstacle spiritAnimate = new SwordWheelObstacle(player.getX() + (player.getSpiritIncreaseDist() * xDirection), player.getY(), player.getSpiritDrainSpriteSheet().getRegionWidth()/115F, player, player.getAttackLifespan(), 5f, scale, player.getSpiritDrainSpriteSheet());
+                addQueuedObject(spiritAnimate);
+            }
 
         }
 
-        if (shortestDist < player.getSpiritIncreaseDist() && player.getForm()==0)
-            player.increaseSpirit();
+//        if (shortestDist < player.getSpiritIncreaseDist() && player.getForm()==0 ){
+//            player.increaseSpirit();
+//            Vector2 scale = new Vector2(0.5f,0.5f);
+//            int direction = player.isFacingRight()? 1: -1;
+//            SwordWheelObstacle spiritAnimate = new SwordWheelObstacle(player.getX() + (player.getSpiritIncreaseDist() * direction), player.getY(), player.getSpiritDrainSpriteSheet().getRegionWidth()/100F, player, player.getAttackLifespan(), 5f, scale, player.getSpiritDrainSpriteSheet());
+//            addQueuedObject(spiritAnimate);
+//        }
 
     }
 
