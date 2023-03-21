@@ -54,7 +54,7 @@
         "jumpTolerance": 20,
         "jumptime": 15,
         "maxJumpyVelocity": 3.5,
-        "playerGravity": 6.0,
+        "playerGravity": 7.0,
         "spiritIncreaseRate": 0.03,
         "spiritDecreaseRate": 0.01,
         "spiritIncreaseDist": 2.0,
@@ -67,7 +67,6 @@
         }
       },
       "enemy":[
-        
         {
           "type":"Goomba",
           "TextureAsset": "platform:worm",

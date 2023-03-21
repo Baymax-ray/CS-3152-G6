@@ -108,10 +108,48 @@ public class Player extends CapsuleObstacle {
      * The sprite sheet containing the spirit drain animation frames.
      */
     private final TextureRegion spiritDrainSpriteSheet;
+    /**
+     * The sprite sheet containing the momo dash animation frames.
+     */
+    private TextureRegion momoDashSpriteSheet;
+
+    /**
+     * The sprite sheet containing the momo run animation frames.
+     */
+    private TextureRegion momoRunSpriteSheet;
+
+    /**
+     * The sprite sheet containing the momo jump animation frames.
+     */
+    private TextureRegion momoJumpSpriteSheet;
+
+    /**
+     * The sprite sheet containing the chiyo run animation frames.
+     */
+    private TextureRegion chiyoRunSpriteSheet;
+
+    /**
+     * The sprite sheet containing the chiyo attack animation frames.
+     */
+    private TextureRegion chiyoAttackSpriteSheet;
+
+    /**
+     * The sprite sheet containing the chiyo jump animation frames.
+     */
+    private TextureRegion chiyoJumpSpriteSheet;
+
     //#endregion
 
     //#region NONFINAL FIELDS
+    /**
+     * The offset value along the x-axis.
+     */
+    private float oxOffset;
 
+    /**
+     * The offset value along the y-axis.
+     */
+    private float oyOffset;
     private float hearts;
     private float spirit;
 
@@ -231,10 +269,99 @@ public class Player extends CapsuleObstacle {
         return spiritDrainSpriteSheet;
     }
 
+    /**
+     * Get momoDashSpriteSheet.
+     *
+     * @return The momoDashSpriteSheet TextureRegion.
+     */
+    public TextureRegion getMomoDashSpriteSheet() {
+        return momoDashSpriteSheet;
+    }
+
+    /**
+     * Get momoRunSpriteSheet.
+     *
+     * @return The momoRunSpriteSheet TextureRegion.
+     */
+    public TextureRegion getMomoRunSpriteSheet() {
+        return momoRunSpriteSheet;
+    }
+
+    /**
+     * Get momoJumpSpriteSheet.
+     *
+     * @return The momoJumpSpriteSheet TextureRegion.
+     */
+    public TextureRegion getMomoJumpSpriteSheet() {
+        return momoJumpSpriteSheet;
+    }
+
+    /**
+     * Get chiyoRunSpriteSheet.
+     *
+     * @return The chiyoRunSpriteSheet TextureRegion.
+     */
+    public TextureRegion getChiyoRunSpriteSheet() {
+        return chiyoRunSpriteSheet;
+    }
+
+    /**
+     * Get chiyoAttackSpriteSheet.
+     *
+     * @return The chiyoAttackSpriteSheet TextureRegion.
+     */
+    public TextureRegion getChiyoAttackSpriteSheet() {
+        return chiyoAttackSpriteSheet;
+    }
+
+    /**
+     * Get chiyoJumpSpriteSheet.
+     *
+     * @return The chiyoJumpSpriteSheet TextureRegion.
+     */
+    public TextureRegion getChiyoJumpSpriteSheet() {
+        return chiyoJumpSpriteSheet;
+    }
+
 
     //#endregion
 
     //#region GETTERS AND SETTERS
+    /**
+     * Get the x-axis offset value.
+     *
+     * @return The x-axis offset value as a float.
+     */
+    public float getOxOffset() {
+        return oxOffset;
+    }
+
+    /**
+     * Set the x-axis offset value.
+     *
+     * @param oxOffset The x-axis offset value as a float.
+     */
+    public void setOxOffset(float oxOffset) {
+        this.oxOffset = oxOffset;
+    }
+
+    /**
+     * Get the y-axis offset value.
+     *
+     * @return The y-axis offset value as a float.
+     */
+    public float getOyOffset() {
+        return oyOffset;
+    }
+
+    /**
+     * Set the y-axis offset value.
+     *
+     * @param oyOffset The y-axis offset value as a float.
+     */
+    public void setOyOffset(float oyOffset) {
+        this.oyOffset = oyOffset;
+    }
     /**
      * Returns the gravity value affecting the player.
      *
@@ -688,8 +815,8 @@ public class Player extends CapsuleObstacle {
         float y = getY();
 
         //position of player in tile
-        float ox = this.texture.getRegionWidth()/2;
-        float oy = this.texture.getRegionHeight()/2 - 100;
+        float ox = this.texture.getRegionWidth()/2 + oxOffset;
+        float oy = this.texture.getRegionHeight()/2 + oyOffset;
 
         // Scaling Factor of Player - Determined by momoImageWidth/momoImageHeight in constants.json
         float sx = (isFacingRight ? 1 : -1) * momoImageWidth / this.texture.getRegionWidth();
@@ -785,10 +912,11 @@ public class Player extends CapsuleObstacle {
         this.chiyoImageWidth = json.getFloat("chiyo:ImageWidth");
         this.chiyoImageHeight = json.getFloat("chiyo:ImageHeight");
 
-        //Amimations
+        //Animations
         this.swordEffectSpriteSheet = new TextureRegion(assets.getEntry( "chiyo:swordAttack", Texture.class));
         this.dashEffectSpriteSheet = new TextureRegion(assets.getEntry( "momo:dashEffect", Texture.class));
-
+        this.momoDashSpriteSheet = new TextureRegion(assets.getEntry( "momo:dash", Texture.class));
+        this.momoRunSpriteSheet = new TextureRegion(assets.getEntry( "momo:run", Texture.class));
         this.spiritDrainSpriteSheet = new TextureRegion(assets.getEntry("chiyo:spiritDrain", Texture.class));
 
         //Position and Movement
