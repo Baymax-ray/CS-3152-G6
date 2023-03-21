@@ -296,7 +296,6 @@ public class ActionController {
 
         if (player.isGrounded() && !player.isDashing()) player.setDashedInAir(false);
 
-        System.out.println(player.dashedInAir());
         if (debugPressed) {
             level.setDebug(!level.isDebug());
         }
