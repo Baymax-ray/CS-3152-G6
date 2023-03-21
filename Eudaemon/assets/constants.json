@@ -67,16 +67,9 @@
         }
       },
       "enemy":[
+        
         {
-          "type":"Goomba",
-          "TextureAsset": "platform:worm",
-          "startX": 10,
-          "startY": 5,
-          "hitboxWidth": 0.6,
-          "hitboxHeight": 0.5
-        },
-        {
-          "type":"Goomba",
+          "type":"Fly",
           "TextureAsset": "platform:worm",
           "startX": 12,
           "startY": 4,

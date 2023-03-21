@@ -19,10 +19,12 @@ public class FlyAI extends AIController{
     private FSMState state;
     private EnemyAction move;
     private int WanderWait=0;
+    /**
+     * in the level coordinate
+     */
     private float[] goal;
     private boolean needGoal = true;
-    //TODO 3-21
-    int upRightDownLeft[][] = {{0,0}, {0,0}, {0,0}, {0,0}};
+
 
     private enum FSMState {
         /** The enemy just spawned */
@@ -163,7 +165,7 @@ public class FlyAI extends AIController{
         int tx=level.levelToTileCoordinatesX(ex);
         int ty=level.levelToTileCoordinatesY(ey);//but NO!
         int ty2 = level.levelToTileCoordinatesX(ey);
-        System.out.println("position (after transform) is "+tx+":"+ty + "and ty2 is: " + ty2);
+        System.out.println("position (in tile) is "+tx+":"+ty );
 
         Random rand = new Random();
         int randomInt;
@@ -175,19 +177,11 @@ public class FlyAI extends AIController{
 
             case WANDER:
                 int nx=tx;
-                int ny=ty2;
-                if(Math.abs(ex - goal[0]) + Math.abs(ey - goal[1])<=0.5){needGoal = true;}
-                if(!needGoal)break;
+                int ny=ty;
 
-                System.out.println("finding an air. nx ny are: "+nx + " " + ny);
-                randomInt = Math.abs(rand.nextInt());
+                randomInt = rand.nextInt();
+                if (ticks%30==1) {
 
-                upRightDownLeft= new int[][]{{0, 0}, {0, 0}, {0, 0}, {0, 0}};
-                if(level.isAirAt(tx, ty+1)){upRightDownLeft[0]= new int[]{0, 2};}
-                else if (level.isAirAt(tx + 1, ty)) {upRightDownLeft[1] = new int[]{2, 0};}
-                else if (level.isAirAt(tx, ty-1)){upRightDownLeft[2] = new int[]{0, -2};}
-                else if (level.isAirAt(tx-1, ty)){upRightDownLeft[3] = new int[]{-2, 0};}
-                int randStart = randomInt % 4;
 //                for (int i = 0; i < upRightDownLeft.length; i++){
 //
 //                    int current = (randStart + i) % upRightDownLeft.length;
@@ -210,12 +204,16 @@ public class FlyAI extends AIController{
                         nx = nx - 1;
                         System.out.println("3333");
                     } else if (randomInt % 4 == 3 && level.isAirAt(tx + 1, ty)) {
-                        nx = nx + 1;System.out.println("4444");
+                        nx = nx + 1;
+                        System.out.println("4444");
                     }
+                }
 
-                goal[0]=nx;
-                goal[1]=ny;
+                goal[0]=level.tileToLevelCoordinatesX(nx);
+                goal[1]=level.tileToLevelCoordinatesY(ny);
                 System.out.println("goal is "+goal[0]+":"+goal[1]);
+                System.out.println("goal (in tile) is "+nx+":"+ny );
+
                 needGoal = false;
                 break;
             case CHASE:

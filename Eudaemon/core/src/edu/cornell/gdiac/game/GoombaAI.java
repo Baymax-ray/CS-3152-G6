@@ -165,8 +165,12 @@ public class GoombaAI extends AIController{
     private void MoveAlongPathToGoal(){
         float ex=enemy.getX();
         float ey=enemy.getY();
+        System.out.println("moving along path, current position is "+ex+":"+ey);
+
         int tx=level.levelToTileCoordinatesX(ex);
         int ty=level.levelToTileCoordinatesY(ey);
+        System.out.println("in tiles urrent position is "+tx+":"+ty);
+
 
         if(ex<=goal[0]+0.1 && ex>=goal[0]-0.1){this.move=EnemyAction.STAY;}
         else if (ex<goal[0]){
