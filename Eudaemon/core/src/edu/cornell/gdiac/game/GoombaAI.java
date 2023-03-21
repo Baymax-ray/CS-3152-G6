@@ -95,6 +95,7 @@ public class GoombaAI extends AIController{
             case TOWANDER:
 //                System.out.println("toWander");
                 state=FSMState.WANDER;
+                break;
             case WANDER:
 //                System.out.println("Wander");
                 if (checkDetection()){
