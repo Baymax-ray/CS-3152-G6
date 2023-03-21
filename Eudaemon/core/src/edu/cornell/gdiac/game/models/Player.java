@@ -103,6 +103,11 @@ public class Player extends CapsuleObstacle {
      * The sprite sheet containing the dash attack animation frames.
      */
     private final TextureRegion dashSpriteSheet;
+
+    /**
+     * The sprite sheet containing the spirit drain animation frames.
+     */
+    private final TextureRegion spiritDrainSpriteSheet;
     //#endregion
 
     //#region NONFINAL FIELDS
@@ -216,6 +221,16 @@ public class Player extends CapsuleObstacle {
     public TextureRegion getDashSpriteSheet() {
         return dashSpriteSheet;
     }
+    /**
+     * Gets the sprite sheet containing the spirit drain animation frames.
+     *
+     * @return the sprite sheet containing the spirit drain animation frames
+     */
+    public TextureRegion getSpiritDrainSpriteSheet() {
+        return spiritDrainSpriteSheet;
+    }
+
+
     //#endregion
 
     //#region GETTERS AND SETTERS
@@ -780,6 +795,7 @@ public class Player extends CapsuleObstacle {
         this.chiyoImageHeight = json.getFloat("chiyo:ImageHeight");
         this.swordSpriteSheet = new TextureRegion(assets.getEntry( "chiyo:swordAttack", Texture.class));
         this.dashSpriteSheet = new TextureRegion(assets.getEntry( "chiyo:dash", Texture.class));
+        this.spiritDrainSpriteSheet = new TextureRegion(assets.getEntry("chiyo:spiritDrain", Texture.class));
 
         //Position and Movement
         this.startX = json.getFloat("startX");

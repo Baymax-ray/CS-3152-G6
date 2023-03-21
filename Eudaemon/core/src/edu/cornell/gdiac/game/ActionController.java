@@ -276,7 +276,7 @@ public class ActionController {
 
         if (player.isDashing()) {
             player.setDashCooldownRemaining(Math.max(player.getDashCooldownRemaining()-1,0));
-            if (player.getDashLifespanRemaining()==0) player.setDashing(false);
+            if (player.getDashCooldownRemaining()==0) player.setDashing(false);
         }
 
         if (debugPressed) {
