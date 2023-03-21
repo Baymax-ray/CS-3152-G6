@@ -141,6 +141,11 @@ public class Player extends CapsuleObstacle {
     //#endregion
 
     //#region NONFINAL FIELDS
+    /** The amount player's drawing scale is multiplied by on the x-axis. */
+    private float sxMult = 1;
+
+    /** The amount player's drawing scale is multiplied by on the y-axis. */
+    private float syMult = 1;
     /**
      * The offset value along the x-axis.
      */
@@ -327,6 +332,41 @@ public class Player extends CapsuleObstacle {
     //#endregion
 
     //#region GETTERS AND SETTERS
+    /**
+     * Gets the value of the sxMult variable.
+     *
+     * @return The value of the sxMult variable.
+     */
+    public float getSxMult() {
+        return sxMult;
+    }
+
+    /**
+     * Sets the value of the sxMult variable.
+     *
+     * @param sxMult The value to set for the sxMult variable.
+     */
+    public void setSxMult(float sxMult) {
+        this.sxMult = sxMult;
+    }
+
+    /**
+     * Gets the value of the syMult variable.
+     *
+     * @return The value of the syMult variable.
+     */
+    public float getSyMult() {
+        return syMult;
+    }
+
+    /**
+     * Sets the value of the syMult variable.
+     *
+     * @param syMult The value to set for the syMult variable.
+     */
+    public void setSyMult(float syMult) {
+        this.syMult = syMult;
+    }
     /**
      * Get the x-axis offset value.
      *
@@ -819,8 +859,8 @@ public class Player extends CapsuleObstacle {
         float oy = this.texture.getRegionHeight()/2 + oyOffset;
 
         // Scaling Factor of Player - Determined by momoImageWidth/momoImageHeight in constants.json
-        float sx = (isFacingRight ? 1 : -1) * momoImageWidth / this.texture.getRegionWidth();
-        float sy = momoImageHeight / this.texture.getRegionHeight();
+        float sx = sxMult * (isFacingRight ? 1 : -1) * momoImageWidth / this.texture.getRegionWidth();
+        float sy = syMult * momoImageHeight / this.texture.getRegionHeight();
 
         canvas.draw(this.texture, Color.WHITE, ox, oy, x, y, 0, sx, sy);
     }

@@ -273,7 +273,6 @@ public class Enemy extends CapsuleObstacle implements ContactListener {
         if (!isActive()) {
             return;
         }
-
         // Don't want to be moving. Damp out player motion
         if (getMovementH() == 0f) {
             forceCache.set(-this.damping*getVX(),0);
@@ -292,6 +291,7 @@ public class Enemy extends CapsuleObstacle implements ContactListener {
             setVY(Math.signum(getVY())*this.maxSpeed);
         }
         else {
+            
             if(this.type.equals("Fly")){this.movementV *= this.force; this.movementH *= this.force;}
             forceCache.set(getMovementH(),getMovementV());
             body.applyForce(forceCache,getPosition(),true);
