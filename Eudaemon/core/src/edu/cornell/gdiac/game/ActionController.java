@@ -2,12 +2,15 @@ package edu.cornell.gdiac.game;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
+import com.badlogic.gdx.graphics.g2d.Animation;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
 import edu.cornell.gdiac.game.models.*;
 import edu.cornell.gdiac.game.obstacle.SwordWheelObstacle;
 
 import java.util.EnumSet;
+import java.util.HashMap;
 
 public class ActionController {
 
@@ -15,10 +18,48 @@ public class ActionController {
     private Enemy[] enemies;
     private Player player;
 
+    /**
+     * A HashMap storing 2D TextureRegion arrays with a String identifier.
+     * Each key represents an animation name, and the associated value is a 2D TextureRegion array
+     * with rows representing different animation states and columns representing individual frames.
+     */
+    private HashMap<String, Animation> animations;
+
+    /**
+     * The current animation TextureRegion.
+     */
+    private Animation currentAnimation;
+
+    /**
+     * The number of ticks that have occurred since this object was created
+     */
+    private int ticks;
+
+    /**
+     * The current frame of the animation.
+     */
+    private int currentFrame;
+
+    /**
+     * The number of ticks before the animation frame changes.
+     */
+    private int tickFrameSwitch = 4;
+
+    /**
+     * The max number of frames before currentFrame resets
+     */
+    private int maxFrame = 6;
+
+
     public ActionController(Level level) {
         enemies = level.getEnemies();
         player = level.getPlayer();
         this.level = level;
+        animations = new HashMap<>();
+
+        //Creating a Dictionary of Textures
+        addAnimations(player.getMomoRunSpriteSheet(), 6, 1, "momoRun");
+        addAnimations(player.getMomoDashSpriteSheet(), 5, 1, "momoDash");
     }
 
     /**
@@ -30,7 +71,7 @@ public class ActionController {
     public void resolveActions(EnumSet<Action> playerAction, Array<EnumSet<EnemyAction>> enemyActions) {
         resolvePlayerActions(playerAction);
         resolveEnemyActions(enemyActions);
-
+        ticks++;
     }
 
     //#region Player Actions
@@ -214,16 +255,7 @@ public class ActionController {
         }
         //#endregion
 
-        //#region Textures and Animation
-        if (player.getForm() == 0){
-            player.setTexture(player.getMomoTexture());
-        }
-        else{
-            player.setTexture(player.getChiyoTexture());
-        }
-        //#endregion
-
-        //#region jump
+        //#region Jump
         //jump!
         //include all three situations
         //normal jump, coyote, and jump pressed in air
@@ -299,6 +331,27 @@ public class ActionController {
         if (debugPressed) {
             level.setDebug(!level.isDebug());
         }
+
+        //#region Textures and Animation
+        if (ticks % tickFrameSwitch == 0){
+            currentFrame++;
+            if (currentFrame > maxFrame){
+                currentFrame = 0;
+            }
+        }
+        if (player.getForm() == 0){
+            player.setTexture(player.getMomoTexture());
+            if (player.getHorizontalAcceleration() > 0){
+                TextureRegion current = (TextureRegion) (animations.get("momoRun")).getKeyFrame(currentFrame); // Gets the current frame of the animation
+                tickFrameSwitch = 8;
+                maxFrame = 5;
+                player.setTexture(current);
+            }
+        }
+        else{
+            player.setTexture(player.getChiyoTexture());
+        }
+        //#endregion
     }
     /**
      * Resolves the set of enemy actions
@@ -372,8 +425,14 @@ public class ActionController {
         level.addQueuedObject(sword);
     }
 
-
     //#endregion
+
+    private void addAnimations (TextureRegion spriteSheet, int columns, int rows, String name){
+        TextureRegion[][] frames = spriteSheet.split(spriteSheet.getRegionWidth()/columns, spriteSheet.getRegionHeight()/rows);
+        Animation animation = new Animation<TextureRegion>(0.5f, frames[0]); // Creates an animation with a frame duration of 0.1 seconds
+        animation.setPlayMode(Animation.PlayMode.NORMAL); // Sets the animation to play normally
+        animations.put(name, animation);
+    }
 }
 
 
