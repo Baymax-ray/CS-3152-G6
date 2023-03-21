@@ -159,12 +159,12 @@ public class ActionController {
         //#endregion
 
         //#region Dash
-        if(player.getForm() == 0 && dashPressed && player.isGrounded() && player.getDashCooldownRemaining() == 0 && !player.isDashing()
-                || player.getForm() == 0 && dashPressed && player.getJumpVelocity() > 0 && player.getDashCooldownRemaining() == 0 && !player.isDashing()){
+        if(player.getForm() == 0 && dashPressed && player.isGrounded() && player.getDashCooldownRemaining() == 0 && !player.isDashing() && !player.dashedInAir()
+                || player.getForm() == 0 && dashPressed && player.getJumpVelocity() > 0 && player.getDashCooldownRemaining() == 0 && !player.isDashing() && !player.dashedInAir()){
             player.setDashCooldownRemaining(player.getDashCooldown());
             player.setDashing(true);
+            player.setDashedInAir(true);
             player.setDashLifespanRemaining((player.getDashLifespan()));
-            System.out.println(player.getDashLifespanRemaining());
             float currOffset = player.getAttackOffset();
             int angleFacing = player.getAngleFacing();
             float dashX = player.getX() + currOffset;
@@ -210,6 +210,7 @@ public class ActionController {
             level.addQueuedObject(dashAnimate);
             //player.dash();
             //player.setVelocity(player.getBodyVelocityX(), 0);
+
         }
         //#endregion
 
@@ -284,7 +285,6 @@ public class ActionController {
             }
 
         }
-        System.out.println(player.isDashing());
 
 
         //System.out.println(player.getDashLifespanRemaining());
@@ -294,8 +294,9 @@ public class ActionController {
             if (player.getDashCooldownRemaining()==0) player.setDashing(false);
         }
 
-        //if (player.getDashLifespanRemaining()==0 && player.isDashing()) player.setVelocity(0,0);
-        //System.out.println(player.getDashLifespanRemaining());
+        if (player.isGrounded() && !player.isDashing()) player.setDashedInAir(false);
+
+        System.out.println(player.dashedInAir());
         if (debugPressed) {
             level.setDebug(!level.isDebug());
         }

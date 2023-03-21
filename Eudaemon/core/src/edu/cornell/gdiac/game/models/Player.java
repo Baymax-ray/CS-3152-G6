@@ -131,6 +131,7 @@ public class Player extends CapsuleObstacle {
     private boolean isHit;
     private boolean isGrounded;
     private boolean isFacingRight;
+    private boolean dashedInAir;
     /**
      * The angle at which the entity is facing, in degrees.
      */
@@ -672,9 +673,10 @@ public class Player extends CapsuleObstacle {
     public void setAttacking(boolean value) { isAttacking = value; }
     public boolean isDashing() { return isDashing;}
     public void setDashing(boolean value) { isDashing = value; }
-
-
     public float getAttackDist() { return attackDist; }
+    public boolean dashedInAir() { return dashedInAir; }
+    public void setDashedInAir(boolean value) { dashedInAir = value; }
+
 
 
 
@@ -843,6 +845,7 @@ public class Player extends CapsuleObstacle {
         this.isLookingDown = false;
         this.jumpPressedInAir = false;
         this.isAttacking = false;
+        this.dashedInAir = false;
         this.dashCooldownRemaining = 0;
         this.attackCooldownRemaining = 0;
         this.hitCooldownRemaining = 0;
