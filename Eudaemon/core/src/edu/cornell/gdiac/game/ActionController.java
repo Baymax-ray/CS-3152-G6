@@ -340,12 +340,17 @@ public class ActionController {
             }
         }
         if (player.getForm() == 0){
-            player.setTexture(player.getMomoTexture());
-            if (player.getHorizontalAcceleration() > 0){
+
+            if (player.getBodyVelocityX() != 0){
                 TextureRegion current = (TextureRegion) (animations.get("momoRun")).getKeyFrame(currentFrame); // Gets the current frame of the animation
-                tickFrameSwitch = 8;
+                tickFrameSwitch = 5;
                 maxFrame = 5;
                 player.setTexture(current);
+                player.setOyOffset(-30);
+            }
+            else{
+                player.setTexture(player.getMomoTexture());
+                player.setOyOffset(-130);
             }
         }
         else{

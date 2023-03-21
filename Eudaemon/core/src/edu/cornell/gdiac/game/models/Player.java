@@ -141,7 +141,15 @@ public class Player extends CapsuleObstacle {
     //#endregion
 
     //#region NONFINAL FIELDS
+    /**
+     * The offset value along the x-axis.
+     */
+    private float oxOffset;
 
+    /**
+     * The offset value along the y-axis.
+     */
+    private float oyOffset;
     private float hearts;
     private float spirit;
 
@@ -319,6 +327,41 @@ public class Player extends CapsuleObstacle {
     //#endregion
 
     //#region GETTERS AND SETTERS
+    /**
+     * Get the x-axis offset value.
+     *
+     * @return The x-axis offset value as a float.
+     */
+    public float getOxOffset() {
+        return oxOffset;
+    }
+
+    /**
+     * Set the x-axis offset value.
+     *
+     * @param oxOffset The x-axis offset value as a float.
+     */
+    public void setOxOffset(float oxOffset) {
+        this.oxOffset = oxOffset;
+    }
+
+    /**
+     * Get the y-axis offset value.
+     *
+     * @return The y-axis offset value as a float.
+     */
+    public float getOyOffset() {
+        return oyOffset;
+    }
+
+    /**
+     * Set the y-axis offset value.
+     *
+     * @param oyOffset The y-axis offset value as a float.
+     */
+    public void setOyOffset(float oyOffset) {
+        this.oyOffset = oyOffset;
+    }
     /**
      * Returns the gravity value affecting the player.
      *
@@ -772,8 +815,8 @@ public class Player extends CapsuleObstacle {
         float y = getY();
 
         //position of player in tile
-        float ox = this.texture.getRegionWidth()/2;
-        float oy = this.texture.getRegionHeight()/2 - 30;
+        float ox = this.texture.getRegionWidth()/2 + oxOffset;
+        float oy = this.texture.getRegionHeight()/2 + oyOffset;
 
         // Scaling Factor of Player - Determined by momoImageWidth/momoImageHeight in constants.json
         float sx = (isFacingRight ? 1 : -1) * momoImageWidth / this.texture.getRegionWidth();
