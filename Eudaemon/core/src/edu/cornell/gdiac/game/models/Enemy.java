@@ -40,16 +40,6 @@ public class Enemy extends CapsuleObstacle implements ContactListener {
     private final float attackOffset;
     private final int hitCooldown;
     /**
-     * The multiplier used to calculate the width of the hitbox.
-     */
-    private final float hitboxWidthMult;
-
-    /**
-     * The multiplier used to calculate the height of the hitbox.
-     */
-    private final float hitboxHeightMult;
-
-    /**
      * The scaling factor for the sprite.
      */
     private final Vector2 scale;
@@ -163,8 +153,8 @@ public class Enemy extends CapsuleObstacle implements ContactListener {
             this.enemyData=null;
             throw new IllegalArgumentException("Enemy can only be Fly or Goomba");
         }
-        this.setWidth(enemyData.getFloat("hitboxWidth"));
-        this.setHeight(enemyData.getFloat("hitboxHeight"));
+        this.setWidth(json.getFloat("hitboxWidth"));
+        this.setHeight(json.getFloat("hitboxHeight"));
 
         //Texture
         this.enemyTexture = new TextureRegion(assets.getEntry(TextureAsset, Texture.class));
@@ -181,8 +171,6 @@ public class Enemy extends CapsuleObstacle implements ContactListener {
 
         this.maxSpeed = enemyData.getFloat("maxSpeed");
         this.force = enemyData.getFloat("force");
-        this.hitboxWidthMult = enemyData.getFloat("hitboxWidthMult");
-        this.hitboxHeightMult = enemyData.getFloat("hitboxHeightMult");
         this.damping = enemyData.getFloat("damping");
 
         //Attacking
