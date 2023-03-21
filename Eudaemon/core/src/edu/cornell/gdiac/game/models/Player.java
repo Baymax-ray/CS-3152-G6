@@ -73,7 +73,7 @@ public class Player extends CapsuleObstacle {
      */
     private final float attackLifespan;
 
-    private final float dashLifespan;
+    private final int dashLifespan;
 
     /** Cache for internal force calculations */
     private final Vector2 forceCache = new Vector2();
@@ -271,10 +271,10 @@ public class Player extends CapsuleObstacle {
     public float getAttackLifespanRemaining() { return attackLifespanRemaining; }
     public void setAttackLifespanRemaining(int value) {attackLifespanRemaining = value;}
 
-    public float getDashLifespan() {
+    public int getDashLifespan() {
         return dashLifespan;
     }
-    public float getDashLifespanRemaining() { return dashLifespanRemaining; }
+    public int getDashLifespanRemaining() { return dashLifespanRemaining; }
     public void setDashLifespanRemaining(int value) {dashLifespanRemaining = value;}
     public float getX() {
         return body.getPosition().x;
@@ -796,7 +796,7 @@ public class Player extends CapsuleObstacle {
         horizontalAcceleration = json.getFloat("horizontalAcceleration");
         hit_force = json.getFloat( "hit_force");
         dash = json.getFloat("dash", 2000);
-        this.dashLifespan = json.getFloat("dashLifespan");
+        this.dashLifespan = json.getInt("dashLifespan");
 
         //Attacking
         this.attackPower = json.getInt("attackPower");

@@ -153,7 +153,7 @@ public class ActionController {
         if (attackPressed && player.getForm() == 1 && player.getAttackCooldownRemaining() == 0){
             player.setAttackCooldownRemaining(player.getAttackCooldown());
             player.setAttacking(true);
-            player.setAttackLifespanRemaining((int) (player.getAttackLifespan()/(1/60)));
+            player.setAttackLifespanRemaining((int)player.getAttackLifespan());
             createSword();
         }
         //#endregion
@@ -163,44 +163,53 @@ public class ActionController {
                 || player.getForm() == 0 && dashPressed && player.getJumpVelocity() > 0 && player.getDashCooldownRemaining() == 0 && !player.isDashing()){
             player.setDashCooldownRemaining(player.getDashCooldown());
             player.setDashing(true);
-            player.setDashLifespanRemaining((int) (player.getDashLifespan()/(1/60)));
+            player.setDashLifespanRemaining((player.getDashLifespan()));
+            System.out.println(player.getDashLifespanRemaining());
             float currOffset = player.getAttackOffset();
             int angleFacing = player.getAngleFacing();
             float dashX = player.getX() + currOffset;
             float dashY = player.getY();
+            if (angleFacing == 0) player.setVelocity(10,0);
             if (angleFacing == 45){
                 dashX = player.getX() + 0.71f * currOffset;
                 dashY = player.getY() + 0.71f * currOffset;
+                player.setVelocity(10,10);
             }
             else if (angleFacing == 90){
                 dashX = player.getX();
                 dashY = player.getY() + currOffset;
+                player.setVelocity(0,10);
             }
             else if (angleFacing == 135){
                 dashX = player.getX() - 0.71f * currOffset;
                 dashY = player.getY() + 0.71f * currOffset;
+                player.setVelocity(-10,10);
             }
             else if (angleFacing == 180){
                 dashX = player.getX() - currOffset;
                 dashY = player.getY();
+                player.setVelocity(-10,0);
             }
             else if (angleFacing == 225){
                 dashX = player.getX() - 0.71f * currOffset;
                 dashY = player.getY() - 0.71f * currOffset;
+                player.setVelocity(-10,-10);
             }
             else if (angleFacing == 270){
                 dashX = player.getX();
                 dashY = player.getY()- currOffset;
+                player.setVelocity(0,-10);
             }
             else if (angleFacing == 315){
                 dashX = player.getX() + 0.71f * currOffset;
                 dashY = player.getY() - 0.71f * currOffset;
+                player.setVelocity(10,-10);
             }
             Vector2 scale = new Vector2(10f,10f);
-            SwordWheelObstacle dashAnimate = new SwordWheelObstacle(dashX, dashY, player.getDashEffectSpriteSheet().getRegionWidth()/100, player, player.getDashLifespan(), 0.01f, scale, player.getDashEffectSpriteSheet());
+            SwordWheelObstacle dashAnimate = new SwordWheelObstacle(dashX, dashY, player.getDashEffectSpriteSheet().getRegionWidth()/100, player, 0.4f, 0.01f, scale, player.getDashEffectSpriteSheet());
             level.addQueuedObject(dashAnimate);
-            player.dash();
-            player.setVelocity(player.getBodyVelocityX(), 0);
+            //player.dash();
+            //player.setVelocity(player.getBodyVelocityX(), 0);
         }
         //#endregion
 
@@ -268,17 +277,25 @@ public class ActionController {
         }
 
         if(player.getDashLifespanRemaining() > 0){
-            player.setDashLifespanRemaining(Math.max(player.getDashCooldownRemaining()-1, 0));
+            player.setDashLifespanRemaining((int)Math.max(player.getDashLifespanRemaining()-1, 0));
             if(player.getDashLifespanRemaining() == 0){
                 player.setDashing(false);
+                player.setVelocity(player.getBodyVelocityX()/3, player.getBodyVelocityY()/3);
             }
+
         }
+        System.out.println(player.isDashing());
+
+
+        //System.out.println(player.getDashLifespanRemaining());
 
         if (player.isDashing()) {
             player.setDashCooldownRemaining(Math.max(player.getDashCooldownRemaining()-1,0));
             if (player.getDashCooldownRemaining()==0) player.setDashing(false);
         }
 
+        //if (player.getDashLifespanRemaining()==0 && player.isDashing()) player.setVelocity(0,0);
+        //System.out.println(player.getDashLifespanRemaining());
         if (debugPressed) {
             level.setDebug(!level.isDebug());
         }

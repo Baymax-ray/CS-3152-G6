@@ -45,7 +45,7 @@
         "attackOffset": 0.65,
         "swordRadius": 0.6,
         "attackLifespan": 0.4,
-        "dashLifespan": 0.4,
+        "dashLifespan": 25,
         "hitCooldown": 1.0,
         "hit_force": 5.5,
         "dash": 30.0,
