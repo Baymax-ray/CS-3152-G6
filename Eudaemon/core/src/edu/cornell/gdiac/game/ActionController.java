@@ -205,7 +205,8 @@ public class ActionController {
         if (attackPressed && player.getForm() == 1 && player.getAttackCooldownRemaining() == 0){
             player.setAttackCooldownRemaining(player.getAttackCooldown());
             player.setAttacking(true);
-            player.setAttackLifespanRemaining((int)player.getAttackLifespan());
+            System.out.println("attakc lifespan: "+ player.getAttackLifespan());
+            player.setAttackLifespanRemaining(player.getAttackLifespan());
             createSword();
         }
         //#endregion
@@ -312,12 +313,19 @@ public class ActionController {
 
         if (player.getiFramesRemaining() > 0) {
             player.setiFramesRemaining(Math.max(player.getiFramesRemaining()-1,0));
-            if (player.getiFramesRemaining()==0) player.setHit(false);
+            if (player.getiFramesRemaining()==0) {
+                player.setHit(false);
+
+            }
         }
 
         if (player.getAttackLifespanRemaining() > 0) {
+            System.out.println("attack lifespan decrease: "+player.getAttackLifespanRemaining());
             player.setAttackLifespanRemaining(Math.max(player.getAttackCooldownRemaining()-1,0));
-            if (player.getAttackLifespanRemaining()==0) player.setAttacking(false);
+            if (player.getAttackLifespanRemaining()==0) {
+                player.setAttacking(false);
+                System.out.println("yes, setting attacking to false");
+            }
         }
 
         if(player.getDashLifespanRemaining() > 0){

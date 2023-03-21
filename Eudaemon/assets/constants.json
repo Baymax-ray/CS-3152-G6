@@ -70,14 +70,14 @@
         {
           "type":"Goomba",
           "TextureAsset": "platform:worm",
-          "startX": 12,
+          "startX": 5,
           "startY": 4,
           "hitboxWidth": 0.6,
           "hitboxHeight": 0.5
         },
         
         {
-          "type":"Fly",
+          "type":"Goomba",
           "TextureAsset": "platform:worm",
           "startX": 12,
           "startY": 10,

@@ -218,7 +218,7 @@ public class Player extends CapsuleObstacle {
     private int iFramesRemaining;
 
     private boolean isAttacking;
-    private int attackLifespanRemaining;
+    private float attackLifespanRemaining;
     private int dashLifespanRemaining;
 
     /**
@@ -437,7 +437,7 @@ public class Player extends CapsuleObstacle {
         return attackLifespan;
     }
     public float getAttackLifespanRemaining() { return attackLifespanRemaining; }
-    public void setAttackLifespanRemaining(int value) {attackLifespanRemaining = value;}
+    public void setAttackLifespanRemaining(float value) {attackLifespanRemaining = value;}
 
     public int getDashLifespan() {
         return dashLifespan;
