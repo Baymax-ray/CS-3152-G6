@@ -68,6 +68,7 @@ public class ActionController {
         addAnimations(player.getMomoRunSpriteSheet(), 6, 1, "momoRun");
         addAnimations(player.getMomoDashSpriteSheet(), 5, 1, "momoDash");
         addAnimations(player.getMomoJumpSpriteSheet(), 6, 1, "momoJump");
+        addAnimations(player.getChiyoRunSpriteSheet(), 8, 1, "chiyoRun");
     }
 
     /**
@@ -377,8 +378,17 @@ public class ActionController {
             }
         }
         else{
-            player.setTexture(player.getChiyoTexture());
-            player.setOyOffset(-100);
+            if (player.getBodyVelocityX() != 0){
+                TextureRegion current = (TextureRegion) (animations.get("chiyoRun")).getKeyFrame(currentFrame); // Gets the current frame of the animation
+                tickFrameSwitch = 4;
+                maxFrame = 7;
+                player.setTexture(current);
+                player.setOyOffset(-18);
+            }
+            else{
+                player.setTexture(player.getChiyoTexture());
+                player.setOyOffset(-100);
+            }
         }
         //#endregion
         if (deltaX == 0 && !player.isGrounded() && (leftPressed || rightPressed)

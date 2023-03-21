@@ -919,6 +919,7 @@ public class Player extends CapsuleObstacle {
         this.momoDashSpriteSheet = new TextureRegion(assets.getEntry( "momo:dash", Texture.class));
         this.momoRunSpriteSheet = new TextureRegion(assets.getEntry( "momo:run", Texture.class));
         this.momoJumpSpriteSheet = new TextureRegion(assets.getEntry( "momo:jump", Texture.class));
+        this.chiyoRunSpriteSheet = new TextureRegion(assets.getEntry( "chiyo:run", Texture.class));
 
         //Position and Movement
         this.startX = json.getFloat("startX");

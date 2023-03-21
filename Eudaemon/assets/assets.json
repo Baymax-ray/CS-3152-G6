@@ -51,6 +51,15 @@
             }
           }
         },
+        "chiyo:run": {
+          "file" : "animations/chiyoRun.png",
+          "sprites" : {
+            "fire": {
+              "rows": 1,
+              "cols": 8
+            }
+          }
+        },
         "chiyo:spiritDrain": {
           "file" : "platform/reversespiritdrain.png",
           "sprites" : {
