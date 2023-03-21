@@ -20,6 +20,7 @@ public class FlyAI extends AIController{
     private EnemyAction move;
     private int WanderWait=0;
     private float[] goal;
+    private boolean needGoal = true;
 
     private enum FSMState {
         /** The enemy just spawned */
@@ -158,7 +159,8 @@ public class FlyAI extends AIController{
         System.out.println("position is "+ex+":"+ey);
 
         int tx=level.levelToTileCoordinatesX(ex);
-        int ty=level.levelToTileCoordinatesY(ey);
+        int ty=level.levelToTileCoordinatesY(ey);//but NO!
+        int ty2 = level.levelToTileCoordinatesX(ey);
         System.out.println("position (after transform) is "+tx+":"+ty);
 
         Random rand = new Random();
@@ -171,21 +173,47 @@ public class FlyAI extends AIController{
 
             case WANDER:
                 int nx=tx;
-                int ny=ty;
-                if (ticks%10==0) {
-                    randomInt = rand.nextInt();
-                    if (randomInt % 4 == 0 && level.isAirAt(tx, ty - 1)) {
-                        ny = ty - 1;
-                    } else if (randomInt % 4 == 1 && level.isAirAt(tx, ty + 1)) {
-                        ny = ty + 1;
-                    } else if (randomInt % 4 == 2 && level.isAirAt(tx - 1, ty)) {
-                        nx = tx - 1;
-                    } else if (randomInt % 4 == 3 && level.isAirAt(tx + 1, ty)) {
-                        nx = tx + 1;
+                int ny=ty2;
+                if(Math.abs(tx - goal[0]) + Math.abs(ty - goal[1])<=0.2){needGoal = true;}
+                if(!needGoal)break;
+
+                System.out.println("finding an air. nx ny are: "+nx + " " + ny);
+                randomInt = Math.abs(rand.nextInt());
+
+                int upRightDownLeft[][] = {{0,0}, {0,0}, {0,0}, {0,0}};
+                if(level.isAirAt(tx, ty+1)){upRightDownLeft[0]= new int[]{0, 2};}
+                else if (level.isAirAt(tx + 1, ty)) {upRightDownLeft[1] = new int[]{2, 0};}
+                else if (level.isAirAt(tx, ty-1)){upRightDownLeft[2] = new int[]{0, -2};}
+                else if (level.isAirAt(tx-1, ty)){upRightDownLeft[3] = new int[]{-2, 0};}
+                int randStart = randomInt % 4;
+                for (int i = 0; i < upRightDownLeft.length; i++){
+
+                    int current = (randStart + i) % upRightDownLeft.length;
+                    if(upRightDownLeft[current][0]!=0 || upRightDownLeft[current][1] != 0){
+                        System.out.println("i found it");
+                        nx += upRightDownLeft[current][0];
+                        ny += upRightDownLeft[current][1];
+                        System.out.println("Now reset, and nx ny are: "+nx + " " + ny);
+                        break;
                     }
+
                 }
+//                    if (randomInt % 4 == 0 && level.isAirAt(tx, ty - 1)) {
+//                        System.out.println("1111");
+//                        ny = ty - 1;
+//                    } else if (randomInt % 4 == 1 && level.isAirAt(tx, ty + 1)) {
+//                        System.out.println("2222");
+//                        ny = ty + 1;
+//                    } else if (randomInt % 4 == 2 && level.isAirAt(tx - 1, ty)) {
+//                        nx = tx - 1;
+//                        System.out.println("3333");
+//                    } else if (randomInt % 4 == 3 && level.isAirAt(tx + 1, ty)) {
+//                        nx = tx + 1;System.out.println("4444");
+//                    }
+
                 goal[0]=nx;
                 goal[1]=ny;
+                System.out.println("goal is "+goal[0]+":"+goal[1]);
                 break;
             case CHASE:
                 // only need to fly to the same tile
@@ -198,13 +226,14 @@ public class FlyAI extends AIController{
                 break;
 
         }
-        System.out.println("goal is "+goal[0]+":"+goal[1]);
+
 
     }
     private void MoveAlongPathToGoal() {
         float ex = enemy.getX();
         float ey = enemy.getY();
-        System.out.println("it is "+ex+":"+ey);
+        System.out.println("moving along path, current position is "+ex+":"+ey);
+        System.out.println("goal is "+goal[0]+":"+goal[1]);
         switch (state) {
             case WANDER:
             case CHASE_close:

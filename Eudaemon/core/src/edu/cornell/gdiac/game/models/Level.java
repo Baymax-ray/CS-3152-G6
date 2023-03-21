@@ -219,7 +219,9 @@ public class Level {
         int nrow = tilemap.length;
         int ncol = tilemap[0].length;
         int nx=levelToTileCoordinatesX(x);
-        int ny=levelToTileCoordinatesY(y);
+        //TODO: 3-21
+        int ny = levelToTileCoordinatesY(y);
+        //int ny=levelToTileCoordinatesY(y);
 
         if (nx<0 || nx>(ncol-1) ||ny<0 || ny>(nrow-1) ){
             return false;
@@ -242,6 +244,8 @@ public class Level {
     }
 
     public int levelToTileCoordinatesY(float y) {
+        //System.out.println("tilemap length is" + tilemap.length + "tilesize is "+ this.tileSize);
+//        return (int) Math.floor(y / this.tileSize);
         return tilemap.length - 1 - (int) Math.floor(y / this.tileSize);
     }
 

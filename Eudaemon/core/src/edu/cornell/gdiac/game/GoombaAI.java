@@ -49,14 +49,6 @@ public class GoombaAI extends AIController{
         MoveAlongPathToGoal();
 
         enemyAction.add(move);
-//        int movement=-2;
-//        if (move==EnemyAction.MOVE_RIGHT){movement=1;}
-//        else if (move==EnemyAction.MOVE_LEFT){movement=-1;}
-//        else if (move == EnemyAction.STAY){movement = 0;}
-
-//        if (enemyAction.size()>1){
-//            System.out.println("more than one action." + enemyAction.size());
-//        }
 
     }
     private boolean checkDetection(){
@@ -126,6 +118,7 @@ public class GoombaAI extends AIController{
         int tx=level.levelToTileCoordinatesX(ex);
         int ty=level.levelToTileCoordinatesY(ey);
 
+
         int a;
         switch (state) {
             case SPAWN:
@@ -174,24 +167,21 @@ public class GoombaAI extends AIController{
         float ey=enemy.getY();
         int tx=level.levelToTileCoordinatesX(ex);
         int ty=level.levelToTileCoordinatesY(ey);
-//        System.out.println("tx/ty"+tx+" "+ty);
 
-        //TODO: this should be && not ||
         if(ex<=goal[0]+0.1 && ex>=goal[0]-0.1){this.move=EnemyAction.STAY;}
         else if (ex<goal[0]){
             this.move=EnemyAction.MOVE_RIGHT;
-            System.out.println("right");
             if(level.isAirAt(tx+1,ty+1)){
                 System.out.println("stop!!");
-
-                this.move=EnemyAction.STAY;}
+                this.move=EnemyAction.STAY;
+            }
         }
         else if (ex>goal[0]){
             this.move=EnemyAction.MOVE_LEFT;
-            System.out.println("left");
             if(level.isAirAt(tx-1,ty+1)){
                 System.out.println("stop!!");
-                this.move=EnemyAction.STAY;}
+                this.move=EnemyAction.STAY;
+            }
         }
         }
     }
