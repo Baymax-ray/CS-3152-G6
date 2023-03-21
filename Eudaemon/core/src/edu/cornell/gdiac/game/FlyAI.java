@@ -181,6 +181,7 @@ public class FlyAI extends AIController{
 
                 randomInt = rand.nextInt();
                 if (ticks%30==1) {
+                    System.out.println("we are changing goal right now");
 
 //                for (int i = 0; i < upRightDownLeft.length; i++){
 //
@@ -206,13 +207,17 @@ public class FlyAI extends AIController{
                     } else if (randomInt % 4 == 3 && level.isAirAt(tx + 1, ty)) {
                         nx = nx + 1;
                         System.out.println("4444");
-                    }
-                }
+                    } else {break;}
 
-                goal[0]=level.tileToLevelCoordinatesX(nx);
-                goal[1]=level.tileToLevelCoordinatesY(ny);
+                    // the reason why we call this a second time is we must change the Y coordinate back
+                    // to normal cardinality
+                    goal[0]=level.tileToLevelCoordinatesX(nx);
+                    goal[1]=level.tileToLevelCoordinatesY(ny);
+
+                }
                 System.out.println("goal is "+goal[0]+":"+goal[1]);
                 System.out.println("goal (in tile) is "+nx+":"+ny );
+
 
                 needGoal = false;
                 break;

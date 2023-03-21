@@ -45,7 +45,7 @@ public class Enemy extends CapsuleObstacle implements ContactListener {
     private final Vector2 scale;
 
     /** Cache for internal force calculations */
-    private final Vector2 forceCache = new Vector2();
+    private Vector2 forceCache = new Vector2();
 
     /** The amount to slow the character down */
     private final float damping;
@@ -273,6 +273,7 @@ public class Enemy extends CapsuleObstacle implements ContactListener {
         if (!isActive()) {
             return;
         }
+        forceCache = new Vector2(0,0);
         // Don't want to be moving. Damp out player motion
         if (getMovementH() == 0f) {
             forceCache.set(-this.damping*getVX(),0);
@@ -291,10 +292,9 @@ public class Enemy extends CapsuleObstacle implements ContactListener {
             setVY(Math.signum(getVY())*this.maxSpeed);
         }
         else {
-            
-            if(this.type.equals("Fly")){this.movementV *= this.force; this.movementH *= this.force;}
-            forceCache.set(getMovementH(),getMovementV());
-            body.applyForce(forceCache,getPosition(),true);
+        if(this.type.equals("Fly")){this.movementV *= this.force; this.movementH *= this.force;}
+        forceCache.set(getMovementH(),getMovementV());
+        body.applyForce(forceCache,getPosition(),true);
         }
     }
 
