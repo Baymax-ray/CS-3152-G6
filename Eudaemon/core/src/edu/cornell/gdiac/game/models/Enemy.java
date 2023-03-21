@@ -277,7 +277,7 @@ public class Enemy extends CapsuleObstacle implements ContactListener {
             forceCache.set(-this.damping*getVX(),0);
             body.applyForce(forceCache,getPosition(),true);
         }
-        if (getMovementV() == 0f) {
+        if (getMovementV() == 0f && this.type.equals("Fly")) {
             forceCache.set(0,-this.damping*getVY());
             body.applyForce(forceCache,getPosition(),true);
         }
@@ -286,8 +286,8 @@ public class Enemy extends CapsuleObstacle implements ContactListener {
         // Velocity too high, clamp it
         if (Math.abs(getVX()) >= this.maxSpeed) {
             setVX(Math.signum(getVX())*this.maxSpeed);
-        }else if (Math.abs(getVY()) >= this.maxSpeed) {
-            setVY(Math.signum(getVX())*this.maxSpeed);
+        }else if (this.type.equals("Fly")&&Math.abs(getVY()) >= this.maxSpeed) {
+            setVY(Math.signum(getVY())*this.maxSpeed);
         }
         else {
             forceCache.set(getMovementH(),getMovementV());
