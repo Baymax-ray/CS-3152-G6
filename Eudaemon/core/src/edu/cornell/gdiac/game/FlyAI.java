@@ -12,7 +12,8 @@ import java.util.Random;
 public class FlyAI extends AIController{
     private static final int maxWait = 10;
     private static final int detectDistance=4;
-
+    private final float enemyWidth;
+    private final float enemyHeight;
     private Enemy enemy;
     private Level level;
     private int ticks=0;
@@ -45,6 +46,8 @@ public class FlyAI extends AIController{
         this.goal=new float[2];
         this.level=super.level;
         this.enemy=super.enemy;
+        this.enemyHeight= this.enemy.getHeight();
+        this.enemyWidth= this.enemy.getWidth();
 
     }
     public void setEnemyAction(EnumSet<EnemyAction> enemyAction){
@@ -178,23 +181,9 @@ public class FlyAI extends AIController{
             case WANDER:
                 int nx=tx;
                 int ny=ty;
-
                 randomInt = rand.nextInt();
                 if (ticks%30==1) {
                     System.out.println("we are changing goal right now");
-
-//                for (int i = 0; i < upRightDownLeft.length; i++){
-//
-//                    int current = (randStart + i) % upRightDownLeft.length;
-//                    if(upRightDownLeft[current][0]!=0 || upRightDownLeft[current][1] != 0){
-//                        System.out.println("i found it");
-//                        nx += upRightDownLeft[current][0];
-//                        ny += upRightDownLeft[current][1];
-//                        System.out.println("Now reset, and nx ny are: "+nx + " " + ny);
-//                        break;
-//                    }
-//
-//                }
                     if (randomInt % 4 == 0 && level.isAirAt(tx, ty - 1)) {
                         System.out.println("1111");
                         ny = ny - 1;
@@ -214,13 +203,8 @@ public class FlyAI extends AIController{
 
                     goal[0]=level.tileToLevelCoordinatesX(nx);
                     goal[1]=level.tileToLevelCoordinatesY(ny);
-
-
+                    System.out.println("goal (in tile) is "+nx+":"+ny );
                 }
-                System.out.println("goal is "+goal[0]+":"+goal[1]);
-                System.out.println("goal (in tile) is "+nx+":"+ny );
-
-
                 needGoal = false;
                 break;
             case CHASE:
@@ -232,10 +216,8 @@ public class FlyAI extends AIController{
                 goal[0]=level.getPlayer().getX();
                 goal[1]=level.getPlayer().getY();
                 break;
-
         }
-
-
+        System.out.println("goal is "+goal[0]+":"+goal[1]);
     }
     private void MoveAlongPathToGoal() {
         float ex = enemy.getX();
@@ -244,6 +226,8 @@ public class FlyAI extends AIController{
         System.out.println("moving along path, goal is "+goal[0]+":"+goal[1]);
         switch (state) {
             case WANDER:
+                ex=ex-enemyWidth/2;
+                ey=ey-enemyHeight/2;
             case CHASE_close:
                 float dx=goal[0]-ex;
                 float dy=goal[1]-ey;
@@ -268,6 +252,8 @@ public class FlyAI extends AIController{
             default:
                 int gy=level.levelToTileCoordinatesY(goal[1]);
                 int gx=level.levelToTileCoordinatesX(goal[0]);
+                ex=ex-enemyWidth/2;
+                ey=ey-enemyHeight/2;
                 int cy=level.levelToTileCoordinatesY(ey);
                 int cx=level.levelToTileCoordinatesX(ex);
                 Queue<Coord> boundary= new Queue<>();
