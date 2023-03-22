@@ -37,22 +37,19 @@ public class CollisionController implements ContactListener {
             }
         } catch (Exception e) { }
         if(bd1 instanceof Enemy && bd2 instanceof Enemy ){
-// Get the two fixtures that you want to ignore each other
+            // Get the two fixtures that you want to ignore each other
             Fixture fixture1 = fix1;
             Fixture fixture2 = fix2;
 
-// Get the filter data for each fixture
+            // Get the filter data for each fixture
             Filter filter1 = fixture1.getFilterData();
             Filter filter2 = fixture2.getFilterData();
 
-// Set the mask bits for each fixture so that they don't collide with each other
-//            filter1.maskBits = 0;
-//            filter2.maskBits = 0;
             /** Collision groups allow a certain group of objects to never collide (negative) or always collide (positive). Zero means no
              * collision group. Non-zero group filtering always wins against the mask bits. */
             filter1.groupIndex = -1;
             filter2.groupIndex = -1;
-// Set the updated filter data for each fixture
+            // Set the updated filter data for each fixture
             fixture1.setFilterData(filter1);
             fixture2.setFilterData(filter2);
 
