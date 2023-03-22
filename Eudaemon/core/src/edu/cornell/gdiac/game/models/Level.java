@@ -475,7 +475,7 @@ public class Level {
             if (player.isAttacking() && dist < player.getAttackDist() &&
                     (player.isFacingRight() && player.getX() < enemies.get(i).getX() ||
                     !player.isFacingRight() && player.getX() > enemies.get(i).getX())) {
-                enemies.get(i).hitBySword();
+                enemies.get(i).hitBySword(player);
                 System.out.println("removing enemy" + enemies.get(i).getType());
                 enemies = removeEnemy(enemies,i);
             }

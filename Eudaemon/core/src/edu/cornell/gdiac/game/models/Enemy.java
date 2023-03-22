@@ -10,7 +10,7 @@ import edu.cornell.gdiac.assets.AssetDirectory;
 import edu.cornell.gdiac.game.*;
 import edu.cornell.gdiac.game.obstacle.*;
 
-public class Enemy extends CapsuleObstacle implements ContactListener {
+public class Enemy extends CapsuleObstacle {
 
     //#region FINAL FIELDS
 
@@ -299,76 +299,19 @@ public class Enemy extends CapsuleObstacle implements ContactListener {
     }
 
 
-    //<editor-fold desc="COLLISION">
-    /** This method is called when two objects start colliding **/
-    @Override
-    public void beginContact(Contact contact) {
-        Fixture fix1 = contact.getFixtureA();
-        Fixture fix2 = contact.getFixtureB();
-
-        Body body1 = fix1.getBody();
-        Body body2 = fix2.getBody();
-
-        Object fd1 = fix1.getUserData();
-        Object fd2 = fix2.getUserData();
-
-        Object bd1 = body1.getUserData();
-        Object bd2 = body2.getUserData();
-
-        //TODO: whatif two enemies collide
-
-        // Check if the two objects colliding are an instance of EnemyModel and SwordWheelObstacle
-        if ((bd1 instanceof Enemy
-                && bd2 instanceof SwordWheelObstacle)
-                || (bd2 instanceof Enemy
-                && bd1 instanceof SwordWheelObstacle)) {
-
-            // Get references to the EnemyModel and SwordWheelObstacle objects involved in the collision
-            Enemy enemy = null;
-            SwordWheelObstacle obstacle = null;
-            if (bd1 instanceof Enemy) {
-                enemy = (Enemy) bd1;
-                obstacle = (SwordWheelObstacle) bd2;
-            } else {
-                enemy = (Enemy) bd2;
-                obstacle = (SwordWheelObstacle)bd1;
-            }
-            // Call a method in EnemyModel to handle the collisions
-            enemy.hitBySword();
-        }
-
-        if(bd1 instanceof Enemy && bd2 instanceof Enemy ){
-//            System.out.println("WOW, from Enemy model!");
-        }
-    }
-
     /**
      * Called when this enemy is hit by a sword.
      *
      * This method decrements the number of hearts for this enemy by 1. If the number of hearts
      * reaches 0, this method destroys the enemy
      */
-    public void hitBySword() {
+    public void hitBySword(Player player) {
         hearts--;
         if (hearts <= 0) {
             this.markRemoved(true);
             this.setActive(false);
+            player.increaseSpiritByKill(); //player gain some spirit when the enemy killed
+            System.out.println("kill an enemy!");
         }
     }
-
-    @Override
-    public void endContact(Contact contact) {
-
-    }
-
-    @Override
-    public void preSolve(Contact contact, Manifold oldManifold) {
-
-    }
-
-    @Override
-    public void postSolve(Contact contact, ContactImpulse impulse) {
-
-    }
-    //</editor-fold>
 }
