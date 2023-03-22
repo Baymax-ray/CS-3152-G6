@@ -17,7 +17,7 @@ public class Player extends CapsuleObstacle {
 
     private final float startX;
     private final float startY;
-
+    private final float spiritKillingEnemy;
     private final int maxHearts;
     private final int initialHearts;
     private final float maxSpirit;
@@ -824,6 +824,7 @@ public class Player extends CapsuleObstacle {
     public float getSpiritIncreaseRate() { return spiritIncreaseRate; }
     public void increaseSpirit() { setSpirit(Math.min(getSpirit() + getSpiritIncreaseRate(), maxSpirit)); }
     public float getSpiritDecreaseRate() { return spiritDecreaseRate; }
+    public void increaseSpiritByKill(){ setSpirit(Math.min(getSpirit() + getSpiritIncreaseRate(), maxSpirit));}
     public void decreaseSpirit() { setSpirit(Math.max(getSpirit() - getSpiritDecreaseRate(), 0)); }
     public float getSpiritIncreaseDist() { return spiritIncreaseDist; }
 
@@ -978,6 +979,7 @@ public class Player extends CapsuleObstacle {
         this.attackOffset = json.getFloat("attackOffset");
         this.swordRadius = json.getFloat("swordRadius");
         this.attackLifespan = json.getFloat("attackLifespan");
+        this.spiritKillingEnemy= json.getFloat("spiritKillingEnemy");
 
 
         //Other Information

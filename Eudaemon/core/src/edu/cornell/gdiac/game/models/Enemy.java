@@ -310,7 +310,8 @@ public class Enemy extends CapsuleObstacle {
         if (hearts <= 0) {
             this.markRemoved(true);
             this.setActive(false);
-            player.increaseSpirit(); //player gain some spirit when the enemy killed
+            player.increaseSpiritByKill(); //player gain some spirit when the enemy killed
+            System.out.println("kill an enemy!");
         }
     }
 }
