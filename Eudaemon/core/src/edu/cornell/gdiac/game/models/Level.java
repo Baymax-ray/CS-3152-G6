@@ -388,8 +388,8 @@ public class Level {
                 Body body = world.createBody(bodyDef);
                 body.setUserData(tile);
 
-                PolygonShape shape = new PolygonShape();
-                shape.set(new float[]{
+                ChainShape shape = new ChainShape();
+                shape.createLoop(new float[]{
                         0,        0,
                         tileSize, 0,
                         tileSize, tileSize,
