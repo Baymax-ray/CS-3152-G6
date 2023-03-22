@@ -15,6 +15,8 @@ public class Player extends CapsuleObstacle {
 
     //#region FINAL FIELDS
 
+    private final JsonValue playerData;
+
     private final float startX;
     private final float startY;
     private final float spiritKillingEnemy;
@@ -925,11 +927,9 @@ public class Player extends CapsuleObstacle {
             if (hearts > 0) {
                 setVelocity(getBodyVelocityX(), 2.0f);
                 setiFramesRemaining(getIFrames());
-                if (isFacingRight) setVelocity(-10,0);
-                else setVelocity(10,0);
-            }
-
-            else this.markRemoved(true);
+                if (isFacingRight) setVelocity(-10,5);
+                else setVelocity(10,5);
+            } else this.markRemoved(true);
         }
 
     }
@@ -937,6 +937,11 @@ public class Player extends CapsuleObstacle {
 
     public Player(JsonValue json, AssetDirectory assets) {
         super(json.getFloat("startX"), json.getFloat("startY"), json.getFloat("hitboxWidth"), json.getFloat("hitboxHeight"));
+
+        //now the player's shared data is separated into sharedConstants.json, we shall not query them
+        //from constants.json, as that file only records changing data.
+        this.playerData = assets.getEntry("sharedConstants", JsonValue.class).get("Player");
+        json = playerData;
 
         //Textures
         this.momoTexture = new TextureRegion(assets.getEntry(json.getString("momo:TextureAsset"), Texture.class));

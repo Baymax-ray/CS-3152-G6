@@ -171,13 +171,11 @@ public class Level {
 //        this.backgroundTexture = assets.get(backgroundAsset);
 
         this.world = new World(new Vector2(0, gravity), true);
+        JsonValue playerData = assets.getEntry("sharedConstants", JsonValue.class).get("Player");
         this.player = new Player(json.get("player"), assets);
-        uiElements = new UIOverlay(json.get("player"), assets);
+        uiElements = new UIOverlay(playerData, assets);
 
 
-
-        // TODO: need more than 1 ideally
-        //this is a temporary code!!
         this.enemies = new ArrayList<Enemy>();
         //System.out.println(json.get("enemy").get(0).toString());
         JsonValue.JsonIterator enemyIterator = json.get("enemy").iterator();
