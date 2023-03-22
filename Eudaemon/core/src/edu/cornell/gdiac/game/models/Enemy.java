@@ -338,7 +338,7 @@ public class Enemy extends CapsuleObstacle implements ContactListener {
         }
 
         if(bd1 instanceof Enemy && bd2 instanceof Enemy ){
-            System.out.println("WOW, from Enemy model!");
+//            System.out.println("WOW, from Enemy model!");
         }
     }
 

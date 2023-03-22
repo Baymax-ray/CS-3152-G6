@@ -8,6 +8,8 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
 import edu.cornell.gdiac.game.models.*;
 import edu.cornell.gdiac.game.obstacle.SwordWheelObstacle;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import java.util.EnumSet;
 import java.util.HashMap;
@@ -222,41 +224,42 @@ public class ActionController {
             int angleFacing = player.getAngleFacing();
             float dashX = player.getX() + currOffset;
             float dashY = player.getY();
-            if (angleFacing == 0) player.setVelocity(10,0);
+            float dash = player.getDash();
+            if (angleFacing == 0) player.setVelocity(dash,0);
             if (angleFacing == 45){
                 dashX = player.getX() + 0.71f * currOffset;
                 dashY = player.getY() + 0.71f * currOffset;
-                player.setVelocity(10,10);
+                player.setVelocity(dash,10);
             }
             else if (angleFacing == 90){
                 dashX = player.getX();
                 dashY = player.getY() + currOffset;
-                player.setVelocity(0,10);
+                player.setVelocity(0,dash);
             }
             else if (angleFacing == 135){
                 dashX = player.getX() - 0.71f * currOffset;
                 dashY = player.getY() + 0.71f * currOffset;
-                player.setVelocity(-10,10);
+                player.setVelocity(-0.71f*dash,10);
             }
             else if (angleFacing == 180){
                 dashX = player.getX() - currOffset;
                 dashY = player.getY();
-                player.setVelocity(-10,0);
+                player.setVelocity(-dash,0);
             }
             else if (angleFacing == 225){
                 dashX = player.getX() - 0.71f * currOffset;
                 dashY = player.getY() - 0.71f * currOffset;
-                player.setVelocity(-10,-10);
+                player.setVelocity(-0.71f*dash,-0.71f*dash);
             }
             else if (angleFacing == 270){
                 dashX = player.getX();
                 dashY = player.getY()- currOffset;
-                player.setVelocity(0,-10);
+                player.setVelocity(0,-dash);
             }
             else if (angleFacing == 315){
                 dashX = player.getX() + 0.71f * currOffset;
                 dashY = player.getY() - 0.71f * currOffset;
-                player.setVelocity(10,-10);
+                player.setVelocity(0.71f*dash,-0.71f*dash);
             }
             Vector2 scale = new Vector2(10f,10f);
             SwordWheelObstacle dashAnimate = new SwordWheelObstacle(dashX, dashY, player.getDashEffectSpriteSheet().getRegionWidth()/100, player, 0.4f, 0.01f, scale, player.getDashEffectSpriteSheet());
@@ -264,7 +267,19 @@ public class ActionController {
             //player.dash();
             //player.setVelocity(player.getBodyVelocityX(), 0);
 
+
+            //Setting Gravity to 0 and scheduling to set it back
+            player.setPlayerGravity(0.0f);
+            Timer timer = new Timer();
+            timer.schedule(new TimerTask() {
+                @Override
+                public void run() {
+                    player.setPlayerGravity(player.getPlayerGravity());
+                }
+            }, player.getDashTime());
         }
+
+        System.out.println(player.getBody().getGravityScale());
         //#endregion
 
         //#region Jump

@@ -60,19 +60,19 @@ public class FlyAI extends AIController{
         markGoal();
         MoveAlongPathToGoal();
         if(move==EnemyAction.FLY_UP){
-            System.out.println("up");
+//            System.out.println("up");
         }
         else if (move==EnemyAction.FLY_DOWN){
-            System.out.println("down");
+//            System.out.println("down");
         }
         else if (move==EnemyAction.STAY){
-            System.out.println("stay");
+//            System.out.println("stay");
         }
         else if (move==EnemyAction.FLY_RIGHT){
-            System.out.println("right");
+//            System.out.println("right");
         }
         else if (move==EnemyAction.FLY_LEFT){
-            System.out.println("left");
+//            System.out.println("left");
         }
 
         enemyAction.add(move);
@@ -140,7 +140,7 @@ public class FlyAI extends AIController{
                     if (WanderWait>maxWait){
                         WanderWait=0;
                         state= FSMState.WANDER;
-                        System.out.println("return to wander");
+//                        System.out.println("return to wander");
                     }
                 }
                 break;
@@ -153,9 +153,9 @@ public class FlyAI extends AIController{
                 break;
         }
         if (state==FSMState.WANDER){
-            System.out.println("wander");
+//            System.out.println("wander");
         } else if (state==FSMState.CHASE) {
-            System.out.println("chase");
+//            System.out.println("chase");
 
         }
 
@@ -163,12 +163,12 @@ public class FlyAI extends AIController{
     private void markGoal(){
         float ex=enemy.getX();
         float ey=enemy.getY();
-        System.out.println("position is "+ex+":"+ey);
+//        System.out.println("position is "+ex+":"+ey);
 
         int tx=level.levelToTileCoordinatesX(ex);
         int ty=level.levelToTileCoordinatesY(ey);//but NO!
         int ty2 = level.levelToTileCoordinatesX(ey);
-        System.out.println("position (in tile) is "+tx+":"+ty );
+//        System.out.println("position (in tile) is "+tx+":"+ty );
 
         Random rand = new Random();
         int randomInt;
@@ -183,19 +183,19 @@ public class FlyAI extends AIController{
                 int ny=ty;
                 randomInt = rand.nextInt();
                 if (ticks%30==1) {
-                    System.out.println("we are changing goal right now");
+//                    System.out.println("we are changing goal right now");
                     if (randomInt % 4 == 0 && level.isAirAt(tx, ty - 1)) {
-                        System.out.println("1111");
+//                        System.out.println("1111");
                         ny = ny - 1;
                     } else if (randomInt % 4 == 1 && level.isAirAt(tx, ty + 1)) {
-                        System.out.println("2222");
+//                        System.out.println("2222");
                         ny = ny + 1;
                     } else if (randomInt % 4 == 2 && level.isAirAt(tx - 1, ty)) {
                         nx = nx - 1;
-                        System.out.println("3333");
+//                        System.out.println("3333");
                     } else if (randomInt % 4 == 3 && level.isAirAt(tx + 1, ty)) {
                         nx = nx + 1;
-                        System.out.println("4444");
+//                        System.out.println("4444");
                     } else {break;}
 
                     // the reason why we call this a second time is we must change the Y coordinate back
@@ -203,7 +203,7 @@ public class FlyAI extends AIController{
 
                     goal[0]=level.tileToLevelCoordinatesX(nx);
                     goal[1]=level.tileToLevelCoordinatesY(ny);
-                    System.out.println("goal (in tile) is "+nx+":"+ny );
+//                    System.out.println("goal (in tile) is "+nx+":"+ny );
                 }
                 needGoal = false;
                 break;
@@ -217,13 +217,13 @@ public class FlyAI extends AIController{
                 goal[1]=level.getPlayer().getY();
                 break;
         }
-        System.out.println("goal is "+goal[0]+":"+goal[1]);
+//        System.out.println("goal is "+goal[0]+":"+goal[1]);
     }
     private void MoveAlongPathToGoal() {
         float ex = enemy.getX();
         float ey = enemy.getY();
-        System.out.println("moving along path, current position is "+ex+":"+ey);
-        System.out.println("moving along path, goal is "+goal[0]+":"+goal[1]);
+//        System.out.println("moving along path, current position is "+ex+":"+ey);
+//        System.out.println("moving along path, goal is "+goal[0]+":"+goal[1]);
         switch (state) {
             case WANDER:
                 ex=ex-enemyWidth/2;

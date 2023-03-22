@@ -27,6 +27,10 @@ public class Player extends CapsuleObstacle {
 
     private final boolean startsFacingRight;
 
+    /**
+     * Time in milliseconds during which gravity doesn't affect the player
+     */
+    private final int dashTime;
     private final int dashCooldown;
     /**
      * The amount of ticks before the palyer can attack again
@@ -233,6 +237,14 @@ public class Player extends CapsuleObstacle {
     //#endregion
 
     //#region TEXTURE GETTERS AND SETTERS
+
+    /**
+     *  Returns the variable representing how many milliseconds gravity is turned off for the player when they dash
+     * @return dashtime
+     */
+    public int getDashTime() {
+        return dashTime;
+    }
     /**
      * Returns the {@link com.badlogic.gdx.graphics.g2d.TextureRegion} of the Momo texture.
      *
@@ -409,6 +421,13 @@ public class Player extends CapsuleObstacle {
      */
     public float getPlayerGravity() {
         return playerGravity;
+    }
+    /**
+     * Changes the player gravity for the body (not the max player gravity)
+     *
+     */
+    public void setPlayerGravity(float pg) {
+        body.setGravityScale(pg);
     }
     /**
      * Returns the jump velocity of the game object.
@@ -660,7 +679,14 @@ public class Player extends CapsuleObstacle {
     public void setDashCooldownRemaining(int dashCooldownRemaining) {
         this.dashCooldownRemaining = dashCooldownRemaining;
     }
-
+    /**
+     * Retrieves the dash velocity
+     *
+     * @return The dash velocity
+     */
+    public float getDash() {
+        return dash;
+    }
     /**
      * Returns the remaining time in seconds until the player can transform again.
      * @return the remaining time in seconds
@@ -886,39 +912,6 @@ public class Player extends CapsuleObstacle {
     }
 
     /**
-     * Dash, Momo, Dash
-     *
-     * Implemented 8 directional dash
-     * */
-    public void dash(){
-        if(angleFacing == 0){
-            forceCache.set(hit_force * dash * 1, 0);
-        }
-        else if (angleFacing == 45){
-            forceCache.set(hit_force * dash * 1, hit_force * dash * 1);
-        }
-        else if (angleFacing == 90){
-            forceCache.set(0, 2 * hit_force * dash * 1);
-        }
-        else if (angleFacing == 135){
-            forceCache.set(hit_force * dash * -1, hit_force * dash * 1);
-        }
-        else if (angleFacing == 180){
-            forceCache.set(hit_force * dash * -1, 0);
-        }
-        else if (angleFacing == 225){
-            forceCache.set(hit_force * dash * -1, hit_force * dash * -1);
-        }
-        else if (angleFacing == 270){
-            forceCache.set(0, hit_force * dash * -1);
-        }
-        else if (angleFacing == 315){
-            forceCache.set(hit_force * dash * 1, hit_force * dash * -1);
-        }
-        body.applyForce(forceCache, getPosition(), true);
-    }
-
-    /**
      * Called when the character is hit by an enemy.
      *
      * This method decrements the number of hearts for the character by 1. If the number of hearts
@@ -968,8 +961,9 @@ public class Player extends CapsuleObstacle {
         maxSpeed = json.getFloat("maxSpeed");
         horizontalAcceleration = json.getFloat("horizontalAcceleration");
         hit_force = json.getFloat( "hit_force");
-        dash = json.getFloat("dash", 2000);
+        this.dash = json.getFloat("dash", 2000);
         this.dashLifespan = json.getInt("dashLifespan");
+        this.dashTime = json.getInt("dashTime");
 
         //Attacking
         this.attackPower = json.getInt("attackPower");
