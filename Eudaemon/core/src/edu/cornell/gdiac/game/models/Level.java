@@ -458,28 +458,29 @@ public class Level {
         //TODO: What is this number?
         double shortestDist = 99999;
         for (int i = 0; i < enemies.size(); i++) {
-            double dist = Math.sqrt(Math.pow(player.getX()-enemies.get(i).getX(),2) + Math.pow(player.getY()-enemies.get(i).getY(),2));
+            double dist = Math.sqrt(Math.pow(player.getX() - enemies.get(i).getX(), 2) + Math.pow(player.getY() - enemies.get(i).getY(), 2));
             if (dist < shortestDist) shortestDist = dist;
 
             if (dist < player.getHitDist() && !player.isHit()) {
                 player.setHit(true);
                 player.hitByEnemy();
             }
-            if (shortestDist < player.getSpiritIncreaseDist() && player.getForm()==0  ){
-                player.increaseSpirit();
-                Vector2 scale = new Vector2(5f,5f);
-                SwordWheelObstacle spiritAnimate = new SwordWheelObstacle(enemies.get(i).getX(), player.getY(), player.getSpiritDrainSpriteSheet().getRegionWidth()/350F, player, player.getAttackLifespan(), 5f, scale, player.getSpiritDrainSpriteSheet());
-                addQueuedObject(spiritAnimate);
-            }
             if (player.isAttacking() && dist < player.getAttackDist() &&
                     (player.isFacingRight() && player.getX() < enemies.get(i).getX() ||
-                    !player.isFacingRight() && player.getX() > enemies.get(i).getX())) {
+                            !player.isFacingRight() && player.getX() > enemies.get(i).getX())) {
                 enemies.get(i).hitBySword(player);
                 System.out.println("removing enemy" + enemies.get(i).getType());
-                enemies = removeEnemy(enemies,i);
+                enemies = removeEnemy(enemies, i);
             }
 
         }
+        if (shortestDist < player.getSpiritIncreaseDist() && player.getForm()==0  ){
+            player.increaseSpirit();
+            Vector2 scale = new Vector2(5f,5f);
+            SwordWheelObstacle spiritAnimate = new SwordWheelObstacle(player.getX(), player.getY(), player.getSpiritDrainSpriteSheet().getRegionWidth()/400F, player, player.getAttackLifespan(), 5f, scale, player.getSpiritDrainSpriteSheet());
+            addQueuedObject(spiritAnimate);
+        }
+
     }
 
     /**
