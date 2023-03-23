@@ -11,7 +11,7 @@ import java.util.Random;
 
 public class FlyAI extends AIController{
     private static final int maxWait = 10;
-    private static final int detectDistance=10;
+    private static final int detectDistance=5;
     private final float enemyWidth;
     private final float enemyHeight;
     private final float tileSize;
