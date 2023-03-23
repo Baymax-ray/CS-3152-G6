@@ -171,7 +171,6 @@ public class GoombaAI extends AIController{
         int ty=level.levelToTileCoordinatesY(ey);
 //        System.out.println("in tiles urrent position is "+tx+":"+ty);
 
-
         if(ex<=goal[0]+0.1 && ex>=goal[0]-0.1){this.move=EnemyAction.STAY;}
         else if (ex<goal[0]){
             this.move=EnemyAction.MOVE_RIGHT;
@@ -189,4 +188,3 @@ public class GoombaAI extends AIController{
         }
         }
     }
-

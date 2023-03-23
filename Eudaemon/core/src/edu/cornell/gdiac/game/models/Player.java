@@ -253,6 +253,7 @@ public class Player extends CapsuleObstacle {
     private final int jumpTime;
     private int jumpTimeRemaining;
 
+    /**iFrames is the frame count of being able to GET attacked again*/
     private int iFramesRemaining;
 
     private boolean isAttacking;
@@ -998,7 +999,6 @@ public class Player extends CapsuleObstacle {
      * reaches 0, this method destroys the character
      */
     public void hitByEnemy() {
-
         if (isHit() && hearts > 0){
             hearts--;
             if (hearts > 0) {

@@ -461,7 +461,7 @@ public class Level {
             double dist = Math.sqrt(Math.pow(player.getX() - enemies.get(i).getX(), 2) + Math.pow(player.getY() - enemies.get(i).getY(), 2));
             if (dist < shortestDist) shortestDist = dist;
 
-            if (dist < player.getHitDist() && !player.isHit()) {
+            if (dist < player.getHitDist() && !player.isHit() && !player.isDashing()) {
                 player.setHit(true);
                 player.hitByEnemy();
             }

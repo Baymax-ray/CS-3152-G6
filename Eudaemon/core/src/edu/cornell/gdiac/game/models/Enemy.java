@@ -143,7 +143,9 @@ public class Enemy extends CapsuleObstacle {
 
 
     public Enemy(JsonValue json, AssetDirectory assets) {
-        super(json.getFloat("startX"), json.getFloat("startY"), json.getFloat("hitboxWidth"), json.getFloat("hitboxHeight"));
+        super(json.getFloat("startX"), json.getFloat("startY"),
+                assets.getEntry("sharedConstants", JsonValue.class).get((json.getString("type").equals("Goomba")? "Goomba":"Fly")).getFloat("hitboxWidth"),
+                assets.getEntry("sharedConstants", JsonValue.class).get((json.getString("type").equals("Goomba")? "Goomba":"Fly")).getFloat("hitboxHeight"));
         String TextureAsset = json.getString("TextureAsset");
 
         //Query the type of this enemy, then query the corresponding data in enemyConstants.json
@@ -158,8 +160,8 @@ public class Enemy extends CapsuleObstacle {
             this.enemyData=null;
             throw new IllegalArgumentException("Enemy can only be Fly or Goomba");
         }
-        this.setWidth(json.getFloat("hitboxWidth"));
-        this.setHeight(json.getFloat("hitboxHeight"));
+        this.setWidth(enemyData.getFloat("hitboxWidth"));
+        this.setHeight(enemyData.getFloat("hitboxHeight"));
 
 
         //Texture
@@ -277,11 +279,13 @@ public class Enemy extends CapsuleObstacle {
         // Don't want to be moving. Damp out player motion
         if (getMovementH() == 0f) {
             forceCache.set(-this.damping*getVX(),0);
-            body.applyForce(forceCache,getPosition(),true);
+            body.setLinearVelocity(forceCache);
+            //body.applyForce(forceCache,getPosition(),true);
         }
         if (getMovementV() == 0f && this.type.equals("Fly")) {
             forceCache.set(0,-this.damping*getVY());
-            body.applyForce(forceCache,getPosition(),true);
+            body.setLinearVelocity(forceCache);
+            //body.applyForce(forceCache,getPosition(),true);
         }
 
 
@@ -294,7 +298,8 @@ public class Enemy extends CapsuleObstacle {
 
         //if(this.type.equals("Fly")){this.movementV *= this.force; this.movementH *= this.force;}
         forceCache.set(getMovementH(),getMovementV());
-        body.applyForce(forceCache,getPosition(),true);
+        body.setLinearVelocity(forceCache);
+        //body.applyForce(forceCache,getPosition(),true);
         }
 
 
