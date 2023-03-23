@@ -1,7 +1,8 @@
 {
 	"textures": {
-        "background": "shared/loading.png",
+        "background": "shared/loading_background.png",
 		"play": "shared/play.png",
+        "title": "shared/EUDAEMON_title.png",
         "progress": {
             "file": "shared/progressbar.png",
             "atlas":     {
@@ -12,6 +13,9 @@
                 "foreleft"   : [0,   40,  16, 70],
                 "foreright"  : [384, 40, 400, 70]
             }
-        }
+        },
+      "start": "shared/start_button.png",
+      "levelselect": "shared/levelselect_button.png",
+      "settings": "shared/settings_button.png"
 	}
 }

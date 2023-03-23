@@ -31,6 +31,7 @@ import com.badlogic.gdx.controllers.ControllerMapping;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.Texture.TextureFilter;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import edu.cornell.gdiac.assets.AssetDirectory;
 import edu.cornell.gdiac.util.Controllers;
@@ -59,8 +60,14 @@ public class LoadingScreen implements Screen, InputProcessor, ControllerListener
 	
 	/** Background texture for start-up */
 	private Texture background;
+	/** Title texture for start-up */
+	private Texture title;
 	/** Play button to display when done */
 	private Texture playButton;
+	/** settings button to display when done */
+	private Texture settingsButton;
+	/** level select button to display when done */
+	private Texture levelSelectButton;
 	/** Texture atlas to support a progress bar */
 	private final Texture statusBar;
 	
@@ -87,9 +94,9 @@ public class LoadingScreen implements Screen, InputProcessor, ControllerListener
 	/** Ratio of the bar width to the screen */
 	private static float BAR_WIDTH_RATIO  = 0.66f;
 	/** Ration of the bar height to the screen */
-	private static float BAR_HEIGHT_RATIO = 0.25f;	
+	private static float BAR_HEIGHT_RATIO = 0.25f;
 	/** Height of the progress bar */
-	private static float BUTTON_SCALE  = 0.75f;
+	private static float BUTTON_SCALE  = 0.20f;
 	
 	/** Reference to GameCanvas created by the root */
 	private GameCanvas canvas;
@@ -204,8 +211,11 @@ public class LoadingScreen implements Screen, InputProcessor, ControllerListener
 		// Load the next two images immediately.
 		playButton = null;
 		background = internal.getEntry( "background", Texture.class );
+		title = internal.getEntry("title", Texture.class);
 		background.setFilter( TextureFilter.Linear, TextureFilter.Linear );
 		statusBar = internal.getEntry( "progress", Texture.class );
+		settingsButton = null;
+		levelSelectButton = null;
 
 		// Break up the status bar texture into regions
 		statusBkgLeft = internal.getEntry( "progress.backleft", TextureRegion.class );
@@ -256,7 +266,9 @@ public class LoadingScreen implements Screen, InputProcessor, ControllerListener
 			this.progress = assets.getProgress();
 			if (progress >= 1.0f) {
 				this.progress = 1.0f;
-				playButton = internal.getEntry("play",Texture.class);
+				playButton = internal.getEntry("start",Texture.class);
+				settingsButton = internal.getEntry("settings", Texture.class);
+				levelSelectButton = internal.getEntry("levelselect", Texture.class);
 			}
 		}
 	}
@@ -272,12 +284,18 @@ public class LoadingScreen implements Screen, InputProcessor, ControllerListener
 		canvas.setOverlayCamera();
 		canvas.begin();
 		canvas.draw(background, 0, 0);
+		canvas.draw(title, Color.WHITE, title.getWidth()/2, title.getHeight()/2, centerX, canvas.getHeight()-150F, 0, 1, 1);
 		if (playButton == null) {
 			drawProgress(canvas);
 		} else {
 			Color tint = (pressState == 1 ? Color.GRAY: Color.WHITE);
 			canvas.draw(playButton, tint, playButton.getWidth()/2, playButton.getHeight()/2, 
-						centerX, centerY, 0, BUTTON_SCALE*scale, BUTTON_SCALE*scale);
+						centerX, centerY + playButton.getHeight()*BUTTON_SCALE+45F, 0, BUTTON_SCALE*scale, BUTTON_SCALE*scale);
+			canvas.draw(levelSelectButton, tint, levelSelectButton.getWidth()/2, levelSelectButton.getHeight()/2,
+					centerX, centerY+35F, 0, BUTTON_SCALE*scale, BUTTON_SCALE*scale);
+			canvas.draw(settingsButton, tint, settingsButton.getWidth()/2, settingsButton.getHeight()/2,
+					centerX, centerY-settingsButton.getHeight()*BUTTON_SCALE +25F, 0, BUTTON_SCALE*scale, BUTTON_SCALE*scale);
+
 		}
 		canvas.end();
 	}
@@ -426,7 +444,7 @@ public class LoadingScreen implements Screen, InputProcessor, ControllerListener
 		// TODO: Fix scaling
 		// Play button is a circle.
 		float radius = BUTTON_SCALE*scale*playButton.getWidth()/2.0f;
-		float dist = (screenX-centerX)*(screenX-centerX)+(screenY-centerY)*(screenY-centerY);
+		float dist = (screenX-centerX)*(screenX-centerX)+(screenY-(centerY + playButton.getHeight()*BUTTON_SCALE+45F))*(screenY-(centerY + playButton.getHeight()*BUTTON_SCALE+45F));
 		if (dist < radius*radius) {
 			pressState = 1;
 		}
