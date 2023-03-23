@@ -210,6 +210,9 @@ public class ActionController {
             System.out.println("attakc lifespan: "+ player.getAttackLifespan());
             player.setAttackLifespanRemaining(player.getAttackLifespan());
             createSword();
+            if(player.getAngleFacing() == 270){
+                player.setVelocity(player.getBodyVelocityX(), player.getJumpVelocity()-1F);
+            }
         }
         //#endregion
 
