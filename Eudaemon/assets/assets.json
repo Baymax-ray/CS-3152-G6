@@ -177,7 +177,16 @@
         "tiles:ConcreteDirtBottom2x2_1C.png": "tiles/ConcreteDirtBottom2x2_1C.png",
         "tiles:ConcreteDirtBottom2x2_2C.png": "tiles/ConcreteDirtBottom2x2_2C.png",
         "tiles:ConcreteDirtBottom2x2_3C.png": "tiles/ConcreteDirtBottom2x2_3C.png",
-        "tiles:ConcreteDirtBottom2x2_4C.png": "tiles/ConcreteDirtBottom2x2_4C.png"
+        "tiles:ConcreteDirtBottom2x2_4C.png": "tiles/ConcreteDirtBottom2x2_4C.png",
+        "tiles:ConcreteBlueA.png": "tiles/ConcreteBlueA.png",
+        "tiles:ConcreteBlueB.png": "tiles/ConcreteBlueB.png",
+        "tiles:ConcreteBlueC.png": "tiles/ConcreteBlueC.png",
+        "tiles:ConcreteRedA.png": "tiles/ConcreteRedA.png",
+        "tiles:ConcreteRedB.png": "tiles/ConcreteRedB.png",
+        "tiles:ConcreteRedC.png": "tiles/ConcreteRedC.png",
+        "tiles:ConcretePinkA.png": "tiles/ConcretePinkA.png",
+        "tiles:ConcretePinkB.png": "tiles/ConcretePinkB.png",
+        "tiles:ConcretePinkC.png": "tiles/ConcretePinkC.png"
     },
     "jsons"  : {
         "constants": "constants.json",
@@ -185,7 +194,8 @@
         "sharedConstants": "sharedConstants.json",
         "levelTest": "levels/levelTest.json",
         "levelTestBox": "levels/levelTestBox.json",
-        "tileset": "tileset.json"
+        "levelDemo": "levels/levelDemo.json",
+        "tileset": "tileset2.json"
     },
     "sounds" : {
         "platform:jump" : "platform/jump.mp3",

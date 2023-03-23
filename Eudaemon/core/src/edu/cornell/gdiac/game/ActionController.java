@@ -92,6 +92,8 @@ public class ActionController {
      * @param playerAction the set of player actions to resolve
      */
     private void resolvePlayerActions(EnumSet<Action> playerAction){
+        System.out.println("x: " + player.getX());
+        System.out.println("y: " + player.getY());
         currentX = player.getX();
         float deltaX = previousX - currentX;
         //#region Button Inputs
@@ -207,7 +209,7 @@ public class ActionController {
         if (attackPressed && player.getForm() == 1 && player.getAttackCooldownRemaining() == 0){
             player.setAttackCooldownRemaining(player.getAttackCooldown());
             player.setAttacking(true);
-            System.out.println("attakc lifespan: "+ player.getAttackLifespan());
+//            System.out.println("attakc lifespan: "+ player.getAttackLifespan());
             player.setAttackLifespanRemaining(player.getAttackLifespan());
             createSword();
             if(player.getAngleFacing() == 270){
@@ -282,7 +284,7 @@ public class ActionController {
             }, player.getDashTime());
         }
 
-        System.out.println(player.getBody().getGravityScale());
+//        System.out.println(player.getBody().getGravityScale());
         //#endregion
 
         //#region Jump

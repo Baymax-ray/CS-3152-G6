@@ -108,7 +108,9 @@ public class Level {
         Enemy[] result = new Enemy[enemies.size()];
         return enemies.toArray(result);
     }
-
+    public float gettileSize(){
+        return tileSize;
+    }
     /**
      * Returns the player associated with this level instance.
      *

@@ -8,15 +8,15 @@
   ],
   "levels": [
     {
-      "level": "levelTestBox",
-      "levelHeight": 15,
+      "level": "levelDemo",
+      "levelHeight": 40,
       "tileSize": 1,
       "cameraWidth": 26.69,
       "cameraHeight": 15,
       "gravity": -1,
       "player": {
-        "startX": 3,
-        "startY": 3,
+        "startX": 7,
+        "startY": 14,
         "hitboxWidth": 0.6,
         "hitboxHeight": 0.9
       },
@@ -24,16 +24,40 @@
         {
           "type":"Goomba",
           "TextureAsset": "platform:worm",
-          "startX": 5,
-          "startY": 4,
+          "startX": 11,
+          "startY": 8,
           "hitboxWidth": 0.6,
           "hitboxHeight": 0.5
         },
         {
           "type":"Goomba",
           "TextureAsset": "platform:worm",
-          "startX": 12,
-          "startY": 4,
+          "startX": 21,
+          "startY": 13,
+          "hitboxWidth": 0.6,
+          "hitboxHeight": 0.5
+        },
+        {
+          "type":"Goomba",
+          "TextureAsset": "platform:worm",
+          "startX": 37,
+          "startY": 19,
+          "hitboxWidth": 0.6,
+          "hitboxHeight": 0.5
+        },
+        {
+          "type":"Goomba",
+          "TextureAsset": "platform:worm",
+          "startX": 42,
+          "startY": 19,
+          "hitboxWidth": 0.6,
+          "hitboxHeight": 0.5
+        },
+        {
+          "type":"Goomba",
+          "TextureAsset": "platform:worm",
+          "startX": 26,
+          "startY": 27,
           "hitboxWidth": 0.6,
           "hitboxHeight": 0.5
         },
@@ -42,6 +66,22 @@
           "TextureAsset": "platform:worm",
           "startX": 12,
           "startY": 10,
+          "hitboxWidth": 0.6,
+          "hitboxHeight": 0.5
+        },
+        {
+          "type":"Fly",
+          "TextureAsset": "platform:worm",
+          "startX": 26,
+          "startY": 31,
+          "hitboxWidth": 0.6,
+          "hitboxHeight": 0.5
+        },
+        {
+          "type":"Fly",
+          "TextureAsset": "platform:worm",
+          "startX": 27,
+          "startY": 19,
           "hitboxWidth": 0.6,
           "hitboxHeight": 0.5
         }
