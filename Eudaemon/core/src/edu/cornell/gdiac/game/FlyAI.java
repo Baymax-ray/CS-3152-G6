@@ -11,9 +11,10 @@ import java.util.Random;
 
 public class FlyAI extends AIController{
     private static final int maxWait = 10;
-    private static final int detectDistance=4;
+    private static final int detectDistance=10;
     private final float enemyWidth;
     private final float enemyHeight;
+    private final float tileSize;
     private Enemy enemy;
     private Level level;
     private int ticks=0;
@@ -24,7 +25,9 @@ public class FlyAI extends AIController{
      * in the level coordinate
      */
     private float[] goal;
+    /** do we need to go to the next step in chasing?*/
     private boolean needGoal = true;
+    private float[]tempgoal;
 
 
     private enum FSMState {
@@ -48,6 +51,7 @@ public class FlyAI extends AIController{
         this.enemy=super.enemy;
         this.enemyHeight= this.enemy.getHeight();
         this.enemyWidth= this.enemy.getWidth();
+        this.tileSize=this.level.gettileSize();
 
     }
     public void setEnemyAction(EnumSet<EnemyAction> enemyAction){
@@ -60,19 +64,19 @@ public class FlyAI extends AIController{
         markGoal();
         MoveAlongPathToGoal();
         if(move==EnemyAction.FLY_UP){
-//            System.out.println("up");
+            System.out.println("up");
         }
         else if (move==EnemyAction.FLY_DOWN){
-//            System.out.println("down");
+            System.out.println("down");
         }
         else if (move==EnemyAction.STAY){
-//            System.out.println("stay");
+            System.out.println("stay");
         }
         else if (move==EnemyAction.FLY_RIGHT){
-//            System.out.println("right");
+            System.out.println("right");
         }
         else if (move==EnemyAction.FLY_LEFT){
-//            System.out.println("left");
+            System.out.println("left");
         }
 
         enemyAction.add(move);
@@ -126,6 +130,7 @@ public class FlyAI extends AIController{
             case WANDER:
                 if (checkDetection()){
                     state= FSMState.CHASE;
+                    needGoal=true;
                 }
                 break;
             case CHASE:
@@ -152,23 +157,19 @@ public class FlyAI extends AIController{
                 //TODO
                 break;
         }
-        if (state==FSMState.WANDER){
-//            System.out.println("wander");
-        } else if (state==FSMState.CHASE) {
-//            System.out.println("chase");
-
+        if (state==FSMState.CHASE) {
+            System.out.println("chase");
         }
 
     }
     private void markGoal(){
         float ex=enemy.getX();
         float ey=enemy.getY();
-//        System.out.println("position is "+ex+":"+ey);
+       System.out.println("position is "+ex+":"+ey);
 
         int tx=level.levelToTileCoordinatesX(ex);
         int ty=level.levelToTileCoordinatesY(ey);//but NO!
-        int ty2 = level.levelToTileCoordinatesX(ey);
-//        System.out.println("position (in tile) is "+tx+":"+ty );
+        System.out.println("position (in tile) is "+tx+":"+ty );
 
         Random rand = new Random();
         int randomInt;
@@ -209,8 +210,14 @@ public class FlyAI extends AIController{
                 break;
             case CHASE:
                 // only need to fly to the same tile
-                goal[0]=level.tileToLevelCoordinatesX( level.levelToTileCoordinatesX(level.getPlayer().getX()));
-                goal[1]=level.tileToLevelCoordinatesY( level.levelToTileCoordinatesY(level.getPlayer().getY()));
+                int a=level.levelToTileCoordinatesX(level.getPlayer().getX());
+                int b=level.levelToTileCoordinatesY(level.getPlayer().getY());
+                if (a!=level.levelToTileCoordinatesX(goal[0])||b!=level.levelToTileCoordinatesY(goal[1])){
+                    needGoal=true; //player is moving, need to re-compute the goal
+                    System.out.println("recompute because player moves");
+                }
+                goal[0]=level.tileToLevelCoordinatesX(a);
+                goal[1]=level.tileToLevelCoordinatesY(b);
                 break;
             case CHASE_close:
                 goal[0]=level.getPlayer().getX();
@@ -219,11 +226,105 @@ public class FlyAI extends AIController{
         }
 //        System.out.println("goal is "+goal[0]+":"+goal[1]);
     }
+
+    private float[] ChaseGoalHelper(){
+        float ex = enemy.getX();
+        float ey = enemy.getY();
+        int gy=level.levelToTileCoordinatesY(goal[1]);
+        int gx=level.levelToTileCoordinatesX(goal[0]);
+        int cy=level.levelToTileCoordinatesY(ey);
+        int cx=level.levelToTileCoordinatesX(ex);
+        Queue<Coord> boundary= new Queue<>();
+        HashSet<int[]>visited= new HashSet<>();
+        if (level.isAirAt(level.tileToLevelCoordinatesX(cx-1),level.tileToLevelCoordinatesY(cy))){
+            Coord L=new Coord(cx-1,cy,EnemyAction.FLY_LEFT);
+            boundary.addLast(L);
+            visited.add(new int[] {cx-1, cy});
+        }
+        if (level.isAirAt(level.tileToLevelCoordinatesX(cx+1),level.tileToLevelCoordinatesY(cy))){
+            Coord R=new Coord(cx+1,cy,EnemyAction.FLY_RIGHT);
+            boundary.addLast(R);
+            visited.add(new int[] {cx+1, cy});
+        }
+        if (level.isAirAt(level.tileToLevelCoordinatesX(cx),level.tileToLevelCoordinatesY(cy+1))){
+            Coord D=new Coord(cx,cy+1,EnemyAction.FLY_DOWN);
+            boundary.addLast(D);
+            visited.add(new int[] {cx,cy+1});
+        }
+        if (level.isAirAt(level.tileToLevelCoordinatesX(cx),level.tileToLevelCoordinatesY(cy-1))){
+            Coord U=new Coord(cx,cy-1,EnemyAction.FLY_UP);
+            boundary.addLast(U);
+            visited.add(new int[] {cx,cy-1});
+        }
+        if (cx==gx&&cy==gy){
+            this.move= EnemyAction.STAY;
+            float[] result=new float[2];
+            result[0]=level.tileToLevelCoordinatesX(cx)+this.tileSize/2;
+            result[1]=level.tileToLevelCoordinatesY(cy)+this.tileSize/2;
+            return result;}
+        else{
+            while(!boundary.isEmpty()){
+                Coord co=boundary.removeFirst();
+                int x=co.getX();
+                int y=co.getY();
+                if (x==gx&&y==gy){
+                    this.move= co.getDirection();
+                    float[] result=new float[2];
+                    if (move==EnemyAction.FLY_DOWN){
+                        result[0]=level.tileToLevelCoordinatesX(cx)+this.tileSize/2;
+                        result[1]=level.tileToLevelCoordinatesY(cy+1)+this.tileSize/2;
+                    }else if (move==EnemyAction.FLY_UP){
+                        result[0]=level.tileToLevelCoordinatesX(cx)+this.tileSize/2;
+                        result[1]=level.tileToLevelCoordinatesY(cy-1)+this.tileSize/2;
+                    }else if (move==EnemyAction.FLY_RIGHT){
+                        result[0]=level.tileToLevelCoordinatesX(cx+1)+this.tileSize/2;
+                        result[1]=level.tileToLevelCoordinatesY(cy)+this.tileSize/2;
+                    }else if (move==EnemyAction.FLY_LEFT){
+                    result[0]=level.tileToLevelCoordinatesX(cx-1)+this.tileSize/2;
+                    result[1]=level.tileToLevelCoordinatesY(cy)+this.tileSize/2;
+                    }
+                    return result;
+                }
+                if (level.isAirAt(level.tileToLevelCoordinatesX(x-1),level.tileToLevelCoordinatesY(y))){
+                    Coord L=new Coord(x-1,y,co.getDirection());
+                    if(!visited.contains(new int[] {x - 1, y})) {
+                        boundary.addLast(L);
+                        visited.add(new int[]{x - 1, y});
+                    }
+                }
+                if (level.isAirAt(level.tileToLevelCoordinatesX(x+1),level.tileToLevelCoordinatesY(y))){
+                    Coord R=new Coord(x+1,y,co.getDirection());
+                    if(!visited.contains(new int[] {x + 1, y})) {
+                        boundary.addLast(R);
+                        visited.add(new int[]{x + 1, y});
+                    }
+                }
+                if (level.isAirAt(level.tileToLevelCoordinatesX(x),level.tileToLevelCoordinatesY(y+1))){
+                    Coord D=new Coord(x,y+1,co.getDirection());
+                    if(!visited.contains(new int[] {x, y+1})) {
+                        boundary.addLast(D);
+                        visited.add(new int[]{x, y+1});
+                    }
+                }
+                if (level.isAirAt(level.tileToLevelCoordinatesX(x),level.tileToLevelCoordinatesY(y-1))){
+                    Coord U=new Coord(x,y-1,co.getDirection());
+                    if(!visited.contains(new int[] {x, y-1})) {
+                        boundary.addLast(U);
+                        visited.add(new int[]{x, y-1});
+                    }
+                }
+            }
+        }
+        float[] result=new float[2];
+        result[0]=level.tileToLevelCoordinatesX(cx)+this.tileSize/2;
+        result[1]=level.tileToLevelCoordinatesY(cy)+this.tileSize/2;
+        return result;//do not move if cannot find a path
+    }
     private void MoveAlongPathToGoal() {
         float ex = enemy.getX();
         float ey = enemy.getY();
 //        System.out.println("moving along path, current position is "+ex+":"+ey);
-//        System.out.println("moving along path, goal is "+goal[0]+":"+goal[1]);
+        System.out.println("moving along path, goal is "+goal[0]+":"+goal[1]);
         switch (state) {
             case WANDER:
                 ex=ex-enemyWidth/2;
@@ -250,78 +351,32 @@ public class FlyAI extends AIController{
                 }
                 break;
             default:
-                int gy=level.levelToTileCoordinatesY(goal[1]);
-                int gx=level.levelToTileCoordinatesX(goal[0]);
-                ex=ex-enemyWidth/2;
-                ey=ey-enemyHeight/2;
-                int cy=level.levelToTileCoordinatesY(ey);
-                int cx=level.levelToTileCoordinatesX(ex);
-                Queue<Coord> boundary= new Queue<>();
-                HashSet<int[]>visited= new HashSet<>();
-                if (level.isAirAt(level.tileToLevelCoordinatesX(cx-1),level.tileToLevelCoordinatesY(cy))){
-                    Coord L=new Coord(cx-1,cy,EnemyAction.FLY_LEFT);
-                    boundary.addLast(L);
-                    visited.add(new int[] {cx-1, cy});
-                }
-                if (level.isAirAt(level.tileToLevelCoordinatesX(cx+1),level.tileToLevelCoordinatesY(cy))){
-                    Coord R=new Coord(cx+1,cy,EnemyAction.FLY_RIGHT);
-                    boundary.addLast(R);
-                    visited.add(new int[] {cx+1, cy});
-                }
-                if (level.isAirAt(level.tileToLevelCoordinatesX(cx),level.tileToLevelCoordinatesY(cy+1))){
-                    Coord D=new Coord(cx,cy+1,EnemyAction.FLY_DOWN);
-                    boundary.addLast(D);
-                    visited.add(new int[] {cx,cy+1});
-                }
-                if (level.isAirAt(level.tileToLevelCoordinatesX(cx),level.tileToLevelCoordinatesY(cy-1))){
-                    Coord U=new Coord(cx,cy-1,EnemyAction.FLY_UP);
-                    boundary.addLast(U);
-                    visited.add(new int[] {cx,cy-1});
-                }
-                if (cx==gx&&cy==gy){
-                    this.move= EnemyAction.STAY;
-                    return;}
-                else{
-                    while(!boundary.isEmpty()){
-                        Coord co=boundary.removeFirst();
-                        int x=co.getX();
-                        int y=co.getY();
-                        if (x==gx&&y==gy){
-                            this.move= co.getDirection();
-                            return;
+                if (needGoal){
+                    this.tempgoal=ChaseGoalHelper();
+                    needGoal=false;
+                }else {
+                    System.out.println("moving along path, tempgoal is "+tempgoal[0]+":"+tempgoal[1]);
+
+                    float dtx = tempgoal[0] - ex;
+                    float dty = tempgoal[1] - ey;
+                    if (Math.abs(dtx) + Math.abs(dty) <= 0.2) {
+                        needGoal = true;
+                        System.out.println("recompute because we reach there");
+                    }
+                    if (Math.abs(dtx) > Math.abs(dty)) {
+                        if (dtx > 0) {
+                            this.move = EnemyAction.FLY_RIGHT;
+                        } else {
+                            this.move = EnemyAction.FLY_LEFT;
                         }
-                        if (level.isAirAt(level.tileToLevelCoordinatesX(x-1),level.tileToLevelCoordinatesY(y))){
-                            Coord L=new Coord(x-1,y,co.getDirection());
-                            if(!visited.contains(new int[] {x - 1, y})) {
-                                boundary.addLast(L);
-                                visited.add(new int[]{x - 1, y});
-                            }
-                        }
-                        if (level.isAirAt(level.tileToLevelCoordinatesX(x+1),level.tileToLevelCoordinatesY(y))){
-                            Coord R=new Coord(x+1,y,co.getDirection());
-                            if(!visited.contains(new int[] {x + 1, y})) {
-                                boundary.addLast(R);
-                                visited.add(new int[]{x + 1, y});
-                            }
-                        }
-                        if (level.isAirAt(level.tileToLevelCoordinatesX(x),level.tileToLevelCoordinatesY(y+1))){
-                            Coord D=new Coord(x,y+1,co.getDirection());
-                            if(!visited.contains(new int[] {x, y+1})) {
-                                boundary.addLast(D);
-                                visited.add(new int[]{x, y+1});
-                            }
-                        }
-                        if (level.isAirAt(level.tileToLevelCoordinatesX(x),level.tileToLevelCoordinatesY(y-1))){
-                            Coord U=new Coord(x,y-1,co.getDirection());
-                            if(!visited.contains(new int[] {x, y-1})) {
-                                boundary.addLast(U);
-                                visited.add(new int[]{x, y-1});
-                            }
+                    } else {
+                        if (dty > 0) {
+                            this.move = EnemyAction.FLY_UP;
+                        } else {
+                            this.move = EnemyAction.FLY_DOWN;
                         }
                     }
                 }
-                this.move=EnemyAction.STAY; //do not move if cannot find a path
-                break;
         }
     }
     private class Coord {
