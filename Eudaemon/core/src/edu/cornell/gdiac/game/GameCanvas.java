@@ -79,7 +79,7 @@ public class GameCanvas {
 	private PolygonSpriteBatch spriteBatch;
 	
 	/** Rendering context for the debug outlines */
-	private ShapeRenderer debugRender;
+	private final ShapeRenderer debugRender;
 	
 	/** Track whether or not we are active (for error checking) */
 	private DrawPass active;
@@ -88,9 +88,9 @@ public class GameCanvas {
 	private BlendState blend;
 	
 	/** Camera for the underlying SpriteBatch */
-	private OrthographicCamera camera;
+	private final OrthographicCamera camera;
 
-	private Viewport viewport;
+	private final Viewport viewport;
 	
 	/** Value to cache window width (if we are currently full screen) */
 	int width;

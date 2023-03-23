@@ -31,7 +31,7 @@ public class ParserUtils {
                 suffix.append( c );
             }
         }
-        return first + sep + suffix.toString();
+        return first + sep + suffix;
     }
 
     /**

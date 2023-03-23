@@ -9,14 +9,14 @@ import java.util.Random;
 
 public class GoombaAI extends AIController{
     public static final int maxWait = 10;
-    private Enemy enemy;
-    private Level level;
+    private final Enemy enemy;
+    private final Level level;
     private int ticks=0;
     private FSMState state;
     private EnemyAction move;
     /**the amount of time to wait before back to wander state*/
     private int WanderWait=0;
-    private float[] goal;
+    private final float[] goal;
     private enum FSMState {
         /** The enemy just spawned */
         SPAWN,

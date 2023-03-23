@@ -44,7 +44,7 @@ public class SplinePather {
     /** Whether the calculation has been run */
     private boolean calculated;
     /** The flatness tolerance for generating paths */
-    private float tolerance;
+    private final float tolerance;
 
     private float[] vertBuff;
     private short[] indBuff;

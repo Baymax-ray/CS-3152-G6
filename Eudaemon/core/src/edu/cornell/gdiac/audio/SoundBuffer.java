@@ -44,14 +44,14 @@ public interface SoundBuffer extends Sound {
      * playing simultaneously, so it must specify the particular instance that has
      * just ended.
      */
-    public interface OnCompletionListener {
+    interface OnCompletionListener {
         /** 
          * Called when the end of a music stream is reached during playback.
          *
          * @param buffer    The sound buffer that finished playing
          * @param instance     The particular instance that has completed
          */
-        public abstract void onCompletion(SoundBuffer buffer, long instance);
+        void onCompletion(SoundBuffer buffer, long instance);
     }
     
     /** 
@@ -59,7 +59,7 @@ public interface SoundBuffer extends Sound {
      *
      * @param listener  The callback that will be run. 
      */
-    public void setOnCompletionListener(OnCompletionListener listener);
+    void setOnCompletionListener(OnCompletionListener listener);
     
     
     // #mark -
@@ -71,7 +71,7 @@ public interface SoundBuffer extends Sound {
      *
      * @return the file that generated this asset.
      */
-    public FileHandle getFile();
+    FileHandle getFile();
     
     /**
      * Returns true if this is a mono audio asset.
@@ -81,21 +81,21 @@ public interface SoundBuffer extends Sound {
      *
      * @return true if this is a mono audio asset.
      */
-    public boolean isMono();
+    boolean isMono();
     
     /**
      * Returns the number of audio samples (per channel) per second.
      *
      * @return the number of audio samples (per channel) per second.
      */
-    public int getSampleRate();
+    int getSampleRate();
 
     /**
      * Returns the duration of this audio asset in seconds.
      *
      * @return the duration of this audio asset in seconds.
      */
-    public float getDuration();
+    float getDuration();
     
     // #mark -
     // #mark Playback Control
@@ -109,7 +109,7 @@ public interface SoundBuffer extends Sound {
      *
      * @return true if the given instance is actively playing
      */
-    public boolean isPlaying(long soundId);
+    boolean isPlaying(long soundId);
 
     /** 
      * Returns the volume of the given instance
@@ -121,7 +121,7 @@ public interface SoundBuffer extends Sound {
      *
      * @return the volume of the given instance
      */
-    public float getVolume(long soundId, float volume);
+    float getVolume(long soundId, float volume);
 
     /** 
      * Returns the loop setting of the given instance
@@ -133,7 +133,7 @@ public interface SoundBuffer extends Sound {
      *
      * @return the loop setting of the given instance
      */
-    public boolean getLooping(long soundId, boolean looping);
+    boolean getLooping(long soundId, boolean looping);
 
     /** 
      * Returns the pitch of the given instance
@@ -148,7 +148,7 @@ public interface SoundBuffer extends Sound {
      *
      * @return the pitch of the given instance
      */
-    public float getPitch(long soundId);
+    float getPitch(long soundId);
 
     /** 
      * Sets the pan of the given instance
@@ -162,7 +162,7 @@ public interface SoundBuffer extends Sound {
      * @param soundId   The playback instance
      * @param pan       The pan value -1 (left) to 1 (right). Use 0 for center.
      */
-    public void setPan(long soundId, float pan);
+    void setPan(long soundId, float pan);
 
     /** 
      * Returns the pan value of the given instance
@@ -177,7 +177,7 @@ public interface SoundBuffer extends Sound {
      *
      * @return the pan value of the given instance
      */
-    public float getPan(long soundId);
+    float getPan(long soundId);
     
     /**
      * Returns the current position of this instance in seconds.
@@ -189,7 +189,7 @@ public interface SoundBuffer extends Sound {
      *
      * @return the current position of this instance in seconds.
      */
-    public float getPosition(long soundId);
+    float getPosition(long soundId);
     
     /**
      * Sets the current position of this instance in seconds.
@@ -201,6 +201,6 @@ public interface SoundBuffer extends Sound {
      * @param soundId   The playback instance
      * @param seconds   The current position of this instance in seconds.
      */
-    public void setPosition(long soundId, float seconds);
+    void setPosition(long soundId, float seconds);
 
 }

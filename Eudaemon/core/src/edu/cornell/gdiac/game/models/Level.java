@@ -40,9 +40,9 @@ public class Level {
      * Key: Integer representing the texture ID.
      * Value: String representing the path to the texture file.
      */
-    private HashMap<Integer, TextureRegion> texturePaths;
+    private final HashMap<Integer, TextureRegion> texturePaths;
     /** Background texture for start-up */
-    private TextureRegion background;
+    private final TextureRegion background;
 
     /**
      * In level coordinates (not pixels), the width and height of a single tile.
@@ -65,13 +65,13 @@ public class Level {
 
 
     //#region NONFINAL FIELDS
-    private UIOverlay uiElements;
-    private World world;
+    private final UIOverlay uiElements;
+    private final World world;
 
     /** Queue for adding objects */
-    private PooledList<Obstacle> addQueue;
+    private final PooledList<Obstacle> addQueue;
 
-    private PooledList<Obstacle> objects;
+    private final PooledList<Obstacle> objects;
 
     /**
      * Whether this level has been completed

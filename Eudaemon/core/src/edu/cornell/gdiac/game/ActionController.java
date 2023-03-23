@@ -16,9 +16,9 @@ import java.util.HashMap;
 
 public class ActionController {
 
-    private Level level;
-    private Enemy[] enemies;
-    private Player player;
+    private final Level level;
+    private final Enemy[] enemies;
+    private final Player player;
 
     private float previousX;
     private float currentX;
@@ -29,7 +29,7 @@ public class ActionController {
      * Each key represents an animation name, and the associated value is a 2D TextureRegion array
      * with rows representing different animation states and columns representing individual frames.
      */
-    private HashMap<String, Animation> animations;
+    private final HashMap<String, Animation> animations;
 
     /**
      * The current animation TextureRegion.
@@ -92,8 +92,8 @@ public class ActionController {
      * @param playerAction the set of player actions to resolve
      */
     private void resolvePlayerActions(EnumSet<Action> playerAction){
-        System.out.println("x: " + player.getX());
-        System.out.println("y: " + player.getY());
+        //System.out.println("x: " + player.getX());
+        //System.out.println("y: " + player.getY());
         currentX = player.getX();
         float deltaX = previousX - currentX;
         //#region Button Inputs
@@ -166,7 +166,7 @@ public class ActionController {
 
         //#region Right Left Movement
         float y = player.getBodyVelocityY();
-        float x = player.getBodyVelocityX();;
+        float x = player.getBodyVelocityX();
         float max_speed;
         if (player.getForm() == 0) {
             max_speed = player.getMaxSpeed();
@@ -353,7 +353,7 @@ public class ActionController {
         }
 
         if(player.getDashLifespanRemaining() > 0){
-            player.setDashLifespanRemaining((int)Math.max(player.getDashLifespanRemaining()-1, 0));
+            player.setDashLifespanRemaining(Math.max(player.getDashLifespanRemaining()-1, 0));
             if(player.getDashLifespanRemaining() == 0){
                 player.setDashing(false);
                 player.setVelocity(player.getBodyVelocityX()/3, player.getBodyVelocityY()/3);

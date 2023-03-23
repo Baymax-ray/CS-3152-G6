@@ -39,7 +39,7 @@ public interface AudioSource extends Disposable {
      *
      * @return the file that generated this source.
      */
-    public FileHandle getFile();
+    FileHandle getFile();
 
     /**
      * Returns the number of audio channels in this source.
@@ -51,7 +51,7 @@ public interface AudioSource extends Disposable {
      *
      * @return the number of audio channels in this source.
      */
-    public int getChannels();
+    int getChannels();
 
     /**
      * Returns the sample rate of this audio asset
@@ -62,7 +62,7 @@ public interface AudioSource extends Disposable {
      *
      * @return the sample rate of this audio asset
      */
-    public int getSampleRate();
+    int getSampleRate();
 
     /**
      * Returns the duration of this audio asset in seconds
@@ -72,7 +72,7 @@ public interface AudioSource extends Disposable {
      *
      * @return  the duration of this audio asset in seconds
      */
-    public float getDuration();
+    float getDuration();
     
     /**
      * Returns a new {@link AudioStream} to stream this asset.
@@ -83,7 +83,7 @@ public interface AudioSource extends Disposable {
      *
      * @return a new {@link AudioStream} to stream this asset.
      */
-    public AudioStream getStream();
+    AudioStream getStream();
 
     /**
      * Returns a byte buffer encapsulating the audio asset
@@ -100,6 +100,6 @@ public interface AudioSource extends Disposable {
      *
      * @return a byte buffer encapsulating the audio asset
      */
-    public ByteBuffer getData();
+    ByteBuffer getData();
 
 }

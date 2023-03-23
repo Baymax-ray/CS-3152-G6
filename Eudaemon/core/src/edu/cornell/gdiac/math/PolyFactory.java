@@ -28,8 +28,8 @@ import java.util.ArrayList;
  * have have some settings (like precision and geometry) that we want to set separately.
  */
 public class PolyFactory {
-    private float DEFAULT_TOLERANCE = 0.5F;
-    private float tolerance;
+    private final float DEFAULT_TOLERANCE = 0.5F;
+    private final float tolerance;
 
     /**
      * Creates a PolyFactory for generating solid polygons.

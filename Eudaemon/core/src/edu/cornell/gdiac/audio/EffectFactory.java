@@ -40,7 +40,7 @@ public interface EffectFactory {
      * Edit properties of a ReverbDef object then use {@link #createReverb()} or {@link #updateReverb(EffectFilter, ReverbDef)}
      * to transfer properties from ReverbDef to the effect object.
      */
-    public class ReverbDef {
+    class ReverbDef {
 
         // Below are the default Settings for reverb effects
 
@@ -188,12 +188,12 @@ public interface EffectFactory {
      *
      * @param def the ReverbDef object to create from
      */
-    public EffectFilter createReverb(ReverbDef def);
+    EffectFilter createReverb(ReverbDef def);
 
     /**
      * Create default reverb object
      */
-    public EffectFilter createReverb();
+    EffectFilter createReverb();
 
     /**
      * Update an existing reverb effect based on the ReverbDef
@@ -201,7 +201,7 @@ public interface EffectFactory {
      * @param reverb the reverb effect to edit
      * @param def    the ReverbDef object to create from
      */
-    public void updateReverb(EffectFilter reverb, ReverbDef def);
+    void updateReverb(EffectFilter reverb, ReverbDef def);
 
     /**
      * This class contains definitions for constructing a EAXReverb object
@@ -219,7 +219,7 @@ public interface EffectFactory {
      * Edit properties of a EAXReverbDef object then use {@link #createEAXReverb()} or {@link #updateEAXReverb(EffectFilter, EAXReverbDef)}
      * to transfer properties from EAXReverbDef to the effect object.
      */
-    public class EAXReverbDef {
+    class EAXReverbDef {
         // Default Settings for EAX reverb effects
         /** These settings are the same as their standard reverb counterparts, refer to {@link ReverbDef} */
         public float                                        // [] denote the ranges of the values
@@ -360,12 +360,12 @@ public interface EffectFactory {
      *
      * @param def the EAXReverbDef object to create from
      */
-    public EffectFilter createEAXReverb(EAXReverbDef def);
+    EffectFilter createEAXReverb(EAXReverbDef def);
 
     /**
      * Create default EAXReverb object
      */
-    public EffectFilter createEAXReverb();
+    EffectFilter createEAXReverb();
 
     /**
      * Update an existing EAXReverb effect based on the EAXReverbDef
@@ -373,7 +373,7 @@ public interface EffectFactory {
      * @param eaxReverb the EaxReverb effect to edit
      * @param def the EAxReverbDef object to create from
      */
-    public void updateEAXReverb(EffectFilter eaxReverb, EAXReverbDef def);
+    void updateEAXReverb(EffectFilter eaxReverb, EAXReverbDef def);
 
     /**
      * This class contains definitions for constructing a chorus effect filter object
@@ -389,7 +389,7 @@ public interface EffectFactory {
      * Edit properties of a ChorusDef object then use {@link #createChorus()} or {@link #updateChorus(EffectFilter, ChorusDef)}
      * to transfer properties from ChorusDef to the effect object.
      */
-    public class ChorusDef {
+    class ChorusDef {
 
         // Default Settings for Chorus effects
         /**
@@ -457,12 +457,12 @@ public interface EffectFactory {
      *
      * @param def the ChorusDef object to create from
      */
-    public EffectFilter createChorus(ChorusDef def);
+    EffectFilter createChorus(ChorusDef def);
 
     /**
      * Create default Chorus object
      */
-    public EffectFilter createChorus();
+    EffectFilter createChorus();
 
     /**
      * Update an existing chorus effect based on the ChorusDef
@@ -470,7 +470,7 @@ public interface EffectFactory {
      * @param chorus the chorus effect to edit
      * @param def the ChorusDef object to create from
      */
-    public void updateChorus(EffectFilter chorus, ChorusDef def);
+    void updateChorus(EffectFilter chorus, ChorusDef def);
 
     /**
      * This class contains definitions for constructing a distortion object
@@ -483,7 +483,7 @@ public interface EffectFactory {
      * Edit properties of a DistortionDef object then use {@link #createDistortion()} or {@link #updateDistortion(EffectFilter, DistortionDef)} )}
      * to transfer properties from DistortionDef to the effect object.
      */
-    public class DistortionDef {
+    class DistortionDef {
         //Default Settings for Distortion effects
 
         /**
@@ -534,12 +534,12 @@ public interface EffectFactory {
      *
      * @param def the DistortionDef object to create from
      */
-    public EffectFilter createDistortion(DistortionDef def);
+    EffectFilter createDistortion(DistortionDef def);
 
     /**
      * Create default Distortion object
      */
-    public EffectFilter createDistortion();
+    EffectFilter createDistortion();
 
     /**
      * Update an existing distortion effect based on the DistortionDef
@@ -547,7 +547,7 @@ public interface EffectFactory {
      * @param distortion    the distortion effect to edit
      * @param def       the distortion object to create from
      */
-    public void updateDistortion(EffectFilter distortion, DistortionDef def);
+    void updateDistortion(EffectFilter distortion, DistortionDef def);
 
     /**
      * This class contains definitions for constructing an echo object
@@ -558,7 +558,7 @@ public interface EffectFactory {
      * Edit properties of a EchoDef object then use {@link #createEcho()} or {@link #updateEcho(EffectFilter, EchoDef)} )}
      * to transfer properties from EchoDef to the effect object.
      */
-    public class EchoDef {
+    class EchoDef {
         // Default Settings for Echo effects
         /**
          * This property controls the delay between the original sound and the first ‘tap’, or echo instance.
@@ -615,12 +615,12 @@ public interface EffectFactory {
      *
      * @param def the EchoDef object to create from
      */
-    public EffectFilter createEcho(EchoDef def) ;
+    EffectFilter createEcho(EchoDef def) ;
 
     /**
      * Create default Echo object
      */
-    public EffectFilter createEcho();
+    EffectFilter createEcho();
 
     /**
      * Update an existing echo effect based on the EchoDef
@@ -628,7 +628,7 @@ public interface EffectFactory {
      * @param echo the echo effect to edit
      * @param def the echo object to create from
      */
-    public void updateEcho(EffectFilter echo, EchoDef def);
+    void updateEcho(EffectFilter echo, EchoDef def);
 
     /**
      * This class contains definitions for constructing a flanger object
@@ -640,7 +640,7 @@ public interface EffectFactory {
      * Edit properties of a FlangerDef object then use {@link #createFlanger()} or {@link #updateFlanger(EffectFilter, FlangerDef)} )}
      * to transfer properties from FlangerDef to the effect object.
      */
-    public class FlangerDef {
+    class FlangerDef {
         // Default Settings for Flanger effects
         /**
          * Selects the shape of the LFO waveform that controls the amount of the delay of the sampled signal.
@@ -703,12 +703,12 @@ public interface EffectFactory {
      *
      * @param def the FlangerDef object to create from
      */
-    public EffectFilter createFlanger(FlangerDef def);
+    EffectFilter createFlanger(FlangerDef def);
 
     /**
      * Create default Flanger object
      */
-    public EffectFilter createFlanger();
+    EffectFilter createFlanger();
 
     /**
      * Update an existing flanger effect based on the FlangerDef
@@ -716,7 +716,7 @@ public interface EffectFactory {
      * @param flanger the flanger effect to edit
      * @param def the FlangerDef object to create from
      */
-    public void updateFlanger(EffectFilter flanger, FlangerDef def);
+    void updateFlanger(EffectFilter flanger, FlangerDef def);
 
     /**
      * This class contains definitions for constructing a FrequencyShifter object
@@ -730,7 +730,7 @@ public interface EffectFactory {
      * Edit properties of a FreqShiftDef object then use {@link #createFreqShift()} or {@link #updateFreqShift(EffectFilter, FreqShiftDef)} )}
      * to transfer properties from FreqShiftDef to the effect object.
      */
-    public class FreqShiftDef {
+    class FreqShiftDef {
         // Default Settings for frequency shifter effects
 
         /**
@@ -760,12 +760,12 @@ public interface EffectFactory {
      *
      * @param def the FreqShiftDef object to create from
      */
-    public EffectFilter createFreqShift(FreqShiftDef def);
+    EffectFilter createFreqShift(FreqShiftDef def);
 
     /**
      * Create default FreqShift object
      */
-    public EffectFilter createFreqShift();
+    EffectFilter createFreqShift();
 
     /**
      * Update an existing freqShift effect based on the FreqShiftDef
@@ -773,7 +773,7 @@ public interface EffectFactory {
      * @param freqShift the freqShift effect to edit
      * @param def the FreqShiftDef object to create from
      */
-    public void updateFreqShift(EffectFilter freqShift, FreqShiftDef def);
+    void updateFreqShift(EffectFilter freqShift, FreqShiftDef def);
 
     /**
      * This class contains definitions for constructing a VocalMorpher object
@@ -787,7 +787,7 @@ public interface EffectFactory {
      * Edit properties of a VocalMorpherDef object then use {@link #createVocalMorpher()} or {@link #updateVocalMorpher(EffectFilter, VocalMorpherDef)} )}
      * to transfer properties from VocalMorpherDef to the effect object.
      */
-    public class VocalMorpherDef {
+    class VocalMorpherDef {
         // Default Settings for vocal morpher effects
 
         /**
@@ -837,12 +837,12 @@ public interface EffectFactory {
      *
      * @param def the VocalMorpherDef object to create from
      */
-    public EffectFilter createVocalMorpher(VocalMorpherDef def);
+    EffectFilter createVocalMorpher(VocalMorpherDef def);
 
     /**
      * Create default VocalMorpher object
      */
-    public EffectFilter createVocalMorpher();
+    EffectFilter createVocalMorpher();
 
     /**
      * Update an existing vocalMorpher effect based on the VocalMorpherDef
@@ -850,7 +850,7 @@ public interface EffectFactory {
      * @param vocalMorpher the vocalMorpher effect to edit
      * @param def the VocalMorpherDef object to create from
      */
-    public void updateVocalMorpher(EffectFilter vocalMorpher, VocalMorpherDef def);
+    void updateVocalMorpher(EffectFilter vocalMorpher, VocalMorpherDef def);
 
     /**
      * This class contains definitions for constructing a Pitch Shifter object
@@ -861,7 +861,7 @@ public interface EffectFactory {
      * Edit properties of a PitchShifterDef object then use {@link #createPitchShifter()} or {@link #updatePitchShifter(EffectFilter, PitchShifterDef)} )}
      * to transfer properties from PitchShifterDef to the effect object.
      */
-    public class PitchShifterDef {
+    class PitchShifterDef {
         // Default Settings for pitch shifter effects
         /**
          * This sets the number of semitones by which the pitch is shifted. There are 12 semitones per octave.
@@ -887,12 +887,12 @@ public interface EffectFactory {
      *
      * @param def the PitchShifterDef object to create from
      */
-    public EffectFilter createPitchShifter(PitchShifterDef def);
+    EffectFilter createPitchShifter(PitchShifterDef def);
 
     /**
      * Create default PitchShifter object
      */
-    public EffectFilter createPitchShifter();
+    EffectFilter createPitchShifter();
 
     /**
      * Update an existing PitchShifter effect based on the PitchShifterDef
@@ -900,7 +900,7 @@ public interface EffectFactory {
      * @param pitchShifter the pitchShifter effect to edit
      * @param def the PitchShifterDef object to create from
      */
-    public void updatePitchShifter(EffectFilter pitchShifter, PitchShifterDef def);
+    void updatePitchShifter(EffectFilter pitchShifter, PitchShifterDef def);
 
     /**
      * This class contains definitions for constructing a Ring Modulator object
@@ -911,7 +911,7 @@ public interface EffectFactory {
      * Edit properties of a RingModDef object then use {@link #createRingMod()} or {@link #updateRingMod(EffectFilter, RingModDef)} )}
      * to transfer properties from RingModDef to the effect object.
      */
-    public class RingModDef {
+    class RingModDef {
         // Default Settings for ring modulator effects
         /**
          * This is the frequency of the carrier signal. If the carrier signal is slowly varying (less than 20 Hz),
@@ -950,12 +950,12 @@ public interface EffectFactory {
      *
      * @param def the RingModDef object to create from
      */
-    public EffectFilter createRingMod(RingModDef def);
+    EffectFilter createRingMod(RingModDef def);
 
     /**
      * Create default Ring Modulator object
      */
-    public EffectFilter createRingMod();
+    EffectFilter createRingMod();
 
     /**
      * Update an existing RingModulator effect based on the RingModDef
@@ -963,7 +963,7 @@ public interface EffectFactory {
      * @param ringMod the RingMod effect to edit
      * @param def the RingModDef object to create from
      */
-    public void updateRingMod(EffectFilter ringMod, RingModDef def);
+    void updateRingMod(EffectFilter ringMod, RingModDef def);
 
 
     /**
@@ -978,7 +978,7 @@ public interface EffectFactory {
      * Edit properties of a AutoWAHDef object then use {@link #createAutoWAH()} or {@link #updateAutoWAH(EffectFilter, AutoWAHDef)} )}
      * to transfer properties from AutoWAHDef to the effect object.
      */
-    public class AutoWAHDef {
+    class AutoWAHDef {
         // Default Settings for AutoWAH effects
 
         /**
@@ -1023,12 +1023,12 @@ public interface EffectFactory {
      *
      * @param def the AutoWAHDef object to create from
      */
-    public EffectFilter createAutoWAH(AutoWAHDef def);
+    EffectFilter createAutoWAH(AutoWAHDef def);
 
     /**
      * Create default AutoWAH object
      */
-    public EffectFilter createAutoWAH();
+    EffectFilter createAutoWAH();
 
     /**
      * Update an existing AutoWAH effect based on the AutoWAHDef
@@ -1036,7 +1036,7 @@ public interface EffectFactory {
      * @param AutoWAH the AutoWAH effect to edit
      * @param def the AutoWAHDef object to create from
      */
-    public void updateAutoWAH(EffectFilter AutoWAH, AutoWAHDef def);
+    void updateAutoWAH(EffectFilter AutoWAH, AutoWAHDef def);
 
     /**
      * This class contains definitions for constructing an Equalizer object
@@ -1048,7 +1048,7 @@ public interface EffectFactory {
      * Edit properties of a EqualizerDef object then use {@link #createEqualizer()} or {@link #updateEqualizer(EffectFilter, EqualizerDef)} )}
      * to transfer properties from EqualizerDef to the effect object.
      */
-    public class EqualizerDef {
+    class EqualizerDef {
         // Default Settings for Equalizer effects
         /**
          * This property controls amount of cut or boost on the low frequency range.
@@ -1136,12 +1136,12 @@ public interface EffectFactory {
      *
      * @param def the EqualizerDef object to create from
      */
-    public EffectFilter createEqualizer(EqualizerDef def);
+    EffectFilter createEqualizer(EqualizerDef def);
 
     /**
      * Create default Equalizer object
      */
-    public EffectFilter createEqualizer();
+    EffectFilter createEqualizer();
 
     /**
      * Update an existing Equalizer effect based on the EqualizerDef
@@ -1149,5 +1149,5 @@ public interface EffectFactory {
      * @param Equalizer the Equalizer effect to edit
      * @param def the EqualizerDef object to create from
      */
-    public void updateEqualizer(EffectFilter Equalizer, EqualizerDef def);
+    void updateEqualizer(EffectFilter Equalizer, EqualizerDef def);
 }

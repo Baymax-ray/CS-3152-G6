@@ -26,13 +26,13 @@ public class BoxObstacle extends SimpleObstacle {
 	/** Shape information for this box */
 	protected PolygonShape shape;
 	/** The width and height of the box */
-	private Vector2 dimension;
+	private final Vector2 dimension;
 	/** A cache value for when the user wants to access the dimensions */
-	private Vector2 sizeCache;
+	private final Vector2 sizeCache;
 	/** A cache value for the fixture (for resizing) */
 	private Fixture geometry;
 	/** Cache of the polygon vertices (for resizing) */
-	private float[] vertices;
+	private final float[] vertices;
 	
 	/** 
 	 * Returns the dimensions of this box

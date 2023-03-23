@@ -41,8 +41,8 @@ public class CapsuleObstacle extends SimpleObstacle {
         HORIZONTAL,
         /** A half-capsule with a rounded end at the right */
         RIGHT
-    };
-    
+    }
+
 	/** Shape information for this box */
 	protected PolygonShape shape;
 	/** Shape information for the end cap */
@@ -53,9 +53,9 @@ public class CapsuleObstacle extends SimpleObstacle {
     protected Rectangle center;
 
 	/** The width and height of the box */
-	private Vector2 dimension;
+	private final Vector2 dimension;
 	/** A cache value for when the user wants to access the dimensions */
-	private Vector2 sizeCache;
+	private final Vector2 sizeCache;
     /** A cache value for the center fixture (for resizing) */
 	private Fixture core;
     /** A cache value for the first end cap fixture (for resizing) */
@@ -65,10 +65,10 @@ public class CapsuleObstacle extends SimpleObstacle {
     /** The capsule orientation */
     private Orientation orient;
 	/** Cache of the polygon vertices (for resizing) */
-	private float[] vertices;
+	private final float[] vertices;
 	
 	/** A cache value for computing fixtures */
-	private Vector2 posCache = new Vector2();
+	private final Vector2 posCache = new Vector2();
     /** The seam offset of the core rectangle */
     private float seamEpsilon;
 
