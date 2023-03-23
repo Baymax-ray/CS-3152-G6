@@ -268,18 +268,18 @@ public class FlyAI extends AIController{
                 int x=co.getX();
                 int y=co.getY();
                 if (x==gx&&y==gy){
-                    this.move= co.getDirection();
+                    EnemyAction nexttile= co.getDirection();
                     float[] result=new float[2];
-                    if (move==EnemyAction.FLY_DOWN){
+                    if (nexttile==EnemyAction.FLY_DOWN){
                         result[0]=level.tileToLevelCoordinatesX(cx)+this.tileSize/2;
                         result[1]=level.tileToLevelCoordinatesY(cy+1)+this.tileSize/2;
-                    }else if (move==EnemyAction.FLY_UP){
+                    }else if (nexttile==EnemyAction.FLY_UP){
                         result[0]=level.tileToLevelCoordinatesX(cx)+this.tileSize/2;
                         result[1]=level.tileToLevelCoordinatesY(cy-1)+this.tileSize/2;
-                    }else if (move==EnemyAction.FLY_RIGHT){
+                    }else if (nexttile==EnemyAction.FLY_RIGHT){
                         result[0]=level.tileToLevelCoordinatesX(cx+1)+this.tileSize/2;
                         result[1]=level.tileToLevelCoordinatesY(cy)+this.tileSize/2;
-                    }else if (move==EnemyAction.FLY_LEFT){
+                    }else if (nexttile==EnemyAction.FLY_LEFT){
                     result[0]=level.tileToLevelCoordinatesX(cx-1)+this.tileSize/2;
                     result[1]=level.tileToLevelCoordinatesY(cy)+this.tileSize/2;
                     }
