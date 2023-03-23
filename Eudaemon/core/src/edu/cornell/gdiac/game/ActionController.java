@@ -172,7 +172,7 @@ public class ActionController {
             max_speed = player.getMaxSpeed();
         }
         else{
-            max_speed = 1.5f * player.getMaxSpeed();
+            max_speed = player.getChiyoSpeedMult() * player.getMaxSpeed();
         }
         float h_acc = player.getHorizontalAcceleration();
         if (rightPressed && leftPressed || (!rightPressed && !leftPressed)){
@@ -289,8 +289,6 @@ public class ActionController {
                 }
             }, player.getDashTime());
         }
-
-//        System.out.println(player.getBody().getGravityScale());
         //#endregion
 
         //#region Jump
@@ -484,7 +482,7 @@ public class ActionController {
         }
         else if (angleFacing == 90){
             x = player.getX();
-            y = player.getY() + currOffset;
+            y = player.getY() + 1.3f *currOffset;
         }
         else if (angleFacing == 135){
             x = player.getX() - 0.71f * currOffset;
@@ -506,8 +504,8 @@ public class ActionController {
             x = player.getX() + 0.71f * currOffset;
             y = player.getY() - 0.71f * currOffset;
         }
-        Vector2 scale = new Vector2(32.0f,32.0f); //only gets used in sword attack
-        SwordWheelObstacle sword = new SwordWheelObstacle(x, y, player.getSwordRadius()*2, player, player.getAttackLifespan(), 10.0f, scale, player.getSwordEffectSpriteSheet(angleFacing));
+        Vector2 scale = new Vector2(32.0f,32.0f);
+        SwordWheelObstacle sword = new SwordWheelObstacle(x, y, player.getSwordRadius(), player, player.getAttackLifespan(), 10.0f, scale, player.getSwordEffectSpriteSheet(angleFacing));
         level.addQueuedObject(sword);
     }
 
