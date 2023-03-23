@@ -167,7 +167,13 @@ public class ActionController {
         //#region Right Left Movement
         float y = player.getBodyVelocityY();
         float x = player.getBodyVelocityX();;
-        float max_speed = player.getMaxSpeed();
+        float max_speed;
+        if (player.getForm() == 0) {
+            max_speed = player.getMaxSpeed();
+        }
+        else{
+            max_speed = 1.5f * player.getMaxSpeed();
+        }
         float h_acc = player.getHorizontalAcceleration();
         if (rightPressed && leftPressed || (!rightPressed && !leftPressed)){
             if (x > 0.0f){
