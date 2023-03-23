@@ -99,7 +99,7 @@ public class LoadingScreen implements Screen, InputProcessor, ControllerListener
 	private static final float BUTTON_SCALE  = 0.20f;
 	
 	/** Reference to GameCanvas created by the root */
-	private final GameCanvas canvas;
+	private GameCanvas canvas;
 	/** Listener that will update the player mode when we are done */
 	private ScreenListener listener;
 

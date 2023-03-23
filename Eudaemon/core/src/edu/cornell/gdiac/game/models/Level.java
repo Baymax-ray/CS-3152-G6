@@ -66,12 +66,12 @@ public class Level {
 
     //#region NONFINAL FIELDS
     private final UIOverlay uiElements;
-    private final World world;
+    private World world;
 
     /** Queue for adding objects */
-    private final PooledList<Obstacle> addQueue;
+    private PooledList<Obstacle> addQueue;
 
-    private final PooledList<Obstacle> objects;
+    private PooledList<Obstacle> objects;
 
     /**
      * Whether this level has been completed
