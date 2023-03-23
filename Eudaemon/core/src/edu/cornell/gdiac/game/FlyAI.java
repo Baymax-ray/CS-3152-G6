@@ -152,6 +152,8 @@ public class FlyAI extends AIController{
             case CHASE_close:
                 if(!sameCell()){
                     state=FSMState.CHASE;
+                    needGoal = true;
+
                 }
             case ATTACK:
                 //TODO
@@ -178,7 +180,6 @@ public class FlyAI extends AIController{
                 goal[0]=ex;
                 goal[1]=ey;
                 break;
-
             case WANDER:
                 int nx=tx;
                 int ny=ty;
@@ -206,7 +207,6 @@ public class FlyAI extends AIController{
                     goal[1]=level.tileToLevelCoordinatesY(ny);
 //                    System.out.println("goal (in tile) is "+nx+":"+ny );
                 }
-                needGoal = false;
                 break;
             case CHASE:
                 // only need to fly to the same tile
@@ -327,11 +327,9 @@ public class FlyAI extends AIController{
         System.out.println("moving along path, goal is "+goal[0]+":"+goal[1]);
         switch (state) {
             case WANDER:
-                ex=ex-enemyWidth/2;
-                ey=ey-enemyHeight/2;
             case CHASE_close:
-                float dx=goal[0]-ex;
-                float dy=goal[1]-ey;
+                float dx=goal[0]+this.tileSize/2-ex;
+                float dy=goal[1]+this.tileSize/2-ey;
                 if (Math.abs(dx)<=0.1 && Math.abs(dy)<=0.1){
                     this.move=EnemyAction.STAY;
                 }
