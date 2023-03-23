@@ -42,7 +42,7 @@
     "jumptime": 20,
     "maxJumpyVelocity": 5.0,
     "playerGravity": 18.0,
-    "spiritIncreaseRate": 0.005,
+    "spiritIncreaseRate": 0.015,
     "spiritKillingEnemy":1.0,
     "spiritDecreaseRate": 0.01,
     "spiritIncreaseDist": 2.0,
