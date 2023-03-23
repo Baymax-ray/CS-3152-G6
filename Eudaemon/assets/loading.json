@@ -4,14 +4,14 @@
 		"play": "shared/play.png",
         "title": "shared/EUDAEMON_title.png",
         "progress": {
-            "file": "shared/progressbar.png",
+            "file": "shared/progress.png",
             "atlas":     {
-                "background" : [16,   0, 216, 30],
-                "backleft"   : [0,    0,  15, 30],
-                "backright"  : [384,  0, 400, 30],
-                "foreground" : [16,  40, 216, 70],
-                "foreleft"   : [0,   40,  16, 70],
-                "foreright"  : [384, 40, 400, 70]
+                "background" : [16,   0, 216, 45],
+                "backleft"   : [0,    0,  15, 45],
+                "backright"  : [384,  0, 400, 45],
+                "foreground" : [16,  40, 216, 85],
+                "foreleft"   : [0,   40,  16, 85],
+                "foreright"  : [384, 40, 400, 85]
             }
         },
       "start": "shared/start_button.png",

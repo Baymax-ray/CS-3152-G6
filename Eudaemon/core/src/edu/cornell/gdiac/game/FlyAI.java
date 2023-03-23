@@ -64,19 +64,19 @@ public class FlyAI extends AIController{
         markGoal();
         MoveAlongPathToGoal();
         if(move==EnemyAction.FLY_UP){
-            System.out.println("up");
+//            System.out.println("up");
         }
         else if (move==EnemyAction.FLY_DOWN){
-            System.out.println("down");
+//            System.out.println("down");
         }
         else if (move==EnemyAction.STAY){
-            System.out.println("stay");
+//            System.out.println("stay");
         }
         else if (move==EnemyAction.FLY_RIGHT){
-            System.out.println("right");
+//            System.out.println("right");
         }
         else if (move==EnemyAction.FLY_LEFT){
-            System.out.println("left");
+//            System.out.println("left");
         }
 
         enemyAction.add(move);
@@ -160,18 +160,18 @@ public class FlyAI extends AIController{
                 break;
         }
         if (state==FSMState.CHASE) {
-            System.out.println("chase");
+//            System.out.println("chase");
         }
 
     }
     private void markGoal(){
         float ex=enemy.getX();
         float ey=enemy.getY();
-       System.out.println("position is "+ex+":"+ey);
+//       System.out.println("position is "+ex+":"+ey);
 
         int tx=level.levelToTileCoordinatesX(ex);
         int ty=level.levelToTileCoordinatesY(ey);//but NO!
-        System.out.println("position (in tile) is "+tx+":"+ty );
+//        System.out.println("position (in tile) is "+tx+":"+ty );
 
         Random rand = new Random();
         int randomInt;
@@ -214,7 +214,7 @@ public class FlyAI extends AIController{
                 int b=level.levelToTileCoordinatesY(level.getPlayer().getY());
                 if (a!=level.levelToTileCoordinatesX(goal[0])||b!=level.levelToTileCoordinatesY(goal[1])){
                     needGoal=true; //player is moving, need to re-compute the goal
-                    System.out.println("recompute because player moves");
+//                    System.out.println("recompute because player moves");
                 }
                 goal[0]=level.tileToLevelCoordinatesX(a);
                 goal[1]=level.tileToLevelCoordinatesY(b);
@@ -324,7 +324,7 @@ public class FlyAI extends AIController{
         float ex = enemy.getX();
         float ey = enemy.getY();
 //        System.out.println("moving along path, current position is "+ex+":"+ey);
-        System.out.println("moving along path, goal is "+goal[0]+":"+goal[1]);
+//        System.out.println("moving along path, goal is "+goal[0]+":"+goal[1]);
         switch (state) {
             case WANDER:
             case CHASE_close:
@@ -353,13 +353,13 @@ public class FlyAI extends AIController{
                     this.tempgoal=ChaseGoalHelper();
                     needGoal=false;
                 }else {
-                    System.out.println("moving along path, tempgoal is "+tempgoal[0]+":"+tempgoal[1]);
+//                    System.out.println("moving along path, tempgoal is "+tempgoal[0]+":"+tempgoal[1]);
 
                     float dtx = tempgoal[0] - ex;
                     float dty = tempgoal[1] - ey;
                     if (Math.abs(dtx) + Math.abs(dty) <= 0.2) {
                         needGoal = true;
-                        System.out.println("recompute because we reach there");
+//                        System.out.println("recompute because we reach there");
                     }
                     if (Math.abs(dtx) > Math.abs(dty)) {
                         if (dtx > 0) {

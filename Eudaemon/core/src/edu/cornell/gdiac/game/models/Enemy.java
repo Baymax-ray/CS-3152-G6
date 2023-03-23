@@ -311,7 +311,7 @@ public class Enemy extends CapsuleObstacle {
             this.markRemoved(true);
             this.setActive(false);
             player.increaseSpiritByKill(); //player gain some spirit when the enemy killed
-            System.out.println("kill an enemy!");
+//            System.out.println("kill an enemy!");
         }
     }
 }

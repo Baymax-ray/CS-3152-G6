@@ -26,7 +26,10 @@ public class Player extends CapsuleObstacle {
     private final float initialSpirit;
     private final float spiritPerSecond;
     private final int attackPower;
-
+    /**
+     * How much max speed is multiplied by for Chiyo
+     */
+    private final float chiyoSpeedMult;
     private final boolean startsFacingRight;
 
     /**
@@ -400,6 +403,14 @@ public class Player extends CapsuleObstacle {
 
     //#region GETTERS AND SETTERS
     /**
+     * Gets the value of the chiyo's speed multiplier
+     *
+     * @return The value of chiyo's speed multiplier.
+     */
+    public float getChiyoSpeedMult() {
+        return chiyoSpeedMult;
+    }
+    /**
      * Gets the value of the sxMult variable.
      *
      * @return The value of the sxMult variable.
@@ -490,7 +501,12 @@ public class Player extends CapsuleObstacle {
      * @return A float representing the jump velocity.
      */
     public float getJumpVelocity() {
-        return maxJumpVelocity;
+        if(form == 0) {
+            return maxJumpVelocity;
+        }
+        else{
+            return 1.3f * maxJumpVelocity;
+        }
     }
 
     /**
@@ -886,7 +902,15 @@ public class Player extends CapsuleObstacle {
      *
      * @return the time in frames
      */
-    public int getJumpTime() { return jumpTime; }
+    public int getJumpTime() {
+        if(form == 0) {
+            return jumpTime;
+        }
+        else{
+            return (int) 1.3 * jumpTime;
+        }
+
+    }
 
     /**
      * Returns the remaining number of frames that the player can ascend by holding the jump key
@@ -1030,6 +1054,7 @@ public class Player extends CapsuleObstacle {
         this.dash = json.getFloat("dash", 2000);
         this.dashLifespan = json.getInt("dashLifespan");
         this.dashTime = json.getInt("dashTime");
+        this.chiyoSpeedMult = json.getFloat("chiyoSpeedMult");
 
         //Attacking
         this.attackPower = json.getInt("attackPower");
