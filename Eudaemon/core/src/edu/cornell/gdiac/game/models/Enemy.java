@@ -291,12 +291,12 @@ public class Enemy extends CapsuleObstacle {
         }else if (this.type.equals("Fly")&&Math.abs(getVY()) >= this.maxSpeed) {
             setVY(Math.signum(getVY())*this.maxSpeed);
         }
-        else {
+
         //if(this.type.equals("Fly")){this.movementV *= this.force; this.movementH *= this.force;}
         forceCache.set(getMovementH(),getMovementV());
         body.applyForce(forceCache,getPosition(),true);
         }
-    }
+
 
 
     /**
