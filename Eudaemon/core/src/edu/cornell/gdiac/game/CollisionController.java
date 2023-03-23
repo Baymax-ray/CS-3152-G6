@@ -9,11 +9,16 @@ import java.util.ArrayList;
 
 public class CollisionController implements ContactListener {
 
-    Level level;
-    protected ObjectSet<Fixture> sensorFixtures;
+    private Level level;
+    private ObjectSet<Fixture> sensorFixtures;
     public CollisionController(Level level) {
         this.level = level;
         sensorFixtures = new ObjectSet<Fixture>();
+    }
+
+    public void dispose() {
+        this.level = null;
+        this.sensorFixtures.clear();
     }
 
     @Override

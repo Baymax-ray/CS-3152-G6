@@ -61,8 +61,6 @@ public class LevelScreen implements Screen {
         actionController.resolveActions(playerAction, enemyActions);
 
         level.update(delta);
-
-        checkScreenTransitions();
     }
 
 
@@ -88,6 +86,7 @@ public class LevelScreen implements Screen {
         if (active) {
             update(delta);
             draw(delta);
+            checkScreenTransitions();
         }
     }
 
@@ -124,7 +123,13 @@ public class LevelScreen implements Screen {
 
     @Override
     public void dispose() {
-        // TODO: dispose of everything that needs it to prevent memory leaks!
+        // TODO: dispose of everything that needs it to prevent memory leaks
+        this.level.getWorld().setContactListener(null);
+        collisionController.dispose();
+        aiControllers.clear();
+        enemyActions.clear();
+        canvas = null;
+        listener = null;
     }
 
     public void setScreenListener(ScreenListener listener) {

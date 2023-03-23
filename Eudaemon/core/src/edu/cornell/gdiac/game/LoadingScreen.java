@@ -249,6 +249,8 @@ public class LoadingScreen implements Screen, InputProcessor, ControllerListener
 	public void dispose() {
 		internal.unloadAssets();
 		internal.dispose();
+		canvas = null;
+		listener = null;
 	}
 	
 	/**

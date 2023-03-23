@@ -501,5 +501,17 @@ public class Level {
         return result;
     }
 
+    public void dispose() {
+        for(Obstacle obj : objects) {
+            obj.deactivatePhysics(world);
+        }
+        objects.clear();
+        addQueue.clear();
+        world.dispose();
+        objects = null;
+        addQueue = null;
+        world  = null;
+    }
+
 
 }

@@ -29,6 +29,15 @@ public class GameState {
         return bindings;
     }
 
+    public void dispose() {
+        //assets disposed by root
+        //bindings don't need to be disposed
+        // tiles don't need to be disposed
+        for (Level level : levels) {
+            level.dispose();
+        }
+    }
+
     public GameState(AssetDirectory assets) {
         this.currentLevelId = 0;
 

@@ -22,18 +22,26 @@ public class GameRoot extends Game implements ScreenListener {
 		setScreen(loadingScreen);
 	}
 
-	private GameState loadState() {
-		AssetDirectory assets = new AssetDirectory("assets.json");
-		assets.loadAssets();
-		assets.finishLoading(); // TODO: add loading screen
-		return new GameState(assets);
+	@Override
+	public void dispose() {
+		setScreen(null);
+		levelScreen.dispose();
+		loadingScreen.dispose();
+		assets.unloadAssets();
+		assets.dispose();
+		assets = null;
+		canvas.dispose();
+		state.dispose();
+		super.dispose();
 	}
+
 
 	@Override
 	public void exitScreen(Screen screen, int exitCode) {
 		if (screen == loadingScreen) {
 			assets = loadingScreen.getAssets();
 			state = new GameState(assets);
+			if (levelScreen != null) levelScreen.dispose();
 			this.levelScreen = new LevelScreen(this.state.getCurrentLevel(), this.state.getActionBindings());
 			levelScreen.setScreenListener(this);
 			levelScreen.setCanvas(canvas);
@@ -44,7 +52,10 @@ public class GameRoot extends Game implements ScreenListener {
 			if (exitCode == ExitCode.RESET || exitCode == ExitCode.LOSE) {
 				screen.pause();
 				this.state.resetCurrentLevel();
+				setScreen(null);
+				levelScreen.dispose();
 				levelScreen = new LevelScreen(this.state.getCurrentLevel(), this.state.getActionBindings());
+
 				levelScreen.setScreenListener(this);
 				levelScreen.setCanvas(canvas);
 				setScreen(levelScreen);
