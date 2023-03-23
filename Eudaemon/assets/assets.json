@@ -6,7 +6,7 @@
             "wrapV": "repeated"
         },
         "shared:goal":   "shared/goaldoor.png",
-        "chiyo:swordAttack": {
+        "chiyo:swordAttack0": {
             "file" : "platform/swordSpriteSheet.png",
             "sprites" : {
                 "fire": {
@@ -15,6 +15,69 @@
                 }
             }
         },
+      "chiyo:swordAttack45": {
+        "file" : "platform/45_swordattackspritesheet.png",
+        "sprites" : {
+          "fire": {
+            "rows": 1,
+            "cols": 6
+          }
+        }
+      },
+      "chiyo:swordAttack90": {
+        "file" : "platform/90_swordattackspritesheet.png",
+        "sprites" : {
+          "fire": {
+            "rows": 1,
+            "cols": 6
+          }
+        }
+      },
+      "chiyo:swordAttack135": {
+        "file" : "platform/135_swordattackspritesheet.png",
+        "sprites" : {
+          "fire": {
+            "rows": 1,
+            "cols": 6
+          }
+        }
+      },
+      "chiyo:swordAttack180": {
+        "file" : "platform/180_swordattackspritesheet.png",
+        "sprites" : {
+          "fire": {
+            "rows": 1,
+            "cols": 6
+          }
+        }
+      },
+      "chiyo:swordAttack225": {
+        "file" : "platform/225_swordattackspritesheet.png",
+        "sprites" : {
+          "fire": {
+            "rows": 1,
+            "cols": 6
+          }
+        }
+      },
+      "chiyo:swordAttack270": {
+        "file" : "platform/270_swordattackspritesheet.png",
+        "sprites" : {
+          "fire": {
+            "rows": 1,
+            "cols": 6
+          }
+        }
+      },
+      "chiyo:swordAttack315": {
+        "file" : "platform/315_swordattackspritesheet.png",
+        "sprites" : {
+          "fire": {
+            "rows": 1,
+            "cols": 6
+          }
+        }
+      },
         "momo:dashEffect": {
           "file" : "animations/dashEffectSpriteSheet.png",
           "sprites" : {

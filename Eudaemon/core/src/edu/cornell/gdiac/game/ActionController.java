@@ -496,7 +496,7 @@ public class ActionController {
             y = player.getY() - 0.71f * currOffset;
         }
         Vector2 scale = new Vector2(32.0f,32.0f); //only gets used in sword attack
-        SwordWheelObstacle sword = new SwordWheelObstacle(x, y, player.getSwordRadius(), player, player.getAttackLifespan(), 10.0f, scale, player.getSwordEffectSpriteSheet());
+        SwordWheelObstacle sword = new SwordWheelObstacle(x, y, player.getSwordRadius()*2, player, player.getAttackLifespan(), 10.0f, scale, player.getSwordEffectSpriteSheet(angleFacing));
         level.addQueuedObject(sword);
     }
 

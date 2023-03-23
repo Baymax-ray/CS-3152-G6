@@ -101,9 +101,38 @@ public class Player extends CapsuleObstacle {
     private final float chiyoImageWidth;
     private final float chiyoImageHeight;
     /**
-     * The sprite sheet containing the sword attack animation frames.
+     * The sprite sheet containing the 0 angle sword attack animation frames.
      */
-    private final TextureRegion swordEffectSpriteSheet;
+    private final TextureRegion swordEffectSpriteSheet0;
+    /**
+     * The sprite sheet containing the 45 angle sword attack animation frames.
+     */
+    private final TextureRegion swordEffectSpriteSheet45;
+    /**
+     * The sprite sheet containing the 90 angle sword attack animation frames.
+     */
+    private final TextureRegion swordEffectSpriteSheet90;
+    /**
+     * The sprite sheet containing the 135 angle sword attack animation frames.
+     */
+    private final TextureRegion swordEffectSpriteSheet135;
+    /**
+     * The sprite sheet containing the 180 angle sword attack animation frames.
+     */
+    private final TextureRegion swordEffectSpriteSheet180;
+    /**
+     * The sprite sheet containing the 225 angle sword attack animation frames.
+     */
+    private final TextureRegion swordEffectSpriteSheet225;
+    /**
+     * The sprite sheet containing the 270 angle sword attack animation frames.
+     */
+    private final TextureRegion swordEffectSpriteSheet270;
+    /**
+     * The sprite sheet containing the 315 angle sword attack animation frames.
+     */
+    private final TextureRegion swordEffectSpriteSheet315;
+
 
     /**
      * The sprite sheet containing the dash attack animation frames.
@@ -268,8 +297,32 @@ public class Player extends CapsuleObstacle {
      *
      * @return the sprite sheet containing the sword animation frames
      */
-    public TextureRegion getSwordEffectSpriteSheet() {
-        return swordEffectSpriteSheet;
+    public TextureRegion getSwordEffectSpriteSheet(float direction) {
+        if(direction == 0){
+            return swordEffectSpriteSheet0;
+        }
+        else if(direction == 45){
+            return swordEffectSpriteSheet45;
+        }
+        else if(direction == 90){
+            return swordEffectSpriteSheet90;
+        }
+        else if(direction == 135){
+            return swordEffectSpriteSheet135;
+        }
+        else if(direction == 180){
+            return swordEffectSpriteSheet180;
+        }
+        else if(direction == 225){
+            return swordEffectSpriteSheet225;
+        }
+        else if(direction == 270){
+            return swordEffectSpriteSheet270;
+        }
+        else if(direction == 315){
+            return swordEffectSpriteSheet315;
+        }
+        return swordEffectSpriteSheet0;
     }
     /**
      * Gets the sprite sheet containing the dash animation frames.
@@ -952,7 +1005,14 @@ public class Player extends CapsuleObstacle {
         this.chiyoImageHeight = json.getFloat("chiyo:ImageHeight");
 
         //Animations
-        this.swordEffectSpriteSheet = new TextureRegion(assets.getEntry( "chiyo:swordAttack", Texture.class));
+        this.swordEffectSpriteSheet0 = new TextureRegion(assets.getEntry( "chiyo:swordAttack0", Texture.class));
+        this.swordEffectSpriteSheet45 = new TextureRegion(assets.getEntry( "chiyo:swordAttack45", Texture.class));
+        this.swordEffectSpriteSheet90 = new TextureRegion(assets.getEntry( "chiyo:swordAttack90", Texture.class));
+        this.swordEffectSpriteSheet135 = new TextureRegion(assets.getEntry( "chiyo:swordAttack135", Texture.class));
+        this.swordEffectSpriteSheet180 = new TextureRegion(assets.getEntry( "chiyo:swordAttack180", Texture.class));
+        this.swordEffectSpriteSheet225 = new TextureRegion(assets.getEntry( "chiyo:swordAttack225", Texture.class));
+        this.swordEffectSpriteSheet270 = new TextureRegion(assets.getEntry( "chiyo:swordAttack270", Texture.class));
+        this.swordEffectSpriteSheet315 = new TextureRegion(assets.getEntry( "chiyo:swordAttack315", Texture.class));
         this.dashEffectSpriteSheet = new TextureRegion(assets.getEntry( "momo:dashEffect", Texture.class));
         this.spiritDrainSpriteSheet = new TextureRegion(assets.getEntry("chiyo:spiritDrain", Texture.class));
         this.momoDashSpriteSheet = new TextureRegion(assets.getEntry( "momo:dash", Texture.class));
