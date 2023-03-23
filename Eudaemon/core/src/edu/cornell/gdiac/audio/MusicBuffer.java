@@ -51,7 +51,7 @@ public interface MusicBuffer extends Music {
      * processed, confirming that they did indeed happen.  For a less conservative
      * approach, you should get the current position in the queue.
      */
-    public interface OnTransitionListener {
+    interface OnTransitionListener {
         /** 
          * Called when a single audio source loops back around.
          *
@@ -62,7 +62,7 @@ public interface MusicBuffer extends Music {
          * @param buffer    The buffer that reached the end of the stream
          * @param source    The source that looped around
          */
-        public void onLoopback(MusicBuffer buffer, AudioSource source);
+        void onLoopback(MusicBuffer buffer, AudioSource source);
         /** 
          * Called when queue transitions from one source to another.
          *
@@ -74,7 +74,7 @@ public interface MusicBuffer extends Music {
          * @param source1   The previous source in the transition
          * @param source2   The current source in the transition
          */
-        public void onTransition(MusicBuffer buffer, AudioSource source1, AudioSource source2);
+        void onTransition(MusicBuffer buffer, AudioSource source1, AudioSource source2);
         /** 
          * Called when the end of a music stream is reached during playback.
          *
@@ -86,7 +86,7 @@ public interface MusicBuffer extends Music {
          * @param buffer    The buffer that reached the end of the stream
          * @param source    The last source processed by this stream
          */
-        public void onCompletion(MusicBuffer buffer, AudioSource source);
+        void onCompletion(MusicBuffer buffer, AudioSource source);
     }
     
     /** 
@@ -94,7 +94,7 @@ public interface MusicBuffer extends Music {
      *
      * @param listener  The callback that will be run. 
      */
-    public void setOnTransitionListener(OnTransitionListener listener);
+    void setOnTransitionListener(OnTransitionListener listener);
     
     // #mark -
     // #mark Fixed Attributes
@@ -106,7 +106,7 @@ public interface MusicBuffer extends Music {
      *
      * @return true if this is a mono music stream.
      */
-    public boolean isMono();
+    boolean isMono();
     
     /**
      * Returns the number of audio samples (per channel) per second.
@@ -116,7 +116,7 @@ public interface MusicBuffer extends Music {
      *
      * @return the number of audio samples (per channel) per second.
      */
-    public int getSampleRate();
+    int getSampleRate();
     
     /**
      * Returns the current duration of this music stream in seconds.
@@ -124,7 +124,7 @@ public interface MusicBuffer extends Music {
      * The duration is the sum of the durations of all of the sources
      * in the music buffer.
      */
-    public float getDuration();
+    float getDuration();
 
     /** 
      * Sets the pitch of the music stream
@@ -134,7 +134,7 @@ public interface MusicBuffer extends Music {
      *
      * @param pitch The pitch of the  music stream
      */
-    public void setPitch(float pitch);
+    void setPitch(float pitch);
     
     /** 
      * Returns the pitch of the music stream
@@ -144,7 +144,7 @@ public interface MusicBuffer extends Music {
      *
      * @return the pitch of the  music stream
      */
-    public float getPitch();
+    float getPitch();
 
     /** 
      * Sets the pan of the given music stream
@@ -154,7 +154,7 @@ public interface MusicBuffer extends Music {
      *
      * @param pan       The pan value -1 (left) to 1 (right). Use 0 for center.
      */
-    public void setPan(float pan);
+    void setPan(float pan);
 
     /** 
      * Returns the pan value of the music stream
@@ -164,7 +164,7 @@ public interface MusicBuffer extends Music {
      *
      * @return the pan value of the music stream
      */
-    public float getPan();
+    float getPan();
     
     /** 
      * Sets the loop behavior of this music buffer.
@@ -180,7 +180,7 @@ public interface MusicBuffer extends Music {
      *
      * @param local Whether the loop behavior is local
      */
-     public void setLoopBehavior(boolean local);
+    void setLoopBehavior(boolean local);
 
     /** 
      * Returns the loop behavior of this music buffer.
@@ -196,7 +196,7 @@ public interface MusicBuffer extends Music {
      *
      * @return the loop behavior of this music buffer.
      */
-     public boolean getLoopBehavior();
+    boolean getLoopBehavior();
      
      
     // #mark Queue Management
@@ -205,7 +205,7 @@ public interface MusicBuffer extends Music {
      *
      * @return the number of audio sources in this buffer
      */
-    public int getNumberOfSources();
+    int getNumberOfSources();
     
     /**
      * Returns the current audio sources being played.
@@ -216,7 +216,7 @@ public interface MusicBuffer extends Music {
      *
      * @return the current audio sources being played.
      */
-    public AudioSource getCurrent();
+    AudioSource getCurrent();
 
     /**
      * Returns the audio source at the given queue position.
@@ -225,7 +225,7 @@ public interface MusicBuffer extends Music {
      *
      * @return the audio source at the given queue position.
      */
-    public AudioSource getSource(int pos);
+    AudioSource getSource(int pos);
     
     /**
      * Sets the source for the given position.
@@ -237,7 +237,7 @@ public interface MusicBuffer extends Music {
      * @param pos       The position in the source queue
      * @param source    The source to place
      */
-    public void setSource(int pos, AudioSource source);
+    void setSource(int pos, AudioSource source);
 
     /**
      * Adds the given source as the source queue.
@@ -248,7 +248,7 @@ public interface MusicBuffer extends Music {
      *
      * @param source    The source to add
      */
-    public void addSource(AudioSource source);
+    void addSource(AudioSource source);
 
     /**
      * Insert the source at the given position.
@@ -260,7 +260,7 @@ public interface MusicBuffer extends Music {
      * @param pos       The position in the source queue
      * @param source    The source to insert
      */
-    public void insertSource(int pos, AudioSource source);
+    void insertSource(int pos, AudioSource source);
 
     /**
      * Removes the source at the given position.
@@ -276,7 +276,7 @@ public interface MusicBuffer extends Music {
      *
      * @return the source removed from the given position
      */
-    public AudioSource removeSource(int pos);
+    AudioSource removeSource(int pos);
 
     /**
      * Clears the music buffer, removing all sources.
@@ -284,7 +284,7 @@ public interface MusicBuffer extends Music {
      * It is safe to call them method while the buffer is playing.
      * It will immediately halt all playback.
      */
-    public void clearSources();
+    void clearSources();
 
     /**
      * Advances the music buffer to the next audio source in the queue
@@ -294,7 +294,7 @@ public interface MusicBuffer extends Music {
      * an attached transition listener, it will be notified of the
      * transition.
      */
-    public void advanceSource();
+    void advanceSource();
     
     /**
      * Advances the music buffer the given number of steps in the queue
@@ -312,7 +312,7 @@ public interface MusicBuffer extends Music {
      *
      * @throws IllegalArgumentException if steps < 0
      */
-    public void advanceSource(int steps);
+    void advanceSource(int steps);
     
     /**
      * Jumps to the given source in the music buffer queue
@@ -323,7 +323,7 @@ public interface MusicBuffer extends Music {
      *
      * @param pos   The position in the source queue
      */
-    public void jumpToSource(int pos);
+    void jumpToSource(int pos);
     
     /**
      * Resets the music buffer to very beginning of the stream.
@@ -331,6 +331,6 @@ public interface MusicBuffer extends Music {
      * The stream will return to the very beginning of the first source
      * in the buffer queue.
      */
-    public void reset();
+    void reset();
 
 }

@@ -149,22 +149,22 @@ public class Player extends CapsuleObstacle {
     /**
      * The sprite sheet containing the momo dash animation frames.
      */
-    private TextureRegion momoDashSpriteSheet;
+    private final TextureRegion momoDashSpriteSheet;
 
     /**
      * The sprite sheet containing the momo run animation frames.
      */
-    private TextureRegion momoRunSpriteSheet;
+    private final TextureRegion momoRunSpriteSheet;
 
     /**
      * The sprite sheet containing the momo jump animation frames.
      */
-    private TextureRegion momoJumpSpriteSheet;
+    private final TextureRegion momoJumpSpriteSheet;
 
     /**
      * The sprite sheet containing the chiyo run animation frames.
      */
-    private TextureRegion chiyoRunSpriteSheet;
+    private final TextureRegion chiyoRunSpriteSheet;
 
     /**
      * The sprite sheet containing the chiyo attack animation frames.
@@ -204,7 +204,7 @@ public class Player extends CapsuleObstacle {
     /**
      * The horizontal acceleration of the object.
      */
-    private float horizontalAcceleration;
+    private final float horizontalAcceleration;
 
     private boolean isDashing;
     private boolean isJumping;
@@ -219,8 +219,8 @@ public class Player extends CapsuleObstacle {
     private int angleFacing;
     private boolean isMovingRight;
     private boolean isMovingLeft;
-    private boolean isLookingUp;
-    private boolean isLookingDown;
+    private final boolean isLookingUp;
+    private final boolean isLookingDown;
     private boolean jumpPressedInAir;
 
     private int dashCooldownRemaining;
@@ -232,7 +232,7 @@ public class Player extends CapsuleObstacle {
      * The remaining time in seconds until the player can transform again.
      */
     private int transformCooldownRemaining;
-    private int hitCooldownRemaining;
+    private final int hitCooldownRemaining;
 
     /** The player's form: 0 is Momo, 1 is Chiyo */
     private int form;
@@ -262,7 +262,7 @@ public class Player extends CapsuleObstacle {
     /**
      * A float representing the max jump velocity of a game object.
      */
-    private float maxJumpVelocity;
+    private final float maxJumpVelocity;
     /**
      * A final float representing the gravity affecting the player.
      */

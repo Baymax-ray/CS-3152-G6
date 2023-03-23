@@ -11,13 +11,13 @@ import edu.cornell.gdiac.game.models.Action;
 
 public class UIOverlay {
     /** Texture for hearts*/
-    private Texture heartRegion;
+    private final Texture heartRegion;
 
     /** Texture for filled spirit bar*/
-    private Texture filledSpiritBar;
+    private final Texture filledSpiritBar;
 
     /** Texture for outline of bar/hearts*/
-    private Texture uiOutline;
+    private final Texture uiOutline;
 
     public UIOverlay(JsonValue json, AssetDirectory assets){
         this.heartRegion = assets.getEntry(json.getString("heart"), Texture.class);

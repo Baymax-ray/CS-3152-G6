@@ -31,7 +31,7 @@ public interface AudioStream {
      *
      * @return the {@link AudioSource} that generated this stream.
      */
-     public AudioSource getSource();
+    AudioSource getSource();
     
     /**
      * Returns the total number of bytes in this stream.
@@ -42,7 +42,7 @@ public interface AudioStream {
      *
      * @return the total number of bytes in this stream.
      */
-    public long getByteSize();
+    long getByteSize();
     
     /**
      * Returns the current byte position in this stream.
@@ -54,7 +54,7 @@ public interface AudioStream {
      *
      * @return the total number of bytes in this stream.
      */
-    public long getByteOffset();
+    long getByteOffset();
     
     /**
      * Returns the total number of audio samples in this stream.
@@ -66,7 +66,7 @@ public interface AudioStream {
      *
      * @return the total number of audio samples in this stream.
      */
-    public long getSampleSize();
+    long getSampleSize();
     
     /**
      * Returns the current audio sample in this stream.
@@ -79,7 +79,7 @@ public interface AudioStream {
      *
      * @return the current audio samples in this stream.
      */
-    public long getSampleOffset();
+    long getSampleOffset();
     
     /**
      * Reads the next page of bytes into the given buffer.
@@ -98,7 +98,7 @@ public interface AudioStream {
      *
      * @return the number of bytes read
      */
-    public int read(byte[] buffer);
+    int read(byte[] buffer);
     
     /**
      * Reads the next page of audio samples into the given buffer.
@@ -120,7 +120,7 @@ public interface AudioStream {
      *
      * @return the number of audio samples read
      */
-    public int read(short[] buffer);
+    int read(short[] buffer);
     
     /**
      * Reads the next page of audio samples into the given buffer.
@@ -142,7 +142,7 @@ public interface AudioStream {
      *
      * @return the number of audio samples read
      */
-    public int read(float[] buffer);
+    int read(float[] buffer);
     
     /**
      * Seeks to the given byte position, reading the results into the provided buffer
@@ -167,7 +167,7 @@ public interface AudioStream {
      *
      * @return the number of bytes read
      */
-    public int seek(long pos, byte[] buffer);
+    int seek(long pos, byte[] buffer);
     
     /**
      * Seeks to the given audio sample, reading the results into the provided buffer
@@ -194,7 +194,7 @@ public interface AudioStream {
      *
      * @return the number of audio samples read
      */
-    public int seek(long pos, short[] buffer);
+    int seek(long pos, short[] buffer);
 
     /**
      * Seeks to the given audio sample, reading the results into the provided buffer
@@ -220,7 +220,7 @@ public interface AudioStream {
      *
      * @return the number of audio samples read
      */
-    public int seek(long pos, float[] buffer);
+    int seek(long pos, float[] buffer);
 
     /**
      * Resets this audio stream rewinding it to the beginning.
@@ -228,7 +228,7 @@ public interface AudioStream {
      * This differs from {@link #loop} in that it assumes the asset will not need
      * to be streamed immediately, so it is safe to delete internal memory.
      */
-    public void reset();
+    void reset();
 
     /**
      * Resets this audio stream rewinding it to the beginning.
@@ -236,6 +236,6 @@ public interface AudioStream {
      * This differs from {@link #reset} in that it assumes the asset will need
      * to be streamed immediately, so it preserves any internal memory.
      */
-    public void loop();
+    void loop();
 
 }

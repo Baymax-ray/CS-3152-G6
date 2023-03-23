@@ -11,20 +11,20 @@ public class LevelScreen implements Screen {
 
     private boolean active;
 
-    private Level level;
+    private final Level level;
 
     private ScreenListener listener;
     private GameCanvas canvas;
 
-    private InputController inputController;
-    private EnumSet<Action> playerAction;
+    private final InputController inputController;
+    private final EnumSet<Action> playerAction;
 
-    private Array<AIController> aiControllers;
-    private Array<EnumSet<EnemyAction>> enemyActions;
+    private final Array<AIController> aiControllers;
+    private final Array<EnumSet<EnemyAction>> enemyActions;
 
-    private ActionController actionController;
+    private final ActionController actionController;
 
-    private CollisionController collisionController;
+    private final CollisionController collisionController;
 
 
     public LevelScreen(Level level, ActionBindings actionBindings) {

@@ -45,7 +45,7 @@ public class PathSmoother {
     private boolean calculated;
 
     /** This makes sense as default for touch coordinates */
-    private float DEFAULT_EPSILON=1;
+    private final float DEFAULT_EPSILON=1;
 
     /**
      * Creates a path smoother with no vertex data.

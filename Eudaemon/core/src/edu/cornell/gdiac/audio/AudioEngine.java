@@ -39,7 +39,7 @@ public interface AudioEngine extends Audio {
      * Possible simultaneous sound sources include instances of {@link SoundEffect},
      * {@link MusicQueue}, and {@link AudioDevice}.
      */
-    public int getCapacity();
+    int getCapacity();
 
     /**
      * Creates a new {#link AudioSource} from the given file.
@@ -59,7 +59,7 @@ public interface AudioEngine extends Audio {
      * @throws GdxRuntimeException if the asset could not be loaded
      * @return a new {#link Sample} from the given file.
      */
-    public AudioSource newSource(FileHandle file);
+    AudioSource newSource(FileHandle file);
     
     /**
      * Creates a new {@link SoundEffect} which to play back audio effects.
@@ -79,7 +79,7 @@ public interface AudioEngine extends Audio {
      * @throws GdxRuntimeException if the asset could not be loaded
      * @return a new {#link SoundBuffer} from the given file.
      */
-    public SoundEffect newSound(FileHandle file);
+    SoundEffect newSound(FileHandle file);
     
     /**
      * Creates a new {@link SoundEffect} which to play back audio effects.
@@ -98,7 +98,7 @@ public interface AudioEngine extends Audio {
      *
      * @return a new {#link SoundBuffer} from the given audio source.
      */
-    public SoundEffect newSoundBuffer(AudioSource source);
+    SoundEffect newSoundBuffer(AudioSource source);
     
     /** 
      * Creates a new {@link MusicQueue} to stream from the given file.
@@ -122,7 +122,7 @@ public interface AudioEngine extends Audio {
      * @throws GdxRuntimeException if the asset could not be loaded
      * @return a new {#link MusicBuffer} from the given file.
      */
-    public MusicQueue newMusic(FileHandle file);
+    MusicQueue newMusic(FileHandle file);
     
     /** 
      * Creates a new {@link MusicQueue} with the given properties.
@@ -147,7 +147,7 @@ public interface AudioEngine extends Audio {
      *
      * @return a new {#link MusicBuffer} with the given properties.
      */
-    public MusicQueue newMusicBuffer(boolean isMono, int sampleRate);
+    MusicQueue newMusicBuffer(boolean isMono, int sampleRate);
     
     /**
      * Pauses all sound instances associated with this audio engine.
@@ -155,7 +155,7 @@ public interface AudioEngine extends Audio {
      * This will pause everything, and not just music.  This is the method that 
      * should be called when your application is minimized.
      */
-    public void pause();
+    void pause();
 
     /**
      * Pauses all sound instances previously paused.
@@ -164,12 +164,12 @@ public interface AudioEngine extends Audio {
      * method.  Sound instances paused via their own local pause interface will not be
      * affected.
      */
-    public void resume();
+    void resume();
 
     /**
      * Gets the EffectFactory for creating {@link EffectFilter}
      *
      * @return EffectFactory class for generating sound filters
      * */
-    public EffectFactory getEffectFactory();
+    EffectFactory getEffectFactory();
 }

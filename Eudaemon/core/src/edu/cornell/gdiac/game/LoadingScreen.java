@@ -54,14 +54,14 @@ import edu.cornell.gdiac.util.XBoxController;
 public class LoadingScreen implements Screen, InputProcessor, ControllerListener {
 	// There are TWO asset managers.  One to load the loading screen.  The other to load the assets
 	/** Internal assets for this loading screen */
-	private AssetDirectory internal;
+	private final AssetDirectory internal;
 	/** The actual assets to be loaded */
-	private AssetDirectory assets;
+	private final AssetDirectory assets;
 	
 	/** Background texture for start-up */
-	private Texture background;
+	private final Texture background;
 	/** Title texture for start-up */
-	private Texture title;
+	private final Texture title;
 	/** Play button to display when done */
 	private Texture playButton;
 	/** settings button to display when done */
@@ -73,33 +73,33 @@ public class LoadingScreen implements Screen, InputProcessor, ControllerListener
 	
 	// statusBar is a "texture atlas." Break it up into parts.
 	/** Left cap to the status background (grey region) */
-	private TextureRegion statusBkgLeft;
+	private final TextureRegion statusBkgLeft;
 	/** Middle portion of the status background (grey region) */
-	private TextureRegion statusBkgMiddle;
+	private final TextureRegion statusBkgMiddle;
 	/** Right cap to the status background (grey region) */
-	private TextureRegion statusBkgRight;
+	private final TextureRegion statusBkgRight;
 	/** Left cap to the status forground (colored region) */
-	private TextureRegion statusFrgLeft;
+	private final TextureRegion statusFrgLeft;
 	/** Middle portion of the status forground (colored region) */
-	private TextureRegion statusFrgMiddle;
+	private final TextureRegion statusFrgMiddle;
 	/** Right cap to the status forground (colored region) */
-	private TextureRegion statusFrgRight;	
+	private final TextureRegion statusFrgRight;
 
 	/** Default budget for asset loader (do nothing but load 60 fps) */
-	private static int DEFAULT_BUDGET = 15;
+	private static final int DEFAULT_BUDGET = 15;
 	/** Standard window size (for scaling) */
-	private static int STANDARD_WIDTH  = 800;
+	private static final int STANDARD_WIDTH  = 800;
 	/** Standard window height (for scaling) */
-	private static int STANDARD_HEIGHT = 700;
+	private static final int STANDARD_HEIGHT = 700;
 	/** Ratio of the bar width to the screen */
-	private static float BAR_WIDTH_RATIO  = 0.66f;
+	private static final float BAR_WIDTH_RATIO  = 0.66f;
 	/** Ration of the bar height to the screen */
-	private static float BAR_HEIGHT_RATIO = 0.25f;
+	private static final float BAR_HEIGHT_RATIO = 0.25f;
 	/** Height of the progress bar */
-	private static float BUTTON_SCALE  = 0.20f;
+	private static final float BUTTON_SCALE  = 0.20f;
 	
 	/** Reference to GameCanvas created by the root */
-	private GameCanvas canvas;
+	private final GameCanvas canvas;
 	/** Listener that will update the player mode when we are done */
 	private ScreenListener listener;
 

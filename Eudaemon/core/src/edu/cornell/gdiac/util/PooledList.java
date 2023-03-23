@@ -110,7 +110,7 @@ public class PooledList<E> extends AbstractSequentialList<E> implements Iterable
 	}
 
 	/** Memory pool for reallocating deleted objects */
-	private Pool<Entry> memory;
+	private final Pool<Entry> memory;
 	
 	/** The queue head */
 	private Entry head;
@@ -407,9 +407,9 @@ public class PooledList<E> extends AbstractSequentialList<E> implements Iterable
 	}
 	
 	/** Cached reference to the value iterator */
-	private ValueIterator values  = new ValueIterator();
+	private final ValueIterator values  = new ValueIterator();
 	/** Cached reference to the entry iterator */
-	private EntryIterator entries = new EntryIterator();
+	private final EntryIterator entries = new EntryIterator();
 
 	/**
 	 * Returns an iterator over the list values

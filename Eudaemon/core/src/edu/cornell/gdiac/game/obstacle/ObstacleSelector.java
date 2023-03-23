@@ -37,20 +37,20 @@ import edu.cornell.gdiac.game.*;  // For GameCanvas
  */
 public class ObstacleSelector implements QueryCallback  {
 	/** The default size of the mouse selector */
-	private static float DEFAULT_MSIZE = 0.2f;
+	private static final float DEFAULT_MSIZE = 0.2f;
 	/** The default update frequence (in Hz) of the joint */
-	private static float DEFAULT_FREQUENCY = 10.0f;
+	private static final float DEFAULT_FREQUENCY = 10.0f;
 	/** The default damping force of the joint */
-	private static float DEFAULT_DAMPING = 0.7f;
+	private static final float DEFAULT_DAMPING = 0.7f;
 	/** The default force multiplier of the selector */
-	private static float DEFAULT_FORCE = 1000.0f;
+	private static final float DEFAULT_FORCE = 1000.0f;
 
     /** The World associated with this selection */
-    private World world;
+    private final World world;
     /** The current fixture selected by this tool (may be nullptr) */
     private Fixture selection;
     /** A default body used as the other half of the mouse joint */
-    private Body ground;
+    private final Body ground;
 	/** The width and height of the box */
 	private Vector2 dimension;
 	
@@ -59,22 +59,22 @@ public class ObstacleSelector implements QueryCallback  {
 	/** The texture origin (in the center) */
 	private Vector2 origin;
 	/** The drawing scale for this selector */
-	private Vector2 drawScale;
+	private final Vector2 drawScale;
     
     /** A reusable definition for creating a mouse joint */
-    private MouseJointDef mouseJointDef;
+    private final MouseJointDef mouseJointDef;
     /** The current mouse joint, if an item is selected */
     private MouseJoint mouseJoint;
     
     /** The region of world space to select an object from */
-    private Rectangle  pointer;
+    private final Rectangle  pointer;
     /** The amount to multiply by the mass to move the object */
     private float force;
     
     /** Position cache for moving mouse */
-    private Vector2 position = new Vector2();
+    private final Vector2 position = new Vector2();
     /** Size cache for the draw scale */
-    private Vector2 scaleCache = new Vector2();
+    private final Vector2 scaleCache = new Vector2();
     
 	/**
      * Returns the response speed of the mouse joint

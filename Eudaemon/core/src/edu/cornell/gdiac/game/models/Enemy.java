@@ -75,15 +75,15 @@ public class Enemy extends CapsuleObstacle {
     /**
      * The maximum horizontal speed that the object can reach.
      */
-    private float maxSpeed;
+    private final float maxSpeed;
 
     /**
      * The horizontal acceleration of the object.
      */
     private float horizontalAcceleration;
 
-    private boolean isHit;
-    private boolean isGrounded;
+    private final boolean isHit;
+    private final boolean isGrounded;
     private boolean isFacingRight;
     /**
      * The angle at which the entity is facing, in degrees.

@@ -26,9 +26,9 @@ public class Spinner extends ComplexObstacle {
 	private final JsonValue data;
 
 	/** The primary spinner obstacle */
-	private BoxObstacle barrier;
+	private final BoxObstacle barrier;
 
-	private BodyDef pivotDef;
+	private final BodyDef pivotDef;
 
 	/**
 	 * Creates a new spinner with the given physics data.

@@ -17,7 +17,7 @@ import java.util.HashMap;
 public class InputController {
 
     private final HashMap<String, Integer> inputMap;
-    private EnumSet<Action> prevAction;
+    private final EnumSet<Action> prevAction;
 
 
     public InputController(ActionBindings bindings) {

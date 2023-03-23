@@ -15,8 +15,8 @@ public class FlyAI extends AIController{
     private final float enemyWidth;
     private final float enemyHeight;
     private final float tileSize;
-    private Enemy enemy;
-    private Level level;
+    private final Enemy enemy;
+    private final Level level;
     private int ticks=0;
     private FSMState state;
     private EnemyAction move;
@@ -24,7 +24,7 @@ public class FlyAI extends AIController{
     /**
      * in the level coordinate
      */
-    private float[] goal;
+    private final float[] goal;
     /** do we need to go to the next step in chasing?*/
     private boolean needGoal = true;
     private float[]tempgoal;
@@ -91,12 +91,7 @@ public class FlyAI extends AIController{
         float ex=enemy.getX();
         int ty=level.levelToTileCoordinatesY(ey);
         int tx=level.levelToTileCoordinatesX(ex);
-        if (Math.abs(tpy-ty)+Math.abs(tpx-tx)<=detectDistance){
-            return true;
-        }
-        else{
-            return false;
-        }
+        return Math.abs(tpy - ty) + Math.abs(tpx - tx) <= detectDistance;
     }
 
     private boolean sameCell(){
@@ -108,12 +103,7 @@ public class FlyAI extends AIController{
         float ex=enemy.getX();
         int ty=level.levelToTileCoordinatesY(ey);
         int tx=level.levelToTileCoordinatesX(ex);
-        if (tpy==ty && tpx==tx){
-            return true;
-        }
-        else{
-            return false;
-        }
+        return tpy == ty && tpx == tx;
     }
 
     private boolean canAttack(){
@@ -378,9 +368,9 @@ public class FlyAI extends AIController{
         }
     }
     private class Coord {
-        private int x;
-        private int y;
-        private EnemyAction d;
+        private final int x;
+        private final int y;
+        private final EnemyAction d;
         public Coord(int x, int y,EnemyAction direction){
             this.x=x;
             this.y=y;

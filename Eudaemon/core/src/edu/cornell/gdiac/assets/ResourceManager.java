@@ -233,7 +233,7 @@ public class ResourceManager {
         if (resourcesByType == null) {
             throw new GdxRuntimeException(String.format("Pipeline resource '%s' not active.", key));
         }
-        Disposable resource = (Disposable)resourcesByType.get(key);
+        Disposable resource = resourcesByType.get(key);
         if (resource == null) {
             throw new GdxRuntimeException(String.format("Pipeline resource '%s' not active.", key));
         }
@@ -258,7 +258,7 @@ public class ResourceManager {
         if (resourcesByType == null) {
             throw new GdxRuntimeException(String.format("Pipeline resource '%s' not active.", key));
         }
-        Disposable resource = (Disposable)resourcesByType.get(key);
+        Disposable resource = resourcesByType.get(key);
         if (resource == null) {
             throw new GdxRuntimeException(String.format("Pipeline resource '%s' not active.", key));
         }
@@ -322,7 +322,7 @@ public class ResourceManager {
         if (resourcesByType == null) {
             throw new GdxRuntimeException(String.format("Pipeline resource '%s' not active.", key));
         }
-        Disposable resource = (Disposable)resourcesByType.get(key);
+        Disposable resource = resourcesByType.get(key);
         if (resource == null) {
             throw new GdxRuntimeException(String.format("Pipeline resource '%s' not active.", key));
         }
@@ -350,7 +350,7 @@ public class ResourceManager {
         if (resourcesByType == null) {
             throw new GdxRuntimeException(String.format("Pipeline resource '%s' not active.", key));
         }
-        Disposable resource = (Disposable)resourcesByType.get(key);
+        Disposable resource = resourcesByType.get(key);
         if (resource == null) {
             throw new GdxRuntimeException(String.format("Pipeline resource '%s' not active.", key));
         }

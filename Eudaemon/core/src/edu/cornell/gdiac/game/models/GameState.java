@@ -5,12 +5,12 @@ import com.badlogic.gdx.utils.Json;
 import edu.cornell.gdiac.assets.AssetDirectory;
 
 public class GameState {
-    private AssetDirectory assets;
-    private ActionBindings bindings;
+    private final AssetDirectory assets;
+    private final ActionBindings bindings;
     //other global settings go here
-    private Tile[] tiles;
-    private Level[] levels;
-    private int currentLevelId;
+    private final Tile[] tiles;
+    private final Level[] levels;
+    private final int currentLevelId;
 
     public Level getCurrentLevel() {
         return levels[currentLevelId];
