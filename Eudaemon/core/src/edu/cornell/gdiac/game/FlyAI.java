@@ -27,7 +27,7 @@ public class FlyAI extends AIController{
     private final float[] goal;
     /** do we need to go to the next step in chasing?*/
     private boolean needGoal = true;
-    private float[]tempgoal;
+    private float[] tempgoal;
 
 
     private enum FSMState {
