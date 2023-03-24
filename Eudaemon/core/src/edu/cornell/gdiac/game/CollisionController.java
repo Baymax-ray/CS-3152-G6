@@ -93,7 +93,6 @@ public class CollisionController implements ContactListener {
         Object bd2 = body2.getUserData();
         if((bd1 instanceof Player && bd2 instanceof Enemy && ((Player) bd1).isDashing())||
                 (bd1 instanceof Enemy && bd2 instanceof Player&& ((Player) bd2).isDashing())){
-            System.out.println("yes, flying and player");
             // Get the two fixtures that you want to ignore each other
             Fixture fixture1 = fix1;
             Fixture fixture2 = fix2;
