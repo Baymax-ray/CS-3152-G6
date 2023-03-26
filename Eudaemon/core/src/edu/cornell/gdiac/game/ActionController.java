@@ -285,6 +285,9 @@ public class ActionController {
             player.setVelocity(player.getBodyVelocityX(), player.getJumpVelocity());
             player.setJumpCooldownRemaining(player.getJumpCooldown());
             player.setJumpTimeRemaining(player.getJumpTime());
+            player.setJumpTimeRemaining(
+                    player.getForm()==0 ? player.getJumpTime() : (int) (player.getJumpTime()
+                            * player.getChiyoJumpTimeMult()));
             player.setIsJumping(true);
         } else if (player.isGrounded() && player.getBodyVelocityY() == 0) {
             player.setIsJumping(false);

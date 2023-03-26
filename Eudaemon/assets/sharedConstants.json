@@ -40,6 +40,7 @@
     "coyoteTime": 20,
     "jumpTolerance": 20,
     "jumptime": 20,
+    "chiyoJumpTimeMult": 1.5,
     "maxJumpyVelocity": 5.0,
     "playerGravity": 18.0,
     "spiritIncreaseRate": 0.015,

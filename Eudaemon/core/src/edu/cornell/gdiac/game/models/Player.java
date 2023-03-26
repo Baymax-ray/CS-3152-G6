@@ -93,6 +93,8 @@ public class Player extends CapsuleObstacle {
 
     private final float attackDist;
 
+    private final float chiyoJumpTimeMult;
+
     //#endregion
 
     //#region TEXTURES
@@ -411,6 +413,16 @@ public class Player extends CapsuleObstacle {
     public float getChiyoSpeedMult() {
         return chiyoSpeedMult;
     }
+
+    /**
+     * Gets the value of the chiyo's speed multiplier
+     *
+     * @return The value of chiyo's speed multiplier.
+     */
+    public float getChiyoJumpTimeMult() {
+        return chiyoJumpTimeMult;
+    }
+
     /**
      * Gets the value of the sxMult variable.
      *
@@ -981,8 +993,8 @@ public class Player extends CapsuleObstacle {
         sensorDef.isSensor = true;
         sensorShape = new PolygonShape();
         JsonValue sensorjv = data.get("sensor");
-        sensorShape.setAsBox(0.6f*getWidth()/2.0f,
-                0.05f, sensorCenter, 0.0f);
+        sensorShape.setAsBox(sensorjv.getFloat("shrink",0)*getWidth()/2.0f,
+                sensorjv.getFloat("height",0), sensorCenter, 0.0f);
         sensorDef.shape = sensorShape;
 
         // Ground sensor to represent our feet
@@ -1055,6 +1067,7 @@ public class Player extends CapsuleObstacle {
         this.dashLifespan = json.getInt("dashLifespan");
         this.dashTime = json.getInt("dashTime");
         this.chiyoSpeedMult = json.getFloat("chiyoSpeedMult");
+        this.chiyoJumpTimeMult = json.getFloat("chiyoJumpTimeMult");
 
         //Attacking
         this.attackPower = json.getInt("attackPower");
@@ -1086,6 +1099,7 @@ public class Player extends CapsuleObstacle {
         this.hitDist = json.getFloat("hit_dist");
         this.iFrames = json.getInt("iFrames");
         this.attackDist = json.getFloat("attack_dist");
+
 
         this.isChiyo = false;
 
