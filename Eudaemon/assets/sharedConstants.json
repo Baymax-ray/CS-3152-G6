@@ -4,6 +4,7 @@
     "momo:ImageWidth": 1.5,
     "momo:ImageHeight": 1.5,
     "uioutline": "platform:uioutline",
+    "settings": "platform:settings",
     "chiyo:TextureAsset": "platform:chiyo",
     "chiyo:ImageWidth": 1.3,
     "chiyo:ImageHeight": 1.3,
