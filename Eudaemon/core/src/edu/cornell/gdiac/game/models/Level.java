@@ -429,12 +429,10 @@ public class Level {
 
         if (Math.abs(canvas.getCamera().position.x - player.getX()) > camZone_x) {
             if (canvas.getCamera().position.x > player.getX()) {
-
                 canvas.setGameplayCamera(player.getX()+camZone_x, canvas.getCamera().position.y, cameraWidth, cameraHeight);
             }
 
             else {
-
                 canvas.setGameplayCamera(player.getX()-camZone_x, canvas.getCamera().position.y, cameraWidth, cameraHeight);
             }
         }
@@ -446,8 +444,14 @@ public class Level {
             else canvas.setGameplayCamera(canvas.getCamera().position.x, player.getY()-camZone_y, cameraWidth, cameraHeight);
         }
 
-        //System.out.println("camera: "+canvas.getCamera().position.x+" "+canvas.getCamera().position.y);
-        //System.out.println("player: "+player.getX()+" "+player.getY());
+        if (canvas.getCamera().position.x < cameraWidth/2)
+            canvas.setGameplayCamera(cameraWidth/2, canvas.getCamera().position.y, cameraWidth, cameraHeight);
+
+        //canvas.setGameplayCamera(cameraWidth/2, cameraHeight/2, cameraWidth, cameraHeight);
+
+        System.out.println("camera: "+canvas.getCamera().position.x+" "+canvas.getCamera().position.y);
+        System.out.println("player: "+player.getX()+" "+player.getY());
+        System.out.println();
     }
 
     public void handleSpirit() {

@@ -71,8 +71,8 @@ public class CollisionController implements ContactListener {
         Object bd1 = body1.getUserData();
         Object bd2 = body2.getUserData();
 
-        if ((body1.getUserData().toString().contains("Tile") && level.getPlayer() != body1.getUserData()) ||
-                (body2.getUserData().toString().contains("Tile") && level.getPlayer() != body2.getUserData())) {
+        if ((body1.getUserData().toString().contains("Tile") && level.getPlayer() == body2.getUserData()) ||
+                (body2.getUserData().toString().contains("Tile") && level.getPlayer() == body1.getUserData())) {
             sensorFixtures.remove(level.getPlayer() == body1.getUserData() ? fix2 : fix1);
             if (sensorFixtures.size == 0) {
                 level.getPlayer().setGrounded(false);

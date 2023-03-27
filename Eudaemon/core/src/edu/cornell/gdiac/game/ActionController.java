@@ -405,6 +405,8 @@ public class ActionController {
         previousX = player.getX();
         movedDuringLastFrame = (leftPressed || rightPressed) && deltaX > 0;
 
+
+
     }
 
     /**
