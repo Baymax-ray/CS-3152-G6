@@ -82,7 +82,8 @@
     "sensor": {
       "shrink" : 0.6,
       "height" : 0.05
-    }
+    },
+    "spiritLimitation":8
   },
   "Fly": {
     "ImageWidth": 0.5,
@@ -110,6 +111,7 @@
     "sensor": {
       "shrink" : 0.6,
       "height" : 0.05
-    }
+    },
+    "spiritLimitation":8
   }
 }

@@ -11,14 +11,15 @@ import edu.cornell.gdiac.game.*;
 import edu.cornell.gdiac.game.obstacle.*;
 
 public class Enemy extends CapsuleObstacle {
-
-    //#region FINAL FIELDS
-
+    private float spiritlimit;
     private Vector2 pos;
     private Vector2 vel;
-
     private float movementH;
     private float movementV=0;
+    /** Cache for internal force calculations */
+    private Vector2 forceCache = new Vector2();
+
+    //#region FINAL FIELDS
     private final float startX;
     private final float startY;
 
@@ -43,9 +44,6 @@ public class Enemy extends CapsuleObstacle {
      * The scaling factor for the sprite.
      */
     private final Vector2 scale;
-
-    /** Cache for internal force calculations */
-    private Vector2 forceCache = new Vector2();
 
     /** The amount to slow the character down */
     private final float damping;
@@ -109,6 +107,15 @@ public class Enemy extends CapsuleObstacle {
         return type;
     }
     private String getSensorName() {return this.sensorName;}
+    public float getSpiritlimit() {
+        return spiritlimit;
+    }
+    public void lossingSpirit(float rate){
+        this.spiritlimit-=rate;
+    }
+
+
+    //#endregion
 
     public void setMovement(EnemyAction move) {
         if (move==EnemyAction.MOVE_RIGHT ||move==EnemyAction.FLY_RIGHT){
@@ -195,6 +202,7 @@ public class Enemy extends CapsuleObstacle {
         this.maxHearts = enemyData.getInt("maxHearts");
         this.initialHearts = enemyData.getInt("initialHearts");
         this.hearts = initialHearts;
+        this.spiritlimit=enemyData.getFloat(("spiritLimitation"));
 
         this.startsFacingRight = enemyData.getBoolean("startsFacingRight");
 
@@ -319,4 +327,5 @@ public class Enemy extends CapsuleObstacle {
 //            System.out.println("kill an enemy!");
         }
     }
+
 }

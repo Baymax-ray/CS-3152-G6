@@ -455,12 +455,15 @@ public class Level {
             player.decreaseSpirit();
             if (player.getSpirit()==0) player.setForm();
         }
-
+        int e=0;
         //TODO: What is this number?
         double shortestDist = 99999;
         for (int i = 0; i < enemies.size(); i++) {
             double dist = Math.sqrt(Math.pow(player.getX() - enemies.get(i).getX(), 2) + Math.pow(player.getY() - enemies.get(i).getY(), 2));
-            if (dist < shortestDist) shortestDist = dist;
+            if (dist < shortestDist && enemies.get(i).getSpiritlimit()>0) {
+                shortestDist = dist;
+                e=i;
+            }
 
             if (dist < player.getHitDist() && !player.isHit() && !player.isDashing()) {
                 player.setHit(true);
@@ -479,6 +482,7 @@ public class Level {
             }
         }
         if (shortestDist < player.getSpiritIncreaseDist() && player.getForm()==0){
+            enemies.get(e).lossingSpirit(player.getSpiritIncreaseRate());
             player.increaseSpirit();
             Vector2 scale = new Vector2(5f,5f);
             SwordWheelObstacle spiritAnimate = new SwordWheelObstacle(player.getX(), player.getY(), player.getSpiritDrainSpriteSheet().getRegionWidth()/400F, player, player.getAttackLifespan(), 5f, scale, player.getSpiritDrainSpriteSheet());
