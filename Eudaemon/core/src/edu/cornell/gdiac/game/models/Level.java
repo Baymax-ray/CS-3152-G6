@@ -468,6 +468,10 @@ public class Level {
             if (player.isAttacking() && dist < player.getAttackDist() &&
                     (player.isFacingRight() && player.getX() < enemies.get(i).getX() ||
                             !player.isFacingRight() && player.getX() > enemies.get(i).getX())) {
+                if((player.getY() > enemies.get(i).getY())
+                        && player.getAngleFacing() == 270){
+                    player.setVelocity(player.getBodyVelocityX(), player.getJumpVelocity() - 1F);
+                }
                 enemies.get(i).hitBySword(player);
                 System.out.println("removing enemy" + enemies.get(i).getType());
                 enemies = removeEnemy(enemies, i);

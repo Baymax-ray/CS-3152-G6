@@ -9,11 +9,7 @@ import com.badlogic.gdx.utils.Array;
 import edu.cornell.gdiac.game.models.*;
 import edu.cornell.gdiac.game.obstacle.SwordWheelObstacle;
 
-import java.util.Timer;
-import java.util.TimerTask;
-
-import java.util.EnumSet;
-import java.util.HashMap;
+import java.util.*;
 
 public class ActionController {
 
@@ -163,8 +159,10 @@ public class ActionController {
         float x = player.getBodyVelocityX();
         float max_speed;
         if (player.getForm() == 0) {
+            player.setGrounded(true);
             max_speed = player.getMaxSpeed();
         } else {
+            player.setGrounded(true);
             max_speed = player.getChiyoSpeedMult() * player.getMaxSpeed();
         }
         float h_acc = player.getHorizontalAcceleration();
@@ -207,9 +205,6 @@ public class ActionController {
             player.setAttacking(true);
             player.setAttackLifespanRemaining(player.getAttackLifespan());
             createSword();
-            if (player.getAngleFacing() == 270) {
-                player.setVelocity(player.getBodyVelocityX(), player.getJumpVelocity() - 1F);
-            }
         }
         //#endregion
 
@@ -448,6 +443,27 @@ public class ActionController {
         int angleFacing = player.getAngleFacing();
         float x = player.getX() + currOffset;
         float y = player.getY();
+        //When on ground, downward slashes should just be left or right slash
+        if(player.getBodyVelocityY() == 0 && (angleFacing == 225 || angleFacing == 270 || angleFacing == 315) && !player.getIsJumping()){
+            if(angleFacing == 225){
+                x = player.getX() - currOffset;
+                y = player.getY();
+                angleFacing = 180;
+            }
+            else if(angleFacing == 270){
+                if(player.isFacingRight()){
+                    angleFacing = 0;
+                }
+                else{
+                    x = player.getX() - currOffset;
+                    y = player.getY();
+                    angleFacing = 180;
+                }
+            }
+            else if(angleFacing == 315){
+                angleFacing = 0;
+            }
+        }
         if (angleFacing == 45) {
             x = player.getX() + 0.71f * currOffset;
             y = player.getY() + 0.71f * currOffset;
@@ -470,6 +486,7 @@ public class ActionController {
             x = player.getX() + 0.71f * currOffset;
             y = player.getY() - 0.71f * currOffset;
         }
+
         Vector2 scale = new Vector2(32.0f, 32.0f);
         SwordWheelObstacle sword = new SwordWheelObstacle(x, y, player.getSwordRadius(), player, player.getAttackLifespan(), 10.0f, scale, player.getSwordEffectSpriteSheet(angleFacing));
         level.addQueuedObject(sword);
