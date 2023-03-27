@@ -1,0 +1,69 @@
+{
+  "numTiles": 1,
+  "numLevels": 1,
+  "tiles": [
+    {
+      "textureAsset": "shared:earth"
+    }
+  ],
+  "levels": [
+    {
+      "level": "levelDemo",
+      "levelHeight": 40,
+      "tileSize": 1,
+      "cameraWidth": 26.69,
+      "cameraHeight": 15,
+      "gravity": -1,
+      "player": {
+        "startX": 7,
+        "startY": 14,
+        "hitboxWidth": 0.6,
+        "hitboxHeight": 0.9
+      },
+      "enemy":[
+        {
+          "type":"Goomba",
+          "TextureAsset": "platform:worm",
+          "startX": 11,
+          "startY": 8
+        },
+        {
+          "type":"Goomba",
+          "TextureAsset": "platform:worm",
+          "startX": 37,
+          "startY": 19
+        },
+        {
+          "type":"Goomba",
+          "TextureAsset": "platform:worm",
+          "startX": 42,
+          "startY": 19
+        },
+        {
+          "type":"Goomba",
+          "TextureAsset": "platform:worm",
+          "startX": 26,
+          "startY": 27
+        },
+        {
+          "type":"Fly",
+          "TextureAsset": "platform:worm",
+          "startX": 12,
+          "startY": 10
+        },
+        {
+          "type":"Fly",
+          "TextureAsset": "platform:worm",
+          "startX": 26,
+          "startY": 31
+        },
+        {
+          "type":"Fly",
+          "TextureAsset": "platform:worm",
+          "startX": 27,
+          "startY": 19
+        }
+      ]
+    }
+  ]
+}
