@@ -942,7 +942,7 @@ public class Player extends CapsuleObstacle {
     public float getSpiritIncreaseRate() { return spiritIncreaseRate; }
     public void increaseSpirit() { setSpirit(Math.min(getSpirit() + getSpiritIncreaseRate(), maxSpirit)); }
     public float getSpiritDecreaseRate() { return spiritDecreaseRate; }
-    public void increaseSpiritByKill(){ setSpirit(Math.min(getSpirit() + getSpiritIncreaseRate(), maxSpirit));}
+    public void increaseSpiritByKill(){ setSpirit(Math.min(getSpirit() + spiritKillingEnemy, maxSpirit));}
     public void decreaseSpirit() { setSpirit(Math.max(getSpirit() - getSpiritDecreaseRate(), 0)); }
     public float getSpiritIncreaseDist() { return spiritIncreaseDist; }
 
