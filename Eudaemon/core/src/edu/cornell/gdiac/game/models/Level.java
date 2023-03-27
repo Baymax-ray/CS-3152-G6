@@ -337,7 +337,8 @@ public class Level {
         float cam_y = canvas.getCamera().position.y;
 
 
-        canvas.draw(background, -50F, 0);
+//        canvas.draw(background, 0, 0);
+        canvas.draw(background, Color.WHITE, 0, 0, -3, 0, 0, 0.07F, 0.07F);
 //        canvas.draw(background, Color.CLEAR, background.getRegionWidth()/2, background.getRegionHeight()/2, 0, 0, 1 / background.getRegionWidth(), 1/ background.getRegionHeight());
 
         for (int y = 0; y < tilemap.length; y++) {
@@ -476,9 +477,8 @@ public class Level {
                 System.out.println("removing enemy" + enemies.get(i).getType());
                 enemies = removeEnemy(enemies, i);
             }
-
         }
-        if (shortestDist < player.getSpiritIncreaseDist() && player.getForm()==0  ){
+        if (shortestDist < player.getSpiritIncreaseDist() && player.getForm()==0){
             player.increaseSpirit();
             Vector2 scale = new Vector2(5f,5f);
             SwordWheelObstacle spiritAnimate = new SwordWheelObstacle(player.getX(), player.getY(), player.getSpiritDrainSpriteSheet().getRegionWidth()/400F, player, player.getAttackLifespan(), 5f, scale, player.getSpiritDrainSpriteSheet());
