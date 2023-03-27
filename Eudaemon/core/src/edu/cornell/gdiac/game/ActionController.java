@@ -159,10 +159,8 @@ public class ActionController {
         float x = player.getBodyVelocityX();
         float max_speed;
         if (player.getForm() == 0) {
-            player.setGrounded(true);
             max_speed = player.getMaxSpeed();
         } else {
-            player.setGrounded(true);
             max_speed = player.getChiyoSpeedMult() * player.getMaxSpeed();
         }
         float h_acc = player.getHorizontalAcceleration();
