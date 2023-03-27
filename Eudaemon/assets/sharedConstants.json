@@ -45,7 +45,7 @@
     "maxJumpyVelocity": 5.0,
     "playerGravity": 18.0,
     "spiritIncreaseRate": 0.005,
-    "spiritKillingEnemy":100.0,
+    "spiritKillingEnemy":2.0,
     "spiritDecreaseRate": 0.01,
     "spiritIncreaseDist": 2.0,
     "hit_dist": 0.75,
