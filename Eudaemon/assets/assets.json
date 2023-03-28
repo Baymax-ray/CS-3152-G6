@@ -147,6 +147,7 @@
         "platform:emptyspirit": "platform/emptyspirit.png",
         "platform:filled": "platform/filled.png",
         "platform:uioutline": "platform/UIOutline.png",
+        "platform:settings": "platform/settings.png",
         "tiles:DeepDirt1x1A.png": "tiles/DeepDirt1x1A.png",
         "tiles:DeepDirt1x1B.png": "tiles/DeepDirt1x1B.png",
         "tiles:DeepDirt1x1C.png": "tiles/DeepDirt1x1C.png",

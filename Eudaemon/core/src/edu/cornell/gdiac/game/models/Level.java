@@ -337,7 +337,8 @@ public class Level {
         float cam_y = canvas.getCamera().position.y;
 
 
-        canvas.draw(background, -50F, 0);
+//        canvas.draw(background, 0, 0);
+        canvas.draw(background, Color.WHITE, 0, 0, -3, 0, 0, 0.07F, 0.07F);
 //        canvas.draw(background, Color.CLEAR, background.getRegionWidth()/2, background.getRegionHeight()/2, 0, 0, 1 / background.getRegionWidth(), 1/ background.getRegionHeight());
 
         for (int y = 0; y < tilemap.length; y++) {
@@ -428,12 +429,10 @@ public class Level {
 
         if (Math.abs(canvas.getCamera().position.x - player.getX()) > camZone_x) {
             if (canvas.getCamera().position.x > player.getX()) {
-
                 canvas.setGameplayCamera(player.getX()+camZone_x, canvas.getCamera().position.y, cameraWidth, cameraHeight);
             }
 
             else {
-
                 canvas.setGameplayCamera(player.getX()-camZone_x, canvas.getCamera().position.y, cameraWidth, cameraHeight);
             }
         }
@@ -445,8 +444,14 @@ public class Level {
             else canvas.setGameplayCamera(canvas.getCamera().position.x, player.getY()-camZone_y, cameraWidth, cameraHeight);
         }
 
-        //System.out.println("camera: "+canvas.getCamera().position.x+" "+canvas.getCamera().position.y);
-        //System.out.println("player: "+player.getX()+" "+player.getY());
+        if (canvas.getCamera().position.x < cameraWidth/2)
+            canvas.setGameplayCamera(cameraWidth/2, canvas.getCamera().position.y, cameraWidth, cameraHeight);
+
+        //canvas.setGameplayCamera(cameraWidth/2, cameraHeight/2, cameraWidth, cameraHeight);
+
+        System.out.println("camera: "+canvas.getCamera().position.x+" "+canvas.getCamera().position.y);
+        System.out.println("player: "+player.getX()+" "+player.getY());
+        System.out.println();
     }
 
     public void handleSpirit() {
@@ -454,27 +459,34 @@ public class Level {
             player.decreaseSpirit();
             if (player.getSpirit()==0) player.setForm();
         }
-
+        int e=0;
         //TODO: What is this number?
         double shortestDist = 99999;
         for (int i = 0; i < enemies.size(); i++) {
             double dist = Math.sqrt(Math.pow(player.getX() - enemies.get(i).getX(), 2) + Math.pow(player.getY() - enemies.get(i).getY(), 2));
-            if (dist < shortestDist) shortestDist = dist;
+            if (dist < shortestDist && enemies.get(i).getSpiritlimit()>0) {
+                shortestDist = dist;
+                e=i;
+            }
 
-            if (dist < player.getHitDist() && !player.isHit()) {
+            if (dist < player.getHitDist() && !player.isHit() && !player.isDashing()) {
                 player.setHit(true);
                 player.hitByEnemy();
             }
             if (player.isAttacking() && dist < player.getAttackDist() &&
                     (player.isFacingRight() && player.getX() < enemies.get(i).getX() ||
                             !player.isFacingRight() && player.getX() > enemies.get(i).getX())) {
+                if((player.getY() > enemies.get(i).getY())
+                        && player.getAngleFacing() == 270){
+                    player.setVelocity(player.getBodyVelocityX(), player.getJumpVelocity() - 1F);
+                }
                 enemies.get(i).hitBySword(player);
                 System.out.println("removing enemy" + enemies.get(i).getType());
                 enemies = removeEnemy(enemies, i);
             }
-
         }
-        if (shortestDist < player.getSpiritIncreaseDist() && player.getForm()==0  ){
+        if (shortestDist < player.getSpiritIncreaseDist() && player.getForm()==0){
+            enemies.get(e).lossingSpirit(player.getSpiritIncreaseRate());
             player.increaseSpirit();
             Vector2 scale = new Vector2(5f,5f);
             SwordWheelObstacle spiritAnimate = new SwordWheelObstacle(player.getX(), player.getY(), player.getSpiritDrainSpriteSheet().getRegionWidth()/400F, player, player.getAttackLifespan(), 5f, scale, player.getSpiritDrainSpriteSheet());

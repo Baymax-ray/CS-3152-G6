@@ -25,65 +25,43 @@
           "type":"Goomba",
           "TextureAsset": "platform:worm",
           "startX": 11,
-          "startY": 8,
-          "hitboxWidth": 0.6,
-          "hitboxHeight": 0.5
-        },
-        {
-          "type":"Goomba",
-          "TextureAsset": "platform:worm",
-          "startX": 21,
-          "startY": 13,
-          "hitboxWidth": 0.6,
-          "hitboxHeight": 0.5
+          "startY": 8
         },
         {
           "type":"Goomba",
           "TextureAsset": "platform:worm",
           "startX": 37,
-          "startY": 19,
-          "hitboxWidth": 0.6,
-          "hitboxHeight": 0.5
+          "startY": 19
         },
         {
           "type":"Goomba",
           "TextureAsset": "platform:worm",
           "startX": 42,
-          "startY": 19,
-          "hitboxWidth": 0.6,
-          "hitboxHeight": 0.5
+          "startY": 19
         },
         {
           "type":"Goomba",
           "TextureAsset": "platform:worm",
           "startX": 26,
-          "startY": 27,
-          "hitboxWidth": 0.6,
-          "hitboxHeight": 0.5
+          "startY": 27
         },
         {
           "type":"Fly",
           "TextureAsset": "platform:worm",
           "startX": 12,
-          "startY": 10,
-          "hitboxWidth": 0.6,
-          "hitboxHeight": 0.5
+          "startY": 10
         },
         {
           "type":"Fly",
           "TextureAsset": "platform:worm",
           "startX": 26,
-          "startY": 31,
-          "hitboxWidth": 0.6,
-          "hitboxHeight": 0.5
+          "startY": 31
         },
         {
           "type":"Fly",
           "TextureAsset": "platform:worm",
           "startX": 27,
-          "startY": 19,
-          "hitboxWidth": 0.6,
-          "hitboxHeight": 0.5
+          "startY": 19
         }
       ]
     }

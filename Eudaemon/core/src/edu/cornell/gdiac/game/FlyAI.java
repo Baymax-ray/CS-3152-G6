@@ -27,7 +27,7 @@ public class FlyAI extends AIController{
     private final float[] goal;
     /** do we need to go to the next step in chasing?*/
     private boolean needGoal = true;
-    private float[]tempgoal;
+    private float[] tempgoal;
 
 
     private enum FSMState {
@@ -133,9 +133,8 @@ public class FlyAI extends AIController{
                 else if (!checkDetection()){
                     WanderWait++;
                     if (WanderWait>maxWait){
-                        WanderWait=0;
+                        this.WanderWait=0;
                         state= FSMState.WANDER;
-//                        System.out.println("return to wander");
                     }
                 }
                 break;
@@ -146,13 +145,9 @@ public class FlyAI extends AIController{
 
                 }
             case ATTACK:
-                //TODO
+                //TODO: animations?
                 break;
         }
-        if (state==FSMState.CHASE) {
-//            System.out.println("chase");
-        }
-
     }
     private void markGoal(){
         float ex=enemy.getX();
@@ -175,27 +170,20 @@ public class FlyAI extends AIController{
                 int ny=ty;
                 randomInt = rand.nextInt();
                 if (ticks%30==1) {
-//                    System.out.println("we are changing goal right now");
                     if (randomInt % 4 == 0 && level.isAirAt(tx, ty - 1)) {
-//                        System.out.println("1111");
                         ny = ny - 1;
                     } else if (randomInt % 4 == 1 && level.isAirAt(tx, ty + 1)) {
-//                        System.out.println("2222");
                         ny = ny + 1;
                     } else if (randomInt % 4 == 2 && level.isAirAt(tx - 1, ty)) {
                         nx = nx - 1;
-//                        System.out.println("3333");
                     } else if (randomInt % 4 == 3 && level.isAirAt(tx + 1, ty)) {
                         nx = nx + 1;
-//                        System.out.println("4444");
                     } else {break;}
 
                     // the reason why we call this a second time is we must change the Y coordinate back
                     // to normal cardinality
-
                     goal[0]=level.tileToLevelCoordinatesX(nx);
                     goal[1]=level.tileToLevelCoordinatesY(ny);
-//                    System.out.println("goal (in tile) is "+nx+":"+ny );
                 }
                 break;
             case CHASE:
@@ -204,7 +192,6 @@ public class FlyAI extends AIController{
                 int b=level.levelToTileCoordinatesY(level.getPlayer().getY());
                 if (a!=level.levelToTileCoordinatesX(goal[0])||b!=level.levelToTileCoordinatesY(goal[1])){
                     needGoal=true; //player is moving, need to re-compute the goal
-//                    System.out.println("recompute because player moves");
                 }
                 goal[0]=level.tileToLevelCoordinatesX(a);
                 goal[1]=level.tileToLevelCoordinatesY(b);

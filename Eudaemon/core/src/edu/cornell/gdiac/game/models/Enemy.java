@@ -11,14 +11,15 @@ import edu.cornell.gdiac.game.*;
 import edu.cornell.gdiac.game.obstacle.*;
 
 public class Enemy extends CapsuleObstacle {
-
-    //#region FINAL FIELDS
-
+    private float spiritlimit;
     private Vector2 pos;
     private Vector2 vel;
-
     private float movementH;
     private float movementV=0;
+    /** Cache for internal force calculations */
+    private Vector2 forceCache = new Vector2();
+
+    //#region FINAL FIELDS
     private final float startX;
     private final float startY;
 
@@ -43,9 +44,6 @@ public class Enemy extends CapsuleObstacle {
      * The scaling factor for the sprite.
      */
     private final Vector2 scale;
-
-    /** Cache for internal force calculations */
-    private Vector2 forceCache = new Vector2();
 
     /** The amount to slow the character down */
     private final float damping;
@@ -109,6 +107,15 @@ public class Enemy extends CapsuleObstacle {
         return type;
     }
     private String getSensorName() {return this.sensorName;}
+    public float getSpiritlimit() {
+        return spiritlimit;
+    }
+    public void lossingSpirit(float rate){
+        this.spiritlimit-=rate;
+    }
+
+
+    //#endregion
 
     public void setMovement(EnemyAction move) {
         if (move==EnemyAction.MOVE_RIGHT ||move==EnemyAction.FLY_RIGHT){
@@ -143,7 +150,9 @@ public class Enemy extends CapsuleObstacle {
 
 
     public Enemy(JsonValue json, AssetDirectory assets) {
-        super(json.getFloat("startX"), json.getFloat("startY"), json.getFloat("hitboxWidth"), json.getFloat("hitboxHeight"));
+        super(json.getFloat("startX"), json.getFloat("startY"),
+                assets.getEntry("sharedConstants", JsonValue.class).get((json.getString("type").equals("Goomba")? "Goomba":"Fly")).getFloat("hitboxWidth"),
+                assets.getEntry("sharedConstants", JsonValue.class).get((json.getString("type").equals("Goomba")? "Goomba":"Fly")).getFloat("hitboxHeight"));
         String TextureAsset = json.getString("TextureAsset");
 
         //Query the type of this enemy, then query the corresponding data in enemyConstants.json
@@ -158,8 +167,8 @@ public class Enemy extends CapsuleObstacle {
             this.enemyData=null;
             throw new IllegalArgumentException("Enemy can only be Fly or Goomba");
         }
-        this.setWidth(json.getFloat("hitboxWidth"));
-        this.setHeight(json.getFloat("hitboxHeight"));
+        this.setWidth(enemyData.getFloat("hitboxWidth"));
+        this.setHeight(enemyData.getFloat("hitboxHeight"));
 
 
         //Texture
@@ -193,6 +202,7 @@ public class Enemy extends CapsuleObstacle {
         this.maxHearts = enemyData.getInt("maxHearts");
         this.initialHearts = enemyData.getInt("initialHearts");
         this.hearts = initialHearts;
+        this.spiritlimit=enemyData.getFloat(("spiritLimitation"));
 
         this.startsFacingRight = enemyData.getBoolean("startsFacingRight");
 
@@ -277,11 +287,13 @@ public class Enemy extends CapsuleObstacle {
         // Don't want to be moving. Damp out player motion
         if (getMovementH() == 0f) {
             forceCache.set(-this.damping*getVX(),0);
-            body.applyForce(forceCache,getPosition(),true);
+            body.setLinearVelocity(forceCache);
+            //body.applyForce(forceCache,getPosition(),true);
         }
         if (getMovementV() == 0f && this.type.equals("Fly")) {
             forceCache.set(0,-this.damping*getVY());
-            body.applyForce(forceCache,getPosition(),true);
+            body.setLinearVelocity(forceCache);
+            //body.applyForce(forceCache,getPosition(),true);
         }
 
 
@@ -293,8 +305,9 @@ public class Enemy extends CapsuleObstacle {
         }
 
         //if(this.type.equals("Fly")){this.movementV *= this.force; this.movementH *= this.force;}
-        forceCache.set(getMovementH(),getMovementV());
-        body.applyForce(forceCache,getPosition(),true);
+        forceCache.set(getMovementH()/20,getMovementV()/20);
+        body.setLinearVelocity(forceCache);
+        //body.applyForce(forceCache,getPosition(),true);
         }
 
 
@@ -314,4 +327,5 @@ public class Enemy extends CapsuleObstacle {
 //            System.out.println("kill an enemy!");
         }
     }
+
 }

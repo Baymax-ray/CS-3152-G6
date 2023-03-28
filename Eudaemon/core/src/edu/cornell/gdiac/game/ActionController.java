@@ -8,11 +8,8 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
 import edu.cornell.gdiac.game.models.*;
 import edu.cornell.gdiac.game.obstacle.SwordWheelObstacle;
-import java.util.Timer;
-import java.util.TimerTask;
 
-import java.util.EnumSet;
-import java.util.HashMap;
+import java.util.*;
 
 public class ActionController {
 
@@ -85,13 +82,14 @@ public class ActionController {
         ticks++;
     }
 
-    //#region Player Actions
+    //#region Player and Enemy Actions
+
     /**
      * Resolves the set of player actions
      *
      * @param playerAction the set of player actions to resolve
      */
-    private void resolvePlayerActions(EnumSet<Action> playerAction){
+    private void resolvePlayerActions(EnumSet<Action> playerAction) {
         //System.out.println("x: " + player.getX());
         //System.out.println("y: " + player.getY());
         currentX = player.getX();
@@ -111,54 +109,46 @@ public class ActionController {
 
         //#region Timers
         int attackCooldownRemaining = player.getAttackCooldownRemaining();
-        if (attackCooldownRemaining > 0){
+        if (attackCooldownRemaining > 0) {
             player.setAttackCooldownRemaining(attackCooldownRemaining - 1);
         }
         int transformCooldownRemaining = player.getTransformCooldownRemaining();
-        if (transformCooldownRemaining > 0){
+        if (transformCooldownRemaining > 0) {
             player.setTransformCooldownRemaining(transformCooldownRemaining - 1);
         }
 
         int dashCooldownRemaining = player.getDashCooldownRemaining();
-        if (dashCooldownRemaining > 0){
+        if (dashCooldownRemaining > 0) {
             player.setDashCooldownRemaining(dashCooldownRemaining - 1);
         }
         //#endregion
 
         //#region Direction
-        if (player.isFacingRight()){
+        if (player.isFacingRight()) {
             player.setAngleFacing(0);
-        }
-        else{
+        } else {
             player.setAngleFacing(180);
         }
-        if ((rightPressed && !leftPressed && !upPressed && !downPressed) || (rightPressed && !leftPressed && upPressed && downPressed)){
+        if ((rightPressed && !leftPressed && !upPressed && !downPressed) || (rightPressed && !leftPressed && upPressed && downPressed)) {
             player.setAngleFacing(0);
             player.setFacingRight(true);
-        }
-        else if ((rightPressed && !leftPressed && upPressed && !downPressed)){
+        } else if ((rightPressed && !leftPressed && upPressed && !downPressed)) {
             player.setAngleFacing(45);
             player.setFacingRight(true);
-        }
-        else if ((rightPressed && leftPressed && upPressed && !downPressed) || (!rightPressed && !leftPressed && upPressed && !downPressed)){
+        } else if ((rightPressed && leftPressed && upPressed && !downPressed) || (!rightPressed && !leftPressed && upPressed && !downPressed)) {
             player.setAngleFacing(90);
-        }
-        else if ((!rightPressed && leftPressed && upPressed && !downPressed)){
+        } else if ((!rightPressed && leftPressed && upPressed && !downPressed)) {
             player.setAngleFacing(135);
             player.setFacingRight(false);
-        }
-        else if ((!rightPressed && leftPressed && !upPressed && !downPressed) || (!rightPressed && leftPressed && upPressed && downPressed)){
+        } else if ((!rightPressed && leftPressed && !upPressed && !downPressed) || (!rightPressed && leftPressed && upPressed && downPressed)) {
             player.setAngleFacing(180);
             player.setFacingRight(false);
-        }
-        else if ((!rightPressed && leftPressed && !upPressed && downPressed)){
+        } else if ((!rightPressed && leftPressed && !upPressed && downPressed)) {
             player.setAngleFacing(225);
             player.setFacingRight(false);
-        }
-        else if ((!rightPressed && !leftPressed && !upPressed && downPressed) || (rightPressed && leftPressed && !upPressed && downPressed)){
+        } else if ((!rightPressed && !leftPressed && !upPressed && downPressed) || (rightPressed && leftPressed && !upPressed && downPressed)) {
             player.setAngleFacing(270);
-        }
-        else if ((rightPressed && !leftPressed && !upPressed && downPressed)){
+        } else if ((rightPressed && !leftPressed && !upPressed && downPressed)) {
             player.setAngleFacing(315);
             player.setFacingRight(true);
         }
@@ -170,63 +160,55 @@ public class ActionController {
         float max_speed;
         if (player.getForm() == 0) {
             max_speed = player.getMaxSpeed();
-        }
-        else{
+        } else {
             max_speed = player.getChiyoSpeedMult() * player.getMaxSpeed();
         }
         float h_acc = player.getHorizontalAcceleration();
-        if (rightPressed && leftPressed || (!rightPressed && !leftPressed)){
-            if (x > 0.0f){
-                x = Math.max(x-h_acc, 0);
-                if (x < 0.0f){
+        if (rightPressed && leftPressed || (!rightPressed && !leftPressed)) {
+            if (x > 0.0f) {
+                x = Math.max(x - h_acc, 0);
+                if (x < 0.0f) {
+                    x = 0.0f;
+                }
+            } else if (x < 0.0f) {
+                x = Math.min(x + h_acc, 0);
+                if (x > 0.0f) {
                     x = 0.0f;
                 }
             }
-            else if (x < 0.0f){
-                x = Math.min(x+h_acc, 0);
-                if (x > 0.0f){
-                    x = 0.0f;
-                }
-            }
-        }
-        else if (rightPressed){
-            if (x < max_speed){
+        } else if (rightPressed) {
+            if (x < max_speed) {
                 //x = Math.min(x+h_acc, max_speed);
-                x = Math.min(x+h_acc, max_speed);
+                x = Math.min(x + h_acc, max_speed);
             }
-        }
-        else if (leftPressed){
-            if (x > -max_speed){
+        } else if (leftPressed) {
+            if (x > -max_speed) {
                 //x = Math.max(x-h_acc, -max_speed);
-                x = Math.max(x-h_acc, -max_speed);
+                x = Math.max(x - h_acc, -max_speed);
             }
         }
-        player.setVelocity(x,y);
+        player.setVelocity(x, y);
         //#endregion
 
         //#region Form Switching
-        if (transformPressed && player.getTransformCooldownRemaining() == 0 && player.getSpirit() > 1.0f){
+        if (transformPressed && player.getTransformCooldownRemaining() == 0 && player.getSpirit() > 1.0f) {
             player.setTransformCooldownRemaining(player.getTransformCooldown());
             player.setForm();
         }
         //#endregion
 
         //#region Sword Attack
-        if (attackPressed && player.getForm() == 1 && player.getAttackCooldownRemaining() == 0){
+        if (attackPressed && player.getForm() == 1 && player.getAttackCooldownRemaining() == 0) {
             player.setAttackCooldownRemaining(player.getAttackCooldown());
             player.setAttacking(true);
-//            System.out.println("attakc lifespan: "+ player.getAttackLifespan());
             player.setAttackLifespanRemaining(player.getAttackLifespan());
             createSword();
-            if(player.getAngleFacing() == 270){
-                player.setVelocity(player.getBodyVelocityX(), player.getJumpVelocity()-1F);
-            }
         }
         //#endregion
 
         //#region Dash
-        if(player.getForm() == 0 && dashPressed && player.isGrounded() && player.getDashCooldownRemaining() == 0 && !player.isDashing() && !player.dashedInAir()
-                || player.getForm() == 0 && dashPressed && player.getJumpVelocity() > 0 && player.getDashCooldownRemaining() == 0 && !player.isDashing() && !player.dashedInAir()){
+        if (player.getForm() == 0 && dashPressed && player.isGrounded() && player.getDashCooldownRemaining() == 0 && !player.isDashing() && !player.dashedInAir()
+                || player.getForm() == 0 && dashPressed && player.getJumpVelocity() > 0 && player.getDashCooldownRemaining() == 0 && !player.isDashing() && !player.dashedInAir()) {
             player.setDashCooldownRemaining(player.getDashCooldown());
             player.setDashing(true);
             player.setDashedInAir(true);
@@ -236,44 +218,38 @@ public class ActionController {
             float dashX = player.getX() + currOffset;
             float dashY = player.getY();
             float dash = player.getDash();
-            if (angleFacing == 0) player.setVelocity(dash,0);
-            if (angleFacing == 45){
+            if (angleFacing == 0) player.setVelocity(dash, 0);
+            if (angleFacing == 45) {
                 dashX = player.getX() + 0.71f * currOffset;
                 dashY = player.getY() + 0.71f * currOffset;
-                player.setVelocity(dash,10);
-            }
-            else if (angleFacing == 90){
+                player.setVelocity(dash, 10);
+            } else if (angleFacing == 90) {
                 dashX = player.getX();
                 dashY = player.getY() + currOffset;
-                player.setVelocity(0,dash);
-            }
-            else if (angleFacing == 135){
+                player.setVelocity(0, dash);
+            } else if (angleFacing == 135) {
                 dashX = player.getX() - 0.71f * currOffset;
                 dashY = player.getY() + 0.71f * currOffset;
-                player.setVelocity(-0.71f*dash,10);
-            }
-            else if (angleFacing == 180){
+                player.setVelocity(-0.71f * dash, 10);
+            } else if (angleFacing == 180) {
                 dashX = player.getX() - currOffset;
                 dashY = player.getY();
-                player.setVelocity(-dash,0);
-            }
-            else if (angleFacing == 225){
+                player.setVelocity(-dash, 0);
+            } else if (angleFacing == 225) {
                 dashX = player.getX() - 0.71f * currOffset;
                 dashY = player.getY() - 0.71f * currOffset;
-                player.setVelocity(-0.71f*dash,-0.71f*dash);
-            }
-            else if (angleFacing == 270){
+                player.setVelocity(-0.71f * dash, -0.71f * dash);
+            } else if (angleFacing == 270) {
                 dashX = player.getX();
-                dashY = player.getY()- currOffset;
-                player.setVelocity(0,-dash);
-            }
-            else if (angleFacing == 315){
+                dashY = player.getY() - currOffset;
+                player.setVelocity(0, -dash);
+            } else if (angleFacing == 315) {
                 dashX = player.getX() + 0.71f * currOffset;
                 dashY = player.getY() - 0.71f * currOffset;
-                player.setVelocity(0.71f*dash,-0.71f*dash);
+                player.setVelocity(0.71f * dash, -0.71f * dash);
             }
-            Vector2 scale = new Vector2(10f,10f);
-            SwordWheelObstacle dashAnimate = new SwordWheelObstacle(dashX, dashY, player.getDashEffectSpriteSheet().getRegionWidth()/100, player, 0.4f, 0.01f, scale, player.getDashEffectSpriteSheet());
+            Vector2 scale = new Vector2(10f, 10f);
+            SwordWheelObstacle dashAnimate = new SwordWheelObstacle(dashX, dashY, player.getDashEffectSpriteSheet().getRegionWidth() / 100, player, 0.4f, 0.01f, scale, player.getDashEffectSpriteSheet());
             level.addQueuedObject(dashAnimate);
             //player.dash();
             //player.setVelocity(player.getBodyVelocityX(), 0);
@@ -296,18 +272,19 @@ public class ActionController {
         //include all three situations
         //normal jump, coyote, and jump pressed in air
 
-        if ((jumpPressed && player.isGrounded() && player.getJumpCooldownRemaining()==0) ||
-                (jumpPressed && player.getCoyoteFramesRemaining() > 0 && player.getJumpCooldownRemaining()==0) ||
-                (player.getJumpPressedInAir() && player.getJumpCooldownRemaining()==0 && player.isGrounded())) {
+        if ((jumpPressed && player.isGrounded() && player.getJumpCooldownRemaining() == 0) ||
+                (jumpPressed && player.getCoyoteFramesRemaining() > 0 && player.getJumpCooldownRemaining() == 0) ||
+                (player.getJumpPressedInAir() && player.getJumpCooldownRemaining() == 0 && player.isGrounded())) {
             player.setVelocity(player.getBodyVelocityX(), player.getJumpVelocity());
             player.setJumpCooldownRemaining(player.getJumpCooldown());
             player.setJumpTimeRemaining(player.getJumpTime());
+            player.setJumpTimeRemaining(
+                    player.getForm()==0 ? player.getJumpTime() : (int) (player.getJumpTime()
+                            * player.getChiyoJumpTimeMult()));
             player.setIsJumping(true);
-        }
-        else if (player.isGrounded() && player.getBodyVelocityY() == 0) {
+        } else if (player.isGrounded() && player.getBodyVelocityY() == 0) {
             player.setIsJumping(false);
-        }
-        else player.setJumpCooldownRemaining(Math.max(0, player.getJumpCooldownRemaining()-1));
+        } else player.setJumpCooldownRemaining(Math.max(0, player.getJumpCooldownRemaining() - 1));
 
         if (player.getIsJumping()) player.setJumpTimeRemaining(player.getJumpTimeRemaining() - 1);
 
@@ -320,9 +297,8 @@ public class ActionController {
         //calculate coyote time
         if (player.isGrounded()) {
             player.setCoyoteFramesRemaining(player.getCoyoteFrames());
-        }
-        else {
-            player.setCoyoteFramesRemaining(Math.max(0, player.getCoyoteFramesRemaining()-1));
+        } else {
+            player.setCoyoteFramesRemaining(Math.max(0, player.getCoyoteFramesRemaining() - 1));
         }
 
         //jump pressed in air
@@ -330,33 +306,31 @@ public class ActionController {
             player.setJumpToleranceRemaining(player.getJumpTolerance());
             player.setJumpPressedInAir(true);
         } else if (!player.isGrounded()) {
-            player.setJumpToleranceRemaining(Math.max(0, player.getJumpToleranceRemaining()-1));
-            if (player.getJumpToleranceRemaining()==0) player.setJumpPressedInAir(false);
+            player.setJumpToleranceRemaining(Math.max(0, player.getJumpToleranceRemaining() - 1));
+            if (player.getJumpToleranceRemaining() == 0) player.setJumpPressedInAir(false);
         }
         //#endregion
 
         if (player.getiFramesRemaining() > 0) {
-            player.setiFramesRemaining(Math.max(player.getiFramesRemaining()-1,0));
-            if (player.getiFramesRemaining()==0) {
+            player.setiFramesRemaining(Math.max(player.getiFramesRemaining() - 1, 0));
+            if (player.getiFramesRemaining() == 0) {
                 player.setHit(false);
 
             }
         }
 
         if (player.getAttackLifespanRemaining() > 0) {
-            System.out.println("attack lifespan decrease: "+player.getAttackLifespanRemaining());
-            player.setAttackLifespanRemaining(Math.max(player.getAttackCooldownRemaining()-1,0));
-            if (player.getAttackLifespanRemaining()==0) {
+            player.setAttackLifespanRemaining(Math.max(player.getAttackCooldownRemaining() - 1, 0));
+            if (player.getAttackLifespanRemaining() == 0) {
                 player.setAttacking(false);
-                System.out.println("yes, setting attacking to false");
             }
         }
 
-        if(player.getDashLifespanRemaining() > 0){
-            player.setDashLifespanRemaining(Math.max(player.getDashLifespanRemaining()-1, 0));
-            if(player.getDashLifespanRemaining() == 0){
+        if (player.getDashLifespanRemaining() > 0) {
+            player.setDashLifespanRemaining(Math.max(player.getDashLifespanRemaining() - 1, 0));
+            if (player.getDashLifespanRemaining() == 0) {
                 player.setDashing(false);
-                player.setVelocity(player.getBodyVelocityX()/3, player.getBodyVelocityY()/3);
+                player.setVelocity(player.getBodyVelocityX() / 3, player.getBodyVelocityY() / 3);
             }
 
         }
@@ -365,8 +339,8 @@ public class ActionController {
         //System.out.println(player.getDashLifespanRemaining());
 
         if (player.isDashing()) {
-            player.setDashCooldownRemaining(Math.max(player.getDashCooldownRemaining()-1,0));
-            if (player.getDashCooldownRemaining()==0) player.setDashing(false);
+            player.setDashCooldownRemaining(Math.max(player.getDashCooldownRemaining() - 1, 0));
+            if (player.getDashCooldownRemaining() == 0) player.setDashing(false);
         }
 
         if (player.isGrounded() && !player.isDashing()) player.setDashedInAir(false);
@@ -376,43 +350,39 @@ public class ActionController {
         }
 
         //#region Textures and Animation
-        if (ticks % tickFrameSwitch == 0){
+        if (ticks % tickFrameSwitch == 0) {
             currentFrame++;
-            if (currentFrame > maxFrame){
+            if (currentFrame > maxFrame) {
                 currentFrame = 0;
             }
         }
-        if (player.getForm() == 0){
+        if (player.getForm() == 0) {
             player.setSxMult(1.0f);
             player.setSyMult(1.0f);
-            if (player.isDashing()){
+            if (player.isDashing()) {
                 TextureRegion current = (TextureRegion) (animations.get("momoDash")).getKeyFrame(currentFrame); // Gets the current frame of the animation
                 tickFrameSwitch = 10;
                 maxFrame = 4;
                 player.setTexture(current);
                 player.setOyOffset(-30);
-            }
-            else if (player.getIsJumping()){
+            } else if (player.getIsJumping()) {
                 TextureRegion current = (TextureRegion) (animations.get("momoJump")).getKeyFrame(currentFrame); // Gets the current frame of the animation
                 tickFrameSwitch = 10;
                 maxFrame = 5;
                 player.setTexture(current);
                 player.setOyOffset(-30);
-            }
-            else if (player.getBodyVelocityX() != 0){
+            } else if (player.getBodyVelocityX() != 0) {
                 TextureRegion current = (TextureRegion) (animations.get("momoRun")).getKeyFrame(currentFrame); // Gets the current frame of the animation
                 tickFrameSwitch = 5;
                 maxFrame = 5;
                 player.setTexture(current);
                 player.setOyOffset(-30);
-            }
-            else{
+            } else {
                 player.setTexture(player.getMomoTexture());
                 player.setOyOffset(-130);
             }
-        }
-        else{
-            if (player.getBodyVelocityX() != 0){
+        } else {
+            if (player.getBodyVelocityX() != 0) {
                 TextureRegion current = (TextureRegion) (animations.get("chiyoRun")).getKeyFrame(currentFrame); // Gets the current frame of the animation
                 tickFrameSwitch = 4;
                 maxFrame = 7;
@@ -420,8 +390,7 @@ public class ActionController {
                 player.setOyOffset(-25);
                 player.setSxMult(1.5f);
                 player.setSyMult(1.5f);
-            }
-            else{
+            } else {
                 player.setTexture(player.getChiyoTexture());
                 player.setOyOffset(-100);
                 player.setSxMult(1.0f);
@@ -436,7 +405,10 @@ public class ActionController {
         previousX = player.getX();
         movedDuringLastFrame = (leftPressed || rightPressed) && deltaX > 0;
 
+
+
     }
+
     /**
      * Resolves the set of enemy actions
      *
@@ -452,18 +424,13 @@ public class ActionController {
                 for (EnemyAction action : enemyAction) {
                     if (action == EnemyAction.ATTACK) {
                         //TODO: is this already handled by the HandleSpirit() in Level.java?
-
-                    }
-                    else {
-                        //TODO
+                    } else {
                         enemy.setMovement(action);
                         enemy.applyForce();
                     }
                 }
                 enemyAction.clear();
-
             }
-
         }
     }
 
@@ -476,43 +443,59 @@ public class ActionController {
         int angleFacing = player.getAngleFacing();
         float x = player.getX() + currOffset;
         float y = player.getY();
-        if (angleFacing == 45){
+        //When on ground, downward slashes should just be left or right slash
+        if(player.getBodyVelocityY() == 0 && (angleFacing == 225 || angleFacing == 270 || angleFacing == 315) && !player.getIsJumping()){
+            if(angleFacing == 225){
+                x = player.getX() - currOffset;
+                y = player.getY();
+                angleFacing = 180;
+            }
+            else if(angleFacing == 270){
+                if(player.isFacingRight()){
+                    angleFacing = 0;
+                }
+                else{
+                    x = player.getX() - currOffset;
+                    y = player.getY();
+                    angleFacing = 180;
+                }
+            }
+            else if(angleFacing == 315){
+                angleFacing = 0;
+            }
+        }
+        if (angleFacing == 45) {
             x = player.getX() + 0.71f * currOffset;
             y = player.getY() + 0.71f * currOffset;
-        }
-        else if (angleFacing == 90){
+        } else if (angleFacing == 90) {
             x = player.getX();
-            y = player.getY() + 1.3f *currOffset;
-        }
-        else if (angleFacing == 135){
+            y = player.getY() + 1.3f * currOffset;
+        } else if (angleFacing == 135) {
             x = player.getX() - 0.71f * currOffset;
             y = player.getY() + 0.71f * currOffset;
-        }
-        else if (angleFacing == 180){
+        } else if (angleFacing == 180) {
             x = player.getX() - currOffset;
             y = player.getY();
-        }
-        else if (angleFacing == 225){
+        } else if (angleFacing == 225) {
             x = player.getX() - 0.71f * currOffset;
             y = player.getY() - 0.71f * currOffset;
-        }
-        else if (angleFacing == 270){
+        } else if (angleFacing == 270) {
             x = player.getX();
-            y = player.getY()- currOffset;
-        }
-        else if (angleFacing == 315){
+            y = player.getY() - currOffset;
+        } else if (angleFacing == 315) {
             x = player.getX() + 0.71f * currOffset;
             y = player.getY() - 0.71f * currOffset;
         }
-        Vector2 scale = new Vector2(32.0f,32.0f);
+
+        Vector2 scale = new Vector2(32.0f, 32.0f);
         SwordWheelObstacle sword = new SwordWheelObstacle(x, y, player.getSwordRadius(), player, player.getAttackLifespan(), 10.0f, scale, player.getSwordEffectSpriteSheet(angleFacing));
         level.addQueuedObject(sword);
     }
 
     //#endregion
 
-    private void addAnimations (TextureRegion spriteSheet, int columns, int rows, String name){
-        TextureRegion[][] frames = spriteSheet.split(spriteSheet.getRegionWidth()/columns, spriteSheet.getRegionHeight()/rows);
+    private void addAnimations(TextureRegion spriteSheet, int columns, int rows, String name) {
+        TextureRegion[][] frames = spriteSheet.split(spriteSheet.getRegionWidth() / columns, spriteSheet.getRegionHeight() / rows);
         Animation animation = new Animation<TextureRegion>(0.5f, frames[0]); // Creates an animation with a frame duration of 0.1 seconds
         animation.setPlayMode(Animation.PlayMode.NORMAL); // Sets the animation to play normally
         animations.put(name, animation);

@@ -4,6 +4,7 @@
     "momo:ImageWidth": 1.5,
     "momo:ImageHeight": 1.5,
     "uioutline": "platform:uioutline",
+    "settings": "platform:settings",
     "chiyo:TextureAsset": "platform:chiyo",
     "chiyo:ImageWidth": 1.3,
     "chiyo:ImageHeight": 1.3,
@@ -40,15 +41,16 @@
     "coyoteTime": 20,
     "jumpTolerance": 20,
     "jumptime": 20,
+    "chiyoJumpTimeMult": 1.5,
     "maxJumpyVelocity": 5.0,
     "playerGravity": 18.0,
-    "spiritIncreaseRate": 0.015,
-    "spiritKillingEnemy":1.0,
+    "spiritIncreaseRate": 0.005,
+    "spiritKillingEnemy":2.0,
     "spiritDecreaseRate": 0.01,
     "spiritIncreaseDist": 2.0,
     "hit_dist": 0.75,
     "attack_dist": 1,
-    "iFrames": 200,
+    "iFrames": 50,
     "sensor": {
       "shrink" : 0.6,
       "height" : 0.05
@@ -57,7 +59,7 @@
   "Goomba": {
     "ImageWidth": 0.5,
     "ImageHeight": 0.5,
-    "hitboxWidth": 0.9,
+    "hitboxWidth": 0.5,
     "hitboxHeight": 0.6,
     "maxSpeed": 2.5,
     "horizontalAcceleration": 0.12,
@@ -80,14 +82,44 @@
     "sensor": {
       "shrink" : 0.6,
       "height" : 0.05
-    }
+    },
+    "spiritLimitation":8
+  },
+  "FlyGuardian": {
+    "ImageWidth": 0.5,
+    "ImageHeight": 0.5,
+    "hitboxWidth": 0.5,
+    "hitboxHeight": 0.6,
+    "maxSpeed": 1,
+    "horizontalAcceleration": 0.12,
+    "maxHearts": 1,
+    "initialHearts": 1,
+    "attackPower": 1,
+    "startsFacingRight": true,
+    "dashCooldown": 0.4,
+    "attackCooldown": 30,
+    "attackOffset": 0.23,
+    "swordRadius": 0.2,
+    "attackLifespan": 0.4,
+    "hitCooldown": 1.0,
+    "drawScaleX": 32,
+    "drawScaleY": 32,
+    "hit_force": 5.5,
+    "force": 20.0,
+    "dash": 2000.0,
+    "damping": 100.0,
+    "sensor": {
+      "shrink" : 0.6,
+      "height" : 0.05
+    },
+    "spiritLimitation":8
   },
   "Fly": {
     "ImageWidth": 0.5,
     "ImageHeight": 0.5,
-    "hitboxWidth": 0.9,
+    "hitboxWidth": 0.5,
     "hitboxHeight": 0.6,
-    "maxSpeed": 2.5,
+    "maxSpeed": 1,
     "horizontalAcceleration": 0.12,
     "maxHearts": 1,
     "initialHearts": 1,
@@ -108,6 +140,7 @@
     "sensor": {
       "shrink" : 0.6,
       "height" : 0.05
-    }
+    },
+    "spiritLimitation":8
   }
 }

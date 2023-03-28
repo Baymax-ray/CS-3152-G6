@@ -1,6 +1,6 @@
 {
 	"textures": {
-        "background": "shared/loading_background.png",
+        "background": "backgrounds/loading_background.png",
 		"play": "shared/play.png",
         "title": "shared/EUDAEMON_title.png",
         "progress": {
