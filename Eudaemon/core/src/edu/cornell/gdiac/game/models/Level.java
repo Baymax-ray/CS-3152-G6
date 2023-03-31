@@ -135,8 +135,7 @@ public class Level {
         String levelName = json.getString("level");
         JsonValue levelJson = assets.getEntry(levelName,  JsonValue.class);
         int widthInTiles = levelJson.getInt("width");
-//        int heightInTiles = json.getInt("height");
-        int heightInTiles = json.getInt("levelHeight");
+        int heightInTiles = levelJson.getInt("height");
         JsonValue layers = levelJson.get("layers").get("data");
         this.tilemap = new int[heightInTiles][widthInTiles];
         for (int y = 0; y < heightInTiles; y++) {

@@ -9,7 +9,6 @@
   "levels": [
     {
       "level": "levelDemo",
-      "levelHeight": 40,
       "tileSize": 1,
       "cameraWidth": 26.69,
       "cameraHeight": 15,
