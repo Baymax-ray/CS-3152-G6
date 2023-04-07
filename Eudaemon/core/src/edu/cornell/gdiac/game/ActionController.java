@@ -216,7 +216,7 @@ public class ActionController {
             player.setDashLifespanRemaining((player.getDashLifespan()));
             int angleFacing = player.getAngleFacing();
             float dashX = 0;
-            float dashY = 0;
+            float dashY = 0.4f;
             float dash = player.getDash();
             float diagonalDashMult = 0.71f;
             //direction effect angle
@@ -279,8 +279,8 @@ public class ActionController {
             Vector2 scale = new Vector2(1f, 1f);
             EffectObstacle dashAnimate = new EffectObstacle(player.getX(), player.getY(), player.getDashEffectSpriteSheet().getRegionWidth(),
                     player.getDashEffectSpriteSheet().getRegionHeight(), 0.08f, 0.08f, effectAngle,
-                    pOffsetX, pOffsetY,true,
-                    "dashEffect", player, 0.4f,
+                    pOffsetX, pOffsetY,5, 1,true,
+                    "dashEffect", player, 0.35f,
                     scale, player.getDashEffectSpriteSheet(),5);
             level.addQueuedObject(dashAnimate);
 

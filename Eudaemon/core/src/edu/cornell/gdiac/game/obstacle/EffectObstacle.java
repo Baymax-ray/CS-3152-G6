@@ -13,7 +13,7 @@ public class EffectObstacle extends BoxObstacle{
     /**
      * The avatar of this object.
      */
-    private final Player player;
+    private final CapsuleObstacle avatar;
     /**
      * Accumulates the ticks elapsed since the animation started.
      */
@@ -57,15 +57,15 @@ public class EffectObstacle extends BoxObstacle{
      *
      * @return The avatar of this object.
      */
-    public Player getPlayer() {
-        return player;
+    public CapsuleObstacle getAvatar() {
+        return avatar;
     }
 
     //</editor-fold>
 
-    public EffectObstacle(float x, float y, float width, float height, float sx, float sy, float angle, float pOffsetX, float pOffsetY, Boolean trackPlayer, String name, final Player player, float lifespan, Vector2 scale, TextureRegion spriteSheet, int tickSpeed) {
+    public EffectObstacle(float x, float y, float width, float height, float sx, float sy, float angle, float pOffsetX, float pOffsetY, int framesX, int framesY, Boolean trackPlayer, String name, CapsuleObstacle avatar, float lifespan, Vector2 scale, TextureRegion spriteSheet, int tickSpeed) {
         super(x,y,width,height);
-        this.player = player;
+        this.avatar = avatar;
         this.tickSpeed = tickSpeed;
         this.trackPlayer = trackPlayer;
         this.sX = sx;
@@ -83,7 +83,7 @@ public class EffectObstacle extends BoxObstacle{
         setAngle(angle);
 
         //ANIMATION
-        TextureRegion[][] frames = spriteSheet.split(spriteSheet.getRegionWidth()/6, spriteSheet.getRegionHeight());
+        TextureRegion[][] frames = spriteSheet.split(spriteSheet.getRegionWidth()/framesX, spriteSheet.getRegionHeight()/framesY);
         animation = new Animation<TextureRegion>(0.5f, frames[0]); // Creates an animation with a frame duration of 0.1 seconds
         animation.setPlayMode(Animation.PlayMode.NORMAL); // Sets the animation to play normally
         currentTicks = 0; // Accumulates the time elapsed since the animation started
@@ -115,7 +115,7 @@ public class EffectObstacle extends BoxObstacle{
      */
     public void update(float dt) {
         if (trackPlayer) {
-            this.setLinearVelocity(player.getBodyVelocity());
+            this.setLinearVelocity(avatar.getLinearVelocity());
         }
         super.update(dt);
 
