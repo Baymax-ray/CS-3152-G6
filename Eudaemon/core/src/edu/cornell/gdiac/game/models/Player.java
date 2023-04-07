@@ -24,7 +24,6 @@ public class Player extends CapsuleObstacle {
     private final int initialHearts;
     private final float maxSpirit;
     private final float initialSpirit;
-    private final float spiritPerSecond;
     private final int attackPower;
     /**
      * How much max speed is multiplied by for Chiyo
@@ -1084,7 +1083,6 @@ public class Player extends CapsuleObstacle {
         this.initialHearts = json.getInt("initialHearts");
         this.maxSpirit = json.getFloat("maxSpirit");
         this.initialSpirit = json.getFloat("initialSpirit");
-        this.spiritPerSecond = json.getFloat("spiritPerSecond");
         this.startsFacingRight = json.getBoolean("startsFacingRight");
         this.hitCooldown = json.getInt("hitCooldown");
         this.jumpCooldown = json.getInt("jumpCooldown");
