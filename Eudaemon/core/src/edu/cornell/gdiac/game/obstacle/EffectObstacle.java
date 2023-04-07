@@ -30,6 +30,26 @@ public class EffectObstacle extends BoxObstacle{
      * The animation object that represents a sequence of TextureRegions.
      */
     Animation<TextureRegion> animation;
+    /**
+     * X scale of the sprite
+     */
+    private float sX;
+    /**
+     * Y scale of the sprite
+     */
+    private float sY;
+    /**
+     * Whether or not the effect should track the player
+     */
+    private boolean trackPlayer;
+    /**
+     * X offset of the effect from the player
+     */
+    private float pOffsetX;
+    /**
+     * Y offset of the effect from the player
+     */
+    private float pOffsetY;
 
     //<editor-fold desc="GETTERS AND SETTERS">
     /**
@@ -43,18 +63,24 @@ public class EffectObstacle extends BoxObstacle{
 
     //</editor-fold>
 
-    public EffectObstacle(float x, float y, float width, float height, String name, final Player player, float lifespan, Vector2 scale, TextureRegion spriteSheet, int tickSpeed) {
+    public EffectObstacle(float x, float y, float width, float height, float sx, float sy, float angle, float pOffsetX, float pOffsetY, Boolean trackPlayer, String name, final Player player, float lifespan, Vector2 scale, TextureRegion spriteSheet, int tickSpeed) {
         super(x,y,width,height);
         this.player = player;
         this.tickSpeed = tickSpeed;
+        this.trackPlayer = trackPlayer;
+        this.sX = sx;
+        this.sY = sy;
+        this.pOffsetX = pOffsetX;
+        this.pOffsetY = pOffsetY;
 
         setName(name);
         setDensity(0);
-        setDrawScale(scale);
+        this.setDrawScale(scale);
         setBullet(true);
         setGravityScale(0);
         setBodyType(BodyDef.BodyType.KinematicBody);
         setSensor(true);
+        setAngle(angle);
 
         //ANIMATION
         TextureRegion[][] frames = spriteSheet.split(spriteSheet.getRegionWidth()/6, spriteSheet.getRegionHeight());
@@ -88,7 +114,9 @@ public class EffectObstacle extends BoxObstacle{
      * @param dt	Number of seconds since last animation frame
      */
     public void update(float dt) {
-//        this.setLinearVelocity(player.getBodyVelocity());
+        if (trackPlayer) {
+            this.setLinearVelocity(player.getBodyVelocity());
+        }
         super.update(dt);
 
         //Animation
@@ -104,8 +132,6 @@ public class EffectObstacle extends BoxObstacle{
     public void draw(GameCanvas canvas) {
 //        float sx = 2*getRadius()/this.texture.getRegionWidth(); // size in world coordinates / texture coordinates
 //        float sy = 2*getRadius()/this.texture.getRegionHeight();
-        float sx = 1.0f;
-        float sy = 1.0f;
-        canvas.draw(texture, Color.WHITE, origin.x, origin.y, getX(), getY(), getAngle(), sx, sy);
+        canvas.draw(texture, Color.WHITE, origin.x, origin.y, getX() + pOffsetX, getY() + pOffsetY, getAngle(), sX, sY);
     }
 }

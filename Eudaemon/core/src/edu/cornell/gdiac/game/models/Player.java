@@ -985,7 +985,11 @@ public class Player extends CapsuleObstacle {
 
     public boolean activatePhysics(World world) {
         if (!super.activatePhysics(world)) return false;
+
+        //Set Gravity
         body.setGravityScale(playerGravity);
+
+        // Define Fixture
         Vector2 sensorCenter = new Vector2(0, -getHeight() / 2);
         FixtureDef sensorDef = new FixtureDef();
         sensorDef.density = data.getFloat("density",0);
@@ -995,6 +999,9 @@ public class Player extends CapsuleObstacle {
         sensorShape.setAsBox(sensorjv.getFloat("shrink",0)*getWidth()/2.0f,
                 sensorjv.getFloat("height",0), sensorCenter, 0.0f);
         sensorDef.shape = sensorShape;
+
+        //Set Friction to 0
+        body.getFixtureList().get(0).setFriction(0);
 
         // Ground sensor to represent our feet
         Fixture sensorFixture = body.createFixture( sensorDef );

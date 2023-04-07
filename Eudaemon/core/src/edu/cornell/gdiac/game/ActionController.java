@@ -7,6 +7,7 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
 import edu.cornell.gdiac.game.models.*;
+import edu.cornell.gdiac.game.obstacle.EffectObstacle;
 import edu.cornell.gdiac.game.obstacle.SwordWheelObstacle;
 
 import java.util.*;
@@ -213,47 +214,75 @@ public class ActionController {
             player.setDashing(true);
             player.setDashedInAir(true);
             player.setDashLifespanRemaining((player.getDashLifespan()));
-            float currOffset = player.getAttackOffset();
             int angleFacing = player.getAngleFacing();
-            float dashX = player.getX() + currOffset;
-            float dashY = player.getY();
+            float dashX = 0;
+            float dashY = 0;
             float dash = player.getDash();
-            if (angleFacing == 0) player.setVelocity(dash, 0);
-            if (angleFacing == 45) {
-                dashX = player.getX() + 0.71f * currOffset;
-                dashY = player.getY() + 0.71f * currOffset;
-                player.setVelocity(dash, 10);
-            } else if (angleFacing == 90) {
-                dashX = player.getX();
-                dashY = player.getY() + currOffset;
-                player.setVelocity(0, dash);
-            } else if (angleFacing == 135) {
-                dashX = player.getX() - 0.71f * currOffset;
-                dashY = player.getY() + 0.71f * currOffset;
-                player.setVelocity(-0.71f * dash, 10);
-            } else if (angleFacing == 180) {
-                dashX = player.getX() - currOffset;
-                dashY = player.getY();
-                player.setVelocity(-dash, 0);
-            } else if (angleFacing == 225) {
-                dashX = player.getX() - 0.71f * currOffset;
-                dashY = player.getY() - 0.71f * currOffset;
-                player.setVelocity(-0.71f * dash, -0.71f * dash);
-            } else if (angleFacing == 270) {
-                dashX = player.getX();
-                dashY = player.getY() - currOffset;
-                player.setVelocity(0, -dash);
-            } else if (angleFacing == 315) {
-                dashX = player.getX() + 0.71f * currOffset;
-                dashY = player.getY() - 0.71f * currOffset;
-                player.setVelocity(0.71f * dash, -0.71f * dash);
-            }
-            Vector2 scale = new Vector2(10f, 10f);
-            SwordWheelObstacle dashAnimate = new SwordWheelObstacle(dashX, dashY, player.getDashEffectSpriteSheet().getRegionWidth() / 100, player, 0.4f, 0.01f, scale, player.getDashEffectSpriteSheet());
-            level.addQueuedObject(dashAnimate);
-            //player.dash();
-            //player.setVelocity(player.getBodyVelocityX(), 0);
+            float diagonalDashMult = 0.71f;
+            //direction effect angle
+            float effectAngle = 0.0f;
+            //offset of effect from player
+            float pOffsetX = 0.0f;
+            float pOffsetY = 0.0f;
+            float pOffset = 1.2f;
 
+            //Setting dash according to angles
+            if (angleFacing == 0) {
+                dashX = dash;
+                dashY = 0;
+                effectAngle = 1.57f;
+                pOffsetX = -pOffset;
+            }
+            else if (angleFacing == 45) {
+                dashX = diagonalDashMult * dash;
+                dashY = diagonalDashMult * dash;
+                effectAngle = 2.356f;
+                pOffsetX = -diagonalDashMult * pOffset;
+                pOffsetY = -diagonalDashMult * pOffset;
+            } else if (angleFacing == 90) {
+                dashX = 0;
+                dashY = dash;
+                effectAngle = 3.141f;
+                pOffsetY = -pOffset;
+            } else if (angleFacing == 135) {
+                dashX = -diagonalDashMult * dash;
+                dashY = diagonalDashMult * dash;
+                effectAngle = 3.926f;
+                pOffsetX = diagonalDashMult * pOffset;
+                pOffsetY = -diagonalDashMult * pOffset;
+            } else if (angleFacing == 180) {
+                dashX = -dash;
+                dashY = 0;
+                effectAngle = 4.712f;
+                pOffsetX = 1.0f;
+            } else if (angleFacing == 225) {
+                dashX = - 0.71f * dash;
+                dashY = - 0.71f * dash;
+                effectAngle = 5.497f;
+                pOffsetX = diagonalDashMult * pOffset;
+                pOffsetY = diagonalDashMult * pOffset;
+            } else if (angleFacing == 270) {
+                dashX = 0;
+                dashY = - dash;
+                effectAngle = 0.0f;
+                pOffsetY = 1.0f;
+            } else if (angleFacing == 315) {
+                dashX = 0.71f * dash;
+                dashY = - 0.71f * dash;
+                effectAngle = 0.785f;
+                pOffsetX = -diagonalDashMult * pOffset;
+                pOffsetY = diagonalDashMult * pOffset;
+            }
+            player.setVelocity(dashX, dashY);
+
+            //Creating dash effect
+            Vector2 scale = new Vector2(1f, 1f);
+            EffectObstacle dashAnimate = new EffectObstacle(player.getX(), player.getY(), player.getDashEffectSpriteSheet().getRegionWidth(),
+                    player.getDashEffectSpriteSheet().getRegionHeight(), 0.08f, 0.08f, effectAngle,
+                    pOffsetX, pOffsetY,true,
+                    "dashEffect", player, 0.4f,
+                    scale, player.getDashEffectSpriteSheet(),5);
+            level.addQueuedObject(dashAnimate);
 
             //Setting Gravity to 0 and scheduling to set it back
             player.setPlayerGravity(0.0f);
@@ -487,7 +516,7 @@ public class ActionController {
             y = player.getY() - 0.71f * currOffset;
         }
 
-        Vector2 scale = new Vector2(32.0f, 32.0f);
+        Vector2 scale = new Vector2(64.0f, 64.0f);
         SwordWheelObstacle sword = new SwordWheelObstacle(x, y, player.getSwordRadius(), player, player.getAttackLifespan(), 10.0f, scale, player.getSwordEffectSpriteSheet(angleFacing));
         level.addQueuedObject(sword);
     }
