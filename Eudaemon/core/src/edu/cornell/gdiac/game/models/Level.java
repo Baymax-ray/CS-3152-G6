@@ -615,10 +615,10 @@ public class Level {
             canvas.setGameplayCamera(cameraWidth/2, canvas.getCamera().position.y, cameraWidth, cameraHeight);
 
         //canvas.setGameplayCamera(cameraWidth/2, cameraHeight/2, cameraWidth, cameraHeight);
-
-        System.out.println("camera: "+canvas.getCamera().position.x+" "+canvas.getCamera().position.y);
-        System.out.println("player: "+player.getX()+" "+player.getY());
-        System.out.println();
+//
+//        System.out.println("camera: "+canvas.getCamera().position.x+" "+canvas.getCamera().position.y);
+//        System.out.println("player: "+player.getX()+" "+player.getY());
+//        System.out.println();
     }
 
     public void handleSpirit() {
@@ -650,19 +650,31 @@ public class Level {
                 Enemy enemy = enemies.get(i);
                 enemy.hitBySword(player);
                 //create hit by sword effect
-                float effectAngle = 0.0f;
+                float effectAngle = (float) Math.toRadians(player.getAngleFacing());
                 float pOffsetX = 0.0f;
                 float pOffsetY = 0.0f;
+                float sx;
+
+                // Determines Direction of sword effect
+                if (player.isFacingRight()){
+                    sx = 0.02f;
+                    System.out.println("facing right");
+                }
+                else{
+                    System.out.println("facing left");
+                    sx = -0.02f;
+                    pOffsetX = -0.5f;
+                }
                 Vector2 scale = new Vector2(1f, 1f);
                 EffectObstacle dashAnimate = new EffectObstacle(enemy.getX(), enemy.getY(), enemy.getBloodEffect().getRegionWidth(),
-                        enemy.getBloodEffect().getRegionHeight(), 0.02f, 0.02f, effectAngle,
+                        enemy.getBloodEffect().getRegionHeight(), sx, 0.02f, effectAngle,
                         pOffsetX, pOffsetY,17, 1,true,
                         "dashEffect", enemy, 0.35f,
                         scale, enemy.getBloodEffect(),3);
                 this.addQueuedObject(dashAnimate);
 
                 if (!enemy.isActive()){
-                System.out.println("removing enemy" + enemy.getType());
+//                System.out.println("removing enemy" + enemy.getType());
                 enemies = removeEnemy(enemies, i);}
             }
         }

@@ -434,7 +434,7 @@ public class ActionController {
         movedDuringLastFrame = (leftPressed || rightPressed) && deltaX > 0;
 
 
-        System.out.println (player.isGrounded());
+//        System.out.println (player.isGrounded());
     }
 
     /**
