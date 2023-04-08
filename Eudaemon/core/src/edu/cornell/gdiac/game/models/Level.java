@@ -94,6 +94,7 @@ public class Level {
      * The y position of the camera in level coordinates
      */
     private float cameraY;
+    private MyGridGraph gridGraph;
 
     //#endregion
 
@@ -131,6 +132,7 @@ public class Level {
     }
 
     //#endregion
+
     public class MyConnection<MyNode> implements Connection<MyNode> {
 
         protected MyNode fromNode;
@@ -301,6 +303,7 @@ public class Level {
                 tilemap[y][x] = layers.getInt(y*widthInTiles + x) - 1;
             }
         }
+        this.gridGraph= new MyGridGraph(widthInTiles,heightInTiles,this.tilemap);
         texturePaths = new HashMap<>();
         JsonValue tileset = assets.getEntry("tileset",  JsonValue.class);
         JsonValue tileList = tileset.get("tiles");
@@ -311,10 +314,8 @@ public class Level {
             texturePaths.put(t.getInt("id"),tileTexture);
         }
 
-        for (int y = 0; y < tilemap.length; y++) {
-            int[] row = tilemap[y];
-            for (int x = 0; x < row.length; x++) {
-                int tileId = row[x];
+        for (int[] row : tilemap) {
+            for (int tileId : row) {
                 if (tileId <= 0) continue;
                 tiles[tileId].setTexture(texturePaths.get(tileId));
             }
@@ -359,7 +360,7 @@ public class Level {
      *
      * @param x the x coordinate of the point in level coordinates
      * @param y the y coordinate of the point in level coordinates
-     * @return
+     * @return the tile
      */
     public Tile tileAt(float x, float y) {
         return tiles[tilemap[levelToTileCoordinatesY(y)][levelToTileCoordinatesX(x)]];
@@ -419,8 +420,7 @@ public class Level {
      *
      * Objects on the queue are added just before collision processing.  We do this to
      * control object creation.
-     *
-     * param obj The object to add
+     * @param obj The object to add
      */
     public void addQueuedObject(Obstacle obj) {
         assert inBounds(obj) : "Object is not in bounds";
