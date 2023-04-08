@@ -21,10 +21,16 @@
       },
       "enemy":[
         {
-          "type":"Goomba",
+          "type":"Fly",
           "TextureAsset": "platform:worm",
           "startX": 11,
           "startY": 8
+        },
+        {
+          "type":"Fly",
+          "TextureAsset": "platform:worm",
+          "startX": 11,
+          "startY": 9
         },
         {
           "type":"Goomba",
@@ -43,25 +49,8 @@
           "TextureAsset": "platform:worm",
           "startX": 26,
           "startY": 27
-        },
-        {
-          "type":"Fly",
-          "TextureAsset": "platform:worm",
-          "startX": 12,
-          "startY": 10
-        },
-        {
-          "type":"Fly",
-          "TextureAsset": "platform:worm",
-          "startX": 26,
-          "startY": 31
-        },
-        {
-          "type":"Fly",
-          "TextureAsset": "platform:worm",
-          "startX": 27,
-          "startY": 19
         }
+        
       ]
     }
   ]

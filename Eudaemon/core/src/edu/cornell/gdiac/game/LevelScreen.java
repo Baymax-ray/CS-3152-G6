@@ -45,7 +45,7 @@ public class LevelScreen implements Screen {
             enemyActions.add(EnumSet.noneOf(EnemyAction.class));
         }
 
-        actionController = new ActionController(level);
+        actionController = new ActionController(level,aiControllers);
 
         collisionController = new CollisionController(level);
         level.getWorld().setContactListener(collisionController);

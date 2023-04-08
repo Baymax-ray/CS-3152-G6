@@ -1,23 +1,28 @@
 package edu.cornell.gdiac.game;
 
-import com.badlogic.gdx.utils.Queue;
+import com.badlogic.gdx.ai.pfa.DefaultGraphPath;
+import com.badlogic.gdx.ai.pfa.GraphPath;
+import com.badlogic.gdx.ai.pfa.Heuristic;
+import com.badlogic.gdx.ai.pfa.indexed.IndexedAStarPathFinder;
+import com.badlogic.gdx.ai.pfa.indexed.IndexedGraph;
+import com.badlogic.gdx.math.Vector2;
 import edu.cornell.gdiac.game.models.Enemy;
 import edu.cornell.gdiac.game.models.EnemyAction;
 import edu.cornell.gdiac.game.models.Level;
 
 import java.util.EnumSet;
-import java.util.HashSet;
 import java.util.Random;
 
 public class FlyAI extends AIController{
     private static final int maxWait = 10;
     private static final int detectDistance=5;
-    private final float enemyWidth;
-    private final float enemyHeight;
+    //private final float enemyWidth;
+    //private final float enemyHeight;
     private final float tileSize;
     private final Enemy enemy;
     private final Level level;
     private int ticks=0;
+    private Vector2 v;
     private FSMState state;
     private EnemyAction move;
     private int WanderWait=0;
@@ -26,8 +31,11 @@ public class FlyAI extends AIController{
      */
     private final float[] goal;
     /** do we need to go to the next step in chasing?*/
-    private boolean needGoal = true;
-    private float[] tempgoal;
+    private boolean needNewPath = true;
+    private Heuristic<Level.MyNode> heuristic;
+    private Level.MyGridGraph graph;
+    private GraphPath<Level.MyNode> path;
+    private int indexAlongPath=0;
 
 
     private enum FSMState {
@@ -49,11 +57,22 @@ public class FlyAI extends AIController{
         this.goal=new float[2];
         this.level=super.level;
         this.enemy=super.enemy;
-        this.enemyHeight= this.enemy.getHeight();
-        this.enemyWidth= this.enemy.getWidth();
+        //this.enemyHeight= this.enemy.getHeight();
+        //this.enemyWidth= this.enemy.getWidth();
         this.tileSize=this.level.gettileSize();
+        Heuristic<Level.MyNode> heuristic = new EuclideanDistance<Level.MyNode>();
+        this.heuristic=heuristic;
+        Level.MyGridGraph graph=Level.getGridGraph();
+        this.graph=graph;
+        this.path = new DefaultGraphPath<>();
 
     }
+
+    @Override
+    public Vector2 getVelocity() {
+        return this.v;
+    }
+
     public void setEnemyAction(EnumSet<EnemyAction> enemyAction){
         if(this.enemy.isRemoved()) return;
         ticks=ticks+1;
@@ -63,20 +82,8 @@ public class FlyAI extends AIController{
         // Pathfinding
         markGoal();
         MoveAlongPathToGoal();
-        if(move==EnemyAction.FLY_UP){
-//            System.out.println("up");
-        }
-        else if (move==EnemyAction.FLY_DOWN){
-//            System.out.println("down");
-        }
-        else if (move==EnemyAction.STAY){
-//            System.out.println("stay");
-        }
-        else if (move==EnemyAction.FLY_RIGHT){
-//            System.out.println("right");
-        }
-        else if (move==EnemyAction.FLY_LEFT){
-//            System.out.println("left");
+        if (state == FSMState.CHASE){
+            System.out.println("Chasing, the goal is"+goal[0]+":"+goal[1]);
         }
 
         enemyAction.add(move);
@@ -120,7 +127,7 @@ public class FlyAI extends AIController{
             case WANDER:
                 if (checkDetection()){
                     state= FSMState.CHASE;
-                    needGoal=true;
+                    needNewPath =true;
                 }
                 break;
             case CHASE:
@@ -141,7 +148,7 @@ public class FlyAI extends AIController{
             case CHASE_close:
                 if(!sameCell()){
                     state=FSMState.CHASE;
-                    needGoal = true;
+                    needNewPath = true;
 
                 }
             case ATTACK:
@@ -191,7 +198,7 @@ public class FlyAI extends AIController{
                 int a=level.levelToTileCoordinatesX(level.getPlayer().getX());
                 int b=level.levelToTileCoordinatesY(level.getPlayer().getY());
                 if (a!=level.levelToTileCoordinatesX(goal[0])||b!=level.levelToTileCoordinatesY(goal[1])){
-                    needGoal=true; //player is moving, need to re-compute the goal
+                    needNewPath =true; //player is moving, need to re-compute the goal
                 }
                 goal[0]=level.tileToLevelCoordinatesX(a);
                 goal[1]=level.tileToLevelCoordinatesY(b);
@@ -204,169 +211,66 @@ public class FlyAI extends AIController{
 //        System.out.println("goal is "+goal[0]+":"+goal[1]);
     }
 
-    private float[] ChaseGoalHelper(){
-        float ex = enemy.getX();
-        float ey = enemy.getY();
-        int gy=level.levelToTileCoordinatesY(goal[1]);
-        int gx=level.levelToTileCoordinatesX(goal[0]);
-        int cy=level.levelToTileCoordinatesY(ey);
-        int cx=level.levelToTileCoordinatesX(ex);
-        Queue<Coord> boundary= new Queue<>();
-        HashSet<int[]>visited= new HashSet<>();
-        if (level.isAirAt(level.tileToLevelCoordinatesX(cx-1),level.tileToLevelCoordinatesY(cy))){
-            Coord L=new Coord(cx-1,cy,EnemyAction.FLY_LEFT);
-            boundary.addLast(L);
-            visited.add(new int[] {cx-1, cy});
-        }
-        if (level.isAirAt(level.tileToLevelCoordinatesX(cx+1),level.tileToLevelCoordinatesY(cy))){
-            Coord R=new Coord(cx+1,cy,EnemyAction.FLY_RIGHT);
-            boundary.addLast(R);
-            visited.add(new int[] {cx+1, cy});
-        }
-        if (level.isAirAt(level.tileToLevelCoordinatesX(cx),level.tileToLevelCoordinatesY(cy+1))){
-            Coord D=new Coord(cx,cy+1,EnemyAction.FLY_DOWN);
-            boundary.addLast(D);
-            visited.add(new int[] {cx,cy+1});
-        }
-        if (level.isAirAt(level.tileToLevelCoordinatesX(cx),level.tileToLevelCoordinatesY(cy-1))){
-            Coord U=new Coord(cx,cy-1,EnemyAction.FLY_UP);
-            boundary.addLast(U);
-            visited.add(new int[] {cx,cy-1});
-        }
-        if (cx==gx&&cy==gy){
-            this.move= EnemyAction.STAY;
-            float[] result=new float[2];
-            result[0]=level.tileToLevelCoordinatesX(cx)+this.tileSize/2;
-            result[1]=level.tileToLevelCoordinatesY(cy)+this.tileSize/2;
-            return result;}
-        else{
-            while(!boundary.isEmpty()){
-                Coord co=boundary.removeFirst();
-                int x=co.getX();
-                int y=co.getY();
-                if (x==gx&&y==gy){
-                    EnemyAction nexttile= co.getDirection();
-                    float[] result=new float[2];
-                    if (nexttile==EnemyAction.FLY_DOWN){
-                        result[0]=level.tileToLevelCoordinatesX(cx)+this.tileSize/2;
-                        result[1]=level.tileToLevelCoordinatesY(cy+1)+this.tileSize/2;
-                    }else if (nexttile==EnemyAction.FLY_UP){
-                        result[0]=level.tileToLevelCoordinatesX(cx)+this.tileSize/2;
-                        result[1]=level.tileToLevelCoordinatesY(cy-1)+this.tileSize/2;
-                    }else if (nexttile==EnemyAction.FLY_RIGHT){
-                        result[0]=level.tileToLevelCoordinatesX(cx+1)+this.tileSize/2;
-                        result[1]=level.tileToLevelCoordinatesY(cy)+this.tileSize/2;
-                    }else if (nexttile==EnemyAction.FLY_LEFT){
-                    result[0]=level.tileToLevelCoordinatesX(cx-1)+this.tileSize/2;
-                    result[1]=level.tileToLevelCoordinatesY(cy)+this.tileSize/2;
-                    }
-                    return result;
-                }
-                if (level.isAirAt(level.tileToLevelCoordinatesX(x-1),level.tileToLevelCoordinatesY(y))){
-                    Coord L=new Coord(x-1,y,co.getDirection());
-                    if(!visited.contains(new int[] {x - 1, y})) {
-                        boundary.addLast(L);
-                        visited.add(new int[]{x - 1, y});
-                    }
-                }
-                if (level.isAirAt(level.tileToLevelCoordinatesX(x+1),level.tileToLevelCoordinatesY(y))){
-                    Coord R=new Coord(x+1,y,co.getDirection());
-                    if(!visited.contains(new int[] {x + 1, y})) {
-                        boundary.addLast(R);
-                        visited.add(new int[]{x + 1, y});
-                    }
-                }
-                if (level.isAirAt(level.tileToLevelCoordinatesX(x),level.tileToLevelCoordinatesY(y+1))){
-                    Coord D=new Coord(x,y+1,co.getDirection());
-                    if(!visited.contains(new int[] {x, y+1})) {
-                        boundary.addLast(D);
-                        visited.add(new int[]{x, y+1});
-                    }
-                }
-                if (level.isAirAt(level.tileToLevelCoordinatesX(x),level.tileToLevelCoordinatesY(y-1))){
-                    Coord U=new Coord(x,y-1,co.getDirection());
-                    if(!visited.contains(new int[] {x, y-1})) {
-                        boundary.addLast(U);
-                        visited.add(new int[]{x, y-1});
-                    }
-                }
-            }
-        }
-        float[] result=new float[2];
-        result[0]=level.tileToLevelCoordinatesX(cx)+this.tileSize/2;
-        result[1]=level.tileToLevelCoordinatesY(cy)+this.tileSize/2;
-        return result;//do not move if cannot find a path
-    }
     private void MoveAlongPathToGoal() {
         float ex = enemy.getX();
         float ey = enemy.getY();
-//        System.out.println("moving along path, current position is "+ex+":"+ey);
-//        System.out.println("moving along path, goal is "+goal[0]+":"+goal[1]);
+        //boolean foundPath = pathFinder.searchNodePath(startNode, endNode, heuristic, path);
         switch (state) {
+            case SPAWN:
+                this.move=EnemyAction.STAY;
+                break;
             case WANDER:
             case CHASE_close:
                 float dx=goal[0]+this.tileSize/2-ex;
                 float dy=goal[1]+this.tileSize/2-ey;
-                if (Math.abs(dx)<=0.1 && Math.abs(dy)<=0.1){
-                    this.move=EnemyAction.STAY;
-                }
-                else if (Math.abs(dx)>Math.abs(dy)){
-                    if (dx>0){
-                        this.move=EnemyAction.FLY_RIGHT;
+                this.move=EnemyAction.FLY;
+                this.v=new Vector2(dx,dy);
+                break;
+            case CHASE:
+                IndexedAStarPathFinder<Level.MyNode> pathFinder = new IndexedAStarPathFinder<>((IndexedGraph<Level.MyNode>) graph);
+                Level.MyNode startNode = graph.getNode(level.levelToTileCoordinatesX(ex), level.levelToTileCoordinatesY(ey));
+                Level.MyNode endNode = graph.getNode(level.levelToTileCoordinatesX(goal[0]), level.levelToTileCoordinatesY(goal[1]));
+                if (needNewPath){
+                    path.clear();
+                    indexAlongPath=0;
+                    System.out.println("recalculate the path to: "+endNode.getX()+": "+endNode.getY());
+                    boolean foundPath = pathFinder.searchNodePath(startNode, endNode, heuristic, path);
+                    if(!foundPath){//did not find the path
+                        System.out.println("Did not find path, so stay");
+                        this.move=EnemyAction.STAY;
                     }else{
-                        this.move=EnemyAction.FLY_LEFT;
+                    needNewPath =false;}
+                }
+
+                if (path.getCount()>indexAlongPath) {
+                    this.move=EnemyAction.FLY;
+                    System.out.println("moving along path, index is "+this.indexAlongPath);
+                    Level.MyNode goalnode=path.get(indexAlongPath);
+                    float gx= level.tileToLevelCoordinatesX(goalnode.getX())+this.tileSize/2;
+                    float gy= level.tileToLevelCoordinatesY(goalnode.getY())+this.tileSize/2;
+                    this.v=new Vector2(gx-ex,gy-ey);
+                    System.out.println("the current goal is: "+gx+": "+gy );
+                    System.out.println("I am here "+ex+":"+ey);
+                    if ((Math.abs(gx-ex)<0.2) &&(Math.abs(gy-ey)<0.2)){
+                        //reach this goal, move to the next goal
+                        System.out.println("moving to next index");
+                        indexAlongPath=indexAlongPath+1;
+                        if (indexAlongPath>=path.getCount()){
+                            needNewPath=true;
+                        }
                     }
                 }else{
-                    if (dy>0){
-                        this.move=EnemyAction.FLY_UP;
-                    }
-                    else{
-                        this.move=EnemyAction.FLY_DOWN;
-                    }
-                }
-                break;
-            default:
-                if (needGoal){
-                    this.tempgoal=ChaseGoalHelper();
-                    needGoal=false;
-                }else {
-//                    System.out.println("moving along path, tempgoal is "+tempgoal[0]+":"+tempgoal[1]);
-
-                    float dtx = tempgoal[0] - ex;
-                    float dty = tempgoal[1] - ey;
-                    if (Math.abs(dtx) + Math.abs(dty) <= 0.2) {
-                        needGoal = true;
-//                        System.out.println("recompute because we reach there");
-                    }
-                    if (Math.abs(dtx) > Math.abs(dty)) {
-                        if (dtx > 0) {
-                            this.move = EnemyAction.FLY_RIGHT;
-                        } else {
-                            this.move = EnemyAction.FLY_LEFT;
-                        }
-                    } else {
-                        if (dty > 0) {
-                            this.move = EnemyAction.FLY_UP;
-                        } else {
-                            this.move = EnemyAction.FLY_DOWN;
-                        }
-                    }
+                    this.move=EnemyAction.STAY;
                 }
         }
     }
-    private class Coord {
-        private final int x;
-        private final int y;
-        private final EnemyAction d;
-        public Coord(int x, int y,EnemyAction direction){
-            this.x=x;
-            this.y=y;
-            this.d=direction;
+
+    private class EuclideanDistance<T> implements Heuristic<Level.MyNode> {
+        @Override
+        public float estimate(Level.MyNode node, Level.MyNode endNode) {
+            float dx = Math.abs(node.getX() - endNode.getX());
+            float dy = Math.abs(node.getY() - endNode.getY());
+            return (float) Math.sqrt(dx * dx + dy * dy);
         }
-
-        public int getX(){return x;}
-        public int getY(){return y;}
-        public EnemyAction getDirection(){return d;}
-
     }
 }

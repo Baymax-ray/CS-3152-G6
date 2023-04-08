@@ -1,5 +1,6 @@
 package edu.cornell.gdiac.game;
 
+import com.badlogic.gdx.math.Vector2;
 import edu.cornell.gdiac.game.models.Enemy;
 import edu.cornell.gdiac.game.models.EnemyAction;
 import edu.cornell.gdiac.game.models.Level;
@@ -38,6 +39,12 @@ public class GoombaAI extends AIController{
         this.enemy=super.enemy;
 
     }
+    //goomba AI do not actually need this method
+    @Override
+    public Vector2 getVelocity() {
+        return null;
+    }
+
     public void setEnemyAction(EnumSet<EnemyAction> enemyAction){
         if(this.enemy.isRemoved()) return;
         ticks=ticks+1;

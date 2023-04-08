@@ -14,8 +14,8 @@ public class Enemy extends CapsuleObstacle {
     private float spiritlimit;
     private Vector2 pos;
     private Vector2 vel;
-    private float movementH;
-    private float movementV=0;
+    private float velocityH;
+    private float velocityV =0;
     /** Cache for internal force calculations */
     private Vector2 forceCache = new Vector2();
 
@@ -74,6 +74,7 @@ public class Enemy extends CapsuleObstacle {
      * The maximum horizontal speed that the object can reach.
      */
     private final float maxSpeed;
+    private final float goombaSpeedCoefficient=0.2f;
 
     /**
      * The horizontal acceleration of the object.
@@ -117,35 +118,37 @@ public class Enemy extends CapsuleObstacle {
 
     //#endregion
 
+    /**
+     * normalize the vector and apply it to velocity
+     * @param v un-normalized vector
+     */
+    public void  setVelocity(Vector2 v){
+        double m=Math.sqrt(v.x*v.x+v.y*v.y);
+        velocityH= (float) (v.x/m);
+        velocityV= (float) (v.y/m);
+    }
     public void setMovement(EnemyAction move) {
-        if (move==EnemyAction.MOVE_RIGHT ||move==EnemyAction.FLY_RIGHT){
-            movementH =1;
-            movementV =0;}
-        else if (move==EnemyAction.MOVE_LEFT ||move==EnemyAction.FLY_LEFT){
-            movementH =-1;
-            movementV =0;}
+        if (move==EnemyAction.MOVE_RIGHT){
+            velocityH =1*goombaSpeedCoefficient;
+            velocityV =0;}
+        else if (move==EnemyAction.MOVE_LEFT){
+            velocityH =-1*goombaSpeedCoefficient;
+            velocityV =0;}
         else if (move == EnemyAction.STAY){
-            movementH = 0;
-            movementV =0;}
-        else if(move==EnemyAction.FLY_UP){
-            movementV =1;
-            movementH =0;
-        }
-        else if (move==EnemyAction.FLY_DOWN){
-            movementV=-1;
-            movementH =0;
-        }
-        movementV*= this.force;
-        movementH *= this.force;
+            velocityH = 0;
+            velocityV =0;}
+
+        velocityV *= this.force;
+        velocityH *= this.force;
         // Change facing if appropriate
-        if (movementH < 0) {
+        if (velocityH < 0) {
             isFacingRight = false;
-        } else if (movementH > 0) {
+        } else if (velocityH > 0) {
             isFacingRight = true;
         }
     }
-    public float getMovementH(){return movementH;}
-    public float getMovementV(){return movementV;}
+    public float getVelocityH(){return velocityH;}
+    public float getVelocityV(){return velocityV;}
     //#endregion
 
 
@@ -275,22 +278,21 @@ public class Enemy extends CapsuleObstacle {
     }
 
     /**
-     * Applies the force to the body of this dude
-     *
-     * This method should be called after the force attribute is set.
+     * Applies the velocity to the body of this dude
+     * This method should be called after the velocity attributes are set.
      */
-    public void applyForce() {
+    public void applyVelocity() {
         if (!isActive()) {
             return;
         }
         forceCache = new Vector2(0,0);
         // Don't want to be moving. Damp out player motion
-        if (getMovementH() == 0f) {
+        if (getVelocityH() == 0f) {
             forceCache.set(-this.damping*getVX(),0);
             body.setLinearVelocity(forceCache);
             //body.applyForce(forceCache,getPosition(),true);
         }
-        if (getMovementV() == 0f && this.type.equals("Fly")) {
+        if (getVelocityV() == 0f && this.type.equals("Fly")) {
             forceCache.set(0,-this.damping*getVY());
             body.setLinearVelocity(forceCache);
             //body.applyForce(forceCache,getPosition(),true);
@@ -305,7 +307,7 @@ public class Enemy extends CapsuleObstacle {
         }
 
         //if(this.type.equals("Fly")){this.movementV *= this.force; this.movementH *= this.force;}
-        forceCache.set(getMovementH()/20,getMovementV()/20);
+        forceCache.set(getVelocityH(), getVelocityV());
         body.setLinearVelocity(forceCache);
         //body.applyForce(forceCache,getPosition(),true);
         }

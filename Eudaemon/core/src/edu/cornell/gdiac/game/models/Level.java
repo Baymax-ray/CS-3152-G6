@@ -3,10 +3,9 @@ package edu.cornell.gdiac.game.models;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.ai.pfa.Connection;
-import com.badlogic.gdx.ai.pfa.Graph;
+import com.badlogic.gdx.ai.pfa.indexed.IndexedGraph;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
@@ -25,6 +24,7 @@ import java.util.Iterator;
 
 public class Level {
 
+    private static MyGridGraph gridGraph;
     //#region FINAL FIELDS
     private final Player player;
     private ArrayList<Enemy> enemies ;
@@ -94,7 +94,7 @@ public class Level {
      * The y position of the camera in level coordinates
      */
     private float cameraY;
-    private MyGridGraph gridGraph;
+    //private MyGridGraph gridGraph;
 
     //#endregion
 
@@ -131,10 +131,13 @@ public class Level {
         this.debug = debug;
     }
 
+    public static MyGridGraph getGridGraph(){
+        return gridGraph;
+    }
+
     //#endregion
 
     public class MyConnection<MyNode> implements Connection<MyNode> {
-
         protected MyNode fromNode;
         protected MyNode toNode;
         protected float cost;
@@ -149,7 +152,6 @@ public class Level {
         public float getCost () {
             return cost;
         }
-
         @Override
         public MyNode getFromNode () {
             return fromNode;
@@ -165,7 +167,7 @@ public class Level {
      * x and y stored in tile coordinates
      * same with tilemap
      */
-    private class MyNode{
+    public class MyNode{
         private final int x;
         private final int y;
         private boolean passable;
@@ -176,7 +178,6 @@ public class Level {
 
         /**
          * true is this node can be passed
-         * @param passable
          */
         public void setPassable(boolean passable) {
             this.passable = passable;
@@ -203,7 +204,7 @@ public class Level {
             return y;
         }
     }
-    private class MyGridGraph implements Graph<MyNode> {
+    public class MyGridGraph implements IndexedGraph<MyNode> {
         private final int width, height;
         private MyNode[][] nodes;
         public MyGridGraph(int width, int height,int[][]tilemap) {
@@ -219,6 +220,14 @@ public class Level {
             }
 
         }
+
+        @Override
+        public int getIndex(MyNode node) {
+            int x= node.getX();
+            int y= node.getY();
+            return y*width+x;
+        }
+
         public int getNodeCount(){
             return width * height;
         }
@@ -303,7 +312,7 @@ public class Level {
                 tilemap[y][x] = layers.getInt(y*widthInTiles + x) - 1;
             }
         }
-        this.gridGraph= new MyGridGraph(widthInTiles,heightInTiles,this.tilemap);
+        gridGraph= new MyGridGraph(widthInTiles,heightInTiles,this.tilemap);
         texturePaths = new HashMap<>();
         JsonValue tileset = assets.getEntry("tileset",  JsonValue.class);
         JsonValue tileList = tileset.get("tiles");

@@ -1,7 +1,5 @@
 package edu.cornell.gdiac.game;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
@@ -53,9 +51,10 @@ public class ActionController {
      * The max number of frames before currentFrame resets
      */
     private int maxFrame = 6;
+    Array<AIController> aiControllers;
 
 
-    public ActionController(Level level) {
+    public ActionController(Level level,Array<AIController> aiControllers) {
         enemies = level.getEnemies();
         player = level.getPlayer();
         this.level = level;
@@ -63,6 +62,7 @@ public class ActionController {
         previousX = 0;
         currentX = 0;
         movedDuringLastFrame = false;
+        this.aiControllers= aiControllers;
 
         //Creating a Dictionary of Textures
         addAnimations(player.getMomoRunSpriteSheet(), 6, 1, "momoRun");
@@ -453,9 +453,12 @@ public class ActionController {
                 for (EnemyAction action : enemyAction) {
                     if (action == EnemyAction.ATTACK) {
                         //TODO: is this already handled by the HandleSpirit() in Level.java?
-                    } else {
+                    } else if(action==EnemyAction.FLY){
+                        enemy.setVelocity(aiControllers.get(i).getVelocity());
+                        enemy.applyVelocity();
+                    }else{
                         enemy.setMovement(action);
-                        enemy.applyForce();
+                        enemy.applyVelocity();
                     }
                 }
                 enemyAction.clear();
