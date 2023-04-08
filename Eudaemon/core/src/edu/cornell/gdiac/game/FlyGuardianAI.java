@@ -236,10 +236,10 @@ public class FlyGuardianAI extends AIController{
 
                     path.clear();
                     indexAlongPath=0;
-                    System.out.println("recalculate the path to: "+endNode.getX()+": "+endNode.getY());
+//                    System.out.println("recalculate the path to: "+endNode.getX()+": "+endNode.getY());
                     boolean foundPath = pathFinder.searchNodePath(startNode, endNode, heuristic, path);
                     if(!foundPath){//did not find the path
-                        System.out.println("Did not find path, so stay");
+//                        System.out.println("Did not find path, so stay");
                         this.move=EnemyAction.STAY;
                     }else{
                         needNewGuardPath =false;}
@@ -247,16 +247,16 @@ public class FlyGuardianAI extends AIController{
 
                 if (path.getCount()>indexAlongPath) {
                     this.move=EnemyAction.FLY;
-                    System.out.println("guarding along path, index is "+this.indexAlongPath);
+//                    System.out.println("guarding along path, index is "+this.indexAlongPath);
                     Level.MyNode goalnode=path.get(indexAlongPath);
                     float gx= level.tileToLevelCoordinatesX(goalnode.getX())+this.tileSize/2;
                     float gy= level.tileToLevelCoordinatesY(goalnode.getY())+this.tileSize/2;
                     this.v=new Vector2(gx-ex,gy-ey);
-                    System.out.println("the current goal is: "+gx+": "+gy );
-                    System.out.println("I am here "+ex+":"+ey);
+//                    System.out.println("the current goal is: "+gx+": "+gy );
+//                    System.out.println("I am here "+ex+":"+ey);
                     if ((Math.abs(gx-ex)<0.2) &&(Math.abs(gy-ey)<0.2)){
                         //reach this goal, move to the next goal
-                        System.out.println("moving to next index");
+//                        System.out.println("moving to next index");
                         indexAlongPath=indexAlongPath+1;
                         if (indexAlongPath>=path.getCount()){
                             needNewGuardPath=true;
@@ -277,10 +277,10 @@ public class FlyGuardianAI extends AIController{
                     Level.MyNode endNode = graph.getNode(level.levelToTileCoordinatesX(goal[0]), level.levelToTileCoordinatesY(goal[1]));
                     path.clear();
                     indexAlongPath=0;
-                    System.out.println("recalculate the path to: "+endNode.getX()+": "+endNode.getY());
+//                    System.out.println("recalculate the path to: "+endNode.getX()+": "+endNode.getY());
                     boolean foundPath = pathFinder.searchNodePath(startNode, endNode, heuristic, path);
                     if(!foundPath){//did not find the path
-                        System.out.println("Did not find path, so stay");
+//                        System.out.println("Did not find path, so stay");
                         this.move=EnemyAction.STAY;
                     }else{
                         needNewPath =false;}
@@ -293,11 +293,11 @@ public class FlyGuardianAI extends AIController{
                     float gx= level.tileToLevelCoordinatesX(goalnode.getX())+this.tileSize/2;
                     float gy= level.tileToLevelCoordinatesY(goalnode.getY())+this.tileSize/2;
                     this.v=new Vector2(gx-ex,gy-ey);
-                    System.out.println("the current goal is: "+gx+": "+gy );
-                    System.out.println("I am here "+ex+":"+ey);
+//                    System.out.println("the current goal is: "+gx+": "+gy );
+//                    System.out.println("I am here "+ex+":"+ey);
                     if ((Math.abs(gx-ex)<0.2) &&(Math.abs(gy-ey)<0.2)){
                         //reach this goal, move to the next goal
-                        System.out.println("moving to next index");
+//                        System.out.println("moving to next index");
                         indexAlongPath=indexAlongPath+1;
                         if (indexAlongPath>=path.getCount()){
                             needNewPath=true;
