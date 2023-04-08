@@ -34,7 +34,7 @@
           "guardianList":[11,9,11,15]
         },
         {
-          "type":"Guardian",
+          "type":"GoombaGuardian",
           "TextureAsset": "platform:worm",
           "startX": 10,
           "startY": 8,

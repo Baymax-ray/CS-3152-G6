@@ -151,6 +151,7 @@ public class Enemy extends CapsuleObstacle {
 
         //Query the type of this enemy, then query the corresponding data in enemyConstants.json
         this.type=json.getString("type");
+        this.guardianList=new ArrayList<>();
         switch (this.type) {
             case "Goomba":
                 this.enemyData = assets.getEntry("sharedConstants", JsonValue.class).get("Goomba");
@@ -162,7 +163,7 @@ public class Enemy extends CapsuleObstacle {
                 this.enemyData = assets.getEntry("sharedConstants", JsonValue.class).get("FlyGuardian");
                 this.guardianRadius = enemyData.getInt("guardianRadius");
                 JsonValue glist = json.get("guardianList");
-                for (int i = 0; i < glist.size; i++) {
+                for (int i = 0; i < glist.size(); i++) {
                     this.guardianList.add(glist.getInt(i));
                 }
                 break;
@@ -170,7 +171,7 @@ public class Enemy extends CapsuleObstacle {
                 this.enemyData = assets.getEntry("sharedConstants", JsonValue.class).get("GoombaGuardian");
                 this.guardianRadius = enemyData.getInt("guardianRadius");
                 glist = json.get("guardianList");
-                for (int i = 0; i < glist.size; i++) {
+                for (int i = 0; i < glist.size(); i++) {
                     this.guardianList.add(glist.getInt(i));
                 }
                 break;
