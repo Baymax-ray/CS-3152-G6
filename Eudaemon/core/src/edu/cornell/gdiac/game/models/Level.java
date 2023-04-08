@@ -2,6 +2,8 @@ package edu.cornell.gdiac.game.models;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
+import com.badlogic.gdx.ai.pfa.Connection;
+import com.badlogic.gdx.ai.pfa.Graph;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
@@ -129,7 +131,163 @@ public class Level {
     }
 
     //#endregion
+    public class MyConnection<MyNode> implements Connection<MyNode> {
 
+        protected MyNode fromNode;
+        protected MyNode toNode;
+        protected float cost;
+
+        public MyConnection (MyNode fromNode, MyNode toNode,float cost) {
+            this.fromNode = fromNode;
+            this.toNode = toNode;
+            this.cost=cost;
+        }
+
+        @Override
+        public float getCost () {
+            return cost;
+        }
+
+        @Override
+        public MyNode getFromNode () {
+            return fromNode;
+        }
+
+        @Override
+        public MyNode getToNode () {
+            return toNode;
+        }
+
+    }
+    /**
+     * x and y stored in tile coordinates
+     * same with tilemap
+     */
+    private class MyNode{
+        private final int x;
+        private final int y;
+        private boolean passable;
+        public MyNode(int x, int y){
+            this.x=x;
+            this.y=y;
+        }
+
+        /**
+         * true is this node can be passed
+         * @param passable
+         */
+        public void setPassable(boolean passable) {
+            this.passable = passable;
+        }
+
+        /**
+         * @return true is this node can be passed
+         */
+        public boolean isPassable() {
+            return passable;
+        }
+
+        /**
+         * @return x in tile coordinates
+         */
+        public int getX() {
+            return x;
+        }
+
+        /**
+         * @return y in tile coordinates
+         */
+        public int getY() {
+            return y;
+        }
+    }
+    private class MyGridGraph implements Graph<MyNode> {
+        private final int width, height;
+        private MyNode[][] nodes;
+        public MyGridGraph(int width, int height,int[][]tilemap) {
+            this.width = width;
+            this.height = height;
+            nodes = new MyNode[height][width];
+            for (int y=0;y<height;y++){
+                for (int x = 0; x < width; x++) {
+                    MyNode node=new MyNode(x,y);
+                    node.setPassable(tilemap[y][x]<=0);
+                    nodes[y][x]=node;
+                }
+            }
+
+        }
+        public int getNodeCount(){
+            return width * height;
+        }
+        public MyNode getNode(int index) {
+            int x = index % width;
+            int y = index / width;
+            return nodes[y][x];
+        }
+        public MyNode getNode(int x, int y) {
+            return nodes[y][x];
+        }
+
+        @Override
+        public Array<Connection<MyNode>> getConnections(MyNode fromNode) {
+            int x= fromNode.getX();
+            int y= fromNode.getY();
+            Array<Connection<MyNode>> connections=new Array<>();
+            if (x>0) {
+                MyNode toNode=getNode(x-1,y);
+                if (toNode.isPassable()) {
+                    connections.add(new MyConnection<>(fromNode,toNode,1f));
+                    // Add diagonal neighboring nodes
+                    if (y > 0){
+                        toNode=getNode(x-1,y-1);
+                        if (toNode.isPassable()) {
+                            connections.add(new MyConnection<>(fromNode,toNode,1.4f));
+                        }
+                    }
+                    if (y < height - 1){
+                        toNode=getNode(x-1,y+1);
+                        if (toNode.isPassable()) {
+                            connections.add(new MyConnection<>(fromNode,toNode,1.4f));
+                        }
+                    }
+                }
+            }
+            if (x < width - 1){
+                MyNode toNode=getNode(x+1,y);
+                if (toNode.isPassable()) {
+                    connections.add(new MyConnection<>(fromNode,toNode,1f));
+                    // Add diagonal neighboring nodes
+                    if (x < width - 1 && y > 0){
+                        toNode=getNode(x+1,y-1);
+                        if (toNode.isPassable()) {
+                            connections.add(new MyConnection<>(fromNode,toNode,1.4f));
+                        }
+                    }
+                    if (x < width - 1 && y < height - 1){
+                        toNode=getNode(x+1,y+1);
+                        if (toNode.isPassable()) {
+                            connections.add(new MyConnection<>(fromNode,toNode,1.4f));
+                        }
+                    }
+                }
+            }
+            if (y > 0){
+                MyNode toNode=getNode(x,y-1);
+                if (toNode.isPassable()) {
+                    connections.add(new MyConnection<>(fromNode,toNode,1f));
+                }
+            }
+            if (y < height - 1){
+                MyNode toNode=getNode(x,y+1);
+                if (toNode.isPassable()) {
+                    connections.add(new MyConnection<>(fromNode,toNode,1f));
+                }
+            }
+
+            return connections;
+        }
+    }
     public Level(JsonValue json, Tile[] tiles, AssetDirectory assets) {
         this.tiles = tiles;
         String levelName = json.getString("level");
@@ -218,9 +376,7 @@ public class Level {
         int nrow = tilemap.length;
         int ncol = tilemap[0].length;
         int nx=levelToTileCoordinatesX(x);
-        //TODO: 3-21
         int ny = levelToTileCoordinatesY(y);
-        //int ny=levelToTileCoordinatesY(y);
 
         if (nx<0 || nx>(ncol-1) ||ny<0 || ny>(nrow-1) ){
             return false;
