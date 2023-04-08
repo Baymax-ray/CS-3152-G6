@@ -215,17 +215,22 @@ public class FlyAI extends AIController{
                 this.move=EnemyAction.STAY;
                 break;
             case WANDER:
-            case CHASE_close:
                 float dx=goal[0]+this.tileSize/2-ex;
                 float dy=goal[1]+this.tileSize/2-ey;
                 this.move=EnemyAction.FLY;
                 this.v=new Vector2(dx,dy);
                 break;
+            case CHASE_close:
+                dx=goal[0]-ex;
+                dy=goal[1]-ey;
+                this.move=EnemyAction.FLY;
+                this.v=new Vector2(dx,dy);
+                break;
             case CHASE:
                 IndexedAStarPathFinder<Level.MyNode> pathFinder = new IndexedAStarPathFinder<>((IndexedGraph<Level.MyNode>) graph);
-                Level.MyNode startNode = graph.getNode(level.levelToTileCoordinatesX(ex), level.levelToTileCoordinatesY(ey));
-                Level.MyNode endNode = graph.getNode(level.levelToTileCoordinatesX(goal[0]), level.levelToTileCoordinatesY(goal[1]));
                 if (needNewPath){
+                    Level.MyNode startNode = graph.getNode(level.levelToTileCoordinatesX(ex), level.levelToTileCoordinatesY(ey));
+                    Level.MyNode endNode = graph.getNode(level.levelToTileCoordinatesX(goal[0]), level.levelToTileCoordinatesY(goal[1]));
                     path.clear();
                     indexAlongPath=0;
 //                    System.out.println("recalculate the path to: "+endNode.getX()+": "+endNode.getY());
@@ -257,6 +262,7 @@ public class FlyAI extends AIController{
                 }else{
                     this.move=EnemyAction.STAY;
                 }
+                break;
         }
     }
 

@@ -117,6 +117,11 @@ public class Enemy extends CapsuleObstacle {
         double m=Math.sqrt(v.x*v.x+v.y*v.y);
         velocityH= (float) (v.x/m);
         velocityV= (float) (v.y/m);
+        if (velocityH < 0) {
+            isFacingRight = false;
+        } else if (velocityH > 0) {
+            isFacingRight = true;
+        }
     }
     public void setMovement(EnemyAction move) {
         if (move==EnemyAction.MOVE_RIGHT){
@@ -219,7 +224,7 @@ public class Enemy extends CapsuleObstacle {
 
         this.isHit = false;
         this.isGrounded = true;
-        if(this.type.equals("Fly")){this.setGravityScale(0);}
+        if(this.type.equals("Fly")||this.type.equals("FlyGuardian")){this.setGravityScale(0);}
         else{this.setGravityScale(40);}
     }
 

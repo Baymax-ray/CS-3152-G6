@@ -220,7 +220,9 @@ public class Level {
             }
 
         }
-
+        public int getHeight(){
+            return height;
+        }
         @Override
         public int getIndex(MyNode node) {
             int x= node.getX();
