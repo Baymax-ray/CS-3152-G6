@@ -11,9 +11,7 @@ import edu.cornell.gdiac.game.*;
 import edu.cornell.gdiac.game.obstacle.*;
 
 public class Enemy extends CapsuleObstacle {
-    private float spiritlimit;
-    private Vector2 pos;
-    private Vector2 vel;
+    private float spiritRemain;
     private float velocityH;
     private float velocityV =0;
     /** Cache for internal force calculations */
@@ -23,12 +21,8 @@ public class Enemy extends CapsuleObstacle {
     private final float startX;
     private final float startY;
 
-    private final int maxHearts;
     private final int initialHearts;
-
     private final int attackPower;
-
-    private final boolean startsFacingRight;
 
     /**
      * The amount of ticks before the enemy can attack again
@@ -64,32 +58,23 @@ public class Enemy extends CapsuleObstacle {
     /**the type of this enemy. currently: goombaAI or fly.*/
     private final String type;
     private final JsonValue enemyData;
-
-    //#endregion
-
-    //#region NONFINAL FIELDS
-
-    private float hearts;
     /**
-     * The maximum horizontal speed that the object can reach.
+     * The maximum speed that the object can reach.
      */
     private final float maxSpeed;
     private final float goombaSpeedCoefficient=0.2f;
-
-    /**
-     * The horizontal acceleration of the object.
-     */
-    private float horizontalAcceleration;
-
     private final boolean isHit;
     private final boolean isGrounded;
+    //#endregion
+
+    //#region NON-FINAL FIELDS
+    private float hearts;
     private boolean isFacingRight;
     /**
      * The angle at which the entity is facing, in degrees.
      */
     private int angleFacing;
-    private boolean isMovingRight;
-    private boolean isMovingLeft;
+
 
     /**
      * The remaining time in seconds until the enemy can attack again.
@@ -97,7 +82,6 @@ public class Enemy extends CapsuleObstacle {
     private int attackCooldownRemaining;
 
     private int hitCooldownRemaining;
-
 
     /** The physics shape of this object */
     private PolygonShape sensorShape;
@@ -108,11 +92,11 @@ public class Enemy extends CapsuleObstacle {
         return type;
     }
     private String getSensorName() {return this.sensorName;}
-    public float getSpiritlimit() {
-        return spiritlimit;
+    public float getSpiritRemain() {
+        return spiritRemain;
     }
-    public void lossingSpirit(float rate){
-        this.spiritlimit-=rate;
+    public void LossSpirit(float rate){
+        this.spiritRemain -=rate;
     }
 
 
@@ -202,17 +186,13 @@ public class Enemy extends CapsuleObstacle {
         this.sensorName = "EnemyGroundSensor";
 
         //Other Information
-        this.maxHearts = enemyData.getInt("maxHearts");
         this.initialHearts = enemyData.getInt("initialHearts");
         this.hearts = initialHearts;
-        this.spiritlimit=enemyData.getFloat(("spiritLimitation"));
-
-        this.startsFacingRight = enemyData.getBoolean("startsFacingRight");
+        this.spiritRemain =enemyData.getFloat(("spiritLimitation"));
+        this.isFacingRight = enemyData.getBoolean("startsFacingRight");
 
         this.isHit = false;
         this.isGrounded = true;
-        this.isFacingRight = startsFacingRight;
-
         if(this.type.equals("Fly")){this.setGravityScale(0);}
         else{this.setGravityScale(40);}
     }
@@ -239,11 +219,8 @@ public class Enemy extends CapsuleObstacle {
     /**
      * TODO: change this function to cater for Flying Enemy!
      * Creates the physics Body(s) for this object, adding them to the world.
-     *
      * This method overrides the base method to keep your ship from spinning.
-     *
      * @param world Box2D world to store body
-     *
      * @return true if object allocation succeeded
      */
     public boolean activatePhysics(World world) {
@@ -316,7 +293,6 @@ public class Enemy extends CapsuleObstacle {
 
     /**
      * Called when this enemy is hit by a sword.
-     *
      * This method decrements the number of hearts for this enemy by 1. If the number of hearts
      * reaches 0, this method destroys the enemy
      */

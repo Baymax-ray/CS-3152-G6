@@ -27,16 +27,18 @@
           "startY": 8
         },
         {
-          "type":"Fly",
+          "type":"FlyGuardian",
           "TextureAsset": "platform:worm",
           "startX": 11,
-          "startY": 9
+          "startY": 9,
+          "guardianList":[11,9,11,15]
         },
         {
-          "type":"Goomba",
+          "type":"Guardian",
           "TextureAsset": "platform:worm",
-          "startX": 37,
-          "startY": 19
+          "startX": 10,
+          "startY": 8,
+          "guardianList":[7,10]
         },
         {
           "type":"Goomba",
