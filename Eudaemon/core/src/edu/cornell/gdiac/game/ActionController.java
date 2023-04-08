@@ -460,7 +460,7 @@ public class ActionController {
                         enemy.applyVelocity();
                     }
                 }
-                if(enemy.getType().equals("Goomba") || enemy.getType().equals("GoombaGuardian")){
+                if(enemy.getType().equals("Goomba")){
                     if(enemy.getIsFacingRight()){
                         addAnimations(enemy.getBasicGoombaRightSpriteSheet(), 10, 1, "goombaRightWalk");
                         TextureRegion current = (TextureRegion) (animations.get("goombaRightWalk")).getKeyFrame(currentFrame); // Gets the current frame of the animation

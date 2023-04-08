@@ -48,7 +48,7 @@
         },
         {
           "type":"Goomba",
-          "TextureAsset": "platform:worm",
+          "TextureAsset": "platform:trackingGoomba",
           "RightAsset": "basicGoomba:rightWalk",
           "LeftAsset": "basicGoomba:leftWalk",
           "startX": 42,
@@ -56,7 +56,7 @@
         },
         {
           "type":"Goomba",
-          "TextureAsset": "platform:worm",
+          "TextureAsset": "platform:trackingGoomba",
           "RightAsset": "basicGoomba:rightWalk",
           "LeftAsset": "basicGoomba:leftWalk",
           "startX": 26,
