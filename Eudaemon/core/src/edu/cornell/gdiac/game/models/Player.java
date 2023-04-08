@@ -8,7 +8,6 @@ import com.badlogic.gdx.physics.box2d.*;
 import com.badlogic.gdx.utils.JsonValue;
 import edu.cornell.gdiac.assets.AssetDirectory;
 import edu.cornell.gdiac.game.GameCanvas;
-import edu.cornell.gdiac.game.obstacle.BoxObstacle;
 import edu.cornell.gdiac.game.obstacle.CapsuleObstacle;
 
 public class Player extends CapsuleObstacle {
@@ -180,6 +179,10 @@ public class Player extends CapsuleObstacle {
     //#endregion
 
     //#region NONFINAL FIELDS
+    /**
+     * A boolean variable representing whether the object is sliding or not.
+     */
+    private boolean isTouchingWall;
     /** The amount player's drawing scale is multiplied by on the x-axis. */
     private float sxMult = 1;
 
@@ -404,6 +407,20 @@ public class Player extends CapsuleObstacle {
     //#endregion
 
     //#region GETTERS AND SETTERS
+    /**
+     * Retrieves if the player is sliding
+     *
+     * @return The current sliding state.
+     */
+    public boolean isTouchingWall() {
+        return isTouchingWall;
+    }
+    /**
+     * Sets if the player is sliding
+     */
+    public void setTouchingWall(boolean slide) {
+        isTouchingWall = slide;
+    }
     /**
      * Gets the value of the chiyo's speed multiplier
      *

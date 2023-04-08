@@ -14,6 +14,7 @@ import com.badlogic.gdx.utils.JsonValue;
 import edu.cornell.gdiac.assets.AssetDirectory;
 import edu.cornell.gdiac.game.GameCanvas;
 import edu.cornell.gdiac.game.UIOverlay;
+import edu.cornell.gdiac.game.obstacle.EffectObstacle;
 import edu.cornell.gdiac.game.obstacle.Obstacle;
 import edu.cornell.gdiac.game.obstacle.SwordWheelObstacle;
 import edu.cornell.gdiac.util.PooledList;
@@ -646,9 +647,22 @@ public class Level {
                         && player.getAngleFacing() == 270){
                     player.setVelocity(player.getBodyVelocityX(), player.getJumpVelocity() - 1F);
                 }
-                enemies.get(i).hitBySword(player);
-                if (!enemies.get(i).isActive()){
-                System.out.println("removing enemy" + enemies.get(i).getType());
+                Enemy enemy = enemies.get(i);
+                enemy.hitBySword(player);
+                //create hit by sword effect
+                float effectAngle = 0.0f;
+                float pOffsetX = 0.0f;
+                float pOffsetY = 0.0f;
+                Vector2 scale = new Vector2(1f, 1f);
+                EffectObstacle dashAnimate = new EffectObstacle(enemy.getX(), enemy.getY(), enemy.getBloodEffect().getRegionWidth(),
+                        enemy.getBloodEffect().getRegionHeight(), 0.02f, 0.02f, effectAngle,
+                        pOffsetX, pOffsetY,17, 1,true,
+                        "dashEffect", enemy, 0.35f,
+                        scale, enemy.getBloodEffect(),3);
+                this.addQueuedObject(dashAnimate);
+
+                if (!enemy.isActive()){
+                System.out.println("removing enemy" + enemy.getType());
                 enemies = removeEnemy(enemies, i);}
             }
         }

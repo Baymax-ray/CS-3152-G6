@@ -91,8 +91,6 @@ public class ActionController {
      * @param playerAction the set of player actions to resolve
      */
     private void resolvePlayerActions(EnumSet<Action> playerAction) {
-        //System.out.println("x: " + player.getX());
-        //System.out.println("y: " + player.getY());
         currentX = player.getX();
         float deltaX = previousX - currentX;
         //#region Button Inputs
@@ -340,6 +338,10 @@ public class ActionController {
         }
         //#endregion
 
+        //#region Wall Slide
+
+        //#endregion
+
         if (player.getiFramesRemaining() > 0) {
             player.setiFramesRemaining(Math.max(player.getiFramesRemaining() - 1, 0));
             if (player.getiFramesRemaining() == 0) {
@@ -363,9 +365,6 @@ public class ActionController {
             }
 
         }
-
-
-        //System.out.println(player.getDashLifespanRemaining());
 
         if (player.isDashing()) {
             player.setDashCooldownRemaining(Math.max(player.getDashCooldownRemaining() - 1, 0));
@@ -435,7 +434,7 @@ public class ActionController {
         movedDuringLastFrame = (leftPressed || rightPressed) && deltaX > 0;
 
 
-
+        System.out.println (player.isGrounded());
     }
 
     /**
