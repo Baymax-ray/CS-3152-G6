@@ -84,8 +84,8 @@
     "spiritLimitation":8
   },
   "GoombaGuardian": {
-    "ImageWidth": 1,
-    "ImageHeight": 1,
+    "ImageWidth": 0.5,
+    "ImageHeight": 0.5,
     "hitboxWidth": 0.5,
     "hitboxHeight": 0.6,
     "maxSpeed": 2.5,
@@ -113,8 +113,8 @@
     "guardianTime":60
   },
   "FlyGuardian": {
-    "ImageWidth": 1,
-    "ImageHeight": 1,
+    "ImageWidth": 0.5,
+    "ImageHeight": 0.5,
     "hitboxWidth": 0.5,
     "hitboxHeight": 0.6,
     "maxSpeed": 1,
@@ -142,8 +142,8 @@
     "guardianTime":60
   },
   "Fly": {
-    "ImageWidth": 1,
-    "ImageHeight": 1,
+    "ImageWidth": 0.5,
+    "ImageHeight": 0.5,
     "hitboxWidth": 0.5,
     "hitboxHeight": 0.6,
     "maxSpeed": 1,
