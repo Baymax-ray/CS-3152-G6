@@ -37,7 +37,6 @@ public class FlyAI extends AIController{
     private GraphPath<Level.MyNode> path;
     private int indexAlongPath=0;
 
-
     private enum FSMState {
         /** The enemy just spawned */
         SPAWN,

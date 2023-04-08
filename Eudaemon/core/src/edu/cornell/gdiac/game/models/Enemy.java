@@ -10,6 +10,8 @@ import edu.cornell.gdiac.assets.AssetDirectory;
 import edu.cornell.gdiac.game.*;
 import edu.cornell.gdiac.game.obstacle.*;
 
+import java.util.ArrayList;
+
 public class Enemy extends CapsuleObstacle {
     private float spiritRemain;
     private float velocityH;
@@ -68,6 +70,9 @@ public class Enemy extends CapsuleObstacle {
     //#endregion
 
     //#region NON-FINAL FIELDS
+    private int guardianRadius=0;
+    private ArrayList<Integer> guardianList;
+
     private float hearts;
     private boolean isFacingRight;
     /**
@@ -88,6 +93,8 @@ public class Enemy extends CapsuleObstacle {
     //#endregion
 
     //#region Getter and Setter
+    public int getGuardianRadius(){return guardianRadius;}
+    public ArrayList<Integer> getGuardianList(){return guardianList;}
     public String getType() {
         return type;
     }
@@ -144,15 +151,33 @@ public class Enemy extends CapsuleObstacle {
 
         //Query the type of this enemy, then query the corresponding data in enemyConstants.json
         this.type=json.getString("type");
-        if(this.type.equals("Goomba")){
-            this.enemyData = assets.getEntry("sharedConstants", JsonValue.class).get("Goomba");
-        }else if (this.type.equals("Fly")){
-            this.enemyData = assets.getEntry("sharedConstants", JsonValue.class).get("Fly");
-        }
-        else{
-            //should never reach here
-            this.enemyData=null;
-            throw new IllegalArgumentException("Enemy can only be Fly or Goomba");
+        switch (this.type) {
+            case "Goomba":
+                this.enemyData = assets.getEntry("sharedConstants", JsonValue.class).get("Goomba");
+                break;
+            case "Fly":
+                this.enemyData = assets.getEntry("sharedConstants", JsonValue.class).get("Fly");
+                break;
+            case "FlyGuardian":
+                this.enemyData = assets.getEntry("sharedConstants", JsonValue.class).get("FlyGuardian");
+                this.guardianRadius = enemyData.getInt("guardianRadius");
+                JsonValue glist = json.get("guardianList");
+                for (int i = 0; i < glist.size; i++) {
+                    this.guardianList.add(glist.getInt(i));
+                }
+                break;
+            case "GoombaGuardian":
+                this.enemyData = assets.getEntry("sharedConstants", JsonValue.class).get("GoombaGuardian");
+                this.guardianRadius = enemyData.getInt("guardianRadius");
+                glist = json.get("guardianList");
+                for (int i = 0; i < glist.size; i++) {
+                    this.guardianList.add(glist.getInt(i));
+                }
+                break;
+            default:
+                //should never reach here
+                this.enemyData = null;
+                throw new IllegalArgumentException("Enemy can only be Fly or Goomba");
         }
         this.setWidth(enemyData.getFloat("hitboxWidth"));
         this.setHeight(enemyData.getFloat("hitboxHeight"));

@@ -5,6 +5,7 @@ import edu.cornell.gdiac.game.models.Enemy;
 import edu.cornell.gdiac.game.models.EnemyAction;
 import edu.cornell.gdiac.game.models.Level;
 
+import java.util.ArrayList;
 import java.util.EnumSet;
 import java.util.Random;
 
@@ -18,6 +19,8 @@ public class GoombaGuardianAI extends AIController{
     /**the amount of time to wait before back to wander state*/
     private int WanderWait=0;
     private final float[] goal;
+    private int guardianRadius;
+    private ArrayList<Integer> guardianList;
     private enum FSMState {
         /** The enemy just spawned */
         SPAWN,
@@ -37,6 +40,8 @@ public class GoombaGuardianAI extends AIController{
         this.goal=new float[2];
         this.level=super.level;
         this.enemy=super.enemy;
+        this.guardianList=enemy.getGuardianList();
+        this.guardianRadius=enemy.getGuardianRadius();
 
     }
     //goomba AI do not actually need this method

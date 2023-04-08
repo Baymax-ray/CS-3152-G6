@@ -10,6 +10,7 @@ import edu.cornell.gdiac.game.models.Enemy;
 import edu.cornell.gdiac.game.models.EnemyAction;
 import edu.cornell.gdiac.game.models.Level;
 
+import java.util.ArrayList;
 import java.util.EnumSet;
 import java.util.Random;
 
@@ -36,7 +37,8 @@ public class FlyGuardianAI extends AIController{
     private Level.MyGridGraph graph;
     private GraphPath<Level.MyNode> path;
     private int indexAlongPath=0;
-
+    private int guardianRadius;
+    private ArrayList<Integer> guardianList;
 
     private enum FSMState {
         /** The enemy just spawned */
@@ -65,7 +67,8 @@ public class FlyGuardianAI extends AIController{
         Level.MyGridGraph graph=Level.getGridGraph();
         this.graph=graph;
         this.path = new DefaultGraphPath<>();
-
+        this.guardianList=enemy.getGuardianList();
+        this.guardianRadius=enemy.getGuardianRadius();
     }
 
     @Override
