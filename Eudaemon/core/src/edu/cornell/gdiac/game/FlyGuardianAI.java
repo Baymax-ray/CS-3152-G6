@@ -288,7 +288,7 @@ public class FlyGuardianAI extends AIController{
 
                 if (path.getCount()>indexAlongPath) {
                     this.move=EnemyAction.FLY;
-                    System.out.println("moving along path, index is "+this.indexAlongPath);
+//                    System.out.println("moving along path, index is "+this.indexAlongPath);
                     Level.MyNode goalnode=path.get(indexAlongPath);
                     float gx= level.tileToLevelCoordinatesX(goalnode.getX())+this.tileSize/2;
                     float gy= level.tileToLevelCoordinatesY(goalnode.getY())+this.tileSize/2;
