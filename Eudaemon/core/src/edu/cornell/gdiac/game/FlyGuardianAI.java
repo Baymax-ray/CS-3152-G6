@@ -17,8 +17,6 @@ import java.util.Random;
 public class FlyGuardianAI extends AIController{
     private static final int maxWait = 10;
     private static final int detectDistance=5;
-    //private final float enemyWidth;
-    //private final float enemyHeight;
     private final float tileSize;
     private final Enemy enemy;
     private final Level level;
@@ -37,7 +35,7 @@ public class FlyGuardianAI extends AIController{
     private Level.MyGridGraph graph;
     private GraphPath<Level.MyNode> path;
     private int indexAlongPath=0;
-    private int guardianRadius;
+    private int guardianTime;
     private ArrayList<Integer> guardianList;
 
     private enum FSMState {
@@ -59,8 +57,6 @@ public class FlyGuardianAI extends AIController{
         this.goal=new float[2];
         this.level=super.level;
         this.enemy=super.enemy;
-        //this.enemyHeight= this.enemy.getHeight();
-        //this.enemyWidth= this.enemy.getWidth();
         this.tileSize=this.level.gettileSize();
         Heuristic<Level.MyNode> heuristic = new EuclideanDistance<Level.MyNode>();
         this.heuristic=heuristic;
@@ -68,7 +64,7 @@ public class FlyGuardianAI extends AIController{
         this.graph=graph;
         this.path = new DefaultGraphPath<>();
         this.guardianList=enemy.getGuardianList();
-        this.guardianRadius=enemy.getGuardianRadius();
+        this.guardianTime =enemy.getGuardianTime();
     }
 
     @Override

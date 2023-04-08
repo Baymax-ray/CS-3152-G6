@@ -38,7 +38,7 @@
           "TextureAsset": "platform:worm",
           "startX": 10,
           "startY": 8,
-          "guardianList":[7,10]
+          "guardianList":[9,13]
         },
         {
           "type":"Goomba",

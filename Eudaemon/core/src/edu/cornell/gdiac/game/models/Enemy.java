@@ -70,7 +70,7 @@ public class Enemy extends CapsuleObstacle {
     //#endregion
 
     //#region NON-FINAL FIELDS
-    private int guardianRadius=0;
+    private int guardianTime =0;
     private ArrayList<Integer> guardianList;
 
     private float hearts;
@@ -93,7 +93,7 @@ public class Enemy extends CapsuleObstacle {
     //#endregion
 
     //#region Getter and Setter
-    public int getGuardianRadius(){return guardianRadius;}
+    public int getGuardianTime(){return guardianTime;}
     public ArrayList<Integer> getGuardianList(){return guardianList;}
     public String getType() {
         return type;
@@ -161,7 +161,7 @@ public class Enemy extends CapsuleObstacle {
                 break;
             case "FlyGuardian":
                 this.enemyData = assets.getEntry("sharedConstants", JsonValue.class).get("FlyGuardian");
-                this.guardianRadius = enemyData.getInt("guardianRadius");
+                this.guardianTime = enemyData.getInt("guardianTime");
                 JsonValue glist = json.get("guardianList");
                 for (int i = 0; i < glist.size(); i++) {
                     this.guardianList.add(glist.getInt(i));
@@ -169,7 +169,7 @@ public class Enemy extends CapsuleObstacle {
                 break;
             case "GoombaGuardian":
                 this.enemyData = assets.getEntry("sharedConstants", JsonValue.class).get("GoombaGuardian");
-                this.guardianRadius = enemyData.getInt("guardianRadius");
+                this.guardianTime = enemyData.getInt("guardianTime");
                 glist = json.get("guardianList");
                 for (int i = 0; i < glist.size(); i++) {
                     this.guardianList.add(glist.getInt(i));

@@ -6,7 +6,6 @@ import edu.cornell.gdiac.game.models.EnemyAction;
 import edu.cornell.gdiac.game.models.Level;
 
 import java.util.EnumSet;
-import java.util.Random;
 
 public class GoombaAI extends AIController{
     public static final int maxWait = 10;
@@ -124,16 +123,11 @@ public class GoombaAI extends AIController{
         float ey=enemy.getY();
         int tx=level.levelToTileCoordinatesX(ex);
         int ty=level.levelToTileCoordinatesY(ey);
-
-
-        int a;
         switch (state) {
             case SPAWN:
                 goal[0]=ex;
-                goal[1]=ey;
             break;
             case TOWANDER:
-                goal[1]=ey;
                 if(!level.isAirAt(tx+1,ty+1)){
                     goal[0]=level.tileToLevelCoordinatesX(tx+2);
                 } else if (!level.isAirAt(tx-1,ty+1)) {
@@ -178,7 +172,7 @@ public class GoombaAI extends AIController{
         int ty=level.levelToTileCoordinatesY(ey);
 //        System.out.println("in tiles urrent position is "+tx+":"+ty);
 
-        if(ex<=goal[0]+0.1 && ex>=goal[0]-0.1){this.move=EnemyAction.STAY;}
+        if(Math.abs(ex-goal[0])<0.1){this.move=EnemyAction.STAY;}
         else if (ex<goal[0]){
             this.move=EnemyAction.MOVE_RIGHT;
             if(level.isAirAt(tx+1,ty+1)){

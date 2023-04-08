@@ -62,7 +62,6 @@
     "hitboxHeight": 0.6,
     "maxSpeed": 2.5,
     "horizontalAcceleration": 0.12,
-    "maxHearts": 1,
     "initialHearts": 1,
     "attackPower": 1,
     "startsFacingRight": true,
@@ -91,7 +90,6 @@
     "hitboxHeight": 0.6,
     "maxSpeed": 2.5,
     "horizontalAcceleration": 0.12,
-    "maxHearts": 1,
     "initialHearts": 1,
     "attackPower": 1,
     "startsFacingRight": true,
@@ -112,7 +110,7 @@
       "height" : 0.05
     },
     "spiritLimitation":8,
-    "guardianRadius":2
+    "guardianTime":60
   },
   "FlyGuardian": {
     "ImageWidth": 0.5,
@@ -121,8 +119,7 @@
     "hitboxHeight": 0.6,
     "maxSpeed": 1,
     "horizontalAcceleration": 0.12,
-    "maxHearts": 1,
-    "initialHearts": 1,
+    "initialHearts": 2,
     "attackPower": 1,
     "startsFacingRight": true,
     "dashCooldown": 0.4,
@@ -142,7 +139,7 @@
       "height" : 0.05
     },
     "spiritLimitation":8,
-    "guardianRadius":2
+    "guardianTime":60
   },
   "Fly": {
     "ImageWidth": 0.5,
@@ -151,7 +148,6 @@
     "hitboxHeight": 0.6,
     "maxSpeed": 1,
     "horizontalAcceleration": 0.12,
-    "maxHearts": 1,
     "initialHearts": 1,
     "attackPower": 1,
     "startsFacingRight": true,

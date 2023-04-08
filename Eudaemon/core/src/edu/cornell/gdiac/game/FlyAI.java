@@ -16,8 +16,6 @@ import java.util.Random;
 public class FlyAI extends AIController{
     private static final int maxWait = 10;
     private static final int detectDistance=5;
-    //private final float enemyWidth;
-    //private final float enemyHeight;
     private final float tileSize;
     private final Enemy enemy;
     private final Level level;
@@ -56,10 +54,8 @@ public class FlyAI extends AIController{
         this.goal=new float[2];
         this.level=super.level;
         this.enemy=super.enemy;
-        //this.enemyHeight= this.enemy.getHeight();
-        //this.enemyWidth= this.enemy.getWidth();
         this.tileSize=this.level.gettileSize();
-        Heuristic<Level.MyNode> heuristic = new EuclideanDistance<Level.MyNode>();
+        Heuristic<Level.MyNode> heuristic = new EuclideanDistance();
         this.heuristic=heuristic;
         Level.MyGridGraph graph=Level.getGridGraph();
         this.graph=graph;
@@ -82,7 +78,7 @@ public class FlyAI extends AIController{
         markGoal();
         MoveAlongPathToGoal();
         if (state == FSMState.CHASE){
-            System.out.println("Chasing, the goal is"+goal[0]+":"+goal[1]);
+//            System.out.println("Chasing, the goal is"+goal[0]+":"+goal[1]);
         }
 
         enemyAction.add(move);
@@ -232,10 +228,10 @@ public class FlyAI extends AIController{
                 if (needNewPath){
                     path.clear();
                     indexAlongPath=0;
-                    System.out.println("recalculate the path to: "+endNode.getX()+": "+endNode.getY());
+//                    System.out.println("recalculate the path to: "+endNode.getX()+": "+endNode.getY());
                     boolean foundPath = pathFinder.searchNodePath(startNode, endNode, heuristic, path);
                     if(!foundPath){//did not find the path
-                        System.out.println("Did not find path, so stay");
+//                        System.out.println("Did not find path, so stay");
                         this.move=EnemyAction.STAY;
                     }else{
                     needNewPath =false;}
@@ -243,16 +239,16 @@ public class FlyAI extends AIController{
 
                 if (path.getCount()>indexAlongPath) {
                     this.move=EnemyAction.FLY;
-                    System.out.println("moving along path, index is "+this.indexAlongPath);
+//                    System.out.println("moving along path, index is "+this.indexAlongPath);
                     Level.MyNode goalnode=path.get(indexAlongPath);
                     float gx= level.tileToLevelCoordinatesX(goalnode.getX())+this.tileSize/2;
                     float gy= level.tileToLevelCoordinatesY(goalnode.getY())+this.tileSize/2;
                     this.v=new Vector2(gx-ex,gy-ey);
-                    System.out.println("the current goal is: "+gx+": "+gy );
-                    System.out.println("I am here "+ex+":"+ey);
+//                    System.out.println("the current goal is: "+gx+": "+gy );
+//                    System.out.println("I am here "+ex+":"+ey);
                     if ((Math.abs(gx-ex)<0.2) &&(Math.abs(gy-ey)<0.2)){
                         //reach this goal, move to the next goal
-                        System.out.println("moving to next index");
+//                        System.out.println("moving to next index");
                         indexAlongPath=indexAlongPath+1;
                         if (indexAlongPath>=path.getCount()){
                             needNewPath=true;
@@ -264,7 +260,7 @@ public class FlyAI extends AIController{
         }
     }
 
-    private class EuclideanDistance<T> implements Heuristic<Level.MyNode> {
+    private class EuclideanDistance implements Heuristic<Level.MyNode> {
         @Override
         public float estimate(Level.MyNode node, Level.MyNode endNode) {
             float dx = Math.abs(node.getX() - endNode.getX());

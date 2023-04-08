@@ -7,29 +7,26 @@ import edu.cornell.gdiac.game.models.Level;
 
 import java.util.ArrayList;
 import java.util.EnumSet;
-import java.util.Random;
 
 public class GoombaGuardianAI extends AIController{
-    public static final int maxWait = 10;
     private final Enemy enemy;
     private final Level level;
+    private final float tileSize;
+    private int indexAlongList;
     private int ticks=0;
     private FSMState state;
     private EnemyAction move;
     /**the amount of time to wait before back to wander state*/
-    private int WanderWait=0;
     private final float[] goal;
-    private int guardianRadius;
+    private int guardianTime;
     private ArrayList<Integer> guardianList;
     private enum FSMState {
         /** The enemy just spawned */
         SPAWN,
-        /**The first frame the enemy starts to wander*/
-        TOWANDER,
-        /** The enemy is patrolling around without a target */
-        WANDER,
-        /** The enemy has a target, but must get closer */
-        CHASE,
+        /**The the enemy move between guard positions*/
+        GUARD,
+        /**The the enemy stay in the position*/
+        STAY,
         /** The enemy has a target and is attacking it */
         ATTACK
     }
@@ -41,7 +38,10 @@ public class GoombaGuardianAI extends AIController{
         this.level=super.level;
         this.enemy=super.enemy;
         this.guardianList=enemy.getGuardianList();
-        this.guardianRadius=enemy.getGuardianRadius();
+        this.guardianTime =enemy.getGuardianTime();
+        this.indexAlongList=0;
+        this.tileSize=this.level.gettileSize();
+
 
     }
     //goomba AI do not actually need this method
@@ -63,113 +63,55 @@ public class GoombaGuardianAI extends AIController{
         enemyAction.add(move);
 
     }
-    private boolean checkDetection(){
-        float py=level.getPlayer().getY();
-        float px=level.getPlayer().getX();
-        int tpy=level.levelToTileCoordinatesY(py);
-        int tpx=level.levelToTileCoordinatesX(px);
-        float ey=enemy.getY();
-        float ex=enemy.getX();
-        int ty=level.levelToTileCoordinatesY(ey);
-        int tx=level.levelToTileCoordinatesX(ex);
-        if (ty!=tpy){return false;}
-        else{
-            int start=Math.min(tpx,tx);
-            int end=Math.max(tpx,tx);
-            for (int i=start;i<=end;i++){
-                if(!level.isAirAt(i,ey)){
-                    return false;
-                }
-            }
-            this.WanderWait=0;
-            return true;
-        }
-    }
+
     private boolean canAttack(){
         //ToDo
         return false;
+    }
+    private boolean arrive(){
+        float ex=enemy.getX();
+        float gx=level.tileToLevelCoordinatesX(guardianList.get(indexAlongList))+tileSize/2;
+        return (Math.abs(ex-gx)<0.1);
     }
     private void changeStateIfApplicable() {
         switch (state) {
             case SPAWN:
                 if (ticks>60){
-                    state=FSMState.TOWANDER;
+                    state=FSMState.GUARD;
                 }
                 break;
-            case TOWANDER:
-//                System.out.println("toWander");
-                state=FSMState.WANDER;
-                break;
-            case WANDER:
-//                System.out.println("Wander");
-                if (checkDetection()){
-                    state=FSMState.CHASE;
-                }
-                break;
-            case CHASE:
+            case GUARD:
                 if (canAttack()){
                     state=FSMState.ATTACK;
                 }
-                else if (!checkDetection()){
-                    WanderWait++;
-                    if (WanderWait>maxWait){
-                        WanderWait=0;
-                        state=FSMState.TOWANDER;
-                    }
+                if (arrive()){
+                    indexAlongList=(indexAlongList+1)%guardianList.size();
+                    state=FSMState.STAY;
+                    ticks=0;
+                }
+                break;
+            case STAY:
+                if (ticks>guardianTime){
+                    state=FSMState.GUARD;
                 }
                 break;
             case ATTACK:
-                //TODO: is this already handled by the HandleSpirit() in Level.java?
+                //TODO: ?
                 break;
         }
 
     }
     private void markGoal(){
         float ex=enemy.getX();
-        float ey=enemy.getY();
-        int tx=level.levelToTileCoordinatesX(ex);
-        int ty=level.levelToTileCoordinatesY(ey);
-
-
-        int a;
         switch (state) {
+            case STAY:
             case SPAWN:
                 goal[0]=ex;
-                goal[1]=ey;
                 break;
-            case TOWANDER:
-                goal[1]=ey;
-                if(!level.isAirAt(tx+1,ty+1)){
-                    goal[0]=level.tileToLevelCoordinatesX(tx+2);
-                } else if (!level.isAirAt(tx-1,ty+1)) {
-                    goal[0]=level.tileToLevelCoordinatesX(tx-2);
-                }
+            case GUARD:
+                goal[0]=level.tileToLevelCoordinatesX(guardianList.get(indexAlongList))+tileSize/2;
                 break;
-            case WANDER:
-                // turn if the ground of next cell is air or next cell is not air
-                if (goal[0]>=ex){ //going right
-                    if(level.isAirAt(tx+1,ty+1)||!level.isAirAt(tx+1,ty)) { //need to turn
-                        goal[0]=level.tileToLevelCoordinatesX(tx-2);
-                    }
-                    else{
-                        goal[0]=level.tileToLevelCoordinatesX(tx+2);
-                    }
-                }
-                else if(goal[0]<ex) { //going left
-                    if (level.isAirAt(tx-1,ty+1)||!level.isAirAt(tx-1,ty)) { //need to turn
-                        goal[0]=level.tileToLevelCoordinatesX(tx+2);
-                    }
-                    else{
-                        goal[0]=level.tileToLevelCoordinatesX(tx-2);
-                    }
-                }
-                else {
-                    goal[0]=ex; //should not reach here
-                }
-                break;
-            case CHASE:
-                goal[0]=level.getPlayer().getX();
-                break;
+
         }
 //        System.out.println("goal is "+goal[0]);
 
@@ -181,9 +123,8 @@ public class GoombaGuardianAI extends AIController{
 
         int tx=level.levelToTileCoordinatesX(ex);
         int ty=level.levelToTileCoordinatesY(ey);
-//        System.out.println("in tiles urrent position is "+tx+":"+ty);
 
-        if(ex<=goal[0]+0.1 && ex>=goal[0]-0.1){this.move=EnemyAction.STAY;}
+        if(Math.abs(ex-goal[0])<0.1){this.move=EnemyAction.STAY;}
         else if (ex<goal[0]){
             this.move=EnemyAction.MOVE_RIGHT;
             if(level.isAirAt(tx+1,ty+1)){
