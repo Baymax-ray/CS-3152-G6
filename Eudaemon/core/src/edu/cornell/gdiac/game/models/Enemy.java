@@ -83,6 +83,11 @@ public class Enemy extends CapsuleObstacle {
      */
     private int angleFacing;
 
+    /**
+     * The offset value along the y-axis.
+     */
+    private float oyOffset;
+
 
     /**
      * The remaining time in seconds until the enemy can attack again.
@@ -93,6 +98,12 @@ public class Enemy extends CapsuleObstacle {
 
     /** The physics shape of this object */
     private PolygonShape sensorShape;
+
+    /** The sprite sheet for the basic goomba right walk */
+    private TextureRegion basicGoombaRightSpriteSheet;
+
+    /** The sprite sheet for the basic goomba left walk */
+    private TextureRegion basicGoombaLeftSpriteSheet;
     //#endregion
 
     //#region Getter and Setter
@@ -115,6 +126,32 @@ public class Enemy extends CapsuleObstacle {
      */
     public TextureRegion getBloodEffect() {
         return bloodEffectSpriteSheet;
+    }
+    /**
+     * Returns whether enemy is facing right or not
+     *
+     * @return isFacingRight.
+     */
+    public boolean getIsFacingRight(){
+        return isFacingRight;
+    }
+
+    /**
+     * Get basicGoombaRightSpriteSheet.
+     *
+     * @return The basicGoombaRightSpriteSheet TextureRegion.
+     */
+    public TextureRegion getBasicGoombaRightSpriteSheet() {
+        return basicGoombaRightSpriteSheet;
+    }
+
+    /**
+     * Get basicGoombaLeftSpriteSheet.
+     *
+     * @return The basicGoombaLeftSpriteSheet TextureRegion.
+     */
+    public TextureRegion getBasicGoombaLeftSpriteSheet() {
+        return basicGoombaLeftSpriteSheet;
     }
 
 
@@ -156,6 +193,15 @@ public class Enemy extends CapsuleObstacle {
     }
     public float getVelocityH(){return velocityH;}
     public float getVelocityV(){return velocityV;}
+
+    /**
+     * Set the y-axis offset value.
+     *
+     * @param oyOffset The y-axis offset value as a float.
+     */
+    public void setOyOffset(float oyOffset) {
+        this.oyOffset = oyOffset;
+    }
     //#endregion
 
 
@@ -164,6 +210,8 @@ public class Enemy extends CapsuleObstacle {
                 assets.getEntry("sharedConstants", JsonValue.class).get((json.getString("type").equals("Goomba")? "Goomba":"Fly")).getFloat("hitboxWidth"),
                 assets.getEntry("sharedConstants", JsonValue.class).get((json.getString("type").equals("Goomba")? "Goomba":"Fly")).getFloat("hitboxHeight"));
         String TextureAsset = json.getString("TextureAsset");
+        String RightMoveAsset = json.getString("RightAsset");
+        String LeftMoveAsset = json.getString("LeftAsset");
 
         //Query the type of this enemy, then query the corresponding data in enemyConstants.json
         this.type=json.getString("type");
@@ -203,6 +251,8 @@ public class Enemy extends CapsuleObstacle {
         //Texture
         this.enemyTexture = new TextureRegion(assets.getEntry(TextureAsset, Texture.class));
         this.texture = this.enemyTexture;
+        this.basicGoombaRightSpriteSheet = new TextureRegion(assets.getEntry(RightMoveAsset, Texture.class));
+        this.basicGoombaLeftSpriteSheet = new TextureRegion(assets.getEntry(LeftMoveAsset, Texture.class));
         this.bloodEffectSpriteSheet = new TextureRegion(assets.getEntry( "bloodEffect", Texture.class));
 
         //Position and Movement. These two values are stored in constants.json
@@ -250,9 +300,9 @@ public class Enemy extends CapsuleObstacle {
         float y = getY();
 
         float ox = this.texture.getRegionWidth()/2;
-        float oy = this.texture.getRegionHeight()/2;
+        float oy = this.texture.getRegionHeight()/2 + oyOffset;
 
-        float sx = (isFacingRight ? -1 : 1) * enemyImageWidth / this.texture.getRegionWidth();
+        float sx = enemyImageWidth / this.texture.getRegionWidth();
         float sy = enemyImageHeight / this.texture.getRegionHeight();
 
         canvas.draw(this.texture, Color.WHITE, ox, oy, x, y, 0, sx, sy);

@@ -23,12 +23,16 @@
         {
           "type":"Fly",
           "TextureAsset": "platform:worm",
+          "RightAsset": "basicGoomba:rightWalk",
+          "LeftAsset": "basicGoomba:leftWalk",
           "startX": 11,
           "startY": 8
         },
         {
           "type":"FlyGuardian",
           "TextureAsset": "platform:worm",
+          "RightAsset": "basicGoomba:rightWalk",
+          "LeftAsset": "basicGoomba:leftWalk",
           "startX": 11,
           "startY": 9,
           "guardianList":[12,9,12,15]
@@ -36,6 +40,8 @@
         {
           "type":"GoombaGuardian",
           "TextureAsset": "platform:worm",
+          "RightAsset": "basicGoomba:rightWalk",
+          "LeftAsset": "basicGoomba:leftWalk",
           "startX": 10,
           "startY": 8,
           "guardianList":[9,13]
@@ -43,12 +49,16 @@
         {
           "type":"Goomba",
           "TextureAsset": "platform:worm",
+          "RightAsset": "basicGoomba:rightWalk",
+          "LeftAsset": "basicGoomba:leftWalk",
           "startX": 42,
           "startY": 19
         },
         {
           "type":"Goomba",
           "TextureAsset": "platform:worm",
+          "RightAsset": "basicGoomba:rightWalk",
+          "LeftAsset": "basicGoomba:leftWalk",
           "startX": 26,
           "startY": 27
         }

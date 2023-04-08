@@ -460,6 +460,22 @@ public class ActionController {
                         enemy.applyVelocity();
                     }
                 }
+                if(enemy.getIsFacingRight()){
+                    addAnimations(enemy.getBasicGoombaRightSpriteSheet(), 10, 1, "goombaRightWalk");
+                    TextureRegion current = (TextureRegion) (animations.get("goombaRightWalk")).getKeyFrame(currentFrame); // Gets the current frame of the animation
+                    tickFrameSwitch = 3;
+                    maxFrame = 9;
+                    enemy.setTexture(current);
+                    enemy.setOyOffset(-12);
+                }
+                else if(!enemy.getIsFacingRight()){
+                    addAnimations(enemy.getBasicGoombaLeftSpriteSheet(), 10, 1, "goombaLeftWalk");
+                    TextureRegion current = (TextureRegion) (animations.get("goombaLeftWalk")).getKeyFrame(currentFrame); // Gets the current frame of the animation
+                    tickFrameSwitch = 5;
+                    maxFrame = 9;
+                    enemy.setTexture(current);
+                    enemy.setOyOffset(-12);
+                }
                 enemyAction.clear();
             }
         }

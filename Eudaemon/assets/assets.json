@@ -141,6 +141,24 @@
             }
           }
         },
+        "basicGoomba:rightWalk": {
+          "file" : "animations/basic_goomba_walk_right.png",
+          "sprites" : {
+            "fire": {
+              "rows": 1,
+              "cols": 10
+            }
+          }
+        },
+        "basicGoomba:leftWalk": {
+          "file" : "animations/basic_goomba_walk_left.png",
+          "sprites" : {
+            "fire": {
+              "rows": 1,
+              "cols": 10
+            }
+          }
+        },
         "background:city": "backgrounds/backgroundCityPlaceholder.png",
         "platform:momo":  "platform/momo.png",
         "platform:momoUp":  "platform/momoUp.png",
@@ -148,7 +166,7 @@
         "platform:chiyo":  "platform/chiyo.png",
         "platform:chiyoUp":  "platform/chiyoUp.png",
         "platform:chiyoDown":  "platform/chiyoDown.png",
-        "platform:worm":  "platform/worm.png",
+        "platform:worm":  "platform/basicGoombaL.png",
         "platform:rope":  "platform/ropebridge.png",
         "platform:barrier": "platform/barrier.png",
         "platform:bullet":  "platform/bullet.png",
