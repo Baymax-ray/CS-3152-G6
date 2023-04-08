@@ -12,7 +12,6 @@ import edu.cornell.gdiac.game.models.Level;
 
 import java.util.ArrayList;
 import java.util.EnumSet;
-import java.util.Random;
 
 public class FlyGuardianAI extends AIController{
     private static final int maxWait = 10;

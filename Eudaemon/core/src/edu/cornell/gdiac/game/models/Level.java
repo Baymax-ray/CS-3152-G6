@@ -647,8 +647,9 @@ public class Level {
                     player.setVelocity(player.getBodyVelocityX(), player.getJumpVelocity() - 1F);
                 }
                 enemies.get(i).hitBySword(player);
+                if (!enemies.get(i).isActive()){
                 System.out.println("removing enemy" + enemies.get(i).getType());
-                enemies = removeEnemy(enemies, i);
+                enemies = removeEnemy(enemies, i);}
             }
         }
         if (shortestDist < player.getSpiritIncreaseDist() && player.getForm()==0){
