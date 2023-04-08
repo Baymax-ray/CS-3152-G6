@@ -78,6 +78,15 @@
           }
         }
       },
+      "bloodEffect": {
+        "file" : "animations/bloodEffectSpritesheet.png",
+        "sprites" : {
+          "fire": {
+            "rows": 1,
+            "cols": 17
+          }
+        }
+      },
         "momo:dashEffect": {
           "file" : "animations/dashEffectSpriteSheet.png",
           "sprites" : {

@@ -52,6 +52,9 @@ public class Enemy extends CapsuleObstacle {
     //#region TEXTURES
     // TODO: Add texture fields (FilmStrip?)
     private final TextureRegion enemyTexture;
+
+    /** The texture for the enemy's blood */
+    private final TextureRegion bloodEffectSpriteSheet;
     private final float enemyImageWidth;
     private final float enemyImageHeight;
     /** Identifier to allow us to track the sensor in ContactListener */
@@ -104,6 +107,14 @@ public class Enemy extends CapsuleObstacle {
     }
     public void LossSpirit(float rate){
         this.spiritRemain -=rate;
+    }
+    /**
+     * Retrieves the blood effect sprite sheet of the object.
+     *
+     * @return The current blood effect sprite sheet.
+     */
+    public TextureRegion getBloodEffect() {
+        return bloodEffectSpriteSheet;
     }
 
 
@@ -192,6 +203,7 @@ public class Enemy extends CapsuleObstacle {
         //Texture
         this.enemyTexture = new TextureRegion(assets.getEntry(TextureAsset, Texture.class));
         this.texture = this.enemyTexture;
+        this.bloodEffectSpriteSheet = new TextureRegion(assets.getEntry( "bloodEffect", Texture.class));
 
         //Position and Movement. These two values are stored in constants.json
         this.startX = json.getFloat("startX");
