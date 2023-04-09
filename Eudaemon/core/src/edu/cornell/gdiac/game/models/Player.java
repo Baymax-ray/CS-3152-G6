@@ -1044,6 +1044,13 @@ public class Player extends CapsuleObstacle {
         canvas.draw(this.texture, Color.WHITE, ox, oy, x, y, 0, sx, sy);
     }
 
+
+    public void drawDebug(GameCanvas canvas) {
+        super.drawDebug(canvas);
+        canvas.drawPhysics(sensorShape,Color.RED,getX(),getY(),getAngle(),drawScale.x,drawScale.y);
+    }
+
+
     public boolean activatePhysics(World world) {
         if (!super.activatePhysics(world)) return false;
 
@@ -1060,9 +1067,6 @@ public class Player extends CapsuleObstacle {
         sensorShape.setAsBox(sensorjv.getFloat("shrink",0)*getWidth()/2.0f,
                 sensorjv.getFloat("height",0), sensorCenter, 0.0f);
         sensorDef.shape = sensorShape;
-
-        //Set Friction to 0
-        body.getFixtureList().get(0).setFriction(0);
 
         // Ground sensor to represent our feet
         Fixture sensorFixture = body.createFixture( sensorDef );
