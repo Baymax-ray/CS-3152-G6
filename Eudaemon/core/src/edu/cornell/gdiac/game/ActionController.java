@@ -1,5 +1,6 @@
 package edu.cornell.gdiac.game;
 
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
@@ -55,6 +56,10 @@ public class ActionController {
     private int maxFrame = 6;
     Array<AIController> aiControllers;
 
+    /** The jump sound.  We only want to play once. */
+    private Sound jumpSound;
+    private long jumpId = -1;
+
 
     public ActionController(Level level,Array<AIController> aiControllers) {
         enemies = level.getEnemies();
@@ -65,6 +70,7 @@ public class ActionController {
         currentX = 0;
         movedDuringLastFrame = false;
         this.aiControllers= aiControllers;
+        this.jumpSound = player.getJumpSound();
 
         //Creating a Dictionary of Textures
         addAnimations(player.getMomoRunSpriteSheet(), 6, 1, "momoRun");
@@ -455,6 +461,11 @@ public class ActionController {
                     scale, player.getImpactEffectSpriteSheet(), 5);
             level.addQueuedObject(impactAnimate);
         }
+        //Sound effects
+        if(player.getIsJumping()){
+            jumpId = playSound( jumpSound, jumpId, 1F );
+            System.out.println("jump sound is playing");
+        }
 
         //#endregion
         if (deltaX == 0 && !player.isGrounded() && (leftPressed || rightPressed)
@@ -575,6 +586,28 @@ public class ActionController {
         Animation animation = new Animation<TextureRegion>(0.5f, frames[0]); // Creates an animation with a frame duration of 0.1 seconds
         animation.setPlayMode(Animation.PlayMode.NORMAL); // Sets the animation to play normally
         animations.put(name, animation);
+    }
+
+    /**
+     * Method to ensure that a sound asset is only played once.
+     *
+     * Every time you play a sound asset, it makes a new instance of that sound.
+     * If you play the sounds to close together, you will have overlapping copies.
+     * To prevent that, you must stop the sound before you play it again.  That
+     * is the purpose of this method.  It stops the current instance playing (if
+     * any) and then returns the id of the new instance for tracking.
+     *
+     * @param sound		The sound asset to play
+     * @param soundId	The previously playing sound instance
+     * @param volume	The sound volume
+     *
+     * @return the new sound instance for this asset.
+     */
+    public long playSound(Sound sound, long soundId, float volume) {
+        if (soundId != -1) {
+            sound.stop( soundId );
+        }
+        return sound.play(volume);
     }
 }
 

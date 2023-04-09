@@ -1,5 +1,8 @@
 package edu.cornell.gdiac.game.models;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.audio.Sound;
+import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
@@ -284,6 +287,11 @@ public class Player extends CapsuleObstacle {
      * A final float representing the gravity affecting the player.
      */
     private final float playerGravity;
+
+    /**
+     * A Sound object representing the jump sound effect when the player jumps.
+     */
+    private Sound jumpSound;
 
     //#endregion
 
@@ -1022,6 +1030,14 @@ public class Player extends CapsuleObstacle {
     public float getAttackDist() { return attackDist; }
     public boolean dashedInAir() { return dashedInAir; }
     public void setDashedInAir(boolean value) { dashedInAir = value; }
+    /**
+     * Gets the sound effect for player jumping
+     *
+     * @return jumpSound
+     */
+    public Sound getJumpSound(){
+        return jumpSound;
+    }
 
 
 
@@ -1123,6 +1139,10 @@ public class Player extends CapsuleObstacle {
         this.momoJumpSpriteSheet = new TextureRegion(assets.getEntry( "momo:jump", Texture.class));
         this.chiyoRunSpriteSheet = new TextureRegion(assets.getEntry( "chiyo:run", Texture.class));
         this.impactEffectSpriteSheet = new TextureRegion(assets.getEntry( "impactEffect", Texture.class));
+
+        //Sound Effects
+//        this.jumpSound = Gdx.audio.newSound(Gdx.files.internal("platform/jump.mp3"));
+        this.jumpSound = Gdx.audio.newSound(Gdx.files.internal("audio/temp-jump.mp3"));
 
         //Position and Movement
         this.startX = json.getFloat("startX");

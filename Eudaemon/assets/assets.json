@@ -224,7 +224,7 @@
         "tiles:ConcreteRedC.png": "tiles/ConcreteRedC.png",
         "tiles:ConcretePinkA.png": "tiles/ConcretePinkA.png",
         "tiles:ConcretePinkB.png": "tiles/ConcretePinkB.png",
-        "tiles:ConcretePinkC.png": "tiles/ConcretePinkC.png"
+        "tiles:ConcretePinkC.png": "tiles/ConcretePinkC.png",
     },
     "jsons"  : {
         "constants": "constants.json",
