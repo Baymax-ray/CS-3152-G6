@@ -1,7 +1,5 @@
 package edu.cornell.gdiac.game;
 
-import com.badlogic.gdx.ai.pfa.Heuristic;
-import com.badlogic.gdx.ai.utils.RaycastCollisionDetector;
 import com.badlogic.gdx.math.Vector2;
 import edu.cornell.gdiac.game.models.EnemyAction;
 import edu.cornell.gdiac.game.models.Level;
@@ -11,13 +9,12 @@ import java.util.EnumSet;
 public class ProjectileAI extends AIController{
     private final float tileSize;
     private final int CoolDown;
-    private float[] goal;
     private EnemyAction move;
     private FSMState state;
     private Level.MyGridGraph graph;
     private int ticks=0;
     private Vector2 v;
-    private int detectDistance;
+    private static final int detectDistance=8;
 
 
     private enum FSMState {
@@ -30,7 +27,6 @@ public class ProjectileAI extends AIController{
         super(ii,level);
         this.state= FSMState.SPAWN;
         this.move=EnemyAction.STAY;
-        this.goal=new float[2];
         this.level=super.level;
         this.enemy=super.enemy;
         this.tileSize=this.level.gettileSize();
@@ -55,7 +51,7 @@ public class ProjectileAI extends AIController{
     }
 
     private boolean canAttack(){
-        if (ticks<60) return false;
+        if (ticks<CoolDown) return false;
         float py=level.getPlayer().getY();
         float px=level.getPlayer().getX();
         int tpy=level.levelToTileCoordinatesY(py);

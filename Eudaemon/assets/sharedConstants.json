@@ -180,7 +180,7 @@
     "attackPower": 1,
     "startsFacingRight": true,
     "dashCooldown": 0.4,
-    "attackCooldown": 30,
+    "attackCooldown": 120,
     "attackOffset": 0.23,
     "swordRadius": 0.2,
     "attackLifespan": 0.4,
@@ -195,6 +195,11 @@
       "shrink" : 0.6,
       "height" : 0.05
     },
-    "spiritLimitation":8
+    "spiritLimitation":8,
+    "bullet": {
+    	"offset" : 0.2,
+    	"speed"  : 20.0,
+		"density": 10.0
+    }
   }
 }

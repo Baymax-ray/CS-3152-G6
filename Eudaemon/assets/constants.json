@@ -47,6 +47,14 @@
           "guardianList":[9,13]
         },
         {
+          "type":"Projectile",
+          "TextureAsset": "platform:worm",
+          "RightAsset": "basicGoomba:rightWalk",
+          "LeftAsset": "basicGoomba:leftWalk",
+          "startX": 19,
+          "startY": 8
+        },
+        {
           "type":"Goomba",
           "TextureAsset": "platform:trackingGoomba",
           "RightAsset": "basicGoomba:rightWalk",
