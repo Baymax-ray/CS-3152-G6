@@ -121,7 +121,6 @@ public class ActionController {
         //Sets the player's ticks in air falling
         if(!player.isGrounded() && player.getBodyVelocityY() < 0){
             player.setTicksInAir(player.getTicksInAir()+1);
-            System.out.println(player.getTicksInAir());
         }
         else if (player.getTicksInAir() != 0){
             player.setTicksInAir(0);
@@ -464,9 +463,6 @@ public class ActionController {
         }
         previousX = player.getX();
         movedDuringLastFrame = (leftPressed || rightPressed) && deltaX > 0;
-
-
-//        System.out.println (player.isGrounded());
     }
 
     /**
