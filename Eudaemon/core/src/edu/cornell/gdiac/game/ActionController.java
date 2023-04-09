@@ -70,6 +70,11 @@ public class ActionController {
 
     private long swordSwipeSoundId = -1;
 
+    /** The player dash sound.  We only want to play once. */
+    private Sound dashSound;
+
+    private long dashSoundId = -1;
+
 
     public ActionController(Level level,Array<AIController> aiControllers) {
         enemies = level.getEnemies();
@@ -83,6 +88,7 @@ public class ActionController {
         this.jumpSound = Gdx.audio.newSound(Gdx.files.internal("audio/temp-jump.mp3"));
         this.impactSound = Gdx.audio.newSound(Gdx.files.internal("audio/temp-impact.mp3"));
         this.swordSwipeSound = Gdx.audio.newSound(Gdx.files.internal("audio/temp-sword-swipe.mp3"));
+        this.dashSound = Gdx.audio.newSound(Gdx.files.internal("audio/temp-dash.mp3"));
 
         //Creating a Dictionary of Textures
         addAnimations(player.getMomoRunSpriteSheet(), 6, 1, "momoRun");
@@ -312,6 +318,9 @@ public class ActionController {
                     scale, player.getDashEffectSpriteSheet(),5);
             level.addQueuedObject(dashAnimate);
 
+            //Sound effect
+            dashSoundId = playSound(dashSound, dashSoundId, 1F);
+
             //Setting Gravity to 0 and scheduling to set it back
             player.setPlayerGravity(0.0f);
             Timer timer = new Timer();
@@ -477,7 +486,7 @@ public class ActionController {
         }
         //Sound effects
         if(player.getIsJumping()){
-            jumpId = playSound( jumpSound, jumpId, 1F );
+            jumpId = playSound( jumpSound, jumpId, 10F );
         }
 
         //#endregion
