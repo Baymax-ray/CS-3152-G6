@@ -1,6 +1,7 @@
 package edu.cornell.gdiac.game;
 
 import com.badlogic.gdx.physics.box2d.*;
+import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.ObjectSet;
 import edu.cornell.gdiac.game.models.Enemy;
 import edu.cornell.gdiac.game.models.Level;
@@ -11,10 +12,10 @@ import java.util.ArrayList;
 public class CollisionController implements ContactListener {
 
     private Level level;
-    private ObjectSet<Fixture> sensorFixtures;
+    private Array<Fixture> sensorFixtures;
     public CollisionController(Level level) {
         this.level = level;
-        sensorFixtures = new ObjectSet<Fixture>();
+        sensorFixtures = new Array<Fixture>();
     }
 
     public void dispose() {
@@ -71,13 +72,18 @@ public class CollisionController implements ContactListener {
         Object bd1 = body1.getUserData();
         Object bd2 = body2.getUserData();
 
-        if ((body1.getUserData().toString().contains("Tile") && level.getPlayer() == body2.getUserData()) ||
-                (body2.getUserData().toString().contains("Tile") && level.getPlayer() == body1.getUserData())) {
-            sensorFixtures.remove(level.getPlayer() == body1.getUserData() ? fix2 : fix1);
-            if (sensorFixtures.size == 0) {
-                level.getPlayer().setGrounded(false);
+        try {
+            if ((body1.getUserData().toString().contains("Tile") && fix2.getUserData().equals(
+                    level.getPlayer().getSensorName())) ||
+                    (body2.getUserData().toString().contains("Tile") && fix1.getUserData().equals(
+                            level.getPlayer().getSensorName()))) {
+
+                sensorFixtures.removeValue(level.getPlayer() == body1.getUserData() ? fix2 : fix1, true);
+                if (sensorFixtures.size == 0) {
+                    level.getPlayer().setGrounded(false);
+                }
             }
-        }
+        } catch (Exception e) {}
 
     }
 
