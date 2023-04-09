@@ -288,11 +288,6 @@ public class Player extends CapsuleObstacle {
      */
     private final float playerGravity;
 
-    /**
-     * A Sound object representing the jump sound effect when the player jumps.
-     */
-    private Sound jumpSound;
-
     //#endregion
 
     //#region TEXTURE GETTERS AND SETTERS
@@ -1030,17 +1025,6 @@ public class Player extends CapsuleObstacle {
     public float getAttackDist() { return attackDist; }
     public boolean dashedInAir() { return dashedInAir; }
     public void setDashedInAir(boolean value) { dashedInAir = value; }
-    /**
-     * Gets the sound effect for player jumping
-     *
-     * @return jumpSound
-     */
-    public Sound getJumpSound(){
-        return jumpSound;
-    }
-
-
-
 
     //#endregion
 
@@ -1139,10 +1123,6 @@ public class Player extends CapsuleObstacle {
         this.momoJumpSpriteSheet = new TextureRegion(assets.getEntry( "momo:jump", Texture.class));
         this.chiyoRunSpriteSheet = new TextureRegion(assets.getEntry( "chiyo:run", Texture.class));
         this.impactEffectSpriteSheet = new TextureRegion(assets.getEntry( "impactEffect", Texture.class));
-
-        //Sound Effects
-//        this.jumpSound = Gdx.audio.newSound(Gdx.files.internal("platform/jump.mp3"));
-        this.jumpSound = Gdx.audio.newSound(Gdx.files.internal("audio/temp-jump.mp3"));
 
         //Position and Movement
         this.startX = json.getFloat("startX");

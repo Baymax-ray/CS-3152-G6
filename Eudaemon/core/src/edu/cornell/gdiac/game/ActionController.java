@@ -1,5 +1,6 @@
 package edu.cornell.gdiac.game;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
@@ -70,7 +71,7 @@ public class ActionController {
         currentX = 0;
         movedDuringLastFrame = false;
         this.aiControllers= aiControllers;
-        this.jumpSound = player.getJumpSound();
+        this.jumpSound = Gdx.audio.newSound(Gdx.files.internal("audio/temp-jump.mp3"));
 
         //Creating a Dictionary of Textures
         addAnimations(player.getMomoRunSpriteSheet(), 6, 1, "momoRun");
