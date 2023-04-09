@@ -253,6 +253,7 @@ public class ActionController {
                 dashY = dash;
                 effectAngle = 3.141f;
                 pOffsetY = -pOffset;
+                pOffsetX = 0.1f;
             } else if (angleFacing == 135) {
                 dashX = -diagonalDashMult * dash;
                 dashY = diagonalDashMult * dash;
@@ -415,10 +416,10 @@ public class ActionController {
                 tickFrameSwitch = 5;
                 maxFrame = 5;
                 player.setTexture(current);
-                player.setOyOffset(-30);
+                player.setOyOffset(-35);
             } else {
                 player.setTexture(player.getMomoTexture());
-                player.setOyOffset(-130);
+                player.setOyOffset(-160);
             }
         } else {
             if (player.getBodyVelocityX() != 0) {
@@ -448,12 +449,12 @@ public class ActionController {
             float pOffsetX = 0.0f;
             float pOffsetY = -0.33f;
             Vector2 scale = new Vector2(1f, 1f);
-            EffectObstacle dashAnimate = new EffectObstacle(player.getX(), player.getY(), player.getDashEffectSpriteSheet().getRegionWidth(),
-                    player.getDashEffectSpriteSheet().getRegionHeight(), 0.02f, 0.02f, effectAngle,
+            EffectObstacle impactAnimate = new EffectObstacle(player.getX(), player.getY(), player.getImpactEffectSpriteSheet().getRegionWidth(),
+                    player.getImpactEffectSpriteSheet().getRegionHeight(), 0.02f, 0.02f, effectAngle,
                     pOffsetX, pOffsetY, 8, 1, false,
-                    "dashEffect", player, 0.35f,
+                    "impactEffect", player, 0.35f,
                     scale, player.getImpactEffectSpriteSheet(), 5);
-            level.addQueuedObject(dashAnimate);
+            level.addQueuedObject(impactAnimate);
         }
 
         //#endregion
