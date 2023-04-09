@@ -653,18 +653,7 @@ public class Level {
                 float effectAngle = (float) Math.toRadians(player.getAngleFacing());
                 float pOffsetX = 0.0f;
                 float pOffsetY = 0.0f;
-                float sx;
-
-                // Determines Direction of sword effect
-                if (player.isFacingRight()){
-                    sx = 0.02f;
-                    System.out.println("facing right");
-                }
-                else{
-                    System.out.println("facing left");
-                    sx = -0.02f;
-                    pOffsetX = -0.5f;
-                }
+                float sx = 0.02f;
                 Vector2 scale = new Vector2(1f, 1f);
                 EffectObstacle dashAnimate = new EffectObstacle(enemy.getX(), enemy.getY(), enemy.getBloodEffect().getRegionWidth(),
                         enemy.getBloodEffect().getRegionHeight(), sx, 0.02f, effectAngle,
