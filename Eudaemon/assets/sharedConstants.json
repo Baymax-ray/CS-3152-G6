@@ -43,6 +43,7 @@
     "chiyoJumpTimeMult": 1.5,
     "maxJumpyVelocity": 5.0,
     "playerGravity": 18.0,
+    "timeForImpact": 45,
     "spiritIncreaseRate": 0.02,
     "spiritKillingEnemy":2.0,
     "spiritDecreaseRate": 0.01,

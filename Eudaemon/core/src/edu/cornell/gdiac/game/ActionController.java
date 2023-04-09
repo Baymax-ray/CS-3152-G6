@@ -20,6 +20,8 @@ public class ActionController {
     private float currentX;
     private boolean movedDuringLastFrame;
 
+    private boolean impact = false;
+
     /**
      * A HashMap storing 2D TextureRegion arrays with a String identifier.
      * Each key represents an animation name, and the associated value is a 2D TextureRegion array
@@ -114,6 +116,15 @@ public class ActionController {
         int transformCooldownRemaining = player.getTransformCooldownRemaining();
         if (transformCooldownRemaining > 0) {
             player.setTransformCooldownRemaining(transformCooldownRemaining - 1);
+        }
+
+        //Sets the player's ticks in air falling
+        if(!player.isGrounded() && player.getBodyVelocityY() < 0){
+            player.setTicksInAir(player.getTicksInAir()+1);
+            System.out.println(player.getTicksInAir());
+        }
+        else if (player.getTicksInAir() != 0){
+            player.setTicksInAir(0);
         }
 
         int dashCooldownRemaining = player.getDashCooldownRemaining();
@@ -425,6 +436,26 @@ public class ActionController {
                 player.setSyMult(1.0f);
             }
         }
+        //Creating impact animation for large jumps
+        if (!player.isGrounded() && player.getTicksInAir() > player.getTimeForImpact()) {
+            impact = true;
+        }
+        //next time the player is grounded, create the impact animation
+        if (impact && player.isGrounded()) {
+            impact = false;
+            float effectAngle = 0.0f;
+            //offset of effect from player
+            float pOffsetX = 0.0f;
+            float pOffsetY = -0.33f;
+            Vector2 scale = new Vector2(1f, 1f);
+            EffectObstacle dashAnimate = new EffectObstacle(player.getX(), player.getY(), player.getDashEffectSpriteSheet().getRegionWidth(),
+                    player.getDashEffectSpriteSheet().getRegionHeight(), 0.02f, 0.02f, effectAngle,
+                    pOffsetX, pOffsetY, 8, 1, false,
+                    "dashEffect", player, 0.35f,
+                    scale, player.getImpactEffectSpriteSheet(), 5);
+            level.addQueuedObject(dashAnimate);
+        }
+
         //#endregion
         if (deltaX == 0 && !player.isGrounded() && (leftPressed || rightPressed)
                 && Math.abs(player.getBodyVelocityX()) == player.getHorizontalAcceleration() && movedDuringLastFrame) {

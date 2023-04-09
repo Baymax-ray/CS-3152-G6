@@ -87,6 +87,15 @@
           }
         }
       },
+      "impactEffect": {
+        "file" : "animations/impactEffectSpritesheet.png",
+        "sprites" : {
+          "fire": {
+            "rows": 1,
+            "cols": 8
+          }
+        }
+      },
         "momo:dashEffect": {
           "file" : "animations/dashEffectSpriteSheet.png",
           "sprites" : {

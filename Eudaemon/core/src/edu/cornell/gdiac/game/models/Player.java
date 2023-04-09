@@ -39,6 +39,10 @@ public class Player extends CapsuleObstacle {
      * The amount of ticks before the palyer can attack again
      */
     private final int attackCooldown;
+    /**
+     * The amount of ticks the player can final before a large impact is created
+     */
+    private final int timeForImpact;
 
     /**
      * The amount of ticks before the palyer can transform again
@@ -107,6 +111,10 @@ public class Player extends CapsuleObstacle {
      * The sprite sheet containing the 0 angle sword attack animation frames.
      */
     private final TextureRegion swordEffectSpriteSheet0;
+    /**
+     * The sprite sheet containing the effect animation for impacts
+     */
+    private final TextureRegion impactEffectSpriteSheet;
     /**
      * The sprite sheet containing the 45 angle sword attack animation frames.
      */
@@ -179,6 +187,10 @@ public class Player extends CapsuleObstacle {
     //#endregion
 
     //#region NONFINAL FIELDS
+    /**
+     * The amount of ticks the player has spent falling
+     */
+    private int ticksInAir;
     /**
      * A boolean variable representing whether the object is sliding or not.
      */
@@ -278,13 +290,6 @@ public class Player extends CapsuleObstacle {
     //#region TEXTURE GETTERS AND SETTERS
 
     /**
-     *  Returns the variable representing how many milliseconds gravity is turned off for the player when they dash
-     * @return dashtime
-     */
-    public int getDashTime() {
-        return dashTime;
-    }
-    /**
      * Returns the {@link com.badlogic.gdx.graphics.g2d.TextureRegion} of the Momo texture.
      *
      * @return the {@link com.badlogic.gdx.graphics.g2d.TextureRegion} of the Momo texture.
@@ -339,6 +344,14 @@ public class Player extends CapsuleObstacle {
      */
     public TextureRegion getDashEffectSpriteSheet() {
         return dashEffectSpriteSheet;
+    }
+    /**
+     * Gets the sprite sheet containing the impact animation frames
+     *
+     * @return the sprite sheet containing the impact animation frames
+     */
+    public TextureRegion getImpactEffectSpriteSheet() {
+        return impactEffectSpriteSheet;
     }
     /**
      * Gets the sprite sheet containing the spirit drain animation frames.
@@ -407,6 +420,30 @@ public class Player extends CapsuleObstacle {
     //#endregion
 
     //#region GETTERS AND SETTERS
+    /**
+     * Gets the number of ticks the player spends falling.
+     *
+     * @return the number of ticks in the air
+     */
+    public int getTicksInAir() {
+        return ticksInAir;
+    }
+
+    /**
+     * Sets the number of ticks the player spends falling.
+     *
+     * @param ticksInAir the new number of ticks in the air
+     */
+    public void setTicksInAir(int ticksInAir) {
+        this.ticksInAir = ticksInAir;
+    }
+    /**
+     *  Returns the variable representing how many milliseconds gravity is turned off for the player when they dash
+     * @return dashtime
+     */
+    public int getDashTime() {
+        return dashTime;
+    }
     /**
      * Retrieves if the player is sliding
      *
@@ -904,7 +941,14 @@ public class Player extends CapsuleObstacle {
      * @return the remaining time in frames
      */
     public int getJumpToleranceRemaining() { return jumpToleranceRemaining; }
-
+    /**
+     * Gets the amount of ticks in the air before the impact animation.
+     *
+     * @return the time for impact in ticks
+     */
+    public int getTimeForImpact() {
+        return timeForImpact;
+    }
     /**
      * Sets the remaining time in frames that the player can jump after they touch the ground if
      * they press jump in the air.
@@ -1078,6 +1122,7 @@ public class Player extends CapsuleObstacle {
         this.momoRunSpriteSheet = new TextureRegion(assets.getEntry( "momo:run", Texture.class));
         this.momoJumpSpriteSheet = new TextureRegion(assets.getEntry( "momo:jump", Texture.class));
         this.chiyoRunSpriteSheet = new TextureRegion(assets.getEntry( "chiyo:run", Texture.class));
+        this.impactEffectSpriteSheet = new TextureRegion(assets.getEntry( "impactEffect", Texture.class));
 
         //Position and Movement
         this.startX = json.getFloat("startX");
@@ -1095,6 +1140,7 @@ public class Player extends CapsuleObstacle {
         //Attacking
         this.attackPower = json.getInt("attackPower");
         this.attackCooldown = json.getInt("attackCooldown");
+        this.timeForImpact = json.getInt("timeForImpact");
         this.transformCooldown = json.getInt("transformCooldown");
         this.attackOffset = json.getFloat("attackOffset");
         this.swordRadius = json.getFloat("swordRadius");
