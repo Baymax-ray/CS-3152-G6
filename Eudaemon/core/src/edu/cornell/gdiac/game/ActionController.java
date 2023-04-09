@@ -60,6 +60,15 @@ public class ActionController {
     /** The jump sound.  We only want to play once. */
     private Sound jumpSound;
     private long jumpId = -1;
+    /** The impact sound.  We only want to play once. */
+    private Sound impactSound;
+
+    private long impactId = -1;
+
+    /** The sword swipe sound.  We only want to play once. */
+    private Sound swordSwipeSound;
+
+    private long swordSwipeSoundId = -1;
 
 
     public ActionController(Level level,Array<AIController> aiControllers) {
@@ -72,6 +81,8 @@ public class ActionController {
         movedDuringLastFrame = false;
         this.aiControllers= aiControllers;
         this.jumpSound = Gdx.audio.newSound(Gdx.files.internal("audio/temp-jump.mp3"));
+        this.impactSound = Gdx.audio.newSound(Gdx.files.internal("audio/temp-impact.mp3"));
+        this.swordSwipeSound = Gdx.audio.newSound(Gdx.files.internal("audio/temp-sword-swipe.mp3"));
 
         //Creating a Dictionary of Textures
         addAnimations(player.getMomoRunSpriteSheet(), 6, 1, "momoRun");
@@ -219,6 +230,7 @@ public class ActionController {
             player.setAttacking(true);
             player.setAttackLifespanRemaining(player.getAttackLifespan());
             createSword();
+            swordSwipeSoundId = playSound( swordSwipeSound, swordSwipeSoundId, 1F );
         }
         //#endregion
 
@@ -461,11 +473,11 @@ public class ActionController {
                     "impactEffect", player, 0.35f,
                     scale, player.getImpactEffectSpriteSheet(), 5);
             level.addQueuedObject(impactAnimate);
+            impactId = playSound(impactSound, impactId, 1F);
         }
         //Sound effects
         if(player.getIsJumping()){
             jumpId = playSound( jumpSound, jumpId, 1F );
-            System.out.println("jump sound is playing");
         }
 
         //#endregion
