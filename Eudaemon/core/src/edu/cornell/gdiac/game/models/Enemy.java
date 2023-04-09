@@ -1,5 +1,7 @@
 package edu.cornell.gdiac.game.models;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.*;
 import com.badlogic.gdx.graphics.*;
@@ -104,6 +106,11 @@ public class Enemy extends CapsuleObstacle {
 
     /** The sprite sheet for the basic goomba left walk */
     private TextureRegion basicGoombaLeftSpriteSheet;
+
+    /** The sword killing enemy sound.  We only want to play once. */
+    private Sound swordKillingSound;
+
+    private long swordKillingSoundId = -1;
     //#endregion
 
     //#region Getter and Setter
@@ -282,6 +289,9 @@ public class Enemy extends CapsuleObstacle {
         this.attackOffset = enemyData.getFloat("attackOffset");
         this.hitCooldown = enemyData.getInt("hitCooldown");
 
+        //Sound Effects
+        this.swordKillingSound =  Gdx.audio.newSound(Gdx.files.internal("audio/temp-sword-killing.mp3"));
+
         //Sensor. Wtf is this?
         //used for collision detection
         this.sensorName = "EnemyGroundSensor";
@@ -405,6 +415,14 @@ public class Enemy extends CapsuleObstacle {
             player.increaseSpiritByKill(); //player gain some spirit when the enemy killed
 //            System.out.println("kill an enemy!");
         }
+        swordKillingSoundId = playSound(swordKillingSound, swordKillingSoundId, 1F);
+    }
+
+    public long playSound(Sound sound, long soundId, float volume) {
+        if (soundId != -1) {
+            sound.stop( soundId );
+        }
+        return sound.play(volume);
     }
 
 }

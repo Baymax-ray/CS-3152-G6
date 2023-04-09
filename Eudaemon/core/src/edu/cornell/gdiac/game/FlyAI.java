@@ -1,10 +1,12 @@
 package edu.cornell.gdiac.game;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.ai.pfa.DefaultGraphPath;
 import com.badlogic.gdx.ai.pfa.GraphPath;
 import com.badlogic.gdx.ai.pfa.Heuristic;
 import com.badlogic.gdx.ai.pfa.indexed.IndexedAStarPathFinder;
 import com.badlogic.gdx.ai.pfa.indexed.IndexedGraph;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.math.Vector2;
 import edu.cornell.gdiac.game.models.Enemy;
 import edu.cornell.gdiac.game.models.EnemyAction;
@@ -60,7 +62,6 @@ public class FlyAI extends AIController{
         Level.MyGridGraph graph=Level.getGridGraph();
         this.graph=graph;
         this.path = new DefaultGraphPath<>();
-
     }
 
     @Override
@@ -69,7 +70,9 @@ public class FlyAI extends AIController{
     }
 
     public void setEnemyAction(EnumSet<EnemyAction> enemyAction){
-        if(this.enemy.isRemoved()) return;
+        if(this.enemy.isRemoved()){
+            return;
+        }
         ticks=ticks+1;
         // Process the FSM
         changeStateIfApplicable();
