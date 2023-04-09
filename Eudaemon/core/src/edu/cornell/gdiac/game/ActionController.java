@@ -467,7 +467,6 @@ public class ActionController {
                         tickFrameSwitch = 3;
                         maxFrame = 9;
                         enemy.setTexture(current);
-                        enemy.setOyOffset(-12);
                     }
                     else if(!enemy.getIsFacingRight()){
                         addAnimations(enemy.getBasicGoombaLeftSpriteSheet(), 10, 1, "goombaLeftWalk");
@@ -475,7 +474,6 @@ public class ActionController {
                         tickFrameSwitch = 5;
                         maxFrame = 9;
                         enemy.setTexture(current);
-                        enemy.setOyOffset(-12);
                     }
 
                 }
