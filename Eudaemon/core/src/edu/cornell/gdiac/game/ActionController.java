@@ -451,7 +451,7 @@ public class ActionController {
             if (!enemy.isRemoved()) {
                 for (EnemyAction action : enemyAction) {
                     if (action == EnemyAction.ATTACK) {
-                        //TODO: is this already handled by the HandleSpirit() in Level.java?
+                        enemy.attack(aiControllers.get(i).getVelocity());
                     } else if(action==EnemyAction.FLY){
                         enemy.setVelocity(aiControllers.get(i).getVelocity());
                         enemy.applyVelocity();
