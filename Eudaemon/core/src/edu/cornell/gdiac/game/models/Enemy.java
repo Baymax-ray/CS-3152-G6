@@ -171,6 +171,10 @@ public class Enemy extends CapsuleObstacle {
             isFacingRight = true;
         }
     }
+    /**shoot a bullet to the direction */
+    public void attack(Vector2 v){
+        
+    }
     public void setMovement(EnemyAction move) {
         if (move==EnemyAction.MOVE_RIGHT){
             velocityH =1*goombaSpeedCoefficient;
@@ -193,7 +197,7 @@ public class Enemy extends CapsuleObstacle {
     }
     public float getVelocityH(){return velocityH;}
     public float getVelocityV(){return velocityV;}
-
+    public int getAttackCooldown(){return attackCooldown;}
     /**
      * Set the y-axis offset value.
      *
@@ -239,6 +243,10 @@ public class Enemy extends CapsuleObstacle {
                     this.guardianList.add(glist.getInt(i));
                 }
                 break;
+            case "Projectile":
+                this.enemyData = assets.getEntry("sharedConstants", JsonValue.class).get("Projectile");
+                break;
+
             default:
                 //should never reach here
                 this.enemyData = null;
