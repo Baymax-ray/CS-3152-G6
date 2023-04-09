@@ -21,7 +21,7 @@
     "maxHearts": 5,
     "initialHearts": 5,
     "maxSpirit": 10,
-    "initialSpirit": 10,
+    "initialSpirit": 0,
     "attackPower": 1,
     "startsFacingRight": true,
     "dashCooldown": 0.4,
