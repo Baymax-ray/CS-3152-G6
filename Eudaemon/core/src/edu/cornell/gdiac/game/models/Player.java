@@ -27,6 +27,8 @@ public class Player extends CapsuleObstacle {
     private final float maxSpirit;
     private final float initialSpirit;
     private final int attackPower;
+    private final float downwardAttackPropelX;
+    private final float downwardAttackPropelY;
     /**
      * How much max speed is multiplied by for Chiyo
      */
@@ -1030,6 +1032,9 @@ public class Player extends CapsuleObstacle {
     public float getAttackDist() { return attackDist; }
     public boolean dashedInAir() { return dashedInAir; }
     public void setDashedInAir(boolean value) { dashedInAir = value; }
+    public float getDownwardAttackPropelX() {return downwardAttackPropelX; }
+    public float getDownwardAttackPropelY() {return downwardAttackPropelY; }
+
 
     //#endregion
 
@@ -1090,7 +1095,7 @@ public class Player extends CapsuleObstacle {
      */
     public void hitByEnemy() {
         if (isHit() && hearts > 0){
-            hearts--;
+            //hearts--;
             playerDamageSoundId = playSound(playerDamageSound, playerDamageSoundId, 0.8F);
             if (hearts > 0) {
                 setVelocity(getBodyVelocityX(), 2.0f);
@@ -1182,6 +1187,8 @@ public class Player extends CapsuleObstacle {
         this.hitDist = json.getFloat("hit_dist");
         this.iFrames = json.getInt("iFrames");
         this.attackDist = json.getFloat("attack_dist");
+        this.downwardAttackPropelX = json.getFloat("downwardAttackPropelX");
+        this.downwardAttackPropelY = json.getFloat("downwardAttackPropelY");
 
 
         this.isChiyo = false;

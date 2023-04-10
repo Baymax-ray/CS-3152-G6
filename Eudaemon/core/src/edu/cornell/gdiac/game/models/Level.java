@@ -652,35 +652,47 @@ public class Level {
                 player.hitByEnemy();
             }
 
-            if (player.isAttacking() && dist < player.getAttackDist() &&
-                    (player.isFacingRight() && player.getX() < enemies.get(i).getX() ||
-                            !player.isFacingRight() && player.getX() > enemies.get(i).getX())) {
-                if((player.getY() > enemies.get(i).getY())
-                        && player.getAngleFacing() == 270){
-                    player.setVelocity(player.getBodyVelocityX(), player.getJumpVelocity() - 1F);
-                }
-                Enemy enemy = enemies.get(i);
-                if(enemyCanGetAttacked){
-                    enemy.hitBySword(player);
-                    enemyCanGetAttacked = false;
-                }
-                //create hit by sword effect
-                float effectAngle = (float) Math.toRadians(player.getAngleFacing());
-                float pOffsetX = 0.0f;
-                float pOffsetY = 0.0f;
-                float sx = 0.02f;
-                Vector2 scale = new Vector2(1f, 1f);
-                EffectObstacle dashAnimate = new EffectObstacle(enemy.getX(), enemy.getY(), enemy.getBloodEffect().getRegionWidth(),
-                        enemy.getBloodEffect().getRegionHeight(), sx, 0.02f, effectAngle,
-                        pOffsetX, pOffsetY,17, 1,true,
-                        "dashEffect", enemy, 0.35f,
-                        scale, enemy.getBloodEffect(),3);
-                this.addQueuedObject(dashAnimate);
+            //handle player attack
+            if (player.isAttacking() && dist < player.getAttackDist()) {
+                //handles attack in eight directions
+                //up
+                if (player.getAngleFacing() == 90 && enemies.get(i).getY() > player.getY()) enemyHitByPlayer(i);
 
-                if (!enemy.isActive()){
-//                System.out.println("removing enemy" + enemy.getType());
-                enemies = removeEnemy(enemies, i);}
+                //left
+                else if (player.getAngleFacing() == 180 && player.getX() > enemies.get(i).getX()) enemyHitByPlayer(i);
+
+                //right
+                else if (player.getAngleFacing() == 0 && player.getX() < enemies.get(i).getX()) enemyHitByPlayer(i);
+
+                //down
+                else if (player.getAngleFacing() == 270 && player.getY() > enemies.get(i).getY()) {
+                    enemyHitByPlayer(i);
+                    player.setVelocity(player.getBodyVelocityX(), player.getDownwardAttackPropelY());
+                }
+
+                //down left
+                else if (player.getAngleFacing() == 225 && player.getY() > enemies.get(i).getY() && player.getX() > enemies.get(i).getX()) {
+                    enemyHitByPlayer(i);
+                    player.setVelocity(player.getDownwardAttackPropelX(), player.getDownwardAttackPropelY());
+                }
+
+                //down right
+                else if (player.getAngleFacing() == 315 && player.getY() > enemies.get(i).getY() && player.getX() < enemies.get(i).getX()) {
+                    enemyHitByPlayer(i);
+                    player.setVelocity(-player.getDownwardAttackPropelX(), player.getDownwardAttackPropelY());
+                }
+
             }
+
+//            if (player.isAttacking() && dist < player.getAttackDist() &&
+//                    (player.isFacingRight() && player.getX() < enemies.get(i).getX() ||
+//                            !player.isFacingRight() && player.getX() > enemies.get(i).getX())) {
+//                if((player.getY() > enemies.get(i).getY())
+//                        && player.getAngleFacing() == 270){
+//                    player.setVelocity(player.getBodyVelocityX(), player.getJumpVelocity() - 1F);
+//                }
+//                //enemyHitByPlayer(i);
+//            }
         }
         if (shortestDist < player.getSpiritIncreaseDist() && player.getForm()==0){
             enemies.get(e).LossSpirit(player.getSpiritIncreaseRate());
@@ -708,6 +720,30 @@ public class Level {
             result.add(arr.get(i));
         }
         return result;
+    }
+
+    private void enemyHitByPlayer(int i) {
+        Enemy enemy = enemies.get(i);
+        if(enemyCanGetAttacked){
+            enemy.hitBySword(player);
+            enemyCanGetAttacked = false;
+        }
+        //create hit by sword effect
+        float effectAngle = (float) Math.toRadians(player.getAngleFacing());
+        float pOffsetX = 0.0f;
+        float pOffsetY = 0.0f;
+        float sx = 0.02f;
+        Vector2 scale = new Vector2(1f, 1f);
+        EffectObstacle dashAnimate = new EffectObstacle(enemy.getX(), enemy.getY(), enemy.getBloodEffect().getRegionWidth(),
+                enemy.getBloodEffect().getRegionHeight(), sx, 0.02f, effectAngle,
+                pOffsetX, pOffsetY,17, 1,true,
+                "dashEffect", enemy, 0.35f,
+                scale, enemy.getBloodEffect(),3);
+        this.addQueuedObject(dashAnimate);
+
+        if (!enemy.isActive()){
+//                System.out.println("removing enemy" + enemy.getType());
+            enemies = removeEnemy(enemies, i);}
     }
 
     public void dispose() {
