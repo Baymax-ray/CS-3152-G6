@@ -627,8 +627,7 @@ public class Level {
             if (player.getSpirit()==0) player.setForm();
         }
         int e=0;
-        //TODO: What is this number?
-        double shortestDist = 99999;
+        double shortestDist = Double.MAX_VALUE;
         for (int i = 0; i < enemies.size(); i++) {
             double dist = Math.sqrt(Math.pow(player.getX() - enemies.get(i).getX(), 2) + Math.pow(player.getY() - enemies.get(i).getY(), 2));
             if (dist < shortestDist && enemies.get(i).getSpiritRemain()>0) {
