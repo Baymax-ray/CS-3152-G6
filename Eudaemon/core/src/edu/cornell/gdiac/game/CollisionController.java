@@ -44,14 +44,14 @@ public class CollisionController implements ContactListener {
             }
         } catch (Exception e) { }
 
-        if(bd1 instanceof Enemy){
+        if(bd1 instanceof Enemy || bd1 instanceof Player){
             Fixture fixture1 = fix1;
 
             Filter filter1 = fixture1.getFilterData();
 
             filter1.groupIndex = -1;
             fixture1.setFilterData(filter1);
-        }else if (bd2 instanceof Enemy) {
+        }else if (bd2 instanceof Enemy || bd2 instanceof Player) {
             Fixture fixture1 = fix2;
 
             Filter filter1 = fixture1.getFilterData();
@@ -97,22 +97,22 @@ public class CollisionController implements ContactListener {
 
         Object bd1 = body1.getUserData();
         Object bd2 = body2.getUserData();
-        if((bd1 instanceof Player && bd2 instanceof Enemy && ((Player) bd1).isDashing())||
-                (bd1 instanceof Enemy && bd2 instanceof Player&& ((Player) bd2).isDashing())){
-            // Get the two fixtures that you want to ignore each other
-            Fixture fixture1 = fix1;
-            Fixture fixture2 = fix2;
-
-            // Get the filter data for each fixture
-            Filter filter1 = fixture1.getFilterData();
-            Filter filter2 = fixture2.getFilterData();
-
-            filter1.groupIndex = -1;
-            filter2.groupIndex = -1;
-            // Set the updated filter data for each fixture
-            fixture1.setFilterData(filter1);
-            fixture2.setFilterData(filter2);
-        }
+//        if((bd1 instanceof Player && bd2 instanceof Enemy && ((Player) bd1).isDashing())||
+//                (bd1 instanceof Enemy && bd2 instanceof Player&& ((Player) bd2).isDashing())){
+//            // Get the two fixtures that you want to ignore each other
+//            Fixture fixture1 = fix1;
+//            Fixture fixture2 = fix2;
+//
+//            // Get the filter data for each fixture
+//            Filter filter1 = fixture1.getFilterData();
+//            Filter filter2 = fixture2.getFilterData();
+//
+//            filter1.groupIndex = -1;
+//            filter2.groupIndex = -1;
+//            // Set the updated filter data for each fixture
+//            fixture1.setFilterData(filter1);
+//            fixture2.setFilterData(filter2);
+//        }
     }
 
     @Override
@@ -128,26 +128,26 @@ public class CollisionController implements ContactListener {
 
         Object bd1 = body1.getUserData();
         Object bd2 = body2.getUserData();
-
-        if(bd1 instanceof Player && !((Player) bd1).isDashing()){
-            // Get the two fixtures that you want to ignore each other
-            Fixture fixture1 = fix1;
-
-            // Get the filter data for each fixture
-            Filter filter1 = fixture1.getFilterData();
-
-            filter1.groupIndex = 0;
-            // Set the updated filter data for each fixture
-            fixture1.setFilterData(filter1);
-        }else if(bd2 instanceof Player && !((Player) bd2).isDashing()){
-            Fixture fixture1 = fix2;
-
-            // Get the filter data for each fixture
-            Filter filter1 = fixture1.getFilterData();
-
-            filter1.groupIndex = 0;
-            // Set the updated filter data for each fixture
-            fixture1.setFilterData(filter1);
-        }
+//
+//        if(bd1 instanceof Player && !((Player) bd1).isDashing()){
+//            // Get the two fixtures that you want to ignore each other
+//            Fixture fixture1 = fix1;
+//
+//            // Get the filter data for each fixture
+//            Filter filter1 = fixture1.getFilterData();
+//
+//            filter1.groupIndex = 0;
+//            // Set the updated filter data for each fixture
+//            fixture1.setFilterData(filter1);
+//        }else if(bd2 instanceof Player && !((Player) bd2).isDashing()){
+//            Fixture fixture1 = fix2;
+//
+//            // Get the filter data for each fixture
+//            Filter filter1 = fixture1.getFilterData();
+//
+//            filter1.groupIndex = 0;
+//            // Set the updated filter data for each fixture
+//            fixture1.setFilterData(filter1);
+//        }
     }
 }
