@@ -1046,7 +1046,9 @@ public class Player extends CapsuleObstacle {
         float sx = sxMult * (isFacingRight ? 1 : -1) * momoImageWidth / this.texture.getRegionWidth();
         float sy = syMult * momoImageHeight / this.texture.getRegionHeight();
 
-        canvas.draw(this.texture, Color.WHITE, ox, oy, x, y, 0, sx, sy);
+        if (isHit)
+            canvas.draw(this.texture, Color.RED, ox, oy, x, y, 0, sx, sy);
+        else canvas.draw(this.texture, Color.WHITE, ox, oy, x, y, 0, sx, sy);
     }
 
 
