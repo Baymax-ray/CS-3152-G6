@@ -162,6 +162,8 @@ public class Enemy extends CapsuleObstacle {
     }
 
 
+    public boolean enemyCanGetAttack = false;
+
     //#endregion
 
     /**
