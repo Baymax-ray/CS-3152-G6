@@ -45,20 +45,39 @@ public class CollisionController implements ContactListener {
         } catch (Exception e) { }
 
         if(bd1 instanceof Enemy || bd1 instanceof Player){
+            //System.out.println("YES, hi");
+
             Fixture fixture1 = fix1;
 
             Filter filter1 = fixture1.getFilterData();
 
-            filter1.groupIndex = -1;
+            //currently, we'll always go to the else statement. I don't know why.
+            //One possible reason: the collision of the flying enemies are just not considered.
+            if(bd1 instanceof Enemy && (((Enemy) bd1).getType() == "FlyGuardian" || ((Enemy) bd1).getType() == "Fly") ){
+                System.out.println("fly, hi");
+                filter1.groupIndex = 1;
+            }else{
+                filter1.groupIndex = -1;
+            }
             fixture1.setFilterData(filter1);
         }else if (bd2 instanceof Enemy || bd2 instanceof Player) {
+            //System.out.println("YES, hi");
             Fixture fixture1 = fix2;
 
             Filter filter1 = fixture1.getFilterData();
 
-            filter1.groupIndex = -1;
+
+            if(bd2 instanceof Enemy && (((Enemy) bd2).getType() == "FlyGuardian" || ((Enemy) bd2).getType() == "Fly") ){
+                System.out.println("fly, hi");
+                filter1.groupIndex = 1;
+            }else{
+                filter1.groupIndex = -1;
+            }
             fixture1.setFilterData(filter1);
         }
+
+
+
     }
 
     @Override
@@ -97,6 +116,33 @@ public class CollisionController implements ContactListener {
 
         Object bd1 = body1.getUserData();
         Object bd2 = body2.getUserData();
+        //below is an attempt to cancel the collision between flying enemies, but failed.
+//        if(bd1 instanceof Enemy && bd2 instanceof Enemy){
+//            System.out.println("YES, hi");
+//
+//            if(
+//                    (((Enemy) bd1).getType() == "FlyGuardian" || ((Enemy) bd1).getType() == "Fly") &&
+//                            (((Enemy) bd2).getType() == "FlyGuardian" || ((Enemy) bd2).getType() == "Fly")
+//            ){
+//                System.out.println("flying , hi");
+//                Fixture fixture1 = fix1;
+//
+//                Filter filter1 = fixture1.getFilterData();
+//
+//                filter1.groupIndex = 1;
+//                fixture1.setFilterData(filter1);
+//                Fixture fixture2 = fix2;
+//
+//                Filter filter2 = fixture2.getFilterData();
+//
+//                filter2.groupIndex = 1;
+//                fixture2.setFilterData(filter2);
+//            }
+//
+//        }
+
+        //the following code is trying to remove the collision between player and enemy when player is dashing.
+        //this is not used because now the player should not be colliding with enemies anyways.
 //        if((bd1 instanceof Player && bd2 instanceof Enemy && ((Player) bd1).isDashing())||
 //                (bd1 instanceof Enemy && bd2 instanceof Player&& ((Player) bd2).isDashing())){
 //            // Get the two fixtures that you want to ignore each other
@@ -128,7 +174,8 @@ public class CollisionController implements ContactListener {
 
         Object bd1 = body1.getUserData();
         Object bd2 = body2.getUserData();
-//
+
+//      same as above: dash collision, not used.
 //        if(bd1 instanceof Player && !((Player) bd1).isDashing()){
 //            // Get the two fixtures that you want to ignore each other
 //            Fixture fixture1 = fix1;
