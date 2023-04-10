@@ -1095,7 +1095,7 @@ public class Player extends CapsuleObstacle {
      */
     public void hitByEnemy() {
         if (isHit() && hearts > 0){
-            //hearts--;
+            hearts--;
             playerDamageSoundId = playSound(playerDamageSound, playerDamageSoundId, 0.8F);
             if (hearts > 0) {
                 setVelocity(getBodyVelocityX(), 2.0f);
