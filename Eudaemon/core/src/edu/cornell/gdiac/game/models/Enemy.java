@@ -409,6 +409,9 @@ public class Enemy extends CapsuleObstacle {
      */
     public void hitBySword(Player player) {
         hearts--;
+        if(hearts > 0){
+            //forceCache.set()
+        }
         if (hearts <= 0) {
             this.markRemoved(true);
             this.setActive(false);
