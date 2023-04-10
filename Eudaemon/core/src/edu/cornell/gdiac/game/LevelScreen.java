@@ -69,7 +69,7 @@ public class LevelScreen implements Screen {
 
     /** this function checks the player input and/or level state to determine whether to exit the screen */
     private void checkScreenTransitions() {
-        if (this.level.getPlayer().getHearts() == 0) {
+        if (this.level.getPlayer().getHearts() == 0 || !this.level.inBounds(level.getPlayer())) {
             listener.exitScreen(this, ExitCode.LOSE);
         }
 
