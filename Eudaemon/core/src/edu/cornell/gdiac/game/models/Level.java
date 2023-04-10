@@ -620,14 +620,17 @@ public class Level {
 //        System.out.println("player: "+player.getX()+" "+player.getY());
 //        System.out.println();
     }
-
+    boolean enemyCanGetAttacked = true;
     public void handleSpirit() {
         if (player.getForm()==1) {
             player.decreaseSpirit();
             if (player.getSpirit()==0) player.setForm();
         }
+
         int e=0;
         double shortestDist = Double.MAX_VALUE;
+        if(player.getAttackLifespanRemaining() <= 0)enemyCanGetAttacked = true;
+
         for (int i = 0; i < enemies.size(); i++) {
             double dist = Math.sqrt(Math.pow(player.getX() - enemies.get(i).getX(), 2) + Math.pow(player.getY() - enemies.get(i).getY(), 2));
             if (dist < shortestDist && enemies.get(i).getSpiritRemain()>0) {
@@ -639,6 +642,7 @@ public class Level {
                 player.setHit(true);
                 player.hitByEnemy();
             }
+
             if (player.isAttacking() && dist < player.getAttackDist() &&
                     (player.isFacingRight() && player.getX() < enemies.get(i).getX() ||
                             !player.isFacingRight() && player.getX() > enemies.get(i).getX())) {
@@ -647,7 +651,10 @@ public class Level {
                     player.setVelocity(player.getBodyVelocityX(), player.getJumpVelocity() - 1F);
                 }
                 Enemy enemy = enemies.get(i);
-                enemy.hitBySword(player);
+                if(enemyCanGetAttacked){
+                    enemy.hitBySword(player);
+                    enemyCanGetAttacked = false;
+                }
                 //create hit by sword effect
                 float effectAngle = (float) Math.toRadians(player.getAngleFacing());
                 float pOffsetX = 0.0f;

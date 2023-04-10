@@ -409,7 +409,6 @@ public class Enemy extends CapsuleObstacle {
      */
     public void hitBySword(Player player) {
         hearts--;
-        System.out.println("attacked!");
         if (hearts <= 0) {
             this.markRemoved(true);
             this.setActive(false);
