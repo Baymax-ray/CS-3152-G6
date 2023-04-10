@@ -46,11 +46,18 @@ public class CollisionController implements ContactListener {
 
 
         if(bd1 instanceof Enemy || bd1 instanceof Player){
+
             //System.out.println("YES1, hi");
             //System.out.println(((Enemy) bd1).getType().equals("FlyGuardian"));
             Fixture fixture1 = fix1;
             Filter filter1 = fixture1.getFilterData();
             filter1.groupIndex = -1;
+            //one solution is to simply set the group index of flying enemies to 1, meaning that they always collide
+            //with anything.
+//            if(bd1 instanceof Enemy &&
+//                    (((Enemy) bd1).getType().equals( "FlyGuardian") || ((Enemy) bd1).getType().equals( "Fly"))){
+//            filter1.groupIndex = 1;
+//            }
             fixture1.setFilterData(filter1);
         }else if (bd2 instanceof Enemy || bd2 instanceof Player) {
             //System.out.println("YES2, hi");
@@ -58,6 +65,10 @@ public class CollisionController implements ContactListener {
             Fixture fixture1 = fix2;
             Filter filter1 = fixture1.getFilterData();
             filter1.groupIndex = -1;
+//            if(bd2 instanceof Enemy &&
+//                    (((Enemy) bd2).getType().equals( "FlyGuardian") || ((Enemy) bd2).getType().equals( "Fly"))){
+//                filter1.groupIndex = 1;
+//            }
             fixture1.setFilterData(filter1);
         }
 
