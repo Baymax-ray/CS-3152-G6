@@ -76,6 +76,10 @@ public class LevelScreen implements Screen {
         if (playerAction.contains(Action.RESET)) {
             listener.exitScreen(this, ExitCode.RESET);
         }
+
+        if (level.isCompleted()) {
+            listener.exitScreen(this, ExitCode.WIN);
+        }
     }
 
     public void draw(float delta) {

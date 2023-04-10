@@ -136,6 +136,14 @@ public class Level {
         return gridGraph;
     }
 
+    public boolean isCompleted() {
+        return isCompleted;
+    }
+
+    public void setCompleted(boolean completed) {
+        isCompleted = completed;
+    }
+
     //#endregion
 
     public class MyConnection<MyNode> implements Connection<MyNode> {
@@ -365,6 +373,7 @@ public class Level {
         this.objects = new PooledList<>();
 
         this.debug = false;
+        this.isCompleted = false;
     }
 
     /**

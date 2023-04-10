@@ -49,7 +49,7 @@ public class GameRoot extends Game implements ScreenListener {
 		}
 
 		if (screen instanceof LevelScreen) {
-			if (exitCode == ExitCode.RESET || exitCode == ExitCode.LOSE) {
+			if (exitCode == ExitCode.RESET || exitCode == ExitCode.LOSE) { // TODO: Separate LOSE and RESET effects
 				screen.pause();
 				this.state.resetCurrentLevel();
 				setScreen(null);
@@ -59,6 +59,10 @@ public class GameRoot extends Game implements ScreenListener {
 				levelScreen.setScreenListener(this);
 				levelScreen.setCanvas(canvas);
 				setScreen(levelScreen);
+			}
+
+			if (exitCode == ExitCode.WIN) {
+				// TODO
 			}
 		}
 	}
