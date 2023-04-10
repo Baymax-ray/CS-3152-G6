@@ -8,7 +8,7 @@ import edu.cornell.gdiac.game.models.Level;
 import java.util.EnumSet;
 
 public class GoombaAI extends AIController{
-    public static final int maxWait = 10;
+    public static final int maxWait = 100;
     private final Enemy enemy;
     private final Level level;
     private int ticks=0;
@@ -71,7 +71,12 @@ public class GoombaAI extends AIController{
             int start=Math.min(tpx,tx);
             int end=Math.max(tpx,tx);
             for (int i=start;i<=end;i++){
+                //that shall be reachable
                 if(!level.isAirAt(i,ey)){
+                    return false;
+                }
+                //also there shall be all land under feet
+                if(level.isAirAt(i, ey-1)){
                     return false;
                 }
             }
@@ -91,11 +96,9 @@ public class GoombaAI extends AIController{
                 }
                 break;
             case TOWANDER:
-//                System.out.println("toWander");
                 state=FSMState.WANDER;
                 break;
             case WANDER:
-//                System.out.println("Wander");
                 if (checkDetection()){
                     state=FSMState.CHASE;
                 }
@@ -107,6 +110,7 @@ public class GoombaAI extends AIController{
                 else if (!checkDetection()){
                     WanderWait++;
                     if (WanderWait>maxWait){
+                        System.out.println("now to wander");
                         WanderWait=0;
                         state=FSMState.TOWANDER;
                     }
