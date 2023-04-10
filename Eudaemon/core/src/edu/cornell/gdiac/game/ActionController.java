@@ -319,7 +319,7 @@ public class ActionController {
             level.addQueuedObject(dashAnimate);
 
             //Sound effect
-            dashSoundId = playSound(dashSound, dashSoundId, 1F);
+            dashSoundId = playSound(dashSound, dashSoundId, 0.2F);
 
             //Setting Gravity to 0 and scheduling to set it back
             player.setPlayerGravity(0.0f);

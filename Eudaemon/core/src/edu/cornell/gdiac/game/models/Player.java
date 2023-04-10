@@ -288,6 +288,11 @@ public class Player extends CapsuleObstacle {
      */
     private final float playerGravity;
 
+    /** The player dash sound.  We only want to play once. */
+    private Sound playerDamageSound;
+
+    private long playerDamageSoundId = -1;
+
     //#endregion
 
     //#region TEXTURE GETTERS AND SETTERS
@@ -1084,6 +1089,7 @@ public class Player extends CapsuleObstacle {
     public void hitByEnemy() {
         if (isHit() && hearts > 0){
             hearts--;
+            playerDamageSoundId = playSound(playerDamageSound, playerDamageSoundId, 0.8F);
             if (hearts > 0) {
                 setVelocity(getBodyVelocityX(), 2.0f);
                 setiFramesRemaining(getIFrames());
@@ -1127,6 +1133,9 @@ public class Player extends CapsuleObstacle {
         this.momoJumpSpriteSheet = new TextureRegion(assets.getEntry( "momo:jump", Texture.class));
         this.chiyoRunSpriteSheet = new TextureRegion(assets.getEntry( "chiyo:run", Texture.class));
         this.impactEffectSpriteSheet = new TextureRegion(assets.getEntry( "impactEffect", Texture.class));
+
+        //Sound Effect
+        this.playerDamageSound = Gdx.audio.newSound(Gdx.files.internal("audio/temp-lost-heart.mp3"));
 
         //Position and Movement
         this.startX = json.getFloat("startX");
@@ -1203,6 +1212,13 @@ public class Player extends CapsuleObstacle {
         this.texture = momoTexture;
         this.data = json;
         sensorName = "PlayerGroundSensor";
+    }
+
+    public long playSound(Sound sound, long soundId, float volume) {
+        if (soundId != -1) {
+            sound.stop( soundId );
+        }
+        return sound.play(volume);
     }
 
 }
