@@ -58,7 +58,7 @@ public class CollisionController implements ContactListener {
                     bd2.toString().contains("Spike") && bd1 instanceof Player && !fix1.isSensor())
                     && level.getPlayer().getiFramesRemaining() == 0) {
                 level.getPlayer().setHit(true);
-                level.getPlayer().hitByEnemy();
+                level.getPlayer().hitByEnemy(null);
             }
         } catch (Exception e) { }
 
@@ -69,7 +69,7 @@ public class CollisionController implements ContactListener {
                 Player player=level.getPlayer();
                 if (!player.isHit() & !player.isDashing()) {
                     player.setHit(true);
-                    player.hitByEnemy();
+                    player.hitByEnemy(null);
                 }
             }
         }else if (bd2 instanceof WheelObstacle && !(bd2 instanceof SwordWheelObstacle)&& !(bd1 instanceof Enemy)){
@@ -79,7 +79,7 @@ public class CollisionController implements ContactListener {
                 Player player = level.getPlayer();
                 if (!player.isHit() & !player.isDashing()) {
                     player.setHit(true);
-                    player.hitByEnemy();
+                    player.hitByEnemy(null);
                 }
             }
         }
@@ -132,7 +132,7 @@ public class CollisionController implements ContactListener {
 
             if (!player.isHit() & !player.isDashing()) {
                 player.setHit(true);
-                player.hitByEnemy();
+                player.hitByEnemy(null);
             }
         }
 

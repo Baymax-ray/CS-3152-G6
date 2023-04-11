@@ -1131,11 +1131,12 @@ public class Player extends CapsuleObstacle {
      * This method decrements the number of hearts for the character by 1. If the number of hearts
      * reaches 0, this method destroys the character
      */
-    public void hitByEnemy() {
+    public void hitByEnemy(Enemy enemy) {
         if (isHit() && hearts > 0){
             hearts--;
             playerDamageSoundId = playSound(playerDamageSound, playerDamageSoundId, 0.8F);
             if (hearts > 0) {
+
                 setVelocity(getBodyVelocityX(), 2.0f);
                 setiFramesRemaining(getIFrames());
                 if (isFacingRight) setVelocity(-10,5);

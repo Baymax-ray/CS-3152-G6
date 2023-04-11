@@ -410,8 +410,9 @@ public class Enemy extends CapsuleObstacle {
     public void hitBySword(Player player) {
         hearts--;
         if(hearts > 0){
+            float direction = player.getX() - this.getX() > 0? -1: 1;
             System.out.println("not dying yet!");
-            Vector2 knockback = new Vector2((isFacingRight? -1: 1)* enemyData.getFloat("knockbackX"),
+            Vector2 knockback = new Vector2(direction* enemyData.getFloat("knockbackX"),
                     enemyData.getFloat("knockbackY"));
             forceCache.set(knockback);
             body.setLinearVelocity(forceCache);
