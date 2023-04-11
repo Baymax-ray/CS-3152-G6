@@ -563,6 +563,7 @@ public class ActionController {
             Enemy enemy = enemies[i];
             if (!enemy.isRemoved()) {
                 for (EnemyAction action : enemyAction) {
+
                     if (action == EnemyAction.ATTACK) {
                         createBullet(aiControllers.get(i).getVelocity(),enemy);
                     } else if(action==EnemyAction.FLY){
