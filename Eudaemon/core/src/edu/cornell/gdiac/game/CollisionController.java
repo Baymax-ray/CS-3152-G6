@@ -85,18 +85,33 @@ public class CollisionController implements ContactListener {
         //#endregion
 
         //#region Cancel ALL collision between spike and enemy
-        if(bd1 instanceof Enemy || bd1 instanceof Spike){
-
+        if((bd1 instanceof Enemy && bd2 instanceof Spike) || (bd2 instanceof Enemy && bd1 instanceof Spike)){
             Fixture fixture1 = fix1;
+            Fixture fixture2 = fix2;
             Filter filter1 = fixture1.getFilterData();
+            Filter filter2 = fixture2.getFilterData();
             filter1.groupIndex = -1;
+            filter2.groupIndex = -1;
             fixture1.setFilterData(filter1);
-        }else if (bd2 instanceof Enemy || bd2 instanceof Spike) {
-            Fixture fixture1 = fix2;
-            Filter filter1 = fixture1.getFilterData();
-            filter1.groupIndex = -1;
-            fixture1.setFilterData(filter1);
+            fixture2.setFilterData(filter2);
         }
+
+//        else if((bd1 instanceof Player && bd2 instanceof Spike) || (bd2 instanceof Player && bd1 instanceof Spike)){
+//            Fixture fixture1 = fix1;
+//            Fixture fixture2 = fix2;
+//            Filter filter1 = fixture1.getFilterData();
+//            Filter filter2 = fixture2.getFilterData();
+//            filter1.groupIndex = 1;
+//            filter2.groupIndex = 1;
+//            fixture1.setFilterData(filter1);
+//            fixture2.setFilterData(filter2);
+//        }
+//        else if (bd2 instanceof Enemy || bd2 instanceof Spike) {
+//            Fixture fixture1 = fix2;
+//            Filter filter1 = fixture1.getFilterData();
+//            filter1.groupIndex = -1;
+//            fixture1.setFilterData(filter1);
+//        }
         //#endregion
 
 
