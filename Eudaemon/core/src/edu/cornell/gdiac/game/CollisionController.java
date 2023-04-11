@@ -45,10 +45,9 @@ public class CollisionController implements ContactListener {
         } catch (Exception e) { }
 
         try {
-            if ((bd1.toString().contains("Spike") && fix2.getUserData().equals(
-                    level.getPlayer().getSensorName())) ||
-                    (bd2.toString().contains("Spike") && fix1.getUserData().equals(
-                            level.getPlayer().getSensorName()))) {
+            if (((bd1.toString().contains("Spike") && bd2.toString().contains("Player")) ||
+                    (bd2.toString().contains("Spike") && bd1.toString().contains("Player")))
+                    && level.getPlayer().getiFramesRemaining() == 0) {
                 level.getPlayer().setHit(true);
                 level.getPlayer().hitByEnemy();
             }
