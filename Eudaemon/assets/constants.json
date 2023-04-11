@@ -58,7 +58,7 @@
         },
         {
           "type":"Projectile",
-          "TextureAsset": "platform:worm",
+          "TextureAsset": "platform:projectileEnemy",
           "RightAsset": "basicGoomba:rightWalk",
           "LeftAsset": "basicGoomba:leftWalk",
           "startX": 19,

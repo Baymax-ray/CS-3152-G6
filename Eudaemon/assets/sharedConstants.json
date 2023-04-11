@@ -179,8 +179,8 @@
     "knockbackY":1
   },
   "Projectile": {
-    "ImageWidth": 0.5,
-    "ImageHeight": 0.5,
+    "ImageWidth": 1,
+    "ImageHeight": 1.3,
     "hitboxWidth": 0.5,
     "hitboxHeight": 0.6,
     "maxSpeed": 1,
