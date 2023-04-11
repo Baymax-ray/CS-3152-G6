@@ -274,8 +274,6 @@ public class Enemy extends CapsuleObstacle {
     public void setOyOffset(float oyOffset) {
         this.oyOffset = oyOffset;
     }
-    //#endregion
-
 
     public Enemy(JsonValue json, AssetDirectory assets) {
         super(json.getFloat("startX"), json.getFloat("startY"),
@@ -291,6 +289,9 @@ public class Enemy extends CapsuleObstacle {
         switch (this.type) {
             case "Goomba":
                 this.enemyData = assets.getEntry("sharedConstants", JsonValue.class).get("Goomba");
+                break;
+            case "Fast":
+                this.enemyData = assets.getEntry("sharedConstants", JsonValue.class).get("Fast");
                 break;
             case "Fly":
                 this.enemyData = assets.getEntry("sharedConstants", JsonValue.class).get("Fly");
@@ -323,7 +324,7 @@ public class Enemy extends CapsuleObstacle {
             default:
                 //should never reach here
                 this.enemyData = null;
-                throw new IllegalArgumentException("Enemy can only be Fly or Goomba");
+                throw new IllegalArgumentException("Enemy type does not exist");
         }
         this.setWidth(enemyData.getFloat("hitboxWidth"));
         this.setHeight(enemyData.getFloat("hitboxHeight"));
@@ -462,10 +463,8 @@ public class Enemy extends CapsuleObstacle {
 
         //if(this.type.equals("Fly")){this.movementV *= this.force; this.movementH *= this.force;}
         forceCache.set(getVelocityH(), getVelocityV());
-        //body.applyForce(forceCache, getPosition(), true);
         body.setLinearVelocity(forceCache);
-        //body.applyForce(forceCache,getPosition(),true);
-        }
+    }
 
 
 
@@ -477,13 +476,13 @@ public class Enemy extends CapsuleObstacle {
     public void hitBySword(Player player) {
         hearts--;
         if(hearts > 0){
+            System.out.println("not died yet!");
             float direction = player.getX() - this.getX() > 0? -1: 1;
-            System.out.println("not dying yet!");
             Vector2 knockback = new Vector2(direction* enemyData.getFloat("knockbackX"),
                     enemyData.getFloat("knockbackY"));
             forceCache.set(knockback);
-            body.setLinearVelocity(forceCache);
-            //forceCache.set()
+            body.applyForce(forceCache,this.getPosition(), true);
+            //body.setLinearVelocity(forceCache);
         }
         else {
             this.markRemoved(true);
