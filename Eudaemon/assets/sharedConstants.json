@@ -63,7 +63,7 @@
   "Goomba": {
     "ImageWidth": 1.5,
     "ImageHeight": 1.5,
-    "hitboxWidth": 0.5,
+    "hitboxWidth": 1,
     "hitboxHeight": 1.4,
     "maxSpeed": 2.5,
     "horizontalAcceleration": 0.12,

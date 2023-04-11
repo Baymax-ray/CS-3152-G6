@@ -212,6 +212,8 @@
         "platform:chiyoUp":  "platform/chiyoUp.png",
         "platform:chiyoDown":  "platform/chiyoDown.png",
         "platform:worm":  "platform/worm.png",
+        "platform:pathfindingGoombaL": "platform/pathfindingGoombaLeft.png",
+        "platform:pathfindingGoombaR": "platform/pathfindingGoombaRight.png",
         "platform:trackingGoomba": "platform/basicGoombaL.png",
         "platform:rope":  "platform/ropebridge.png",
         "platform:barrier": "platform/barrier.png",

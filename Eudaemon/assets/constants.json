@@ -66,17 +66,17 @@
         },
         {
           "type":"Goomba",
-          "TextureAsset": "platform:trackingGoomba",
-          "RightAsset": "basicGoomba:rightWalk",
-          "LeftAsset": "basicGoomba:leftWalk",
+          "TextureAsset": "platform:pathfindingGoombaR",
+          "RightAsset": "platform:pathfindingGoombaR",
+          "LeftAsset": "platform:pathfindingGoombaL",
           "startX": 42,
           "startY": 19
         },
         {
           "type":"Goomba",
-          "TextureAsset": "platform:trackingGoomba",
-          "RightAsset": "basicGoomba:rightWalk",
-          "LeftAsset": "basicGoomba:leftWalk",
+          "TextureAsset": "platform:pathfindingGoombaR",
+          "RightAsset": "platform:pathfindingGoombaR",
+          "LeftAsset": "platform:pathfindingGoombaL",
           "startX": 26,
           "startY": 27
         }
