@@ -8,6 +8,7 @@ import edu.cornell.gdiac.game.models.Enemy;
 import edu.cornell.gdiac.game.models.Level;
 import edu.cornell.gdiac.game.models.Player;
 import edu.cornell.gdiac.game.obstacle.EffectObstacle;
+import edu.cornell.gdiac.game.models.Spike;
 import edu.cornell.gdiac.game.obstacle.Obstacle;
 import edu.cornell.gdiac.game.obstacle.SwordWheelObstacle;
 import edu.cornell.gdiac.game.obstacle.WheelObstacle;
@@ -50,42 +51,14 @@ public class CollisionController implements ContactListener {
         } catch (Exception e) { }
 
         try {
-            if ((bd1.toString().contains("Spike") && fix2.getUserData().equals(
-                    level.getPlayer().getSensorName())) ||
-                    (bd2.toString().contains("Spike") && fix1.getUserData().equals(
-                            level.getPlayer().getSensorName()))) {
+            if (((bd1.toString().contains("Spike") && bd2.toString().contains("Player")) ||
+                    (bd2.toString().contains("Spike") && bd1.toString().contains("Player")))
+                    && level.getPlayer().getiFramesRemaining() == 0) {
                 level.getPlayer().setHit(true);
                 level.getPlayer().hitByEnemy();
             }
         } catch (Exception e) { }
 
-
-//        if(bd1 instanceof Enemy || bd1 instanceof Player){
-//
-//            //System.out.println("YES1, hi");
-//            //System.out.println(((Enemy) bd1).getType().equals("FlyGuardian"));
-//            Fixture fixture1 = fix1;
-//            Filter filter1 = fixture1.getFilterData();
-//            filter1.groupIndex = -1;
-//            //one solution is to simply set the group index of flying enemies to 1, meaning that they always collide
-//            //with anything.
-////            if(bd1 instanceof Enemy &&
-////                    (((Enemy) bd1).getType().equals( "FlyGuardian") || ((Enemy) bd1).getType().equals( "Fly"))){
-////            filter1.groupIndex = 1;
-////            }
-//            fixture1.setFilterData(filter1);
-//        }else if (bd2 instanceof Enemy || bd2 instanceof Player) {
-//            //System.out.println("YES2, hi");
-//            //System.out.println(((Enemy) bd2).getType() == "FlyGuardian");
-//            Fixture fixture1 = fix2;
-//            Filter filter1 = fixture1.getFilterData();
-//            filter1.groupIndex = -1;
-////            if(bd2 instanceof Enemy &&
-////                    (((Enemy) bd2).getType().equals( "FlyGuardian") || ((Enemy) bd2).getType().equals( "Fly"))){
-////                filter1.groupIndex = 1;
-////            }
-//            fixture1.setFilterData(filter1);
-//        }
 
         if (bd1 instanceof SwordWheelObstacle && bd2 instanceof Enemy || bd2 instanceof SwordWheelObstacle && bd1 instanceof Enemy) {
             Enemy enemy = (Enemy) (bd1 instanceof SwordWheelObstacle ? bd2 : bd1);
@@ -138,6 +111,35 @@ public class CollisionController implements ContactListener {
                 player.setHit(true);
                 player.hitByEnemy();
             }
+        }
+        //#endregion
+
+        //#region Cancel ALL collision between spike and enemy
+        if(bd1 instanceof Enemy || bd1 instanceof Spike){
+            Fixture fixture1 = fix1;
+            Filter filter1 = fixture1.getFilterData();
+            filter1.groupIndex = -1;
+            fixture1.setFilterData(filter1);
+        }else if (bd2 instanceof Enemy || bd2 instanceof Spike) {
+            Fixture fixture1 = fix2;
+            Filter filter1 = fixture1.getFilterData();
+            filter1.groupIndex = -1;
+            fixture1.setFilterData(filter1);
+        }
+        //#endregion
+
+        //#region Cancel ALL collision between spike and enemy
+        if(bd1 instanceof Enemy || bd1 instanceof Spike){
+
+            Fixture fixture1 = fix1;
+            Filter filter1 = fixture1.getFilterData();
+            filter1.groupIndex = -1;
+            fixture1.setFilterData(filter1);
+        }else if (bd2 instanceof Enemy || bd2 instanceof Spike) {
+            Fixture fixture1 = fix2;
+            Filter filter1 = fixture1.getFilterData();
+            filter1.groupIndex = -1;
+            fixture1.setFilterData(filter1);
         }
         //#endregion
 
