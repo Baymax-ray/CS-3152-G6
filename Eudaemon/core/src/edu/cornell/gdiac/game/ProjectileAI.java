@@ -106,7 +106,7 @@ public class ProjectileAI extends AIController{
             case ALERT:
                 if (canAttack()) {
                     this.move = EnemyAction.ATTACK;
-                    System.out.println("attack");
+                    //System.out.println("attack");
                     float vx=level.getPlayer().getX()-enemy.getX();
                     float vy=level.getPlayer().getY()-enemy.getY();
                     this.v=new Vector2(vx,vy);
