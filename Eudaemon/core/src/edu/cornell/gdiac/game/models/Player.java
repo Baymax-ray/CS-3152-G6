@@ -1142,7 +1142,7 @@ public class Player extends CapsuleObstacle {
         this.impactEffectSpriteSheet = new TextureRegion(assets.getEntry( "impactEffect", Texture.class));
 
         //Sound Effect
-        this.playerDamageSound = Gdx.audio.newSound(Gdx.files.internal("audio/temp-lost-heart.mp3"));
+        this.playerDamageSound = Gdx.audio.newSound(Gdx.files.internal("audio/temp-player-damage.mp3"));
 
         //Position and Movement
         this.startX = json.getFloat("startX");

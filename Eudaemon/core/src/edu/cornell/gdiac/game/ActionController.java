@@ -350,6 +350,8 @@ public class ActionController {
                     player.getForm()==0 ? player.getJumpTime() : (int) (player.getJumpTime()
                             * player.getChiyoJumpTimeMult()));
             player.setIsJumping(true);
+            //Sound Effect
+            jumpId = playSound( jumpSound, jumpId, 10F );
         } else if (player.isGrounded() && player.getBodyVelocityY() == 0) {
             player.setIsJumping(false);
         } else player.setJumpCooldownRemaining(Math.max(0, player.getJumpCooldownRemaining() - 1));
@@ -485,10 +487,6 @@ public class ActionController {
                     scale, player.getImpactEffectSpriteSheet(), 5);
             level.addQueuedObject(impactAnimate);
             impactId = playSound(impactSound, impactId, 1F);
-        }
-        //Sound effects
-        if(player.getIsJumping()){
-            jumpId = playSound( jumpSound, jumpId, 10F );
         }
 
         //#endregion
