@@ -34,6 +34,9 @@ public class CollisionController implements ContactListener {
         Fixture fix1 = contact.getFixtureA();
         Fixture fix2 = contact.getFixtureB();
 
+        Object fd1 = fix1.getUserData();
+        Object fd2 = fix2.getUserData();
+
         Body body1 = fix1.getBody();
         Body body2 = fix2.getBody();
 
@@ -51,8 +54,8 @@ public class CollisionController implements ContactListener {
         } catch (Exception e) { }
 
         try {
-            if (((bd1.toString().contains("Spike") && bd2.toString().contains("Player")) ||
-                    (bd2.toString().contains("Spike") && bd1.toString().contains("Player")))
+            if ((bd1.toString().contains("Spike") && bd2 instanceof Player && !fix2.isSensor() ||
+                    bd2.toString().contains("Spike") && bd1 instanceof Player && !fix1.isSensor())
                     && level.getPlayer().getiFramesRemaining() == 0) {
                 level.getPlayer().setHit(true);
                 level.getPlayer().hitByEnemy();
@@ -103,7 +106,7 @@ public class CollisionController implements ContactListener {
 
         }
 
-        if (bd1 instanceof Player && bd2 instanceof Enemy || bd2 instanceof Player && bd1 instanceof Enemy) {
+        if (bd1 instanceof Player && !fix1.isSensor() && bd2 instanceof Enemy || bd2 instanceof Player && !fix2.isSensor() && bd1 instanceof Enemy) {
             Enemy enemy = (Enemy) (bd1 instanceof Player ? bd2 : bd1);
             Player player = (Player) (bd1 instanceof Player ? bd1 : bd2);
 
@@ -112,6 +115,13 @@ public class CollisionController implements ContactListener {
                 player.hitByEnemy();
             }
         }
+
+        if (level.getPlayer().getSpiritSensorName().equals(fd1) && bd2 instanceof Enemy || level.getPlayer().getSpiritSensorName().equals(fd2) && bd1 instanceof Enemy) {
+            Enemy enemy = (Enemy) (bd1 instanceof Enemy ? bd1 : bd2);
+
+             level.getPlayer().getEnemiesInSpiritRange().add(enemy);
+        }
+
         //#endregion
 
         //#region Cancel ALL collision between spike and enemy
@@ -142,7 +152,6 @@ public class CollisionController implements ContactListener {
             fixture1.setFilterData(filter1);
         }
         //#endregion
-
 
     }
 
@@ -150,6 +159,9 @@ public class CollisionController implements ContactListener {
     public void endContact(Contact contact) {
         Fixture fix1 = contact.getFixtureA();
         Fixture fix2 = contact.getFixtureB();
+
+        Object fd1 = fix1.getUserData();
+        Object fd2 = fix2.getUserData();
 
         Body body1 = fix1.getBody();
         Body body2 = fix2.getBody();
@@ -170,6 +182,11 @@ public class CollisionController implements ContactListener {
             }
         } catch (Exception e) {}
 
+        if (level.getPlayer().getSpiritSensorName().equals(fd1) && bd2 instanceof Enemy || level.getPlayer().getSpiritSensorName().equals(fd2) && bd1 instanceof Enemy) {
+            Enemy enemy = (Enemy) (bd1 instanceof Enemy ? bd1 : bd2);
+
+            level.getPlayer().getEnemiesInSpiritRange().removeValue(enemy, true);
+        }
     }
 
     @Override
@@ -184,7 +201,7 @@ public class CollisionController implements ContactListener {
         Object bd2 = body2.getUserData();
 
 
-        if (bd1 instanceof Player && bd2 instanceof Enemy || bd2 instanceof Player && bd1 instanceof Enemy) {
+        if (bd1 instanceof Player && !fix1.isSensor() && bd2 instanceof Enemy || bd2 instanceof Player && !fix2.isSensor() && bd1 instanceof Enemy) {
             contact.setEnabled(false);
         }
 

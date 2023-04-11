@@ -8,6 +8,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
+import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.JsonValue;
 import edu.cornell.gdiac.assets.AssetDirectory;
 import edu.cornell.gdiac.game.GameCanvas;
@@ -234,6 +235,9 @@ public class Player extends CapsuleObstacle {
     private boolean isGrounded;
     private boolean isFacingRight;
     private boolean dashedInAir;
+    private boolean isGainingSpirit;
+
+    private Array<Enemy> enemiesInSpiritRange;
     /**
      * The angle at which the entity is facing, in degrees.
      */
@@ -265,11 +269,17 @@ public class Player extends CapsuleObstacle {
 
     private final JsonValue data;
 
-    /** The physics shape of this object */
-    private PolygonShape sensorShape;
+    /** The shape for the ground sensor */
+    private PolygonShape groundSensorShape;
+
+    /** The shape for the spirit sensor */
+    private CircleShape spiritSensorShape;
 
     /** Identifier to allow us to track the sensor in ContactListener */
     private final String sensorName;
+
+    /** Identifier to allow us to track the spirit sensor in ContactListener */
+    private final String spiritSensorName;
 
     private final int jumpTime;
     private int jumpTimeRemaining;
@@ -430,6 +440,23 @@ public class Player extends CapsuleObstacle {
     //#endregion
 
     //#region GETTERS AND SETTERS
+
+    public Array<Enemy> getEnemiesInSpiritRange() {
+        return enemiesInSpiritRange;
+    }
+
+    public String getSpiritSensorName() {
+        return spiritSensorName;
+    }
+
+    public boolean isGainingSpirit() {
+        return isGainingSpirit;
+    }
+
+    public void setGainingSpirit(boolean gainingSpirit) {
+        isGainingSpirit = gainingSpirit;
+    }
+
     /**
      * Gets the number of ticks the player spends falling.
      *
@@ -1059,7 +1086,8 @@ public class Player extends CapsuleObstacle {
 
     public void drawDebug(GameCanvas canvas) {
         super.drawDebug(canvas);
-        canvas.drawPhysics(sensorShape,Color.RED,getX(),getY(),getAngle(),drawScale.x,drawScale.y);
+        canvas.drawPhysics(groundSensorShape,Color.RED,getX(),getY(),getAngle(),drawScale.x,drawScale.y);
+        canvas.drawPhysics(spiritSensorShape,Color.CYAN,getX(),getY(),drawScale.x,drawScale.y);
     }
 
 
@@ -1074,15 +1102,25 @@ public class Player extends CapsuleObstacle {
         FixtureDef sensorDef = new FixtureDef();
         sensorDef.density = data.getFloat("density",0);
         sensorDef.isSensor = true;
-        sensorShape = new PolygonShape();
+        groundSensorShape = new PolygonShape();
         JsonValue sensorjv = data.get("sensor");
-        sensorShape.setAsBox(sensorjv.getFloat("shrink",0)*getWidth()/2.0f,
+        groundSensorShape.setAsBox(sensorjv.getFloat("shrink",0)*getWidth()/2.0f,
                 sensorjv.getFloat("height",0), sensorCenter, 0.0f);
-        sensorDef.shape = sensorShape;
+        sensorDef.shape = groundSensorShape;
 
         // Ground sensor to represent our feet
         Fixture sensorFixture = body.createFixture( sensorDef );
         sensorFixture.setUserData(getSensorName());
+
+
+
+        //create spirit gain sensor
+        spiritSensorShape = new CircleShape();
+        spiritSensorShape.setRadius(getSpiritIncreaseDist());
+        sensorDef.shape = spiritSensorShape;
+
+        Fixture spiritSensorFixture = body.createFixture(sensorDef);
+        spiritSensorFixture.setUserData(getSpiritSensorName());
 
         return true;
     }
@@ -1221,6 +1259,9 @@ public class Player extends CapsuleObstacle {
         this.texture = momoTexture;
         this.data = json;
         sensorName = "PlayerGroundSensor";
+        spiritSensorName = "PlayerSpiritSensor";
+
+        this.enemiesInSpiritRange = new Array<>();
     }
 
     public long playSound(Sound sound, long soundId, float volume) {
@@ -1229,5 +1270,6 @@ public class Player extends CapsuleObstacle {
         }
         return sound.play(volume);
     }
+
 
 }

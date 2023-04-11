@@ -528,6 +528,26 @@ public class ActionController {
         }
         previousX = player.getX();
         movedDuringLastFrame = (leftPressed || rightPressed) && deltaX > 0;
+
+
+
+        // automatic spirit loss
+        if (player.getForm() == 1) { // if player is chiyo
+            player.decreaseSpirit();
+            if (player.getSpirit() <= 0) {
+                player.setForm(); // switch back to momo
+            }
+        } else if (player.getEnemiesInSpiritRange().size > 0) {
+
+                player.getEnemiesInSpiritRange().get(0).LossSpirit(level.getPlayer().getSpiritIncreaseRate());
+                player.increaseSpirit();
+
+                // TODO SPAWN spiritAnimation HERE; <-- use pooled list
+                // Vector2 scale = new Vector2(5f,5f);
+                // SwordWheelObstacle spiritAnimate = new SwordWheelObstacle(player.getX(), player.getY(), player.getSpiritDrainSpriteSheet().getRegionWidth()/400F, player, player.getAttackLifespan(), 5f, scale, player.getSpiritDrainSpriteSheet());
+                // addQueuedObject(spiritAnimate);
+                // ^ we should try and use the effectobstacle for this.
+        }
     }
 
     /**

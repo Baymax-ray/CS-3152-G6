@@ -489,7 +489,6 @@ public class Level {
         while (!addQueue.isEmpty()) {
             addObject(addQueue.poll());
         }
-
         world.step(delta, 6, 2);
 
         // Garbage collect the deleted objects.
@@ -507,9 +506,6 @@ public class Level {
                 obj.update(delta);
             }
         }
-
-        handleSpirit();
-
     }
 
     public void draw(GameCanvas canvas) {
@@ -642,37 +638,6 @@ public class Level {
 //        System.out.println("camera: "+canvas.getCamera().position.x+" "+canvas.getCamera().position.y);
 //        System.out.println("player: "+player.getX()+" "+player.getY());
 //        System.out.println();
-    }
-    public void handleSpirit() {
-        if (player.isRemoved()) return;
-
-        if (player.getForm()==1) {
-            player.decreaseSpirit();
-            if (player.getSpirit()==0) player.setForm();
-        }
-
-        int e=0;
-        double shortestDist = Double.MAX_VALUE;
-
-        for (int i = 0; i < enemies.size(); i++) {
-            if (enemies.get(i).isRemoved()) continue;
-
-            if(player.getAttackLifespanRemaining() <= 0) enemies.get(i).enemyCanGetAttack = true;
-            double dist = Math.sqrt(Math.pow(player.getX() - enemies.get(i).getX(), 2) + Math.pow(player.getY() - enemies.get(i).getY(), 2));
-            if (dist < shortestDist && enemies.get(i).getSpiritRemain()>0) {
-                shortestDist = dist;
-                e=i;
-            }
-        }
-
-        if (shortestDist < player.getSpiritIncreaseDist() && player.getForm()==0){
-            enemies.get(e).LossSpirit(player.getSpiritIncreaseRate());
-            player.increaseSpirit();
-            Vector2 scale = new Vector2(5f,5f);
-//            SwordWheelObstacle spiritAnimate = new SwordWheelObstacle(player.getX(), player.getY(), player.getSpiritDrainSpriteSheet().getRegionWidth()/400F, player, player.getAttackLifespan(), 5f, scale, player.getSpiritDrainSpriteSheet());
-//            addQueuedObject(spiritAnimate);
-        }
-
     }
 
     /**
