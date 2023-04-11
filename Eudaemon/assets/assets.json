@@ -185,7 +185,7 @@
         "platform:filled": "platform/filled.png",
         "platform:uioutline": "platform/UIOutline.png",
         "platform:settings": "platform/settings.png",
-        "platform:spike": "platform/worm.png",
+        "platform:spike": "platform/spike.png",
         "tiles:DeepDirt1x1A.png": "tiles/DeepDirt1x1A.png",
         "tiles:DeepDirt1x1B.png": "tiles/DeepDirt1x1B.png",
         "tiles:DeepDirt1x1C.png": "tiles/DeepDirt1x1C.png",
