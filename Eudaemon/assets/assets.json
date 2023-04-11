@@ -177,6 +177,15 @@
             }
           }
         },
+        "nonTrackingFlying:leftFly": {
+          "file" : "animations/nonTrackingFlyingLeft.png",
+          "sprites" : {
+            "fire": {
+              "rows": 1,
+              "cols": 6
+            }
+          }
+        },
         "background:city": "backgrounds/backgroundCityPlaceholder.png",
         "platform:momo":  "platform/momo.png",
         "platform:momoUp":  "platform/momoUp.png",
