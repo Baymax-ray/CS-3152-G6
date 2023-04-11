@@ -410,6 +410,9 @@ public class Enemy extends CapsuleObstacle {
     public void hitBySword(Player player) {
         hearts--;
         if(hearts > 0){
+            System.out.println("not dying yet!");
+            this.setVelocity(new Vector2((isFacingRight? -100f:100f), 50f));
+            this.applyVelocity();
             //forceCache.set()
         }
         else {
