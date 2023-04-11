@@ -183,7 +183,7 @@
         "platform:heart": "platform/heart.png",
         "platform:emptyspirit": "platform/emptyspirit.png",
         "platform:filled": "platform/filled.png",
-        "platform:uioutline": "platform/UIOutline.png",
+        "platform:uioutline": "platform/UI_Outline.png",
         "platform:settings": "platform/settings.png",
         "platform:spike": "platform/spike.png",
         "tiles:DeepDirt1x1A.png": "tiles/DeepDirt1x1A.png",
