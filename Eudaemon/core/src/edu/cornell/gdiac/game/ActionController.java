@@ -26,6 +26,8 @@ public class ActionController {
 
     private boolean impact = false;
 
+    private boolean smallImpact = false;
+
     /**
      * A HashMap storing 2D TextureRegion arrays with a String identifier.
      * Each key represents an animation name, and the associated value is a 2D TextureRegion array
@@ -96,6 +98,10 @@ public class ActionController {
 
     private long momoRunSoundId = -1;
 
+    private Sound smallImpactSound;
+
+    private long smallImpactSoundId = -1;
+
 
     public ActionController(Level level,Array<AIController> aiControllers) {
         enemies = level.getEnemies();
@@ -114,6 +120,7 @@ public class ActionController {
         this.playerMomoTransformSound = Gdx.audio.newSound(Gdx.files.internal("audio/temp-transform-to-momo.mp3"));
         this.chiyoRunSound = Gdx.audio.newSound(Gdx.files.internal("audio/temp-chiyo-run.mp3"));
         this.momoRunSound = Gdx.audio.newSound(Gdx.files.internal("audio/temp-momo-run.mp3"));
+        this.smallImpactSound = Gdx.audio.newSound(Gdx.files.internal("audio/temp-small-impact.mp3"));
         //Creating a Dictionary of Textures
         addAnimations(player.getMomoRunSpriteSheet(), 6, 1, "momoRun");
         addAnimations(player.getMomoDashSpriteSheet(), 5, 1, "momoDash");
@@ -374,7 +381,7 @@ public class ActionController {
                 (jumpPressed && player.getCoyoteFramesRemaining() > 0 && player.getJumpCooldownRemaining() == 0) ||
                 (player.getJumpPressedInAir() && player.getJumpCooldownRemaining() == 0 && player.isGrounded())) {
             //Sound Effect
-            jumpId = playSound( jumpSound, jumpId, 0.1F );
+            jumpId = playSound( jumpSound, jumpId, 0.5F );
             player.setVelocity(player.getBodyVelocityX(), player.getJumpVelocity());
             player.setJumpCooldownRemaining(player.getJumpCooldown());
             player.setJumpTimeRemaining(player.getJumpTime());
@@ -506,6 +513,14 @@ public class ActionController {
         //Creating impact animation for large jumps
         if (!player.isGrounded() && player.getTicksInAir() > player.getTimeForImpact()) {
             impact = true;
+        }
+        //Small impact sound effect for smaller jumps
+        if (!player.isGrounded() && player.getTicksInAir() <= player.getTimeForImpact()) {
+            smallImpact = true;
+        }
+        if(smallImpact && player.isGrounded()){
+            smallImpact = false;
+            smallImpactSoundId = playSound(smallImpactSound, smallImpactSoundId, 0.8F);
         }
         //next time the player is grounded, create the impact animation
         if (impact && player.isGrounded()) {
