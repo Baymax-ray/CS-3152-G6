@@ -19,6 +19,16 @@
         "hitboxWidth": 0.6,
         "hitboxHeight": 0.9
       },
+      "spike": [
+        {
+          "startX": 11,
+          "startY": 8
+        },
+        {
+          "startX": 11,
+          "startY": 9
+        }
+      ],
       "enemy":[
         {
           "type":"Fly",

@@ -185,6 +185,7 @@
         "platform:filled": "platform/filled.png",
         "platform:uioutline": "platform/UIOutline.png",
         "platform:settings": "platform/settings.png",
+        "platform:spike": "platform/spike.png",
         "tiles:DeepDirt1x1A.png": "tiles/DeepDirt1x1A.png",
         "tiles:DeepDirt1x1B.png": "tiles/DeepDirt1x1B.png",
         "tiles:DeepDirt1x1C.png": "tiles/DeepDirt1x1C.png",
@@ -224,7 +225,7 @@
         "tiles:ConcreteRedC.png": "tiles/ConcreteRedC.png",
         "tiles:ConcretePinkA.png": "tiles/ConcretePinkA.png",
         "tiles:ConcretePinkB.png": "tiles/ConcretePinkB.png",
-        "tiles:ConcretePinkC.png": "tiles/ConcretePinkC.png",
+        "tiles:ConcretePinkC.png": "tiles/ConcretePinkC.png"
     },
     "jsons"  : {
         "constants": "constants.json",

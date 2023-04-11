@@ -30,6 +30,8 @@ public class Level {
     private final Player player;
     private ArrayList<Enemy> enemies ;
 
+    private ArrayList<Spike> spikes;
+
     // NOTE: the natural way of viewing a 2d array is flipped for the map. tilemap[0] is the top of the map. need fancy
     // conversions between the two spaces
     private final int[][] tilemap; // value represents the index of the tile in the tiles array
@@ -363,6 +365,12 @@ public class Level {
             enemies.add(new Enemy(enemyIterator.next(), assets));
         }
 
+        this.spikes = new ArrayList<Spike>();
+        JsonValue.JsonIterator spikeIterator = json.get("spike").iterator();
+        while(spikeIterator.hasNext()){
+            spikes.add(new Spike(spikeIterator.next(), assets));
+        }
+
         this.bodyDef = new BodyDef();
         this.bodyDef.type = BodyDef.BodyType.StaticBody;
         this.bodyDef.active = false;
@@ -584,6 +592,10 @@ public class Level {
         //TODO: enemies activate too
         for(int i = 0; i < enemies.size(); i++){
             addObject(enemies.get(i));
+        }
+
+        for(int i = 0; i < spikes.size(); i++){
+            addObject(spikes.get(i));
         }
     }
 
