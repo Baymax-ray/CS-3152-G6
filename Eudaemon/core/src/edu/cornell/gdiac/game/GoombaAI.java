@@ -11,6 +11,7 @@ public class GoombaAI extends AIController{
     public static final int maxWait = 100;
     private final Enemy enemy;
     private final Level level;
+    private final float enemyHeight;
     private int ticks=0;
     private FSMState state;
     private EnemyAction move;
@@ -36,6 +37,7 @@ public class GoombaAI extends AIController{
         this.goal=new float[2];
         this.level=super.level;
         this.enemy=super.enemy;
+        this.enemyHeight=enemy.getHeight();
 
     }
     //goomba AI do not actually need this method
@@ -76,9 +78,9 @@ public class GoombaAI extends AIController{
                     return false;
                 }
                 //also there shall be all land under feet
-                if(level.isAirAt(i, ey-1)){
-                    return false;
-                }
+//                if(level.isAirAt(i, ey-1)){
+//                    return false;
+//                }
             }
             this.WanderWait=0;
             return true;
@@ -110,7 +112,7 @@ public class GoombaAI extends AIController{
                 else if (!checkDetection()){
                     WanderWait++;
                     if (WanderWait>maxWait){
-                        System.out.println("now to wander");
+                        //System.out.println("now to wander");
                         WanderWait=0;
                         state=FSMState.TOWANDER;
                     }
