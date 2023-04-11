@@ -126,7 +126,7 @@ public class GoombaAI extends AIController{
     }
     private void markGoal(){
         float ex=enemy.getX();
-        float ey=enemy.getY();
+        float ey=enemy.getY()-enemyHeight/2+0.1f;//check the feet of the enemy
         int tx=level.levelToTileCoordinatesX(ex);
         int ty=level.levelToTileCoordinatesY(ey);
         switch (state) {
@@ -171,7 +171,7 @@ public class GoombaAI extends AIController{
     }
     private void MoveAlongPathToGoal(){
         float ex=enemy.getX();
-        float ey=enemy.getY();
+        float ey=enemy.getY()-enemyHeight/2+0.1f;//check the feet of the enemy
 //        System.out.println("moving along path, current position is "+ex+":"+ey);
 
         int tx=level.levelToTileCoordinatesX(ex);

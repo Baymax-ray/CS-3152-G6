@@ -404,18 +404,6 @@ public class Enemy extends CapsuleObstacle {
             return;
         }
         forceCache = new Vector2(0,0);
-        // Don't want to be moving. Damp out player motion
-        if (getVelocityH() == 0f) {
-            forceCache.set(-this.damping*getVX(),0);
-            body.setLinearVelocity(forceCache);
-            //body.applyForce(forceCache,getPosition(),true);
-        }
-        if (getVelocityV() == 0f && this.type.equals("Fly")) {
-            forceCache.set(0,-this.damping*getVY());
-            body.setLinearVelocity(forceCache);
-            //body.applyForce(forceCache,getPosition(),true);
-        }
-
 
         // Velocity too high, clamp it
         if (Math.abs(getVX()) >= this.maxSpeed) {
@@ -426,8 +414,8 @@ public class Enemy extends CapsuleObstacle {
 
         //if(this.type.equals("Fly")){this.movementV *= this.force; this.movementH *= this.force;}
         forceCache.set(getVelocityH(), getVelocityV());
-        body.applyForce(forceCache, getPosition(), true);
-        //body.setLinearVelocity(forceCache);
+        //body.applyForce(forceCache, getPosition(), true);
+        body.setLinearVelocity(forceCache);
         //body.applyForce(forceCache,getPosition(),true);
         }
 
