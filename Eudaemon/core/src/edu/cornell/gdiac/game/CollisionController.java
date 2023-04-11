@@ -256,7 +256,7 @@ public class CollisionController implements ContactListener {
 //        }
     //#endregion
 
-        //#region Attempt to cancel player-enemy collision WHEN DASHING
+        //#region Attempt to cancel player-enemy collision WHEN DASHING (Not Adopted, Commented Out)
         //the following code is trying to remove the collision between player and enemy when player is dashing.
         //this is not used because now the player should not be colliding with enemies anyways.
 //        if((bd1 instanceof Player && bd2 instanceof Enemy && ((Player) bd1).isDashing())||
@@ -292,7 +292,7 @@ public class CollisionController implements ContactListener {
         Object bd1 = body1.getUserData();
         Object bd2 = body2.getUserData();
 
-        //#region Attempt to cancel player-enemy collision WHEN DASHING
+        //#region Attempt to cancel player-enemy collision WHEN DASHING (Not Adopted, Commented Out)
 //      same as above: dash collision, not used.
 //        if(bd1 instanceof Player && !((Player) bd1).isDashing()){
 //            // Get the two fixtures that you want to ignore each other
