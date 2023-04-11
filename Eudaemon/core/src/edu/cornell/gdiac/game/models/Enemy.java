@@ -389,6 +389,13 @@ public class Enemy extends CapsuleObstacle {
     }
 
     /**
+     * Back to the start x and y
+     */
+    public void backtoStart(){
+        this.setX(startX);
+        this.setY(startY);
+    }
+    /**
      * Applies the velocity to the body of this dude
      * This method should be called after the velocity attributes are set.
      */

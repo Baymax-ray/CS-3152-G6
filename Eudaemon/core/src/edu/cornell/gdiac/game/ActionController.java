@@ -565,7 +565,9 @@ public class ActionController {
                 for (EnemyAction action : enemyAction) {
 
                     if (action == EnemyAction.ATTACK) {
+                        //enemy.backtoStart();
                         createBullet(aiControllers.get(i).getVelocity(),enemy);
+                        //enemy.backtoStart();
                     } else if(action==EnemyAction.FLY){
                         enemy.setVelocity(aiControllers.get(i).getVelocity());
                         enemy.applyVelocity();

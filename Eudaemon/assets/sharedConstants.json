@@ -120,8 +120,8 @@
   "FlyGuardian": {
     "ImageWidth": 1.7,
     "ImageHeight": 1.7,
-    "hitboxWidth": 1.7,
-    "hitboxHeight": 1.8,
+    "hitboxWidth": 0.8,
+    "hitboxHeight": 0.9,
     "maxSpeed": 1,
     "horizontalAcceleration": 0.12,
     "initialHearts": 2,
