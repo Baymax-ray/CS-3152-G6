@@ -1153,6 +1153,8 @@ public class Player extends CapsuleObstacle {
                         direction = ((WheelObstacle) hitter).getX() - this.getX() >=0? -1:1;break;
                     case 3:
                         direction = ((SwordWheelObstacle) hitter).getX() - this.getX() >=0? -1:1;break;
+                    default:
+                        direction = isFacingRight? -1: 1;
                 }
                 //setVelocity(getBodyVelocityX(), 2.0f);
                 setiFramesRemaining(getIFrames());
