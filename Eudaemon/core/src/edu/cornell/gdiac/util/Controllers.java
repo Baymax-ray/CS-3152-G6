@@ -92,7 +92,7 @@ public class Controllers {
             try {
                 return com.badlogic.gdx.controllers.Controllers.getControllers();
             } catch (Exception e) {
-                e.printStackTrace();
+                //e.printStackTrace();
             }
         }
         return new Array<Controller>();

@@ -44,6 +44,16 @@ public class CollisionController implements ContactListener {
             }
         } catch (Exception e) { }
 
+        try {
+            if ((bd1.toString().contains("Spike") && fix2.getUserData().equals(
+                    level.getPlayer().getSensorName())) ||
+                    (bd2.toString().contains("Spike") && fix1.getUserData().equals(
+                            level.getPlayer().getSensorName()))) {
+                level.getPlayer().setHit(true);
+                level.getPlayer().hitByEnemy();
+            }
+        } catch (Exception e) { }
+
 
         //#region Cancel ALL collision between player and enemy
         if(bd1 instanceof Enemy || bd1 instanceof Player){
