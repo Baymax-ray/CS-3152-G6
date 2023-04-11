@@ -1141,7 +1141,7 @@ public class Player extends CapsuleObstacle {
     public void hitByEnemy(int whichObstacle, Object hitter) {
         if (isHit() && hearts > 0){
             hearts--;
-            playerDamageSoundId = playSound(playerDamageSound, playerDamageSoundId, 0.8F);
+            playerDamageSoundId = playSound(playerDamageSound, playerDamageSoundId, 0.1F);
             if (hearts > 0) {
                 float direction = 1;
                 switch (whichObstacle){

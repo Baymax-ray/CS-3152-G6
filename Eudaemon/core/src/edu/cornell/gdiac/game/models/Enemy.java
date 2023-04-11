@@ -103,6 +103,11 @@ public class Enemy extends CapsuleObstacle {
     private TextureRegion nonTrackingFlyingRightSpriteSheet;
     /** The sprite sheet for the non tracking flying left fly */
     private TextureRegion nonTrackingFlyingLeftSpriteSheet;
+    /** The sprite sheet for the non tracking goomba right walk*/
+    private TextureRegion nonTrackingGoombaRightSpriteSheet;
+    /** The sprite sheet for the non tracking goomba left walk */
+    private TextureRegion nonTrackingGoombaLeftSpriteSheet;
+
 
     /** The sword killing enemy sound.  We only want to play once. */
     private Sound swordKillingSound;
@@ -174,6 +179,24 @@ public class Enemy extends CapsuleObstacle {
     public TextureRegion getNonTrackingFlyingLeftSpriteSheet() {
         return nonTrackingFlyingLeftSpriteSheet;
     }
+
+    /**
+     * Get nonTrackingGoombaRight sprite sheet.
+     *
+     * @return The nonTrackingGoombaRightSpriteSheet TextureRegion.
+     */
+    public TextureRegion getNonTrackingGoombaRightSpriteSheet() {
+        return nonTrackingGoombaRightSpriteSheet;
+    }
+    /**
+     * Get nonTrackingGoombaLeft sprite sheet.
+     *
+     * @return The nonTrackingGoombaLeftSpriteSheet TextureRegion.
+     */
+    public TextureRegion getNonTrackingGoombaLeftSpriteSheet() {
+        return nonTrackingGoombaLeftSpriteSheet;
+    }
+
 
 
     public boolean enemyCanGetAttack = false;
@@ -293,6 +316,8 @@ public class Enemy extends CapsuleObstacle {
         this.bloodEffectSpriteSheet = new TextureRegion(assets.getEntry( "bloodEffect", Texture.class));
         this.nonTrackingFlyingRightSpriteSheet = new TextureRegion(assets.getEntry(RightMoveAsset, Texture.class));
         this.nonTrackingFlyingLeftSpriteSheet = new TextureRegion(assets.getEntry(LeftMoveAsset, Texture.class));
+        this.nonTrackingGoombaRightSpriteSheet = new TextureRegion(assets.getEntry(RightMoveAsset, Texture.class));
+        this.nonTrackingGoombaLeftSpriteSheet = new TextureRegion(assets.getEntry(LeftMoveAsset, Texture.class));
         //Position and Movement. These two values are stored in constants.json
         this.startX = json.getFloat("startX");
         this.startY = json.getFloat("startY");
@@ -442,7 +467,7 @@ public class Enemy extends CapsuleObstacle {
             player.increaseSpiritByKill(); //player gain some spirit when the enemy killed
 //            System.out.println("kill an enemy!");
         }
-        swordKillingSoundId = playSound(swordKillingSound, swordKillingSoundId, 1F);
+        swordKillingSoundId = playSound(swordKillingSound, swordKillingSoundId, 0.05F);
     }
 
     public long playSound(Sound sound, long soundId, float volume) {

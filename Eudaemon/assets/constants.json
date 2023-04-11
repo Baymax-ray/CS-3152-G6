@@ -50,8 +50,8 @@
         {
           "type":"GoombaGuardian",
           "TextureAsset": "platform:worm",
-          "RightAsset": "basicGoomba:rightWalk",
-          "LeftAsset": "basicGoomba:leftWalk",
+          "RightAsset": "nonTrackingGoomba:rightWalk",
+          "LeftAsset": "nonTrackingGoomba:leftWalk",
           "startX": 10,
           "startY": 8,
           "guardianList":[9,13]

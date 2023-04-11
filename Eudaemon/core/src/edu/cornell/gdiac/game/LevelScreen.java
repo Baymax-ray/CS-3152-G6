@@ -1,6 +1,8 @@
 package edu.cornell.gdiac.game;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.utils.Array;
 import edu.cornell.gdiac.game.models.*;
 import edu.cornell.gdiac.util.ScreenListener;
@@ -25,6 +27,7 @@ public class LevelScreen implements Screen {
     private final ActionController actionController;
 
     private final CollisionController collisionController;
+
 
 
     public LevelScreen(Level level, ActionBindings actionBindings) {
@@ -53,6 +56,8 @@ public class LevelScreen implements Screen {
         collisionController = new CollisionController(level);
         level.getWorld().setContactListener(collisionController);
         level.activatePhysics();
+
+
     }
 
 
@@ -142,4 +147,5 @@ public class LevelScreen implements Screen {
     public void setScreenListener(ScreenListener listener) {
         this.listener = listener;
     }
+
 }

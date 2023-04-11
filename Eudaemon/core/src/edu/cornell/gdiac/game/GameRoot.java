@@ -1,7 +1,9 @@
 package edu.cornell.gdiac.game;
 
 import com.badlogic.gdx.Game;
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.audio.Sound;
 import edu.cornell.gdiac.assets.AssetDirectory;
 import edu.cornell.gdiac.game.models.GameState;
 import edu.cornell.gdiac.util.ScreenListener;
@@ -13,6 +15,7 @@ public class GameRoot extends Game implements ScreenListener {
 	private LoadingScreen loadingScreen;
 	private GameCanvas canvas;
 	private AssetDirectory assets;
+	private Sound backgroundDroneSound;
 
 	@Override
 	public void create() {
@@ -46,6 +49,8 @@ public class GameRoot extends Game implements ScreenListener {
 			levelScreen.setScreenListener(this);
 			levelScreen.setCanvas(canvas);
 			setScreen(levelScreen);
+			backgroundDroneSound = Gdx.audio.newSound(Gdx.files.internal("audio/temp-background-drone.mp3"));
+			backgroundDroneSound.loop();
 		}
 
 		if (screen instanceof LevelScreen) {

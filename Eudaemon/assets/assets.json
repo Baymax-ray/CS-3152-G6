@@ -186,6 +186,24 @@
             }
           }
         },
+        "nonTrackingGoomba:rightWalk": {
+          "file" : "animations/nonTrackingGoombaRight.png",
+          "sprites" : {
+            "fire": {
+              "rows": 1,
+              "cols": 6
+            }
+          }
+        },
+        "nonTrackingGoomba:leftWalk": {
+          "file" : "animations/nonTrackingGoombaLeft.png",
+          "sprites" : {
+            "fire": {
+              "rows": 1,
+              "cols": 6
+            }
+          }
+        },
         "background:city": "backgrounds/backgroundCityPlaceholder.png",
         "platform:momo":  "platform/momo.png",
         "platform:momoUp":  "platform/momoUp.png",

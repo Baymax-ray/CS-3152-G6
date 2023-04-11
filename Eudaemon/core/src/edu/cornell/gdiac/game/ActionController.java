@@ -268,7 +268,7 @@ public class ActionController {
             player.setAttacking(true);
             player.setAttackLifespanRemaining(player.getAttackLifespan());
             createSword();
-            swordSwipeSoundId = playSound( swordSwipeSound, swordSwipeSoundId, 1F );
+            swordSwipeSoundId = playSound( swordSwipeSound, swordSwipeSoundId, 0.05F );
         }
         //#endregion
 
@@ -351,7 +351,7 @@ public class ActionController {
             level.addQueuedObject(dashAnimate);
 
             //Sound effect
-            dashSoundId = playSound(dashSound, dashSoundId, 0.2F);
+            dashSoundId = playSound(dashSound, dashSoundId, 0.05F);
 
             //Setting Gravity to 0 and scheduling to set it back
             player.setPlayerGravity(0.0f);
@@ -374,7 +374,7 @@ public class ActionController {
                 (jumpPressed && player.getCoyoteFramesRemaining() > 0 && player.getJumpCooldownRemaining() == 0) ||
                 (player.getJumpPressedInAir() && player.getJumpCooldownRemaining() == 0 && player.isGrounded())) {
             //Sound Effect
-            jumpId = playSound( jumpSound, jumpId, 10F );
+            jumpId = playSound( jumpSound, jumpId, 0.1F );
             player.setVelocity(player.getBodyVelocityX(), player.getJumpVelocity());
             player.setJumpCooldownRemaining(player.getJumpCooldown());
             player.setJumpTimeRemaining(player.getJumpTime());
@@ -473,7 +473,9 @@ public class ActionController {
                 player.setTexture(current);
                 player.setOyOffset(-30);
             } else if (player.getBodyVelocityX() != 0) {
-//                momoRunSoundId = playSound( momoRunSound, momoRunSoundId, 10F );
+//                momoRunSoundId = playRunSound( momoRunSound, momoRunSoundId, 10F );
+                momoRunSound.setVolume(momoRunSoundId, 10F);
+                momoRunSound.setLooping(momoRunSoundId, true);
                 TextureRegion current = (TextureRegion) (animations.get("momoRun")).getKeyFrame(currentFrame); // Gets the current frame of the animation
                 tickFrameSwitch = 5;
                 maxFrame = 5;
@@ -481,11 +483,12 @@ public class ActionController {
                 player.setOyOffset(-35);
             } else {
                 player.setTexture(player.getMomoTexture());
+                momoRunSound.setLooping(momoRunSoundId, false);
                 player.setOyOffset(-160);
             }
         } else {
             if (player.getBodyVelocityX() != 0) {
-//                chiyoRunSoundId = playSound( chiyoRunSound, chiyoRunSoundId, 10F );
+//                chiyoRunSoundId = playRunSound( chiyoRunSound, chiyoRunSoundId, 10F );
                 TextureRegion current = (TextureRegion) (animations.get("chiyoRun")).getKeyFrame(currentFrame); // Gets the current frame of the animation
                 tickFrameSwitch = 4;
                 maxFrame = 7;
@@ -518,7 +521,7 @@ public class ActionController {
                     "impactEffect", player, 0.35f,
                     scale, player.getImpactEffectSpriteSheet(), 5);
             level.addQueuedObject(impactAnimate);
-            impactId = playSound(impactSound, impactId, 1F);
+            impactId = playSound(impactSound, impactId, 0.3F);
         }
 
         //#endregion
@@ -604,6 +607,22 @@ public class ActionController {
                     else if(!enemy.getIsFacingRight()){
                         addAnimations(enemy.getNonTrackingFlyingLeftSpriteSheet(), 6, 1, "nonTrackingFlyingLeft");
                         TextureRegion current = (TextureRegion) (animations.get("nonTrackingFlyingLeft")).getKeyFrame(currentFrame); // Gets the current frame of the animation
+                        tickFrameSwitch = 5;
+                        maxFrame = 5;
+                        enemy.setTexture(current);
+                    }
+                }
+                else if(enemy.getType().equals("GoombaGuardian")){
+                    if(enemy.getIsFacingRight()){
+                        addAnimations(enemy.getNonTrackingGoombaRightSpriteSheet(), 6, 1, "nonTrackingGoombaRight");
+                        TextureRegion current = (TextureRegion) (animations.get("nonTrackingGoombaRight")).getKeyFrame(currentFrame); // Gets the current frame of the animation
+                        tickFrameSwitch = 3;
+                        maxFrame = 5;
+                        enemy.setTexture(current);
+                    }
+                    else if(!enemy.getIsFacingRight()){
+                        addAnimations(enemy.getNonTrackingGoombaLeftSpriteSheet(), 6, 1, "nonTrackingGoombaLeft");
+                        TextureRegion current = (TextureRegion) (animations.get("nonTrackingGoombaLeft")).getKeyFrame(currentFrame); // Gets the current frame of the animation
                         tickFrameSwitch = 5;
                         maxFrame = 5;
                         enemy.setTexture(current);
@@ -728,6 +747,14 @@ public class ActionController {
         }
         return sound.play(volume);
     }
+
+//    public long playRunSound(Sound sound, long soundId, float volume) {
+//        if (soundId != -1) {
+//            sound.setLooping( soundId, false );
+//        }
+//        sound.setVolume(soundId, volume);
+//        return sound.loop();
+//    }
 }
 
 
