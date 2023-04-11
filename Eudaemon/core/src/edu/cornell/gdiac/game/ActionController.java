@@ -87,6 +87,15 @@ public class ActionController {
 
     private long playerMomoTransformId = -1;
 
+    /** The chiyo running sound.  We only want to play once. */
+    private Sound chiyoRunSound;
+
+    private long chiyoRunSoundId = -1;
+    /** The momo running sound.  We only want to play once. */
+    private Sound momoRunSound;
+
+    private long momoRunSoundId = -1;
+
 
     public ActionController(Level level,Array<AIController> aiControllers) {
         enemies = level.getEnemies();
@@ -103,6 +112,8 @@ public class ActionController {
         this.dashSound = Gdx.audio.newSound(Gdx.files.internal("audio/temp-dash.mp3"));
         this.playerChiyoTransformSound = Gdx.audio.newSound(Gdx.files.internal("audio/temp-transform.mp3"));
         this.playerMomoTransformSound = Gdx.audio.newSound(Gdx.files.internal("audio/temp-transform-to-momo.mp3"));
+        this.chiyoRunSound = Gdx.audio.newSound(Gdx.files.internal("audio/temp-chiyo-run.mp3"));
+        this.momoRunSound = Gdx.audio.newSound(Gdx.files.internal("audio/temp-momo-run.mp3"));
         //Creating a Dictionary of Textures
         addAnimations(player.getMomoRunSpriteSheet(), 6, 1, "momoRun");
         addAnimations(player.getMomoDashSpriteSheet(), 5, 1, "momoDash");
@@ -227,6 +238,7 @@ public class ActionController {
                 //x = Math.min(x+h_acc, max_speed);
                 x = Math.min(x + h_acc, max_speed);
             }
+
         } else if (leftPressed) {
             if (x > -max_speed) {
                 //x = Math.max(x-h_acc, -max_speed);
@@ -241,11 +253,11 @@ public class ActionController {
             player.setTransformCooldownRemaining(player.getTransformCooldown());
             if(player.getForm() == 0){
                 player.setForm();
-                playerChiyoTransformId = playSound( playerChiyoTransformSound, playerChiyoTransformId, 1F );
+                playerChiyoTransformId = playSound( playerChiyoTransformSound, playerChiyoTransformId, 0.1F );
             }
             else{
                 player.setForm();
-                playerMomoTransformId = playSound( playerMomoTransformSound, playerMomoTransformId, 1F );
+                playerMomoTransformId = playSound( playerMomoTransformSound, playerMomoTransformId, 0.1F );
             }
         }
         //#endregion
@@ -361,6 +373,8 @@ public class ActionController {
         if ((jumpPressed && player.isGrounded() && player.getJumpCooldownRemaining() == 0) ||
                 (jumpPressed && player.getCoyoteFramesRemaining() > 0 && player.getJumpCooldownRemaining() == 0) ||
                 (player.getJumpPressedInAir() && player.getJumpCooldownRemaining() == 0 && player.isGrounded())) {
+            //Sound Effect
+            jumpId = playSound( jumpSound, jumpId, 10F );
             player.setVelocity(player.getBodyVelocityX(), player.getJumpVelocity());
             player.setJumpCooldownRemaining(player.getJumpCooldown());
             player.setJumpTimeRemaining(player.getJumpTime());
@@ -368,8 +382,6 @@ public class ActionController {
                     player.getForm()==0 ? player.getJumpTime() : (int) (player.getJumpTime()
                             * player.getChiyoJumpTimeMult()));
             player.setIsJumping(true);
-            //Sound Effect
-            jumpId = playSound( jumpSound, jumpId, 10F );
         } else if (player.isGrounded() && player.getBodyVelocityY() == 0) {
             player.setIsJumping(false);
         } else player.setJumpCooldownRemaining(Math.max(0, player.getJumpCooldownRemaining() - 1));
@@ -461,6 +473,7 @@ public class ActionController {
                 player.setTexture(current);
                 player.setOyOffset(-30);
             } else if (player.getBodyVelocityX() != 0) {
+//                momoRunSoundId = playSound( momoRunSound, momoRunSoundId, 10F );
                 TextureRegion current = (TextureRegion) (animations.get("momoRun")).getKeyFrame(currentFrame); // Gets the current frame of the animation
                 tickFrameSwitch = 5;
                 maxFrame = 5;
@@ -472,6 +485,7 @@ public class ActionController {
             }
         } else {
             if (player.getBodyVelocityX() != 0) {
+//                chiyoRunSoundId = playSound( chiyoRunSound, chiyoRunSoundId, 10F );
                 TextureRegion current = (TextureRegion) (animations.get("chiyoRun")).getKeyFrame(currentFrame); // Gets the current frame of the animation
                 tickFrameSwitch = 4;
                 maxFrame = 7;
