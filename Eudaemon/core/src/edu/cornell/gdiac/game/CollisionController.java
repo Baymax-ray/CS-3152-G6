@@ -6,6 +6,7 @@ import com.badlogic.gdx.utils.ObjectSet;
 import edu.cornell.gdiac.game.models.Enemy;
 import edu.cornell.gdiac.game.models.Level;
 import edu.cornell.gdiac.game.models.Player;
+import edu.cornell.gdiac.game.models.Spike;
 import edu.cornell.gdiac.game.obstacle.Obstacle;
 import java.util.ArrayList;
 
@@ -79,6 +80,21 @@ public class CollisionController implements ContactListener {
 //                    (((Enemy) bd2).getType().equals( "FlyGuardian") || ((Enemy) bd2).getType().equals( "Fly"))){
 //                filter1.groupIndex = 1;
 //            }
+            fixture1.setFilterData(filter1);
+        }
+        //#endregion
+
+        //#region Cancel ALL collision between spike and enemy
+        if(bd1 instanceof Enemy || bd1 instanceof Spike){
+
+            Fixture fixture1 = fix1;
+            Filter filter1 = fixture1.getFilterData();
+            filter1.groupIndex = -1;
+            fixture1.setFilterData(filter1);
+        }else if (bd2 instanceof Enemy || bd2 instanceof Spike) {
+            Fixture fixture1 = fix2;
+            Filter filter1 = fixture1.getFilterData();
+            filter1.groupIndex = -1;
             fixture1.setFilterData(filter1);
         }
         //#endregion
