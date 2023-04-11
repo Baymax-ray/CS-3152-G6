@@ -77,6 +77,16 @@ public class ActionController {
 
     private long dashSoundId = -1;
 
+    /** The player transform to Chiyo sound.  We only want to play once. */
+    private Sound playerChiyoTransformSound;
+
+    private long playerChiyoTransformId = -1;
+
+    /** The player transform to momo sound.  We only want to play once. */
+    private Sound playerMomoTransformSound;
+
+    private long playerMomoTransformId = -1;
+
 
     public ActionController(Level level,Array<AIController> aiControllers) {
         enemies = level.getEnemies();
@@ -91,7 +101,8 @@ public class ActionController {
         this.impactSound = Gdx.audio.newSound(Gdx.files.internal("audio/temp-impact.mp3"));
         this.swordSwipeSound = Gdx.audio.newSound(Gdx.files.internal("audio/temp-sword-swipe.mp3"));
         this.dashSound = Gdx.audio.newSound(Gdx.files.internal("audio/temp-dash.mp3"));
-
+        this.playerChiyoTransformSound = Gdx.audio.newSound(Gdx.files.internal("audio/temp-transform.mp3"));
+        this.playerMomoTransformSound = Gdx.audio.newSound(Gdx.files.internal("audio/temp-transform-to-momo.mp3"));
         //Creating a Dictionary of Textures
         addAnimations(player.getMomoRunSpriteSheet(), 6, 1, "momoRun");
         addAnimations(player.getMomoDashSpriteSheet(), 5, 1, "momoDash");
@@ -228,7 +239,14 @@ public class ActionController {
         //#region Form Switching
         if (transformPressed && player.getTransformCooldownRemaining() == 0 && player.getSpirit() > 1.0f) {
             player.setTransformCooldownRemaining(player.getTransformCooldown());
-            player.setForm();
+            if(player.getForm() == 0){
+                player.setForm();
+                playerChiyoTransformId = playSound( playerChiyoTransformSound, playerChiyoTransformId, 1F );
+            }
+            else{
+                player.setForm();
+                playerMomoTransformId = playSound( playerMomoTransformSound, playerMomoTransformId, 1F );
+            }
         }
         //#endregion
 
