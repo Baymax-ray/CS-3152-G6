@@ -426,7 +426,8 @@ public class Enemy extends CapsuleObstacle {
 
         //if(this.type.equals("Fly")){this.movementV *= this.force; this.movementH *= this.force;}
         forceCache.set(getVelocityH(), getVelocityV());
-        body.setLinearVelocity(forceCache);
+        body.applyForce(forceCache, getPosition(), true);
+        //body.setLinearVelocity(forceCache);
         //body.applyForce(forceCache,getPosition(),true);
         }
 
