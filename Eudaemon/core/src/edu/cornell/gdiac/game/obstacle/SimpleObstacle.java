@@ -811,6 +811,11 @@ public abstract class SimpleObstacle extends Obstacle {
 		origin = new Vector2();
 		body = null;
 	}
+	protected SimpleObstacle(float x, float y,boolean s) {
+		super(x,y,s);
+		origin = new Vector2();
+		body = null;
+	}
 	
 	/**
 	 * Creates the physics Body(s) for this object, adding them to the world.

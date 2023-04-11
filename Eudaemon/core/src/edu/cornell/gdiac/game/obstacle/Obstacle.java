@@ -948,7 +948,12 @@ public abstract class Obstacle {
         // Set the default drawing scale
         drawScale = new Vector2(1,1);
     }
-
+    protected Obstacle(float x, float y,boolean s){
+        this(x,y);
+        if (s){
+            bodyinfo.type =BodyType.StaticBody;
+        }
+    }
     /// Abstract Methods
     /**
      * Creates the physics Body(s) for this object, adding them to the world.

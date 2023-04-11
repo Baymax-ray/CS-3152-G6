@@ -62,7 +62,27 @@ public class CollisionController implements ContactListener {
             }
         } catch (Exception e) { }
 
-
+        if (bd1 instanceof WheelObstacle && !(bd1 instanceof SwordWheelObstacle) && !(bd2 instanceof Enemy)){
+            System.out.println(bd2.toString());
+            ((WheelObstacle) bd1).markRemoved(true);
+            if(bd2 instanceof Player){
+                Player player=level.getPlayer();
+                if (!player.isHit() & !player.isDashing()) {
+                    player.setHit(true);
+                    player.hitByEnemy();
+                }
+            }
+        }else if (bd2 instanceof WheelObstacle && !(bd2 instanceof SwordWheelObstacle)&& !(bd1 instanceof Enemy)){
+            System.out.println(bd1.toString());
+            ((WheelObstacle) bd2).markRemoved(true);
+            if(bd1 instanceof Player ) {
+                Player player = level.getPlayer();
+                if (!player.isHit() & !player.isDashing()) {
+                    player.setHit(true);
+                    player.hitByEnemy();
+                }
+            }
+        }
         if (bd1 instanceof SwordWheelObstacle && bd2 instanceof Enemy || bd2 instanceof SwordWheelObstacle && bd1 instanceof Enemy) {
             Enemy enemy = (Enemy) (bd1 instanceof SwordWheelObstacle ? bd2 : bd1);
             SwordWheelObstacle sword = (SwordWheelObstacle) (bd1 instanceof SwordWheelObstacle ? bd1 : bd2);
