@@ -411,8 +411,10 @@ public class Enemy extends CapsuleObstacle {
         hearts--;
         if(hearts > 0){
             System.out.println("not dying yet!");
-            this.setVelocity(new Vector2((isFacingRight? -100f:100f), 50f));
-            this.applyVelocity();
+            Vector2 knockback = new Vector2((isFacingRight? -1: 1)* enemyData.getFloat("knockbackX"),
+                    enemyData.getFloat("knockbackY"));
+            forceCache.set(knockback);
+            body.setLinearVelocity(forceCache);
             //forceCache.set()
         }
         else {
