@@ -276,7 +276,6 @@ public class CapsuleObstacle extends SimpleObstacle {
 		end2 = new CircleShape();
 		center = new Rectangle();
 		vertices = new float[8];
-
 		core = null;
 	    cap1 = null;
 	    cap2 = null;
@@ -362,8 +361,11 @@ public class CapsuleObstacle extends SimpleObstacle {
 		end1.setRadius(r);
 		end2.setRadius(r);
 	}
-	
-	
+
+	public void setBodyTypeToStatic(){
+		super.setBodyType(BodyDef.BodyType.StaticBody);
+
+	}
 	
 	/**
 	 * Sets the density of this body

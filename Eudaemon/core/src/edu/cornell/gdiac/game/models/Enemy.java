@@ -250,6 +250,8 @@ public class Enemy extends CapsuleObstacle {
                 this.bullet= enemyData.get("bullet");
                 String bulletT=enemyData.getString("BulletTextureAsset");
                 this.bulletTexture = new TextureRegion(assets.getEntry(bulletT, Texture.class));
+                // this enemy should be static and not affected by recoil
+                super.setBodyTypeToStatic();
                 break;
 
             default:
