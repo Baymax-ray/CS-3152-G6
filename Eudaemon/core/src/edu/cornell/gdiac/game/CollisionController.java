@@ -96,6 +96,7 @@ public class CollisionController implements ContactListener {
             fixture2.setFilterData(filter2);
         }
 
+
 //        else if((bd1 instanceof Player && bd2 instanceof Spike) || (bd2 instanceof Player && bd1 instanceof Spike)){
 //            Fixture fixture1 = fix1;
 //            Fixture fixture2 = fix2;
