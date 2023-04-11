@@ -6,9 +6,11 @@ import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
+import com.badlogic.gdx.utils.JsonValue;
 import edu.cornell.gdiac.game.models.*;
 import edu.cornell.gdiac.game.obstacle.EffectObstacle;
 import edu.cornell.gdiac.game.obstacle.SwordWheelObstacle;
+import edu.cornell.gdiac.game.obstacle.WheelObstacle;
 
 import java.util.*;
 
@@ -512,7 +514,7 @@ public class ActionController {
             if (!enemy.isRemoved()) {
                 for (EnemyAction action : enemyAction) {
                     if (action == EnemyAction.ATTACK) {
-                        enemy.attack(aiControllers.get(i).getVelocity());
+                        createBullet(aiControllers.get(i).getVelocity(),enemy);
                     } else if(action==EnemyAction.FLY){
                         enemy.setVelocity(aiControllers.get(i).getVelocity());
                         enemy.applyVelocity();
@@ -542,7 +544,34 @@ public class ActionController {
             }
         }
     }
+    /**
+     * Add a new bullet to the world
+     */
+    private void createBullet(Vector2 v, Enemy enemy){
+        JsonValue bulletjv = enemy.getBullet();
+        float offset_c = bulletjv.getFloat("offset",0);
+        //normalize the velocity
+        v.nor();
+        TextureRegion bulletTexture= enemy.getBulletTexture();
+        Vector2 offset = new Vector2(v.x*offset_c, v.y*offset_c);
+        Vector2 scale = new Vector2(16.0f, 16.0f);
+        float radius = bulletTexture.getRegionWidth()/(2.0f*scale.x);
+        WheelObstacle bullet = new WheelObstacle(enemy.getX()+offset.x, enemy.getY()+offset.y, radius);
 
+        bullet.setName("bullet");
+        bullet.setDensity(bulletjv.getFloat("density", 0));
+        bullet.setDrawScale(scale);
+        bullet.setTexture(bulletTexture);
+        bullet.setBullet(true);
+        bullet.setGravityScale(0);
+
+        // Compute position and velocity
+        float speed = bulletjv.getFloat( "speed", 0 );
+        Vector2 s= new Vector2(v.x*speed, v.y*speed);
+        bullet.setVX(s.x);
+        bullet.setVY(s.y);
+        level.addQueuedObject(bullet);
+    }
     /**
      * Add a new sword attack to the world and send it in the right direction.
      */

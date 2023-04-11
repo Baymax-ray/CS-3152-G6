@@ -199,10 +199,11 @@
       "height" : 0.05
     },
     "spiritLimitation":8,
+    "BulletTextureAsset": "platform:bullet",
     "bullet": {
     	"offset" : 0.2,
     	"speed"  : 20.0,
-		"density": 10.0
+		  "density": 10.0
     }
   }
 }

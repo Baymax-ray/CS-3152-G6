@@ -53,10 +53,13 @@ public class Enemy extends CapsuleObstacle {
 
     //#region TEXTURES
     // TODO: Add texture fields (FilmStrip?)
+    private TextureRegion bulletTexture;
+
     private final TextureRegion enemyTexture;
 
     /** The texture for the enemy's blood */
     private final TextureRegion bloodEffectSpriteSheet;
+    //#endregion
     private final float enemyImageWidth;
     private final float enemyImageHeight;
     /** Identifier to allow us to track the sensor in ContactListener */
@@ -72,12 +75,10 @@ public class Enemy extends CapsuleObstacle {
     private final float goombaSpeedCoefficient=0.2f;
     private final boolean isHit;
     private final boolean isGrounded;
-    //#endregion
 
     //#region NON-FINAL FIELDS
     private int guardianTime =0;
     private ArrayList<Integer> guardianList;
-
     private float hearts;
     private boolean isFacingRight;
     /**
@@ -89,15 +90,6 @@ public class Enemy extends CapsuleObstacle {
      * The offset value along the y-axis.
      */
     private float oyOffset;
-
-
-    /**
-     * The remaining time in seconds until the enemy can attack again.
-     */
-    private int attackCooldownRemaining;
-
-    private int hitCooldownRemaining;
-
     /** The physics shape of this object */
     private PolygonShape sensorShape;
 
@@ -109,8 +101,8 @@ public class Enemy extends CapsuleObstacle {
 
     /** The sword killing enemy sound.  We only want to play once. */
     private Sound swordKillingSound;
-
     private long swordKillingSoundId = -1;
+    private JsonValue bullet;
     //#endregion
 
     //#region Getter and Setter
@@ -180,10 +172,7 @@ public class Enemy extends CapsuleObstacle {
             isFacingRight = true;
         }
     }
-    /**shoot a bullet to the direction */
-    public void attack(Vector2 v){
-        
-    }
+
     public void setMovement(EnemyAction move) {
         if (move==EnemyAction.MOVE_RIGHT){
             velocityH =1*goombaSpeedCoefficient;
@@ -207,6 +196,10 @@ public class Enemy extends CapsuleObstacle {
     public float getVelocityH(){return velocityH;}
     public float getVelocityV(){return velocityV;}
     public int getAttackCooldown(){return attackCooldown;}
+    public JsonValue getBullet(){return this.bullet;}
+    public TextureRegion getBulletTexture() {
+        return bulletTexture;
+    }
     /**
      * Set the y-axis offset value.
      *
@@ -254,6 +247,9 @@ public class Enemy extends CapsuleObstacle {
                 break;
             case "Projectile":
                 this.enemyData = assets.getEntry("sharedConstants", JsonValue.class).get("Projectile");
+                this.bullet= enemyData.get("bullet");
+                String bulletT=enemyData.getString("BulletTextureAsset");
+                this.bulletTexture = new TextureRegion(assets.getEntry(bulletT, Texture.class));
                 break;
 
             default:
@@ -429,5 +425,6 @@ public class Enemy extends CapsuleObstacle {
         }
         return sound.play(volume);
     }
+
 
 }
