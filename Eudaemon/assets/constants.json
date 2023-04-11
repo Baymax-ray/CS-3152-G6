@@ -21,12 +21,12 @@
       },
       "spike": [
         {
-          "startX": 11,
-          "startY": 8
+          "startX": 9,
+          "startY": 14.2
         },
         {
-          "startX": 11,
-          "startY": 9
+          "startX": 9.5,
+          "startY": 14.2
         }
       ],
       "enemy":[

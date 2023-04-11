@@ -7,6 +7,7 @@ import com.badlogic.gdx.math.*;
 import com.badlogic.gdx.graphics.*;
 import com.badlogic.gdx.physics.box2d.*;
 
+import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
 import com.badlogic.gdx.utils.JsonValue;
 import edu.cornell.gdiac.assets.AssetDirectory;
 import edu.cornell.gdiac.game.*;
@@ -179,6 +180,8 @@ public class Spike extends CapsuleObstacle {
         // Ground sensor to represent our feet
         Fixture sensorFixture = body.createFixture( sensorDef );
         sensorFixture.setUserData(getSensorName());
+
+        super.setBodyTypeToStatic();
 
         return true;
     }
