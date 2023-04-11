@@ -118,10 +118,10 @@
     "guardianTime":60
   },
   "FlyGuardian": {
-    "ImageWidth": 0.5,
-    "ImageHeight": 0.5,
-    "hitboxWidth": 0.5,
-    "hitboxHeight": 0.6,
+    "ImageWidth": 1.7,
+    "ImageHeight": 1.7,
+    "hitboxWidth": 1.7,
+    "hitboxHeight": 1.8,
     "maxSpeed": 1,
     "horizontalAcceleration": 0.12,
     "initialHearts": 2,

@@ -41,6 +41,6 @@ public class UIOverlay {
         int barWidth = (int)(filledSpiritBar.getWidth() * spiritPercentage);
         int barHeight = filledSpiritBar.getHeight();
         TextureRegion croppedBar = new TextureRegion(filledSpiritBar, 0, 0, barWidth, barHeight);
-        canvas.draw(croppedBar, Color.WHITE, 71, canvas.getHeight() - 61, 137 * spiritPercentage, 18.234F);
+        canvas.draw(croppedBar, Color.WHITE, 72, canvas.getHeight() - 61, 137 * spiritPercentage, 18.234F);
     }
 }
