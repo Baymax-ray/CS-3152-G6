@@ -12,6 +12,7 @@ public class GoombaGuardianAI extends AIController{
     private final Enemy enemy;
     private final Level level;
     private final float tileSize;
+    private final float enemyHeight;
     private int indexAlongList;
     private int ticks=0;
     private FSMState state;
@@ -41,7 +42,7 @@ public class GoombaGuardianAI extends AIController{
         this.guardianTime =enemy.getGuardianTime();
         this.indexAlongList=0;
         this.tileSize=this.level.gettileSize();
-
+        this.enemyHeight=enemy.getHeight();
 
     }
     //goomba AI do not actually need this method
@@ -118,7 +119,7 @@ public class GoombaGuardianAI extends AIController{
     }
     private void MoveAlongPathToGoal(){
         float ex=enemy.getX();
-        float ey=enemy.getY();
+        float ey=enemy.getY()-enemyHeight/2+0.1f;//check the feet of the enemy
 //        System.out.println("moving along path, current position is "+ex+":"+ey);
 
         int tx=level.levelToTileCoordinatesX(ex);
