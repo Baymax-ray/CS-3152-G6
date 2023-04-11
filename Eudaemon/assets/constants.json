@@ -65,7 +65,7 @@
           "startY": 8
         },
         {
-          "type":"Goomba",
+          "type":"Fast",
           "TextureAsset": "platform:pathfindingGoombaR",
           "RightAsset": "platform:pathfindingGoombaR",
           "LeftAsset": "platform:pathfindingGoombaL",
