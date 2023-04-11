@@ -69,7 +69,7 @@ public class CollisionController implements ContactListener {
                 Player player=level.getPlayer();
                 if (!player.isHit() & !player.isDashing()) {
                     player.setHit(true);
-                    player.hitByEnemy(3, bd1);
+                    player.hitByEnemy(2, bd1);
                 }
             }
         }else if (bd2 instanceof WheelObstacle && !(bd2 instanceof SwordWheelObstacle)&& !(bd1 instanceof Enemy)){
@@ -79,7 +79,7 @@ public class CollisionController implements ContactListener {
                 Player player = level.getPlayer();
                 if (!player.isHit() & !player.isDashing()) {
                     player.setHit(true);
-                    player.hitByEnemy(3, bd2);
+                    player.hitByEnemy(2, bd2);
                 }
             }
         }
