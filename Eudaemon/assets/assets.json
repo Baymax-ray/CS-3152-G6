@@ -216,6 +216,8 @@
         "platform:pathfindingGoombaR": "platform/pathfindingGoombaRight.png",
         "platform:trackingGoomba": "platform/basicGoombaL.png",
         "platform:projectileEnemy": "platform/projectileEnemy.png",
+        "platform:setPathFlyingR": "platform/setPathFlyingEnemyRight.png",
+        "platform:setPathFlyingL": "platform/setPathFlyingEnemyLeft.png",
         "platform:rope":  "platform/ropebridge.png",
         "platform:barrier": "platform/barrier.png",
         "platform:bullet":  "platform/bullet.png",

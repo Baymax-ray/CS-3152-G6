@@ -32,9 +32,9 @@
       "enemy":[
         {
           "type":"Fly",
-          "TextureAsset": "platform:worm",
-          "RightAsset": "basicGoomba:rightWalk",
-          "LeftAsset": "basicGoomba:leftWalk",
+          "TextureAsset": "platform:setPathFlyingR",
+          "RightAsset": "platform:setPathFlyingR",
+          "LeftAsset": "platform:setPathFlyingL",
           "startX": 11,
           "startY": 8
         },
