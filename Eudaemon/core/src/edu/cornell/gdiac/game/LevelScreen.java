@@ -47,6 +47,7 @@ public class LevelScreen implements Screen {
             else if (enemies[i].getType().equals("FlyGuardian")) {aiControllers.add(new FlyGuardianAI(i, level));}
             else if (enemies[i].getType().equals("GoombaGuardian")) {aiControllers.add(new GoombaGuardianAI(i, level));}
             else if (enemies[i].getType().equals("Projectile")){aiControllers.add(new ProjectileAI(i,level));}
+            else if (enemies[i].getType().equals("Fast")){aiControllers.add(new GoombaAI(i, level));};
             // initializes an empty enumset with the right type
             enemyActions.add(EnumSet.noneOf(EnemyAction.class));
         }
