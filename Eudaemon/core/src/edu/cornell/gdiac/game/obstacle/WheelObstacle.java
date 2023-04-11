@@ -114,7 +114,13 @@ public class WheelObstacle extends SimpleObstacle {
      * @param canvas Drawing context
      */
     public void drawDebug(GameCanvas canvas) {
-        canvas.drawPhysics(shape,Color.YELLOW,getX(),getY(),drawScale.x,drawScale.y);
+        canvas.drawPhysics(shape,Color.MAGENTA,getX(),getY(),drawScale.x,drawScale.y);
+    }
+
+    public void draw(GameCanvas canvas) {
+        float sx = 2 * this.getRadius() / texture.getRegionWidth();
+        float sy = 2 * this.getRadius() / texture.getRegionHeight();
+        canvas.draw(texture, Color.WHITE, origin.x, origin.y, getX(), getY(), 0, sx, sy);
     }
 
 }
