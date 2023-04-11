@@ -53,6 +53,8 @@
     "downwardAttackPropelX": 10,
     "downwardAttackPropelY": 10,
     "iFrames": 100,
+    "knockbackX":10,
+    "knockbackY":5,
     "sensor": {
       "shrink" : 0.6,
       "height" : 0.05

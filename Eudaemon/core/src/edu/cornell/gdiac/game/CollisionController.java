@@ -58,7 +58,7 @@ public class CollisionController implements ContactListener {
                     bd2.toString().contains("Spike") && bd1 instanceof Player && !fix1.isSensor())
                     && level.getPlayer().getiFramesRemaining() == 0) {
                 level.getPlayer().setHit(true);
-                level.getPlayer().hitByEnemy(null);
+                level.getPlayer().hitByEnemy(1, bd2 instanceof Player? bd1: bd2);
             }
         } catch (Exception e) { }
 
@@ -69,7 +69,7 @@ public class CollisionController implements ContactListener {
                 Player player=level.getPlayer();
                 if (!player.isHit() & !player.isDashing()) {
                     player.setHit(true);
-                    player.hitByEnemy(null);
+                    player.hitByEnemy(3, bd1);
                 }
             }
         }else if (bd2 instanceof WheelObstacle && !(bd2 instanceof SwordWheelObstacle)&& !(bd1 instanceof Enemy)){
@@ -79,7 +79,7 @@ public class CollisionController implements ContactListener {
                 Player player = level.getPlayer();
                 if (!player.isHit() & !player.isDashing()) {
                     player.setHit(true);
-                    player.hitByEnemy(null);
+                    player.hitByEnemy(3, bd2);
                 }
             }
         }
@@ -126,13 +126,14 @@ public class CollisionController implements ContactListener {
 
         }
 
-        if (bd1 instanceof Player && !fix1.isSensor() && bd2 instanceof Enemy || bd2 instanceof Player && !fix2.isSensor() && bd1 instanceof Enemy) {
+        if (bd1 instanceof Player && !fix1.isSensor() && bd2 instanceof Enemy ||
+                bd2 instanceof Player && !fix2.isSensor() && bd1 instanceof Enemy) {
             Enemy enemy = (Enemy) (bd1 instanceof Player ? bd2 : bd1);
             Player player = (Player) (bd1 instanceof Player ? bd1 : bd2);
 
             if (!player.isHit() & !player.isDashing()) {
                 player.setHit(true);
-                player.hitByEnemy(null);
+                player.hitByEnemy(0, bd1 instanceof Player? bd2:bd1);
             }
         }
 
@@ -218,7 +219,8 @@ public class CollisionController implements ContactListener {
             }
         } catch (Exception e) {}
 
-        if (level.getPlayer().getSpiritSensorName().equals(fd1) && bd2 instanceof Enemy || level.getPlayer().getSpiritSensorName().equals(fd2) && bd1 instanceof Enemy) {
+        if (level.getPlayer().getSpiritSensorName().equals(fd1) && bd2 instanceof Enemy ||
+                level.getPlayer().getSpiritSensorName().equals(fd2) && bd1 instanceof Enemy) {
             Enemy enemy = (Enemy) (bd1 instanceof Enemy ? bd1 : bd2);
 
             level.getPlayer().getEnemiesInSpiritRange().removeValue(enemy, true);
@@ -237,7 +239,8 @@ public class CollisionController implements ContactListener {
         Object bd2 = body2.getUserData();
 
 
-        if (bd1 instanceof Player && !fix1.isSensor() && bd2 instanceof Enemy || bd2 instanceof Player && !fix2.isSensor() && bd1 instanceof Enemy) {
+        if (bd1 instanceof Player && !fix1.isSensor() && bd2 instanceof Enemy ||
+                bd2 instanceof Player && !fix2.isSensor() && bd1 instanceof Enemy) {
             contact.setEnabled(false);
         }
 
@@ -245,7 +248,8 @@ public class CollisionController implements ContactListener {
             contact.setEnabled(false);
         }
 
-        if (bd1 instanceof Enemy && bd2 instanceof WheelObstacle || bd2 instanceof Enemy && bd1 instanceof WheelObstacle) {
+        if (bd1 instanceof Enemy && bd2 instanceof WheelObstacle ||
+                bd2 instanceof Enemy && bd1 instanceof WheelObstacle) {
             WheelObstacle wheel = (WheelObstacle) (bd1 instanceof WheelObstacle ? bd1 : bd2);
             if (!wheel.getName().equals("bullet"))
                 contact.setEnabled(false);

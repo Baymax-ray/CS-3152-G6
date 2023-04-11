@@ -13,6 +13,8 @@ import com.badlogic.gdx.utils.JsonValue;
 import edu.cornell.gdiac.assets.AssetDirectory;
 import edu.cornell.gdiac.game.GameCanvas;
 import edu.cornell.gdiac.game.obstacle.CapsuleObstacle;
+import edu.cornell.gdiac.game.obstacle.SwordWheelObstacle;
+import edu.cornell.gdiac.game.obstacle.WheelObstacle;
 
 public class Player extends CapsuleObstacle {
 
@@ -1130,17 +1132,33 @@ public class Player extends CapsuleObstacle {
      *
      * This method decrements the number of hearts for the character by 1. If the number of hearts
      * reaches 0, this method destroys the character
+     * @param whichObstacle : the parameter specifying which object the player is hit by:
+     *                      0 for Enemy;
+     *                      1 for Spike;
+     *                      2 for WheelObstacle;
+     *                      3 for SwordWheelObstacle;
      */
-    public void hitByEnemy(Enemy enemy) {
+    public void hitByEnemy(int whichObstacle, Object hitter) {
         if (isHit() && hearts > 0){
             hearts--;
             playerDamageSoundId = playSound(playerDamageSound, playerDamageSoundId, 0.8F);
             if (hearts > 0) {
-
-                setVelocity(getBodyVelocityX(), 2.0f);
+                float direction = 1;
+                switch (whichObstacle){
+                    case 0:
+                        direction = ((Enemy) hitter).getX() - this.getX() >= 0? -1: 1; break;
+                    case 1:
+                        direction = ((Spike) hitter).getX() - this.getX() >=0? -1:1;break;
+                    case 2:
+                        direction = ((WheelObstacle) hitter).getX() - this.getX() >=0? -1:1;break;
+                    case 3:
+                        direction = ((SwordWheelObstacle) hitter).getX() - this.getX() >=0? -1:1;break;
+                }
+                //setVelocity(getBodyVelocityX(), 2.0f);
                 setiFramesRemaining(getIFrames());
-                if (isFacingRight) setVelocity(-10,5);
-                else setVelocity(10,5);
+                Vector2 knockback = new Vector2(direction * playerData.getFloat("knockbackX"),
+                        playerData.getFloat("knockbackY"));
+                setVelocity(knockback.x, knockback.y);
             } else this.markRemoved(true);
         }
 
