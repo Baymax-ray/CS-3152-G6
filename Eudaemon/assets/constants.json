@@ -41,8 +41,8 @@
         {
           "type":"FlyGuardian",
           "TextureAsset": "platform:worm",
-          "RightAsset": "basicGoomba:rightWalk",
-          "LeftAsset": "basicGoomba:leftWalk",
+          "RightAsset": "nonTrackingFlying:rightFly",
+          "LeftAsset": "nonTrackingFlying:rightFly",
           "startX": 11,
           "startY": 9,
           "guardianList":[12,9,12,15]

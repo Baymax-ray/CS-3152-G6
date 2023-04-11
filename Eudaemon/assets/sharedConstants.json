@@ -61,10 +61,10 @@
     }
   },
   "Goomba": {
-    "ImageWidth": 1,
-    "ImageHeight": 1,
+    "ImageWidth": 1.5,
+    "ImageHeight": 1.5,
     "hitboxWidth": 0.5,
-    "hitboxHeight": 0.9,
+    "hitboxHeight": 1.4,
     "maxSpeed": 2.5,
     "horizontalAcceleration": 0.12,
     "initialHearts": 1,

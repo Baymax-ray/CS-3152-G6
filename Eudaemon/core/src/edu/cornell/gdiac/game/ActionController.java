@@ -591,6 +591,22 @@ public class ActionController {
                     }
 
                 }
+                else if(enemy.getType().equals("FlyGuardian")){
+                    if(enemy.getIsFacingRight()){
+                        addAnimations(enemy.getNonTrackingFlyingRightSpriteSheet(), 6, 1, "nonTrackingFlyingRight");
+                        TextureRegion current = (TextureRegion) (animations.get("nonTrackingFlyingRight")).getKeyFrame(currentFrame); // Gets the current frame of the animation
+                        tickFrameSwitch = 3;
+                        maxFrame = 5;
+                        enemy.setTexture(current);
+                    }
+                    else if(!enemy.getIsFacingRight()){
+                        addAnimations(enemy.getNonTrackingFlyingLeftSpriteSheet(), 6, 1, "nonTrackingFlyingLeft");
+                        TextureRegion current = (TextureRegion) (animations.get("nonTrackingFlyingLeft")).getKeyFrame(currentFrame); // Gets the current frame of the animation
+                        tickFrameSwitch = 5;
+                        maxFrame = 5;
+                        enemy.setTexture(current);
+                    }
+                }
                 enemyAction.clear();
             }
         }

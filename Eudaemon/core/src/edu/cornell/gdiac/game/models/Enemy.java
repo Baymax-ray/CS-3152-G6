@@ -99,6 +99,11 @@ public class Enemy extends CapsuleObstacle {
     /** The sprite sheet for the basic goomba left walk */
     private TextureRegion basicGoombaLeftSpriteSheet;
 
+    /** The sprite sheet for the non tracking flying right fly */
+    private TextureRegion nonTrackingFlyingRightSpriteSheet;
+    /** The sprite sheet for the non tracking flying left fly */
+    private TextureRegion nonTrackingFlyingLeftSpriteSheet;
+
     /** The sword killing enemy sound.  We only want to play once. */
     private Sound swordKillingSound;
     private long swordKillingSoundId = -1;
@@ -151,6 +156,23 @@ public class Enemy extends CapsuleObstacle {
      */
     public TextureRegion getBasicGoombaLeftSpriteSheet() {
         return basicGoombaLeftSpriteSheet;
+    }
+
+    /**
+     * Get nonTrackingFlyingRight sprite sheet.
+     *
+     * @return The nonTrackingFlyingRightSpriteSheet TextureRegion.
+     */
+    public TextureRegion getNonTrackingFlyingRightSpriteSheet() {
+        return nonTrackingFlyingRightSpriteSheet;
+    }
+    /**
+     * Get nonTrackingFlyingLeft sprite sheet.
+     *
+     * @return The nonTrackingFlyingLeftSpriteSheet TextureRegion.
+     */
+    public TextureRegion getNonTrackingFlyingLeftSpriteSheet() {
+        return nonTrackingFlyingLeftSpriteSheet;
     }
 
 
@@ -269,7 +291,8 @@ public class Enemy extends CapsuleObstacle {
         this.basicGoombaRightSpriteSheet = new TextureRegion(assets.getEntry(RightMoveAsset, Texture.class));
         this.basicGoombaLeftSpriteSheet = new TextureRegion(assets.getEntry(LeftMoveAsset, Texture.class));
         this.bloodEffectSpriteSheet = new TextureRegion(assets.getEntry( "bloodEffect", Texture.class));
-
+        this.nonTrackingFlyingRightSpriteSheet = new TextureRegion(assets.getEntry(RightMoveAsset, Texture.class));
+        this.nonTrackingFlyingLeftSpriteSheet = new TextureRegion(assets.getEntry(LeftMoveAsset, Texture.class));
         //Position and Movement. These two values are stored in constants.json
         this.startX = json.getFloat("startX");
         this.startY = json.getFloat("startY");
