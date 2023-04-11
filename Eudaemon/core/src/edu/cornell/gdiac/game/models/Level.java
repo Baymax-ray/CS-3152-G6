@@ -602,6 +602,8 @@ public class Level {
 
 
     public void handleGameplayCamera(GameCanvas canvas) {
+        if (player.isRemoved()) return;
+
         if (Gdx.input.isKeyPressed(Input.Keys.O)) {
             canvas.getCamera().zoom += 0.02;
         }
@@ -642,6 +644,8 @@ public class Level {
 //        System.out.println();
     }
     public void handleSpirit() {
+        if (player.isRemoved()) return;
+
         if (player.getForm()==1) {
             player.decreaseSpirit();
             if (player.getSpirit()==0) player.setForm();
@@ -650,68 +654,23 @@ public class Level {
         int e=0;
         double shortestDist = Double.MAX_VALUE;
 
-
         for (int i = 0; i < enemies.size(); i++) {
+            if (enemies.get(i).isRemoved()) continue;
+
             if(player.getAttackLifespanRemaining() <= 0) enemies.get(i).enemyCanGetAttack = true;
             double dist = Math.sqrt(Math.pow(player.getX() - enemies.get(i).getX(), 2) + Math.pow(player.getY() - enemies.get(i).getY(), 2));
             if (dist < shortestDist && enemies.get(i).getSpiritRemain()>0) {
                 shortestDist = dist;
                 e=i;
             }
-
-            if (dist < player.getHitDist() && !player.isHit() && !player.isDashing()) {
-                player.setHit(true);
-                player.hitByEnemy();
-            }
-
-            //handle player attack
-            if (player.isAttacking() && dist < player.getAttackDist()) {
-                //handles attack in eight directions
-                //up
-                if (player.getAngleFacing() == 90 && enemies.get(i).getY() > player.getY()) enemyHitByPlayer(i);
-
-                //left
-                else if (player.getAngleFacing() == 180 && player.getX() > enemies.get(i).getX()) enemyHitByPlayer(i);
-
-                //right
-                else if (player.getAngleFacing() == 0 && player.getX() < enemies.get(i).getX()) enemyHitByPlayer(i);
-
-                //down
-                else if (player.getAngleFacing() == 270 && player.getY() > enemies.get(i).getY()) {
-                    enemyHitByPlayer(i);
-                    player.setVelocity(player.getBodyVelocityX(), player.getDownwardAttackPropelY());
-                }
-
-                //down left
-                else if (player.getAngleFacing() == 225 && player.getY() > enemies.get(i).getY() && player.getX() > enemies.get(i).getX()) {
-                    enemyHitByPlayer(i);
-                    player.setVelocity(player.getDownwardAttackPropelX(), player.getDownwardAttackPropelY());
-                }
-
-                //down right
-                else if (player.getAngleFacing() == 315 && player.getY() > enemies.get(i).getY() && player.getX() < enemies.get(i).getX()) {
-                    enemyHitByPlayer(i);
-                    player.setVelocity(-player.getDownwardAttackPropelX(), player.getDownwardAttackPropelY());
-                }
-
-            }
-
-//            if (player.isAttacking() && dist < player.getAttackDist() &&
-//                    (player.isFacingRight() && player.getX() < enemies.get(i).getX() ||
-//                            !player.isFacingRight() && player.getX() > enemies.get(i).getX())) {
-//                if((player.getY() > enemies.get(i).getY())
-//                        && player.getAngleFacing() == 270){
-//                    player.setVelocity(player.getBodyVelocityX(), player.getJumpVelocity() - 1F);
-//                }
-//                //enemyHitByPlayer(i);
-//            }
         }
+
         if (shortestDist < player.getSpiritIncreaseDist() && player.getForm()==0){
             enemies.get(e).LossSpirit(player.getSpiritIncreaseRate());
             player.increaseSpirit();
             Vector2 scale = new Vector2(5f,5f);
-            SwordWheelObstacle spiritAnimate = new SwordWheelObstacle(player.getX(), player.getY(), player.getSpiritDrainSpriteSheet().getRegionWidth()/400F, player, player.getAttackLifespan(), 5f, scale, player.getSpiritDrainSpriteSheet());
-            addQueuedObject(spiritAnimate);
+//            SwordWheelObstacle spiritAnimate = new SwordWheelObstacle(player.getX(), player.getY(), player.getSpiritDrainSpriteSheet().getRegionWidth()/400F, player, player.getAttackLifespan(), 5f, scale, player.getSpiritDrainSpriteSheet());
+//            addQueuedObject(spiritAnimate);
         }
 
     }

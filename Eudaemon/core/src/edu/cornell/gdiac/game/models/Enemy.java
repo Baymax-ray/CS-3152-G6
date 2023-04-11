@@ -251,7 +251,7 @@ public class Enemy extends CapsuleObstacle {
                 String bulletT=enemyData.getString("BulletTextureAsset");
                 this.bulletTexture = new TextureRegion(assets.getEntry(bulletT, Texture.class));
                 // this enemy should be static and not affected by recoil
-                super.setBodyTypeToStatic();
+//                super.setBodyTypeToStatic();
                 break;
 
             default:
@@ -414,7 +414,6 @@ public class Enemy extends CapsuleObstacle {
         }
         if (hearts <= 0) {
             this.markRemoved(true);
-            this.setActive(false);
             player.increaseSpiritByKill(); //player gain some spirit when the enemy killed
 //            System.out.println("kill an enemy!");
         }

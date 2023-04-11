@@ -5,8 +5,10 @@ import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.BodyDef;
+import com.badlogic.gdx.utils.ObjectSet;
 import com.badlogic.gdx.utils.Timer;
 import edu.cornell.gdiac.game.GameCanvas;
+import edu.cornell.gdiac.game.models.Enemy;
 import edu.cornell.gdiac.game.models.Player;
 
 public class SwordWheelObstacle extends WheelObstacle {
@@ -15,6 +17,12 @@ public class SwordWheelObstacle extends WheelObstacle {
      * The avatar of this object.
      */
     private final Player player;
+
+    /**
+     * This is the set of enemies that have been hit by this sword attack
+     */
+    private final ObjectSet<Enemy> hitEnemies;
+
     /**
      * Accumulates the ticks elapsed since the animation started.
      */
@@ -44,9 +52,11 @@ public class SwordWheelObstacle extends WheelObstacle {
         super(x,y,radius);
         this.player = player;
 
+        this.hitEnemies = new ObjectSet<>();
+
         setName("sword");
         setDensity(density);
-        setDrawScale(scale);
+//        setDrawScale(scale);
         setBullet(true);
         setGravityScale(0);
         setBodyType(BodyDef.BodyType.KinematicBody);
@@ -101,5 +111,19 @@ public class SwordWheelObstacle extends WheelObstacle {
         float sx = 2*getRadius()/this.texture.getRegionWidth(); // size in world coordinates / texture coordinates
         float sy = 2*getRadius()/this.texture.getRegionHeight();
         canvas.draw(texture, Color.WHITE, origin.x, origin.y, getX(), getY(), getAngle(), sx, sy);
+    }
+
+    @Override
+    public void drawDebug(GameCanvas canvas) {
+        super.drawDebug(canvas);
+    }
+
+
+    public void addHitEnemy(Enemy enemy) {
+        this.hitEnemies.add(enemy);
+    }
+
+    public boolean hasHitEnemy(Enemy enemy) {
+        return this.hitEnemies.contains(enemy);
     }
 }
