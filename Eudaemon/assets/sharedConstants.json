@@ -145,8 +145,8 @@
     },
     "spiritLimitation":8,
     "guardianTime":60,
-    "knockbackX":1000,
-    "knockbackY":5000
+    "knockbackX":50,
+    "knockbackY":1
   },
   "Fly": {
     "ImageWidth": 0.5,
@@ -175,8 +175,8 @@
       "height" : 0.05
     },
     "spiritLimitation":8,
-    "knockbackX":1000,
-    "knockbackY":5000
+    "knockbackX":50,
+    "knockbackY":1
   },
   "Projectile": {
     "ImageWidth": 0.5,
