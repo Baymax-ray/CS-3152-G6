@@ -1,55 +1,34 @@
 package edu.cornell.gdiac.game;
 
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.graphics.g2d.Batch;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.scenes.scene2d.Actor;
 
-public class DeathScreen implements Screen {
+public class DeathScreen extends Actor {
 
-    private boolean active;
+    private BitmapFont font;
+    private String message;
+    private float timeRemaining;
 
-    private GameCanvas canvas;
-
-    public DeathScreen(GameCanvas canvas){
-        this.canvas = canvas;
-    }
-
-    public void draw(float delta) {
-        canvas.clear();
-    }
-
-    @Override
-    public void show() {
-        active = true;
+    public DeathScreen(BitmapFont font, String message, float timeToShow){
+        this.font = font;
+        this.message = message;
+        this.timeRemaining = timeToShow;
     }
 
     @Override
-    public void render(float delta) {
-        if (active) {
-            draw(delta);
+    public void draw(Batch batch, float parentAlpha){
+        font.draw(batch, message, getX(), getY());
+    }
+
+    @Override
+    public void act(float delta){
+        super.act(delta);
+        timeRemaining -= delta;
+        if(timeRemaining <= 0){
+            this.remove();
         }
     }
 
-    @Override
-    public void resize(int width, int height) {
-        canvas.getViewport().update(width, height);
-    }
-
-    @Override
-    public void pause() {
-
-    }
-
-    @Override
-    public void resume() {
-
-    }
-
-    @Override
-    public void hide() {
-        active = false;
-    }
-
-    @Override
-    public void dispose() {
-
-    }
 }

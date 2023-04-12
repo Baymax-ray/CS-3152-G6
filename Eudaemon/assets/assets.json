@@ -222,7 +222,7 @@
         "platform:fastGoombaR": "platform/fastGoombaR.png",
         "platform:rope":  "platform/ropebridge.png",
         "platform:barrier": "platform/barrier.png",
-        "platform:bullet":  "platform/bullet.png",
+        "platform:bullet":  "platform/circularProjectile2.png",
         "platform:heart": "platform/heart.png",
         "platform:emptyspirit": "platform/emptyspirit.png",
         "platform:filled": "platform/filled.png",
