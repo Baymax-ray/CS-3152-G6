@@ -299,10 +299,6 @@
         "constants": "constants.json",
         "inputMappings": "inputMapping.json",
         "sharedConstants": "sharedConstants.json",
-        "levelTest": "levels/levelTest.json",
-        "levelTestBox": "levels/levelTestBox.json",
-        "levelDemo": "levels/levelDemo.json",
-        "levelDemo2": "levels/levelDemo2.json",
         "level1": "levels/level1.json",
         "tileset": "EudaemonTileset.json"
     },
