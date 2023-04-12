@@ -1144,6 +1144,7 @@ public class Player extends CapsuleObstacle {
             playerDamageSoundId = playSound(playerDamageSound, playerDamageSoundId, 0.1F);
             if (hearts > 0) {
                 float direction = 1;
+                float spikeKnockBackVerticalMult = 0;
                 switch (whichObstacle){
                     case 0:
                         direction = ((Enemy) hitter).getX() - this.getX() >= 0? -1: 1; break;
@@ -1153,13 +1154,17 @@ public class Player extends CapsuleObstacle {
                         direction = ((WheelObstacle) hitter).getX() - this.getX() >=0? -1:1;break;
                     case 3:
                         direction = ((SwordWheelObstacle) hitter).getX() - this.getX() >=0? -1:1;break;
+                    case 4: //spike
+                        direction = isFacingRight? -0.4f : 0.4f;
+                        spikeKnockBackVerticalMult = 1.6f;
+                        break;
                     default:
                         direction = isFacingRight? -1: 1;
                 }
                 //setVelocity(getBodyVelocityX(), 2.0f);
                 setiFramesRemaining(getIFrames());
                 Vector2 knockback = new Vector2(direction * playerData.getFloat("knockbackX"),
-                        playerData.getFloat("knockbackY"));
+                        spikeKnockBackVerticalMult * playerData.getFloat("knockbackY"));
                 setVelocity(knockback.x, knockback.y);
             } else this.markRemoved(true);
         }
