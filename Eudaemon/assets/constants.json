@@ -10,8 +10,8 @@
     {
       "level": "levelDemo2",
       "tileSize": 1,
-      "cameraWidth": 26.69,
-      "cameraHeight": 15,
+      "cameraWidth": 21.35,
+      "cameraHeight": 12,
       "gravity": -1,
       "player": {
         "startX": 7,
