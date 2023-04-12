@@ -89,11 +89,16 @@ public class Spike extends BoxObstacle {
                 switch (property.getString("value")) {
                     case "Up":
                         this.rotationAngle = 0;
-                        System.out.println("up");
                         break;
                     case "Left":
                         this.rotationAngle = (float) (Math.PI/2);
-                        System.out.println("left");
+                        break;
+                    case "Down":
+                        this.rotationAngle = (float) (Math.PI);
+                        break;
+                    case "Right":
+                        this.rotationAngle = (float) (Math.PI * 1.5f);
+                        break;
                     default:
                         System.out.println("something wrong");
                 }
