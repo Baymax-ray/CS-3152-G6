@@ -33,6 +33,17 @@ public class Level {
     // NOTE: the natural way of viewing a 2d array is flipped for the map. tilemap[0] is the top of the map. need fancy
     // conversions between the two spaces
     private final int[][] tilemap; // value represents the index of the tile in the tiles array
+
+    /**
+     * The list of background 1 tiles in this level.
+     */
+    private final int[][] tilemapBG1;
+
+    /**
+     * The list of background 12 tiles in this level.
+     */
+    private final int[][] tilemapBG2;
+
     private final Tile[] tiles;
     private final BodyDef bodyDef;
     private final FixtureDef fixtureDef;
@@ -393,6 +404,43 @@ public class Level {
             spikes.add(new Spike(spikeIterator.next(), assets));
         }
 
+        // Create the tilemap (background tiles 1)
+        JsonValue tilesBG1 = layerData.get("TileLayerBG");
+        JsonValue tilesBG1Data = tilesBG1.get("data");
+        this.tilemapBG1 = new int[heightInTiles][widthInTiles];
+
+        for (int y = 0; y < heightInTiles; y++) {
+            for (int x = 0; x < widthInTiles; x++) {
+                tilemapBG1[y][x] = tilesBG1Data.getInt(y*widthInTiles + x) - 1;
+            }
+        }
+
+        for (int[] row : tilemapBG1) {
+            for (int tileId : row) {
+                if (tileId <= 0) continue;
+                tiles[tileId].setTexture(texturePaths.get(tileId));
+            }
+        }
+
+        // Create the tilemap (background tiles 1)
+        JsonValue tilesBG2 = layerData.get("TileLayerBG2");
+        JsonValue tilesBG2Data = tilesBG2.get("data");
+        this.tilemapBG2 = new int[heightInTiles][widthInTiles];
+
+        for (int y = 0; y < heightInTiles; y++) {
+            for (int x = 0; x < widthInTiles; x++) {
+                tilemapBG2[y][x] = tilesBG2Data.getInt(y*widthInTiles + x) - 1;
+            }
+        }
+
+        for (int[] row : tilemapBG2) {
+            for (int tileId : row) {
+                if (tileId <= 0) continue;
+                tiles[tileId].setTexture(texturePaths.get(tileId));
+            }
+        }
+
+
         this.bodyDef = new BodyDef();
         this.bodyDef.type = BodyDef.BodyType.StaticBody;
         this.bodyDef.active = false;
@@ -543,6 +591,39 @@ public class Level {
         canvas.draw(background, Color.WHITE, 0, 0, -3, 0, 0, 0.07F, 0.07F);
 //        canvas.draw(background, Color.CLEAR, background.getRegionWidth()/2, background.getRegionHeight()/2, 0, 0, 1 / background.getRegionWidth(), 1/ background.getRegionHeight());
 
+        //Drawing background 2 tiles
+        for (int y = 0; y < tilemapBG2.length; y++) {
+            int[] row = tilemapBG2[y];
+            for (int x = 0; x < row.length; x++) {
+                int tileId = row[x];
+                if (tileId <= 0) continue;
+                Tile tile = tiles[tileId];
+                if (tile.getTexture() == null){ //running into glitch
+                    continue;
+                }
+                float sx = tileSize / tile.getTexture().getRegionWidth();
+                float sy = tileSize / tile.getTexture().getRegionHeight();
+                canvas.draw(tile.getTexture(), Color.WHITE, 0, 0, tileToLevelCoordinatesX(x), tileToLevelCoordinatesY(y), 0, sx, sy);
+            }
+        }
+
+        //Drawing background 1 tiles
+        for (int y = 0; y < tilemapBG1.length; y++) {
+            int[] row = tilemapBG1[y];
+            for (int x = 0; x < row.length; x++) {
+                int tileId = row[x];
+                if (tileId <= 0) continue;
+                Tile tile = tiles[tileId];
+                if (tile.getTexture() == null){ //running into glitch
+                    continue;
+                }
+                float sx = tileSize / tile.getTexture().getRegionWidth();
+                float sy = tileSize / tile.getTexture().getRegionHeight();
+                canvas.draw(tile.getTexture(), Color.WHITE, 0, 0, tileToLevelCoordinatesX(x), tileToLevelCoordinatesY(y), 0, sx, sy);
+            }
+        }
+
+        //Drawing foreground tiles
         for (int y = 0; y < tilemap.length; y++) {
             int[] row = tilemap[y];
             for (int x = 0; x < row.length; x++) {
