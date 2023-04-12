@@ -232,6 +232,7 @@
         "tiles:DeepDirt1x1A.png": "tiles/DeepDirt1x1A.png",
         "tiles:DeepDirt1x1B.png": "tiles/DeepDirt1x1B.png",
         "tiles:DeepDirt1x1C.png": "tiles/DeepDirt1x1C.png",
+        "tiles:DeepDirt1x1D.png": "tiles/DeepDirt1x1D.png",
         "tiles:DirtDeepDirt1x1A.png": "tiles/DirtDeepDirt1x1A.png",
         "tiles:DirtDeepDirt1x1B.png": "tiles/DirtDeepDirt1x1B.png",
         "tiles:DirtDeepDirt1x1C.png": "tiles/DirtDeepDirt1x1C.png",
@@ -242,6 +243,7 @@
         "tiles:Scaffolding1x1D.png": "tiles/Scaffolding1x1D.png",
         "tiles:GrassDirtBottom1x1A.png": "tiles/GrassDirtBottom1x1A.png",
         "tiles:GrassDirtBottom1x1B.png": "tiles/GrassDirtBottom1x1B.png",
+        "tiles:GrassDirtBottom1x1C.png": "tiles/GrassDirtBottom1x1C.png",
         "tiles:ConcreteNoBottom2x1_1A.png": "tiles/ConcreteNoBottom2x1_1A.png",
         "tiles:ConcreteNoBottom2x1_2A.png": "tiles/ConcreteNoBottom2x1_2A.png",
         "tiles:ConcreteNoBottom2x1_1B.png": "tiles/ConcreteNoBottom2x1_1B.png",
@@ -260,6 +262,12 @@
         "tiles:ConcreteDirtBottom2x2_2C.png": "tiles/ConcreteDirtBottom2x2_2C.png",
         "tiles:ConcreteDirtBottom2x2_3C.png": "tiles/ConcreteDirtBottom2x2_3C.png",
         "tiles:ConcreteDirtBottom2x2_4C.png": "tiles/ConcreteDirtBottom2x2_4C.png",
+        "tiles:BGConcreteA.png": "tiles/BGConcreteA.png",
+        "tiles:BGConcreteB.png": "tiles/BGConcreteB.png",
+        "tiles:BGConcreteC.png": "tiles/BGConcreteC.png",
+        "tiles:BGConcreteD.png": "tiles/BGConcreteD.png",
+        "tiles:BGConcreteE.png": "tiles/BGConcreteE.png",
+        "tiles:BGConcreteF.png": "tiles/BGConcreteF.png",
         "tiles:ConcreteBlueA.png": "tiles/ConcreteBlueA.png",
         "tiles:ConcreteBlueB.png": "tiles/ConcreteBlueB.png",
         "tiles:ConcreteBlueC.png": "tiles/ConcreteBlueC.png",
@@ -277,7 +285,8 @@
         "levelTest": "levels/levelTest.json",
         "levelTestBox": "levels/levelTestBox.json",
         "levelDemo": "levels/levelDemo.json",
-        "tileset": "tileset2.json"
+        "levelDemo2": "levels/levelDemo2.json",
+        "tileset": "EudaemonTileset.json"
     },
     "sounds" : {
         "platform:jump" : "platform/jump.mp3",

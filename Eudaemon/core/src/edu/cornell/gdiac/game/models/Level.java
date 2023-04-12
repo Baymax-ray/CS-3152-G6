@@ -19,9 +19,7 @@ import edu.cornell.gdiac.game.obstacle.Obstacle;
 import edu.cornell.gdiac.game.obstacle.SwordWheelObstacle;
 import edu.cornell.gdiac.util.PooledList;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Iterator;
+import java.util.*;
 
 public class Level {
 
@@ -316,24 +314,48 @@ public class Level {
         this.tiles = tiles;
         String levelName = json.getString("level");
         JsonValue levelJson = assets.getEntry(levelName,  JsonValue.class);
-        int widthInTiles = levelJson.getInt("width");
-        int heightInTiles = levelJson.getInt("height");
-        JsonValue layers = levelJson.get("layers").get("data");
+
+        // Access the JsonValues for each layer in the tilemap
+        JsonValue layerArray = levelJson.get("layers");
+
+        // Create a dictionary to contain the names of the layers and their JsonValues
+        Hashtable<String,JsonValue> layerData = new Hashtable<>();
+
+        // Iterate through the JsonValue layer array and perform operations as needed
+        for (JsonValue item : layerArray) {
+            // Add the name of the layer to the hashset as the key with a value of item
+            layerData.put(item.getString("name"), item);
+        }
+
+
+        // Create the tilemap (foreground tiles)
+        JsonValue tilesFG = layerData.get("TileLayerFG");
+        JsonValue tilesFGData = tilesFG.get("data");
+
+        // Get the width and height of the tilemap in tiles
+        int widthInTiles = tilesFG.getInt("width");
+        int heightInTiles = tilesFG.getInt("height");
+
         this.tilemap = new int[heightInTiles][widthInTiles];
         for (int y = 0; y < heightInTiles; y++) {
             for (int x = 0; x < widthInTiles; x++) {
-                tilemap[y][x] = layers.getInt(y*widthInTiles + x) - 1;
+                tilemap[y][x] = tilesFGData.getInt(y*widthInTiles + x) - 1;
             }
         }
         gridGraph= new MyGridGraph(widthInTiles,heightInTiles,this.tilemap);
+
+        // Create the tileset
         texturePaths = new HashMap<>();
         JsonValue tileset = assets.getEntry("tileset",  JsonValue.class);
         JsonValue tileList = tileset.get("tiles");
         int tileListLength = tileset.getInt("tileCount");
         for (int i= 0; i < tileListLength; i++) {
             JsonValue t = tileList.get(i);
-            TextureRegion tileTexture = new TextureRegion(assets.getEntry("tiles:" + t.getString("image"), Texture.class));
-            texturePaths.put(t.getInt("id"),tileTexture);
+            //Avoiding adding enemies and objects
+            if (!(t.getString("image").substring(0,7).equals("Enemies"))){
+                TextureRegion tileTexture = new TextureRegion(assets.getEntry("tiles:" + t.getString("image"), Texture.class));
+                texturePaths.put(t.getInt("id"),tileTexture);
+            }
         }
 
         for (int[] row : tilemap) {
