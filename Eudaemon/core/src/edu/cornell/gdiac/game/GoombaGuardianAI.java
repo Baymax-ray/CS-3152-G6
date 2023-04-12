@@ -128,17 +128,9 @@ public class GoombaGuardianAI extends AIController{
         if(Math.abs(ex-goal[0])<0.1){this.move=EnemyAction.STAY;}
         else if (ex<goal[0]){
             this.move=EnemyAction.MOVE_RIGHT;
-            if(level.isAirAt(tx+1,ty+1)){
-//                System.out.println("stop!!");
-                this.move=EnemyAction.STAY;
-            }
         }
         else if (ex>goal[0]){
             this.move=EnemyAction.MOVE_LEFT;
-            if(level.isAirAt(tx-1,ty+1)){
-//                System.out.println("stop!!");
-                this.move=EnemyAction.STAY;
-            }
         }
     }
 }
