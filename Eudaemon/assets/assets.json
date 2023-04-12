@@ -218,6 +218,8 @@
         "platform:projectileEnemy": "platform/projectileEnemy.png",
         "platform:setPathFlyingR": "platform/setPathFlyingEnemyRight.png",
         "platform:setPathFlyingL": "platform/setPathFlyingEnemyLeft.png",
+        "platform:fastGoombaL": "platform/fastGoombaL.png",
+        "platform:fastGoombaR": "platform/fastGoombaR.png",
         "platform:rope":  "platform/ropebridge.png",
         "platform:barrier": "platform/barrier.png",
         "platform:bullet":  "platform/bullet.png",

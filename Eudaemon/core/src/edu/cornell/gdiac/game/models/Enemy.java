@@ -112,6 +112,11 @@ public class Enemy extends CapsuleObstacle {
     /** The sprite sheet for the set path flying left fly*/
     private TextureRegion setPathFlyingLeftSpriteSheet;
 
+    /** The sprite sheet for the fast goomba right*/
+    private TextureRegion fastGoombaRightSpriteSheet;
+    /** The sprite sheet for the fast goomba left*/
+    private TextureRegion fastGoombaLeftSpriteSheet;
+
 
     /** The sword killing enemy sound.  We only want to play once. */
     private Sound swordKillingSound;
@@ -218,7 +223,12 @@ public class Enemy extends CapsuleObstacle {
         return setPathFlyingLeftSpriteSheet;
     }
 
-
+    public TextureRegion getFastGoombaRightSpriteSheet() {
+        return fastGoombaRightSpriteSheet;
+    }
+    public TextureRegion getFastGoombaLeftSpriteSheet() {
+        return fastGoombaLeftSpriteSheet;
+    }
 
     public boolean enemyCanGetAttack = false;
 
@@ -342,6 +352,8 @@ public class Enemy extends CapsuleObstacle {
         this.nonTrackingGoombaLeftSpriteSheet = new TextureRegion(assets.getEntry(LeftMoveAsset, Texture.class));
         this.setPathFlyingRightSpriteSheet = new TextureRegion(assets.getEntry(RightMoveAsset, Texture.class));
         this.setPathFlyingLeftSpriteSheet = new TextureRegion(assets.getEntry(LeftMoveAsset, Texture.class));
+        this.fastGoombaLeftSpriteSheet =  new TextureRegion(assets.getEntry(LeftMoveAsset, Texture.class));
+        this.fastGoombaRightSpriteSheet = new TextureRegion(assets.getEntry(RightMoveAsset, Texture.class));
         //Position and Movement. These two values are stored in constants.json
         this.startX = json.getFloat("startX");
         this.startY = json.getFloat("startY");

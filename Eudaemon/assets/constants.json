@@ -66,9 +66,9 @@
         },
         {
           "type":"Fast",
-          "TextureAsset": "platform:pathfindingGoombaR",
-          "RightAsset": "platform:pathfindingGoombaR",
-          "LeftAsset": "platform:pathfindingGoombaL",
+          "TextureAsset": "platform:fastGoombaR",
+          "RightAsset": "platform:fastGoombaR",
+          "LeftAsset": "platform:fastGoombaL",
           "startX": 42,
           "startY": 19
         },
