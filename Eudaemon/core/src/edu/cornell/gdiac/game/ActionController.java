@@ -367,6 +367,7 @@ public class ActionController {
             timer.schedule(new TimerTask() {
                 @Override
                 public void run() {
+                    if(player.isRemoved()) return;
                     player.setPlayerGravity(player.getPlayerGravity());
                 }
             }, player.getDashTime());
