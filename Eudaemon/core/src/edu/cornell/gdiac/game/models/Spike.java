@@ -41,49 +41,10 @@ public class Spike extends CapsuleObstacle {
     /** The physics shape of this object */
     private PolygonShape sensorShape;
 
-    /** The sprite sheet for the basic goomba right walk */
-    private TextureRegion basicGoombaRightSpriteSheet;
-
-    /** The sprite sheet for the basic goomba left walk */
-    private TextureRegion basicGoombaLeftSpriteSheet;
-
-    /** The sword killing enemy sound.  We only want to play once. */
-    private Sound swordKillingSound;
-
-    private long swordKillingSoundId = -1;
     //#endregion
 
     //#region Getter and Setter
     private String getSensorName() {return this.sensorName;}
-
-    /**
-     * Retrieves the blood effect sprite sheet of the object.
-     *
-     * @return The current blood effect sprite sheet.
-     */
-    public TextureRegion getBloodEffect() {
-        return bloodEffectSpriteSheet;
-    }
-
-
-    /**
-     * Get basicGoombaRightSpriteSheet.
-     *
-     * @return The basicGoombaRightSpriteSheet TextureRegion.
-     */
-    public TextureRegion getBasicGoombaRightSpriteSheet() {
-        return basicGoombaRightSpriteSheet;
-    }
-
-    /**
-     * Get basicGoombaLeftSpriteSheet.
-     *
-     * @return The basicGoombaLeftSpriteSheet TextureRegion.
-     */
-    public TextureRegion getBasicGoombaLeftSpriteSheet() {
-        return basicGoombaLeftSpriteSheet;
-    }
-
 
     //#endregion
 
@@ -102,8 +63,6 @@ public class Spike extends CapsuleObstacle {
         this.setHeight(spikeData.getFloat("hitboxHeight"));
         this.attackPower = spikeData.getInt("attackPower");
 
-
-
         //Texture
         this.spikeTexture = new TextureRegion(assets.getEntry(TextureAsset, Texture.class));
         this.texture = this.spikeTexture;
@@ -118,10 +77,6 @@ public class Spike extends CapsuleObstacle {
         this.spikeImageHeight = spikeData.getFloat("ImageHeight");
         //this.scale = new Vector2(spikeData.getFloat("drawScaleX"), spikeData.getFloat("drawScaleY"));
 
-        //Sound Effects
-        this.swordKillingSound =  Gdx.audio.newSound(Gdx.files.internal("audio/temp-sword-killing.mp3"));
-
-        //Sensor. Wtf is this?
         //used for collision detection
         this.sensorName = "SpikeGroundSensor";
 
@@ -158,15 +113,6 @@ public class Spike extends CapsuleObstacle {
         if (!super.activatePhysics(world)) {
             return false;
         }
-
-        // Ground Sensor
-        // -------------
-        // We only allow the dude to jump when he's on the ground.
-        // Double jumping is not allowed.
-        //
-        // To determine whether or not the dude is on the ground,
-        // we create a thin sensor under his feet, which reports
-        // collisions with the world but has no collision response.
         Vector2 sensorCenter = new Vector2(0, -getHeight() / 2);
         FixtureDef sensorDef = new FixtureDef();
         sensorDef.density = spikeData.getFloat("density",0);
@@ -184,19 +130,6 @@ public class Spike extends CapsuleObstacle {
         super.setBodyTypeToStatic();
 
         return true;
-    }
-
-
-
-
-
-
-
-    public long playSound(Sound sound, long soundId, float volume) {
-        if (soundId != -1) {
-            sound.stop( soundId );
-        }
-        return sound.play(volume);
     }
 
 }

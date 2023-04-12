@@ -8,10 +8,10 @@
   ],
   "levels": [
     {
-      "level": "levelDemo",
+      "level": "levelDemo2",
       "tileSize": 1,
-      "cameraWidth": 26.69,
-      "cameraHeight": 15,
+      "cameraWidth": 21.35,
+      "cameraHeight": 12,
       "gravity": -1,
       "player": {
         "startX": 7,
@@ -65,10 +65,10 @@
           "startY": 8
         },
         {
-          "type":"Goomba",
-          "TextureAsset": "platform:pathfindingGoombaR",
-          "RightAsset": "platform:pathfindingGoombaR",
-          "LeftAsset": "platform:pathfindingGoombaL",
+          "type":"Fast",
+          "TextureAsset": "platform:fastGoombaR",
+          "RightAsset": "platform:fastGoombaR",
+          "LeftAsset": "platform:fastGoombaL",
           "startX": 42,
           "startY": 19
         },

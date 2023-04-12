@@ -18,8 +18,8 @@
     "maxSpeed": 5.0,
     "chiyoSpeedMult": 1.5,
     "horizontalAcceleration": 0.5,
-    "maxHearts": 5,
-    "initialHearts": 5,
+    "maxHearts": 3,
+    "initialHearts": 3,
     "maxSpirit": 10,
     "initialSpirit": 0,
     "attackPower": 1,
@@ -124,7 +124,7 @@
     "hitboxHeight": 1.4,
     "maxSpeed": 10,
     "horizontalAcceleration": 0.12,
-    "initialHearts": 1,
+    "initialHearts": 3,
     "attackPower": 1,
     "startsFacingRight": true,
     "dashCooldown": 0.4,
@@ -143,7 +143,9 @@
       "shrink" : 0.6,
       "height" : 0.05
     },
-    "spiritLimitation":8
+    "spiritLimitation":8,
+    "knockbackX":5000,
+    "knockbackY":1000
   },
   "FlyGuardian": {
     "ImageWidth": 1.7,
