@@ -543,6 +543,12 @@
                  "height":25.393939393939,
                  "id":92,
                  "name":"Projectile",
+                 "properties":[
+                        {
+                         "name":"ShootDist",
+                         "type":"int",
+                         "value":20
+                        }],
                  "rotation":0,
                  "type":"Enemy",
                  "visible":true,
@@ -555,6 +561,12 @@
                  "height":25.3939,
                  "id":93,
                  "name":"Projectile",
+                 "properties":[
+                        {
+                         "name":"ShootDist",
+                         "type":"int",
+                         "value":20
+                        }],
                  "rotation":0,
                  "type":"Enemy",
                  "visible":true,
@@ -735,7 +747,7 @@
  "nextobjectid":109,
  "orientation":"orthogonal",
  "renderorder":"right-down",
- "tiledversion":"1.10.1",
+ "tiledversion":"1.10.0",
  "tileheight":32,
  "tilesets":[
         {
