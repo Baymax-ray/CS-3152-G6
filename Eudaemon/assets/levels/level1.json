@@ -210,7 +210,7 @@
                         {
                          "name":"rightX",
                          "type":"int",
-                         "value":14
+                         "value":13
                         }],
                  "rotation":0,
                  "type":"Enemy",
