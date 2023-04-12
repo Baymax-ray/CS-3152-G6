@@ -280,8 +280,8 @@
         "tiles:CorruptedBottomA.png": "tiles/CorruptedBottomA.png",
         "tiles:CorruptedBottomB.png": "tiles/CorruptedBottomB.png",
         "tiles:CorruptedBottomC.png": "tiles/CorruptedBottomC.png",
-        "tiles:CorruptedLeftA.png": "tiles/CorruptedLeftA.png",
-        "tiles:CorruptedRightA.png": "tiles/CorruptedRightA.png",
+        "tiles:CorruptedBottomLeftA.png": "tiles/CorruptedBottomLeftA.png",
+        "tiles:CorruptedBottomRightA.png": "tiles/CorruptedBottomRightA.png",
         "tiles:CorruptedTopA.png": "tiles/CorruptedTopA.png",
         "tiles:CorruptedTopB.png": "tiles/CorruptedTopB.png",
         "tiles:CorruptedTopC.png": "tiles/CorruptedTopC.png",
@@ -303,6 +303,7 @@
         "levelTestBox": "levels/levelTestBox.json",
         "levelDemo": "levels/levelDemo.json",
         "levelDemo2": "levels/levelDemo2.json",
+        "level1": "levels/level1.json",
         "tileset": "EudaemonTileset.json"
     },
     "sounds" : {

@@ -302,43 +302,43 @@
         }, 
         {
          "id":106,
-         "image":"..\/..\/..\/..\/..\/..\/..\/..\/..\/Programming\/School\/CS 3152\/Eudaemon\/CS-3152-G6\/Eudaemon\/assets\/tiles\/CorruptedTopB.png",
+         "image":"CorruptedTopB.png",
          "imageheight":32,
          "imagewidth":32
         }, 
         {
          "id":122,
-         "image":"..\/..\/..\/..\/..\/..\/..\/..\/..\/Programming\/School\/CS 3152\/Eudaemon\/CS-3152-G6\/Eudaemon\/assets\/tiles\/CorruptedTopA.png",
+         "image":"CorruptedTopA.png",
          "imageheight":32,
          "imagewidth":32
         }, 
         {
          "id":107,
-         "image":"..\/..\/..\/..\/..\/..\/..\/..\/..\/Programming\/School\/CS 3152\/Eudaemon\/CS-3152-G6\/Eudaemon\/assets\/tiles\/CorruptedTopC.png",
+         "image":"CorruptedTopC.png",
          "imageheight":32,
          "imagewidth":32
         }, 
         {
          "id":108,
-         "image":"..\/..\/..\/..\/..\/..\/..\/..\/..\/Programming\/School\/CS 3152\/Eudaemon\/CS-3152-G6\/Eudaemon\/assets\/tiles\/CorruptedTopD.png",
+         "image":"CorruptedTopD.png",
          "imageheight":32,
          "imagewidth":32
         }, 
         {
          "id":109,
-         "image":"..\/..\/..\/..\/..\/..\/..\/..\/..\/Programming\/School\/CS 3152\/Eudaemon\/CS-3152-G6\/Eudaemon\/assets\/tiles\/CorruptedTopE.png",
+         "image":"CorruptedTopE.png",
          "imageheight":32,
          "imagewidth":32
         }, 
         {
          "id":118,
-         "image":"..\/..\/..\/..\/..\/..\/..\/..\/..\/Programming\/School\/CS 3152\/Eudaemon\/CS-3152-G6\/Eudaemon\/assets\/tiles\/CorruptedEndLeftA.png",
+         "image":"CorruptedEndLeftA.png",
          "imageheight":32,
          "imagewidth":32
         }, 
         {
          "id":119,
-         "image":"..\/..\/..\/..\/..\/..\/..\/..\/..\/Programming\/School\/CS 3152\/Eudaemon\/CS-3152-G6\/Eudaemon\/assets\/tiles\/CorruptedEndRightA.png",
+         "image":"CorruptedEndRightA.png",
          "imageheight":32,
          "imagewidth":32
         }, 
