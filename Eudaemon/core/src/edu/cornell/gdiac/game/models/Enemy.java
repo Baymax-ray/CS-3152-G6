@@ -7,6 +7,7 @@ import com.badlogic.gdx.math.*;
 import com.badlogic.gdx.graphics.*;
 import com.badlogic.gdx.physics.box2d.*;
 
+import com.badlogic.gdx.utils.Json;
 import com.badlogic.gdx.utils.JsonValue;
 import edu.cornell.gdiac.assets.AssetDirectory;
 import edu.cornell.gdiac.game.*;
@@ -285,55 +286,62 @@ public class Enemy extends CapsuleObstacle {
         this.oyOffset = oyOffset;
     }
 
-    public Enemy(JsonValue json, AssetDirectory assets) {
-        super(json.getFloat("startX"), json.getFloat("startY"),
-                assets.getEntry("sharedConstants", JsonValue.class).get((json.getString("type").equals("Goomba")? "Goomba":"Fly")).getFloat("hitboxWidth"),
-                assets.getEntry("sharedConstants", JsonValue.class).get((json.getString("type").equals("Goomba")? "Goomba":"Fly")).getFloat("hitboxHeight"));
-        String TextureAsset = json.getString("TextureAsset");
-        String RightMoveAsset = json.getString("RightAsset");
-        String LeftMoveAsset = json.getString("LeftAsset");
+    public Enemy(JsonValue json, AssetDirectory assets, float x, float y) {
+//        super(x,y,1f,1.4f);
+        super(x, y,
+                assets.getEntry("sharedConstants", JsonValue.class).get((json.getString("name").equals("Goomba")? "Goomba":"Fly")).getFloat("hitboxWidth"),
+                assets.getEntry("sharedConstants", JsonValue.class).get((json.getString("name").equals("Goomba")? "Goomba":"Fly")).getFloat("hitboxHeight"));
+        this.type=json.getString("name");
+        System.out.println("type: " + type);
+        this.enemyData = assets.getEntry("sharedConstants", JsonValue.class).get(type);
+        String TextureAsset = enemyData.getString("TextureAsset");
+        String RightMoveAsset = enemyData.getString("RightAsset");
+        String LeftMoveAsset = enemyData.getString("LeftAsset");
+
+        //Position and Movement
+        this.startX = x;
+        this.startY = y;
 
         //Query the type of this enemy, then query the corresponding data in enemyConstants.json
-        this.type=json.getString("type");
         this.guardianList=new ArrayList<>();
         switch (this.type) {
             case "Goomba":
-                this.enemyData = assets.getEntry("sharedConstants", JsonValue.class).get("Goomba");
                 break;
             case "Fast":
-                this.enemyData = assets.getEntry("sharedConstants", JsonValue.class).get("Fast");
                 break;
             case "Fly":
-                this.enemyData = assets.getEntry("sharedConstants", JsonValue.class).get("Fly");
                 break;
             case "FlyGuardian":
-                this.enemyData = assets.getEntry("sharedConstants", JsonValue.class).get("FlyGuardian");
                 this.guardianTime = enemyData.getInt("guardianTime");
-                JsonValue glist = json.get("guardianList");
-                for (int i = 0; i < glist.size(); i++) {
-                    this.guardianList.add(glist.getInt(i));
+//                JsonValue glist = json.get("guardianList");
+                ArrayList<Integer> list = new ArrayList<>();
+                list.add(12);
+                list.add(9);
+                list.add(12);
+                list.add(15);
+                for (int i = 0; i < list.size(); i++) {
+                    this.guardianList.add(list.get(i));
                 }
                 break;
             case "GoombaGuardian":
-                this.enemyData = assets.getEntry("sharedConstants", JsonValue.class).get("GoombaGuardian");
                 this.guardianTime = enemyData.getInt("guardianTime");
-                glist = json.get("guardianList");
-                for (int i = 0; i < glist.size(); i++) {
-                    this.guardianList.add(glist.getInt(i));
+//                glist = json.get("guardianList");
+                ArrayList<Integer> list2 = new ArrayList<>();
+                list2.add(9);
+                list2.add(13);
+                for (int i = 0; i < list2.size(); i++) {
+                    this.guardianList.add(list2.get(i));
                 }
                 break;
             case "Projectile":
-                this.enemyData = assets.getEntry("sharedConstants", JsonValue.class).get("Projectile");
                 this.bullet= enemyData.get("bullet");
                 String bulletT=enemyData.getString("BulletTextureAsset");
                 this.bulletTexture = new TextureRegion(assets.getEntry(bulletT, Texture.class));
                 // this enemy should be static and not affected by recoil
                 super.setBodyTypeToStatic();
                 break;
-
             default:
                 //should never reach here
-                this.enemyData = null;
                 throw new IllegalArgumentException("Enemy type does not exist");
         }
         this.setWidth(enemyData.getFloat("hitboxWidth"));
@@ -354,9 +362,6 @@ public class Enemy extends CapsuleObstacle {
         this.setPathFlyingLeftSpriteSheet = new TextureRegion(assets.getEntry(LeftMoveAsset, Texture.class));
         this.fastGoombaLeftSpriteSheet =  new TextureRegion(assets.getEntry(LeftMoveAsset, Texture.class));
         this.fastGoombaRightSpriteSheet = new TextureRegion(assets.getEntry(RightMoveAsset, Texture.class));
-        //Position and Movement. These two values are stored in constants.json
-        this.startX = json.getFloat("startX");
-        this.startY = json.getFloat("startY");
 
         //Size
         this.enemyImageWidth = enemyData.getFloat("ImageWidth");

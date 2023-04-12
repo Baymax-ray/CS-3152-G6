@@ -382,27 +382,41 @@ public class Level {
         this.gravity = json.getFloat("gravity");
         this.background = new TextureRegion(assets.getEntry("background:city", Texture.class));
 
+
+        // Define the world
+        this.world = new World(new Vector2(0, gravity), true);
+
 //        String backgroundAsset = json.getString("backgroundAsset");
 //        this.backgroundTexture = assets.get(backgroundAsset);
 
-        this.world = new World(new Vector2(0, gravity), true);
-        JsonValue playerData = assets.getEntry("sharedConstants", JsonValue.class).get("Player");
-        this.player = new Player(json.get("player"), assets);
-        uiElements = new UIOverlay(playerData, assets);
-
-
+        //#region Enemies and Objects
         this.enemies = new ArrayList<Enemy>();
-        //System.out.println(json.get("enemy").get(0).toString());
-        JsonValue.JsonIterator enemyIterator = json.get("enemy").iterator();
-        while(enemyIterator.hasNext()){
-            enemies.add(new Enemy(enemyIterator.next(), assets));
+        this.spikes = new ArrayList<Spike>();
+        int startX = 0;
+        int startY = 0;
+        JsonValue objectLayer = layerData.get("ObjectLayer");
+        JsonValue objects = objectLayer.get("objects");
+
+        for (JsonValue object : objects) {
+            if (object.getString("type").equals("Enemy")) {
+                float x = (int) (object.getInt("x") / 32);
+                float y = heightInTiles - (int) (object.getInt("y") / 32);
+                enemies.add(new Enemy(object, assets,x,y));
+            }
+            else if (object.getString("name").equals("Spike")) {
+//                spikes.add(new Spike(object, assets));
+            }
+            else if (object.getString("name").equals("StartingPoint")) {
+                startX = (int) (object.getInt("x") / 32);
+                startY = heightInTiles - (int) (object.getInt("y") / 32);
+            }
         }
 
-        this.spikes = new ArrayList<Spike>();
-        JsonValue.JsonIterator spikeIterator = json.get("spike").iterator();
-        while(spikeIterator.hasNext()){
-            spikes.add(new Spike(spikeIterator.next(), assets));
-        }
+        //#endregion
+
+        JsonValue playerData = assets.getEntry("sharedConstants", JsonValue.class).get("Player");
+        this.player = new Player(json.get("player"), assets, startX, startY);
+        uiElements = new UIOverlay(playerData, assets);
 
         // Create the tilemap (background tiles 1)
         JsonValue tilesBG1 = layerData.get("TileLayerBG");

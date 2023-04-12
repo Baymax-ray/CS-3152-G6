@@ -32,51 +32,33 @@
       "enemy":[
         {
           "type":"Fly",
-          "TextureAsset": "platform:setPathFlyingR",
-          "RightAsset": "platform:setPathFlyingR",
-          "LeftAsset": "platform:setPathFlyingL",
           "startX": 11,
           "startY": 8
         },
         {
           "type":"FlyGuardian",
-          "TextureAsset": "platform:worm",
-          "RightAsset": "nonTrackingFlying:rightFly",
-          "LeftAsset": "nonTrackingFlying:leftFly",
           "startX": 11,
           "startY": 9,
           "guardianList":[12,9,12,15]
         },
         {
           "type":"GoombaGuardian",
-          "TextureAsset": "platform:worm",
-          "RightAsset": "nonTrackingGoomba:rightWalk",
-          "LeftAsset": "nonTrackingGoomba:leftWalk",
           "startX": 10,
           "startY": 8,
           "guardianList":[9,13]
         },
         {
           "type":"Projectile",
-          "TextureAsset": "platform:projectileEnemy",
-          "RightAsset": "basicGoomba:rightWalk",
-          "LeftAsset": "basicGoomba:leftWalk",
           "startX": 19,
           "startY": 8
         },
         {
           "type":"Fast",
-          "TextureAsset": "platform:fastGoombaR",
-          "RightAsset": "platform:fastGoombaR",
-          "LeftAsset": "platform:fastGoombaL",
           "startX": 42,
           "startY": 19
         },
         {
           "type":"Goomba",
-          "TextureAsset": "platform:pathfindingGoombaR",
-          "RightAsset": "platform:pathfindingGoombaR",
-          "LeftAsset": "platform:pathfindingGoombaL",
           "startX": 26,
           "startY": 27
         }
