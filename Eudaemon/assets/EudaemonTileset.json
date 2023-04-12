@@ -8,7 +8,7 @@
  "margin":0,
  "name":"Eudaemon Tilleset",
  "spacing":0,
- "tilecount":56,
+ "tilecount":73,
  "tiledversion":"1.10.1",
  "tileheight":86,
  "tiles":[
@@ -297,6 +297,108 @@
         {
          "id":60,
          "image":"BGConcreteF.png",
+         "imageheight":32,
+         "imagewidth":32
+        }, 
+        {
+         "id":106,
+         "image":"..\/..\/..\/..\/..\/..\/..\/..\/..\/Programming\/School\/CS 3152\/Eudaemon\/CS-3152-G6\/Eudaemon\/assets\/tiles\/CorruptedTopB.png",
+         "imageheight":32,
+         "imagewidth":32
+        }, 
+        {
+         "id":122,
+         "image":"..\/..\/..\/..\/..\/..\/..\/..\/..\/Programming\/School\/CS 3152\/Eudaemon\/CS-3152-G6\/Eudaemon\/assets\/tiles\/CorruptedTopA.png",
+         "imageheight":32,
+         "imagewidth":32
+        }, 
+        {
+         "id":107,
+         "image":"..\/..\/..\/..\/..\/..\/..\/..\/..\/Programming\/School\/CS 3152\/Eudaemon\/CS-3152-G6\/Eudaemon\/assets\/tiles\/CorruptedTopC.png",
+         "imageheight":32,
+         "imagewidth":32
+        }, 
+        {
+         "id":108,
+         "image":"..\/..\/..\/..\/..\/..\/..\/..\/..\/Programming\/School\/CS 3152\/Eudaemon\/CS-3152-G6\/Eudaemon\/assets\/tiles\/CorruptedTopD.png",
+         "imageheight":32,
+         "imagewidth":32
+        }, 
+        {
+         "id":109,
+         "image":"..\/..\/..\/..\/..\/..\/..\/..\/..\/Programming\/School\/CS 3152\/Eudaemon\/CS-3152-G6\/Eudaemon\/assets\/tiles\/CorruptedTopE.png",
+         "imageheight":32,
+         "imagewidth":32
+        }, 
+        {
+         "id":118,
+         "image":"..\/..\/..\/..\/..\/..\/..\/..\/..\/Programming\/School\/CS 3152\/Eudaemon\/CS-3152-G6\/Eudaemon\/assets\/tiles\/CorruptedEndLeftA.png",
+         "imageheight":32,
+         "imagewidth":32
+        }, 
+        {
+         "id":119,
+         "image":"..\/..\/..\/..\/..\/..\/..\/..\/..\/Programming\/School\/CS 3152\/Eudaemon\/CS-3152-G6\/Eudaemon\/assets\/tiles\/CorruptedEndRightA.png",
+         "imageheight":32,
+         "imagewidth":32
+        }, 
+        {
+         "id":99,
+         "image":"CorruptedBottomA.png",
+         "imageheight":32,
+         "imagewidth":32
+        }, 
+        {
+         "id":100,
+         "image":"CorruptedBottomB.png",
+         "imageheight":32,
+         "imagewidth":32
+        }, 
+        {
+         "id":101,
+         "image":"CorruptedBottomC.png",
+         "imageheight":32,
+         "imagewidth":32
+        }, 
+        {
+         "id":102,
+         "image":"CorruptedBottomLeftA.png",
+         "imageheight":32,
+         "imagewidth":32
+        }, 
+        {
+         "id":103,
+         "image":"CorruptedBottomRightA.png",
+         "imageheight":32,
+         "imagewidth":32
+        }, 
+        {
+         "id":92,
+         "image":"CorruptedLeftA.png",
+         "imageheight":32,
+         "imagewidth":32
+        }, 
+        {
+         "id":104,
+         "image":"CorruptedDirtA.png",
+         "imageheight":32,
+         "imagewidth":32
+        }, 
+        {
+         "id":105,
+         "image":"CorruptedDirtB.png",
+         "imageheight":32,
+         "imagewidth":32
+        }, 
+        {
+         "id":89,
+         "image":"CorruptedDirtC.png",
+         "imageheight":32,
+         "imagewidth":32
+        }, 
+        {
+         "id":93,
+         "image":"CorruptedRightA.png",
          "imageheight":32,
          "imagewidth":32
         }, 
