@@ -5,6 +5,7 @@ import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.physics.box2d.Filter;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.JsonValue;
 import edu.cornell.gdiac.game.models.*;
@@ -683,6 +684,9 @@ public class ActionController {
         bullet.setTexture(bulletTexture);
         bullet.setBullet(true);
         bullet.setGravityScale(0);
+        Filter f =bullet.getFilterData();
+        f.groupIndex = -1; //cancel its collision with enemy
+        bullet.setFilterData(f);
 
         // Compute position and velocity
         float speed = bulletjv.getFloat( "speed", 0 );
