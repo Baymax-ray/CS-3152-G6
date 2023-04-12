@@ -545,9 +545,9 @@
                  "name":"Projectile",
                  "properties":[
                         {
-                         "name":"ShootDist",
-                         "type":"int",
-                         "value":20
+                         "name":"Direction",
+                         "type":"string",
+                         "value":"Up"
                         }],
                  "rotation":0,
                  "type":"Enemy",
@@ -563,9 +563,9 @@
                  "name":"Projectile",
                  "properties":[
                         {
-                         "name":"ShootDist",
-                         "type":"int",
-                         "value":20
+                         "name":"Direction",
+                         "type":"string",
+                         "value":"Up"
                         }],
                  "rotation":0,
                  "type":"Enemy",
