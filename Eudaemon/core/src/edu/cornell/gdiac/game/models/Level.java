@@ -711,7 +711,7 @@ public class Level {
         }
 
         float camZone_x = 5;
-        float camZone_y = 5;
+        float camZone_y = 3;
 
 //        System.out.println("camera: "+canvas.getCamera().position.x+" "+canvas.getCamera().position.y);
 //        System.out.println("player: "+player.getX()+" "+player.getY());
