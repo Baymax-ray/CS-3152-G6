@@ -292,7 +292,6 @@ public class Enemy extends CapsuleObstacle {
                 assets.getEntry("sharedConstants", JsonValue.class).get((json.getString("name").equals("Goomba")? "Goomba":"Fly")).getFloat("hitboxWidth"),
                 assets.getEntry("sharedConstants", JsonValue.class).get((json.getString("name").equals("Goomba")? "Goomba":"Fly")).getFloat("hitboxHeight"));
         this.type=json.getString("name");
-        System.out.println("type: " + type);
         this.enemyData = assets.getEntry("sharedConstants", JsonValue.class).get(type);
         String TextureAsset = enemyData.getString("TextureAsset");
         String RightMoveAsset = enemyData.getString("RightAsset");
@@ -314,21 +313,39 @@ public class Enemy extends CapsuleObstacle {
             case "FlyGuardian":
                 this.guardianTime = enemyData.getInt("guardianTime");
 //                JsonValue glist = json.get("guardianList");
-                ArrayList<Integer> list = new ArrayList<>();
-                list.add(12);
-                list.add(9);
-                list.add(12);
-                list.add(15);
-                for (int i = 0; i < list.size(); i++) {
-                    this.guardianList.add(list.get(i));
+                JsonValue properties1 = json.get("properties");
+                Boolean vertMove = false;
+                int distMove = 0;
+                for (JsonValue property : properties1) {
+                    if (property.getString("name").equals("VertMove")){
+                        vertMove = property.getBoolean("value");
+                    }
+                    else if (property.getString("name").equals("DistMove")){
+                        distMove = property.getInt("value");
+                    }
                 }
+                if (vertMove){
+                    this.guardianList.add((int)x);
+                    this.guardianList.add((int)y+distMove);
+                    this.guardianList.add((int)x);
+                    this.guardianList.add((int)y-distMove);
+                }
+                else{
+                    this.guardianList.add((int)x+distMove);
+                    this.guardianList.add((int)y);
+                    this.guardianList.add((int)x-distMove);
+                    this.guardianList.add((int)y);
+                }
+
                 break;
             case "GoombaGuardian":
                 this.guardianTime = enemyData.getInt("guardianTime");
 //                glist = json.get("guardianList");
                 ArrayList<Integer> list2 = new ArrayList<>();
-                list2.add(9);
-                list2.add(13);
+                JsonValue properties = json.get("properties");
+                for (JsonValue property : properties) {
+                    list2.add(property.getInt("value"));
+                }
                 for (int i = 0; i < list2.size(); i++) {
                     this.guardianList.add(list2.get(i));
                 }

@@ -28,41 +28,6 @@
           "startX": 9.5,
           "startY": 14.2
         }
-      ],
-      "enemy":[
-        {
-          "type":"Fly",
-          "startX": 11,
-          "startY": 8
-        },
-        {
-          "type":"FlyGuardian",
-          "startX": 11,
-          "startY": 9,
-          "guardianList":[12,9,12,15]
-        },
-        {
-          "type":"GoombaGuardian",
-          "startX": 10,
-          "startY": 8,
-          "guardianList":[9,13]
-        },
-        {
-          "type":"Projectile",
-          "startX": 19,
-          "startY": 8
-        },
-        {
-          "type":"Fast",
-          "startX": 42,
-          "startY": 19
-        },
-        {
-          "type":"Goomba",
-          "startX": 26,
-          "startY": 27
-        }
-        
       ]
     }
   ]

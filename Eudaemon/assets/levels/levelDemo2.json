@@ -46,7 +46,7 @@
          "height":40,
          "id":10,
          "name":"TileLayerBG2",
-         "opacity":0.55,
+         "opacity":0.71,
          "type":"tilelayer",
          "visible":true,
          "width":50,
@@ -97,7 +97,7 @@
          "height":40,
          "id":8,
          "name":"TileLayerBG",
-         "opacity":0.47,
+         "opacity":0.54,
          "type":"tilelayer",
          "visible":true,
          "width":50,
@@ -193,7 +193,7 @@
                  "type":"Enemy",
                  "visible":true,
                  "width":35,
-                 "x":1375.66666666667,
+                 "x":1375.67,
                  "y":737
                 }, 
                 {
@@ -225,7 +225,7 @@
                  "id":10,
                  "name":"Projectile",
                  "rotation":0,
-                 "type":"enemy",
+                 "type":"Enemy",
                  "visible":true,
                  "width":33.9394,
                  "x":1119.92,
@@ -380,60 +380,92 @@
                  "height":29.3333,
                  "id":36,
                  "name":"FlyGuardian",
+                 "properties":[
+                        {
+                         "name":"DistMove",
+                         "type":"int",
+                         "value":3
+                        }, 
+                        {
+                         "name":"VertMove",
+                         "type":"bool",
+                         "value":true
+                        }],
                  "rotation":0,
                  "type":"Enemy",
                  "visible":true,
                  "width":32,
-                 "x":702.667,
-                 "y":836
+                 "x":705.333666666667,
+                 "y":830.666666666667
                 }, 
                 {
-                 "gid":89,
-                 "height":32,
-                 "id":37,
-                 "name":"Fly",
+                 "gid":81,
+                 "height":29.3333,
+                 "id":44,
+                 "name":"FlyGuardian",
+                 "properties":[
+                        {
+                         "name":"DistMove",
+                         "type":"int",
+                         "value":2
+                        }, 
+                        {
+                         "name":"VertMove",
+                         "type":"bool",
+                         "value":true
+                        }],
                  "rotation":0,
                  "type":"Enemy",
                  "visible":true,
                  "width":32,
-                 "x":896,
-                 "y":897.333
+                 "x":382.666666666667,
+                 "y":478.666683333333
                 }, 
                 {
-                 "gid":89,
-                 "height":32,
-                 "id":38,
-                 "name":"Fly",
+                 "gid":81,
+                 "height":29.3333,
+                 "id":45,
+                 "name":"FlyGuardian",
+                 "properties":[
+                        {
+                         "name":"DistMove",
+                         "type":"int",
+                         "value":2
+                        }, 
+                        {
+                         "name":"VertMove",
+                         "type":"bool",
+                         "value":true
+                        }],
                  "rotation":0,
                  "type":"Enemy",
                  "visible":true,
                  "width":32,
-                 "x":578.667,
-                 "y":544
+                 "x":769.333333333333,
+                 "y":322.666683333333
                 }, 
                 {
-                 "gid":89,
-                 "height":32,
-                 "id":39,
-                 "name":"Fly",
+                 "gid":81,
+                 "height":29.3333,
+                 "id":46,
+                 "name":"FlyGuardian",
+                 "properties":[
+                        {
+                         "name":"DistMove",
+                         "type":"int",
+                         "value":2
+                        }, 
+                        {
+                         "name":"VertMove",
+                         "type":"bool",
+                         "value":true
+                        }],
                  "rotation":0,
                  "type":"Enemy",
                  "visible":true,
                  "width":32,
-                 "x":894.667,
-                 "y":188
-                }, 
-                {
-                 "gid":89,
-                 "height":32,
-                 "id":40,
-                 "name":"Fly",
-                 "rotation":0,
-                 "type":"Enemy",
-                 "visible":true,
-                 "width":32,
-                 "x":348,
-                 "y":252
+                 "x":1282.66666666667,
+                 "y":384.000016666667
                 }],
          "opacity":1,
          "type":"objectgroup",
@@ -442,7 +474,7 @@
          "y":0
         }],
  "nextlayerid":11,
- "nextobjectid":41,
+ "nextobjectid":47,
  "orientation":"orthogonal",
  "renderorder":"right-down",
  "tiledversion":"1.10.1",
