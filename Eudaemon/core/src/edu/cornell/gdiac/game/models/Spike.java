@@ -41,6 +41,8 @@ public class Spike extends BoxObstacle {
     /** The physics shape of this object */
     private PolygonShape sensorShape;
 
+    private float rotationAngle;
+
     //#endregion
 
     //#region Getter and Setter
@@ -80,6 +82,24 @@ public class Spike extends BoxObstacle {
         //used for collision detection
         this.sensorName = "SpikeGroundSensor";
 
+        JsonValue properties = json.get("properties");
+
+        for (JsonValue property : properties) {
+            if (property.getString("name").equals("Direction")) {
+                switch (property.getString("value")) {
+                    case "Up":
+                        this.rotationAngle = 0;
+                        System.out.println("up");
+                        break;
+                    case "Left":
+                        this.rotationAngle = (float) (Math.PI/2);
+                        System.out.println("left");
+                    default:
+                        System.out.println("something wrong");
+                }
+            }
+        }
+
     }
 
     /**
@@ -97,7 +117,7 @@ public class Spike extends BoxObstacle {
         float sx = 1.97f * spikeImageWidth / this.texture.getRegionWidth();
         float sy = 1.97f * spikeImageHeight / this.texture.getRegionHeight();
 
-        canvas.draw(this.texture, Color.WHITE, ox, oy, x, y, 0, sx, sy);
+        canvas.draw(this.texture, Color.WHITE, ox, oy, x, y, rotationAngle, sx, sy);
     }
 
 
