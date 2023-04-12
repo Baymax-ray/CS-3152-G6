@@ -362,9 +362,11 @@ public class Level {
         int tileListLength = tileset.getInt("tileCount");
         for (int i= 0; i < tileListLength; i++) {
             JsonValue t = tileList.get(i);
+            String name = tileList.get(i).getString("image").substring(6);
+            System.out.println(name);
             //Avoiding adding enemies and objects
-            if (!(t.getString("image").substring(0,7).equals("Enemies"))){
-                TextureRegion tileTexture = new TextureRegion(assets.getEntry("tiles:" + t.getString("image"), Texture.class));
+            if (!(name.substring(0,7).equals("Enemies"))){
+                TextureRegion tileTexture = new TextureRegion(assets.getEntry("tiles:" + name, Texture.class));
                 texturePaths.put(t.getInt("id"),tileTexture);
             }
         }
