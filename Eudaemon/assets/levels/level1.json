@@ -692,6 +692,18 @@
                  "width":25.2095422308191,
                  "x":1189.20051579626,
                  "y":1087.48742746615
+                }, 
+                {
+                 "gid":86,
+                 "height":25.3939,
+                 "id":93,
+                 "name":"Projectile",
+                 "rotation":0,
+                 "type":"Enemy",
+                 "visible":true,
+                 "width":25.2095,
+                 "x":353.922287319116,
+                 "y":829.839226694593
                 }],
          "opacity":1,
          "type":"objectgroup",
@@ -700,7 +712,7 @@
          "y":0
         }],
  "nextlayerid":11,
- "nextobjectid":93,
+ "nextobjectid":94,
  "orientation":"orthogonal",
  "renderorder":"right-down",
  "tiledversion":"1.10.0",

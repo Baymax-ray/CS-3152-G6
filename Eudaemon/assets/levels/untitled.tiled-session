@@ -13,11 +13,11 @@
             "scaleInEditor": 1
         },
         "level1.json": {
-            "scale": 0.65,
-            "selectedLayer": 0,
+            "scale": 0.53,
+            "selectedLayer": 3,
             "viewCenter": {
-                "x": 339.23076923076917,
-                "y": 1055.3846153846152
+                "x": 699.0566037735849,
+                "y": 762.2641509433961
             }
         }
     },
@@ -29,8 +29,8 @@
     ],
     "project": "untitled.tiled-project",
     "recentFiles": [
-        "/Users/neelin2/coding/cs3152/Eudaemon/CS-3152-G6/Eudaemon/assets/EudaemonTileset.json",
-        "level1.json"
+        "level1.json",
+        "/Users/neelin2/coding/cs3152/Eudaemon/CS-3152-G6/Eudaemon/assets/EudaemonTileset.json"
     ],
     "tileset.lastUsedFilter": "JSON tileset files (*.tsj *.json)"
 }
