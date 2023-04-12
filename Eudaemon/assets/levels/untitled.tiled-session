@@ -26,11 +26,11 @@
             "expandedObjectLayers": [
                 7
             ],
-            "scale": 0.8221,
-            "selectedLayer": 2,
+            "scale": 0.9441,
+            "selectedLayer": 3,
             "viewCenter": {
-                "x": 535.822892592142,
-                "y": 700.6446904269553
+                "x": 666.7725876496133,
+                "y": 904.5651943650037
             }
         },
         "level0.tmj": {
@@ -48,8 +48,8 @@
             "scale": 0.6876,
             "selectedLayer": 3,
             "viewCenter": {
-                "x": 592.6410703897615,
-                "y": 791.1576497963933
+                "x": 1385.2530541012218,
+                "y": 759.1623036649215
             }
         }
     },
@@ -65,6 +65,7 @@
         "level0.json"
     ],
     "project": "untitled.tiled-project",
+    "property.type": "int",
     "recentFiles": [
         "F:/Programming/School/CS 3152/Eudaemon/CS-3152-G6/Eudaemon/assets/EudaemonTileset.json",
         "level1.json",
