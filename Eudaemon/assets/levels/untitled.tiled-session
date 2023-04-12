@@ -1,0 +1,27 @@
+{
+    "activeFile": "",
+    "expandedProjectPaths": [
+    ],
+    "fileStates": {
+        "/Users/neelin2/coding/cs3152/Eudaemon/CS-3152-G6/Eudaemon/assets/Assets/Tiles/EudaemonTileset.json": {
+            "scaleInDock": 1
+        },
+        "level1.json": {
+            "scale": 0.6502,
+            "selectedLayer": 2,
+            "viewCenter": {
+                "x": 560.5967394647801,
+                "y": 767.4561673331283
+            }
+        }
+    },
+    "last.externalTilesetPath": "/Users/neelin2/coding/cs3152/Eudaemon/CS-3152-G6/Eudaemon/assets",
+    "last.imagePath": "/Users/neelin2/coding/cs3152/Eudaemon/CS-3152-G6/Eudaemon/assets/tiles/EnemiesObjects",
+    "openFiles": [
+    ],
+    "project": "untitled.tiled-project",
+    "recentFiles": [
+        "level1.json"
+    ],
+    "tileset.lastUsedFilter": "JSON tileset files (*.tsj *.json)"
+}
