@@ -411,7 +411,7 @@ public class Level {
                 spikes.add(new Spike(object, assets,x,y));
             }
             else if (object.getString("name").equals("StartingPoint")) {
-                startX = (int) (object.getInt("x") / 32);
+                startX = (int) (object.getInt("x") / 32) + 1;
                 startY = heightInTiles - (int) (object.getInt("y") / 32);
             }
         }

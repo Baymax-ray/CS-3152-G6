@@ -47,7 +47,8 @@ public class GameState {
 
         bindings = new ActionBindings(assets.getEntry("inputMappings", JsonValue.class));
 
-        JsonValue levelJson = assets.getEntry("levelTest",  JsonValue.class);
+        String levelName = constants.get("levels").get(0).getString("level");
+        JsonValue levelJson = assets.getEntry(levelName,  JsonValue.class);
 //        int numTiles = levelJson.getInt("height") * levelJson.getInt("width") ; // bugging for height
         int numTiles = 20 * levelJson.getInt("width") ;
         tiles = new Tile[numTiles];

@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<template>
+ <tileset firstgid="1" source="../../EudaemonTileset.json"/>
+ <object name="Fly" type="Enemy" gid="89" width="28.6875" height="29.25"/>
+</template>
