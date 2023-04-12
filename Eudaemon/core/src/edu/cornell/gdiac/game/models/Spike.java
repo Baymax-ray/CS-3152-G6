@@ -15,7 +15,7 @@ import edu.cornell.gdiac.game.obstacle.*;
 
 import java.util.ArrayList;
 
-public class Spike extends CapsuleObstacle {
+public class Spike extends BoxObstacle {
     //#region FINAL FIELDS
     private final float startX;
     private final float startY;
@@ -52,8 +52,8 @@ public class Spike extends CapsuleObstacle {
 
 
 
-    public Spike(JsonValue json, AssetDirectory assets) {
-        super(json.getFloat("startX"), json.getFloat("startY"),
+    public Spike(JsonValue json, AssetDirectory assets, float x, float y) {
+        super(x + 0.5f, y - 0.9f,
                 assets.getEntry("sharedConstants", JsonValue.class).get("Spike").getFloat("hitboxWidth"),
                 assets.getEntry("sharedConstants", JsonValue.class).get("Spike").getFloat("hitboxHeight"));
         String TextureAsset = "platform:spike";
@@ -69,8 +69,8 @@ public class Spike extends CapsuleObstacle {
         this.bloodEffectSpriteSheet = new TextureRegion(assets.getEntry( "bloodEffect", Texture.class));
 
         //Position and Movement. These two values are stored in constants.json
-        this.startX = json.getFloat("startX");
-        this.startY = json.getFloat("startY");
+        this.startX = x + 0.5f;
+        this.startY = y - 0.9f;
 
         //Size
         this.spikeImageWidth = spikeData.getFloat("ImageWidth");
@@ -89,13 +89,13 @@ public class Spike extends CapsuleObstacle {
      */
     public void draw(GameCanvas canvas) {
         float x = getX();
-        float y = getY();
+        float y = getY() + 0.39f;
 
         float ox = this.texture.getRegionWidth()/2;
         float oy = this.texture.getRegionHeight()/2;
 
-        float sx = spikeImageWidth / this.texture.getRegionWidth();
-        float sy = spikeImageHeight / this.texture.getRegionHeight();
+        float sx = 1.97f * spikeImageWidth / this.texture.getRegionWidth();
+        float sy = 1.97f * spikeImageHeight / this.texture.getRegionHeight();
 
         canvas.draw(this.texture, Color.WHITE, ox, oy, x, y, 0, sx, sy);
     }
@@ -127,7 +127,8 @@ public class Spike extends CapsuleObstacle {
         Fixture sensorFixture = body.createFixture( sensorDef );
         sensorFixture.setUserData(getSensorName());
 
-        super.setBodyTypeToStatic();
+        super.body.setType(BodyType.StaticBody);
+//        super.setBodyTypeToStatic();
 
         return true;
     }

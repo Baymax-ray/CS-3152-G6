@@ -404,7 +404,9 @@ public class Level {
                 enemies.add(new Enemy(object, assets,x,y));
             }
             else if (object.getString("name").equals("Spike")) {
-//                spikes.add(new Spike(object, assets));
+                float x = (int) (object.getInt("x") / 32);
+                float y = heightInTiles - (int) (object.getInt("y") / 32);
+                spikes.add(new Spike(object, assets,x,y));
             }
             else if (object.getString("name").equals("StartingPoint")) {
                 startX = (int) (object.getInt("x") / 32);

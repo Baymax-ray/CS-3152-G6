@@ -52,7 +52,7 @@
     "attack_dist": 2,
     "downwardAttackPropelX": 10,
     "downwardAttackPropelY": 10,
-    "iFrames": 100,
+    "iFrames": 50,
     "knockbackX":10,
     "knockbackY":5,
     "sensor": {
@@ -263,8 +263,8 @@
   "Spike": {
     "ImageWidth": 0.5,
     "ImageHeight": 0.5,
-    "hitboxWidth": 0.5,
-    "hitboxHeight": 0.6,
+    "hitboxWidth": 1.0,
+    "hitboxHeight": 0.24,
     "drawScaleX": 32,
     "drawScaleY": 32,
     "attackPower": 1,

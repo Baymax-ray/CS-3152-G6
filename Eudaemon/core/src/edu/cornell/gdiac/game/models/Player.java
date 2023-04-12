@@ -1156,7 +1156,7 @@ public class Player extends CapsuleObstacle {
                         direction = ((SwordWheelObstacle) hitter).getX() - this.getX() >=0? -1:1;break;
                     case 4: //spike
                         direction = isFacingRight? -0.4f : 0.4f;
-                        spikeKnockBackVerticalMult = 1.6f;
+                        spikeKnockBackVerticalMult = 2.0f;
                         break;
                     default:
                         direction = isFacingRight? -1: 1;
