@@ -576,7 +576,6 @@ public class ActionController {
      *                     the actions of one enemy
      */
     public void resolveEnemyActions(Array<EnumSet<EnemyAction>> enemyActions) {
-        // TODO: 2023/3/19
         for (int i = 0; i < enemies.length; i++) {
             EnumSet<EnemyAction> enemyAction = enemyActions.get(i);
             Enemy enemy = enemies[i];

@@ -434,7 +434,6 @@ public class Enemy extends CapsuleObstacle {
 
 
     /**
-     * TODO: change this function to cater for Flying Enemy!
      * Creates the physics Body(s) for this object, adding them to the world.
      * This method overrides the base method to keep your ship from spinning.
      * @param world Box2D world to store body
@@ -510,7 +509,6 @@ public class Enemy extends CapsuleObstacle {
     public void hitBySword(Player player) {
         hearts--;
         if(hearts > 0){
-            System.out.println("not died yet!");
             float direction = player.getX() - this.getX() > 0? -1: 1;
             Vector2 knockback = new Vector2(direction* enemyData.getFloat("knockbackX"),
                     enemyData.getFloat("knockbackY"));

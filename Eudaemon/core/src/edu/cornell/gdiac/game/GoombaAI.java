@@ -119,7 +119,6 @@ public class GoombaAI extends AIController{
                 }
                 break;
             case ATTACK:
-                //TODO: is this already handled by the HandleSpirit() in Level.java?
                 break;
         }
 
