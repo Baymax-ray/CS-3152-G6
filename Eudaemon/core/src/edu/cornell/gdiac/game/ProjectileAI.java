@@ -14,7 +14,7 @@ public class ProjectileAI extends AIController{
     private Level.MyGridGraph graph;
     private int ticks=0;
     private Vector2 v;
-    private static final int detectDistance=8;
+    private int detectDistance;
 
 
     private enum FSMState {
@@ -33,6 +33,7 @@ public class ProjectileAI extends AIController{
         Level.MyGridGraph graph=Level.getGridGraph();
         this.graph=graph;
         this.CoolDown= enemy.getAttackCooldown();
+        this.detectDistance= enemy.getDetectDistance();
     }
     /** In this special case, it return the velocity of the bullet instead of the enemy*/
     @Override
