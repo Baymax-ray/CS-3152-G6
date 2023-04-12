@@ -230,7 +230,7 @@
     "ImageWidth": 1,
     "ImageHeight": 1.3,
     "hitboxWidth": 0.5,
-    "hitboxHeight": 0.6,
+    "hitboxHeight": 0.8,
     "maxSpeed": 1,
     "horizontalAcceleration": 0.12,
     "initialHearts": 1,
@@ -254,6 +254,7 @@
     },
     "spiritLimitation":8,
     "BulletTextureAsset": "platform:bullet",
+    "detectDistance":8,
     "bullet": {
     	"offset" : 0.2,
     	"speed"  : 10.0,

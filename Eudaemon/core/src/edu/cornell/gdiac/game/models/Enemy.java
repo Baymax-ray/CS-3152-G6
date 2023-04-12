@@ -16,10 +16,13 @@ import edu.cornell.gdiac.game.obstacle.*;
 import java.util.ArrayList;
 
 public class Enemy extends CapsuleObstacle {
+    private int detectDistance;
     private float spiritRemain;
     private float velocityH;
-    private float velocityV =0;
-    /** Cache for internal force calculations */
+    private float velocityV = 0;
+    /**
+     * Cache for internal force calculations
+     */
     private Vector2 forceCache = new Vector2();
 
     //#region FINAL FIELDS
@@ -44,10 +47,14 @@ public class Enemy extends CapsuleObstacle {
      */
     private final Vector2 scale;
 
-    /** The amount to slow the character down */
+    /**
+     * The amount to slow the character down
+     */
     private final float damping;
 
-    /** The factor to multiply to the movement */
+    /**
+     * The factor to multiply to the movement
+     */
     private final float force;
 
     //#endregion
@@ -58,27 +65,33 @@ public class Enemy extends CapsuleObstacle {
 
     private final TextureRegion enemyTexture;
 
-    /** The texture for the enemy's blood */
+    /**
+     * The texture for the enemy's blood
+     */
     private final TextureRegion bloodEffectSpriteSheet;
     //#endregion
     private final float enemyImageWidth;
     private final float enemyImageHeight;
-    /** Identifier to allow us to track the sensor in ContactListener */
+    /**
+     * Identifier to allow us to track the sensor in ContactListener
+     */
     private final String sensorName;
 
-    /**the type of this enemy. currently: goombaAI or fly.*/
+    /**
+     * the type of this enemy. currently: goombaAI or fly.
+     */
     private final String type;
     private final JsonValue enemyData;
     /**
      * The maximum speed that the object can reach.
      */
     private final float maxSpeed;
-    private final float goombaSpeedCoefficient=0.2f;
+    private final float goombaSpeedCoefficient = 0.2f;
     private final boolean isHit;
     private final boolean isGrounded;
 
     //#region NON-FINAL FIELDS
-    private int guardianTime =0;
+    private int guardianTime = 0;
     private ArrayList<Integer> guardianList;
     private float hearts;
     private boolean isFacingRight;
@@ -91,53 +104,93 @@ public class Enemy extends CapsuleObstacle {
      * The offset value along the y-axis.
      */
     private float oyOffset;
-    /** The physics shape of this object */
+    /**
+     * The physics shape of this object
+     */
     private PolygonShape sensorShape;
 
-    /** The sprite sheet for the basic goomba right walk */
+    /**
+     * The sprite sheet for the basic goomba right walk
+     */
     private TextureRegion basicGoombaRightSpriteSheet;
 
-    /** The sprite sheet for the basic goomba left walk */
+    /**
+     * The sprite sheet for the basic goomba left walk
+     */
     private TextureRegion basicGoombaLeftSpriteSheet;
 
-    /** The sprite sheet for the non tracking flying right fly */
+    /**
+     * The sprite sheet for the non tracking flying right fly
+     */
     private TextureRegion nonTrackingFlyingRightSpriteSheet;
-    /** The sprite sheet for the non tracking flying left fly */
+    /**
+     * The sprite sheet for the non tracking flying left fly
+     */
     private TextureRegion nonTrackingFlyingLeftSpriteSheet;
-    /** The sprite sheet for the non tracking goomba right walk*/
+    /**
+     * The sprite sheet for the non tracking goomba right walk
+     */
     private TextureRegion nonTrackingGoombaRightSpriteSheet;
-    /** The sprite sheet for the non tracking goomba left walk */
+    /**
+     * The sprite sheet for the non tracking goomba left walk
+     */
     private TextureRegion nonTrackingGoombaLeftSpriteSheet;
-    /** The sprite sheet for the set path flying right fly*/
+    /**
+     * The sprite sheet for the set path flying right fly
+     */
     private TextureRegion setPathFlyingRightSpriteSheet;
-    /** The sprite sheet for the set path flying left fly*/
+    /**
+     * The sprite sheet for the set path flying left fly
+     */
     private TextureRegion setPathFlyingLeftSpriteSheet;
 
-    /** The sprite sheet for the fast goomba right*/
+    /**
+     * The sprite sheet for the fast goomba right
+     */
     private TextureRegion fastGoombaRightSpriteSheet;
-    /** The sprite sheet for the fast goomba left*/
+    /**
+     * The sprite sheet for the fast goomba left
+     */
     private TextureRegion fastGoombaLeftSpriteSheet;
 
 
-    /** The sword killing enemy sound.  We only want to play once. */
+    /**
+     * The sword killing enemy sound.  We only want to play once.
+     */
     private Sound swordKillingSound;
     private long swordKillingSoundId = -1;
     private JsonValue bullet;
     //#endregion
 
     //#region Getter and Setter
-    public int getGuardianTime(){return guardianTime;}
-    public ArrayList<Integer> getGuardianList(){return guardianList;}
+    public int getDetectDistance() {
+        return detectDistance;
+    }
+
+    public int getGuardianTime() {
+        return guardianTime;
+    }
+
+    public ArrayList<Integer> getGuardianList() {
+        return guardianList;
+    }
+
     public String getType() {
         return type;
     }
-    private String getSensorName() {return this.sensorName;}
+
+    private String getSensorName() {
+        return this.sensorName;
+    }
+
     public float getSpiritRemain() {
         return spiritRemain;
     }
-    public void LossSpirit(float rate){
-        this.spiritRemain -=rate;
+
+    public void LossSpirit(float rate) {
+        this.spiritRemain -= rate;
     }
+
     /**
      * Retrieves the blood effect sprite sheet of the object.
      *
@@ -146,12 +199,13 @@ public class Enemy extends CapsuleObstacle {
     public TextureRegion getBloodEffect() {
         return bloodEffectSpriteSheet;
     }
+
     /**
      * Returns whether enemy is facing right or not
      *
      * @return isFacingRight.
      */
-    public boolean getIsFacingRight(){
+    public boolean getIsFacingRight() {
         return isFacingRight;
     }
 
@@ -181,6 +235,7 @@ public class Enemy extends CapsuleObstacle {
     public TextureRegion getNonTrackingFlyingRightSpriteSheet() {
         return nonTrackingFlyingRightSpriteSheet;
     }
+
     /**
      * Get nonTrackingFlyingLeft sprite sheet.
      *
@@ -198,6 +253,7 @@ public class Enemy extends CapsuleObstacle {
     public TextureRegion getNonTrackingGoombaRightSpriteSheet() {
         return nonTrackingGoombaRightSpriteSheet;
     }
+
     /**
      * Get nonTrackingGoombaLeft sprite sheet.
      *
@@ -215,6 +271,7 @@ public class Enemy extends CapsuleObstacle {
     public TextureRegion getSetPathFlyingRightSpriteSheet() {
         return setPathFlyingRightSpriteSheet;
     }
+
     /**
      * Get setPathFlyingLeft sprite sheet.
      *
@@ -227,6 +284,7 @@ public class Enemy extends CapsuleObstacle {
     public TextureRegion getFastGoombaRightSpriteSheet() {
         return fastGoombaRightSpriteSheet;
     }
+
     public TextureRegion getFastGoombaLeftSpriteSheet() {
         return fastGoombaLeftSpriteSheet;
     }
@@ -237,12 +295,13 @@ public class Enemy extends CapsuleObstacle {
 
     /**
      * normalize the vector and apply it to velocity
+     *
      * @param v un-normalized vector
      */
-    public void  setVelocity(Vector2 v){
-        double m=Math.sqrt(v.x*v.x+v.y*v.y);
-        velocityH= (float) (v.x/m);
-        velocityV= (float) (v.y/m);
+    public void setVelocity(Vector2 v) {
+        double m = Math.sqrt(v.x * v.x + v.y * v.y);
+        velocityH = (float) (v.x / m);
+        velocityV = (float) (v.y / m);
         if (velocityH < 0) {
             isFacingRight = false;
         } else if (velocityH > 0) {
@@ -251,15 +310,16 @@ public class Enemy extends CapsuleObstacle {
     }
 
     public void setMovement(EnemyAction move) {
-        if (move==EnemyAction.MOVE_RIGHT){
-            velocityH =1*goombaSpeedCoefficient;
-            velocityV =0;}
-        else if (move==EnemyAction.MOVE_LEFT){
-            velocityH =-1*goombaSpeedCoefficient;
-            velocityV =0;}
-        else if (move == EnemyAction.STAY){
+        if (move == EnemyAction.MOVE_RIGHT) {
+            velocityH = 1 * goombaSpeedCoefficient;
+            velocityV = 0;
+        } else if (move == EnemyAction.MOVE_LEFT) {
+            velocityH = -1 * goombaSpeedCoefficient;
+            velocityV = 0;
+        } else if (move == EnemyAction.STAY) {
             velocityH = 0;
-            velocityV =0;}
+            velocityV = 0;
+        }
 
         velocityV *= this.force;
         velocityH *= this.force;
@@ -270,13 +330,27 @@ public class Enemy extends CapsuleObstacle {
             isFacingRight = true;
         }
     }
-    public float getVelocityH(){return velocityH;}
-    public float getVelocityV(){return velocityV;}
-    public int getAttackCooldown(){return attackCooldown;}
-    public JsonValue getBullet(){return this.bullet;}
+
+    public float getVelocityH() {
+        return velocityH;
+    }
+
+    public float getVelocityV() {
+        return velocityV;
+    }
+
+    public int getAttackCooldown() {
+        return attackCooldown;
+    }
+
+    public JsonValue getBullet() {
+        return this.bullet;
+    }
+
     public TextureRegion getBulletTexture() {
         return bulletTexture;
     }
+
     /**
      * Set the y-axis offset value.
      *
@@ -289,9 +363,9 @@ public class Enemy extends CapsuleObstacle {
     public Enemy(JsonValue json, AssetDirectory assets, float x, float y) {
 //        super(x,y,1f,1.4f);
         super(x, y,
-                assets.getEntry("sharedConstants", JsonValue.class).get((json.getString("name").equals("Goomba")? "Goomba":"Fly")).getFloat("hitboxWidth"),
-                assets.getEntry("sharedConstants", JsonValue.class).get((json.getString("name").equals("Goomba")? "Goomba":"Fly")).getFloat("hitboxHeight"));
-        this.type=json.getString("name");
+                assets.getEntry("sharedConstants", JsonValue.class).get((json.getString("name").equals("Goomba") ? "Goomba" : "Fly")).getFloat("hitboxWidth"),
+                assets.getEntry("sharedConstants", JsonValue.class).get((json.getString("name").equals("Goomba") ? "Goomba" : "Fly")).getFloat("hitboxHeight"));
+        this.type = json.getString("name");
         this.enemyData = assets.getEntry("sharedConstants", JsonValue.class).get(type);
         String TextureAsset = enemyData.getString("TextureAsset");
         String RightMoveAsset = enemyData.getString("RightAsset");
@@ -302,7 +376,7 @@ public class Enemy extends CapsuleObstacle {
         this.startY = y;
 
         //Query the type of this enemy, then query the corresponding data in enemyConstants.json
-        this.guardianList=new ArrayList<>();
+        this.guardianList = new ArrayList<>();
         switch (this.type) {
             case "Goomba":
                 break;
@@ -317,24 +391,22 @@ public class Enemy extends CapsuleObstacle {
                 Boolean vertMove = false;
                 int distMove = 0;
                 for (JsonValue property : properties1) {
-                    if (property.getString("name").equals("VertMove")){
+                    if (property.getString("name").equals("VertMove")) {
                         vertMove = property.getBoolean("value");
-                    }
-                    else if (property.getString("name").equals("DistMove")){
+                    } else if (property.getString("name").equals("DistMove")) {
                         distMove = property.getInt("value");
                     }
                 }
-                if (vertMove){
-                    this.guardianList.add((int)x);
-                    this.guardianList.add((int)y+distMove);
-                    this.guardianList.add((int)x);
-                    this.guardianList.add((int)y-distMove);
-                }
-                else{
-                    this.guardianList.add((int)x+distMove);
-                    this.guardianList.add((int)y);
-                    this.guardianList.add((int)x-distMove);
-                    this.guardianList.add((int)y);
+                if (vertMove) {
+                    this.guardianList.add((int) x);
+                    this.guardianList.add((int) y + distMove);
+                    this.guardianList.add((int) x);
+                    this.guardianList.add((int) y - distMove);
+                } else {
+                    this.guardianList.add((int) x + distMove);
+                    this.guardianList.add((int) y);
+                    this.guardianList.add((int) x - distMove);
+                    this.guardianList.add((int) y);
                 }
 
                 break;
@@ -351,9 +423,10 @@ public class Enemy extends CapsuleObstacle {
                 }
                 break;
             case "Projectile":
-                this.bullet= enemyData.get("bullet");
-                String bulletT=enemyData.getString("BulletTextureAsset");
+                this.bullet = enemyData.get("bullet");
+                String bulletT = enemyData.getString("BulletTextureAsset");
                 this.bulletTexture = new TextureRegion(assets.getEntry(bulletT, Texture.class));
+                this.detectDistance = enemyData.getInt("detectDistance");
                 // this enemy should be static and not affected by recoil
                 super.setBodyTypeToStatic();
                 break;
@@ -370,14 +443,14 @@ public class Enemy extends CapsuleObstacle {
         this.texture = this.enemyTexture;
         this.basicGoombaRightSpriteSheet = new TextureRegion(assets.getEntry(RightMoveAsset, Texture.class));
         this.basicGoombaLeftSpriteSheet = new TextureRegion(assets.getEntry(LeftMoveAsset, Texture.class));
-        this.bloodEffectSpriteSheet = new TextureRegion(assets.getEntry( "bloodEffect", Texture.class));
+        this.bloodEffectSpriteSheet = new TextureRegion(assets.getEntry("bloodEffect", Texture.class));
         this.nonTrackingFlyingRightSpriteSheet = new TextureRegion(assets.getEntry(RightMoveAsset, Texture.class));
         this.nonTrackingFlyingLeftSpriteSheet = new TextureRegion(assets.getEntry(LeftMoveAsset, Texture.class));
         this.nonTrackingGoombaRightSpriteSheet = new TextureRegion(assets.getEntry(RightMoveAsset, Texture.class));
         this.nonTrackingGoombaLeftSpriteSheet = new TextureRegion(assets.getEntry(LeftMoveAsset, Texture.class));
         this.setPathFlyingRightSpriteSheet = new TextureRegion(assets.getEntry(RightMoveAsset, Texture.class));
         this.setPathFlyingLeftSpriteSheet = new TextureRegion(assets.getEntry(LeftMoveAsset, Texture.class));
-        this.fastGoombaLeftSpriteSheet =  new TextureRegion(assets.getEntry(LeftMoveAsset, Texture.class));
+        this.fastGoombaLeftSpriteSheet = new TextureRegion(assets.getEntry(LeftMoveAsset, Texture.class));
         this.fastGoombaRightSpriteSheet = new TextureRegion(assets.getEntry(RightMoveAsset, Texture.class));
 
         //Size
@@ -396,7 +469,7 @@ public class Enemy extends CapsuleObstacle {
         this.hitCooldown = enemyData.getInt("hitCooldown");
 
         //Sound Effects
-        this.swordKillingSound =  Gdx.audio.newSound(Gdx.files.internal("audio/temp-sword-killing.mp3"));
+        this.swordKillingSound = Gdx.audio.newSound(Gdx.files.internal("audio/temp-sword-killing.mp3"));
 
         //Sensor. Wtf is this?
         //used for collision detection
@@ -405,13 +478,16 @@ public class Enemy extends CapsuleObstacle {
         //Other Information
         this.initialHearts = enemyData.getInt("initialHearts");
         this.hearts = initialHearts;
-        this.spiritRemain =enemyData.getFloat(("spiritLimitation"));
+        this.spiritRemain = enemyData.getFloat(("spiritLimitation"));
         this.isFacingRight = enemyData.getBoolean("startsFacingRight");
 
         this.isHit = false;
         this.isGrounded = true;
-        if(this.type.equals("Fly")||this.type.equals("FlyGuardian")){this.setGravityScale(0);}
-        else{this.setGravityScale(40);}
+        if (this.type.equals("Fly") || this.type.equals("FlyGuardian")) {
+            this.setGravityScale(0);
+        } else {
+            this.setGravityScale(40);
+        }
     }
 
     /**
@@ -423,8 +499,8 @@ public class Enemy extends CapsuleObstacle {
         float x = getX();
         float y = getY();
 
-        float ox = this.texture.getRegionWidth()/2;
-        float oy = this.texture.getRegionHeight()/2 + oyOffset;
+        float ox = this.texture.getRegionWidth() / 2;
+        float oy = this.texture.getRegionHeight() / 2 + oyOffset;
 
         float sx = enemyImageWidth / this.texture.getRegionWidth();
         float sy = enemyImageHeight / this.texture.getRegionHeight();
@@ -436,6 +512,7 @@ public class Enemy extends CapsuleObstacle {
     /**
      * Creates the physics Body(s) for this object, adding them to the world.
      * This method overrides the base method to keep your ship from spinning.
+     *
      * @param world Box2D world to store body
      * @return true if object allocation succeeded
      */
@@ -455,16 +532,16 @@ public class Enemy extends CapsuleObstacle {
         // collisions with the world but has no collision response.
         Vector2 sensorCenter = new Vector2(0, -getHeight() / 2);
         FixtureDef sensorDef = new FixtureDef();
-        sensorDef.density = enemyData.getFloat("density",0);
+        sensorDef.density = enemyData.getFloat("density", 0);
         sensorDef.isSensor = true;
         sensorShape = new PolygonShape();
         JsonValue sensorjv = enemyData.get("sensor");
-        sensorShape.setAsBox(sensorjv.getFloat("shrink",0)*getWidth()/2.0f,
-                sensorjv.getFloat("height",0), sensorCenter, 0.0f);
+        sensorShape.setAsBox(sensorjv.getFloat("shrink", 0) * getWidth() / 2.0f,
+                sensorjv.getFloat("height", 0), sensorCenter, 0.0f);
         sensorDef.shape = sensorShape;
 
         // Ground sensor to represent our feet
-        Fixture sensorFixture = body.createFixture( sensorDef );
+        Fixture sensorFixture = body.createFixture(sensorDef);
         sensorFixture.setUserData(getSensorName());
 
         return true;
@@ -473,10 +550,11 @@ public class Enemy extends CapsuleObstacle {
     /**
      * Back to the start x and y
      */
-    public void backtoStart(){
+    public void backtoStart() {
         this.setX(startX);
         this.setY(startY);
     }
+
     /**
      * Applies the velocity to the body of this dude
      * This method should be called after the velocity attributes are set.
@@ -485,20 +563,19 @@ public class Enemy extends CapsuleObstacle {
         if (!isActive()) {
             return;
         }
-        forceCache = new Vector2(0,0);
+        forceCache = new Vector2(0, 0);
 
         // Velocity too high, clamp it
         if (Math.abs(getVX()) >= this.maxSpeed) {
-            setVX(Math.signum(getVX())*this.maxSpeed);
-        }else if (this.type.equals("Fly")&&Math.abs(getVY()) >= this.maxSpeed) {
-            setVY(Math.signum(getVY())*this.maxSpeed);
+            setVX(Math.signum(getVX()) * this.maxSpeed);
+        } else if (this.type.equals("Fly") && Math.abs(getVY()) >= this.maxSpeed) {
+            setVY(Math.signum(getVY()) * this.maxSpeed);
         }
 
         //if(this.type.equals("Fly")){this.movementV *= this.force; this.movementH *= this.force;}
         forceCache.set(getVelocityH(), getVelocityV());
         body.setLinearVelocity(forceCache);
     }
-
 
 
     /**
@@ -508,15 +585,14 @@ public class Enemy extends CapsuleObstacle {
      */
     public void hitBySword(Player player) {
         hearts--;
-        if(hearts > 0){
-            float direction = player.getX() - this.getX() > 0? -1: 1;
-            Vector2 knockback = new Vector2(direction* enemyData.getFloat("knockbackX"),
+        if (hearts > 0) {
+            float direction = player.getX() - this.getX() > 0 ? -1 : 1;
+            Vector2 knockback = new Vector2(direction * enemyData.getFloat("knockbackX"),
                     enemyData.getFloat("knockbackY"));
             forceCache.set(knockback);
-            body.applyForce(forceCache,this.getPosition(), true);
+            body.applyForce(forceCache, this.getPosition(), true);
             //body.setLinearVelocity(forceCache);
-        }
-        else {
+        } else {
             this.markRemoved(true);
             player.increaseSpiritByKill(); //player gain some spirit when the enemy killed
 //            System.out.println("kill an enemy!");
@@ -526,7 +602,7 @@ public class Enemy extends CapsuleObstacle {
 
     public long playSound(Sound sound, long soundId, float volume) {
         if (soundId != -1) {
-            sound.stop( soundId );
+            sound.stop(soundId);
         }
         return sound.play(volume);
     }
