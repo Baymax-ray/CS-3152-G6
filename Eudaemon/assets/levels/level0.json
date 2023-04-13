@@ -394,7 +394,7 @@
                         {
                          "name":"Direction",
                          "type":"string",
-                         "value":"Up"
+                         "value":"Down"
                         }],
                  "rotation":0,
                  "type":"Enemy",
@@ -412,7 +412,7 @@
                         {
                          "name":"Direction",
                          "type":"string",
-                         "value":"Up"
+                         "value":"Down"
                         }],
                  "rotation":0,
                  "type":"Enemy",
@@ -430,7 +430,7 @@
                         {
                          "name":"Direction",
                          "type":"string",
-                         "value":"Up"
+                         "value":"Down"
                         }],
                  "rotation":0,
                  "type":"Enemy",

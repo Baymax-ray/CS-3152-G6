@@ -160,6 +160,8 @@ public class Enemy extends CapsuleObstacle {
     private Sound swordKillingSound;
     private long swordKillingSoundId = -1;
     private JsonValue bullet;
+    private float projectileEnemyRotation;
+    private String projectileEnemyDirection;
     //#endregion
 
     //#region Getter and Setter
@@ -374,6 +376,8 @@ public class Enemy extends CapsuleObstacle {
         //Position and Movement
         this.startX = x;
         this.startY = y;
+        this.projectileEnemyDirection = "Left";
+        this.projectileEnemyRotation = 0;
 
         //Query the type of this enemy, then query the corresponding data in enemyConstants.json
         this.guardianList = new ArrayList<>();
@@ -429,6 +433,31 @@ public class Enemy extends CapsuleObstacle {
                 this.detectDistance = enemyData.getInt("detectDistance");
                 // this enemy should be static and not affected by recoil
                 super.setBodyTypeToStatic();
+                // set the direction that this projectile enemy is facing
+                JsonValue projectileProperties = json.get("properties");
+                for (JsonValue property : projectileProperties) {
+                    if (property.getString("name").equals("Direction")) {
+                        projectileEnemyDirection = property.getString("value");
+                    }
+                }
+                switch (projectileEnemyDirection) {
+                    case "Left":
+                        this.projectileEnemyRotation = -(float) Math.PI/2;
+                        this.setAngle((float) Math.PI/2);
+                        break;
+                    case "Right":
+                        this.projectileEnemyRotation = (float) Math.PI/2;
+                        this.setAngle((float) Math.PI/2);
+                        break;
+                    case "Up":
+                        this.projectileEnemyRotation = (float) Math.PI;
+                        break;
+                    case "Down":
+                        this.projectileEnemyRotation = 0;
+                        break;
+                    default:
+                        System.out.println("something wrong");
+                }
                 break;
             default:
                 //should never reach here
@@ -488,6 +517,7 @@ public class Enemy extends CapsuleObstacle {
         } else {
             this.setGravityScale(40);
         }
+        System.out.println(projectileEnemyDirection);
     }
 
     /**
@@ -505,7 +535,7 @@ public class Enemy extends CapsuleObstacle {
         float sx = enemyImageWidth / this.texture.getRegionWidth();
         float sy = enemyImageHeight / this.texture.getRegionHeight();
 
-        canvas.draw(this.texture, Color.WHITE, ox, oy, x, y, 0, sx, sy);
+        canvas.draw(this.texture, Color.WHITE, ox, oy, x, y, projectileEnemyRotation, sx, sy);
     }
 
 
