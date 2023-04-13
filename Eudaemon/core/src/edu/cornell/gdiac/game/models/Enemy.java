@@ -450,10 +450,10 @@ public class Enemy extends CapsuleObstacle {
                         this.setAngle((float) Math.PI/2);
                         break;
                     case "Up":
-                        this.projectileEnemyRotation = (float) Math.PI;
+                        this.projectileEnemyRotation = 0;
                         break;
                     case "Down":
-                        this.projectileEnemyRotation = 0;
+                        this.projectileEnemyRotation = (float) Math.PI;
                         break;
                     default:
                         System.out.println("something wrong");
