@@ -348,7 +348,7 @@
                         {
                          "name":"leftX",
                          "type":"int",
-                         "value":13
+                         "value":12
                         }, 
                         {
                          "name":"rightX",

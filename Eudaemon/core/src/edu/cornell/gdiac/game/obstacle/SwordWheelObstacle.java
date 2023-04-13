@@ -94,8 +94,10 @@ public class SwordWheelObstacle extends WheelObstacle {
      * @param dt	Number of seconds since last animation frame
      */
     public void update(float dt) {
-        this.setLinearVelocity(player.getBodyVelocity());
         super.update(dt);
+        if (player.getBody() != null){
+            this.setLinearVelocity(player.getBodyVelocity());
+        }
 
         //Animation
         currentTicks++;
