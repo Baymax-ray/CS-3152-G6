@@ -325,7 +325,7 @@
                         {
                          "name":"leftX",
                          "type":"int",
-                         "value":13
+                         "value":11
                         }, 
                         {
                          "name":"rightX",
@@ -640,7 +640,7 @@
  "nextobjectid":139,
  "orientation":"orthogonal",
  "renderorder":"right-down",
- "tiledversion":"1.10.1",
+ "tiledversion":"1.10.0",
  "tileheight":32,
  "tilesets":[
         {
