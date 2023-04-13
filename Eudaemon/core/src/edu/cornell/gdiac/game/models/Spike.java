@@ -43,6 +43,10 @@ public class Spike extends BoxObstacle {
 
     private float rotationAngle;
 
+    private String direction;
+    private float offsetX;
+    private float offsetY;
+
     //#endregion
 
     //#region Getter and Setter
@@ -60,6 +64,7 @@ public class Spike extends BoxObstacle {
                 assets.getEntry("sharedConstants", JsonValue.class).get("Spike").getFloat("hitboxHeight"));
         String TextureAsset = "platform:spike";
         this.spikeData = assets.getEntry("sharedConstants", JsonValue.class).get("Spike");
+
 
         this.setWidth(spikeData.getFloat("hitboxWidth"));
         this.setHeight(spikeData.getFloat("hitboxHeight"));
@@ -82,28 +87,48 @@ public class Spike extends BoxObstacle {
         //used for collision detection
         this.sensorName = "SpikeGroundSensor";
 
-        JsonValue properties = json.get("properties");
 
+        JsonValue properties = json.get("properties");
+        this.direction = "Up";
         for (JsonValue property : properties) {
             if (property.getString("name").equals("Direction")) {
                 switch (property.getString("value")) {
                     case "Up":
+                        this.direction = "Up";
                         this.rotationAngle = 0;
+                        this.offsetX = 0;
+                        this.offsetY = 0;
                         break;
                     case "Left":
+                        this.direction = "Left";
                         this.rotationAngle = (float) (Math.PI/2);
+                        this.offsetX = 0.45f;
+                        this.offsetY = 0.43f;
+                        this.setX(this.getX()+offsetX);
+                        this.setY(this.getY()+offsetY);
+
                         break;
                     case "Down":
+                        this.direction = "Down";
                         this.rotationAngle = (float) (Math.PI);
+                        this.offsetX = 0;
+                        this.offsetY = 0.8f;
+                        this.setY(this.getY()+offsetY);
                         break;
                     case "Right":
+                        this.direction = "Down";
                         this.rotationAngle = (float) (Math.PI * 1.5f);
+                        this.offsetX = -0.45f;
+                        this.offsetY = 0.43f;
+                        this.setX(this.getX()+offsetX);
+                        this.setY(this.getY()+offsetY);
                         break;
                     default:
                         System.out.println("something wrong");
                 }
             }
         }
+        this.setAngle(rotationAngle);
 
     }
 
@@ -113,8 +138,8 @@ public class Spike extends BoxObstacle {
      * @param canvas Drawing context
      */
     public void draw(GameCanvas canvas) {
-        float x = getX();
-        float y = getY() + 0.39f;
+        float x = getX() - offsetX;
+        float y = getY() + 0.39f - offsetY;
 
         float ox = this.texture.getRegionWidth()/2;
         float oy = this.texture.getRegionHeight()/2;
