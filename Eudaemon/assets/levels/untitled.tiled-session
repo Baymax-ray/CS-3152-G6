@@ -9,6 +9,9 @@
         "."
     ],
     "fileStates": {
+        "/Users/neelin2/coding/cs3152/Eudaemon/CS-3152-G6/Eudaemon/assets/EudaemonTileset.json": {
+            "scaleInDock": 1
+        },
         "F:/Programming/School/CS 3152/Eudaemon/CS-3152-G6/Eudaemon/assets/EudaemonTileset.json": {
             "dynamicWrapping": false,
             "scaleInDock": 2,
@@ -26,11 +29,11 @@
             "expandedObjectLayers": [
                 7
             ],
-            "scale": 1.1098,
-            "selectedLayer": 2,
+            "scale": 1.3196,
+            "selectedLayer": 3,
             "viewCenter": {
-                "x": 1273.6529104343126,
-                "y": 645.1612903225807
+                "x": 583.8890572900879,
+                "y": 495.6047287056684
             }
         },
         "level0.tmj": {
@@ -48,8 +51,8 @@
             "scale": 0.6876,
             "selectedLayer": 3,
             "viewCenter": {
-                "x": 932.955206515416,
-                "y": 756.2536358347877
+                "x": 931.5008726003491,
+                "y": 754.7993019197208
             }
         }
     },
@@ -60,16 +63,15 @@
     "map.lastUsedFormat": "json",
     "map.width": 70,
     "openFiles": [
-        "F:/Programming/School/CS 3152/Eudaemon/CS-3152-G6/Eudaemon/assets/EudaemonTileset.json",
         "level1.json",
         "level0.json"
     ],
     "project": "untitled.tiled-project",
     "property.type": "string",
     "recentFiles": [
-        "F:/Programming/School/CS 3152/Eudaemon/CS-3152-G6/Eudaemon/assets/EudaemonTileset.json",
         "level1.json",
         "level0.json",
+        "F:/Programming/School/CS 3152/Eudaemon/CS-3152-G6/Eudaemon/assets/EudaemonTileset.json",
         "level0.tmj",
         "F:/Users/neelin2/coding/cs3152/Eudaemon/CS-3152-G6/Eudaemon/assets/EudaemonTileset.json"
     ],
