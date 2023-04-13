@@ -77,13 +77,9 @@ public class LevelScreen implements Screen {
     private void checkScreenTransitions() {
         if (this.level.getPlayer().getHearts() == 0 || !this.level.inBounds(level.getPlayer())) {
             listener.exitScreen(this, ExitCode.LOSE);
-        }
-
-        if (playerAction.contains(Action.RESET)) {
+        } else if (playerAction.contains(Action.RESET)) {
             listener.exitScreen(this, ExitCode.RESET);
-        }
-
-        if (level.isCompleted()) {
+        } else if (level.isCompleted()) {
             listener.exitScreen(this, ExitCode.WIN);
         }
     }
@@ -143,6 +139,7 @@ public class LevelScreen implements Screen {
         enemyActions.clear();
         canvas = null;
         listener = null;
+        System.out.println("why u here");
     }
 
     public void setScreenListener(ScreenListener listener) {

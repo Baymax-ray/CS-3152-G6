@@ -736,6 +736,23 @@
                  "width":22,
                  "x":964.5,
                  "y":442
+                }, 
+                {
+                 "height":63,
+                 "id":109,
+                 "name":"Exit",
+                 "properties":[
+                        {
+                         "name":"NextLevel",
+                         "type":"string",
+                         "value":"level0"
+                        }],
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":63.875,
+                 "x":225.3030831879,
+                 "y":766.340314136126
                 }],
          "opacity":1,
          "type":"objectgroup",
@@ -744,10 +761,10 @@
          "y":0
         }],
  "nextlayerid":11,
- "nextobjectid":109,
+ "nextobjectid":110,
  "orientation":"orthogonal",
  "renderorder":"right-down",
- "tiledversion":"1.10.0",
+ "tiledversion":"1.10.1",
  "tileheight":32,
  "tilesets":[
         {

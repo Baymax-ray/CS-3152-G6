@@ -1173,7 +1173,7 @@ public class Player extends CapsuleObstacle {
 
 
     public Player(JsonValue json, AssetDirectory assets, int startXCoord,int startYCoord) {
-        super(startXCoord, startYCoord, json.getFloat("hitboxWidth"), json.getFloat("hitboxHeight"));
+        super(startXCoord, startYCoord, assets.getEntry("sharedConstants", JsonValue.class).get("player").getFloat("hitboxWidth"), assets.getEntry("sharedConstants", JsonValue.class).get("player").getFloat("hitboxHeight"));
 
         //now the player's shared data is separated into sharedConstants.json, we shall not query them
         //from constants.json, as that file only records changing data.

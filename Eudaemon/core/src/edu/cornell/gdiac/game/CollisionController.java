@@ -4,11 +4,8 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.ObjectSet;
-import edu.cornell.gdiac.game.models.Enemy;
-import edu.cornell.gdiac.game.models.Level;
-import edu.cornell.gdiac.game.models.Player;
+import edu.cornell.gdiac.game.models.*;
 import edu.cornell.gdiac.game.obstacle.EffectObstacle;
-import edu.cornell.gdiac.game.models.Spike;
 import edu.cornell.gdiac.game.obstacle.Obstacle;
 import edu.cornell.gdiac.game.obstacle.SwordWheelObstacle;
 import edu.cornell.gdiac.game.obstacle.WheelObstacle;
@@ -140,6 +137,15 @@ public class CollisionController implements ContactListener {
             Enemy enemy = (Enemy) (bd1 instanceof Enemy ? bd1 : bd2);
 
              level.getPlayer().getEnemiesInSpiritRange().add(enemy);
+        }
+
+        if (bd1 instanceof Player && !fix1.isSensor() && bd2 instanceof Exit ||
+                bd2 instanceof Player && !fix2.isSensor() && bd1 instanceof Exit) {
+            Exit exit = (Exit) (bd1 instanceof Player ? bd2 : bd1);
+            Player player = (Player) (bd1 instanceof Player ? bd1 : bd2);
+
+            exit.setReached(true);
+            level.setCompleted(true);
         }
 
         //#endregion

@@ -30,6 +30,8 @@ public class Level {
 
     private ArrayList<Spike> spikes;
 
+    private Exit exit;
+
     // NOTE: the natural way of viewing a 2d array is flipped for the map. tilemap[0] is the top of the map. need fancy
     // conversions between the two spaces
     private final int[][] tilemap; // value represents the index of the tile in the tiles array
@@ -111,6 +113,11 @@ public class Level {
     //#endregion
 
     //#region GETTERS & SETTERS
+
+    public Exit getExit() {
+        return exit;
+    }
+
     public World getWorld() {
         return world;
     }
@@ -413,6 +420,12 @@ public class Level {
             else if (object.getString("name").equals("StartingPoint")) {
                 startX = (int) (object.getInt("x") / 32) + 1;
                 startY = heightInTiles - (int) (object.getInt("y") / 32);
+            } else if (object.getString("name").equals("Exit")) {
+                float x = (float) object.getInt("x") / 32;
+                float y = heightInTiles - (float) object.getInt("y") / 32;
+                float width = object.getFloat("width") / 32;
+                float height = object.getFloat("height") / 32;
+                exit = new Exit(object, assets, x, y, width, height);
             }
         }
 
@@ -552,8 +565,10 @@ public class Level {
      */
     public void addObject(Obstacle obj) {
         assert inBounds(obj) : "Object is not in bounds";
-        objects.add(obj);
-        obj.activatePhysics(world);
+        if (obj != null) {
+            objects.add(obj);
+            obj.activatePhysics(world);
+        }
     }
     /**
      * Returns true if the object is in bounds.
@@ -714,6 +729,8 @@ public class Level {
         for(int i = 0; i < spikes.size(); i++){
             addObject(spikes.get(i));
         }
+
+        addObject(exit);
     }
 
 

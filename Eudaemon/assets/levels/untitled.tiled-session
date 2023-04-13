@@ -9,7 +9,7 @@
         "."
     ],
     "fileStates": {
-        "/Users/neelin2/coding/cs3152/Eudaemon/CS-3152-G6/Eudaemon/assets/EudaemonTileset.json": {
+        "C:/Users/neelin2/coding/cs3152/Eudaemon/CS-3152-G6/Eudaemon/assets/EudaemonTileset.json": {
             "scaleInDock": 1
         },
         "F:/Programming/School/CS 3152/Eudaemon/CS-3152-G6/Eudaemon/assets/EudaemonTileset.json": {
@@ -29,11 +29,11 @@
             "expandedObjectLayers": [
                 7
             ],
-            "scale": 1.3196,
+            "scale": 2,
             "selectedLayer": 3,
             "viewCenter": {
-                "x": 583.8890572900879,
-                "y": 495.6047287056684
+                "x": 1407,
+                "y": 192
             }
         },
         "level0.tmj": {
@@ -51,8 +51,8 @@
             "scale": 0.6876,
             "selectedLayer": 3,
             "viewCenter": {
-                "x": 931.5008726003491,
-                "y": 754.7993019197208
+                "x": 929.3193717277488,
+                "y": 752.6178010471206
             }
         }
     },

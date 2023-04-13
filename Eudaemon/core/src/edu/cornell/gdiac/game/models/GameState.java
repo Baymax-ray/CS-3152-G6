@@ -4,25 +4,43 @@ import com.badlogic.gdx.utils.JsonValue;
 import com.badlogic.gdx.utils.Json;
 import edu.cornell.gdiac.assets.AssetDirectory;
 
+import java.util.HashMap;
+
 public class GameState {
     private final AssetDirectory assets;
     private final ActionBindings bindings;
     //other global settings go here
     private final Tile[] tiles;
-    private final Level[] levels;
-    private final int currentLevelId;
+    private final HashMap<String, Level> levels;
+    private String currentLevelName;
 
     public Level getCurrentLevel() {
-        return levels[currentLevelId];
+        return levels.get(currentLevelName);
     }
 
     public void resetCurrentLevel() {
         JsonValue constants = assets.getEntry("constants", JsonValue.class);
-        this.levels[currentLevelId] = new Level(constants.get("levels").get(currentLevelId), tiles, assets);
+        JsonValue currentLevel = null;
+        for (JsonValue level : constants.get("levels")) {
+            if (level.getString("level").equals(currentLevelName)) {
+                currentLevel = level;
+            }
+        }
+
+        this.levels.put(currentLevelName, new Level(currentLevel, tiles, assets));
+    }
+
+    public void setCurrentLevel(int i) {
+        currentLevelName = assets.getEntry("constants", JsonValue.class).get("levels").get(i).getString("level");
+    }
+
+    public void setCurrentLevel(String name) {
+        currentLevelName = name;
     }
 
     public Level getLevel(int i) {
-        return levels[i];
+        String levelName = assets.getEntry("constants", JsonValue.class).get("levels").get(i).getString("level");
+        return levels.get(levelName);
     }
 
     public ActionBindings getActionBindings() {
@@ -33,13 +51,13 @@ public class GameState {
         //assets disposed by root
         //bindings don't need to be disposed
         // tiles don't need to be disposed
-        for (Level level : levels) {
+        for (Level level : levels.values()) {
             level.dispose();
         }
     }
 
     public GameState(AssetDirectory assets) {
-        this.currentLevelId = 0;
+        this.currentLevelName = assets.getEntry("constants", JsonValue.class).get("levels").get(0).getString("level");
 
         this.assets = assets;
 
@@ -57,9 +75,9 @@ public class GameState {
         }
 
         int numLevels = constants.getInt("numLevels");
-        this.levels = new Level[numLevels];
+        this.levels = new HashMap<>();
         for (int i = 0; i < numLevels; i++) {
-            levels[i] = new Level(constants.get("levels").get(i), tiles, assets);
+            levels.put(constants.get(("levels")).get(i).getString("level"), new Level(constants.get("levels").get(i), tiles, assets));
         }
 
         //TODO: bindings etc.
