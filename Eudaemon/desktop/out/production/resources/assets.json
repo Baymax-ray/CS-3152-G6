@@ -1,0 +1,317 @@
+{
+	"textures": {
+        "shared:earth" : {
+            "file":  "shared/earthtile.png",
+            "wrapU": "repeated",
+            "wrapV": "repeated"
+        },
+        "shared:goal":   "shared/goaldoor.png",
+        "chiyo:swordAttack0": {
+            "file" : "platform/swordSpriteSheet.png",
+            "sprites" : {
+                "fire": {
+                    "rows": 1,
+                    "cols": 6
+                }
+            }
+        },
+      "chiyo:swordAttack45": {
+        "file" : "platform/45_swordattackspritesheet.png",
+        "sprites" : {
+          "fire": {
+            "rows": 1,
+            "cols": 6
+          }
+        }
+      },
+      "chiyo:swordAttack90": {
+        "file" : "platform/90_swordattackspritesheet.png",
+        "sprites" : {
+          "fire": {
+            "rows": 1,
+            "cols": 6
+          }
+        }
+      },
+      "chiyo:swordAttack135": {
+        "file" : "platform/135_swordattackspritesheet.png",
+        "sprites" : {
+          "fire": {
+            "rows": 1,
+            "cols": 6
+          }
+        }
+      },
+      "chiyo:swordAttack180": {
+        "file" : "platform/180_swordattackspritesheet.png",
+        "sprites" : {
+          "fire": {
+            "rows": 1,
+            "cols": 6
+          }
+        }
+      },
+      "chiyo:swordAttack225": {
+        "file" : "platform/225_swordattackspritesheet.png",
+        "sprites" : {
+          "fire": {
+            "rows": 1,
+            "cols": 6
+          }
+        }
+      },
+      "chiyo:swordAttack270": {
+        "file" : "platform/270_swordattackspritesheet.png",
+        "sprites" : {
+          "fire": {
+            "rows": 1,
+            "cols": 6
+          }
+        }
+      },
+      "chiyo:swordAttack315": {
+        "file" : "platform/315_swordattackspritesheet.png",
+        "sprites" : {
+          "fire": {
+            "rows": 1,
+            "cols": 6
+          }
+        }
+      },
+      "bloodEffect": {
+        "file" : "animations/bloodEffectSpritesheet.png",
+        "sprites" : {
+          "fire": {
+            "rows": 1,
+            "cols": 17
+          }
+        }
+      },
+      "impactEffect": {
+        "file" : "animations/impactEffectSpriteSheet.png",
+        "sprites" : {
+          "fire": {
+            "rows": 1,
+            "cols": 8
+          }
+        }
+      },
+        "momo:dashEffect": {
+          "file" : "animations/dashEffectSpriteSheet.png",
+          "sprites" : {
+            "fire": {
+              "rows": 1,
+              "cols": 5
+            }
+          }
+        },
+        "momo:dash": {
+          "file" : "animations/momoDash.png",
+          "sprites" : {
+            "fire": {
+              "rows": 1,
+              "cols": 5
+            }
+          }
+        },
+        "momo:run": {
+          "file" : "animations/momoRun.png",
+          "sprites" : {
+            "fire": {
+              "rows": 1,
+              "cols": 6
+            }
+          }
+        },
+        "momo:jump": {
+          "file" : "animations/momoJump.png",
+          "sprites" : {
+            "fire": {
+              "rows": 1,
+              "cols": 6
+            }
+          }
+        },
+        "chiyo:run": {
+          "file" : "animations/chiyoRun.png",
+          "sprites" : {
+            "fire": {
+              "rows": 1,
+              "cols": 8
+            }
+          }
+        },
+        "chiyo:spiritDrain": {
+          "file" : "platform/reversespiritdrain.png",
+          "sprites" : {
+            "fire": {
+              "rows": 1,
+              "cols": 3
+            }
+          }
+        },
+        "basicGoomba:rightWalk": {
+          "file" : "animations/basic_goomba_walk_right.png",
+          "sprites" : {
+            "fire": {
+              "rows": 1,
+              "cols": 10
+            }
+          }
+        },
+        "basicGoomba:leftWalk": {
+          "file" : "animations/basic_goomba_walk_left.png",
+          "sprites" : {
+            "fire": {
+              "rows": 1,
+              "cols": 10
+            }
+          }
+        },
+        "nonTrackingFlying:rightFly": {
+          "file" : "animations/nonTrackingFlyingRight.png",
+          "sprites" : {
+            "fire": {
+              "rows": 1,
+              "cols": 6
+            }
+          }
+        },
+        "nonTrackingFlying:leftFly": {
+          "file" : "animations/nonTrackingFlyingLeft.png",
+          "sprites" : {
+            "fire": {
+              "rows": 1,
+              "cols": 6
+            }
+          }
+        },
+        "nonTrackingGoomba:rightWalk": {
+          "file" : "animations/nonTrackingGoombaRight.png",
+          "sprites" : {
+            "fire": {
+              "rows": 1,
+              "cols": 6
+            }
+          }
+        },
+        "nonTrackingGoomba:leftWalk": {
+          "file" : "animations/nonTrackingGoombaLeft.png",
+          "sprites" : {
+            "fire": {
+              "rows": 1,
+              "cols": 6
+            }
+          }
+        },
+        "background:city": "backgrounds/backgroundCityPlaceholder.png",
+        "platform:momo":  "platform/momo.png",
+        "platform:momoUp":  "platform/momoUp.png",
+        "platform:momoDown":  "platform/momoDown.png",
+        "platform:chiyo":  "platform/chiyo.png",
+        "platform:chiyoUp":  "platform/chiyoUp.png",
+        "platform:chiyoDown":  "platform/chiyoDown.png",
+        "platform:worm":  "platform/worm.png",
+        "platform:pathfindingGoombaL": "platform/pathfindingGoombaLeft.png",
+        "platform:pathfindingGoombaR": "platform/pathfindingGoombaRight.png",
+        "platform:trackingGoomba": "platform/basicGoombaL.png",
+        "platform:projectileEnemy": "platform/projectileEnemy.png",
+        "platform:setPathFlyingR": "platform/setPathFlyingEnemyRight.png",
+        "platform:setPathFlyingL": "platform/setPathFlyingEnemyLeft.png",
+        "platform:fastGoombaL": "platform/fastGoombaL.png",
+        "platform:fastGoombaR": "platform/fastGoombaR.png",
+        "platform:rope":  "platform/ropebridge.png",
+        "platform:barrier": "platform/barrier.png",
+        "platform:bullet":  "platform/circularProjectile2.png",
+        "platform:heart": "platform/heart.png",
+        "platform:emptyspirit": "platform/emptyspirit.png",
+        "platform:filled": "platform/filled.png",
+        "platform:uioutline": "platform/UI_Outline.png",
+        "platform:settings": "platform/settings.png",
+        "platform:spike": "platform/spike.png",
+        "tiles:DeepDirt1x1A.png": "tiles/DeepDirt1x1A.png",
+        "tiles:DeepDirt1x1B.png": "tiles/DeepDirt1x1B.png",
+        "tiles:DeepDirt1x1C.png": "tiles/DeepDirt1x1C.png",
+        "tiles:DeepDirt1x1D.png": "tiles/DeepDirt1x1D.png",
+        "tiles:DirtDeepDirt1x1A.png": "tiles/DirtDeepDirt1x1A.png",
+        "tiles:DirtDeepDirt1x1B.png": "tiles/DirtDeepDirt1x1B.png",
+        "tiles:DirtDeepDirt1x1C.png": "tiles/DirtDeepDirt1x1C.png",
+        "tiles:DirtDeepDirt1x1D.png": "tiles/DirtDeepDirt1x1D.png",
+        "tiles:Scaffolding1x1A.png": "tiles/Scaffolding1x1A.png",
+        "tiles:Scaffolding1x1B.png": "tiles/Scaffolding1x1B.png",
+        "tiles:Scaffolding1x1C.png": "tiles/Scaffolding1x1C.png",
+        "tiles:Scaffolding1x1D.png": "tiles/Scaffolding1x1D.png",
+        "tiles:GrassDirtBottom1x1A.png": "tiles/GrassDirtBottom1x1A.png",
+        "tiles:GrassDirtBottom1x1B.png": "tiles/GrassDirtBottom1x1B.png",
+        "tiles:GrassDirtBottom1x1C.png": "tiles/GrassDirtBottom1x1C.png",
+        "tiles:ConcreteNoBottom2x1_1A.png": "tiles/ConcreteNoBottom2x1_1A.png",
+        "tiles:ConcreteNoBottom2x1_2A.png": "tiles/ConcreteNoBottom2x1_2A.png",
+        "tiles:ConcreteNoBottom2x1_1B.png": "tiles/ConcreteNoBottom2x1_1B.png",
+        "tiles:ConcreteNoBottom2x1_2B.png": "tiles/ConcreteNoBottom2x1_2B.png",
+        "tiles:ConcreteNoBottom2x1_1C.png": "tiles/ConcreteNoBottom2x1_1C.png",
+        "tiles:ConcreteNoBottom2x1_2C.png": "tiles/ConcreteNoBottom2x1_2C.png",
+        "tiles:ConcreteDirtBottom2x2_1A.png": "tiles/ConcreteDirtBottom2x2_1A.png",
+        "tiles:ConcreteDirtBottom2x2_2A.png": "tiles/ConcreteDirtBottom2x2_2A.png",
+        "tiles:ConcreteDirtBottom2x2_3A.png": "tiles/ConcreteDirtBottom2x2_3A.png",
+        "tiles:ConcreteDirtBottom2x2_4A.png": "tiles/ConcreteDirtBottom2x2_4A.png",
+        "tiles:ConcreteDirtBottom2x2_1B.png": "tiles/ConcreteDirtBottom2x2_1B.png",
+        "tiles:ConcreteDirtBottom2x2_2B.png": "tiles/ConcreteDirtBottom2x2_2B.png",
+        "tiles:ConcreteDirtBottom2x2_3B.png": "tiles/ConcreteDirtBottom2x2_3B.png",
+        "tiles:ConcreteDirtBottom2x2_4B.png": "tiles/ConcreteDirtBottom2x2_4B.png",
+        "tiles:ConcreteDirtBottom2x2_1C.png": "tiles/ConcreteDirtBottom2x2_1C.png",
+        "tiles:ConcreteDirtBottom2x2_2C.png": "tiles/ConcreteDirtBottom2x2_2C.png",
+        "tiles:ConcreteDirtBottom2x2_3C.png": "tiles/ConcreteDirtBottom2x2_3C.png",
+        "tiles:ConcreteDirtBottom2x2_4C.png": "tiles/ConcreteDirtBottom2x2_4C.png",
+        "tiles:BGConcreteA.png": "tiles/BGConcreteA.png",
+        "tiles:BGConcreteB.png": "tiles/BGConcreteB.png",
+        "tiles:BGConcreteC.png": "tiles/BGConcreteC.png",
+        "tiles:BGConcreteD.png": "tiles/BGConcreteD.png",
+        "tiles:BGConcreteE.png": "tiles/BGConcreteE.png",
+        "tiles:BGConcreteF.png": "tiles/BGConcreteF.png",
+        "tiles:ConcreteBlueA.png": "tiles/ConcreteBlueA.png",
+        "tiles:ConcreteBlueB.png": "tiles/ConcreteBlueB.png",
+        "tiles:ConcreteBlueC.png": "tiles/ConcreteBlueC.png",
+        "tiles:ConcreteRedA.png": "tiles/ConcreteRedA.png",
+        "tiles:ConcreteRedB.png": "tiles/ConcreteRedB.png",
+        "tiles:ConcreteRedC.png": "tiles/ConcreteRedC.png",
+        "tiles:ConcretePinkA.png": "tiles/ConcretePinkA.png",
+        "tiles:ConcretePinkB.png": "tiles/ConcretePinkB.png",
+        "tiles:ConcretePinkC.png": "tiles/ConcretePinkC.png",
+        "tiles:CorruptedBottomA.png": "tiles/CorruptedBottomA.png",
+        "tiles:CorruptedBottomB.png": "tiles/CorruptedBottomB.png",
+        "tiles:CorruptedBottomC.png": "tiles/CorruptedBottomC.png",
+        "tiles:CorruptedBottomLeftA.png": "tiles/CorruptedBottomLeftA.png",
+        "tiles:CorruptedBottomRightA.png": "tiles/CorruptedBottomRightA.png",
+        "tiles:CorruptedTopA.png": "tiles/CorruptedTopA.png",
+        "tiles:CorruptedTopB.png": "tiles/CorruptedTopB.png",
+        "tiles:CorruptedTopC.png": "tiles/CorruptedTopC.png",
+        "tiles:CorruptedTopD.png": "tiles/CorruptedTopD.png",
+        "tiles:CorruptedTopE.png": "tiles/CorruptedTopE.png",
+        "tiles:CorruptedDirtA.png": "tiles/CorruptedDirtA.png",
+        "tiles:CorruptedDirtB.png": "tiles/CorruptedDirtB.png",
+        "tiles:CorruptedDirtC.png": "tiles/CorruptedDirtC.png",
+        "tiles:CorruptedEndLeftA.png": "tiles/CorruptedEndLeftA.png",
+        "tiles:CorruptedEndRightA.png": "tiles/CorruptedEndRightA.png",
+        "tiles:CorruptedLeftA.png": "tiles/CorruptedLeftA.png",
+        "tiles:CorruptedRightA.png": "tiles/CorruptedRightA.png"
+    },
+    "jsons"  : {
+        "constants": "constants.json",
+        "inputMappings": "inputMapping.json",
+        "sharedConstants": "sharedConstants.json",
+        "level0": "levels/level0.json",
+        "level1": "levels/level1.json",
+        "tileset": "EudaemonTileset.json"
+    },
+    "sounds" : {
+        "platform:jump" : "platform/jump.mp3",
+        "platform:pew"  : "platform/pew.mp3",
+        "platform:plop" : "platform/plop.mp3"
+    },
+    "fonts": {
+        "shared:retro": {
+            "file": "shared/RetroGame.ttf",
+            "size": 64
+        }
+    }
+}

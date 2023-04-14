@@ -1,0 +1,82 @@
+{
+    "Map/SizeTest": {
+        "height": 4300,
+        "width": 2
+    },
+    "activeFile": "level0.json",
+    "expandedProjectPaths": [
+        "Templates",
+        "."
+    ],
+    "fileStates": {
+        "/Users/neelin2/coding/cs3152/Eudaemon/CS-3152-G6/Eudaemon/assets/EudaemonTileset.json": {
+            "scaleInDock": 1
+        },
+        "C:/Users/neelin2/coding/cs3152/Eudaemon/CS-3152-G6/Eudaemon/assets/EudaemonTileset.json": {
+            "scaleInDock": 1
+        },
+        "F:/Programming/School/CS 3152/Eudaemon/CS-3152-G6/Eudaemon/assets/EudaemonTileset.json": {
+            "dynamicWrapping": false,
+            "scaleInDock": 2,
+            "scaleInEditor": 2
+        },
+        "F:/Users/neelin2/coding/cs3152/Eudaemon/CS-3152-G6/Eudaemon/assets/Assets/Tiles/EudaemonTileset.json": {
+            "scaleInDock": 1
+        },
+        "F:/Users/neelin2/coding/cs3152/Eudaemon/CS-3152-G6/Eudaemon/assets/EudaemonTileset.json": {
+            "dynamicWrapping": true,
+            "scaleInDock": 0.5,
+            "scaleInEditor": 1
+        },
+        "level0.json": {
+            "expandedObjectLayers": [
+                7
+            ],
+            "scale": 1.0348,
+            "selectedLayer": 3,
+            "viewCenter": {
+                "x": 846.0572091225358,
+                "y": 229.99613451874757
+            }
+        },
+        "level0.tmj": {
+            "scale": 0.2803348214285714,
+            "selectedLayer": 0,
+            "viewCenter": {
+                "x": 1121.8727605701092,
+                "y": 642.0893383231148
+            }
+        },
+        "level1.json": {
+            "expandedObjectLayers": [
+                7
+            ],
+            "scale": 0.6876,
+            "selectedLayer": 3,
+            "viewCenter": {
+                "x": 928.5922047702154,
+                "y": 751.890634089587
+            }
+        }
+    },
+    "last.externalTilesetPath": "/Users/neelin2/coding/cs3152/Eudaemon/CS-3152-G6/Eudaemon/assets",
+    "last.imagePath": "/Users/neelin2/coding/cs3152/Eudaemon/CS-3152-G6/Eudaemon/assets/tiles/EnemiesObjects",
+    "last.objectTemplatePath": "F:/Programming/School/CS 3152/Eudaemon/CS-3152-G6/Eudaemon/assets/levels/Templates",
+    "map.height": 40,
+    "map.lastUsedFormat": "json",
+    "map.width": 70,
+    "openFiles": [
+        "level1.json",
+        "level0.json"
+    ],
+    "project": "untitled.tiled-project",
+    "property.type": "string",
+    "recentFiles": [
+        "level1.json",
+        "level0.json",
+        "F:/Programming/School/CS 3152/Eudaemon/CS-3152-G6/Eudaemon/assets/EudaemonTileset.json",
+        "level0.tmj",
+        "F:/Users/neelin2/coding/cs3152/Eudaemon/CS-3152-G6/Eudaemon/assets/EudaemonTileset.json"
+    ],
+    "tileset.lastUsedFilter": "JSON tileset files (*.tsj *.json)"
+}

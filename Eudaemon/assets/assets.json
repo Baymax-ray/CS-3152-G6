@@ -88,7 +88,7 @@
         }
       },
       "impactEffect": {
-        "file" : "animations/impactEffectSpritesheet.png",
+        "file" : "animations/impactEffectSpriteSheet.png",
         "sprites" : {
           "fire": {
             "rows": 1,

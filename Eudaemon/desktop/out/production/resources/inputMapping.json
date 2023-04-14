@@ -1,0 +1,12 @@
+{
+  "up": "W",
+  "down": "S",
+  "left": "A",
+  "right": "D",
+  "jump": "Space",
+  "dash": "LEFT",
+  "attack": "LEFT",
+  "transform": "RIGHT",
+  "debug":  "T",
+  "reset": "R"
+}

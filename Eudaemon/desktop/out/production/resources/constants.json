@@ -1,0 +1,45 @@
+{
+  "numTiles": 1,
+  "numLevels": 1,
+  "tiles": [
+    {
+      "textureAsset": "shared:earth"
+    }
+  ],
+  "levels": [
+    {
+      "level": "level0",
+      "tileSize": 1,
+      "cameraWidth": 21.35,
+      "cameraHeight": 12,
+      "gravity": -1,
+      "spike": [
+        {
+          "startX": 9,
+          "startY": 14.2
+        },
+        {
+          "startX": 9.5,
+          "startY": 14.2
+        }
+      ]
+    },
+    {
+      "level": "level1",
+      "tileSize": 1,
+      "cameraWidth": 21.35,
+      "cameraHeight": 12,
+      "gravity": -1,
+      "spike": [
+        {
+          "startX": 9,
+          "startY": 14.2
+        },
+        {
+          "startX": 9.5,
+          "startY": 14.2
+        }
+      ]
+    }
+  ]
+}
