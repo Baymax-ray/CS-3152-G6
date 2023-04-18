@@ -832,7 +832,7 @@ public abstract class SimpleObstacle extends Obstacle {
 		bodyinfo.active = true;
 		body = world.createBody(bodyinfo);
 		body.setUserData(this);
-		
+
 		// Only initialize if a body was created.
 		if (body != null) {
 			createFixtures();

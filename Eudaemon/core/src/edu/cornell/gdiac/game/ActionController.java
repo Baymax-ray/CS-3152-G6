@@ -127,6 +127,8 @@ public class ActionController {
         addAnimations(player.getMomoDashSpriteSheet(), 5, 1, "momoDash");
         addAnimations(player.getMomoJumpSpriteSheet(), 6, 1, "momoJump");
         addAnimations(player.getChiyoRunSpriteSheet(), 8, 1, "chiyoRun");
+        addAnimations(player.getDashEffectSpriteSheet(), 5, 1, "dashEffect");
+        addAnimations(player.getImpactEffectSpriteSheet(), 8, 1, "impactEffect");
     }
 
     /**
@@ -350,12 +352,11 @@ public class ActionController {
             player.setVelocity(dashX, dashY);
 
             //Creating dash effect
-            Vector2 scale = new Vector2(1f, 1f);
-            EffectObstacle dashAnimate = new EffectObstacle(player.getX(), player.getY(), player.getDashEffectSpriteSheet().getRegionWidth(),
+            EffectObstacle dashAnimate = level.getEffectPool().obtainEffect(player.getX(), player.getY(), player.getDashEffectSpriteSheet().getRegionWidth(),
                     player.getDashEffectSpriteSheet().getRegionHeight(), 0.08f, 0.08f, effectAngle,
-                    pOffsetX, pOffsetY,5, 1,true,
+                    pOffsetX, pOffsetY,true,
                     "dashEffect", player, 0.35f,
-                    scale, player.getDashEffectSpriteSheet(),5);
+                    1, 1, animations.get("dashEffect"),5);
             level.addQueuedObject(dashAnimate);
 
             //Sound effect
@@ -531,12 +532,11 @@ public class ActionController {
             //offset of effect from player
             float pOffsetX = 0.0f;
             float pOffsetY = -0.33f;
-            Vector2 scale = new Vector2(1f, 1f);
-            EffectObstacle impactAnimate = new EffectObstacle(player.getX(), player.getY(), player.getImpactEffectSpriteSheet().getRegionWidth(),
+            EffectObstacle impactAnimate = level.getEffectPool().obtainEffect(player.getX(), player.getY(), player.getImpactEffectSpriteSheet().getRegionWidth(),
                     player.getImpactEffectSpriteSheet().getRegionHeight(), 0.02f, 0.02f, effectAngle,
-                    pOffsetX, pOffsetY, 8, 1, false,
+                    pOffsetX, pOffsetY, true,
                     "impactEffect", player, 0.35f,
-                    scale, player.getImpactEffectSpriteSheet(), 5);
+                    1, 1, animations.get("impactEffect"), 5);
             level.addQueuedObject(impactAnimate);
             impactId = playSound(impactSound, impactId, 0.3F);
         }
@@ -559,13 +559,16 @@ public class ActionController {
             }
         } else if (player.getEnemiesInSpiritRange().size > 0) {
 
-                player.getEnemiesInSpiritRange().get(0).LossSpirit(level.getPlayer().getSpiritIncreaseRate());
-                player.increaseSpirit();
+            player.getEnemiesInSpiritRange().get(0).LossSpirit(level.getPlayer().getSpiritIncreaseRate());
+            player.increaseSpirit();
 
                 // TODO SPAWN spiritAnimation HERE; <-- use pooled list
+            EffectObstacle effect = level.getEffectPool().obtainEffect(player.getX(), player.getY(), player.getSpiritDrainSpriteSheet().getRegionWidth(), player.getSpiritDrainSpriteSheet().getRegionHeight(), 0.1f, 0.1f, 0, 0, 0, true, "spiritDrain", player, 0.1f, 1, 1,  player.getSpiritDrainAnimation(), 3);
+            level.addQueuedObject(effect);
                 // Vector2 scale = new Vector2(5f,5f);
                 // SwordWheelObstacle spiritAnimate = new SwordWheelObstacle(player.getX(), player.getY(), player.getSpiritDrainSpriteSheet().getRegionWidth()/400F, player, player.getAttackLifespan(), 5f, scale, player.getSpiritDrainSpriteSheet());
                 // addQueuedObject(spiritAnimate);
+
                 // ^ we should try and use the effectobstacle for this.
         }
     }

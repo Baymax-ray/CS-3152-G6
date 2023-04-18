@@ -2,6 +2,7 @@ package edu.cornell.gdiac.game.models;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Sound;
+import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.*;
 import com.badlogic.gdx.graphics.*;
@@ -69,6 +70,7 @@ public class Enemy extends CapsuleObstacle {
      * The texture for the enemy's blood
      */
     private final TextureRegion bloodEffectSpriteSheet;
+    private final Animation<TextureRegion> bloodEffectAnimation;
     //#endregion
     private final float enemyImageWidth;
     private final float enemyImageHeight;
@@ -200,6 +202,10 @@ public class Enemy extends CapsuleObstacle {
      */
     public TextureRegion getBloodEffect() {
         return bloodEffectSpriteSheet;
+    }
+
+    public Animation getBloodEffectAnimation() {
+        return bloodEffectAnimation;
     }
 
     /**
@@ -473,6 +479,8 @@ public class Enemy extends CapsuleObstacle {
         this.basicGoombaRightSpriteSheet = new TextureRegion(assets.getEntry(RightMoveAsset, Texture.class));
         this.basicGoombaLeftSpriteSheet = new TextureRegion(assets.getEntry(LeftMoveAsset, Texture.class));
         this.bloodEffectSpriteSheet = new TextureRegion(assets.getEntry("bloodEffect", Texture.class));
+        TextureRegion[][] frames = bloodEffectSpriteSheet.split(bloodEffectSpriteSheet.getRegionWidth() / 17, bloodEffectSpriteSheet.getRegionHeight());
+        bloodEffectAnimation = new Animation<>(0.5f, frames[0]);
         this.nonTrackingFlyingRightSpriteSheet = new TextureRegion(assets.getEntry(RightMoveAsset, Texture.class));
         this.nonTrackingFlyingLeftSpriteSheet = new TextureRegion(assets.getEntry(LeftMoveAsset, Texture.class));
         this.nonTrackingGoombaRightSpriteSheet = new TextureRegion(assets.getEntry(RightMoveAsset, Texture.class));

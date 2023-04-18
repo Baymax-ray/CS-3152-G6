@@ -139,7 +139,6 @@ public class LevelScreen implements Screen {
         enemyActions.clear();
         canvas = null;
         listener = null;
-        System.out.println("why u here");
     }
 
     public void setScreenListener(ScreenListener listener) {

@@ -109,15 +109,13 @@ public class CollisionController implements ContactListener {
                 float pOffsetX = 0.0f;
                 float pOffsetY = 0.0f;
                 float sx = 0.02f;
-                Vector2 scale = new Vector2(1f, 1f);
-                EffectObstacle bloodEffect = new EffectObstacle(enemy.getX(), enemy.getY(), enemy.getBloodEffect().getRegionWidth(),
+                EffectObstacle bloodEffect = level.getEffectPool().obtainEffect(enemy.getX(), enemy.getY(), enemy.getBloodEffect().getRegionWidth(),
                         enemy.getBloodEffect().getRegionHeight(), sx, 0.02f, effectAngle,
-                        pOffsetX, pOffsetY,17, 1,true,
+                        pOffsetX, pOffsetY,true,
                         "bloodEffect", enemy, 0.35f,
-                        scale, enemy.getBloodEffect(),3);
+                        1, 1, enemy.getBloodEffectAnimation(),3);
 
                 level.addQueuedObject(bloodEffect);
-
             }
 
         }

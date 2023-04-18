@@ -18,6 +18,7 @@ import edu.cornell.gdiac.game.obstacle.EffectObstacle;
 import edu.cornell.gdiac.game.obstacle.Obstacle;
 import edu.cornell.gdiac.game.obstacle.SwordWheelObstacle;
 import edu.cornell.gdiac.util.PooledList;
+import org.graalvm.compiler.virtual.phases.ea.EffectList;
 
 import java.util.*;
 
@@ -31,6 +32,8 @@ public class Level {
     private ArrayList<Spike> spikes;
 
     private Exit exit;
+
+    private EffectPool effectPool;
 
     // NOTE: the natural way of viewing a 2d array is flipped for the map. tilemap[0] is the top of the map. need fancy
     // conversions between the two spaces
@@ -160,6 +163,14 @@ public class Level {
 
     public void setCompleted(boolean completed) {
         isCompleted = completed;
+    }
+
+    public EffectPool getEffectPool() {
+        return effectPool;
+    }
+
+    public void setEffectPool(EffectPool effectPool) {
+        this.effectPool = effectPool;
     }
 
     //#endregion
@@ -429,6 +440,8 @@ public class Level {
             }
         }
 
+        effectPool = new EffectPool();
+
         //#endregion
 
         JsonValue playerData = assets.getEntry("sharedConstants", JsonValue.class).get("Player");
@@ -604,6 +617,9 @@ public class Level {
             if (obj.isRemoved()) {
                 obj.deactivatePhysics(world);
                 entry.remove();
+                if (obj instanceof EffectObstacle) {
+                    effectPool.free((EffectObstacle) obj);
+                }
             } else {
                 // Note that update is called last!
                 obj.update(delta);
@@ -808,12 +824,12 @@ public class Level {
         float pOffsetY = 0.0f;
         float sx = 0.02f;
         Vector2 scale = new Vector2(1f, 1f);
-        EffectObstacle dashAnimate = new EffectObstacle(enemy.getX(), enemy.getY(), enemy.getBloodEffect().getRegionWidth(),
-                enemy.getBloodEffect().getRegionHeight(), sx, 0.02f, effectAngle,
-                pOffsetX, pOffsetY,17, 1,true,
-                "dashEffect", enemy, 0.35f,
-                scale, enemy.getBloodEffect(),3);
-        this.addQueuedObject(dashAnimate);
+//        EffectObstacle dashAnimate = new EffectObstacle(enemy.getX(), enemy.getY(), enemy.getBloodEffect().getRegionWidth(),
+//                enemy.getBloodEffect().getRegionHeight(), sx, 0.02f, effectAngle,
+//                pOffsetX, pOffsetY,17, 1,true,
+//                "dashEffect", enemy, 0.35f,
+//                scale, enemy.getBloodEffect(),3);
+//        this.addQueuedObject(dashAnimate);
 
         if (!enemy.isActive()){
 //                System.out.println("removing enemy" + enemy.getType());
@@ -825,6 +841,7 @@ public class Level {
             obj.deactivatePhysics(world);
         }
         objects.clear();
+        effectPool.clear();
         addQueue.clear();
         world.dispose();
         objects = null;

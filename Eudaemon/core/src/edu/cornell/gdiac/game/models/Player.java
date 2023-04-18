@@ -5,6 +5,7 @@ import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
@@ -162,6 +163,10 @@ public class Player extends CapsuleObstacle {
      * The sprite sheet containing the spirit drain animation frames.
      */
     private final TextureRegion spiritDrainSpriteSheet;
+    /**
+     * The animation for the spirit drain animation frames.
+     */
+    private final Animation<TextureRegion> spiritDrainAnimation;
     /**
      * The sprite sheet containing the momo dash animation frames.
      */
@@ -382,6 +387,15 @@ public class Player extends CapsuleObstacle {
      */
     public TextureRegion getSpiritDrainSpriteSheet() {
         return spiritDrainSpriteSheet;
+    }
+
+    /**
+     * Gets the animation containing the spirit drain animation frames.
+     *
+     * @return the sprite sheet containing the spirit drain animation frames
+     */
+    public Animation<TextureRegion> getSpiritDrainAnimation() {
+        return spiritDrainAnimation;
     }
 
     /**
@@ -1199,6 +1213,9 @@ public class Player extends CapsuleObstacle {
         this.swordEffectSpriteSheet315 = new TextureRegion(assets.getEntry( "chiyo:swordAttack315", Texture.class));
         this.dashEffectSpriteSheet = new TextureRegion(assets.getEntry( "momo:dashEffect", Texture.class));
         this.spiritDrainSpriteSheet = new TextureRegion(assets.getEntry("chiyo:spiritDrain", Texture.class));
+        TextureRegion[][] frames = spiritDrainSpriteSheet.split(spiritDrainSpriteSheet.getRegionWidth() / 11, spiritDrainSpriteSheet.getRegionHeight());
+        this.spiritDrainAnimation = new Animation<>(0.5f, frames[0]);
+
         this.momoDashSpriteSheet = new TextureRegion(assets.getEntry( "momo:dash", Texture.class));
         this.momoRunSpriteSheet = new TextureRegion(assets.getEntry( "momo:run", Texture.class));
         this.momoJumpSpriteSheet = new TextureRegion(assets.getEntry( "momo:jump", Texture.class));
