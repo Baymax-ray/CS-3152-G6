@@ -16,11 +16,12 @@ import edu.cornell.gdiac.game.GameCanvas;
 import edu.cornell.gdiac.game.UIOverlay;
 import edu.cornell.gdiac.game.obstacle.EffectObstacle;
 import edu.cornell.gdiac.game.obstacle.Obstacle;
-import edu.cornell.gdiac.game.obstacle.SwordWheelObstacle;
 import edu.cornell.gdiac.util.PooledList;
-import org.graalvm.compiler.virtual.phases.ea.EffectList;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Hashtable;
+import java.util.Iterator;
 
 public class Level {
 
