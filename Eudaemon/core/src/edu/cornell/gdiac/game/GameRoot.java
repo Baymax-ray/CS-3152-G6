@@ -13,6 +13,7 @@ public class GameRoot extends Game implements ScreenListener {
 	private GameState state;
 	private LevelScreen levelScreen;
 	private LoadingScreen loadingScreen;
+	private DeathScreen deathScreen;
 	private GameCanvas canvas;
 	private AssetDirectory assets;
 	private Sound backgroundDroneSound;
@@ -41,7 +42,7 @@ public class GameRoot extends Game implements ScreenListener {
 
 	@Override
 	public void exitScreen(Screen screen, int exitCode) {
-		if (screen == loadingScreen) {
+		if (screen == loadingScreen || screen == deathScreen) {
 			assets = loadingScreen.getAssets();
 			state = new GameState(assets);
 			if (levelScreen != null) levelScreen.dispose();
@@ -55,15 +56,22 @@ public class GameRoot extends Game implements ScreenListener {
 
 		if (screen instanceof LevelScreen) {
 			if (exitCode == ExitCode.RESET || exitCode == ExitCode.LOSE) { // TODO: Separate LOSE and RESET effects
-				screen.pause();
-				this.state.resetCurrentLevel();
-				setScreen(null);
-				levelScreen.dispose();
-				levelScreen = new LevelScreen(this.state.getCurrentLevel(), this.state.getActionBindings());
-
-				levelScreen.setScreenListener(this);
-				levelScreen.setCanvas(canvas);
-				setScreen(levelScreen);
+//				screen.pause();
+//				this.state.resetCurrentLevel();
+//				setScreen(null);
+//				levelScreen.dispose();
+//				levelScreen = new LevelScreen(this.state.getCurrentLevel(), this.state.getActionBindings());
+//
+//				levelScreen.setScreenListener(this);
+//				levelScreen.setCanvas(canvas);
+//				setScreen(levelScreen);
+				this.canvas = new GameCanvas();
+//				this.loadingScreen = new LoadingScreen("assets.json", canvas);
+				this.deathScreen = new DeathScreen("assets.json", canvas);
+				this.deathScreen.setScreenListener(this);
+				setScreen(deathScreen);
+//				this.loadingScreen.setScreenListener(this);
+//				setScreen(loadingScreen);
 			}
 
 			if (exitCode == ExitCode.WIN) {

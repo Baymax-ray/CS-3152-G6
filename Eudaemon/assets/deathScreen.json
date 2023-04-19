@@ -1,0 +1,7 @@
+{
+  "textures": {
+    "background": "backgrounds/tempDeathScreen.png",
+    "restart": "shared/restartButton.png",
+    "quit": "shared/quitButton.png"
+  }
+}

@@ -293,9 +293,9 @@ public class LoadingScreen implements Screen, InputProcessor, ControllerListener
 			Color tint = (pressState == 1 ? Color.GRAY: Color.WHITE);
 			canvas.draw(playButton, tint, playButton.getWidth()/2, playButton.getHeight()/2, 
 						centerX, centerY + playButton.getHeight()*BUTTON_SCALE+45F, 0, BUTTON_SCALE*scale, BUTTON_SCALE*scale);
-			canvas.draw(levelSelectButton, tint, levelSelectButton.getWidth()/2, levelSelectButton.getHeight()/2,
+			canvas.draw(levelSelectButton, Color.WHITE, levelSelectButton.getWidth()/2, levelSelectButton.getHeight()/2,
 					centerX, centerY+35F, 0, BUTTON_SCALE*scale, BUTTON_SCALE*scale);
-			canvas.draw(settingsButton, tint, settingsButton.getWidth()/2, settingsButton.getHeight()/2,
+			canvas.draw(settingsButton, Color.WHITE, settingsButton.getWidth()/2, settingsButton.getHeight()/2,
 					centerX, centerY-settingsButton.getHeight()*BUTTON_SCALE +25F, 0, BUTTON_SCALE*scale, BUTTON_SCALE*scale);
 
 		}
