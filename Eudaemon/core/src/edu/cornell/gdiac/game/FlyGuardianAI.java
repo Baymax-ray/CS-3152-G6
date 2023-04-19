@@ -149,10 +149,6 @@ public class FlyGuardianAI extends AIController{
                 }
                 break;
             case GUARD:
-                if (checkDetection()){
-                    state= FSMState.CHASE;
-                    needNewPath =true;
-                }
                 if (arrive()){
                     indexAlongList=(indexAlongList+1)%(guardianList.size()/2);
                     state= FSMState.STAY;

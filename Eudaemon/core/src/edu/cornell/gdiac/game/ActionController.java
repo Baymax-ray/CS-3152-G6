@@ -584,7 +584,7 @@ public class ActionController {
             EnumSet<EnemyAction> enemyAction = enemyActions.get(i);
             Enemy enemy = enemies[i];
             if (!enemy.isRemoved()) {
-                
+
                 for (EnemyAction action : enemyAction) {
 
                     if (action == EnemyAction.ATTACK) {
