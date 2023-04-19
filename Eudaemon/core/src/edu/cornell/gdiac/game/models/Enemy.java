@@ -397,28 +397,20 @@ public class Enemy extends CapsuleObstacle {
             case "FlyGuardian":
                 this.guardianTime = enemyData.getInt("guardianTime");
 //                JsonValue glist = json.get("guardianList");
-                JsonValue properties1 = json.get("properties");
-                Boolean vertMove = false;
-                int distMove = 0;
-                for (JsonValue property : properties1) {
-                    if (property.getString("name").equals("VertMove")) {
-                        vertMove = property.getBoolean("value");
-                    } else if (property.getString("name").equals("DistMove")) {
-                        distMove = property.getInt("value");
+                JsonValue fgjv = json.get("properties");
+                String value = null;
+                for (JsonValue property : fgjv) {
+                    if ("StopRelateToSelf".equals(property.getString("name"))) {
+                        value = property.getString("value");
+                        break;
                     }
                 }
-                if (vertMove) {
-                    this.guardianList.add((int) x);
-                    this.guardianList.add((int) y + distMove);
-                    this.guardianList.add((int) x);
-                    this.guardianList.add((int) y - distMove);
-                } else {
-                    this.guardianList.add((int) x + distMove);
-                    this.guardianList.add((int) y);
-                    this.guardianList.add((int) x - distMove);
-                    this.guardianList.add((int) y);
+                //loop over value and add numbers to guardianList
+                String[] values = value.split(",");
+                for (String s : values) {
+                    this.guardianList.add(Integer.parseInt(s));
                 }
-
+                //System.out.println(this.guardianList.size());
                 break;
             case "GoombaGuardian":
                 this.guardianTime = enemyData.getInt("guardianTime");

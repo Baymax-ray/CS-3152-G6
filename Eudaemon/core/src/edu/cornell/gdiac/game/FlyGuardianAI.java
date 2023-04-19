@@ -67,13 +67,21 @@ public class FlyGuardianAI extends AIController{
         Level.MyGridGraph graph=Level.getGridGraph();
         this.graph=graph;
         this.path = new DefaultGraphPath<>();
-        this.guardianList=enemy.getGuardianList();
-        for (int i=0;i<guardianList.size();i++){
-            if(i%2==1){//we need to flip y axis
-                int ny= graph.getHeight()-1 -guardianList.get(i);
-                guardianList.set(i,ny);
+        ArrayList<Integer> relative = enemy.getGuardianList();
+        this.guardianList=new ArrayList<>(relative.size());
+        float ex=enemy.getX();
+        float ey=enemy.getY();
+        int tx=level.levelToTileCoordinatesX(ex);
+        int ty=level.levelToTileCoordinatesY(ey);
+        for (int i=0;i<relative.size();i++){
+            if (i%2==0){
+                guardianList.add(relative.get(i)+tx);
+            }
+            else{
+                guardianList.add(relative.get(i)+ty);
             }
         }
+        //System.out.println(this.guardianList.size());
         this.guardianTime =enemy.getGuardianTime();
         this.indexAlongList=0;
 

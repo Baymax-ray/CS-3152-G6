@@ -584,15 +584,11 @@ public class ActionController {
             EnumSet<EnemyAction> enemyAction = enemyActions.get(i);
             Enemy enemy = enemies[i];
             if (!enemy.isRemoved()) {
-                if(enemy.getType().equals("Projectile")){
-                    enemy.backtoStart();
-                }
+                
                 for (EnemyAction action : enemyAction) {
 
                     if (action == EnemyAction.ATTACK) {
-                        //enemy.backtoStart();
                         createBullet(aiControllers.get(i).getVelocity(),enemy);
-                        //enemy.backtoStart();
                     } else if(action==EnemyAction.FLY){
                         enemy.setVelocity(aiControllers.get(i).getVelocity());
                         enemy.applyVelocity();

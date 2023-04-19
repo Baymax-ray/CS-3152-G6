@@ -161,6 +161,7 @@
          "name":"ObjectLayer",
          "objects":[
                 {
+                 "class":"",
                  "gid":87,
                  "height":22.3412749517065,
                  "id":71,
@@ -172,13 +173,13 @@
                          "value":"Up"
                         }],
                  "rotation":0,
-                 "type":"",
                  "visible":true,
                  "width":22.8778707877227,
                  "x":964.67845171727,
                  "y":1083.5313439605
                 }, 
                 {
+                 "class":"",
                  "gid":87,
                  "height":22.3413,
                  "id":72,
@@ -190,13 +191,13 @@
                          "value":"Up"
                         }],
                  "rotation":0,
-                 "type":"",
                  "visible":true,
                  "width":22.8779,
                  "x":995.43490032433,
                  "y":1080.9002184287
                 }, 
                 {
+                 "class":"",
                  "gid":87,
                  "height":22.3413,
                  "id":73,
@@ -208,13 +209,13 @@
                          "value":"Up"
                         }],
                  "rotation":0,
-                 "type":"",
                  "visible":true,
                  "width":22.8779,
                  "x":1030.28822591248,
                  "y":1083.80466222771
                 }, 
                 {
+                 "class":"",
                  "gid":87,
                  "height":22.3413,
                  "id":74,
@@ -226,13 +227,13 @@
                          "value":"Up"
                         }],
                  "rotation":0,
-                 "type":"",
                  "visible":true,
                  "width":22.8779,
                  "x":1058.89488049322,
                  "y":1084.35850442617
                 }, 
                 {
+                 "class":"",
                  "gid":87,
                  "height":22.3413,
                  "id":75,
@@ -244,13 +245,13 @@
                          "value":"Up"
                         }],
                  "rotation":0,
-                 "type":"",
                  "visible":true,
                  "width":22.8779,
                  "x":1091.92209083845,
                  "y":1082.79393258041
                 }, 
                 {
+                 "class":"",
                  "gid":87,
                  "height":22.3413,
                  "id":76,
@@ -262,13 +263,13 @@
                          "value":"Up"
                         }],
                  "rotation":0,
-                 "type":"",
                  "visible":true,
                  "width":22.8779,
                  "x":1124.8096947416,
                  "y":1085.32374826527
                 }, 
                 {
+                 "class":"",
                  "gid":87,
                  "height":22.3413,
                  "id":77,
@@ -280,13 +281,13 @@
                          "value":"Up"
                         }],
                  "rotation":0,
-                 "type":"",
                  "visible":true,
                  "width":22.8779,
                  "x":1154.80608071919,
                  "y":1082.79393258041
                 }, 
                 {
+                 "class":"",
                  "gid":87,
                  "height":22.3413,
                  "id":78,
@@ -298,13 +299,13 @@
                          "value":"Up"
                         }],
                  "rotation":0,
-                 "type":"",
                  "visible":true,
                  "width":22.8779,
                  "x":1187.33228238164,
                  "y":1083.5167370618
                 }, 
                 {
+                 "class":"",
                  "gid":87,
                  "height":22.3413,
                  "id":79,
@@ -316,13 +317,13 @@
                          "value":"Up"
                         }],
                  "rotation":0,
-                 "type":"",
                  "visible":true,
                  "width":22.8779,
                  "x":933.266507173834,
                  "y":1085.68515050596
                 }, 
                 {
+                 "class":"",
                  "gid":87,
                  "height":22.3413,
                  "id":80,
@@ -334,13 +335,13 @@
                          "value":"Up"
                         }],
                  "rotation":0,
-                 "type":"",
                  "visible":true,
                  "width":22.8779,
                  "x":898.933294307915,
                  "y":1083.15533482111
                 }, 
                 {
+                 "class":"",
                  "gid":87,
                  "height":22.3413,
                  "id":81,
@@ -352,13 +353,13 @@
                          "value":"Up"
                         }],
                  "rotation":0,
-                 "type":"",
                  "visible":true,
                  "width":22.8779,
                  "x":865.684288164077,
                  "y":1084.23954154319
                 }, 
                 {
+                 "class":"",
                  "gid":87,
                  "height":22.3413,
                  "id":82,
@@ -370,13 +371,13 @@
                          "value":"Up"
                         }],
                  "rotation":0,
-                 "type":"",
                  "visible":true,
                  "width":22.8779,
                  "x":834.603695464402,
                  "y":1083.15533482111
                 }, 
                 {
+                 "class":"",
                  "gid":87,
                  "height":22.3413,
                  "id":83,
@@ -388,13 +389,13 @@
                          "value":"Up"
                         }],
                  "rotation":0,
-                 "type":"",
                  "visible":true,
                  "width":22.8779,
                  "x":802.800298283339,
                  "y":1083.5167370618
                 }, 
                 {
+                 "class":"",
                  "gid":87,
                  "height":22.3413,
                  "id":84,
@@ -406,13 +407,13 @@
                          "value":"Up"
                         }],
                  "rotation":0,
-                 "type":"",
                  "visible":true,
                  "width":22.8779,
                  "x":770.274096620889,
                  "y":1083.15533482111
                 }, 
                 {
+                 "class":"",
                  "gid":87,
                  "height":22.3413,
                  "id":85,
@@ -424,13 +425,13 @@
                          "value":"Up"
                         }],
                  "rotation":0,
-                 "type":"",
                  "visible":true,
                  "width":22.8779,
                  "x":738.470699439827,
                  "y":1083.87813930249
                 }, 
                 {
+                 "class":"",
                  "gid":87,
                  "height":22.3413,
                  "id":86,
@@ -442,13 +443,13 @@
                          "value":"Up"
                         }],
                  "rotation":0,
-                 "type":"",
                  "visible":true,
                  "width":22.8779,
                  "x":578.022447365349,
                  "y":1148.57588993663
                 }, 
                 {
+                 "class":"",
                  "gid":87,
                  "height":22.3413,
                  "id":87,
@@ -460,13 +461,13 @@
                          "value":"Up"
                         }],
                  "rotation":0,
-                 "type":"",
                  "visible":true,
                  "width":22.8779,
                  "x":546.339939444722,
                  "y":1149.40964014507
                 }, 
                 {
+                 "class":"",
                  "gid":87,
                  "height":22.3413,
                  "id":88,
@@ -478,13 +479,13 @@
                          "value":"Up"
                         }],
                  "rotation":0,
-                 "type":"",
                  "visible":true,
                  "width":22.8779,
                  "x":515.491181732533,
                  "y":1146.90838951976
                 }, 
                 {
+                 "class":"",
                  "gid":87,
                  "height":22.3413,
                  "id":89,
@@ -496,13 +497,13 @@
                          "value":"Up"
                         }],
                  "rotation":0,
-                 "type":"",
                  "visible":true,
                  "width":22.8779,
                  "x":484.642424020344,
                  "y":1147.7421397282
                 }, 
                 {
+                 "class":"",
                  "gid":87,
                  "height":22.3413,
                  "id":90,
@@ -514,13 +515,13 @@
                          "value":"Left"
                         }],
                  "rotation":0,
-                 "type":"",
                  "visible":true,
                  "width":22.8779,
                  "x":1187.4938497332,
                  "y":826.74830947974
                 }, 
                 {
+                 "class":"",
                  "gid":87,
                  "height":22.3413,
                  "id":91,
@@ -532,13 +533,13 @@
                          "value":"Left"
                         }],
                  "rotation":0,
-                 "type":"",
                  "visible":true,
                  "width":22.8779,
                  "x":1187.4938497332,
                  "y":795.89955176755
                 }, 
                 {
+                 "class":"Enemy",
                  "gid":86,
                  "height":25.393939393939,
                  "id":92,
@@ -550,13 +551,13 @@
                          "value":"Up"
                         }],
                  "rotation":0,
-                 "type":"Enemy",
                  "visible":true,
                  "width":25.2095422308191,
                  "x":1189.20051579626,
                  "y":1087.48742746615
                 }, 
                 {
+                 "class":"Enemy",
                  "gid":86,
                  "height":25.3939,
                  "id":93,
@@ -568,129 +569,109 @@
                          "value":"Up"
                         }],
                  "rotation":0,
-                 "type":"Enemy",
                  "visible":true,
                  "width":25.2095,
                  "x":353.922287319116,
                  "y":829.839226694593
                 }, 
                 {
+                 "class":"Enemy",
                  "gid":84,
                  "height":26.6666666666666,
                  "id":96,
                  "name":"Goomba",
                  "rotation":0,
-                 "type":"Enemy",
                  "visible":true,
                  "width":29,
                  "x":1378.33333333333,
                  "y":766
                 }, 
                 {
+                 "class":"Enemy",
                  "gid":89,
                  "height":29.25,
                  "id":101,
                  "name":"Fly",
                  "rotation":0,
-                 "type":"Enemy",
                  "visible":true,
                  "width":28.6875,
                  "x":610,
                  "y":30.5625
                 }, 
                 {
+                 "class":"Enemy",
                  "gid":81,
                  "height":25.5,
                  "id":102,
                  "name":"FlyGuardian",
                  "properties":[
                         {
-                         "name":"DistMove",
-                         "type":"int",
-                         "value":4
-                        }, 
-                        {
-                         "name":"VertMove",
-                         "type":"bool",
-                         "value":true
+                         "name":"StopRelateToSelf",
+                         "type":"string",
+                         "value":"2,0,0,1,0,-1"
                         }],
                  "rotation":0,
-                 "type":"Enemy",
                  "visible":true,
                  "width":20.5,
                  "x":773.5,
                  "y":349
                 }, 
                 {
+                 "class":"Enemy",
                  "gid":81,
                  "height":25.5,
                  "id":103,
                  "name":"FlyGuardian",
                  "properties":[
                         {
-                         "name":"DistMove",
-                         "type":"int",
-                         "value":4
-                        }, 
-                        {
-                         "name":"VertMove",
-                         "type":"bool",
-                         "value":true
+                         "name":"StopRelateToSelf",
+                         "type":"string",
+                         "value":"-1,0,0,-2,0,0"
                         }],
                  "rotation":0,
-                 "type":"Enemy",
                  "visible":true,
                  "width":20.5,
                  "x":1284.41666666667,
                  "y":411.25
                 }, 
                 {
+                 "class":"Enemy",
                  "gid":81,
                  "height":25.5,
                  "id":104,
                  "name":"FlyGuardian",
                  "properties":[
                         {
-                         "name":"DistMove",
-                         "type":"int",
-                         "value":4
-                        }, 
-                        {
-                         "name":"VertMove",
-                         "type":"bool",
-                         "value":true
+                         "name":"StopRelateToSelf",
+                         "type":"string",
+                         "value":"0,3,0,-3,-1,0"
                         }],
                  "rotation":0,
-                 "type":"Enemy",
                  "visible":true,
                  "width":20.5,
                  "x":708.416666666667,
                  "y":859.25
                 }, 
                 {
+                 "class":"Enemy",
                  "gid":81,
                  "height":25.5,
                  "id":105,
                  "name":"FlyGuardian",
                  "properties":[
                         {
-                         "name":"DistMove",
-                         "type":"int",
-                         "value":4
-                        }, 
-                        {
-                         "name":"VertMove",
-                         "type":"bool",
-                         "value":true
+                         "name":"StopRelateToSelf",
+                         "type":"string",
+                         "value":"2,3,4,3,0,-1"
                         }],
                  "rotation":0,
-                 "type":"Enemy",
                  "visible":true,
                  "width":20.5,
                  "x":387.083333333333,
                  "y":505.916666666667
                 }, 
                 {
+                 "class":"Enemy",
                  "gid":83,
                  "height":28,
                  "id":106,
@@ -707,37 +688,37 @@
                          "value":13
                         }],
                  "rotation":0,
-                 "type":"Enemy",
                  "visible":true,
                  "width":28.5,
                  "x":418.5,
                  "y":1086
                 }, 
                 {
+                 "class":"",
                  "gid":88,
                  "height":23.5,
                  "id":107,
                  "name":"StartingPoint",
                  "rotation":0,
-                 "type":"",
                  "visible":true,
                  "width":27,
                  "x":259,
                  "y":1084
                 }, 
                 {
+                 "class":"Enemy",
                  "gid":85,
                  "height":25,
                  "id":108,
                  "name":"Fast",
                  "rotation":0,
-                 "type":"Enemy",
                  "visible":true,
                  "width":22,
                  "x":964.5,
                  "y":442
                 }, 
                 {
+                 "class":"",
                  "height":63,
                  "id":109,
                  "name":"Exit",
@@ -748,7 +729,6 @@
                          "value":"level0"
                         }],
                  "rotation":0,
-                 "type":"",
                  "visible":true,
                  "width":63.875,
                  "x":225.3030831879,
@@ -764,7 +744,7 @@
  "nextobjectid":110,
  "orientation":"orthogonal",
  "renderorder":"right-down",
- "tiledversion":"1.10.1",
+ "tiledversion":"1.9.2",
  "tileheight":32,
  "tilesets":[
         {
@@ -773,6 +753,6 @@
         }],
  "tilewidth":32,
  "type":"map",
- "version":"1.10",
+ "version":"1.9",
  "width":50
 }

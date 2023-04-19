@@ -3,16 +3,19 @@
         "height": 4300,
         "width": 2
     },
-    "activeFile": "level0.json",
+    "activeFile": "level1.json",
     "expandedProjectPaths": [
-        "Templates",
-        "."
+        ".",
+        "Templates"
     ],
     "fileStates": {
-        "/Users/neelin2/coding/cs3152/Eudaemon/CS-3152-G6/Eudaemon/assets/EudaemonTileset.json": {
+        "C:/Users/neelin2/coding/cs3152/Eudaemon/CS-3152-G6/Eudaemon/assets/EudaemonTileset.json": {
             "scaleInDock": 1
         },
-        "C:/Users/neelin2/coding/cs3152/Eudaemon/CS-3152-G6/Eudaemon/assets/EudaemonTileset.json": {
+        "D:/Cornell 康奈尔/课程 Class/2022-2023 Spring/CS 3152/CS-3152-G6/Eudaemon/assets/EudaemonTileset.json": {
+            "scaleInDock": 1
+        },
+        "D:/Users/neelin2/coding/cs3152/Eudaemon/CS-3152-G6/Eudaemon/assets/EudaemonTileset.json": {
             "scaleInDock": 1
         },
         "F:/Programming/School/CS 3152/Eudaemon/CS-3152-G6/Eudaemon/assets/EudaemonTileset.json": {
@@ -35,8 +38,8 @@
             "scale": 1.0348,
             "selectedLayer": 3,
             "viewCenter": {
-                "x": 846.0572091225358,
-                "y": 229.99613451874757
+                "x": 776.4785465790492,
+                "y": 639.2539621182838
             }
         },
         "level0.tmj": {
@@ -54,8 +57,8 @@
             "scale": 0.6876,
             "selectedLayer": 3,
             "viewCenter": {
-                "x": 928.5922047702154,
-                "y": 751.890634089587
+                "x": 666.8121000581734,
+                "y": 748.2547993019199
             }
         }
     },
@@ -72,8 +75,8 @@
     "project": "untitled.tiled-project",
     "property.type": "string",
     "recentFiles": [
-        "level1.json",
         "level0.json",
+        "level1.json",
         "F:/Programming/School/CS 3152/Eudaemon/CS-3152-G6/Eudaemon/assets/EudaemonTileset.json",
         "level0.tmj",
         "F:/Users/neelin2/coding/cs3152/Eudaemon/CS-3152-G6/Eudaemon/assets/EudaemonTileset.json"
