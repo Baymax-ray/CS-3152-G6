@@ -419,7 +419,7 @@ public class Level {
         JsonValue objects = objectLayer.get("objects");
 
         for (JsonValue object : objects) {
-            if (object.getString("class").equals("Enemy")) {
+            if (object.getString("type").equals("Enemy")) {
                 float x = (int) (object.getInt("x") / 32);
                 float y = heightInTiles - (int) (object.getInt("y") / 32);
                 enemies.add(new Enemy(object, assets,x,y));
