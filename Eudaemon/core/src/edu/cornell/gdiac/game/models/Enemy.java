@@ -161,6 +161,8 @@ public class Enemy extends CapsuleObstacle {
      */
     private Sound swordKillingSound;
     private long swordKillingSoundId = -1;
+    private Sound swordHittingSound;
+    private long swordHittingSoundId = -1;
     private JsonValue bullet;
     private float projectileEnemyRotation;
     private String projectileEnemyDirection;
@@ -502,6 +504,7 @@ public class Enemy extends CapsuleObstacle {
 
         //Sound Effects
         this.swordKillingSound = Gdx.audio.newSound(Gdx.files.internal("audio/temp-sword-killing.mp3"));
+        this.swordHittingSound = Gdx.audio.newSound(Gdx.files.internal("audio/temp-non-killing-sound.mp3"));
 
         //Sensor. Wtf is this?
         //used for collision detection
@@ -630,7 +633,13 @@ public class Enemy extends CapsuleObstacle {
             player.increaseSpiritByKill(); //player gain some spirit when the enemy killed
 //            System.out.println("kill an enemy!");
         }
-        swordKillingSoundId = playSound(swordKillingSound, swordKillingSoundId, 0.05F);
+        if(hearts == 0){
+            swordKillingSoundId = playSound(swordKillingSound, swordKillingSoundId, 0.5F);
+        }
+        else{
+            swordHittingSoundId = playSound(swordHittingSound, swordHittingSoundId, 0.05F);
+        }
+
     }
 
     public long playSound(Sound sound, long soundId, float volume) {

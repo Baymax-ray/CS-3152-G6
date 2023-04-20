@@ -483,9 +483,7 @@ public class ActionController {
                 player.setTexture(current);
                 player.setOyOffset(-30);
             } else if (player.getBodyVelocityX() != 0) {
-//                momoRunSoundId = playRunSound( momoRunSound, momoRunSoundId, 10F );
-                momoRunSound.setVolume(momoRunSoundId, 10F);
-                momoRunSound.setLooping(momoRunSoundId, true);
+//                momoRunSoundId = playSound( momoRunSound, momoRunSoundId, 10F );
                 TextureRegion current = (TextureRegion) (animations.get("momoRun")).getKeyFrame(currentFrame); // Gets the current frame of the animation
                 tickFrameSwitch = 5;
                 maxFrame = 5;
@@ -493,12 +491,11 @@ public class ActionController {
                 player.setOyOffset(-35);
             } else {
                 player.setTexture(player.getMomoTexture());
-                momoRunSound.setLooping(momoRunSoundId, false);
                 player.setOyOffset(-160);
             }
         } else {
             if (player.getBodyVelocityX() != 0) {
-//                chiyoRunSoundId = playRunSound( chiyoRunSound, chiyoRunSoundId, 10F );
+//                chiyoRunSoundId = playSound( chiyoRunSound, chiyoRunSoundId, 10F );
                 TextureRegion current = (TextureRegion) (animations.get("chiyoRun")).getKeyFrame(currentFrame); // Gets the current frame of the animation
                 tickFrameSwitch = 4;
                 maxFrame = 7;
