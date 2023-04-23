@@ -133,8 +133,8 @@ public class CollisionController implements ContactListener {
 
         if (level.getPlayer().getSpiritSensorName().equals(fd1) && bd2 instanceof Enemy || level.getPlayer().getSpiritSensorName().equals(fd2) && bd1 instanceof Enemy) {
             Enemy enemy = (Enemy) (bd1 instanceof Enemy ? bd1 : bd2);
-
-             level.getPlayer().getEnemiesInSpiritRange().add(enemy);
+            if (enemy.getSpiritRemain()>0){
+             level.getPlayer().getEnemiesInSpiritRange().add(enemy);}
         }
 
         if (bd1 instanceof Player && !fix1.isSensor() && bd2 instanceof Exit ||
