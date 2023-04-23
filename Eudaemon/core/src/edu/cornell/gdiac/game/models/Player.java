@@ -1305,5 +1305,9 @@ public class Player extends CapsuleObstacle {
         return sound.play(volume);
     }
 
+    public void dispose() {
+        playerDamageSound.dispose();
+    }
+
 
 }

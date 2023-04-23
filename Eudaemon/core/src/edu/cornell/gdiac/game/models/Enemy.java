@@ -647,5 +647,9 @@ public class Enemy extends CapsuleObstacle {
         return sound.play(volume);
     }
 
+    public void dispose() {
+        this.swordHittingSound.dispose();
+        this.swordKillingSound.dispose();
+    }
 
 }

@@ -25,7 +25,7 @@ import java.util.Iterator;
 
 public class Level {
 
-    private static MyGridGraph gridGraph;
+    private MyGridGraph gridGraph;
     //#region FINAL FIELDS
     private final Player player;
     private ArrayList<Enemy> enemies ;
@@ -154,7 +154,7 @@ public class Level {
         this.debug = debug;
     }
 
-    public static MyGridGraph getGridGraph(){
+    public MyGridGraph getGridGraph(){
         return gridGraph;
     }
 
@@ -802,10 +802,17 @@ public class Level {
     }
 
     public void dispose() {
+        world.setContactListener(null);
         for(Obstacle obj : objects) {
             obj.deactivatePhysics(world);
         }
+        for (Enemy enemy : enemies) {
+            enemy.dispose();
+        }
+        gridGraph = null;
+        player.dispose();
         objects.clear();
+        spikes.clear();
         effectPool.clear();
         addQueue.clear();
         world.dispose();

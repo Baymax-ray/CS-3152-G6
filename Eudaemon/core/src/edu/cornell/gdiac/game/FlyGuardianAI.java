@@ -64,7 +64,7 @@ public class FlyGuardianAI extends AIController{
         this.tileSize=this.level.gettileSize();
         Heuristic<Level.MyNode> heuristic = new EuclideanDistance<Level.MyNode>();
         this.heuristic=heuristic;
-        Level.MyGridGraph graph=Level.getGridGraph();
+        Level.MyGridGraph graph=level.getGridGraph();
         this.graph=graph;
         this.path = new DefaultGraphPath<>();
         ArrayList<Integer> relative = enemy.getGuardianList();

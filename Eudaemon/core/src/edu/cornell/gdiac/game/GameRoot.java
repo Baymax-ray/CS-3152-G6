@@ -31,6 +31,7 @@ public class GameRoot extends Game implements ScreenListener {
 		setScreen(null);
 		levelScreen.dispose();
 		loadingScreen.dispose();
+		deathScreen.dispose();
 		assets.unloadAssets();
 		assets.dispose();
 		assets = null;
@@ -42,41 +43,56 @@ public class GameRoot extends Game implements ScreenListener {
 
 	@Override
 	public void exitScreen(Screen screen, int exitCode) {
-		if (screen == loadingScreen || screen == deathScreen) {
+		if (screen == loadingScreen) {
 			assets = loadingScreen.getAssets();
 			state = new GameState(assets);
+
 			if (levelScreen != null) levelScreen.dispose();
 			this.levelScreen = new LevelScreen(this.state.getCurrentLevel(), this.state.getActionBindings());
 			levelScreen.setScreenListener(this);
 			levelScreen.setCanvas(canvas);
+
+			if (this.deathScreen != null) this.deathScreen.dispose();
+			this.deathScreen = new DeathScreen("assets.json", canvas);
+			this.deathScreen.setScreenListener(this);
+
+
 			setScreen(levelScreen);
 //			backgroundDroneSound = Gdx.audio.newSound(Gdx.files.internal("audio/temp-background-drone.mp3"));
 //			backgroundDroneSound.loop();
 		}
 
-		if (screen instanceof LevelScreen) {
-			if (exitCode == ExitCode.RESET || exitCode == ExitCode.LOSE) { // TODO: Separate LOSE and RESET effects
-//				screen.pause();
-//				this.state.resetCurrentLevel();
-//				setScreen(null);
-//				levelScreen.dispose();
-//				levelScreen = new LevelScreen(this.state.getCurrentLevel(), this.state.getActionBindings());
-//
-//				levelScreen.setScreenListener(this);
-//				levelScreen.setCanvas(canvas);
-//				setScreen(levelScreen);
-				this.canvas = new GameCanvas();
-//				this.loadingScreen = new LoadingScreen("assets.json", canvas);
-				this.deathScreen = new DeathScreen("assets.json", canvas);
-				this.deathScreen.setScreenListener(this);
+		if (screen == deathScreen) {
+			if (exitCode == ExitCode.RESET) {
+				this.state.resetCurrentLevel();
+				if (levelScreen != null) levelScreen.dispose();
+				levelScreen = new LevelScreen(this.state.getCurrentLevel(), this.state.getActionBindings());
+				levelScreen.setScreenListener(this);
+				levelScreen.setCanvas(canvas);
+				setScreen(levelScreen);
+			}
+		}
+
+		if (screen == levelScreen) {
+			if (exitCode == ExitCode.RESET) {
+				levelScreen.pause();
+
+				this.state.resetCurrentLevel();
+
+				levelScreen.dispose();
+				levelScreen = new LevelScreen(this.state.getCurrentLevel(), this.state.getActionBindings());
+				levelScreen.setScreenListener(this);
+				levelScreen.setCanvas(canvas);
+				setScreen(levelScreen);
+			}
+			if (exitCode == ExitCode.LOSE) {
+				levelScreen.pause();
+
 				setScreen(deathScreen);
-//				this.loadingScreen.setScreenListener(this);
-//				setScreen(loadingScreen);
 			}
 
 			if (exitCode == ExitCode.WIN) {
 				screen.pause();
-				setScreen(null);
 				levelScreen.dispose();
 
 				this.state.setCurrentLevel(state.getCurrentLevel().getExit().getNextLevel());

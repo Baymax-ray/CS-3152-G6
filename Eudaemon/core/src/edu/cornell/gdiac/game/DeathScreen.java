@@ -54,8 +54,6 @@ public class DeathScreen implements Screen, InputProcessor, ControllerListener {
 	// There are TWO asset managers.  One to load the loading screen.  The other to load the assets
 	/** Internal assets for this loading screen */
 	private final AssetDirectory internal;
-	/** The actual assets to be loaded */
-	private final AssetDirectory assets;
 
 	/** Background texture for start-up */
 	private final Texture background;
@@ -116,18 +114,6 @@ public class DeathScreen implements Screen, InputProcessor, ControllerListener {
 	public boolean restartIsReady() {
 		return pressState == 2;
 	}
-	/**
-	 * Returns the asset directory produced by this loading screen
-	 *
-	 * This asset loader is NOT owned by this loading scene, so it persists even
-	 * after the scene is disposed.  It is your responsbility to unload the
-	 * assets in this directory.
-	 *
-	 * @return the asset directory produced by this loading screen
-	 */
-	public AssetDirectory getAssets() {
-		return assets;
-	}
 
 	/**
 	 * Creates a LoadingScreen with the default budget, size and position.
@@ -177,9 +163,6 @@ public class DeathScreen implements Screen, InputProcessor, ControllerListener {
 			controller.addListener( this );
 		}
 
-		// Start loading the real assets
-		assets = new AssetDirectory( file );
-		assets.loadAssets();
 		active = true;
 	}
 	

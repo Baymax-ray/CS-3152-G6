@@ -58,7 +58,7 @@ public class FlyAI extends AIController{
         this.enemy=super.enemy;
         this.tileSize=this.level.gettileSize();
         this.heuristic= new EuclideanDistance();
-        this.graph= Level.getGridGraph();
+        this.graph= level.getGridGraph();
         this.path = new DefaultGraphPath<>();
         float ey=enemy.getY();
         float ex=enemy.getX();

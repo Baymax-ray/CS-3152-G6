@@ -133,8 +133,8 @@ public class LevelScreen implements Screen {
     @Override
     public void dispose() {
         // TODO: dispose of everything that needs it to prevent memory leaks
-        this.level.getWorld().setContactListener(null);
         collisionController.dispose();
+        actionController.dispose();
         aiControllers.clear();
         enemyActions.clear();
         canvas = null;

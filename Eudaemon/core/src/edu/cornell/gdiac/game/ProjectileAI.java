@@ -30,7 +30,7 @@ public class ProjectileAI extends AIController{
         this.level=super.level;
         this.enemy=super.enemy;
         this.tileSize=this.level.gettileSize();
-        Level.MyGridGraph graph=Level.getGridGraph();
+        Level.MyGridGraph graph=level.getGridGraph();
         this.graph=graph;
         this.CoolDown= enemy.getAttackCooldown();
         this.detectDistance= enemy.getDetectDistance();

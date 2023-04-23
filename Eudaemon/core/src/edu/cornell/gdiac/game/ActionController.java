@@ -8,6 +8,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Filter;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.JsonValue;
+import com.badlogic.gdx.utils.ObjectMap;
 import edu.cornell.gdiac.game.models.*;
 import edu.cornell.gdiac.game.obstacle.EffectObstacle;
 import edu.cornell.gdiac.game.obstacle.SwordWheelObstacle;
@@ -17,7 +18,7 @@ import java.util.*;
 
 public class ActionController {
 
-    private final Level level;
+    private Level level;
     private final Enemy[] enemies;
     private final Player player;
 
@@ -34,7 +35,7 @@ public class ActionController {
      * Each key represents an animation name, and the associated value is a 2D TextureRegion array
      * with rows representing different animation states and columns representing individual frames.
      */
-    private final HashMap<String, Animation> animations;
+    private final ObjectMap<String, Animation> animations;
 
     /**
      * The current animation TextureRegion.
@@ -108,7 +109,7 @@ public class ActionController {
         enemies = level.getEnemies();
         player = level.getPlayer();
         this.level = level;
-        animations = new HashMap<>();
+        animations = new ObjectMap<>();
         previousX = 0;
         currentX = 0;
         movedDuringLastFrame = false;
@@ -807,6 +808,18 @@ public class ActionController {
 //        sound.setVolume(soundId, volume);
 //        return sound.loop();
 //    }
+
+    public void dispose() {
+        jumpSound.dispose();
+        chiyoRunSound.dispose();
+        dashSound.dispose();
+        smallImpactSound.dispose();
+        impactSound.dispose();
+        momoRunSound.dispose();
+        playerChiyoTransformSound.dispose();
+        playerMomoTransformSound.dispose();
+        swordSwipeSound.dispose();
+    }
 }
 
 

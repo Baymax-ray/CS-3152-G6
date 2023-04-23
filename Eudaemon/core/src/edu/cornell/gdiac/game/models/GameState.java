@@ -1,7 +1,6 @@
 package edu.cornell.gdiac.game.models;
 
 import com.badlogic.gdx.utils.JsonValue;
-import com.badlogic.gdx.utils.Json;
 import edu.cornell.gdiac.assets.AssetDirectory;
 
 import java.util.HashMap;
@@ -26,7 +25,7 @@ public class GameState {
                 currentLevel = level;
             }
         }
-
+        this.levels.get(currentLevelName).dispose();
         this.levels.put(currentLevelName, new Level(currentLevel, tiles, assets));
     }
 
