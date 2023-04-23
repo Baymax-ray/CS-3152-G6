@@ -813,30 +813,6 @@ public class Level {
         return result;
     }
 
-    private void enemyHitByPlayer(int i) {
-        Enemy enemy = enemies.get(i);
-        if(enemy.enemyCanGetAttack){
-            enemy.hitBySword(player);
-            enemy.enemyCanGetAttack = false;
-        }
-        //create hit by sword effect
-        float effectAngle = (float) Math.toRadians(player.getAngleFacing());
-        float pOffsetX = 0.0f;
-        float pOffsetY = 0.0f;
-        float sx = 0.02f;
-        Vector2 scale = new Vector2(1f, 1f);
-//        EffectObstacle dashAnimate = new EffectObstacle(enemy.getX(), enemy.getY(), enemy.getBloodEffect().getRegionWidth(),
-//                enemy.getBloodEffect().getRegionHeight(), sx, 0.02f, effectAngle,
-//                pOffsetX, pOffsetY,17, 1,true,
-//                "dashEffect", enemy, 0.35f,
-//                scale, enemy.getBloodEffect(),3);
-//        this.addQueuedObject(dashAnimate);
-
-        if (!enemy.isActive()){
-//                System.out.println("removing enemy" + enemy.getType());
-            enemies = removeEnemy(enemies, i);}
-    }
-
     public void dispose() {
         for(Obstacle obj : objects) {
             obj.deactivatePhysics(world);

@@ -299,8 +299,6 @@ public class Enemy extends CapsuleObstacle {
         return fastGoombaLeftSpriteSheet;
     }
 
-    public boolean enemyCanGetAttack = false;
-
     //#endregion
 
     /**

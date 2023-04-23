@@ -18,6 +18,8 @@ import java.util.Random;
 public class FlyAI extends AIController{
     private static final int maxWait = 10;
     private static final int detectDistance=5;
+    private final int startX;
+    private final int startY;
     private final float tileSize;
     private final Enemy enemy;
     private final Level level;
@@ -62,6 +64,12 @@ public class FlyAI extends AIController{
         Level.MyGridGraph graph=Level.getGridGraph();
         this.graph=graph;
         this.path = new DefaultGraphPath<>();
+        float ey=enemy.getY();
+        float ex=enemy.getX();
+        int ty=level.levelToTileCoordinatesY(ey);
+        int tx=level.levelToTileCoordinatesX(ex);
+        this.startX=tx;
+        this.startY=ty;
     }
 
     @Override
@@ -175,13 +183,13 @@ public class FlyAI extends AIController{
                 int ny=ty;
                 randomInt = rand.nextInt();
                 if (ticks%30==1) {
-                    if (randomInt % 4 == 0 && level.isAirAt(tx, ty - 1)) {
+                    if (randomInt % 4 == 0 && level.isAirAt(tx, ty - 1)&&Math.abs(ty-startY)<=4) {
                         ny = ny - 1;
-                    } else if (randomInt % 4 == 1 && level.isAirAt(tx, ty + 1)) {
+                    } else if (randomInt % 4 == 1 && level.isAirAt(tx, ty + 1)&&Math.abs(ty-startY)<=4) {
                         ny = ny + 1;
-                    } else if (randomInt % 4 == 2 && level.isAirAt(tx - 1, ty)) {
+                    } else if (randomInt % 4 == 2 && level.isAirAt(tx - 1, ty)&&Math.abs(tx-startX)<=4) {
                         nx = nx - 1;
-                    } else if (randomInt % 4 == 3 && level.isAirAt(tx + 1, ty)) {
+                    } else if (randomInt % 4 == 3 && level.isAirAt(tx + 1, ty)&&Math.abs(tx-startX)<=4) {
                         nx = nx + 1;
                     } else {break;}
 
