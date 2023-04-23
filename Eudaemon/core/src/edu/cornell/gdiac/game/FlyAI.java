@@ -1,12 +1,10 @@
 package edu.cornell.gdiac.game;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.ai.pfa.DefaultGraphPath;
 import com.badlogic.gdx.ai.pfa.GraphPath;
 import com.badlogic.gdx.ai.pfa.Heuristic;
 import com.badlogic.gdx.ai.pfa.indexed.IndexedAStarPathFinder;
 import com.badlogic.gdx.ai.pfa.indexed.IndexedGraph;
-import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.math.Vector2;
 import edu.cornell.gdiac.game.models.Enemy;
 import edu.cornell.gdiac.game.models.EnemyAction;
@@ -18,11 +16,11 @@ import java.util.Random;
 public class FlyAI extends AIController{
     private static final int maxWait = 10;
     private static final int detectDistance=5;
-    private final int startX;
-    private final int startY;
     private final float tileSize;
     private final Enemy enemy;
     private final Level level;
+    private int anchorX;
+    private int anchorY;
     private int ticks=0;
     private Vector2 v;
     private FSMState state;
@@ -59,17 +57,13 @@ public class FlyAI extends AIController{
         this.level=super.level;
         this.enemy=super.enemy;
         this.tileSize=this.level.gettileSize();
-        Heuristic<Level.MyNode> heuristic = new EuclideanDistance();
-        this.heuristic=heuristic;
-        Level.MyGridGraph graph=Level.getGridGraph();
-        this.graph=graph;
+        this.heuristic= new EuclideanDistance();
+        this.graph= Level.getGridGraph();
         this.path = new DefaultGraphPath<>();
         float ey=enemy.getY();
         float ex=enemy.getX();
-        int ty=level.levelToTileCoordinatesY(ey);
-        int tx=level.levelToTileCoordinatesX(ex);
-        this.startX=tx;
-        this.startY=ty;
+        this.anchorX = level.levelToTileCoordinatesX(ex);
+        this.anchorY = level.levelToTileCoordinatesY(ey);
     }
 
     @Override
@@ -88,9 +82,6 @@ public class FlyAI extends AIController{
         // Pathfinding
         markGoal();
         MoveAlongPathToGoal();
-        if (state == FSMState.CHASE){
-//            System.out.println("Chasing, the goal is"+goal[0]+":"+goal[1]);
-        }
 
         enemyAction.add(move);
 
@@ -142,13 +133,20 @@ public class FlyAI extends AIController{
                 }
                 else if(sameCell()){
                     state= FSMState.CHASE_close;
+                    this.WanderWait=0;
                 }
                 else if (!checkDetection()){
                     WanderWait++;
                     if (WanderWait>maxWait){
                         this.WanderWait=0;
                         state= FSMState.WANDER;
+                        float ey=enemy.getY();
+                        float ex=enemy.getX();
+                        this.anchorX = level.levelToTileCoordinatesX(ex);
+                        this.anchorY =level.levelToTileCoordinatesY(ey);
                     }
+                }else{
+                    this.WanderWait=0;
                 }
                 break;
             case CHASE_close:
@@ -183,13 +181,13 @@ public class FlyAI extends AIController{
                 int ny=ty;
                 randomInt = rand.nextInt();
                 if (ticks%30==1) {
-                    if (randomInt % 4 == 0 && level.isAirAt(tx, ty - 1)&&Math.abs(ty-startY)<=4) {
+                    if (randomInt % 4 == 0 && level.isAirAt(tx, ty - 1)&&Math.abs(ty- anchorY)<=4) {
                         ny = ny - 1;
-                    } else if (randomInt % 4 == 1 && level.isAirAt(tx, ty + 1)&&Math.abs(ty-startY)<=4) {
+                    } else if (randomInt % 4 == 1 && level.isAirAt(tx, ty + 1)&&Math.abs(ty- anchorY)<=4) {
                         ny = ny + 1;
-                    } else if (randomInt % 4 == 2 && level.isAirAt(tx - 1, ty)&&Math.abs(tx-startX)<=4) {
+                    } else if (randomInt % 4 == 2 && level.isAirAt(tx - 1, ty)&&Math.abs(tx- anchorX)<=4) {
                         nx = nx - 1;
-                    } else if (randomInt % 4 == 3 && level.isAirAt(tx + 1, ty)&&Math.abs(tx-startX)<=4) {
+                    } else if (randomInt % 4 == 3 && level.isAirAt(tx + 1, ty)&&Math.abs(tx- anchorX)<=4) {
                         nx = nx + 1;
                     } else {break;}
 
