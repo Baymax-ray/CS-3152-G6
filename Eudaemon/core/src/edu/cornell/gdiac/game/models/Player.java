@@ -23,8 +23,6 @@ public class Player extends CapsuleObstacle {
 
     private final JsonValue playerData;
 
-    private final float startX;
-    private final float startY;
     private final float spiritKillingEnemy;
     private final int maxHearts;
     private final int initialHearts;
@@ -264,13 +262,10 @@ public class Player extends CapsuleObstacle {
      * The remaining time in seconds until the player can transform again.
      */
     private int transformCooldownRemaining;
-    private final int hitCooldownRemaining;
 
     /** The player's form: 0 is Momo, 1 is Chiyo */
     private int form;
 
-    /** The impulse for the character being hit by enemies */
-    private final float hit_force;
     /** The amount by which the player should move when dashing*/
     private final float dash;
 
@@ -1226,12 +1221,9 @@ public class Player extends CapsuleObstacle {
         this.playerDamageSound = Gdx.audio.newSound(Gdx.files.internal("audio/temp-player-damage.mp3"));
 
         //Position and Movement
-        this.startX = json.getFloat("startX");
-        this.startY = json.getFloat("startY");
         this.dashCooldown = json.getInt("dashCooldownInFrames");
         maxSpeed = json.getFloat("maxSpeed");
         horizontalAcceleration = json.getFloat("horizontalAcceleration");
-        hit_force = json.getFloat( "hit_force");
         this.dash = json.getFloat("dash", 2000);
         this.dashLifespan = json.getInt("dashLifespan");
         this.dashTime = json.getInt("dashTime");
@@ -1290,7 +1282,6 @@ public class Player extends CapsuleObstacle {
         this.dashedInAir = false;
         this.dashCooldownRemaining = 0;
         this.attackCooldownRemaining = 0;
-        this.hitCooldownRemaining = 0;
         this.jumpCooldownRemaining = 0;
         this.coyoteFramesRemaining = 0;
         this.jumpToleranceRemaining = 0;
