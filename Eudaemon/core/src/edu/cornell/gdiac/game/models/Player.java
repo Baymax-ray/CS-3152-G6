@@ -1207,8 +1207,8 @@ public class Player extends CapsuleObstacle {
         this.swordEffectSpriteSheet270 = new TextureRegion(assets.getEntry( "chiyo:swordAttack270", Texture.class));
         this.swordEffectSpriteSheet315 = new TextureRegion(assets.getEntry( "chiyo:swordAttack315", Texture.class));
         this.dashEffectSpriteSheet = new TextureRegion(assets.getEntry( "momo:dashEffect", Texture.class));
-        this.spiritDrainSpriteSheet = new TextureRegion(assets.getEntry("chiyo:spiritDrain", Texture.class));
-        TextureRegion[][] frames = spiritDrainSpriteSheet.split(spiritDrainSpriteSheet.getRegionWidth() / 11, spiritDrainSpriteSheet.getRegionHeight());
+        this.spiritDrainSpriteSheet = new TextureRegion(assets.getEntry("momo:spiritDrain", Texture.class));
+        TextureRegion[][] frames = spiritDrainSpriteSheet.split(spiritDrainSpriteSheet.getRegionWidth() / 14, spiritDrainSpriteSheet.getRegionHeight());
         this.spiritDrainAnimation = new Animation<>(0.5f, frames[0]);
 
         this.momoDashSpriteSheet = new TextureRegion(assets.getEntry( "momo:dash", Texture.class));

@@ -559,15 +559,8 @@ public class ActionController {
 
             player.getEnemiesInSpiritRange().get(0).LossSpirit(level.getPlayer().getSpiritIncreaseRate());
             player.increaseSpirit();
-
-                // TODO SPAWN spiritAnimation HERE; <-- use pooled list
-            EffectObstacle effect = level.getEffectPool().obtainEffect(player.getX(), player.getY(), player.getSpiritDrainSpriteSheet().getRegionWidth(), player.getSpiritDrainSpriteSheet().getRegionHeight(), 0.1f, 0.1f, 0, 0, 0, true, "spiritDrain", player, 0.1f, 1, 1,  player.getSpiritDrainAnimation(), 3);
-            level.addQueuedObject(effect);
-                // Vector2 scale = new Vector2(5f,5f);
-                // SwordWheelObstacle spiritAnimate = new SwordWheelObstacle(player.getX(), player.getY(), player.getSpiritDrainSpriteSheet().getRegionWidth()/400F, player, player.getAttackLifespan(), 5f, scale, player.getSpiritDrainSpriteSheet());
-                // addQueuedObject(spiritAnimate);
-
-                // ^ we should try and use the effectobstacle for this.
+                EffectObstacle effect = level.getEffectPool().obtainEffect(player.getX(), player.getY(), player.getSpiritDrainSpriteSheet().getRegionWidth(), player.getSpiritDrainSpriteSheet().getRegionHeight(), 0.01f, 0.01f, 0, 0, 0, true, "spiritDrain", player, 1f, 1, 1, player.getSpiritDrainAnimation(), 3);
+                level.addQueuedObject(effect);
         }
     }
 

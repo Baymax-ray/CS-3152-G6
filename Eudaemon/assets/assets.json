@@ -141,8 +141,8 @@
             }
           }
         },
-        "chiyo:spiritDrain": {
-          "file" : "platform/reversespiritdrain.png",
+        "momo:spiritDrain": {
+          "file" : "animations/momoSpiritAbsorbing.png",
           "sprites" : {
             "fire": {
               "rows": 1,
