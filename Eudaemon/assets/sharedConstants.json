@@ -22,20 +22,15 @@
 
     "startsFacingRight": true,
 
-    "maxSpeed": 5.0,
+    "maxSpeed": 4.0,
     "chiyoSpeedMult": 1.5,
     "horizontalAcceleration": 0.5,
 
-    "dashCooldown": 0.4,
-    "dashCooldownInFrames": 100,
-
-    "swordRadius": 1.2,
-    "attackLifespan": 0.4,
-    "hitCooldown": 1.0,
-
-    "dash": 10.0,
+    "dash": 8.0,
     "dashTime": 500,
     "dashLifespan": 15,
+    "dashCooldown": 0.4,
+    "dashCooldownInFrames": 100,
 
     "jumpCooldown": 30,
     "coyoteTime": 5,
@@ -46,6 +41,9 @@
     "playerGravity": 20.0,
     "timeForImpact": 45,
 
+    "swordRadius": 1.2,
+    "attackLifespan": 0.4,
+    "hitCooldown": 1.0,
     "attackPower": 1,
     "attackCooldown": 30,
     "attackOffset": 0.65,
@@ -53,6 +51,8 @@
     "attack_dist": 2,
     "downwardAttackPropelX": 10,
     "downwardAttackPropelY": 10,
+    "knockbackX":10,
+    "knockbackY":5,
 
     "transformCooldown": 15,
 
@@ -64,8 +64,7 @@
     "spiritIncreaseDist": 2.0,
 
     "iFrames": 50,
-    "knockbackX":10,
-    "knockbackY":5,
+
     "sensor": {
       "shrink" : 0.6,
       "height" : 0.05

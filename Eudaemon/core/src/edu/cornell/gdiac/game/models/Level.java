@@ -382,7 +382,6 @@ public class Level {
         for (int i= 0; i < tileListLength; i++) {
             JsonValue t = tileList.get(i);
             String name = tileList.get(i).getString("image").substring(6);
-            System.out.println(name);
             //Avoiding adding enemies and objects
             if (!(name.substring(0,7).equals("Enemies"))){
                 TextureRegion tileTexture = new TextureRegion(assets.getEntry("tiles:" + name, Texture.class));
@@ -544,8 +543,6 @@ public class Level {
     }
 
     public int levelToTileCoordinatesY(float y) {
-        //System.out.println("tilemap length is" + tilemap.length + "tilesize is "+ this.tileSize);
-//        return (int) Math.floor(y / this.tileSize);
         return tilemap.length - 1 - (int) Math.floor(y / this.tileSize);
     }
 
@@ -765,9 +762,6 @@ public class Level {
         float camZone_x = 5;
         float camZone_y = 3;
 
-//        System.out.println("camera: "+canvas.getCamera().position.x+" "+canvas.getCamera().position.y);
-//        System.out.println("player: "+player.getX()+" "+player.getY());
-
         if (Math.abs(canvas.getCamera().position.x - player.getX()) > camZone_x) {
             if (canvas.getCamera().position.x > player.getX()) {
                 canvas.setGameplayCamera(player.getX()+camZone_x, canvas.getCamera().position.y, cameraWidth, cameraHeight);
@@ -787,12 +781,6 @@ public class Level {
 
         if (canvas.getCamera().position.x < cameraWidth/2)
             canvas.setGameplayCamera(cameraWidth/2, canvas.getCamera().position.y, cameraWidth, cameraHeight);
-
-        //canvas.setGameplayCamera(cameraWidth/2, cameraHeight/2, cameraWidth, cameraHeight);
-//
-//        System.out.println("camera: "+canvas.getCamera().position.x+" "+canvas.getCamera().position.y);
-//        System.out.println("player: "+player.getX()+" "+player.getY());
-//        System.out.println();
     }
 
     /**
