@@ -88,6 +88,7 @@ public class GameRoot extends Game implements ScreenListener {
 			if (exitCode == ExitCode.LOSE) {
 				levelScreen.pause();
 
+				deathScreen.reset();
 				setScreen(deathScreen);
 			}
 

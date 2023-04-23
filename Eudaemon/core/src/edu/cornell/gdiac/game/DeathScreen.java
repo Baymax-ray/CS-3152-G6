@@ -217,6 +217,14 @@ public class DeathScreen implements Screen, InputProcessor, ControllerListener {
 		}
 	}
 
+
+	/**
+	 * Resets the screen so it can be reused
+	 */
+	public void reset() {
+		this.pressState = 0;
+	}
+
 	/**
 	 * Called when the Screen is resized. 
 	 *
