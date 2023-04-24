@@ -484,7 +484,8 @@ public class ActionController {
                 player.setTexture(current);
                 player.setOyOffset(-30);
             } else if (player.getBodyVelocityX() != 0) {
-//                momoRunSoundId = playSound( momoRunSound, momoRunSoundId, 10F );
+
+                momoRunSoundId = playSound( momoRunSound, momoRunSoundId, 10F );
                 TextureRegion current = (TextureRegion) (animations.get("momoRun")).getKeyFrame(currentFrame); // Gets the current frame of the animation
                 tickFrameSwitch = 5;
                 maxFrame = 5;
@@ -496,7 +497,7 @@ public class ActionController {
             }
         } else {
             if (player.getBodyVelocityX() != 0) {
-//                chiyoRunSoundId = playSound( chiyoRunSound, chiyoRunSoundId, 10F );
+                chiyoRunSoundId = playSound( chiyoRunSound, chiyoRunSoundId, 10F );
                 TextureRegion current = (TextureRegion) (animations.get("chiyoRun")).getKeyFrame(currentFrame); // Gets the current frame of the animation
                 tickFrameSwitch = 4;
                 maxFrame = 7;
@@ -588,24 +589,28 @@ public class ActionController {
                         enemy.applyVelocity();
                     }
                 }
+                //Purple Skull Guy
                 if(enemy.getType().equals("Goomba")){
-                    if(enemy.getIsFacingRight()){
-//                        addAnimations(enemy.getBasicGoombaRightSpriteSheet(), 10, 1, "goombaRightWalk");
-//                        TextureRegion current = (TextureRegion) (animations.get("goombaRightWalk")).getKeyFrame(currentFrame); // Gets the current frame of the animation
-//                        tickFrameSwitch = 3;
-//                        maxFrame = 9;
-                        enemy.setTexture(enemy.getBasicGoombaRightSpriteSheet());
+                    if(enemy.getIsFacingRight() && enemy.getVelocityH() != 0){
+                        addAnimations(enemy.getBasicGoombaRightSpriteSheet(), 4, 1, "goombaRightWalk");
+                        TextureRegion current = (TextureRegion) (animations.get("goombaRightWalk")).getKeyFrame(currentFrame); // Gets the current frame of the animation
+                        tickFrameSwitch = 3;
+                        maxFrame = 3;
+//                        enemy.setTexture(enemy.getBasicGoombaRightSpriteSheet());
+                        enemy.setTexture(current);
                     }
-                    else if(!enemy.getIsFacingRight()){
-//                        addAnimations(enemy.getBasicGoombaLeftSpriteSheet(), 10, 1, "goombaLeftWalk");
-//                        TextureRegion current = (TextureRegion) (animations.get("goombaLeftWalk")).getKeyFrame(currentFrame); // Gets the current frame of the animation
-//                        tickFrameSwitch = 5;
-//                        maxFrame = 9;
-                        enemy.setTexture(enemy.getBasicGoombaLeftSpriteSheet());
+                    else if(!enemy.getIsFacingRight() && enemy.getVelocityH() != 0){
+                        addAnimations(enemy.getBasicGoombaLeftSpriteSheet(), 4, 1, "goombaLeftWalk");
+                        TextureRegion current = (TextureRegion) (animations.get("goombaLeftWalk")).getKeyFrame(currentFrame); // Gets the current frame of the animation
+                        tickFrameSwitch = 5;
+                        maxFrame = 3;
+//                        enemy.setTexture(enemy.getBasicGoombaLeftSpriteSheet());
+                        enemy.setTexture(current);
                     }
 
                 }
-                else if(enemy.getType().equals("FlyGuardian")){
+                //Green Dragon
+                 else if(enemy.getType().equals("FlyGuardian")){
                     if(enemy.getIsFacingRight()){
                         addAnimations(enemy.getNonTrackingFlyingRightSpriteSheet(), 6, 1, "nonTrackingFlyingRight");
                         TextureRegion current = (TextureRegion) (animations.get("nonTrackingFlyingRight")).getKeyFrame(currentFrame); // Gets the current frame of the animation
@@ -621,15 +626,16 @@ public class ActionController {
                         enemy.setTexture(current);
                     }
                 }
+                 //Green Beetle
                 else if(enemy.getType().equals("GoombaGuardian")){
-                    if(enemy.getIsFacingRight()){
+                    if(enemy.getIsFacingRight() && enemy.getVelocityH() != 0){
                         addAnimations(enemy.getNonTrackingGoombaRightSpriteSheet(), 6, 1, "nonTrackingGoombaRight");
                         TextureRegion current = (TextureRegion) (animations.get("nonTrackingGoombaRight")).getKeyFrame(currentFrame); // Gets the current frame of the animation
                         tickFrameSwitch = 3;
                         maxFrame = 5;
                         enemy.setTexture(current);
                     }
-                    else if(!enemy.getIsFacingRight()){
+                    else if(!enemy.getIsFacingRight() && enemy.getVelocityH() != 0){
                         addAnimations(enemy.getNonTrackingGoombaLeftSpriteSheet(), 6, 1, "nonTrackingGoombaLeft");
                         TextureRegion current = (TextureRegion) (animations.get("nonTrackingGoombaLeft")).getKeyFrame(currentFrame); // Gets the current frame of the animation
                         tickFrameSwitch = 5;
@@ -637,37 +643,39 @@ public class ActionController {
                         enemy.setTexture(current);
                     }
                 }
+                //Green Mosquito
                 else if(enemy.getType().equals("Fly")){
-                    if(enemy.getIsFacingRight()){
-//                        addAnimations(enemy.getBasicGoombaRightSpriteSheet(), 10, 1, "goombaRightWalk");
-//                        TextureRegion current = (TextureRegion) (animations.get("goombaRightWalk")).getKeyFrame(currentFrame); // Gets the current frame of the animation
-//                        tickFrameSwitch = 3;
-//                        maxFrame = 9;
-                        enemy.setTexture(enemy.getSetPathFlyingRightSpriteSheet());
+                    if(enemy.getIsFacingRight() && enemy.getVelocityH() != 0){
+                        addAnimations(enemy.getSetPathFlyingRightSpriteSheet(), 7, 1, "flyRight");
+                        TextureRegion current = (TextureRegion) (animations.get("flyRight")).getKeyFrame(currentFrame); // Gets the current frame of the animation
+                        tickFrameSwitch = 3;
+                        maxFrame = 6;
+                        enemy.setTexture(current);
                     }
-                    else if(!enemy.getIsFacingRight()){
-//                        addAnimations(enemy.getBasicGoombaLeftSpriteSheet(), 10, 1, "goombaLeftWalk");
-//                        TextureRegion current = (TextureRegion) (animations.get("goombaLeftWalk")).getKeyFrame(currentFrame); // Gets the current frame of the animation
-//                        tickFrameSwitch = 5;
-//                        maxFrame = 9;
-                        enemy.setTexture(enemy.getSetPathFlyingLeftSpriteSheet());
+                    else if(!enemy.getIsFacingRight() && enemy.getVelocityH() != 0){
+                        addAnimations(enemy.getSetPathFlyingLeftSpriteSheet(), 10, 1, "flyLeft");
+                        TextureRegion current = (TextureRegion) (animations.get("flyLeft")).getKeyFrame(currentFrame); // Gets the current frame of the animation
+                        tickFrameSwitch = 5;
+                        maxFrame = 6;
+                        enemy.setTexture(current);
                     }
 
                 }
+                //Tank guy
                 else if(enemy.getType().equals("Fast")){
-                    if(enemy.getIsFacingRight()){
-//                        addAnimations(enemy.getBasicGoombaRightSpriteSheet(), 10, 1, "goombaRightWalk");
-//                        TextureRegion current = (TextureRegion) (animations.get("goombaRightWalk")).getKeyFrame(currentFrame); // Gets the current frame of the animation
-//                        tickFrameSwitch = 3;
-//                        maxFrame = 9;
-                        enemy.setTexture(enemy.getSetPathFlyingRightSpriteSheet());
+                    if(enemy.getIsFacingRight() && enemy.getVelocityH() != 0){
+                        addAnimations(enemy.getFastGoombaRightSpriteSheet(), 6, 1, "fastGoombaRightWalk");
+                        TextureRegion current = (TextureRegion) (animations.get("fastGoombaRightWalk")).getKeyFrame(currentFrame); // Gets the current frame of the animation
+                        tickFrameSwitch = 3;
+                        maxFrame = 5;
+                        enemy.setTexture(current);
                     }
-                    else if(!enemy.getIsFacingRight()){
-//                        addAnimations(enemy.getBasicGoombaLeftSpriteSheet(), 10, 1, "goombaLeftWalk");
-//                        TextureRegion current = (TextureRegion) (animations.get("goombaLeftWalk")).getKeyFrame(currentFrame); // Gets the current frame of the animation
-//                        tickFrameSwitch = 5;
-//                        maxFrame = 9;
-                        enemy.setTexture(enemy.getSetPathFlyingLeftSpriteSheet());
+                    else if(!enemy.getIsFacingRight() && enemy.getVelocityH() != 0){
+                        addAnimations(enemy.getFastGoombaLeftSpriteSheet(), 6, 1, "fastGoombaLeftWalk");
+                        TextureRegion current = (TextureRegion) (animations.get("fastGoombaLeftWalk")).getKeyFrame(currentFrame); // Gets the current frame of the animation
+                        tickFrameSwitch = 5;
+                        maxFrame = 5;
+                        enemy.setTexture(current);
                     }
 
                 }

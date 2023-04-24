@@ -58,8 +58,8 @@ public class GameRoot extends Game implements ScreenListener {
 
 
 			setScreen(levelScreen);
-//			backgroundDroneSound = Gdx.audio.newSound(Gdx.files.internal("audio/temp-background-drone.mp3"));
-//			backgroundDroneSound.loop();
+			backgroundDroneSound = Gdx.audio.newSound(Gdx.files.internal("audio/temp-background-drone.mp3"));
+			backgroundDroneSound.loop();
 		}
 
 		if (screen == deathScreen) {

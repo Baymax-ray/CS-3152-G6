@@ -5,10 +5,13 @@
     },
     "activeFile": "level1.json",
     "expandedProjectPaths": [
-        ".",
-        "Templates"
+        "Templates",
+        "."
     ],
     "fileStates": {
+        "/Users/Varsha/CS-3152-G6/Eudaemon/assets/EudaemonTileset.json": {
+            "scaleInDock": 1
+        },
         "C:/Users/neelin2/coding/cs3152/Eudaemon/CS-3152-G6/Eudaemon/assets/EudaemonTileset.json": {
             "scaleInDock": 1
         },
@@ -38,8 +41,8 @@
             "scale": 0.5,
             "selectedLayer": 3,
             "viewCenter": {
-                "x": 749,
-                "y": 888
+                "x": 799,
+                "y": 639
             }
         },
         "level0.tmj": {
@@ -54,11 +57,11 @@
             "expandedObjectLayers": [
                 7
             ],
-            "scale": 0.6876,
+            "scale": 0.966,
             "selectedLayer": 3,
             "viewCenter": {
-                "x": 1098.7492728330426,
-                "y": 568.6445607911576
+                "x": 799.6894409937888,
+                "y": 633.0227743271222
             }
         }
     },

@@ -31,12 +31,11 @@ public class UIOverlay {
     public void draw(GameCanvas canvas, float playerHearts, float playerSpirit) {
         float xPos = 74.5F;
         canvas.draw(uiOutline, Color.WHITE, 0, canvas.getHeight() - 62, 221, 52);
-        canvas.draw(settingsButton, Color.WHITE, canvas.getWidth()-72, canvas.getHeight()-62, 51, 52);
+//        canvas.draw(settingsButton, Color.WHITE, canvas.getWidth()-72, canvas.getHeight()-62, 51, 52);
         for(int i=0; i < playerHearts; i++){
             canvas.draw(heartRegion, Color.WHITE, xPos,canvas.getHeight() - 32, 23, 20);
             xPos += 60.5F;
         }
-//        canvas.draw(filledSpiritBar, Color.WHITE, 71, canvas.getHeight() - 61, 137, 18.234F);
         float spiritPercentage = playerSpirit / 10F;
         int barWidth = (int)(filledSpiritBar.getWidth() * spiritPercentage);
         int barHeight = filledSpiritBar.getHeight();

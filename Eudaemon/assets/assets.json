@@ -151,20 +151,20 @@
           }
         },
         "basicGoomba:rightWalk": {
-          "file" : "animations/basic_goomba_walk_right.png",
+          "file" : "animations/goombaRight.png",
           "sprites" : {
             "fire": {
               "rows": 1,
-              "cols": 10
+              "cols": 4
             }
           }
         },
         "basicGoomba:leftWalk": {
-          "file" : "animations/basic_goomba_walk_left.png",
+          "file" : "animations/goombaLeft.png",
           "sprites" : {
             "fire": {
               "rows": 1,
-              "cols": 10
+              "cols": 4
             }
           }
         },
@@ -204,6 +204,42 @@
             }
           }
         },
+      "fly:right": {
+        "file" : "animations/flyRight.png",
+        "sprites" : {
+          "fire": {
+            "rows": 1,
+            "cols": 7
+          }
+        }
+      },
+      "fly:left": {
+        "file" : "animations/flyLeft.png",
+        "sprites" : {
+          "fire": {
+            "rows": 1,
+            "cols": 7
+          }
+        }
+      },
+      "fastGoomba:left": {
+        "file" : "animations/fastGoombaLeft.png",
+        "sprites" : {
+          "fire": {
+            "rows": 1,
+            "cols": 6
+          }
+        }
+      },
+      "fastGoomba:right": {
+        "file" : "animations/fastGoombaRight.png",
+        "sprites" : {
+          "fire": {
+            "rows": 1,
+            "cols": 6
+          }
+        }
+      },
         "background:city": "backgrounds/backgroundCityPlaceholder.png",
         "platform:momo":  "platform/momo.png",
         "platform:momoUp":  "platform/momoUp.png",
@@ -211,11 +247,12 @@
         "platform:chiyo":  "platform/chiyo.png",
         "platform:chiyoUp":  "platform/chiyoUp.png",
         "platform:chiyoDown":  "platform/chiyoDown.png",
-        "platform:worm":  "platform/worm.png",
+        "platform:nonTrackingGoomba":  "platform/nonTrackingGoomba.png",
         "platform:pathfindingGoombaL": "platform/pathfindingGoombaLeft.png",
         "platform:pathfindingGoombaR": "platform/pathfindingGoombaRight.png",
         "platform:trackingGoomba": "platform/basicGoombaL.png",
         "platform:projectileEnemy": "platform/projectileEnemy.png",
+        "platform:nonTrackingFlying": "platform/nonTrackingFlying.png",
         "platform:setPathFlyingR": "platform/setPathFlyingEnemyRight.png",
         "platform:setPathFlyingL": "platform/setPathFlyingEnemyLeft.png",
         "platform:fastGoombaL": "platform/fastGoombaL.png",

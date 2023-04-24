@@ -72,8 +72,8 @@
   },
   "Goomba": {
     "TextureAsset": "platform:pathfindingGoombaR",
-    "RightAsset": "platform:pathfindingGoombaR",
-    "LeftAsset": "platform:pathfindingGoombaL",
+    "RightAsset": "basicGoomba:rightWalk",
+    "LeftAsset": "basicGoomba:leftWalk",
     "ImageWidth": 1.5,
     "ImageHeight": 1.5,
     "hitboxWidth": 1,
@@ -102,7 +102,7 @@
     "spiritLimitation":4
   },
   "GoombaGuardian": {
-    "TextureAsset": "platform:worm",
+    "TextureAsset": "platform:nonTrackingGoomba",
     "RightAsset": "nonTrackingGoomba:rightWalk",
     "LeftAsset": "nonTrackingGoomba:leftWalk",
     "ImageWidth": 0.5,
@@ -135,8 +135,8 @@
   },
   "Fast": {
     "TextureAsset": "platform:fastGoombaR",
-    "RightAsset": "platform:fastGoombaR",
-    "LeftAsset": "platform:fastGoombaL",
+    "RightAsset": "fastGoomba:right",
+    "LeftAsset": "fastGoomba:left",
     "ImageWidth": 1.5,
     "ImageHeight": 1.5,
     "hitboxWidth": 0.5,
@@ -167,7 +167,7 @@
     "knockbackY":1000
   },
   "FlyGuardian": {
-    "TextureAsset": "platform:worm",
+    "TextureAsset": "platform:nonTrackingFlying",
     "RightAsset": "nonTrackingFlying:rightFly",
     "LeftAsset": "nonTrackingFlying:leftFly",
     "ImageWidth": 1.7,
@@ -202,8 +202,8 @@
   },
   "Fly": {
     "TextureAsset": "platform:setPathFlyingR",
-    "RightAsset": "platform:setPathFlyingR",
-    "LeftAsset": "platform:setPathFlyingL",
+    "RightAsset": "fly:right",
+    "LeftAsset": "fly:left",
     "ImageWidth": 0.5,
     "ImageHeight": 0.5,
     "hitboxWidth": 0.5,
