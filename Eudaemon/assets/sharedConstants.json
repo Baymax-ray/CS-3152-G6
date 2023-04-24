@@ -35,9 +35,9 @@
     "jumpCooldown": 30,
     "coyoteTime": 5,
     "jumpTolerance": 7,
-    "jumptime": 20,
+    "jumptime": 25,
     "chiyoJumpTimeMult": 1.3,
-    "maxJumpyVelocity": 3.0,
+    "maxJumpyVelocity": 3.2,
     "playerGravity": 20.0,
     "timeForImpact": 45,
 
