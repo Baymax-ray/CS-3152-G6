@@ -181,13 +181,13 @@ public class FlyAI extends AIController{
                 int ny=ty;
                 randomInt = rand.nextInt();
                 if (ticks%30==1) {
-                    if (randomInt % 4 == 0 && level.isAirAt(tx, ty - 1)&&Math.abs(ty- anchorY)<=4) {
+                    if (randomInt % 4 == 0 && level.isAirAt(tx, ty - 1)&& (anchorY-ty)<=4) {
                         ny = ny - 1;
-                    } else if (randomInt % 4 == 1 && level.isAirAt(tx, ty + 1)&&Math.abs(ty- anchorY)<=4) {
+                    } else if (randomInt % 4 == 1 && level.isAirAt(tx, ty + 1)&&(ty- anchorY)<=4) {
                         ny = ny + 1;
-                    } else if (randomInt % 4 == 2 && level.isAirAt(tx - 1, ty)&&Math.abs(tx- anchorX)<=4) {
+                    } else if (randomInt % 4 == 2 && level.isAirAt(tx - 1, ty)&&(anchorX-tx)<=4) {
                         nx = nx - 1;
-                    } else if (randomInt % 4 == 3 && level.isAirAt(tx + 1, ty)&&Math.abs(tx- anchorX)<=4) {
+                    } else if (randomInt % 4 == 3 && level.isAirAt(tx + 1, ty)&&(tx- anchorX)<=4) {
                         nx = nx + 1;
                     } else {break;}
 
