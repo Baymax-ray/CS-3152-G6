@@ -29,14 +29,18 @@ public class GameRoot extends Game implements ScreenListener {
 	@Override
 	public void dispose() {
 		setScreen(null);
-		levelScreen.dispose();
-		loadingScreen.dispose();
-		deathScreen.dispose();
-		assets.unloadAssets();
-		assets.dispose();
-		assets = null;
-		canvas.dispose();
-		state.dispose();
+		if (levelScreen != null) levelScreen.dispose();
+		if (loadingScreen != null) loadingScreen.dispose();
+		if (deathScreen != null) deathScreen.dispose();
+		if (assets != null) {
+			assets.unloadAssets();
+			assets.dispose();
+			assets = null;
+		}
+		if (canvas != null)	canvas.dispose();
+		if (state != null) state.dispose();
+		if (backgroundDroneSound != null) backgroundDroneSound.dispose();
+
 		super.dispose();
 	}
 
