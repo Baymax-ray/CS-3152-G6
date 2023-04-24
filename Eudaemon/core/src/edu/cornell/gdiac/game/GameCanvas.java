@@ -1214,6 +1214,8 @@ public class GameCanvas {
 
 	public Viewport getViewport() { return viewport; }
 
+	public PolygonSpriteBatch getSpriteBatch() { return spriteBatch; }
+
 
 
 

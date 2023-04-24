@@ -24,7 +24,7 @@ import java.util.Hashtable;
 import java.util.Iterator;
 
 public class Level {
-
+    //private Billboard billboard;
     private MyGridGraph gridGraph;
     //#region FINAL FIELDS
     private final Player player;
@@ -342,6 +342,7 @@ public class Level {
     }
     public Level(JsonValue json, Tile[] tiles, AssetDirectory assets) {
         this.tiles = tiles;
+        //this.billboard = new Billboard();
         String levelName = json.getString("level");
         JsonValue levelJson = assets.getEntry(levelName,  JsonValue.class);
 
@@ -623,6 +624,9 @@ public class Level {
                 obj.update(delta);
             }
         }
+        //billboard.aggregateStringCompleteness(delta);
+
+
     }
 
     public void draw(GameCanvas canvas) {
@@ -702,6 +706,7 @@ public class Level {
         canvas.setOverlayCamera();
         canvas.begin();
         uiElements.draw(canvas, player.getHearts(), player.getSpirit());
+        //billboard.displayDialog(canvas);
         canvas.end();
 
         canvas.setGameplayCamera(cam_x,cam_y, cameraWidth, cameraHeight);

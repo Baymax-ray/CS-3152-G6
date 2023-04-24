@@ -283,5 +283,17 @@
       "shrink" : 0.6,
       "height" : 0.05
     }
+  },
+  "Billboard": {
+    "ImageWidth": 0.5,
+    "ImageHeight": 0.5,
+    "hitboxWidth": 1.0,
+    "hitboxHeight": 0.24,
+    "drawScaleX": 32,
+    "drawScaleY": 32,
+    "sensor": {
+      "shrink" : 0.6,
+      "height" : 0.05
+    }
   }
 }
