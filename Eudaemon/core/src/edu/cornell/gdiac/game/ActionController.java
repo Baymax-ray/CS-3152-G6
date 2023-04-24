@@ -474,6 +474,7 @@ public class ActionController {
             }
         }
         if (player.getForm() == 0) {
+            chiyoRunSound.stop();
             player.setSxMult(1.0f);
             player.setSyMult(1.0f);
             if (player.isDashing()) {
@@ -489,27 +490,40 @@ public class ActionController {
                 player.setTexture(current);
                 player.setOyOffset(-30);
             } else if (player.getBodyVelocityX() != 0) {
-//                if(!soundDictionary.contains(momoRunSound)){
-//                    soundDictionary.add(momoRunSound);
-//                    momoRunSound.loop();
-//                }
+                if(player.isGrounded()){
+                    if(!soundDictionary.contains(momoRunSound)){
+                        soundDictionary.add(momoRunSound);
+                        momoRunSound.loop();
+                    }
+                }
+                else if(!player.isGrounded()){
+                    momoRunSound.stop();
+                    soundDictionary.remove(momoRunSound);
+                }
                 TextureRegion current = (TextureRegion) (animations.get("momoRun")).getKeyFrame(currentFrame); // Gets the current frame of the animation
                 tickFrameSwitch = 5;
                 maxFrame = 5;
                 player.setTexture(current);
                 player.setOyOffset(-35);
             } else {
-//                momoRunSound.stop();
-//                soundDictionary.remove(momoRunSound);
+                momoRunSound.stop();
+                soundDictionary.remove(momoRunSound);
                 player.setTexture(player.getMomoTexture());
                 player.setOyOffset(-160);
             }
         } else {
+            momoRunSound.stop();
             if (player.getBodyVelocityX() != 0) {
-//                if(!soundDictionary.contains(chiyoRunSound)) {
-//                    soundDictionary.add(chiyoRunSound);
-//                    chiyoRunSound.loop();
-//                }
+                if(player.isGrounded()){
+                    if(!soundDictionary.contains(chiyoRunSound)) {
+                        soundDictionary.add(chiyoRunSound);
+                        chiyoRunSound.loop();
+                    }
+                }
+                else if(!player.isGrounded()){
+                    chiyoRunSound.stop();
+                    soundDictionary.remove(chiyoRunSound);
+                }
                 TextureRegion current = (TextureRegion) (animations.get("chiyoRun")).getKeyFrame(currentFrame); // Gets the current frame of the animation
                 tickFrameSwitch = 4;
                 maxFrame = 7;
@@ -518,8 +532,8 @@ public class ActionController {
                 player.setSxMult(1.5f);
                 player.setSyMult(1.5f);
             } else {
-//                chiyoRunSound.stop();
-//                soundDictionary.remove(chiyoRunSound);
+                chiyoRunSound.stop();
+                soundDictionary.remove(chiyoRunSound);
                 player.setTexture(player.getChiyoTexture());
                 player.setOyOffset(-100);
                 player.setSxMult(1.0f);
