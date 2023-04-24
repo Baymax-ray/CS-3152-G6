@@ -139,7 +139,7 @@
     "LeftAsset": "fastGoomba:left",
     "ImageWidth": 1.5,
     "ImageHeight": 1.5,
-    "hitboxWidth": 0.5,
+    "hitboxWidth": 1,
     "hitboxHeight": 1.4,
     "maxSpeed": 10,
     "horizontalAcceleration": 0.12,
