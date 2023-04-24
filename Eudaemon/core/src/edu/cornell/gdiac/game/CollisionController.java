@@ -162,6 +162,29 @@ public class CollisionController implements ContactListener {
         }
         //#endregion
 
+        //#region Cancel collision between player and projectile when dashing
+//        if (((bd1 instanceof Player && bd2 instanceof WheelObstacle)
+//                || (bd2 instanceof Player && bd1 instanceof WheelObstacle))) {
+//            String name1 = "";
+//            String name2 = "";
+//            if (bd1 instanceof WheelObstacle) name1 = ((WheelObstacle) bd1).getName();
+//            else name2 = ((WheelObstacle) bd2).getName();
+//
+//            if ((name1.equals("bullet") && ((Player) bd2).isDashing())
+//                    || (name2.equals("bullet") && ((Player) bd1).isDashing())) {
+//                Fixture fixture1 = fix1;
+//                Fixture fixture2 = fix2;
+//                Filter filter1 = fixture1.getFilterData();
+//                Filter filter2 = fixture2.getFilterData();
+//                filter1.groupIndex = -1;
+//                filter2.groupIndex = -1;
+//                fixture1.setFilterData(filter1);
+//                fixture2.setFilterData(filter2);
+//            }
+//        }
+        //#endregion
+
+
     }
 
     @Override
@@ -197,6 +220,8 @@ public class CollisionController implements ContactListener {
 
             level.getPlayer().getEnemiesInSpiritRange().removeValue(enemy, true);
         }
+
+
     }
 
     @Override
@@ -225,6 +250,10 @@ public class CollisionController implements ContactListener {
             WheelObstacle wheel = (WheelObstacle) (bd1 instanceof WheelObstacle ? bd1 : bd2);
             if (!wheel.getName().equals("bullet"))
                 contact.setEnabled(false);
+        }
+
+        if (bd1 instanceof Billboard || bd2 instanceof Billboard) {
+            contact.setEnabled(false);
         }
 
         //#region  Attempt to cancel fly enemies collision (failed, commented out)
