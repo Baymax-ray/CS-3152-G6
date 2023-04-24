@@ -146,8 +146,8 @@ public class CollisionController implements ContactListener {
             level.setCompleted(true);
         }
 
-        if (bd1 instanceof Player && bd2 instanceof Billboard
-                || bd2 instanceof Player && bd1 instanceof Billboard) {
+        if ((bd1 instanceof Player && bd2 instanceof Billboard || bd2 instanceof Player && bd1 instanceof Billboard)
+                && (!level.getPlayer().getSpiritSensorName().equals(fd1) && !level.getPlayer().getSpiritSensorName().equals(fd2))) {
             Billboard billboard = (Billboard) (bd1 instanceof Billboard? bd1 : bd2);
             billboard.setDisplay(true);
         }
