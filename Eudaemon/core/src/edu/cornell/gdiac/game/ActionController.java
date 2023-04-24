@@ -566,20 +566,7 @@ public class ActionController {
                 level.addQueuedObject(effect);
         }
 
-        // temporary loop for reading billboards
-        // just for testing purpose
-        // will create sensor later
-        for (int i = 0; i < billboards.length; i++) {
-            float bx = billboards[i].getX();
-            float by = billboards[i].getY();
-            float px = player.getX();
-            float py = player.getY();
-            double distance = Math.sqrt(Math.pow(px-bx,2)+Math.pow(py-by,2));
-            if (distance <= 2) {
-                billboards[i].setDisplay(true);
-            }
-            else billboards[i].setDisplay(false);
-        }
+
     }
 
     /**

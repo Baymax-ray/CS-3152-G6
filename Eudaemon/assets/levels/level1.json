@@ -739,7 +739,7 @@
                  "height":22.3413,
                  "id":110,
                  "name":"Billboard",
-                 "text": "test",
+                 "text": "Hey There.\nThis is a test billboard.\nLooks like it's working. Yessss!",
                  "rotation":0,
                  "type":"",
                  "visible":true,

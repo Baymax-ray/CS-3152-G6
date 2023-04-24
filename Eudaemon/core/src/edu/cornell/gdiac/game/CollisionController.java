@@ -146,6 +146,14 @@ public class CollisionController implements ContactListener {
             level.setCompleted(true);
         }
 
+        if (bd1 instanceof Player && bd2 instanceof Billboard
+                || bd2 instanceof Player && bd1 instanceof Billboard) {
+            Billboard billboard = (Billboard) (bd1 instanceof Billboard? bd1 : bd2);
+            billboard.setDisplay(true);
+        }
+
+
+
         //#endregion
 
 
@@ -219,6 +227,12 @@ public class CollisionController implements ContactListener {
             Enemy enemy = (Enemy) (bd1 instanceof Enemy ? bd1 : bd2);
 
             level.getPlayer().getEnemiesInSpiritRange().removeValue(enemy, true);
+        }
+
+        if (bd1 instanceof Player && bd2 instanceof Billboard
+                || bd2 instanceof Player && bd1 instanceof Billboard) {
+            Billboard billboard = (Billboard) (bd1 instanceof Billboard? bd1 : bd2);
+            billboard.setDisplay(false);
         }
 
 

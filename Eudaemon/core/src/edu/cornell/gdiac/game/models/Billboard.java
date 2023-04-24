@@ -97,7 +97,8 @@ public class Billboard extends BoxObstacle {
                 0, 2, 3          // Take care of the counter-clockwise direction.
         });
         canvas.draw(polyReg, padding, padding);
-        String myText = "This is a sample dialog. This is a sample dialog.\nThis is a sample dialog. \nThis is a sample dialog. This is a sample dialog. This is a sample dialog.";
+        //String myText = "This is a sample dialog. This is a sample dialog.\nThis is a sample dialog. \nThis is a sample dialog. This is a sample dialog. This is a sample dialog.";
+        String myText = this.text;
         int charCountThisFrame = (int)stringCompleteness;
         if (charCountThisFrame > myText.length()) charCountThisFrame = myText.length();
 
