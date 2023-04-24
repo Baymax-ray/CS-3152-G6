@@ -255,6 +255,7 @@
         "platform:nonTrackingFlying": "platform/nonTrackingFlying.png",
         "platform:setPathFlyingR": "platform/setPathFlyingEnemyRight.png",
         "platform:setPathFlyingL": "platform/setPathFlyingEnemyLeft.png",
+        "platform:FlyingR":"platform/TrackingFlying.png",
         "platform:fastGoombaL": "platform/fastGoombaL.png",
         "platform:fastGoombaR": "platform/fastGoombaR.png",
         "platform:rope":  "platform/ropebridge.png",

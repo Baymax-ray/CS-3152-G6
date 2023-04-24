@@ -201,7 +201,7 @@
     "knockbackY":1000
   },
   "Fly": {
-    "TextureAsset": "platform:setPathFlyingR",
+    "TextureAsset": "platform:FlyingR",
     "RightAsset": "fly:right",
     "LeftAsset": "fly:left",
     "ImageWidth": 0.5,
