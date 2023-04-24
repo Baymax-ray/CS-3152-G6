@@ -31,8 +31,8 @@ import com.badlogic.gdx.controllers.ControllerMapping;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.Texture.TextureFilter;
-import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.math.Rectangle;
 import edu.cornell.gdiac.assets.AssetDirectory;
 import edu.cornell.gdiac.util.Controllers;
 import edu.cornell.gdiac.util.ScreenListener;
@@ -97,6 +97,8 @@ public class LoadingScreen implements Screen, InputProcessor, ControllerListener
 	private static final float BAR_HEIGHT_RATIO = 0.25f;
 	/** Height of the progress bar */
 	private static final float BUTTON_SCALE  = 0.20f;
+	/** Height of the title */
+	private static final float TITLE_SCALE = 1.3f;
 	
 	/** Reference to GameCanvas created by the root */
 	private GameCanvas canvas;
@@ -104,11 +106,11 @@ public class LoadingScreen implements Screen, InputProcessor, ControllerListener
 	private ScreenListener listener;
 
 	/** The width of the progress bar */
-	private int width;
+	private int progressBarWidth;
 	/** The y-coordinate of the center of the progress bar */
-	private int centerY;
+	private int progressBarCenterY;
 	/** The x-coordinate of the center of the progress bar */
-	private int centerX;
+	private int progressBarCenterX;
 	/** The height of the canvas window (necessary since sprite origin != screen origin) */
 	private int heightY;
 	/** Scaling factor for when the student changes the resolution. */
@@ -117,7 +119,17 @@ public class LoadingScreen implements Screen, InputProcessor, ControllerListener
 	/** Current progress (0 to 1) of the asset manager */
 	private float progress;
 	/** The current state of the play button */
-	private int   pressState;
+	private int playButtonState;
+	/** The hitbox of the start button */
+	private Rectangle playButtonHitbox;
+	/** The current state of the level select button */
+	private int levelSelectButtonState;
+	/** The hitbox of the level select button */
+	private Rectangle levelSelectButtonHitbox;
+	/** The current state of the settings button */
+	private int settingsButtonState;
+	/** The hitbox of the settings button */
+	private Rectangle settingsButtonHitbox;
 	/** The amount of time to devote to loading assets (as opposed to on screen hints, etc.) */
 	private int   budget;
 
@@ -158,7 +170,7 @@ public class LoadingScreen implements Screen, InputProcessor, ControllerListener
 	 * @return true if the player is ready to go
 	 */
 	public boolean isReady() {
-		return pressState == 2;
+		return playButtonState == 2;
 	}
 
 	/**
@@ -228,7 +240,9 @@ public class LoadingScreen implements Screen, InputProcessor, ControllerListener
 
 		// No progress so far.
 		progress = 0;
-		pressState = 0;
+		playButtonState = 0;
+		levelSelectButtonState = 0;
+		settingsButtonState = 0;
 
 		Gdx.input.setInputProcessor( this );
 
@@ -269,8 +283,15 @@ public class LoadingScreen implements Screen, InputProcessor, ControllerListener
 			if (progress >= 1.0f) {
 				this.progress = 1.0f;
 				playButton = internal.getEntry("start",Texture.class);
+				playButtonHitbox = new Rectangle();
+
 				settingsButton = internal.getEntry("settings", Texture.class);
+				settingsButtonHitbox = new Rectangle();
+
 				levelSelectButton = internal.getEntry("levelselect", Texture.class);
+				levelSelectButtonHitbox = new Rectangle();
+
+				resize(canvas.getWidth(), canvas.getHeight());
 			}
 		}
 	}
@@ -285,19 +306,19 @@ public class LoadingScreen implements Screen, InputProcessor, ControllerListener
 	private void draw() {
 		canvas.setOverlayCamera();
 		canvas.begin();
-		canvas.draw(background, 0, 0);
-		canvas.draw(title, Color.WHITE, title.getWidth()/2, title.getHeight()/2, centerX, canvas.getHeight()-150F, 0, 1, 1);
+		canvas.draw(background, Color.WHITE, 0, 0, canvas.getWidth(), canvas.getHeight());
+		canvas.draw(title, Color.WHITE, title.getWidth()/2f, title.getHeight()/2f, progressBarCenterX, canvas.getHeight()*0.8f, 0, scale*TITLE_SCALE, scale*TITLE_SCALE);
 		if (playButton == null) {
 			drawProgress(canvas);
 		} else {
-			Color tint = (pressState == 1 ? Color.GRAY: Color.WHITE);
-			canvas.draw(playButton, tint, playButton.getWidth()/2, playButton.getHeight()/2, 
-						centerX, centerY + playButton.getHeight()*BUTTON_SCALE+45F, 0, BUTTON_SCALE*scale, BUTTON_SCALE*scale);
-			canvas.draw(levelSelectButton, Color.WHITE, levelSelectButton.getWidth()/2, levelSelectButton.getHeight()/2,
-					centerX, centerY+35F, 0, BUTTON_SCALE*scale, BUTTON_SCALE*scale);
-			canvas.draw(settingsButton, Color.WHITE, settingsButton.getWidth()/2, settingsButton.getHeight()/2,
-					centerX, centerY-settingsButton.getHeight()*BUTTON_SCALE +25F, 0, BUTTON_SCALE*scale, BUTTON_SCALE*scale);
+			Color tint = (playButtonState == 1 ? Color.GRAY: Color.WHITE);
+			canvas.draw(playButton, tint, playButtonHitbox.x, playButtonHitbox.y, playButtonHitbox.width, playButtonHitbox.height);
 
+			tint = (settingsButtonState == 1 ? Color.GRAY: Color.WHITE);
+			canvas.draw(settingsButton, tint, settingsButtonHitbox.x, settingsButtonHitbox.y, settingsButtonHitbox.width, settingsButtonHitbox.height);
+
+			tint = (levelSelectButtonState == 1 ? Color.GRAY: Color.WHITE);
+			canvas.draw(levelSelectButton, tint, levelSelectButtonHitbox.x, levelSelectButtonHitbox.y, levelSelectButtonHitbox.width, levelSelectButtonHitbox.height);
 		}
 		canvas.end();
 	}
@@ -312,24 +333,24 @@ public class LoadingScreen implements Screen, InputProcessor, ControllerListener
 	 * @param canvas The drawing context
 	 */	
 	private void drawProgress(GameCanvas canvas) {	
-		canvas.draw(statusBkgLeft,   Color.WHITE, centerX-width/2, centerY,
+		canvas.draw(statusBkgLeft,   Color.WHITE, progressBarCenterX - progressBarWidth /2, progressBarCenterY,
 				scale*statusBkgLeft.getRegionWidth(), scale*statusBkgLeft.getRegionHeight());
-		canvas.draw(statusBkgRight,  Color.WHITE,centerX+width/2-scale*statusBkgRight.getRegionWidth(), centerY,
+		canvas.draw(statusBkgRight,  Color.WHITE, progressBarCenterX + progressBarWidth /2-scale*statusBkgRight.getRegionWidth(), progressBarCenterY,
 				scale*statusBkgRight.getRegionWidth(), scale*statusBkgRight.getRegionHeight());
-		canvas.draw(statusBkgMiddle, Color.WHITE,centerX-width/2+scale*statusBkgLeft.getRegionWidth(), centerY,
-				width-scale*(statusBkgRight.getRegionWidth()+statusBkgLeft.getRegionWidth()),
+		canvas.draw(statusBkgMiddle, Color.WHITE, progressBarCenterX - progressBarWidth /2+scale*statusBkgLeft.getRegionWidth(), progressBarCenterY,
+				progressBarWidth -scale*(statusBkgRight.getRegionWidth()+statusBkgLeft.getRegionWidth()),
 				scale*statusBkgMiddle.getRegionHeight());
 
-		canvas.draw(statusFrgLeft,   Color.WHITE,centerX-width/2, centerY,
+		canvas.draw(statusFrgLeft,   Color.WHITE, progressBarCenterX - progressBarWidth /2, progressBarCenterY,
 				scale*statusFrgLeft.getRegionWidth(), scale*statusFrgLeft.getRegionHeight());
 		if (progress > 0) {
-			float span = progress*(width-scale*(statusFrgLeft.getRegionWidth()+statusFrgRight.getRegionWidth()))/2.0f;
-			canvas.draw(statusFrgRight,  Color.WHITE,centerX-width/2+scale*statusFrgLeft.getRegionWidth()+span, centerY,
+			float span = progress*(progressBarWidth -scale*(statusFrgLeft.getRegionWidth()+statusFrgRight.getRegionWidth()))/2.0f;
+			canvas.draw(statusFrgRight,  Color.WHITE, progressBarCenterX - progressBarWidth /2+scale*statusFrgLeft.getRegionWidth()+span, progressBarCenterY,
 					scale*statusFrgRight.getRegionWidth(), scale*statusFrgRight.getRegionHeight());
-			canvas.draw(statusFrgMiddle, Color.WHITE,centerX-width/2+scale*statusFrgLeft.getRegionWidth(), centerY,
+			canvas.draw(statusFrgMiddle, Color.WHITE, progressBarCenterX - progressBarWidth /2+scale*statusFrgLeft.getRegionWidth(), progressBarCenterY,
 					span, scale*statusFrgMiddle.getRegionHeight());
 		} else {
-			canvas.draw(statusFrgRight,  Color.WHITE,centerX-width/2+scale*statusFrgLeft.getRegionWidth(), centerY,
+			canvas.draw(statusFrgRight,  Color.WHITE, progressBarCenterX - progressBarWidth /2+scale*statusFrgLeft.getRegionWidth(), progressBarCenterY,
 					scale*statusFrgRight.getRegionWidth(), scale*statusFrgRight.getRegionHeight());
 		}
 	}
@@ -370,10 +391,25 @@ public class LoadingScreen implements Screen, InputProcessor, ControllerListener
 		float sy = ((float)height)/STANDARD_HEIGHT;
 		scale = (sx < sy ? sx : sy);
 		
-		this.width = (int)(BAR_WIDTH_RATIO*width);
-		centerY = (int)(BAR_HEIGHT_RATIO*height);
-		centerX = width/2;
+		this.progressBarWidth = (int)(BAR_WIDTH_RATIO*width);
+		progressBarCenterY = (int)(BAR_HEIGHT_RATIO*height);
+		progressBarCenterX = width/2;
+
 		heightY = height;
+
+		if (playButton != null) {
+			float buttonSpacing = 0.25f;
+
+			playButtonHitbox.setSize(BUTTON_SCALE*scale*playButton.getWidth(), BUTTON_SCALE*scale*playButton.getHeight());
+			playButtonHitbox.setCenter(canvas.getWidth()/2.0f, progressBarCenterY + playButton.getHeight()*buttonSpacing*scale);
+			float buttonDelta = playButtonHitbox.height * 1.5f;
+
+			settingsButtonHitbox.setSize(BUTTON_SCALE*scale*settingsButton.getWidth(), BUTTON_SCALE*scale*settingsButton.getHeight());
+			settingsButtonHitbox.setCenter(canvas.getWidth()/2.0f, progressBarCenterY -settingsButton.getHeight()*buttonSpacing*scale);
+
+			levelSelectButtonHitbox.setSize(BUTTON_SCALE*scale*levelSelectButton.getWidth(), BUTTON_SCALE*scale*levelSelectButton.getHeight());
+			levelSelectButtonHitbox.setCenter(canvas.getWidth()/2.0f, progressBarCenterY);
+		}
 	}
 
 	/**
@@ -436,7 +472,7 @@ public class LoadingScreen implements Screen, InputProcessor, ControllerListener
 	 * @return whether to hand the event to other listeners. 
 	 */
 	public boolean touchDown(int screenX, int screenY, int pointer, int button) {
-		if (playButton == null || pressState == 2) {
+		if (playButton == null || playButtonState == 2) {
 			return true;
 		}
 		
@@ -445,11 +481,19 @@ public class LoadingScreen implements Screen, InputProcessor, ControllerListener
 		
 		// TODO: Fix scaling
 		// Play button is a circle.
-		float radius = BUTTON_SCALE*scale*playButton.getWidth()/2.0f;
-		float dist = (screenX-centerX)*(screenX-centerX)+(screenY-(centerY + playButton.getHeight()*BUTTON_SCALE+45F))*(screenY-(centerY + playButton.getHeight()*BUTTON_SCALE+45F));
-		if (dist < radius*radius) {
-			pressState = 1;
+
+		if (playButtonHitbox.contains(screenX, screenY)) {
+			playButtonState = 1;
 		}
+
+		if (settingsButtonHitbox.contains(screenX, screenY)) {
+			settingsButtonState = 1;
+		}
+
+		if (levelSelectButtonHitbox.contains(screenX, screenY)) {
+			levelSelectButtonState = 1;
+		}
+
 		return false;
 	}
 	
@@ -465,9 +509,15 @@ public class LoadingScreen implements Screen, InputProcessor, ControllerListener
 	 * @return whether to hand the event to other listeners. 
 	 */	
 	public boolean touchUp(int screenX, int screenY, int pointer, int button) { 
-		if (pressState == 1) {
-			pressState = 2;
+		if (playButtonState == 1) {
+			playButtonState = 2;
 			return false;
+		}
+		if (settingsButtonState == 1) {
+			settingsButtonState = 2;
+		}
+		if (levelSelectButtonState == 1) {
+			levelSelectButtonState = 2;
 		}
 		return true;
 	}
@@ -484,10 +534,10 @@ public class LoadingScreen implements Screen, InputProcessor, ControllerListener
 	 * @return whether to hand the event to other listeners. 
 	 */
 	public boolean buttonDown (Controller controller, int buttonCode) {
-		if (pressState == 0) {
+		if (playButtonState == 0) {
 			ControllerMapping mapping = controller.getMapping();
 			if (mapping != null && buttonCode == mapping.buttonStart ) {
-				pressState = 1;
+				playButtonState = 1;
 				return false;
 			}
 		}
@@ -506,10 +556,10 @@ public class LoadingScreen implements Screen, InputProcessor, ControllerListener
 	 * @return whether to hand the event to other listeners. 
 	 */
 	public boolean buttonUp (Controller controller, int buttonCode) {
-		if (pressState == 1) {
+		if (playButtonState == 1) {
 			ControllerMapping mapping = controller.getMapping();
 			if (mapping != null && buttonCode == mapping.buttonStart ) {
-				pressState = 2;
+				playButtonState = 2;
 				return false;
 			}
 		}
