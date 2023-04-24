@@ -1,6 +1,8 @@
 package edu.cornell.gdiac.game;
 
+import com.badlogic.gdx.Audio;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
@@ -9,6 +11,7 @@ import com.badlogic.gdx.physics.box2d.Filter;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.JsonValue;
 import com.badlogic.gdx.utils.ObjectMap;
+import edu.cornell.gdiac.audio.SoundEffect;
 import edu.cornell.gdiac.game.models.*;
 import edu.cornell.gdiac.game.obstacle.EffectObstacle;
 import edu.cornell.gdiac.game.obstacle.SwordWheelObstacle;
@@ -105,6 +108,8 @@ public class ActionController {
 
     private long smallImpactSoundId = -1;
 
+    private ArrayList<Sound> soundDictionary;
+
 
     public ActionController(Level level,Array<AIController> aiControllers) {
         enemies = level.getEnemies();
@@ -125,6 +130,7 @@ public class ActionController {
         this.chiyoRunSound = Gdx.audio.newSound(Gdx.files.internal("audio/temp-chiyo-run.mp3"));
         this.momoRunSound = Gdx.audio.newSound(Gdx.files.internal("audio/temp-momo-run.mp3"));
         this.smallImpactSound = Gdx.audio.newSound(Gdx.files.internal("audio/temp-small-impact.mp3"));
+        this.soundDictionary = new ArrayList<Sound>();
         //Creating a Dictionary of Textures
         addAnimations(player.getMomoRunSpriteSheet(), 6, 1, "momoRun");
         addAnimations(player.getMomoDashSpriteSheet(), 5, 1, "momoDash");
@@ -486,20 +492,27 @@ public class ActionController {
                 player.setTexture(current);
                 player.setOyOffset(-30);
             } else if (player.getBodyVelocityX() != 0) {
-
-                momoRunSoundId = playSound( momoRunSound, momoRunSoundId, 10F );
+                if(!soundDictionary.contains(momoRunSound)){
+                    soundDictionary.add(momoRunSound);
+                    momoRunSound.loop();
+                }
                 TextureRegion current = (TextureRegion) (animations.get("momoRun")).getKeyFrame(currentFrame); // Gets the current frame of the animation
                 tickFrameSwitch = 5;
                 maxFrame = 5;
                 player.setTexture(current);
                 player.setOyOffset(-35);
             } else {
+                momoRunSound.stop();
+                soundDictionary.remove(momoRunSound);
                 player.setTexture(player.getMomoTexture());
                 player.setOyOffset(-160);
             }
         } else {
             if (player.getBodyVelocityX() != 0) {
-                chiyoRunSoundId = playSound( chiyoRunSound, chiyoRunSoundId, 10F );
+                if(!soundDictionary.contains(chiyoRunSound)) {
+                    soundDictionary.add(chiyoRunSound);
+                    chiyoRunSound.loop();
+                }
                 TextureRegion current = (TextureRegion) (animations.get("chiyoRun")).getKeyFrame(currentFrame); // Gets the current frame of the animation
                 tickFrameSwitch = 4;
                 maxFrame = 7;
@@ -508,6 +521,8 @@ public class ActionController {
                 player.setSxMult(1.5f);
                 player.setSyMult(1.5f);
             } else {
+                chiyoRunSound.stop();
+                soundDictionary.remove(chiyoRunSound);
                 player.setTexture(player.getChiyoTexture());
                 player.setOyOffset(-100);
                 player.setSxMult(1.0f);
@@ -649,15 +664,16 @@ public class ActionController {
                 }
                 //Green Mosquito
                 else if(enemy.getType().equals("Fly")){
-                    if(enemy.getIsFacingRight() && enemy.getVelocityH() != 0){
+//                    System.out.println("Fly is facing" + enemy.getIsFacingRight());
+                    if(enemy.getVelocityH() > 0){
                         addAnimations(enemy.getSetPathFlyingRightSpriteSheet(), 7, 1, "flyRight");
                         TextureRegion current = (TextureRegion) (animations.get("flyRight")).getKeyFrame(currentFrame); // Gets the current frame of the animation
-                        tickFrameSwitch = 3;
+                        tickFrameSwitch = 5;
                         maxFrame = 6;
                         enemy.setTexture(current);
                     }
-                    else if(!enemy.getIsFacingRight() && enemy.getVelocityH() != 0){
-                        addAnimations(enemy.getSetPathFlyingLeftSpriteSheet(), 10, 1, "flyLeft");
+                    else if(enemy.getVelocityH() < 0){
+                        addAnimations(enemy.getSetPathFlyingLeftSpriteSheet(), 7, 1, "flyLeft");
                         TextureRegion current = (TextureRegion) (animations.get("flyLeft")).getKeyFrame(currentFrame); // Gets the current frame of the animation
                         tickFrameSwitch = 5;
                         maxFrame = 6;
@@ -806,13 +822,6 @@ public class ActionController {
         return sound.play(volume);
     }
 
-//    public long playRunSound(Sound sound, long soundId, float volume) {
-//        if (soundId != -1) {
-//            sound.setLooping( soundId, false );
-//        }
-//        sound.setVolume(soundId, volume);
-//        return sound.loop();
-//    }
 
     public void dispose() {
         jumpSound.dispose();

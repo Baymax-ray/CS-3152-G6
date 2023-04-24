@@ -12,6 +12,7 @@ import com.badlogic.gdx.physics.box2d.*;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.JsonValue;
 import edu.cornell.gdiac.assets.AssetDirectory;
+import edu.cornell.gdiac.audio.SoundEffect;
 import edu.cornell.gdiac.game.GameCanvas;
 import edu.cornell.gdiac.game.obstacle.CapsuleObstacle;
 import edu.cornell.gdiac.game.obstacle.SwordWheelObstacle;
@@ -307,6 +308,7 @@ public class Player extends CapsuleObstacle {
 
     private long playerDamageSoundId = -1;
 
+
     //#endregion
 
     //#region TEXTURE GETTERS AND SETTERS
@@ -392,6 +394,7 @@ public class Player extends CapsuleObstacle {
     public Animation<TextureRegion> getSpiritDrainAnimation() {
         return spiritDrainAnimation;
     }
+
 
     /**
      * Get momoDashSpriteSheet.
@@ -1216,7 +1219,6 @@ public class Player extends CapsuleObstacle {
         this.momoJumpSpriteSheet = new TextureRegion(assets.getEntry( "momo:jump", Texture.class));
         this.chiyoRunSpriteSheet = new TextureRegion(assets.getEntry( "chiyo:run", Texture.class));
         this.impactEffectSpriteSheet = new TextureRegion(assets.getEntry( "impactEffect", Texture.class));
-
         //Sound Effect
         this.playerDamageSound = Gdx.audio.newSound(Gdx.files.internal("audio/temp-player-damage.mp3"));
 
