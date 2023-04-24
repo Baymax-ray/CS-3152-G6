@@ -733,7 +733,21 @@
                  "width":63.875,
                  "x":225.3030831879,
                  "y":766.340314136126
-                }],
+                },
+               {
+                 "gid":110,
+                 "height":22.3413,
+                 "id":110,
+                 "name":"Billboard",
+                 "text": "test",
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":22.8779,
+                 "x":220,
+                 "y":1084
+               }
+         ],
          "opacity":1,
          "type":"objectgroup",
          "visible":true,

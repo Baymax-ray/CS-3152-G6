@@ -20,6 +20,7 @@ public class ActionController {
 
     private Level level;
     private final Enemy[] enemies;
+    private final Billboard[] billboards;
     private final Player player;
 
     private float previousX;
@@ -107,6 +108,7 @@ public class ActionController {
 
     public ActionController(Level level,Array<AIController> aiControllers) {
         enemies = level.getEnemies();
+        billboards = level.getBillboards();
         player = level.getPlayer();
         this.level = level;
         animations = new ObjectMap<>();
@@ -562,6 +564,21 @@ public class ActionController {
             player.increaseSpirit();
                 EffectObstacle effect = level.getEffectPool().obtainEffect(player.getX(), player.getY(), player.getSpiritDrainSpriteSheet().getRegionWidth(), player.getSpiritDrainSpriteSheet().getRegionHeight(), 0.01f, 0.01f, 0, 0, 0, true, "spiritDrain", player, 1f, 1, 1, player.getSpiritDrainAnimation(), 3);
                 level.addQueuedObject(effect);
+        }
+
+        // temporary loop for reading billboards
+        // just for testing purpose
+        // will create sensor later
+        for (int i = 0; i < billboards.length; i++) {
+            float bx = billboards[i].getX();
+            float by = billboards[i].getY();
+            float px = player.getX();
+            float py = player.getY();
+            double distance = Math.sqrt(Math.pow(px-bx,2)+Math.pow(py-by,2));
+            if (distance <= 2) {
+                billboards[i].setDisplay(true);
+            }
+            else billboards[i].setDisplay(false);
         }
     }
 

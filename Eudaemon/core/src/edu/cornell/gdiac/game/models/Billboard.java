@@ -31,8 +31,13 @@ public class Billboard extends BoxObstacle {
     private final float billboardImageHeight;
     private final String sensorName;
     private PolygonShape sensorShape;
+    private String text;
+    private boolean display;
 
-    private String getSensorName() {return this.sensorName;}
+    public String getSensorName() {return this.sensorName;}
+
+    public void setDisplay(boolean value) { this.display = value; }
+    public boolean isDisplay() { return display; }
 
     public Billboard(JsonValue json, AssetDirectory assets, float x, float y){
         super(x + 0.5f, y - 0.9f,
@@ -45,13 +50,16 @@ public class Billboard extends BoxObstacle {
         this.billboardTexture = new TextureRegion(assets.getEntry(TextureAsset, Texture.class));
         this.billboardImageWidth = billboardData.getFloat("ImageWidth");
         this.billboardImageHeight = billboardData.getFloat("ImageHeight");
+        this.text = json.getString("text");
         this.sensorName = "BillboardSensor";
         this.texture = this.billboardTexture;
 
+
         stringCompleteness = 0;
-        textSpeed = 10;
+        textSpeed = 20;
         font = new BitmapFont();
         font.getData().setScale(2.0f);
+        this.display = false;
     }
 
     /**
@@ -101,6 +109,7 @@ public class Billboard extends BoxObstacle {
 
     public void aggregateStringCompleteness(float delta) {
         stringCompleteness += textSpeed * delta;
+        if (!isDisplay()) stringCompleteness = 0;
     }
 
     /**

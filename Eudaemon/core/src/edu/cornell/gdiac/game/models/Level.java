@@ -24,13 +24,14 @@ import java.util.Hashtable;
 import java.util.Iterator;
 
 public class Level {
-    //private Billboard billboard;
     private MyGridGraph gridGraph;
     //#region FINAL FIELDS
     private final Player player;
     private ArrayList<Enemy> enemies ;
 
     private ArrayList<Spike> spikes;
+
+    private ArrayList<Billboard> billboards;
 
     private Exit exit;
 
@@ -133,6 +134,11 @@ public class Level {
     public Enemy[] getEnemies() {
         Enemy[] result = new Enemy[enemies.size()];
         return enemies.toArray(result);
+    }
+
+    public Billboard[] getBillboards() {
+        Billboard[] result = new Billboard[billboards.size()];
+        return billboards.toArray(result);
     }
     public float gettileSize(){
         return tileSize;
@@ -413,6 +419,8 @@ public class Level {
         //#region Enemies and Objects
         this.enemies = new ArrayList<Enemy>();
         this.spikes = new ArrayList<Spike>();
+        this.billboards = new ArrayList<Billboard>();
+
         int startX = 0;
         int startY = 0;
         JsonValue objectLayer = layerData.get("ObjectLayer");
@@ -428,6 +436,11 @@ public class Level {
                 float x = (int) (object.getInt("x") / 32);
                 float y = heightInTiles - (int) (object.getInt("y") / 32);
                 spikes.add(new Spike(object, assets,x,y));
+            }
+            else if (object.getString("name").equals("Billboard")) {
+                float x = (int) (object.getInt("x") / 32);
+                float y = heightInTiles - (int) (object.getInt("y") / 32);
+                billboards.add(new Billboard(object, assets,x,y));
             }
             else if (object.getString("name").equals("StartingPoint")) {
                 startX = (int) (object.getInt("x") / 32) + 1;
@@ -624,6 +637,10 @@ public class Level {
                 obj.update(delta);
             }
         }
+
+        for (int i = 0; i < billboards.size(); i++) {
+            billboards.get(i).aggregateStringCompleteness(delta);
+        }
         //billboard.aggregateStringCompleteness(delta);
 
 
@@ -707,6 +724,10 @@ public class Level {
         canvas.begin();
         uiElements.draw(canvas, player.getHearts(), player.getSpirit());
         //billboard.displayDialog(canvas);
+        for (int i = 0; i < billboards.size(); i++) {
+            if (billboards.get(i).isDisplay()) billboards.get(i).displayDialog(canvas);
+
+        }
         canvas.end();
 
         canvas.setGameplayCamera(cam_x,cam_y, cameraWidth, cameraHeight);
@@ -748,6 +769,11 @@ public class Level {
         for(int i = 0; i < spikes.size(); i++){
             addObject(spikes.get(i));
         }
+
+        for(int i = 0; i < billboards.size(); i++){
+            addObject(billboards.get(i));
+        }
+
 
         addObject(exit);
     }
@@ -818,6 +844,7 @@ public class Level {
         player.dispose();
         objects.clear();
         spikes.clear();
+        billboards.clear();
         effectPool.clear();
         addQueue.clear();
         world.dispose();
