@@ -32,6 +32,7 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.Texture.TextureFilter;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.math.Rectangle;
 import edu.cornell.gdiac.assets.AssetDirectory;
 import edu.cornell.gdiac.util.Controllers;
 import edu.cornell.gdiac.util.ScreenListener;
@@ -104,6 +105,8 @@ public class DeathScreen implements Screen, InputProcessor, ControllerListener {
 
 	/** Whether or not this player mode is still active */
 	private boolean active;
+	/** The hitbox of the start button */
+	private Rectangle playButtonHitbox;
 
 
 	/**
@@ -158,6 +161,8 @@ public class DeathScreen implements Screen, InputProcessor, ControllerListener {
 
 		Gdx.input.setInputProcessor( this );
 
+		playButtonHitbox = new Rectangle();
+
 		// Let ANY connected controller start the game.
 		for (XBoxController controller : Controllers.get().getXBoxControllers()) {
 			controller.addListener( this );
@@ -189,10 +194,7 @@ public class DeathScreen implements Screen, InputProcessor, ControllerListener {
 		canvas.begin();
 		canvas.draw(background, Color.WHITE, 0, 0, canvas.getWidth(), canvas.getHeight());
 		Color tint = (pressState == 1 ? Color.GRAY: Color.WHITE);
-		canvas.draw(playButton, tint, playButton.getWidth()/2, playButton.getHeight()/2,
-				centerX, centerY + playButton.getHeight()*BUTTON_SCALE+45F, 0, BUTTON_SCALE*scale, BUTTON_SCALE*scale);
-		canvas.draw(quitButton, Color.WHITE, quitButton.getWidth()/2, quitButton.getHeight()/2,
-				centerX, centerY+35F, 0, BUTTON_SCALE*scale, BUTTON_SCALE*scale);
+		canvas.draw(playButton, tint, playButtonHitbox.x, playButtonHitbox.y, playButtonHitbox.width, playButtonHitbox.height);
 		canvas.end();
 	}
 
@@ -244,6 +246,12 @@ public class DeathScreen implements Screen, InputProcessor, ControllerListener {
 		centerY = (int)(BAR_HEIGHT_RATIO*height);
 		centerX = width/2;
 		heightY = height;
+		if (playButton != null) {
+			float buttonSpacing = 0.25f;
+
+			playButtonHitbox.setSize(BUTTON_SCALE * scale * playButton.getWidth(), BUTTON_SCALE * scale * playButton.getHeight());
+			playButtonHitbox.setCenter(canvas.getWidth() / 2.0f, centerY + playButton.getHeight() * buttonSpacing * scale);
+		}
 	}
 
 	/**
