@@ -3,10 +3,10 @@
         "height": 4300,
         "width": 2
     },
-    "activeFile": "level1.json",
+    "activeFile": "experimentalLevel1.json",
     "expandedProjectPaths": [
-        "Templates",
-        "."
+        ".",
+        "Templates"
     ],
     "file.lastUsedOpenFilter": "全部文件 (*)",
     "fileStates": {
@@ -42,8 +42,8 @@
             "scale": 0.9,
             "selectedLayer": 1,
             "viewCenter": {
-                "x": 218.33333333333334,
-                "y": 254.99999999999997
+                "x": 319.4444444444445,
+                "y": 642.7777777777778
             }
         },
         "level0.json": {
@@ -53,8 +53,8 @@
             "scale": 0.8,
             "selectedLayer": 3,
             "viewCenter": {
-                "x": 253.125,
-                "y": 336.875
+                "x": 796.875,
+                "y": 636.875
             }
         },
         "level0.tmj": {
@@ -72,8 +72,8 @@
             "scale": 0.966,
             "selectedLayer": 3,
             "viewCenter": {
-                "x": 704.4513457556936,
-                "y": 752.0703933747413
+                "x": 798.6542443064181,
+                "y": 638.1987577639752
             }
         }
     },
@@ -86,13 +86,14 @@
     "map.width": 50,
     "openFiles": [
         "level1.json",
-        "level0.json"
+        "level0.json",
+        "experimentalLevel1.json"
     ],
     "project": "untitled.tiled-project",
     "property.type": "string",
     "recentFiles": [
-        "level1.json",
         "experimentalLevel1.json",
+        "level1.json",
         "level0.json",
         "F:/Programming/School/CS 3152/Eudaemon/CS-3152-G6/Eudaemon/assets/EudaemonTileset.json",
         "level0.tmj",
