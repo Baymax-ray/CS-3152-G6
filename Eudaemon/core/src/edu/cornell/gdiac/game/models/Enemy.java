@@ -395,6 +395,14 @@ public class Enemy extends CapsuleObstacle {
         this.projectileEnemyDirection = "Left";
         this.projectileEnemyRotation = 0;
 
+        //Size
+        this.enemyImageWidth = enemyData.getFloat("ImageWidth");
+        this.enemyImageHeight = enemyData.getFloat("ImageHeight");
+        scaleX = enemyData.getFloat("drawScaleX");
+        scaleY = enemyData.getFloat("drawScaleY");
+        oxOffset = enemyData.getFloat("oxOffset");
+        oyOffset = enemyData.getFloat("oyOffset");
+
         //Query the type of this enemy, then query the corresponding data in enemyConstants.json
         this.guardianList = new ArrayList<>();
         switch (this.type) {
@@ -464,6 +472,7 @@ public class Enemy extends CapsuleObstacle {
                         break;
                     case "Up":
                         this.projectileEnemyRotation = (float) Math.PI;
+                        this.setOyOffset(-110f);
                         break;
                     case "Down":
                         this.projectileEnemyRotation = 0;
@@ -512,13 +521,7 @@ public class Enemy extends CapsuleObstacle {
         TextureRegion[][] frames = bloodEffectSpriteSheet.split(bloodEffectSpriteSheet.getRegionWidth() / 17, bloodEffectSpriteSheet.getRegionHeight());
         bloodEffectAnimation = new Animation<>(0.5f, frames[0]);
 
-        //Size
-        this.enemyImageWidth = enemyData.getFloat("ImageWidth");
-        this.enemyImageHeight = enemyData.getFloat("ImageHeight");
-        scaleX = enemyData.getFloat("drawScaleX");
-        scaleY = enemyData.getFloat("drawScaleY");
-        oxOffset = enemyData.getFloat("oxOffset");
-        oyOffset = enemyData.getFloat("oyOffset");
+
 
         this.maxSpeed = enemyData.getFloat("maxSpeed");
         this.force = enemyData.getFloat("force");
@@ -614,6 +617,10 @@ public class Enemy extends CapsuleObstacle {
         // Ground sensor to represent our feet
         Fixture sensorFixture = body.createFixture(sensorDef);
         sensorFixture.setUserData(getSensorName());
+
+        if (this.type.equals("Projectile")) {
+            body.setType(BodyDef.BodyType.KinematicBody);
+        }
 
         return true;
     }
