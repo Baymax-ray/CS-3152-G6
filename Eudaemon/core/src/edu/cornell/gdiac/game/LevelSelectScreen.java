@@ -33,7 +33,6 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.Texture.TextureFilter;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Rectangle;
-import com.badlogic.gdx.utils.JsonValue;
 import edu.cornell.gdiac.assets.AssetDirectory;
 import edu.cornell.gdiac.game.models.GameState;
 import edu.cornell.gdiac.util.Controllers;
@@ -59,7 +58,10 @@ public class LevelSelectScreen implements Screen, InputProcessor, ControllerList
     private Texture background;
 
     /** texture with lights for level completion */
-    private Texture lightsForeground;
+    private Texture lights;
+
+    /** regions of the lights currently being drawn */
+    private TextureRegion[] litUpLevels;
 
     /** back button texture*/
     private Texture backButton;
@@ -70,25 +72,19 @@ public class LevelSelectScreen implements Screen, InputProcessor, ControllerList
     /** The current state of the back button */
     private int backPressState;
 
-    /** Settings button texture */
-    private Texture settingsButton;
-
-    /** The hitbox for the settings button */
-    private Rectangle settingsHitbox;
-
-    /** The current state of the settings button */
-    private int settingsPressState;
-
     /** The hitboxes for the level select buttons */
     private Rectangle[] levelHitboxes;
 
     /** The current state of the level buttons */
     private int[] levelPressState;
 
+    /** The level number textures */
+    private Texture[] levelNumbers;
+
     /** Standard window size (for scaling) */
-    private static final int STANDARD_WIDTH  = 800;
+    private static final int STANDARD_WIDTH  = 240;
     /** Standard window height (for scaling) */
-    private static final int STANDARD_HEIGHT = 700;
+    private static final int STANDARD_HEIGHT = 135;
 
 
     /** Reference to GameCanvas created by the root */
@@ -105,6 +101,9 @@ public class LevelSelectScreen implements Screen, InputProcessor, ControllerList
     private int heightY;
     /** Scaling factor for when the student changes the resolution. */
     private float scale;
+
+    /** the current level (1-based indexing)*/
+    private int currentLevel;
 
 
     /** Whether or not this player mode is still active */
@@ -129,28 +128,32 @@ public class LevelSelectScreen implements Screen, InputProcessor, ControllerList
         this.canvas  = canvas;
 
 
+        background = assets.getEntry( "levelSelect:background", Texture.class );
+        background.setFilter(TextureFilter.Nearest, TextureFilter.Nearest);
 
-        // Load the next two images immediately.
-        background = assets.getEntry( "background:city", Texture.class );
-        background.setFilter( TextureFilter.Linear, TextureFilter.Linear );
+        lights = assets.getEntry("levelSelect:lights", Texture.class);
+        lights.setFilter(TextureFilter.Nearest, TextureFilter.Nearest);
 
-        lightsForeground = assets.getEntry("levelSelect:levelBegin", Texture.class);
+        currentLevel = 5;
+        setLitUpLevels(currentLevel);
 
         backButton = assets.getEntry("levelSelect:back", Texture.class);
-
-        settingsButton = assets.getEntry("levelSelect:settings", Texture.class);
+        backButton.setFilter(TextureFilter.Nearest, TextureFilter.Nearest);
 
         backHitbox = new Rectangle();
         backPressState = 0;
 
-        settingsHitbox = new Rectangle();
-        settingsPressState = 0;
-
-        levelHitboxes = new Rectangle[state.getLevels().size()];
+        int numLevels = Math.min(state.getLevels().size(), 10);
+        levelHitboxes = new Rectangle[numLevels];
         levelPressState = new int[levelHitboxes.length];
         for (int i = 0; i < levelHitboxes.length; i++) {
             levelHitboxes[i] = new Rectangle();
             levelPressState[i] = 0;
+        }
+        levelNumbers = new Texture[10];
+        for (int i = 0; i < levelNumbers.length; i++) {
+            levelNumbers[i] = assets.getEntry("levelSelect:" + (i + 1), Texture.class);
+            levelNumbers[i].setFilter(TextureFilter.Nearest, TextureFilter.Nearest);
         }
 
         // Compute the dimensions from the canvas
@@ -188,12 +191,52 @@ public class LevelSelectScreen implements Screen, InputProcessor, ControllerList
         canvas.begin();
         canvas.draw(background, Color.WHITE, 0, 0, canvas.getWidth(), canvas.getHeight());
         Color tint = (backPressState == 1 ? Color.GRAY: Color.WHITE);
-        canvas.draw(backButton, tint, backHitbox.x, backHitbox.y, backHitbox.width, backHitbox.height);
-//        canvas.draw(settingsButton, tint, settingsHitbox.x, settingsHitbox.y, settingsHitbox.width, settingsHitbox.height);
+        canvas.draw(backButton, tint, 0, 0, canvas.getWidth(), canvas.getHeight());
+
+        for (int i = 0; i < litUpLevels.length; i++) {
+            canvas.draw(litUpLevels[i], Color.WHITE, 0, canvas.getHeight() - litUpLevels[i].getRegionHeight() * scale, litUpLevels[i].getRegionWidth() * scale, litUpLevels[i].getRegionHeight() * scale);
+        }
+
+        canvas.draw(levelNumbers[currentLevel - 1], Color.WHITE, 0, 0, canvas.getWidth(), canvas.getHeight());
+
 //        for (int i = 0; i < levelHitboxes.length; i++) {
 //            canvas.draw(settingsButton, tint, levelHitboxes[i].x, levelHitboxes[i].y, levelHitboxes[i].width, levelHitboxes[i].height); //TODO: get actual button design
 //        }
         canvas.end();
+    }
+
+    private void setLitUpLevels(int i) {
+
+        int splitX = 106; // this is the coordinate in the texture that splits the two sides of the building
+        int[] splitY = new int[] {40, 55, 70, 85, 100, 115, lights.getHeight()}; // <-- may need to reverse
+
+//        for (int j = 0; j < splitY.length; j++) {
+//            splitY[j] = lights.getHeight() - splitY[j];
+//        }
+
+        if (i <= 0) {
+            litUpLevels = new TextureRegion[0];
+        } else if (i <= 2) {
+            litUpLevels = new TextureRegion[1];
+            int x = (i % 2 == 0) ? lights.getWidth() : splitX;
+            litUpLevels[0] = new TextureRegion(lights, 0, 0, x, splitY[0]);
+        } else if (i <= 4) {
+            litUpLevels = new TextureRegion[2];
+            litUpLevels[0] = new TextureRegion(lights, 0, 0, lights.getWidth(), splitY[0]);
+            int x = (i % 2 == 0) ? lights.getWidth() : splitX;
+            litUpLevels[1] = new TextureRegion(lights, 0, 0, x, splitY[1]);
+        } else if (i <= 6) {
+            litUpLevels = new TextureRegion[2];
+            litUpLevels[0] = new TextureRegion(lights, 0, 0, lights.getWidth(), splitY[1]);
+            int x = (i % 2 == 0) ? lights.getWidth() : splitX;
+            litUpLevels[1] = new TextureRegion(lights, 0, 0, x, splitY[2]);
+        } else {
+            litUpLevels = new TextureRegion[1];
+            int y = splitY[i - 4]; //7 -> 85 -> [3]
+            System.out.println(y);
+            System.out.println(lights.getHeight());
+            litUpLevels[0] = new TextureRegion(lights, 0, 0, lights.getWidth(), y);
+        }
     }
 
 
@@ -247,8 +290,9 @@ public class LevelSelectScreen implements Screen, InputProcessor, ControllerList
         float buttonSpacing = 0.25f;
         float buttonHeight = 0.1f;
 
-        backHitbox.setSize(buttonHeight * scale * backButton.getWidth(), buttonHeight * scale * backButton.getHeight());
+        backHitbox.setSize(10 * scale);
         backHitbox.setCenter(centerX, centerY - backHitbox.width * buttonSpacing);
+        backHitbox.setPosition(5 * scale, canvas.getHeight() - 12 * scale);
     }
 
     /**

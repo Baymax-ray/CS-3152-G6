@@ -322,9 +322,19 @@
         "tiles:TiledFloorD.png": "tiles/TiledFloorD.png",
         "tiles:TiledFloorE.png": "tiles/TiledFloorE.png",
 
-        "levelSelect:beginLevel": "shared/start_button.png",
-        "levelSelect:back": "shared/levelselect_button.png",
-        "levelSelect:settings": "shared/settings_button.png"
+        "levelSelect:background": "levelSelect/levelSelectBackground.png",
+        "levelSelect:lights": "levelSelect/levelLights.png",
+        "levelSelect:back": "levelSelect/backArrow.png",
+        "levelSelect:1": "levelSelect/level1icon.png",
+        "levelSelect:2": "levelSelect/level2icon.png",
+        "levelSelect:3": "levelSelect/level3icon.png",
+        "levelSelect:4": "levelSelect/level4icon.png",
+        "levelSelect:5": "levelSelect/level5icon.png",
+        "levelSelect:6": "levelSelect/level6icon.png",
+        "levelSelect:7": "levelSelect/level7icon.png",
+        "levelSelect:8": "levelSelect/level8icon.png",
+        "levelSelect:9": "levelSelect/level9icon.png",
+        "levelSelect:10": "levelSelect/level10icon.png"
     },
     "jsons"  : {
         "constants": "constants.json",
