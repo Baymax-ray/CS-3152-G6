@@ -708,6 +708,7 @@ public class GameCanvas {
 		// There is a workaround, but it will break if the bug is fixed.
 		// For now, it is better to set the affine transform directly.
 		computeTransform(ox,oy,x,y,angle,sx,sy);
+		region.getTexture().setFilter(Texture.TextureFilter.Nearest, Texture.TextureFilter.Nearest);
 		spriteBatch.setColor(tint);
 		spriteBatch.draw(region, region.getRegionWidth(), region.getRegionHeight(), local);
 	}

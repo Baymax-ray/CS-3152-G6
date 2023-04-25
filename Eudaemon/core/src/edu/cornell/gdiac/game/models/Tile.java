@@ -16,6 +16,7 @@ public class Tile {
     public Tile (AssetDirectory assets) {
 
         this.texture = new TextureRegion(assets.getEntry("shared:earth", Texture.class));
+//        this.texture.getTexture().setFilter(Texture.TextureFilter.Linear, Texture.TextureFilter.Linear);
     }
 
 }
