@@ -33,6 +33,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.Texture.TextureFilter;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Rectangle;
+import com.badlogic.gdx.math.Vector2;
 import edu.cornell.gdiac.assets.AssetDirectory;
 import edu.cornell.gdiac.game.models.GameState;
 import edu.cornell.gdiac.util.Controllers;
@@ -103,7 +104,10 @@ public class LevelSelectScreen implements Screen, InputProcessor, ControllerList
     private float scale;
 
     /** the current level (1-based indexing)*/
-    private int currentLevel;
+    private int numAvailableLevels;
+
+    /** the selected level (0-based indexing) */
+    private int selectedLevel;
 
 
     /** Whether or not this player mode is still active */
@@ -134,8 +138,8 @@ public class LevelSelectScreen implements Screen, InputProcessor, ControllerList
         lights = assets.getEntry("levelSelect:lights", Texture.class);
         lights.setFilter(TextureFilter.Nearest, TextureFilter.Nearest);
 
-        currentLevel = 5;
-        setLitUpLevels(currentLevel);
+        numAvailableLevels = state.getLevels().size();
+        setLitUpLevels(numAvailableLevels);
 
         backButton = assets.getEntry("levelSelect:back", Texture.class);
         backButton.setFilter(TextureFilter.Nearest, TextureFilter.Nearest);
@@ -143,8 +147,7 @@ public class LevelSelectScreen implements Screen, InputProcessor, ControllerList
         backHitbox = new Rectangle();
         backPressState = 0;
 
-        int numLevels = Math.min(state.getLevels().size(), 10);
-        levelHitboxes = new Rectangle[numLevels];
+        levelHitboxes = new Rectangle[10];
         levelPressState = new int[levelHitboxes.length];
         for (int i = 0; i < levelHitboxes.length; i++) {
             levelHitboxes[i] = new Rectangle();
@@ -197,11 +200,12 @@ public class LevelSelectScreen implements Screen, InputProcessor, ControllerList
             canvas.draw(litUpLevels[i], Color.WHITE, 0, canvas.getHeight() - litUpLevels[i].getRegionHeight() * scale, litUpLevels[i].getRegionWidth() * scale, litUpLevels[i].getRegionHeight() * scale);
         }
 
-        canvas.draw(levelNumbers[currentLevel - 1], Color.WHITE, 0, 0, canvas.getWidth(), canvas.getHeight());
+        canvas.draw(levelNumbers[numAvailableLevels - 1], Color.WHITE, 0, 0, canvas.getWidth(), canvas.getHeight());
 
 //        for (int i = 0; i < levelHitboxes.length; i++) {
-//            canvas.draw(settingsButton, tint, levelHitboxes[i].x, levelHitboxes[i].y, levelHitboxes[i].width, levelHitboxes[i].height); //TODO: get actual button design
+//            canvas.draw(background, tint, levelHitboxes[i].x, levelHitboxes[i].y, levelHitboxes[i].width, levelHitboxes[i].height); //for debugging hitboxes
 //        }
+
         canvas.end();
     }
 
@@ -257,6 +261,12 @@ public class LevelSelectScreen implements Screen, InputProcessor, ControllerList
             if (backPressState == 2 && listener != null) {
                 listener.exitScreen(this, ExitCode.MAIN_MENU);
             }
+            for (int i = 0; i < levelPressState.length; i++) {
+                if (levelPressState[i] == 2) {
+                    selectedLevel = i;
+                    listener.exitScreen(this, ExitCode.START);
+                }
+            }
         }
     }
 
@@ -291,8 +301,36 @@ public class LevelSelectScreen implements Screen, InputProcessor, ControllerList
         float buttonHeight = 0.1f;
 
         backHitbox.setSize(10 * scale);
-        backHitbox.setCenter(centerX, centerY - backHitbox.width * buttonSpacing);
         backHitbox.setPosition(5 * scale, canvas.getHeight() - 12 * scale);
+
+        for (int i = 0; i < levelHitboxes.length; i++) {
+            levelHitboxes[i].setSize(9 * scale, 5 * scale);
+            levelHitboxes[i].setPosition(getLevelHitboxPosition(i + 1));
+        }
+    }
+
+    private Vector2 getLevelHitboxPosition(int i) { // uses 1 based indexing
+        float x, y;
+        x = (i % 2 == 0 && i <= 6) ? 109 : 94;
+
+        if (i <=2) {
+            y = lights.getHeight() - 36;
+        } else if (i <= 4) {
+            y = lights.getHeight() - 51;
+        } else if (i <= 6) {
+            y = lights.getHeight() - 66;
+        } else {
+            y = lights.getHeight() - (66 + (i - 6) * 15);
+        }
+
+        System.out.print(x);
+        System.out.print(" ");
+        System.out.println(y);
+        return new Vector2(x * scale, y * scale);
+    }
+
+    public int getSelectedLevel() {
+        return selectedLevel;
     }
 
     /**
@@ -361,6 +399,16 @@ public class LevelSelectScreen implements Screen, InputProcessor, ControllerList
         if (backHitbox.contains(screenX, screenY)) {
             backPressState = 1;
         }
+
+        for (int i = 0, levelHitboxesLength = levelHitboxes.length; i < levelHitboxesLength; i++) {
+            Rectangle levelHitbox = levelHitboxes[i];
+            if (levelHitbox.contains(screenX, screenY)) {
+                if (i < numAvailableLevels) {
+                    System.out.println(i);
+                    levelPressState[i] = 1;
+                }
+            }
+        }
         return false;
     }
 
@@ -379,6 +427,12 @@ public class LevelSelectScreen implements Screen, InputProcessor, ControllerList
         if (backPressState == 1) {
             backPressState = 2;
             return false;
+        }
+        for (int i = 0; i < levelPressState.length; i++) {
+            if (levelPressState[i] == 1) {
+                levelPressState[i] = 2;
+                return false;
+            }
         }
         return true;
     }

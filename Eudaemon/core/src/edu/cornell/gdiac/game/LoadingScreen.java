@@ -481,7 +481,6 @@ public class LoadingScreen implements Screen, InputProcessor, ControllerListener
 	 * @return whether to hand the event to other listeners. 
 	 */
 	public boolean touchDown(int screenX, int screenY, int pointer, int button) {
-		System.out.println("avada");
 		if (playButton == null || playButtonState == 2) {
 			return true;
 		}

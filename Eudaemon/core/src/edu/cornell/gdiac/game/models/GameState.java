@@ -5,8 +5,6 @@ import edu.cornell.gdiac.assets.AssetDirectory;
 
 import java.util.Collection;
 import java.util.HashMap;
-import java.util.List;
-import java.util.stream.Collectors;
 
 public class GameState {
     private final AssetDirectory assets;
@@ -33,6 +31,9 @@ public class GameState {
     }
 
     public void setCurrentLevel(int i) {
+        JsonValue levels = assets.getEntry("constants", JsonValue.class).get("levels");
+        if (i < 0) i = 0;
+        if (i >= levels.size()) i = levels.size() - 1;
         currentLevelName = assets.getEntry("constants", JsonValue.class).get("levels").get(i).getString("level");
     }
 

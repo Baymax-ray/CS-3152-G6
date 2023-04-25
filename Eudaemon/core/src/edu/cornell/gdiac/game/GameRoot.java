@@ -48,6 +48,9 @@ public class GameRoot extends Game implements ScreenListener {
 
 	@Override
 	public void exitScreen(Screen screen, int exitCode) {
+		System.out.println(screen);
+		System.out.println(exitCode);
+
 		if (screen == loadingScreen) {
 			assets = loadingScreen.getAssets();
 			state = new GameState(assets);
@@ -90,6 +93,18 @@ public class GameRoot extends Game implements ScreenListener {
 				screen.pause();
 				loadingScreen.reset();
 				setScreen(loadingScreen);
+			}
+			if (exitCode == ExitCode.START) {
+				screen.pause();
+				this.state.setCurrentLevel(levelSelectScreen.getSelectedLevel());
+
+				this.state.resetCurrentLevel();
+
+				levelScreen.dispose();
+				levelScreen = new LevelScreen(this.state.getCurrentLevel(), this.state.getActionBindings());
+				levelScreen.setScreenListener(this);
+				levelScreen.setCanvas(canvas);
+				setScreen(levelScreen);
 			}
 		}
 
