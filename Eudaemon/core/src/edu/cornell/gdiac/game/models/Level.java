@@ -776,7 +776,6 @@ public class Level {
             }
         }
 
-        addObject(player);
         //TODO: enemies activate too
         for(int i = 0; i < enemies.size(); i++){
             addObject(enemies.get(i));
@@ -790,6 +789,7 @@ public class Level {
             addObject(billboards.get(i));
         }
 
+        addObject(player);
 
         addObject(exit);
     }
