@@ -404,6 +404,7 @@ public class Level {
             String name = tileList.get(i).getString("image").substring(6);
             //Avoiding adding enemies and objects
             if (!(name.substring(0,7).equals("Enemies"))){
+                System.out.println(name);
                 TextureRegion tileTexture = new TextureRegion(assets.getEntry("tiles:" + name, Texture.class));
                 texturePaths.put(t.getInt("id"),tileTexture);
             }
@@ -669,7 +670,7 @@ public class Level {
 
 
 //        canvas.draw(background, 0, 0);
-        canvas.draw(background, Color.WHITE, 0, 0, -3, 0, 0, 0.07F, 0.07F);
+        canvas.draw(background, Color.WHITE, 0, 0, -3, 0, 0, 0.03F, 0.03F);
 //        canvas.draw(background, Color.CLEAR, background.getRegionWidth()/2, background.getRegionHeight()/2, 0, 0, 1 / background.getRegionWidth(), 1/ background.getRegionHeight());
 
         //Drawing background 2 tiles

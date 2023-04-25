@@ -8,9 +8,9 @@
  "margin":0,
  "name":"Eudaemon Tilleset",
  "spacing":0,
- "tilecount":73,
+ "tilecount":98,
  "tiledversion":"1.10.1",
- "tileheight":34,
+ "tileheight":32,
  "tiles":[
         {
          "id":10,
@@ -213,7 +213,7 @@
         {
          "id":54,
          "image":"tiles\/GrassDirtBottom1x1C.png",
-         "imageheight":34,
+         "imageheight":32,
          "imagewidth":32
         }, 
         {
@@ -447,6 +447,156 @@
         {
          "id":87,
          "image":"tiles\/EnemiesObjects\/momo.png",
+         "imageheight":32,
+         "imagewidth":32
+        }, 
+        {
+         "id":130,
+         "image":"tiles\/CorruptedLeftCorner.png",
+         "imageheight":32,
+         "imagewidth":32
+        }, 
+        {
+         "id":127,
+         "image":"tiles\/CorruptedCornerTile.png",
+         "imageheight":32,
+         "imagewidth":32
+        }, 
+        {
+         "id":128,
+         "image":"tiles\/CorruptedInnerCorner.png",
+         "imageheight":32,
+         "imagewidth":32
+        }, 
+        {
+         "id":129,
+         "image":"tiles\/CorruptedLeftCornerInner.png",
+         "imageheight":32,
+         "imagewidth":32
+        }, 
+        {
+         "id":123,
+         "image":"tiles\/CaveWallA.png",
+         "imageheight":32,
+         "imagewidth":32
+        }, 
+        {
+         "id":126,
+         "image":"tiles\/CaveWallD.png",
+         "imageheight":32,
+         "imagewidth":32
+        }, 
+        {
+         "id":125,
+         "image":"tiles\/CaveWallC.png",
+         "imageheight":32,
+         "imagewidth":32
+        }, 
+        {
+         "id":124,
+         "image":"tiles\/CaveWallB.png",
+         "imageheight":32,
+         "imagewidth":32
+        }, 
+        {
+         "id":147,
+         "image":"tiles\/CaveWallTop.png",
+         "imageheight":32,
+         "imagewidth":32
+        }, 
+        {
+         "id":131,
+         "image":"tiles\/GrassA.png",
+         "imageheight":32,
+         "imagewidth":32
+        }, 
+        {
+         "id":132,
+         "image":"tiles\/GrassB.png",
+         "imageheight":32,
+         "imagewidth":32
+        }, 
+        {
+         "id":133,
+         "image":"tiles\/GrassC.png",
+         "imageheight":32,
+         "imagewidth":32
+        }, 
+        {
+         "id":140,
+         "image":"tiles\/MetalPlatformLeftEnd.png",
+         "imageheight":32,
+         "imagewidth":32
+        }, 
+        {
+         "id":134,
+         "image":"tiles\/MetalPlatformA.png",
+         "imageheight":32,
+         "imagewidth":32
+        }, 
+        {
+         "id":135,
+         "image":"tiles\/MetalPlatformB.png",
+         "imageheight":32,
+         "imagewidth":32
+        }, 
+        {
+         "id":136,
+         "image":"tiles\/MetalPlatformC.png",
+         "imageheight":32,
+         "imagewidth":32
+        }, 
+        {
+         "id":137,
+         "image":"tiles\/MetalPlatformD.png",
+         "imageheight":32,
+         "imagewidth":32
+        }, 
+        {
+         "id":138,
+         "image":"tiles\/MetalPlatformE.png",
+         "imageheight":32,
+         "imagewidth":32
+        }, 
+        {
+         "id":139,
+         "image":"tiles\/MetalPlatformF.png",
+         "imageheight":32,
+         "imagewidth":32
+        }, 
+        {
+         "id":141,
+         "image":"tiles\/MetalPlatformRightEnd.png",
+         "imageheight":32,
+         "imagewidth":32
+        }, 
+        {
+         "id":142,
+         "image":"tiles\/TiledFloorB.png",
+         "imageheight":32,
+         "imagewidth":32
+        }, 
+        {
+         "id":143,
+         "image":"tiles\/TiledFloorA.png",
+         "imageheight":32,
+         "imagewidth":32
+        }, 
+        {
+         "id":144,
+         "image":"tiles\/TiledFloorC.png",
+         "imageheight":32,
+         "imagewidth":32
+        }, 
+        {
+         "id":145,
+         "image":"tiles\/TiledFloorE.png",
+         "imageheight":32,
+         "imagewidth":32
+        }, 
+        {
+         "id":146,
+         "image":"tiles\/TiledFloorD.png",
          "imageheight":32,
          "imagewidth":32
         }],

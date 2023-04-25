@@ -50,11 +50,11 @@
             "expandedObjectLayers": [
                 7
             ],
-            "scale": 0.8,
-            "selectedLayer": 3,
+            "scale": 2,
+            "selectedLayer": 0,
             "viewCenter": {
-                "x": 393.125,
-                "y": 497.5
+                "x": 445.75,
+                "y": 266.75
             }
         },
         "level0.tmj": {
@@ -78,7 +78,7 @@
         }
     },
     "last.externalTilesetPath": "/Users/neelin2/coding/cs3152/Eudaemon/CS-3152-G6/Eudaemon/assets",
-    "last.imagePath": "/Users/neelin2/coding/cs3152/Eudaemon/CS-3152-G6/Eudaemon/assets/tiles/EnemiesObjects",
+    "last.imagePath": "F:/Programming/School/CS 3152/Eudaemon/CS-3152-G6/Eudaemon/assets/tiles",
     "last.objectTemplatePath": "F:/Programming/School/CS 3152/Eudaemon/CS-3152-G6/Eudaemon/assets/levels/Templates",
     "map.height": 50,
     "map.lastUsedFormat": "json",
@@ -91,8 +91,8 @@
     "project": "untitled.tiled-project",
     "property.type": "string",
     "recentFiles": [
-        "level1.json",
         "level0.json",
+        "level1.json",
         "experimentalLevel1.json",
         "F:/Programming/School/CS 3152/Eudaemon/CS-3152-G6/Eudaemon/assets/EudaemonTileset.json",
         "level0.tmj",
