@@ -88,7 +88,8 @@ public class GameCanvas {
 	private BlendState blend;
 	
 	/** Camera for the underlying SpriteBatch */
-	private final OrthographicCamera camera;
+	private final CameraController cameraController;
+	//private final OrthographicCamera camera;
 
 	private final Viewport viewport;
 	
@@ -122,18 +123,20 @@ public class GameCanvas {
 
 		
 		// Set the projection matrix (for proper scaling)
-		camera = new OrthographicCamera();
-		camera.setToOrtho(false);
+//		camera = new OrthographicCamera();
+//		camera.setToOrtho(false);
 		//camera.position.set(getWidth()/2.0f,getHeight()/2.0f,0);
+		cameraController = new CameraController();
+
 
 		float aspectRatio = (float)Gdx.graphics.getHeight() / (float)Gdx.graphics.getWidth();
 
-		viewport = new ExtendViewport(getWidth(),getHeight(),camera);
+		viewport = new ExtendViewport(getWidth(),getHeight(),cameraController.getCamera());
 		viewport.setScreenBounds(0,0,getWidth(),getHeight());
 		viewport.apply();
 
-		spriteBatch.setProjectionMatrix(camera.combined);
-		debugRender.setProjectionMatrix(camera.combined);
+		spriteBatch.setProjectionMatrix(cameraController.getCamera().combined);
+		debugRender.setProjectionMatrix(cameraController.getCamera().combined);
 
 		// Initialize the cache objects
 		holder = new TextureRegion();
@@ -363,7 +366,7 @@ public class GameCanvas {
 	 */
     public void begin(Affine2 affine) {
 		global.setAsAffine(affine);
-    	global.mulLeft(camera.combined);
+    	global.mulLeft(cameraController.getCamera().combined);
 		spriteBatch.setProjectionMatrix(global);
 		
 		setBlendState(BlendState.NO_PREMULT);
@@ -382,7 +385,7 @@ public class GameCanvas {
     public void begin(float sx, float sy) {
 		global.idt();
 		global.scl(sx,sy,1.0f);
-    	global.mulLeft(camera.combined);
+    	global.mulLeft(cameraController.getCamera().combined);
 		spriteBatch.setProjectionMatrix(global);
 		
     	spriteBatch.begin();
@@ -395,8 +398,8 @@ public class GameCanvas {
 	 * Nothing is flushed to the graphics card until the method end() is called.
 	 */
     public void begin() {
-	    camera.update();
-	    spriteBatch.setProjectionMatrix(camera.combined);
+	    cameraController.getCamera().update();
+	    spriteBatch.setProjectionMatrix(cameraController.getCamera().combined);
 	    spriteBatch.begin();
 	    active = DrawPass.STANDARD;
     }
@@ -410,10 +413,10 @@ public class GameCanvas {
 	 * @param height the height in level coordinates that the window should display vertically
 	 */
 	public void setGameplayCamera(float x, float y, float width, float height) {
-		getCamera().setToOrtho(false, width, height);
-		getCamera().position.set(x, y, 0); // set to some other position to follow player;
-		getCamera().update();
-		spriteBatch.setProjectionMatrix(camera.combined);
+		cameraController.getCamera().setToOrtho(false, width, height);
+		cameraController.getCamera().position.set(x, y, 0); // set to some other position to follow player;
+		cameraController.getCamera().update();
+		spriteBatch.setProjectionMatrix(cameraController.getCamera().combined);
 	}
 
 
@@ -422,9 +425,9 @@ public class GameCanvas {
 	 */
 	public void setOverlayCamera() {
 		//getCamera().position.set(getWidth() / 2, getHeight() / 2, 0); // set to some other position to follow player;
-		getCamera().setToOrtho(false, getWidth(), getHeight());
-		getCamera().update();
-		spriteBatch.setProjectionMatrix(camera.combined);
+		cameraController.getCamera().setToOrtho(false, getWidth(), getHeight());
+		cameraController.getCamera().update();
+		spriteBatch.setProjectionMatrix(cameraController.getCamera().combined);
 	}
 
 
@@ -982,7 +985,7 @@ public class GameCanvas {
 	 */
     public void beginDebug(Affine2 affine) {
 		global.setAsAffine(affine);
-    	global.mulLeft(camera.combined);
+    	global.mulLeft(cameraController.getCamera().combined);
     	debugRender.setProjectionMatrix(global);
 		
     	debugRender.begin(ShapeRenderer.ShapeType.Line);
@@ -1000,7 +1003,7 @@ public class GameCanvas {
     public void beginDebug(float sx, float sy) {
 		global.idt();
 		global.scl(sx,sy,1.0f);
-    	global.mulLeft(camera.combined);
+    	global.mulLeft(cameraController.getCamera().combined);
     	debugRender.setProjectionMatrix(global);
 		
     	debugRender.begin(ShapeRenderer.ShapeType.Line);
@@ -1013,7 +1016,7 @@ public class GameCanvas {
 	 * Nothing is flushed to the graphics card until the method end() is called.
 	 */
     public void beginDebug() {
-    	debugRender.setProjectionMatrix(camera.combined);
+    	debugRender.setProjectionMatrix(cameraController.getCamera().combined);
     	debugRender.begin(ShapeRenderer.ShapeType.Filled);
     	debugRender.setColor(Color.RED);
     	debugRender.circle(0, 0, 10);
@@ -1210,7 +1213,7 @@ public class GameCanvas {
 	}
 
 	public OrthographicCamera getCamera(){
-		return camera;
+		return cameraController.getCamera();
 	}
 
 	public Viewport getViewport() { return viewport; }
