@@ -790,7 +790,6 @@ public class Level {
         }
 
         addObject(player);
-
         addObject(exit);
     }
 
