@@ -671,7 +671,7 @@ public class ActionController {
 
         // automatic spirit loss
         if (player.getForm() == 1) { // if player is chiyo
-            //player.decreaseSpirit();
+            player.decreaseSpirit();
             if (player.getSpirit() <= 0) {
                 player.setForm(); // switch back to momo
             }
