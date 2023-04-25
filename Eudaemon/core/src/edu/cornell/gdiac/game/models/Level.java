@@ -80,6 +80,16 @@ public class Level {
      */
     private final float cameraHeight;
 
+    /**
+     * How far the player can move before the camera starts moving, x-coords
+     */
+    private float camZoneX;
+
+    /**
+     * How far the player can move before the camera starts moving, y-coords
+     */
+    private float camZoneY;
+
     private final float gravity;
 
     //#endregion
@@ -350,6 +360,9 @@ public class Level {
         this.tiles = tiles;
         //this.billboard = new Billboard();
         String levelName = json.getString("level");
+        camZoneX = json.getFloat("camZoneX");
+        camZoneY = json.getFloat("camZoneY");
+
         JsonValue levelJson = assets.getEntry(levelName,  JsonValue.class);
 
         // Access the JsonValues for each layer in the tilemap
@@ -793,8 +806,8 @@ public class Level {
             canvas.getCamera().zoom -= 0.02;
         }
 
-        float camZone_x = 5;
-        float camZone_y = 3;
+        float camZone_x = camZoneX;
+        float camZone_y = camZoneY;
 
         if (Math.abs(canvas.getCamera().position.x - player.getX()) > camZone_x) {
             if (canvas.getCamera().position.x > player.getX()) {

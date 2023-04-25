@@ -141,6 +141,15 @@
             }
           }
         },
+        "chiyo:jump": {
+          "file" : "character/chiyoJump.png",
+          "sprites" : {
+            "fire": {
+              "rows": 1,
+              "cols": 8
+            }
+          }
+        },
         "momo:spiritDrain": {
           "file" : "animations/momoSpiritAbsorbing.png",
           "sprites" : {

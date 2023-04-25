@@ -133,6 +133,7 @@ public class ActionController {
         addAnimations(player.getMomoDashSpriteSheet(), 5, 1, "momoDash");
         addAnimations(player.getMomoJumpSpriteSheet(), 7, 1, "momoJump");
         addAnimations(player.getChiyoRunSpriteSheet(), 8, 1, "chiyoRun");
+        addAnimations(player.getChiyoJumpSpriteSheet(), 8, 1, "chiyoJump");
         addAnimations(player.getDashEffectSpriteSheet(), 5, 1, "dashEffect");
         addAnimations(player.getImpactEffectSpriteSheet(), 8, 1, "impactEffect");
     }
@@ -305,7 +306,7 @@ public class ActionController {
             //offset of effect from player
             float pOffsetX = 0.0f;
             float pOffsetY = 0.0f;
-            float pOffset = 1.2f;
+            float pOffset = 1.0f;
 
             //Setting dash according to angles
             if (angleFacing == 0) {
@@ -359,7 +360,7 @@ public class ActionController {
 
             //Creating dash effect
             EffectObstacle dashAnimate = level.getEffectPool().obtainEffect(player.getX(), player.getY(), player.getDashEffectSpriteSheet().getRegionWidth(),
-                    player.getDashEffectSpriteSheet().getRegionHeight(), 0.08f, 0.08f, effectAngle,
+                    player.getDashEffectSpriteSheet().getRegionHeight(), 0.025f, 0.025f, effectAngle,
                     pOffsetX, pOffsetY,true,
                     "dashEffect", player, 0.35f,
                     1, 1, animations.get("dashEffect"),5);
@@ -486,21 +487,52 @@ public class ActionController {
             chiyoRunSound.stop();
             player.setSxMult(1.0f);
             player.setSyMult(1.0f);
+            // Momo Dashing
             if (player.isDashing()) {
                 currentAnimation = "momoDash";
                 TextureRegion current = (TextureRegion) (animations.get("momoDash")).getKeyFrame(currentFrame); // Gets the current frame of the animation
-                tickFrameSwitch = 10;
-                maxFrame = 4;
+                tickFrameSwitch = 7;
+                maxFrame = 5;
                 player.setTexture(current);
-                player.setOyOffset(-30);
-            } else if (player.getIsJumping()) {
+                player.setOyOffset(-47);
+                player.setSxMult(1.2f);
+                player.setSyMult(1.2f);
+            }
+            // Momo jumping/falling
+            else if (!player.isGrounded()) {
+                if (currentAnimation != "momoJump") {
+                    currentFrame = 0;
+                }
                 currentAnimation = "momoJump";
                 TextureRegion current = (TextureRegion) (animations.get("momoJump")).getKeyFrame(currentFrame); // Gets the current frame of the animation
-                tickFrameSwitch = 0;
+                tickFrameSwitch = 7;
                 maxFrame = 7;
+                if (currentFrame == 0 && player.getBodyVelocityY() < 0){
+                    currentFrame = 3;
+                }
+                // Disables animation while rising in the air
+                if (currentFrame == 2 && player.getBodyVelocityY() > 0){
+                    tickFrameSwitch = 0;
+                }
+                if (currentFrame == 4 && player.getBodyVelocityY() < 0){
+                    tickFrameSwitch = 0;
+                }
                 player.setTexture(current);
-                player.setOyOffset(-30);
-            } else if (player.getBodyVelocityX() != 0) {
+                player.setOyOffset(-47);
+                player.setSxMult(1.2f);
+                player.setSyMult(1.2f);
+            }
+//            else if (player.isGrounded() && currentAnimation == "momoJump"){
+//                currentAnimation = "momoLand";
+//                TextureRegion current = (TextureRegion) (animations.get("momoJump")).getKeyFrame(5);
+//                tickFrameSwitch = 7;
+//                maxFrame = 7;
+//                player.setTexture(current);
+//                player.setOyOffset(-47);
+//                player.setSxMult(1.2f);
+//                player.setSyMult(1.2f);
+//            }
+            else if (player.getBodyVelocityX() != 0) {
                 if (currentAnimation != "momoRun") {
                     currentFrame = 0;
                 }
@@ -515,7 +547,6 @@ public class ActionController {
                     momoRunSound.stop();
                     soundDictionary.remove(momoRunSound);
                 }
-
 
                 TextureRegion current = (TextureRegion) (animations.get("momoRun")).getKeyFrame(currentFrame); // Gets the current frame of the animation
                 maxFrame = 8;
@@ -538,32 +569,51 @@ public class ActionController {
         // Animations if Player is Chiyo
         else {
             momoRunSound.stop();
-            if (player.getBodyVelocityX() != 0) {
-                currentAnimation = "momoRun";
-                if(player.isGrounded()){
-                    if(!soundDictionary.contains(chiyoRunSound)) {
-                        soundDictionary.add(chiyoRunSound);
-                        chiyoRunSound.loop();
-                    }
+            if (player.getBodyVelocityX() != 0 && player.isGrounded()) {
+                currentAnimation = "chiyoRun";
+                if(!soundDictionary.contains(chiyoRunSound)) {
+                    soundDictionary.add(chiyoRunSound);
+                    chiyoRunSound.loop();
                 }
-                else if(!player.isGrounded()){
-                    chiyoRunSound.stop();
-                    soundDictionary.remove(chiyoRunSound);
-                }
+
                 TextureRegion current = (TextureRegion) (animations.get("chiyoRun")).getKeyFrame(currentFrame); // Gets the current frame of the animation
                 tickFrameSwitch = 4;
                 maxFrame = 7;
                 player.setTexture(current);
                 player.setOyOffset(-25);
-                player.setSxMult(1.5f);
-                player.setSyMult(1.5f);
+                player.setSxMult(1.7f);
+                player.setSyMult(1.7f);
+            } else if(!player.isGrounded()){
+                chiyoRunSound.stop();
+                soundDictionary.remove(chiyoRunSound);
+                if (currentAnimation != "chiyoJump") {
+                    currentFrame = 0;
+                }
+                currentAnimation = "chiyoJump";
+                TextureRegion current = (TextureRegion) (animations.get("chiyoJump")).getKeyFrame(currentFrame); // Gets the current frame of the animation
+                tickFrameSwitch = 8;
+                maxFrame = 8;
+                if (currentFrame == 0 && player.getBodyVelocityY() < 0){
+                    currentFrame = 3;
+                }
+                // Disables animation while rising in the air
+                if (currentFrame == 2 && player.getBodyVelocityY() > 0){
+                    tickFrameSwitch = 0;
+                }
+                if (currentFrame == 4 && player.getBodyVelocityY() < 0){
+                    tickFrameSwitch = 0;
+                }
+                player.setTexture(current);
+                player.setOyOffset(-25);
+                player.setSxMult(1.7f);
+                player.setSyMult(1.7f);
             } else {
-                currentAnimation = "momoIdle";
+                currentAnimation = "chiyoIdle";
                 chiyoRunSound.stop();
                 soundDictionary.remove(chiyoRunSound);
                 player.setTexture(player.getChiyoTexture());
                 player.setOyOffset(-29);
-                player.setSxMult(1.7f);
+                player.setSxMult(2.0f);
                 player.setSyMult(1.7f);
             }
         }
@@ -607,7 +657,7 @@ public class ActionController {
 
         // automatic spirit loss
         if (player.getForm() == 1) { // if player is chiyo
-            player.decreaseSpirit();
+            //player.decreaseSpirit();
             if (player.getSpirit() <= 0) {
                 player.setForm(); // switch back to momo
             }
