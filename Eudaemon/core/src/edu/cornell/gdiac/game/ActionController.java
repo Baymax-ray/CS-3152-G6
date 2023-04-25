@@ -570,7 +570,7 @@ public class ActionController {
         else {
             momoRunSound.stop();
             if (player.getBodyVelocityX() != 0 && player.isGrounded()) {
-                currentAnimation = "momoRun";
+                currentAnimation = "chiyoRun";
                 if(!soundDictionary.contains(chiyoRunSound)) {
                     soundDictionary.add(chiyoRunSound);
                     chiyoRunSound.loop();
@@ -586,15 +586,29 @@ public class ActionController {
             } else if(!player.isGrounded()){
                 chiyoRunSound.stop();
                 soundDictionary.remove(chiyoRunSound);
+                if (currentAnimation != "chiyoJump") {
+                    currentFrame = 0;
+                }
+                currentAnimation = "chiyoJump";
                 TextureRegion current = (TextureRegion) (animations.get("chiyoJump")).getKeyFrame(currentFrame); // Gets the current frame of the animation
-                tickFrameSwitch = 0;
+                tickFrameSwitch = 8;
                 maxFrame = 8;
+                if (currentFrame == 0 && player.getBodyVelocityY() < 0){
+                    currentFrame = 3;
+                }
+                // Disables animation while rising in the air
+                if (currentFrame == 2 && player.getBodyVelocityY() > 0){
+                    tickFrameSwitch = 0;
+                }
+                if (currentFrame == 4 && player.getBodyVelocityY() < 0){
+                    tickFrameSwitch = 0;
+                }
                 player.setTexture(current);
                 player.setOyOffset(-25);
                 player.setSxMult(1.5f);
                 player.setSyMult(1.5f);
             } else {
-                currentAnimation = "momoIdle";
+                currentAnimation = "chiyoIdle";
                 chiyoRunSound.stop();
                 soundDictionary.remove(chiyoRunSound);
                 player.setTexture(player.getChiyoTexture());
@@ -643,7 +657,7 @@ public class ActionController {
 
         // automatic spirit loss
         if (player.getForm() == 1) { // if player is chiyo
-            player.decreaseSpirit();
+            //player.decreaseSpirit();
             if (player.getSpirit() <= 0) {
                 player.setForm(); // switch back to momo
             }
