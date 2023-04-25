@@ -545,13 +545,13 @@ public class ActionController {
                     currentFrame = 0;
                 }
                 currentAnimation = "momoRun";
-                if(player.isGrounded()){
+                if(player.isGrounded() && !player.getIsJumping()){
                     if(!soundDictionary.contains(momoRunSound)){
                         soundDictionary.add(momoRunSound);
                         momoRunSound.loop();
                     }
                 }
-                else if(!player.isGrounded()){
+                else if(!player.isGrounded() || player.getIsJumping()){
                     momoRunSound.stop();
                     soundDictionary.remove(momoRunSound);
                 }
@@ -577,11 +577,13 @@ public class ActionController {
         // Animations if Player is Chiyo
         else {
             momoRunSound.stop();
-            if (player.getBodyVelocityX() != 0 && player.isGrounded()) {
+            if (player.getBodyVelocityX() != 0) {
                 currentAnimation = "chiyoRun";
-                if(!soundDictionary.contains(chiyoRunSound)) {
-                    soundDictionary.add(chiyoRunSound);
-                    chiyoRunSound.loop();
+                if(player.isGrounded() && !player.getIsJumping()){
+                    if(!soundDictionary.contains(chiyoRunSound)) {
+                        soundDictionary.add(chiyoRunSound);
+                        chiyoRunSound.loop();
+                    }
                 }
 
                 TextureRegion current = (TextureRegion) (animations.get("chiyoRun")).getKeyFrame(currentFrame); // Gets the current frame of the animation
@@ -592,7 +594,7 @@ public class ActionController {
                 player.setOyOffset(-25);
                 player.setSxMult(2.0f);
                 player.setSyMult(2.0f);
-            } else if(!player.isGrounded()){
+            } else if(!player.isGrounded() || player.getIsJumping()){
                 chiyoRunSound.stop();
                 soundDictionary.remove(chiyoRunSound);
                 if (currentAnimation != "chiyoJump") {
