@@ -241,12 +241,10 @@
         }
       },
         "background:city": "backgrounds/backgroundCityPlaceholder.png",
-        "platform:momo":  "platform/momo.png",
-        "platform:momoUp":  "platform/momoUp.png",
-        "platform:momoDown":  "platform/momoDown.png",
-        "platform:chiyo":  "platform/chiyo.png",
-        "platform:chiyoUp":  "platform/chiyoUp.png",
-        "platform:chiyoDown":  "platform/chiyoDown.png",
+
+        "character:momo":  "character/momo.png",
+        "character:chiyo":  "character/chiyo.png",
+
         "platform:nonTrackingGoomba":  "platform/nonTrackingGoomba.png",
         "platform:pathfindingGoombaL": "platform/pathfindingGoombaLeft.png",
         "platform:pathfindingGoombaR": "platform/pathfindingGoombaRight.png",

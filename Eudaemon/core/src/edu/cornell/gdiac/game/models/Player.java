@@ -1193,10 +1193,10 @@ public class Player extends CapsuleObstacle {
         json = playerData;
 
         //Textures
-        this.momoTexture = new TextureRegion(assets.getEntry(json.getString("momo:TextureAsset"), Texture.class));
+        this.momoTexture = new TextureRegion(assets.getEntry("character:momo", Texture.class));
         this.momoImageWidth = json.getFloat("momo:ImageWidth");
         this.momoImageHeight = json.getFloat("momo:ImageHeight");
-        this.chiyoTexture = new TextureRegion(assets.getEntry(json.getString("chiyo:TextureAsset"), Texture.class));
+        this.chiyoTexture = new TextureRegion(assets.getEntry("character:chiyo", Texture.class));
         this.chiyoImageWidth = json.getFloat("chiyo:ImageWidth");
         this.chiyoImageHeight = json.getFloat("chiyo:ImageHeight");
 
