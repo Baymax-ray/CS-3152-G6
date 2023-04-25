@@ -44,7 +44,7 @@ public class Billboard extends BoxObstacle {
                 assets.getEntry("sharedConstants", JsonValue.class).get("Spike").getFloat("hitboxWidth"),
                 assets.getEntry("sharedConstants", JsonValue.class).get("Spike").getFloat("hitboxHeight"));
         String TextureAsset = "platform:billboard";
-        this.billboardData = assets.getEntry("sharedConstants", JsonValue.class).get("Spike");
+        this.billboardData = assets.getEntry("sharedConstants", JsonValue.class).get("Billboard");
         this.setWidth(billboardData.getFloat("hitboxWidth"));
         this.setHeight(billboardData.getFloat("hitboxHeight"));
         this.billboardTexture = new TextureRegion(assets.getEntry(TextureAsset, Texture.class));
