@@ -449,19 +449,21 @@ public class Enemy extends CapsuleObstacle {
                 }
                 switch (projectileEnemyDirection) {
                     case "Left":
-                        this.projectileEnemyRotation = -(float) Math.PI/2;
+                        TextureAsset = "enemy:projectileEnemyLeft";
+                        //this.projectileEnemyRotation = -(float) Math.PI/2;
                         this.setAngle((float) Math.PI/2);
                         break;
                     case "Right":
-                        this.projectileEnemyRotation = (float) Math.PI/2;
+                        TextureAsset = "enemy:projectileEnemyRight";
+                        //this.projectileEnemyRotation = (float) Math.PI/2;
                         this.setAngle((float) Math.PI/2);
                         break;
                     case "Up":
-                        this.projectileEnemyRotation = 0;
-                        break;
                     case "Down":
-                        this.projectileEnemyRotation = (float) Math.PI;
+                        TextureAsset = "enemy:projectileEnemyUp";
+                        //this.projectileEnemyRotation = 0;
                         break;
+                    //this.projectileEnemyRotation = (float) Math.PI;
                     default:
                         System.out.println("something wrong");
                 }
@@ -485,6 +487,7 @@ public class Enemy extends CapsuleObstacle {
         this.moveSpriteSheet = new TextureRegion(assets.getEntry(enemyData.getString("MoveAsset"), Texture.class));
         animations = new ObjectMap<>();
         addAnimations(moveSpriteSheet, maxFrame, 1, "move");
+        if (this.type.equals("Projectile")) addAnimations(texture, maxFrame, 1, "projectileIdle");
         currentAnimation = "idle";
 
         this.bloodEffectSpriteSheet = new TextureRegion(assets.getEntry("bloodEffect", Texture.class));
@@ -539,7 +542,8 @@ public class Enemy extends CapsuleObstacle {
      */
     public void draw(GameCanvas canvas) {
         if (currentAnimation == "idle"){
-            this.texture = enemyTexture;
+            if (this.type.equals("Projectile")) this.texture = (TextureRegion) animations.get("projectileIdle").getKeyFrame(currentFrame);
+            else this.texture = enemyTexture;
         }
         else{
             this.texture = (TextureRegion) animations.get(currentAnimation).getKeyFrame(currentFrame);
@@ -554,7 +558,7 @@ public class Enemy extends CapsuleObstacle {
         float sx = scaleX * (isFacingRight ? 1 : -1) * enemyImageWidth / this.texture.getRegionWidth();
         float sy = scaleY * enemyImageHeight / this.texture.getRegionHeight();
 
-        canvas.draw(this.texture, Color.WHITE, ox, oy, x, y, projectileEnemyRotation, sx, sy);
+        canvas.draw(this.texture, Color.WHITE, ox, oy, x, y, 0, sx, sy);
     }
 
 

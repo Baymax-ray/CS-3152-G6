@@ -742,6 +742,15 @@ public class ActionController {
                         enemy.setCurrentAnimation("idle");
                     }
                 }
+                // Projectile
+                else if(enemy.getType().equals("Projectile")){
+                    if(enemy.getVelocityX() != 0){
+                        enemy.setCurrentAnimation("move");
+                    }
+                    else{
+                        enemy.setCurrentAnimation("idle");
+                    }
+                }
                 //#endregion
 
                 enemyAction.clear();

@@ -252,7 +252,7 @@
     "ImageWidth": 2,
     "ImageHeight": 2,
     "tickFrameSwitch": 5,
-    "maxFrame": 5,
+    "maxFrame": 4,
     "hitboxWidth": 1,
     "hitboxHeight": 2,
     "maxSpeed": 1,
