@@ -162,6 +162,7 @@ public class Enemy extends CapsuleObstacle {
     private JsonValue bullet;
     private float projectileEnemyRotation;
     private String projectileEnemyDirection;
+    private String projectileSpriteSheetType;
 
     //#endregion
 
@@ -447,23 +448,40 @@ public class Enemy extends CapsuleObstacle {
                         projectileEnemyDirection = property.getString("value");
                     }
                 }
+                for (JsonValue property : projectileProperties) {
+                    if (property.getString("name").equals("SpriteSheetType")) {
+                        projectileSpriteSheetType = property.getString("value");
+                    }
+                }
                 switch (projectileEnemyDirection) {
                     case "Left":
-                        TextureAsset = "enemy:projectileEnemyLeft";
-                        //this.projectileEnemyRotation = -(float) Math.PI/2;
+                        this.projectileEnemyRotation = -(float) Math.PI/2;
                         this.setAngle((float) Math.PI/2);
                         break;
                     case "Right":
-                        TextureAsset = "enemy:projectileEnemyRight";
-                        //this.projectileEnemyRotation = (float) Math.PI/2;
+                        this.projectileEnemyRotation = (float) Math.PI/2;
                         this.setAngle((float) Math.PI/2);
+                        break;
+                    case "Up":
+                        this.projectileEnemyRotation = (float) Math.PI;
+                        break;
+                    case "Down":
+                        this.projectileEnemyRotation = 0;
+                        break;
+                    default:
+                        System.out.println("something wrong");
+                }
+                switch (projectileSpriteSheetType) {
+                    case "Left":
+                        TextureAsset = "enemy:projectileEnemyLeft";
+                        break;
+                    case "Right":
+                        TextureAsset = "enemy:projectileEnemyRight";
                         break;
                     case "Up":
                     case "Down":
                         TextureAsset = "enemy:projectileEnemyUp";
-                        //this.projectileEnemyRotation = 0;
                         break;
-                    //this.projectileEnemyRotation = (float) Math.PI;
                     default:
                         System.out.println("something wrong");
                 }
@@ -558,7 +576,7 @@ public class Enemy extends CapsuleObstacle {
         float sx = scaleX * (isFacingRight ? 1 : -1) * enemyImageWidth / this.texture.getRegionWidth();
         float sy = scaleY * enemyImageHeight / this.texture.getRegionHeight();
 
-        canvas.draw(this.texture, Color.WHITE, ox, oy, x, y, 0, sx, sy);
+        canvas.draw(this.texture, Color.WHITE, ox, oy, x, y, projectileEnemyRotation, sx, sy);
     }
 
 

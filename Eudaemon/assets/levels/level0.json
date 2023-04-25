@@ -394,8 +394,13 @@
                         {
                          "name":"Direction",
                          "type":"string",
+                         "value":"Down"
+                        },
+                       {
+                         "name":"SpriteSheetType",
+                         "type":"string",
                          "value":"Up"
-                        }],
+                       }],
                  "rotation":0,
                  "type":"Enemy",
                  "visible":true,
@@ -412,8 +417,13 @@
                         {
                          "name":"Direction",
                          "type":"string",
-                         "value":"Up"
-                        }],
+                         "value":"Down"
+                        },
+                       {
+                         "name":"SpriteSheetType",
+                         "type":"string",
+                         "value":"Right"
+                       }],
                  "rotation":0,
                  "type":"Enemy",
                  "visible":true,
@@ -430,8 +440,13 @@
                         {
                          "name":"Direction",
                          "type":"string",
-                         "value":"Up"
-                        }],
+                         "value":"Down"
+                        },
+                       {
+                         "name":"SpriteSheetType",
+                         "type":"string",
+                         "value":"Left"
+                       }],
                  "rotation":0,
                  "type":"Enemy",
                  "visible":true,
