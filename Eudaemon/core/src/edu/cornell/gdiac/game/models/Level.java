@@ -442,7 +442,7 @@ public class Level {
         for (JsonValue object : objects) {
             if (object.getString("type").equals("Enemy")) {
                 float x = (int) (object.getInt("x") / 32);
-                float y = heightInTiles -(int) (object.getInt("y") / 32);
+                float y = heightInTiles -1-(int) (object.getInt("y") / 32);
                 enemies.add(new Enemy(object, assets,x,y));
             }
             else if (object.getString("name").equals("Spike")) {
@@ -532,8 +532,9 @@ public class Level {
      * @param y the y coordinate of the point in level coordinates
      * @return the tile
      */
-    public Tile tileAt(float x, float y) {
-        return tiles[tilemap[levelToTileCoordinatesY(y)][levelToTileCoordinatesX(x)]];
+    public int tileAt(float x, float y) {
+        //return tiles[tilemap[levelToTileCoordinatesY(y)][levelToTileCoordinatesX(x)]];
+        return tilemap[levelToTileCoordinatesY(y)][levelToTileCoordinatesX(x)];
     }
 
     /**

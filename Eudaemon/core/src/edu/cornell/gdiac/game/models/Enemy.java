@@ -554,7 +554,7 @@ public class Enemy extends CapsuleObstacle {
         if (this.type.equals("Fly") || this.type.equals("FlyGuardian")) {
             this.setGravityScale(0);
         } else {
-            this.setGravityScale(40);
+            this.setGravityScale(1);
         }
     }
 
