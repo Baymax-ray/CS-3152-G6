@@ -723,9 +723,12 @@ public class Level {
         canvas.setOverlayCamera();
         canvas.begin();
         uiElements.draw(canvas, player.getHearts(), player.getSpirit());
-        //billboard.displayDialog(canvas);
+        boolean alreadyDisplay = false;
         for (int i = 0; i < billboards.size(); i++) {
-            if (billboards.get(i).isDisplay()) billboards.get(i).displayDialog(canvas);
+            if (billboards.get(i).isDisplay() && !alreadyDisplay) {
+                billboards.get(i).displayDialog(canvas);
+                alreadyDisplay = true;
+            }
 
         }
         canvas.end();

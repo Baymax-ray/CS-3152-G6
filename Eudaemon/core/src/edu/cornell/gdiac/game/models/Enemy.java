@@ -8,8 +8,8 @@ import com.badlogic.gdx.math.*;
 import com.badlogic.gdx.graphics.*;
 import com.badlogic.gdx.physics.box2d.*;
 
-import com.badlogic.gdx.utils.Json;
 import com.badlogic.gdx.utils.JsonValue;
+import com.badlogic.gdx.utils.ObjectMap;
 import edu.cornell.gdiac.assets.AssetDirectory;
 import edu.cornell.gdiac.game.*;
 import edu.cornell.gdiac.game.obstacle.*;
@@ -114,46 +114,34 @@ public class Enemy extends CapsuleObstacle {
     /**
      * The sprite sheet for the basic goomba right walk
      */
-    private TextureRegion basicGoombaRightSpriteSheet;
+    private TextureRegion rightMoveSpriteSheet;
 
     /**
      * The sprite sheet for the basic goomba left walk
      */
-    private TextureRegion basicGoombaLeftSpriteSheet;
-
+    private TextureRegion leftMoveSpriteSheet;
     /**
-     * The sprite sheet for the non tracking flying right fly
+     * A HashMap storing 2D TextureRegion arrays with a String identifier.
+     * Each key represents an animation name, and the associated value is a 2D TextureRegion array
+     * with rows representing different animation states and columns representing individual frames.
      */
-    private TextureRegion nonTrackingFlyingRightSpriteSheet;
+    private ObjectMap<String, Animation> animations;
     /**
-     * The sprite sheet for the non tracking flying left fly
+     * The current animation state of the enemy.
      */
-    private TextureRegion nonTrackingFlyingLeftSpriteSheet;
+    private String currentAnimation;
     /**
-     * The sprite sheet for the non tracking goomba right walk
+     * The ticks between frame switches
      */
-    private TextureRegion nonTrackingGoombaRightSpriteSheet;
+    private int tickFrameSwitch = 5;
     /**
-     * The sprite sheet for the non tracking goomba left walk
+     * The maxFrame for the enemy
      */
-    private TextureRegion nonTrackingGoombaLeftSpriteSheet;
+    private int maxFrame;
     /**
-     * The sprite sheet for the set path flying right fly
+     * The current frame of the video player.
      */
-    private TextureRegion setPathFlyingRightSpriteSheet;
-    /**
-     * The sprite sheet for the set path flying left fly
-     */
-    private TextureRegion setPathFlyingLeftSpriteSheet;
-
-    /**
-     * The sprite sheet for the fast goomba right
-     */
-    private TextureRegion fastGoombaRightSpriteSheet;
-    /**
-     * The sprite sheet for the fast goomba left
-     */
-    private TextureRegion fastGoombaLeftSpriteSheet;
+    private int currentFrame;
 
 
     /**
@@ -166,9 +154,77 @@ public class Enemy extends CapsuleObstacle {
     private JsonValue bullet;
     private float projectileEnemyRotation;
     private String projectileEnemyDirection;
+
     //#endregion
 
     //#region Getter and Setter
+    /**
+     * Gets the current frame of the video player.
+     *
+     * @return the current frame
+     */
+    public int getCurrentFrame() {
+        return currentFrame;
+    }
+
+    /**
+     * Sets the current frame of the video player.
+     *
+     * @param currentFrame the new current frame
+     */
+    public void setCurrentFrame(int currentFrame) {
+        this.currentFrame = currentFrame;
+    }
+    /**
+     * Gets the current number of ticks between frame switches
+     *
+     * @return the current frame
+     */
+    public int getTickFrameSwitch() {
+        return tickFrameSwitch;
+    }
+
+    /**
+     * Sets the current number of ticks between frame switches
+     */
+    public void setTickFrameSwitch(int frame) {
+        this.tickFrameSwitch = frame;
+    }
+
+    /**
+     * Gets the maximum frame count of the video player.
+     *
+     * @return the maximum frame count
+     */
+    public int getMaxFrame() {
+        return maxFrame;
+    }
+    /**
+     * Sets the maximum frame count of the video player.
+     *
+     * @param maxFrame the new maximum frame count
+     */
+    public void setMaxFrame(int maxFrame) {
+        this.maxFrame = maxFrame;
+    }
+    /**
+     * Gets the current animation of the character.
+     *
+     * @return the current animation
+     */
+    public String getCurrentAnimation() {
+        return currentAnimation;
+    }
+
+    /**
+     * Sets the current animation of the character.
+     *
+     * @param currentAnimation the new current animation
+     */
+    public void setCurrentAnimation(String currentAnimation) {
+        this.currentAnimation = currentAnimation;
+    }
+
     public int getDetectDistance() {
         return detectDistance;
     }
@@ -224,8 +280,8 @@ public class Enemy extends CapsuleObstacle {
      *
      * @return The basicGoombaRightSpriteSheet TextureRegion.
      */
-    public TextureRegion getBasicGoombaRightSpriteSheet() {
-        return basicGoombaRightSpriteSheet;
+    public TextureRegion getRightMoveSpriteSheet() {
+        return rightMoveSpriteSheet;
     }
 
     /**
@@ -233,70 +289,8 @@ public class Enemy extends CapsuleObstacle {
      *
      * @return The basicGoombaLeftSpriteSheet TextureRegion.
      */
-    public TextureRegion getBasicGoombaLeftSpriteSheet() {
-        return basicGoombaLeftSpriteSheet;
-    }
-
-    /**
-     * Get nonTrackingFlyingRight sprite sheet.
-     *
-     * @return The nonTrackingFlyingRightSpriteSheet TextureRegion.
-     */
-    public TextureRegion getNonTrackingFlyingRightSpriteSheet() {
-        return nonTrackingFlyingRightSpriteSheet;
-    }
-
-    /**
-     * Get nonTrackingFlyingLeft sprite sheet.
-     *
-     * @return The nonTrackingFlyingLeftSpriteSheet TextureRegion.
-     */
-    public TextureRegion getNonTrackingFlyingLeftSpriteSheet() {
-        return nonTrackingFlyingLeftSpriteSheet;
-    }
-
-    /**
-     * Get nonTrackingGoombaRight sprite sheet.
-     *
-     * @return The nonTrackingGoombaRightSpriteSheet TextureRegion.
-     */
-    public TextureRegion getNonTrackingGoombaRightSpriteSheet() {
-        return nonTrackingGoombaRightSpriteSheet;
-    }
-
-    /**
-     * Get nonTrackingGoombaLeft sprite sheet.
-     *
-     * @return The nonTrackingGoombaLeftSpriteSheet TextureRegion.
-     */
-    public TextureRegion getNonTrackingGoombaLeftSpriteSheet() {
-        return nonTrackingGoombaLeftSpriteSheet;
-    }
-
-    /**
-     * Get setPathFlyingRight sprite sheet.
-     *
-     * @return The setPathFlyingRightSpriteSheet TextureRegion.
-     */
-    public TextureRegion getSetPathFlyingRightSpriteSheet() {
-        return setPathFlyingRightSpriteSheet;
-    }
-
-    /**
-     * Get setPathFlyingLeft sprite sheet.
-     *
-     * @return The setPathFlyingLeftSpriteSheet TextureRegion.
-     */
-    public TextureRegion getSetPathFlyingLeftSpriteSheet() {
-        return setPathFlyingLeftSpriteSheet;
-    }
-
-    public TextureRegion getFastGoombaRightSpriteSheet() {
-        return fastGoombaRightSpriteSheet;
-    }
-
-    public TextureRegion getFastGoombaLeftSpriteSheet() {
-        return fastGoombaLeftSpriteSheet;
+    public TextureRegion getLeftMoveSpriteSheet() {
+        return leftMoveSpriteSheet;
     }
 
     //#endregion
@@ -376,8 +370,6 @@ public class Enemy extends CapsuleObstacle {
         this.type = json.getString("name");
         this.enemyData = assets.getEntry("sharedConstants", JsonValue.class).get(type);
         String TextureAsset = enemyData.getString("TextureAsset");
-        String RightMoveAsset = enemyData.getString("RightAsset");
-        String LeftMoveAsset = enemyData.getString("LeftAsset");
 
         //Position and Movement
         this.startX = x;
@@ -463,6 +455,8 @@ public class Enemy extends CapsuleObstacle {
         }
         this.setWidth(enemyData.getFloat("hitboxWidth"));
         this.setHeight(enemyData.getFloat("hitboxHeight"));
+        this.setMaxFrame(enemyData.getInt("maxFrame"));
+        this.setTickFrameSwitch(enemyData.getInt("tickFrameSwitch"));
         Filter f =this.getFilterData();
         f.groupIndex = -1; //cancel its collision with enemy
         this.setFilterData(f);
@@ -471,19 +465,16 @@ public class Enemy extends CapsuleObstacle {
         //Texture
         this.enemyTexture = new TextureRegion(assets.getEntry(TextureAsset, Texture.class));
         this.texture = this.enemyTexture;
-        this.basicGoombaRightSpriteSheet = new TextureRegion(assets.getEntry(RightMoveAsset, Texture.class));
-        this.basicGoombaLeftSpriteSheet = new TextureRegion(assets.getEntry(LeftMoveAsset, Texture.class));
+        this.rightMoveSpriteSheet = new TextureRegion(assets.getEntry(enemyData.getString("RightAsset"), Texture.class));
+        this.leftMoveSpriteSheet = new TextureRegion(assets.getEntry(enemyData.getString("LeftAsset"), Texture.class));
+        animations = new ObjectMap<>();
+        addAnimations(rightMoveSpriteSheet, maxFrame, 1, "rightWalk");
+        addAnimations(leftMoveSpriteSheet, maxFrame, 1, "leftWalk");
+        currentAnimation = "idle";
+
         this.bloodEffectSpriteSheet = new TextureRegion(assets.getEntry("bloodEffect", Texture.class));
         TextureRegion[][] frames = bloodEffectSpriteSheet.split(bloodEffectSpriteSheet.getRegionWidth() / 17, bloodEffectSpriteSheet.getRegionHeight());
         bloodEffectAnimation = new Animation<>(0.5f, frames[0]);
-        this.nonTrackingFlyingRightSpriteSheet = new TextureRegion(assets.getEntry(RightMoveAsset, Texture.class));
-        this.nonTrackingFlyingLeftSpriteSheet = new TextureRegion(assets.getEntry(LeftMoveAsset, Texture.class));
-        this.nonTrackingGoombaRightSpriteSheet = new TextureRegion(assets.getEntry(RightMoveAsset, Texture.class));
-        this.nonTrackingGoombaLeftSpriteSheet = new TextureRegion(assets.getEntry(LeftMoveAsset, Texture.class));
-        this.setPathFlyingRightSpriteSheet = new TextureRegion(assets.getEntry(RightMoveAsset, Texture.class));
-        this.setPathFlyingLeftSpriteSheet = new TextureRegion(assets.getEntry(LeftMoveAsset, Texture.class));
-        this.fastGoombaLeftSpriteSheet = new TextureRegion(assets.getEntry(LeftMoveAsset, Texture.class));
-        this.fastGoombaRightSpriteSheet = new TextureRegion(assets.getEntry(RightMoveAsset, Texture.class));
 
         //Size
         this.enemyImageWidth = enemyData.getFloat("ImageWidth");
@@ -530,6 +521,13 @@ public class Enemy extends CapsuleObstacle {
      * @param canvas Drawing context
      */
     public void draw(GameCanvas canvas) {
+        if (currentAnimation == "idle"){
+            this.texture = enemyTexture;
+        }
+        else{
+            this.texture = (TextureRegion) animations.get(currentAnimation).getKeyFrame(currentFrame);
+        }
+
         float x = getX();
         float y = getY();
 
@@ -587,6 +585,13 @@ public class Enemy extends CapsuleObstacle {
     public void backtoStart() {
         this.setX(startX);
         this.setY(startY);
+    }
+
+    private void addAnimations(TextureRegion spriteSheet, int columns, int rows, String name) {
+        TextureRegion[][] frames = spriteSheet.split(spriteSheet.getRegionWidth() / columns, spriteSheet.getRegionHeight() / rows);
+        Animation animation = new Animation<TextureRegion>(0.5f, frames[0]); // Creates an animation with a frame duration of 0.1 seconds
+        animation.setPlayMode(Animation.PlayMode.NORMAL); // Sets the animation to play normally
+        animations.put(name, animation);
     }
 
     /**
