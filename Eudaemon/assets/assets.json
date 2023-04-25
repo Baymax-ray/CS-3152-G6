@@ -330,6 +330,9 @@
         "tiles:TiledFloorC.png": "tiles/TiledFloorC.png",
         "tiles:TiledFloorD.png": "tiles/TiledFloorD.png",
         "tiles:TiledFloorE.png": "tiles/TiledFloorE.png",
+        "tiles:rock.png": "tiles/rock.png",
+        "tiles:skulls.png": "tiles/skulls.png",
+        "tiles:shrooms.png": "tiles/shrooms.png",
 
         "levelSelect:background": "levelSelect/levelSelectBackground.png",
         "levelSelect:lights": "levelSelect/levelLights.png",
