@@ -726,13 +726,13 @@ public class ActionController {
                 }
                 //Purple Skull Guy
                 if(enemy.getType().equals("Goomba")){
-                    if(enemy.getVelocityX() != 0){
-                        enemy.setCurrentAnimation("move");
-                    }
-                    else{
-                        enemy.setCurrentAnimation("idle");
-                    }
-
+//                    if(enemy.getVelocityX() != 0){
+//                        enemy.setCurrentAnimation("move");
+//                    }
+//                    else{
+//                        enemy.setCurrentAnimation("idle");
+//                    }
+                    enemy.setCurrentAnimation("move");
                 }
                 //Green Dragon
                  else if(enemy.getType().equals("FlyGuardian")){
