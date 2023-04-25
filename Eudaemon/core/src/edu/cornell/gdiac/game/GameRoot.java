@@ -70,7 +70,7 @@ public class GameRoot extends Game implements ScreenListener {
 
 			if (exitCode == ExitCode.START) {
 				setScreen(levelScreen);
-				backgroundDroneSound = Gdx.audio.newSound(Gdx.files.internal("audio/temp-background-drone.mp3"));
+				backgroundDroneSound = Gdx.audio.newSound(Gdx.files.internal("music/MomoTheme.mp3"));
 				backgroundDroneSound.loop();
 			} else if (exitCode == ExitCode.LEVEL_SELECT) {
 				setScreen(levelSelectScreen);
