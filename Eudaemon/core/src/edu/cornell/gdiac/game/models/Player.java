@@ -115,6 +115,7 @@ public class Player extends CapsuleObstacle {
     private final TextureRegion chiyoTexture;
     private final float chiyoImageWidth;
     private final float chiyoImageHeight;
+    private final TextureRegion momoDiagonalDashTexture;
     /**
      * The sprite sheet containing the 0 angle sword attack animation frames.
      */
@@ -312,6 +313,15 @@ public class Player extends CapsuleObstacle {
     //#endregion
 
     //#region TEXTURE GETTERS AND SETTERS
+
+    /**
+     * Returns the {@link com.badlogic.gdx.graphics.g2d.TextureRegion} of the Momo diagonal dash texture.
+     *
+     * @return the {@link com.badlogic.gdx.graphics.g2d.TextureRegion} of the Momo diagonal dash texture.
+     */
+    public TextureRegion getMomoDiagonalDashTexture(){
+        return momoDiagonalDashTexture;
+    }
 
     /**
      * Returns the {@link com.badlogic.gdx.graphics.g2d.TextureRegion} of the Momo texture.
@@ -1199,6 +1209,7 @@ public class Player extends CapsuleObstacle {
         this.chiyoTexture = new TextureRegion(assets.getEntry("chiyo:idle", Texture.class));
         this.chiyoImageWidth = json.getFloat("chiyo:ImageWidth");
         this.chiyoImageHeight = json.getFloat("chiyo:ImageHeight");
+        this.momoDiagonalDashTexture = new TextureRegion(assets.getEntry("momo:diagonalDash", Texture.class));
 
         //Animations
         this.swordEffectSpriteSheet0 = new TextureRegion(assets.getEntry( "chiyo:swordAttack0", Texture.class));
