@@ -8,9 +8,9 @@
  "margin":0,
  "name":"Eudaemon Tilleset",
  "spacing":0,
- "tilecount":107,
+ "tilecount":113,
  "tiledversion":"1.10.1",
- "tileheight":32,
+ "tileheight":42,
  "tiles":[
         {
          "id":10,
@@ -451,6 +451,12 @@
          "imagewidth":32
         }, 
         {
+         "id":157,
+         "image":"tiles\/EnemiesObjects\/billboard.png",
+         "imageheight":42,
+         "imagewidth":32
+        }, 
+        {
          "id":130,
          "image":"tiles\/CorruptedLeftCorner.png",
          "imageheight":32,
@@ -471,6 +477,18 @@
         {
          "id":129,
          "image":"tiles\/CorruptedLeftCornerInner.png",
+         "imageheight":32,
+         "imagewidth":32
+        }, 
+        {
+         "id":164,
+         "image":"tiles\/CorruptedLeftCornerInnerDown.png",
+         "imageheight":32,
+         "imagewidth":32
+        }, 
+        {
+         "id":165,
+         "image":"tiles\/CorruptedInnerCornerDown.png",
          "imageheight":32,
          "imagewidth":32
         }, 
@@ -651,6 +669,24 @@
         {
          "id":156,
          "image":"tiles\/MetalWallBGA.png",
+         "imageheight":32,
+         "imagewidth":32
+        }, 
+        {
+         "id":161,
+         "image":"tiles\/skulls.png",
+         "imageheight":32,
+         "imagewidth":32
+        }, 
+        {
+         "id":162,
+         "image":"tiles\/shrooms.png",
+         "imageheight":32,
+         "imagewidth":32
+        }, 
+        {
+         "id":163,
+         "image":"tiles\/rock.png",
          "imageheight":32,
          "imagewidth":32
         }],
