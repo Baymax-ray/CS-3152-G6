@@ -272,8 +272,8 @@
   "Spike": {
     "ImageWidth": 0.5,
     "ImageHeight": 0.5,
-    "hitboxWidth": 1.0,
-    "hitboxHeight": 0.24,
+    "hitboxWidth": 0.9,
+    "hitboxHeight": 0.2,
     "drawScaleX": 32,
     "drawScaleY": 32,
     "attackPower": 1,
@@ -286,7 +286,7 @@
     "ImageWidth": 0.5,
     "ImageHeight": 0.5,
     "hitboxWidth": 1.0,
-    "hitboxHeight": 0.24,
+    "hitboxHeight": 0.5,
     "drawScaleX": 32,
     "drawScaleY": 32,
     "sensor": {
