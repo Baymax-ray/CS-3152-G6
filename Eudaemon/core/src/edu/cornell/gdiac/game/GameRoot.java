@@ -17,7 +17,8 @@ public class GameRoot extends Game implements ScreenListener {
 	private DeathScreen deathScreen;
 	private GameCanvas canvas;
 	private AssetDirectory assets;
-	private Sound backgroundDroneSound;
+	private Sound backgroundMomoSound;
+	private Sound backgroundChiyoSound;
 
 	@Override
 	public void create() {
@@ -40,7 +41,7 @@ public class GameRoot extends Game implements ScreenListener {
 		}
 		if (canvas != null)	canvas.dispose();
 		if (state != null) state.dispose();
-		if (backgroundDroneSound != null) backgroundDroneSound.dispose();
+		if (backgroundMomoSound != null) backgroundMomoSound.dispose();
 
 		super.dispose();
 	}
@@ -70,8 +71,11 @@ public class GameRoot extends Game implements ScreenListener {
 
 			if (exitCode == ExitCode.START) {
 				setScreen(levelScreen);
-				backgroundDroneSound = Gdx.audio.newSound(Gdx.files.internal("music/MomoTheme.mp3"));
-				backgroundDroneSound.loop();
+				backgroundMomoSound = Gdx.audio.newSound(Gdx.files.internal("music/MomoTheme.mp3"));
+				backgroundChiyoSound = Gdx.audio.newSound(Gdx.files.internal("music/ChiyoTheme.mp3"));
+				backgroundChiyoSound.loop();
+				backgroundMomoSound.loop();
+				backgroundChiyoSound.setVolume(0,0);
 			} else if (exitCode == ExitCode.LEVEL_SELECT) {
 				setScreen(levelSelectScreen);
 			}
