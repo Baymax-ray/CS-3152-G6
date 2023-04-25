@@ -488,6 +488,8 @@ public class Enemy extends CapsuleObstacle {
                         TextureAsset = "enemy:projectileEnemyRight";
                         break;
                     case "Up":
+                        TextureAsset = "enemy:projectileEnemyUp";
+                        break;
                     case "Down":
                         TextureAsset = "enemy:projectileEnemyUp";
                         break;

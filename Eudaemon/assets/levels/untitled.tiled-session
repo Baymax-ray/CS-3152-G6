@@ -50,11 +50,11 @@
             "expandedObjectLayers": [
                 7
             ],
-            "scale": 2,
-            "selectedLayer": 2,
+            "scale": 1,
+            "selectedLayer": 3,
             "viewCenter": {
-                "x": 369.75,
-                "y": 361.25
+                "x": 1507.5,
+                "y": 789.5
             }
         },
         "level0.tmj": {
@@ -69,11 +69,11 @@
             "expandedObjectLayers": [
                 7
             ],
-            "scale": 3,
+            "scale": 1,
             "selectedLayer": 3,
             "viewCenter": {
-                "x": 309.8333333333333,
-                "y": 967.5
+                "x": 556.5,
+                "y": 791.5
             }
         }
     },
