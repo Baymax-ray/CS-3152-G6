@@ -28,7 +28,7 @@
     "dashTime": 500,
     "dashLifespan": 15,
     "dashCooldown": 0.4,
-    "dashCooldownInFrames": 100,
+    "dashCooldownInFrames": 40,
 
     "jumpCooldown": 10,
     "coyoteTime": 5,
