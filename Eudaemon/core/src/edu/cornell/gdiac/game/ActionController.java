@@ -461,6 +461,13 @@ public class ActionController {
         if (player.isDashing()) {
             player.setDashCooldownRemaining(Math.max(player.getDashCooldownRemaining() - 1, 0));
             if (player.getDashCooldownRemaining() == 0) player.setDashing(false);
+            Filter f =player.getFilterData();
+            f.groupIndex = -1; //cancel its collision with bullet
+            player.setFilterData(f);
+        } else {
+            Filter f =player.getFilterData();
+            f.groupIndex = 0;
+            player.setFilterData(f);
         }
 
         if (player.isGrounded() && !player.isDashing()) player.setDashedInAir(false);
