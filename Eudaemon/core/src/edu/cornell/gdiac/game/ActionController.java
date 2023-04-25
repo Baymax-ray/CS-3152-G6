@@ -661,12 +661,7 @@ public class ActionController {
                 }
                 //Green Dragon
                  else if(enemy.getType().equals("FlyGuardian")){
-                    if(enemy.getVelocityX() != 0){
-                        enemy.setCurrentAnimation("move");
-                    }
-                    else{
-                        enemy.setCurrentAnimation("idle");
-                    }
+                    enemy.setCurrentAnimation("move");
                 }
                  //Green Beetle
                 else if(enemy.getType().equals("GoombaGuardian")){

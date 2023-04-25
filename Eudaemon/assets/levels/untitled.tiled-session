@@ -3,7 +3,7 @@
         "height": 4300,
         "width": 2
     },
-    "activeFile": "experimentalLevel1.json",
+    "activeFile": "level0.json",
     "expandedProjectPaths": [
         ".",
         "Templates"
@@ -53,8 +53,8 @@
             "scale": 0.8,
             "selectedLayer": 3,
             "viewCenter": {
-                "x": 796.875,
-                "y": 636.875
+                "x": 393.125,
+                "y": 497.5
             }
         },
         "level0.tmj": {
@@ -72,8 +72,8 @@
             "scale": 0.966,
             "selectedLayer": 3,
             "viewCenter": {
-                "x": 797.6190476190477,
-                "y": 637.1635610766045
+                "x": 799.6894409937888,
+                "y": 638.7163561076604
             }
         }
     },
@@ -86,14 +86,13 @@
     "map.width": 50,
     "openFiles": [
         "level1.json",
-        "level0.json",
-        "experimentalLevel1.json"
+        "level0.json"
     ],
     "project": "untitled.tiled-project",
     "property.type": "string",
     "recentFiles": [
-        "level0.json",
         "level1.json",
+        "level0.json",
         "experimentalLevel1.json",
         "F:/Programming/School/CS 3152/Eudaemon/CS-3152-G6/Eudaemon/assets/EudaemonTileset.json",
         "level0.tmj",

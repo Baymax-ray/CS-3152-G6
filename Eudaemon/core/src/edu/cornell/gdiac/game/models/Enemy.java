@@ -44,9 +44,13 @@ public class Enemy extends CapsuleObstacle {
     private final float attackOffset;
     private final int hitCooldown;
     /**
-     * The scaling factor for the sprite.
+     * The x-scaling factor for the sprite.
      */
-    private final Vector2 scale;
+    private float scaleX;
+    /**
+     * The y-scaling factor for the sprite.
+     */
+    private float scaleY;
 
     /**
      * The amount to slow the character down
@@ -96,7 +100,7 @@ public class Enemy extends CapsuleObstacle {
     private int guardianTime = 0;
     private ArrayList<Integer> guardianList;
     private float hearts;
-    private boolean isFacingRight;
+    private boolean isFacingRight = false;
     /**
      * The angle at which the entity is facing, in degrees.
      */
@@ -106,6 +110,10 @@ public class Enemy extends CapsuleObstacle {
      * The offset value along the y-axis.
      */
     private float oyOffset;
+    /**
+     * The offset value along the y-axis.
+     */
+    private float oxOffset;
     /**
      * The physics shape of this object
      */
@@ -364,6 +372,12 @@ public class Enemy extends CapsuleObstacle {
     public void setOyOffset(float oyOffset) {
         this.oyOffset = oyOffset;
     }
+    /**
+     * Set the x-axis offset value.
+     */
+    public void setOxOffset(float oxOffset) {
+        this.oxOffset = oxOffset;
+    }
 
     public Enemy(JsonValue json, AssetDirectory assets, float x, float y) {
 //        super(x,y,1f,1.4f);
@@ -480,7 +494,10 @@ public class Enemy extends CapsuleObstacle {
         //Size
         this.enemyImageWidth = enemyData.getFloat("ImageWidth");
         this.enemyImageHeight = enemyData.getFloat("ImageHeight");
-        this.scale = new Vector2(enemyData.getFloat("drawScaleX"), enemyData.getFloat("drawScaleY"));
+        scaleX = enemyData.getFloat("drawScaleX");
+        scaleY = enemyData.getFloat("drawScaleY");
+        oxOffset = enemyData.getFloat("oxOffset");
+        oyOffset = enemyData.getFloat("oyOffset");
 
         this.maxSpeed = enemyData.getFloat("maxSpeed");
         this.force = enemyData.getFloat("force");
@@ -533,11 +550,11 @@ public class Enemy extends CapsuleObstacle {
         float x = getX();
         float y = getY();
 
-        float ox = this.texture.getRegionWidth() / 2;
+        float ox = this.texture.getRegionWidth() / 2 + oxOffset;
         float oy = this.texture.getRegionHeight() / 2 + oyOffset;
 
-        float sx = (isFacingRight ? 1 : -1) * enemyImageWidth / this.texture.getRegionWidth();
-        float sy = enemyImageHeight / this.texture.getRegionHeight();
+        float sx = scaleX * (isFacingRight ? 1 : -1) * enemyImageWidth / this.texture.getRegionWidth();
+        float sy = scaleY * enemyImageHeight / this.texture.getRegionHeight();
 
         canvas.draw(this.texture, Color.WHITE, ox, oy, x, y, projectileEnemyRotation, sx, sy);
     }
