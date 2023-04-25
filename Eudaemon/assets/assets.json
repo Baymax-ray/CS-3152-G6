@@ -231,6 +231,8 @@
         "platform:settings": "platform/settings.png",
         "platform:spike": "platform/spike.png",
         "platform:billboard": "platform/billboard.png",
+        "platform:exit": "platform/exit.png",
+
         "tiles:DeepDirt1x1A.png": "tiles/DeepDirt1x1A.png",
         "tiles:DeepDirt1x1B.png": "tiles/DeepDirt1x1B.png",
         "tiles:DeepDirt1x1C.png": "tiles/DeepDirt1x1C.png",

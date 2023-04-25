@@ -51,10 +51,10 @@
                 7
             ],
             "scale": 2,
-            "selectedLayer": 3,
+            "selectedLayer": 2,
             "viewCenter": {
-                "x": 401.25,
-                "y": 635.75
+                "x": 369.75,
+                "y": 361.25
             }
         },
         "level0.tmj": {
@@ -92,9 +92,9 @@
     "project": "untitled.tiled-project",
     "property.type": "string",
     "recentFiles": [
+        "level0.json",
         "level1.json",
         "F:/Programming/School/CS 3152/Eudaemon/CS-3152-G6/Eudaemon/assets/EudaemonTileset.json",
-        "level0.json",
         "experimentalLevel1.json",
         "level0.tmj",
         "F:/Users/neelin2/coding/cs3152/Eudaemon/CS-3152-G6/Eudaemon/assets/EudaemonTileset.json"

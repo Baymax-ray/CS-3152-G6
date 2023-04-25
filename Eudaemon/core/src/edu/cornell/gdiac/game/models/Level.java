@@ -461,8 +461,8 @@ public class Level {
             } else if (object.getString("name").equals("Exit")) {
                 float x = (float) object.getInt("x") / 32;
                 float y = heightInTiles - (float) object.getInt("y") / 32;
-                float width = object.getFloat("width") / 32;
-                float height = object.getFloat("height") / 32;
+                float width = object.getFloat("width") / 64;
+                float height = object.getFloat("height") / 50;
                 exit = new Exit(object, assets, x, y, width, height);
             }
         }
@@ -728,7 +728,9 @@ public class Level {
                 obj.draw(canvas);
             }
         }
-        p.draw(canvas);
+        if (p != null){
+            p.draw(canvas);
+        }
         canvas.end();
 
         if (debug) {
