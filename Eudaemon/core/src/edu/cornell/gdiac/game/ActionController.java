@@ -581,8 +581,8 @@ public class ActionController {
                 maxFrame = 7;
                 player.setTexture(current);
                 player.setOyOffset(-25);
-                player.setSxMult(1.7f);
-                player.setSyMult(1.7f);
+                player.setSxMult(2.0f);
+                player.setSyMult(2.0f);
             } else if(!player.isGrounded()){
                 chiyoRunSound.stop();
                 soundDictionary.remove(chiyoRunSound);
@@ -605,16 +605,16 @@ public class ActionController {
                 }
                 player.setTexture(current);
                 player.setOyOffset(-25);
-                player.setSxMult(1.7f);
-                player.setSyMult(1.7f);
+                player.setSxMult(2.0f);
+                player.setSyMult(2.0f);
             } else {
                 currentAnimation = "chiyoIdle";
                 chiyoRunSound.stop();
                 soundDictionary.remove(chiyoRunSound);
                 player.setTexture(player.getChiyoTexture());
                 player.setOyOffset(-29);
-                player.setSxMult(2.0f);
-                player.setSyMult(1.7f);
+                player.setSxMult(2.3f);
+                player.setSyMult(2.0f);
             }
         }
         //Creating impact animation for large jumps
