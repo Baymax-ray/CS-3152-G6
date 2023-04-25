@@ -170,26 +170,12 @@ public class CollisionController implements ContactListener {
         }
         //#endregion
 
-        //#region Cancel collision between player and projectile when dashing
-//        if (((bd1 instanceof Player && bd2 instanceof WheelObstacle)
-//                || (bd2 instanceof Player && bd1 instanceof WheelObstacle))) {
-//            String name1 = "";
-//            String name2 = "";
-//            if (bd1 instanceof WheelObstacle) name1 = ((WheelObstacle) bd1).getName();
-//            else name2 = ((WheelObstacle) bd2).getName();
-//
-//            if ((name1.equals("bullet") && ((Player) bd2).isDashing())
-//                    || (name2.equals("bullet") && ((Player) bd1).isDashing())) {
-//                Fixture fixture1 = fix1;
-//                Fixture fixture2 = fix2;
-//                Filter filter1 = fixture1.getFilterData();
-//                Filter filter2 = fixture2.getFilterData();
-//                filter1.groupIndex = -1;
-//                filter2.groupIndex = -1;
-//                fixture1.setFilterData(filter1);
-//                fixture2.setFilterData(filter2);
-//            }
-//        }
+        //#region Player attack destroys projectile
+        if (bd1 instanceof SwordWheelObstacle && bd2 instanceof WheelObstacle ||
+                bd2 instanceof SwordWheelObstacle && bd1 instanceof WheelObstacle) {
+            WheelObstacle bullet = (WheelObstacle) (((WheelObstacle) bd1).getName().equals("bullet") ? bd1 : bd2);
+            bullet.markRemoved(true);
+        }
         //#endregion
 
 
