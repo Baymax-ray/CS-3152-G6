@@ -133,6 +133,7 @@ public class ActionController {
         addAnimations(player.getMomoDashSpriteSheet(), 5, 1, "momoDash");
         addAnimations(player.getMomoJumpSpriteSheet(), 7, 1, "momoJump");
         addAnimations(player.getChiyoRunSpriteSheet(), 8, 1, "chiyoRun");
+        addAnimations(player.getChiyoJumpSpriteSheet(), 8, 1, "chiyoJump");
         addAnimations(player.getDashEffectSpriteSheet(), 5, 1, "dashEffect");
         addAnimations(player.getImpactEffectSpriteSheet(), 8, 1, "impactEffect");
     }
@@ -568,21 +569,26 @@ public class ActionController {
         // Animations if Player is Chiyo
         else {
             momoRunSound.stop();
-            if (player.getBodyVelocityX() != 0) {
+            if (player.getBodyVelocityX() != 0 && player.isGrounded()) {
                 currentAnimation = "momoRun";
-                if(player.isGrounded()){
-                    if(!soundDictionary.contains(chiyoRunSound)) {
-                        soundDictionary.add(chiyoRunSound);
-                        chiyoRunSound.loop();
-                    }
+                if(!soundDictionary.contains(chiyoRunSound)) {
+                    soundDictionary.add(chiyoRunSound);
+                    chiyoRunSound.loop();
                 }
-                else if(!player.isGrounded()){
-                    chiyoRunSound.stop();
-                    soundDictionary.remove(chiyoRunSound);
-                }
+
                 TextureRegion current = (TextureRegion) (animations.get("chiyoRun")).getKeyFrame(currentFrame); // Gets the current frame of the animation
                 tickFrameSwitch = 4;
                 maxFrame = 7;
+                player.setTexture(current);
+                player.setOyOffset(-25);
+                player.setSxMult(1.5f);
+                player.setSyMult(1.5f);
+            } else if(!player.isGrounded()){
+                chiyoRunSound.stop();
+                soundDictionary.remove(chiyoRunSound);
+                TextureRegion current = (TextureRegion) (animations.get("chiyoJump")).getKeyFrame(currentFrame); // Gets the current frame of the animation
+                tickFrameSwitch = 0;
+                maxFrame = 8;
                 player.setTexture(current);
                 player.setOyOffset(-25);
                 player.setSxMult(1.5f);
