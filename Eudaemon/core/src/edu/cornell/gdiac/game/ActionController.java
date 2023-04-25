@@ -386,6 +386,8 @@ public class ActionController {
         //include all three situations
         //normal jump, coyote, and jump pressed in air
 
+        System.out.println(player.getJumpCooldownRemaining());
+
         if ((jumpPressed && player.isGrounded() && player.getJumpCooldownRemaining() == 0) ||
                 (jumpPressed && player.getCoyoteFramesRemaining() > 0 && player.getJumpCooldownRemaining() == 0) ||
                 (player.getJumpPressedInAir() && player.getJumpCooldownRemaining() == 0 && player.isGrounded())) {
@@ -400,9 +402,10 @@ public class ActionController {
             player.setIsJumping(true);
         } else if (player.isGrounded() && player.getBodyVelocityY() == 0) {
             player.setIsJumping(false);
-        } else player.setJumpCooldownRemaining(Math.max(0, player.getJumpCooldownRemaining() - 1));
+        }
 
         if (player.getIsJumping()) player.setJumpTimeRemaining(player.getJumpTimeRemaining() - 1);
+        else player.setJumpCooldownRemaining(Math.max(0, player.getJumpCooldownRemaining() - 1));
 
         if (jumpHold && player.getIsJumping() && player.getJumpTimeRemaining() > 0) {
             player.setVelocity(player.getBodyVelocityX(), player.getJumpVelocity());
