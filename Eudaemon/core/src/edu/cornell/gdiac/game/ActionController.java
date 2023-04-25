@@ -588,6 +588,7 @@ public class ActionController {
                 tickFrameSwitch = 4;
                 maxFrame = 7;
                 player.setTexture(current);
+                player.setOxOffset(20);
                 player.setOyOffset(-25);
                 player.setSxMult(2.0f);
                 player.setSyMult(2.0f);
@@ -613,6 +614,7 @@ public class ActionController {
                     tickFrameSwitch = 0;
                 }
                 player.setTexture(current);
+                player.setOxOffset(20);
                 player.setOyOffset(-25);
                 player.setSxMult(2.0f);
                 player.setSyMult(2.0f);
@@ -621,6 +623,7 @@ public class ActionController {
                 chiyoRunSound.stop();
                 soundDictionary.remove(chiyoRunSound);
                 player.setTexture(player.getChiyoTexture());
+                player.setOxOffset(0);
                 player.setOyOffset(-29);
                 player.setSxMult(2.3f);
                 player.setSyMult(2.0f);
@@ -666,7 +669,7 @@ public class ActionController {
 
         // automatic spirit loss
         if (player.getForm() == 1) { // if player is chiyo
-            player.decreaseSpirit();
+            //player.decreaseSpirit();
             if (player.getSpirit() <= 0) {
                 player.setForm(); // switch back to momo
             }
