@@ -13,6 +13,7 @@ public class GameRoot extends Game implements ScreenListener {
 	private GameState state;
 	private LevelScreen levelScreen;
 	private LoadingScreen loadingScreen;
+	private LevelSelectScreen levelSelectScreen;
 	private DeathScreen deathScreen;
 	private GameCanvas canvas;
 	private AssetDirectory assets;
@@ -60,10 +61,17 @@ public class GameRoot extends Game implements ScreenListener {
 			this.deathScreen = new DeathScreen("assets.json", canvas);
 			this.deathScreen.setScreenListener(this);
 
+			if (this.levelSelectScreen != null) levelScreen.dispose();
+			this.levelSelectScreen = new LevelSelectScreen(assets, state, canvas);
+			this.levelSelectScreen.setScreenListener(this);
 
-			setScreen(levelScreen);
-			backgroundDroneSound = Gdx.audio.newSound(Gdx.files.internal("audio/temp-background-drone.mp3"));
-			backgroundDroneSound.loop();
+			if (exitCode == ExitCode.START) {
+				setScreen(levelScreen);
+				backgroundDroneSound = Gdx.audio.newSound(Gdx.files.internal("audio/temp-background-drone.mp3"));
+				backgroundDroneSound.loop();
+			} else if (exitCode == ExitCode.LEVEL_SELECT) {
+				setScreen(levelSelectScreen);
+			}
 		}
 
 		if (screen == deathScreen) {
@@ -74,6 +82,14 @@ public class GameRoot extends Game implements ScreenListener {
 				levelScreen.setScreenListener(this);
 				levelScreen.setCanvas(canvas);
 				setScreen(levelScreen);
+			}
+		}
+
+		if (screen == levelSelectScreen) {
+			if (exitCode == ExitCode.MAIN_MENU) {
+				screen.pause();
+				loadingScreen.reset();
+				setScreen(loadingScreen);
 			}
 		}
 

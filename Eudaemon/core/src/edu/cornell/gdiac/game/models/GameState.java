@@ -3,7 +3,10 @@ package edu.cornell.gdiac.game.models;
 import com.badlogic.gdx.utils.JsonValue;
 import edu.cornell.gdiac.assets.AssetDirectory;
 
+import java.util.Collection;
 import java.util.HashMap;
+import java.util.List;
+import java.util.stream.Collectors;
 
 public class GameState {
     private final AssetDirectory assets;
@@ -40,6 +43,10 @@ public class GameState {
     public Level getLevel(int i) {
         String levelName = assets.getEntry("constants", JsonValue.class).get("levels").get(i).getString("level");
         return levels.get(levelName);
+    }
+
+    public Collection<Level> getLevels() {
+        return levels.values();
     }
 
     public ActionBindings getActionBindings() {

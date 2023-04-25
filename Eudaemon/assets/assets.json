@@ -206,7 +206,6 @@
         }
       },
         "background:city": "backgrounds/backgroundCityPlaceholder.png",
-
         "momo:idle":  "character/momo.png",
         "momo:upDash":  "character/momoUpDash.png",
         "momo:diagonalDash":  "character/momoDiagonalUpDash.png",
@@ -293,7 +292,11 @@
         "tiles:CorruptedEndLeftA.png": "tiles/CorruptedEndLeftA.png",
         "tiles:CorruptedEndRightA.png": "tiles/CorruptedEndRightA.png",
         "tiles:CorruptedLeftA.png": "tiles/CorruptedLeftA.png",
-        "tiles:CorruptedRightA.png": "tiles/CorruptedRightA.png"
+        "tiles:CorruptedRightA.png": "tiles/CorruptedRightA.png",
+
+        "levelSelect:beginLevel": "shared/start_button.png",
+        "levelSelect:back": "shared/levelselect_button.png",
+        "levelSelect:settings": "shared/settings_button.png"
     },
     "jsons"  : {
         "constants": "constants.json",
