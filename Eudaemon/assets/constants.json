@@ -1,6 +1,5 @@
 {
   "numTiles": 1,
-  "numLevels": 1,
   "tiles": [
     {
       "textureAsset": "shared:earth"

@@ -83,7 +83,7 @@ public class GameState {
             tiles[i] = new Tile(assets);
         }
 
-        int numLevels = constants.getInt("numLevels");
+        int numLevels = constants.get("levels").size();
         this.levels = new HashMap<>();
         for (int i = 0; i < numLevels; i++) {
             levels.put(constants.get(("levels")).get(i).getString("level"), new Level(constants.get("levels").get(i), tiles, assets));
