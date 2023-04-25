@@ -482,21 +482,29 @@ public class ActionController {
                 currentFrame = 0;
             }
         }
+
         //Animation if Player is Momo
         if (player.getForm() == 0) {
             chiyoRunSound.stop();
-            player.setSxMult(1.0f);
-            player.setSyMult(1.0f);
             // Momo Dashing
             if (player.isDashing()) {
+                TextureRegion current;
                 currentAnimation = "momoDash";
-                TextureRegion current = (TextureRegion) (animations.get("momoDash")).getKeyFrame(currentFrame); // Gets the current frame of the animation
-                tickFrameSwitch = 7;
-                maxFrame = 5;
+                if (player.getAngleFacing() == 45 || player.getAngleFacing() == 135){
+                    current = player.getMomoDiagonalDashTexture();
+                    player.setSxMult(1.2f);
+                    player.setSyMult(1.2f);
+                    player.setOyOffset(-10);
+                }
+                else{
+                    current = (TextureRegion) (animations.get("momoDash")).getKeyFrame(currentFrame); // Gets the current frame of the animation
+                    tickFrameSwitch = 7;
+                    maxFrame = 5;
+                    player.setSxMult(1.2f);
+                    player.setSyMult(1.2f);
+                    player.setOyOffset(-47);
+                }
                 player.setTexture(current);
-                player.setOyOffset(-47);
-                player.setSxMult(1.2f);
-                player.setSyMult(1.2f);
             }
             // Momo jumping/falling
             else if (!player.isGrounded()) {
