@@ -122,7 +122,7 @@ public class ActionController {
         this.impactSound = Gdx.audio.newSound(Gdx.files.internal("audio/temp-impact.mp3"));
         this.swordSwipeSound = Gdx.audio.newSound(Gdx.files.internal("audio/temp-sword-swipe.mp3"));
         this.dashSound = Gdx.audio.newSound(Gdx.files.internal("audio/temp-dash.mp3"));
-        this.playerChiyoTransformSound = Gdx.audio.newSound(Gdx.files.internal("audio/temp-transform.mp3"));
+        this.playerChiyoTransformSound = Gdx.audio.newSound(Gdx.files.internal("music/se1-trans.mp3"));
         this.playerMomoTransformSound = Gdx.audio.newSound(Gdx.files.internal("audio/temp-transform-to-momo.mp3"));
         this.chiyoRunSound = Gdx.audio.newSound(Gdx.files.internal("audio/temp-chiyo-run.mp3"));
         this.momoRunSound = Gdx.audio.newSound(Gdx.files.internal("audio/temp-momo-run.mp3"));
