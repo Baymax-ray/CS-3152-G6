@@ -383,8 +383,8 @@ public class Enemy extends CapsuleObstacle {
     public Enemy(JsonValue json, AssetDirectory assets, float x, float y) {
 //        super(x,y,1f,1.4f);
         super(x, y,
-                assets.getEntry("sharedConstants", JsonValue.class).get((json.getString("name").equals("Goomba") ? "Goomba" : "Fly")).getFloat("hitboxWidth"),
-                assets.getEntry("sharedConstants", JsonValue.class).get((json.getString("name").equals("Goomba") ? "Goomba" : "Fly")).getFloat("hitboxHeight"));
+                assets.getEntry("sharedConstants", JsonValue.class).get(json.getString("name")).getFloat("hitboxWidth"),
+                assets.getEntry("sharedConstants", JsonValue.class).get(json.getString("name")).getFloat("hitboxHeight"));
         this.type = json.getString("name");
         this.enemyData = assets.getEntry("sharedConstants", JsonValue.class).get(type);
         String TextureAsset = enemyData.getString("TextureAsset");
@@ -472,7 +472,7 @@ public class Enemy extends CapsuleObstacle {
                         break;
                     case "Up":
                         this.projectileEnemyRotation = (float) Math.PI;
-                        this.setOyOffset(-110f);
+                        //this.setOyOffset(-110f);
                         break;
                     case "Down":
                         this.projectileEnemyRotation = 0;

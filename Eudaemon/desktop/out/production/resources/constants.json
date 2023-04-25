@@ -1,6 +1,5 @@
 {
   "numTiles": 1,
-  "numLevels": 1,
   "tiles": [
     {
       "textureAsset": "shared:earth"
@@ -12,6 +11,8 @@
       "tileSize": 1,
       "cameraWidth": 21.35,
       "cameraHeight": 12,
+      "camZoneX": 3,
+      "camZoneY": 3,
       "gravity": -1,
       "spike": [
         {
@@ -29,6 +30,8 @@
       "tileSize": 1,
       "cameraWidth": 21.35,
       "cameraHeight": 12,
+      "camZoneX": 3,
+      "camZoneY": 3,
       "gravity": -1,
       "spike": [
         {
