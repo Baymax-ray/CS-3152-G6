@@ -72,10 +72,10 @@ public class GameRoot extends Game implements ScreenListener {
 
 			if (exitCode == ExitCode.START) {
 				setScreen(levelScreen);
-//				backgroundMomoSound = Gdx.audio.newSound(Gdx.files.internal("music/MomoTheme.mp3"));
+				backgroundMomoSound = Gdx.audio.newSound(Gdx.files.internal("music/MomoTheme.mp3"));
 //				backgroundChiyoSound = Gdx.audio.newSound(Gdx.files.internal("music/ChiyoTheme.mp3"));
 //				backgroundChiyoSound.loop();
-//				backgroundMomoSound.loop();
+				backgroundMomoSound.loop();
 //				backgroundChiyoSound.setVolume(0,0);
 			} else if (exitCode == ExitCode.LEVEL_SELECT) {
 				setScreen(levelSelectScreen);
