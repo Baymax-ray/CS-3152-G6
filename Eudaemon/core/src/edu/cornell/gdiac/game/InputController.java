@@ -10,7 +10,6 @@ import edu.cornell.gdiac.game.models.Action;
 import edu.cornell.gdiac.game.models.ActionBindings;
 import edu.cornell.gdiac.util.Controllers;
 import edu.cornell.gdiac.util.XBoxController;
-
 import java.util.EnumSet;
 import java.util.HashMap;
 
@@ -25,7 +24,7 @@ public class InputController {
     public InputController(ActionBindings bindings) {
         inputMap = bindings.getInputMap();
         prevAction = EnumSet.noneOf(Action.class);
-    }
+   }
 
     /**
      * Updates the player's actions based on the input from the keyboard or Xbox controller.
