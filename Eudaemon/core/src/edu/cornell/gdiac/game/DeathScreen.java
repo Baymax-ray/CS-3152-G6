@@ -281,6 +281,7 @@ public class DeathScreen implements Screen, InputProcessor, ControllerListener {
 	public void show() {
 		// Useless if called in outside animation loop
 		active = true;
+		Gdx.input.setInputProcessor(this);
 	}
 
 	/**

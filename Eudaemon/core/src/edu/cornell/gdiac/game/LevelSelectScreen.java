@@ -278,6 +278,7 @@ public class LevelSelectScreen implements Screen, InputProcessor, ControllerList
     public void show() {
         // Useless if called in outside animation loop
         active = true;
+        Gdx.input.setInputProcessor(this);
     }
 
     /**

@@ -441,6 +441,7 @@ public class LoadingScreen implements Screen, InputProcessor, ControllerListener
 	public void show() {
 		// Useless if called in outside animation loop
 		active = true;
+		Gdx.input.setInputProcessor(this);
 	}
 
 	/**
@@ -455,8 +456,6 @@ public class LoadingScreen implements Screen, InputProcessor, ControllerListener
 		this.playButtonState = 0;
 		this.levelSelectButtonState = 0;
 		this.settingsButtonState = 0;
-
-		Gdx.input.setInputProcessor(this);
 	}
 	
 	/**
