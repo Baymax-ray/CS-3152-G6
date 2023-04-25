@@ -129,7 +129,7 @@ public class ActionController {
         this.smallImpactSound = Gdx.audio.newSound(Gdx.files.internal("audio/temp-small-impact.mp3"));
         this.soundDictionary = new ArrayList<Sound>();
         //Creating a Dictionary of Textures
-        addAnimations(player.getMomoRunSpriteSheet(), 6, 1, "momoRun");
+        addAnimations(player.getMomoRunSpriteSheet(), 8, 1, "momoRun");
         addAnimations(player.getMomoDashSpriteSheet(), 5, 1, "momoDash");
         addAnimations(player.getMomoJumpSpriteSheet(), 6, 1, "momoJump");
         addAnimations(player.getChiyoRunSpriteSheet(), 8, 1, "chiyoRun");
@@ -473,6 +473,7 @@ public class ActionController {
                 currentFrame = 0;
             }
         }
+        //Animation if Player is Momo
         if (player.getForm() == 0) {
             chiyoRunSound.stop();
             player.setSxMult(1.0f);
@@ -502,16 +503,23 @@ public class ActionController {
                 }
                 TextureRegion current = (TextureRegion) (animations.get("momoRun")).getKeyFrame(currentFrame); // Gets the current frame of the animation
                 tickFrameSwitch = 5;
-                maxFrame = 5;
+                maxFrame = 8;
                 player.setTexture(current);
-                player.setOyOffset(-35);
+                player.setOyOffset(-47);
+                player.setSxMult(1.2f);
+                player.setSyMult(1.2f);
             } else {
                 momoRunSound.stop();
                 soundDictionary.remove(momoRunSound);
                 player.setTexture(player.getMomoTexture());
-                player.setOyOffset(-160);
+
+                player.setOyOffset(-220);
+                player.setSxMult(1.2f);
+                player.setSyMult(1.2f);
             }
-        } else {
+        }
+        // Animations if Player is Chiyo
+        else {
             momoRunSound.stop();
             if (player.getBodyVelocityX() != 0) {
                 if(player.isGrounded()){
@@ -535,9 +543,9 @@ public class ActionController {
                 chiyoRunSound.stop();
                 soundDictionary.remove(chiyoRunSound);
                 player.setTexture(player.getChiyoTexture());
-                player.setOyOffset(-100);
-                player.setSxMult(1.0f);
-                player.setSyMult(1.0f);
+                player.setOyOffset(-29);
+                player.setSxMult(1.7f);
+                player.setSyMult(1.7f);
             }
         }
         //Creating impact animation for large jumps

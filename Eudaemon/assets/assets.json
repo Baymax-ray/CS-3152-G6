@@ -115,11 +115,11 @@
           }
         },
         "momo:run": {
-          "file" : "animations/momoRun.png",
+          "file" : "character/momoRun.png",
           "sprites" : {
             "fire": {
               "rows": 1,
-              "cols": 6
+              "cols": 8
             }
           }
         },
@@ -242,8 +242,9 @@
       },
         "background:city": "backgrounds/backgroundCityPlaceholder.png",
 
-        "character:momo":  "character/momo.png",
-        "character:chiyo":  "character/chiyo.png",
+        "momo:idle":  "character/momo.png",
+        "momo:upDash":  "character/momoUpDash.png",
+        "chiyo:idle":  "character/chiyo.png",
 
         "platform:nonTrackingGoomba":  "platform/nonTrackingGoomba.png",
         "platform:pathfindingGoombaL": "platform/pathfindingGoombaLeft.png",
