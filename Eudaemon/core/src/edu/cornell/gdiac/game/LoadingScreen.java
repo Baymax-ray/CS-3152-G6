@@ -369,9 +369,11 @@ public class LoadingScreen implements Screen, InputProcessor, ControllerListener
 			update(delta);
 			draw();
 
-			// We are are ready, notify our listener
+			// We are ready, notify our listener
 			if (isReady() && listener != null) {
-				listener.exitScreen(this, 0);
+				listener.exitScreen(this, ExitCode.START);
+			} else if (levelSelectButtonState == 2) {
+				listener.exitScreen(this, ExitCode.LEVEL_SELECT);
 			}
 		}
 	}
@@ -448,6 +450,14 @@ public class LoadingScreen implements Screen, InputProcessor, ControllerListener
 		// Useless if called in outside animation loop
 		active = false;
 	}
+
+	public void reset() {
+		this.playButtonState = 0;
+		this.levelSelectButtonState = 0;
+		this.settingsButtonState = 0;
+
+		Gdx.input.setInputProcessor(this);
+	}
 	
 	/**
 	 * Sets the ScreenListener for this mode
@@ -472,6 +482,7 @@ public class LoadingScreen implements Screen, InputProcessor, ControllerListener
 	 * @return whether to hand the event to other listeners. 
 	 */
 	public boolean touchDown(int screenX, int screenY, int pointer, int button) {
+		System.out.println("avada");
 		if (playButton == null || playButtonState == 2) {
 			return true;
 		}
