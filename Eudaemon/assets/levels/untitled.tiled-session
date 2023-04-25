@@ -53,8 +53,8 @@
             "scale": 0.8,
             "selectedLayer": 3,
             "viewCenter": {
-                "x": 253.125,
-                "y": 336.875
+                "x": 799.375,
+                "y": 640
             }
         },
         "level0.tmj": {
@@ -72,8 +72,8 @@
             "scale": 0.966,
             "selectedLayer": 3,
             "viewCenter": {
-                "x": 704.4513457556936,
-                "y": 752.0703933747413
+                "x": 703.416149068323,
+                "y": 750.5175983436853
             }
         }
     },
@@ -91,9 +91,9 @@
     "project": "untitled.tiled-project",
     "property.type": "string",
     "recentFiles": [
+        "level0.json",
         "level1.json",
         "experimentalLevel1.json",
-        "level0.json",
         "F:/Programming/School/CS 3152/Eudaemon/CS-3152-G6/Eudaemon/assets/EudaemonTileset.json",
         "level0.tmj",
         "F:/Users/neelin2/coding/cs3152/Eudaemon/CS-3152-G6/Eudaemon/assets/EudaemonTileset.json"

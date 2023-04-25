@@ -124,11 +124,11 @@
           }
         },
         "momo:jump": {
-          "file" : "animations/momoJump.png",
+          "file" : "character/momoJump.png",
           "sprites" : {
             "fire": {
               "rows": 1,
-              "cols": 6
+              "cols": 7
             }
           }
         },
