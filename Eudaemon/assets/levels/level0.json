@@ -388,29 +388,6 @@
                 {
                  "gid":86,
                  "height":25.3939,
-                 "id":124,
-                 "name":"Projectile",
-                 "properties":[
-                        {
-                         "name":"Direction",
-                         "type":"string",
-                         "value":"Right"
-                        }, 
-                        {
-                         "name":"SpriteSheetType",
-                         "type":"string",
-                         "value":"Up"
-                        }],
-                 "rotation":0,
-                 "type":"Enemy",
-                 "visible":true,
-                 "width":25.2095,
-                 "x":1122.97502784564,
-                 "y":1181.01068424565
-                }, 
-                {
-                 "gid":86,
-                 "height":25.3939,
                  "id":125,
                  "name":"Projectile",
                  "properties":[
@@ -842,6 +819,18 @@
                  "width":19.5,
                  "x":677.75,
                  "y":1148.75
+                }, 
+                {
+                 "gid":84,
+                 "height":26.6667,
+                 "id":157,
+                 "name":"Goomba",
+                 "rotation":0,
+                 "type":"Enemy",
+                 "visible":true,
+                 "width":29,
+                 "x":1122.59160794363,
+                 "y":1180.13237709801
                 }],
          "opacity":1,
          "type":"objectgroup",
@@ -850,10 +839,10 @@
          "y":0
         }],
  "nextlayerid":11,
- "nextobjectid":156,
+ "nextobjectid":158,
  "orientation":"orthogonal",
  "renderorder":"right-down",
- "tiledversion":"1.10.1",
+ "tiledversion":"1.10.0",
  "tileheight":32,
  "tilesets":[
         {
