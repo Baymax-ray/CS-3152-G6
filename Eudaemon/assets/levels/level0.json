@@ -817,20 +817,20 @@
                  "type":"",
                  "visible":true,
                  "width":19.5,
-                 "x":677.75,
-                 "y":1148.75
+                 "x":1221.71355353075,
+                 "y":1084.05751708428
                 }, 
                 {
-                 "gid":84,
-                 "height":26.6667,
-                 "id":157,
-                 "name":"Goomba",
+                 "gid":89,
+                 "height":29.25,
+                 "id":158,
+                 "name":"Fly",
                  "rotation":0,
                  "type":"Enemy",
                  "visible":true,
-                 "width":29,
-                 "x":1122.59160794363,
-                 "y":1180.13237709801
+                 "width":28.6875,
+                 "x":1057.18244589977,
+                 "y":1118.86019362187
                 }],
          "opacity":1,
          "type":"objectgroup",
@@ -839,7 +839,7 @@
          "y":0
         }],
  "nextlayerid":11,
- "nextobjectid":158,
+ "nextobjectid":159,
  "orientation":"orthogonal",
  "renderorder":"right-down",
  "tiledversion":"1.10.0",
