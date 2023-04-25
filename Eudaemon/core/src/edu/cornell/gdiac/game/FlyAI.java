@@ -140,6 +140,7 @@ public class FlyAI extends AIController{
                     if (WanderWait>maxWait){
                         this.WanderWait=0;
                         state= FSMState.WANDER;
+                        needNewPath=true;
                         float ey=enemy.getY();
                         float ex=enemy.getX();
                         this.anchorX = level.levelToTileCoordinatesX(ex);
@@ -165,32 +166,22 @@ public class FlyAI extends AIController{
         float ey=enemy.getY();
 //       System.out.println("position is "+ex+":"+ey);
 
-        int tx=level.levelToTileCoordinatesX(ex);
-        int ty=level.levelToTileCoordinatesY(ey);//but NO!
-//        System.out.println("position (in tile) is "+tx+":"+ty );
-
-        Random rand = new Random();
-        int randomInt;
+        Random random = new Random();
+        int x=3;
         switch (state) {
             case SPAWN:
                 goal[0]=ex;
                 goal[1]=ey;
                 break;
             case WANDER:
-                int nx=tx;
-                int ny=ty;
-                randomInt = rand.nextInt();
-                if (ticks%120==1) {
-                    if (randomInt % 4 == 0 && level.isAirAt(tx, ty - 1)&& (anchorY-ty)<=2) {
-                        ny = ny - 1;
-                    } else if (randomInt % 4 == 1 && level.isAirAt(tx, ty + 1)&&(ty- anchorY)<=2) {
-                        ny = ny + 1;
-                    } else if (randomInt % 4 == 2 && level.isAirAt(tx - 1, ty)&&(anchorX-tx)<=2) {
-                        nx = nx - 1;
-                    } else if (randomInt % 4 == 3 && level.isAirAt(tx + 1, ty)&&(tx- anchorX)<=2) {
-                        nx = nx + 1;
-                    } else {break;}
-
+                int nx=anchorX;
+                int ny=anchorY;
+                if (ticks%300==1) {
+                    needNewPath=true;
+                    int randomIntX = random.nextInt(2 * x + 1) - x;
+                    nx=nx+randomIntX;
+                    int randomIntY = random.nextInt(2 * x + 1) - x;
+                    ny=ny+randomIntY;
                     // the reason why we call this a second time is we must change the Y coordinate back
                     // to normal cardinality
                     goal[0]=level.tileToLevelCoordinatesX(nx);
@@ -223,18 +214,13 @@ public class FlyAI extends AIController{
             case SPAWN:
                 this.move=EnemyAction.STAY;
                 break;
-            case WANDER:
-                float dx=goal[0]+this.tileSize/2-ex;
-                float dy=goal[1]+this.tileSize/2-ey;
-                this.move=EnemyAction.FLY;
-                this.v=new Vector2(dx,dy);
-                break;
             case CHASE_close:
-                dx=goal[0]-ex;
-                dy=goal[1]-ey;
+                float dx=goal[0]-ex;
+                float dy=goal[1]-ey;
                 this.move=EnemyAction.FLY;
                 this.v=new Vector2(dx,dy);
                 break;
+            case WANDER:
             case CHASE:
                 IndexedAStarPathFinder<Level.MyNode> pathFinder = new IndexedAStarPathFinder<>((IndexedGraph<Level.MyNode>) graph);
                 if (needNewPath){
@@ -264,7 +250,7 @@ public class FlyAI extends AIController{
                         //reach this goal, move to the next goal
 //                        System.out.println("moving to next index");
                         indexAlongPath=indexAlongPath+1;
-                        if (indexAlongPath>=path.getCount()){
+                        if (indexAlongPath>=path.getCount() && this.state.equals(FSMState.CHASE)){
                             needNewPath=true;
                         }
                     }
