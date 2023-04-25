@@ -8,7 +8,7 @@
  "margin":0,
  "name":"Eudaemon Tilleset",
  "spacing":0,
- "tilecount":98,
+ "tilecount":107,
  "tiledversion":"1.10.1",
  "tileheight":32,
  "tiles":[
@@ -597,6 +597,60 @@
         {
          "id":146,
          "image":"tiles\/TiledFloorD.png",
+         "imageheight":32,
+         "imagewidth":32
+        }, 
+        {
+         "id":148,
+         "image":"tiles\/MetalPlatformDVert.png",
+         "imageheight":32,
+         "imagewidth":32
+        }, 
+        {
+         "id":149,
+         "image":"tiles\/MetalPlatformEVert.png",
+         "imageheight":32,
+         "imagewidth":32
+        }, 
+        {
+         "id":150,
+         "image":"tiles\/MetalPlatformFVert.png",
+         "imageheight":32,
+         "imagewidth":32
+        }, 
+        {
+         "id":151,
+         "image":"tiles\/MetalPlatformLeftEndVert.png",
+         "imageheight":32,
+         "imagewidth":32
+        }, 
+        {
+         "id":152,
+         "image":"tiles\/MetalPlatformRightEndVert.png",
+         "imageheight":32,
+         "imagewidth":32
+        }, 
+        {
+         "id":153,
+         "image":"tiles\/MetalPlatformAVert.png",
+         "imageheight":32,
+         "imagewidth":32
+        }, 
+        {
+         "id":154,
+         "image":"tiles\/MetalPlatformBVert.png",
+         "imageheight":32,
+         "imagewidth":32
+        }, 
+        {
+         "id":155,
+         "image":"tiles\/MetalPlatformCVert.png",
+         "imageheight":32,
+         "imagewidth":32
+        }, 
+        {
+         "id":156,
+         "image":"tiles\/MetalWallBGA.png",
          "imageheight":32,
          "imagewidth":32
         }],

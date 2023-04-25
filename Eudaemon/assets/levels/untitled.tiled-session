@@ -5,8 +5,8 @@
     },
     "activeFile": "level0.json",
     "expandedProjectPaths": [
-        ".",
-        "Templates"
+        "Templates",
+        "."
     ],
     "file.lastUsedOpenFilter": "全部文件 (*)",
     "fileStates": {
@@ -51,10 +51,10 @@
                 7
             ],
             "scale": 2,
-            "selectedLayer": 0,
+            "selectedLayer": 3,
             "viewCenter": {
-                "x": 445.75,
-                "y": 266.75
+                "x": 401.25,
+                "y": 635.75
             }
         },
         "level0.tmj": {
@@ -69,11 +69,11 @@
             "expandedObjectLayers": [
                 7
             ],
-            "scale": 0.966,
+            "scale": 3,
             "selectedLayer": 3,
             "viewCenter": {
-                "x": 799.6894409937888,
-                "y": 638.7163561076604
+                "x": 309.8333333333333,
+                "y": 967.5
             }
         }
     },
@@ -86,15 +86,16 @@
     "map.width": 50,
     "openFiles": [
         "level1.json",
-        "level0.json"
+        "level0.json",
+        "F:/Programming/School/CS 3152/Eudaemon/CS-3152-G6/Eudaemon/assets/EudaemonTileset.json"
     ],
     "project": "untitled.tiled-project",
     "property.type": "string",
     "recentFiles": [
-        "level0.json",
         "level1.json",
-        "experimentalLevel1.json",
         "F:/Programming/School/CS 3152/Eudaemon/CS-3152-G6/Eudaemon/assets/EudaemonTileset.json",
+        "level0.json",
+        "experimentalLevel1.json",
         "level0.tmj",
         "F:/Users/neelin2/coding/cs3152/Eudaemon/CS-3152-G6/Eudaemon/assets/EudaemonTileset.json"
     ],

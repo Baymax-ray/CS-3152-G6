@@ -33,6 +33,31 @@ public class Billboard extends BoxObstacle {
     private PolygonShape sensorShape;
     private String text;
     private boolean display;
+    /**
+     * The texture origin offset value along the y-axis.
+     */
+    private float oyOffset;
+    /**
+     * The texture origin offset value along the y-axis.
+     */
+    private float oxOffset;
+    /**
+     * The offset value along the x-axis.
+     */
+    private float xOffset;
+    /**
+     * The offset value along the y-axis.
+     */
+    private float yOffset;
+    /**
+     * The texture scale along the x-axis.
+     */
+    private float scaleX;
+    /**
+     * The texture scale along the y-axis.
+     */
+    private float scaleY;
+
 
     public String getSensorName() {return this.sensorName;}
 
@@ -40,7 +65,7 @@ public class Billboard extends BoxObstacle {
     public boolean isDisplay() { return display; }
 
     public Billboard(JsonValue json, AssetDirectory assets, float x, float y){
-        super(x + 0.5f, y - 0.9f,
+        super(x, y,
                 assets.getEntry("sharedConstants", JsonValue.class).get("Spike").getFloat("hitboxWidth"),
                 assets.getEntry("sharedConstants", JsonValue.class).get("Spike").getFloat("hitboxHeight"));
         String TextureAsset = "platform:billboard";
@@ -50,9 +75,17 @@ public class Billboard extends BoxObstacle {
         this.billboardTexture = new TextureRegion(assets.getEntry(TextureAsset, Texture.class));
         this.billboardImageWidth = billboardData.getFloat("ImageWidth");
         this.billboardImageHeight = billboardData.getFloat("ImageHeight");
-        this.text = json.getString("text");
+        this.text = json.get("properties").get(0).getString("value");
         this.sensorName = "BillboardSensor";
         this.texture = this.billboardTexture;
+        scaleX = billboardData.getFloat("drawScaleX");
+        scaleY = billboardData.getFloat("drawScaleY");
+        oxOffset = billboardData.getFloat("oxOffset");
+        oyOffset = billboardData.getFloat("oyOffset");
+        xOffset = billboardData.getFloat("xOffset");
+        yOffset = billboardData.getFloat("yOffset");
+        this.setX(x + xOffset);
+        this.setY(y + yOffset);
 
 
         stringCompleteness = 0;
@@ -69,13 +102,13 @@ public class Billboard extends BoxObstacle {
      */
     public void draw(GameCanvas canvas) {
         float x = getX();
-        float y = getY() + 0.39f;
+        float y = getY();
 
-        float ox = this.texture.getRegionWidth()/2;
-        float oy = this.texture.getRegionHeight()/2;
+        float ox = oxOffset + this.texture.getRegionWidth()/2;
+        float oy = oyOffset + this.texture.getRegionHeight()/2;
 
-        float sx = 1.97f * billboardImageWidth / this.texture.getRegionWidth();
-        float sy = 1.97f * billboardImageHeight / this.texture.getRegionHeight();
+        float sx = scaleX * billboardImageWidth / this.texture.getRegionWidth();
+        float sy = scaleY * billboardImageHeight / this.texture.getRegionHeight();
 
         canvas.draw(this.texture, Color.WHITE, ox, oy, x, y, 0, sx, sy);
     }

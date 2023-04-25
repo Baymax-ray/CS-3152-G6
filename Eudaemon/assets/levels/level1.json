@@ -702,8 +702,8 @@
                  "type":"",
                  "visible":true,
                  "width":27,
-                 "x":259,
-                 "y":1084
+                 "x":293,
+                 "y":1083.66666666667
                 }, 
                 {
                  "gid":85,
@@ -733,34 +733,31 @@
                  "width":63.875,
                  "x":225.3030831879,
                  "y":766.340314136126
-                },
-               {
+                }, 
+                {
                  "gid":110,
                  "height":22.3413,
                  "id":110,
                  "name":"Billboard",
-                 "text": "Another billboard.\nArraylist is working.\nGoooood!",
                  "rotation":0,
                  "type":"",
                  "visible":true,
                  "width":22.8779,
-                 "x":220,
-                 "y":1084
-               },
-               {
+                 "x":229.272727272727,
+                 "y":1083.27272727273
+                }, 
+                {
                  "gid":110,
                  "height":22.3413,
                  "id":111,
                  "name":"Billboard",
-                 "text": "Hey There.\nThis is a test billboard.\nLooks like it's working. Yessss!",
                  "rotation":0,
                  "type":"",
                  "visible":true,
                  "width":22.8779,
-                 "x":250,
-                 "y":1084
-               }
-         ],
+                 "x":261.818181818182,
+                 "y":1082.33333333333
+                }],
          "opacity":1,
          "type":"objectgroup",
          "visible":true,
