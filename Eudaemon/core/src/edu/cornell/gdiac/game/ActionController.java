@@ -760,7 +760,7 @@ public class ActionController {
         Vector2 offset = new Vector2(v.x*offset_c, v.y*offset_c);
         Vector2 scale = new Vector2(8.0f, 8.0f);
         float radius = bulletTexture.getRegionWidth()/(2.0f*scale.x);
-        WheelObstacle bullet = new WheelObstacle(enemy.getX()+offset.x, enemy.getY()+offset.y, radius);
+        WheelObstacle bullet = new WheelObstacle(enemy.getX()+offset.x, enemy.getY()+offset.y, 0.5f * radius);
 
         bullet.setName("bullet");
         bullet.setDensity(bulletjv.getFloat("density", 0));
