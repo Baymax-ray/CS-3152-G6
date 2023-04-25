@@ -829,7 +829,7 @@
                         {
                          "name":"text",
                          "type":"string",
-                         "value":"Gain spirit when in close proximity to enemies. Press Y or Right Button to use it! "
+                         "value":"Gain spirit when in close proximity to enemies.\nPress Y or Right Button to use it! "
                         }],
                  "rotation":0,
                  "type":"",
