@@ -56,6 +56,8 @@ public class CollisionController implements ContactListener {
                 if (!level.getPlayer().isHit()) {
                     level.getPlayer().setHit(true);
                     level.getPlayer().hitByEnemy(4, bd2 instanceof Player? bd1: bd2);
+                    //Resets dash when damaged by spike
+                    level.getPlayer().setDashedInAir(false);
                 }
             }
         } catch (Exception e) { }
