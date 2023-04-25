@@ -477,7 +477,7 @@ public class ActionController {
         //#region Textures and Animation
         if (tickFrameSwitch != 0 && ticks % tickFrameSwitch == 0) {
             currentFrame++;
-            if (currentFrame > maxFrame) {
+            if (currentFrame >= maxFrame) {
                 currentFrame = 0;
             }
         }
@@ -635,19 +635,24 @@ public class ActionController {
                         enemy.applyVelocity();
                     }
                 }
+                if (enemy.getVelocityX() > 0){
+                    enemy.setFacingRight(true);
+                }
+                else if(enemy.getVelocityX() < 0){
+                    enemy.setFacingRight(false);
+                }
+
+                //#region Enemy Animation
                 if (ticks % enemy.getTickFrameSwitch() == 0) {
                     enemy.setCurrentFrame(enemy.getCurrentFrame() + 1);
-                    if (enemy.getCurrentFrame() > enemy.getMaxFrame()) {
+                    if (enemy.getCurrentFrame() >= enemy.getMaxFrame()) {
                         enemy.setCurrentFrame(0);
                     }
                 }
                 //Purple Skull Guy
                 if(enemy.getType().equals("Goomba")){
-                    if(enemy.getIsFacingRight() && enemy.getVelocityH() != 0){
-                        enemy.setCurrentAnimation("rightWalk");
-                    }
-                    else if(!enemy.getIsFacingRight() && enemy.getVelocityH() != 0){
-                        enemy.setCurrentAnimation("leftWalk");
+                    if(enemy.getVelocityX() != 0){
+                        enemy.setCurrentAnimation("move");
                     }
                     else{
                         enemy.setCurrentAnimation("idle");
@@ -656,11 +661,8 @@ public class ActionController {
                 }
                 //Green Dragon
                  else if(enemy.getType().equals("FlyGuardian")){
-                    if(enemy.getIsFacingRight()){
-                        enemy.setCurrentAnimation("rightWalk");
-                    }
-                    else if(!enemy.getIsFacingRight()){
-                        enemy.setCurrentAnimation("leftWalk");
+                    if(enemy.getVelocityX() != 0){
+                        enemy.setCurrentAnimation("move");
                     }
                     else{
                         enemy.setCurrentAnimation("idle");
@@ -668,11 +670,8 @@ public class ActionController {
                 }
                  //Green Beetle
                 else if(enemy.getType().equals("GoombaGuardian")){
-                    if(enemy.getIsFacingRight() && enemy.getVelocityH() != 0){
-                        enemy.setCurrentAnimation("rightWalk");
-                    }
-                    else if(!enemy.getIsFacingRight() && enemy.getVelocityH() != 0){
-                        enemy.setCurrentAnimation("leftWalk");
+                    if(enemy.getVelocityX() != 0){
+                        enemy.setCurrentAnimation("move");
                     }
                     else{
                         enemy.setCurrentAnimation("idle");
@@ -681,30 +680,20 @@ public class ActionController {
                 //Green Mosquito
                 else if(enemy.getType().equals("Fly")){
 //                    System.out.println("Fly is facing" + enemy.getIsFacingRight());
-                    if(enemy.getVelocityH() > 0){
-                        enemy.setCurrentAnimation("rightWalk");
-                    }
-                    else if(enemy.getVelocityH() < 0){
-                        enemy.setCurrentAnimation("leftWalk");
-                    }
-                    else{
-                        enemy.setCurrentAnimation("leftWalk");
-                    }
+                    enemy.setCurrentAnimation("move");
 
                 }
                 //Tank guy
                 else if(enemy.getType().equals("Fast")){
-                    if(enemy.getIsFacingRight() && enemy.getVelocityH() != 0){
-                        enemy.setCurrentAnimation("rightWalk");
-                    }
-                    else if(!enemy.getIsFacingRight() && enemy.getVelocityH() != 0){
-                        enemy.setCurrentAnimation("leftWalk");
+                    if(enemy.getVelocityX() != 0){
+                        enemy.setCurrentAnimation("move");
                     }
                     else{
                         enemy.setCurrentAnimation("idle");
                     }
-
                 }
+                //#endregion
+
                 enemyAction.clear();
             }
         }

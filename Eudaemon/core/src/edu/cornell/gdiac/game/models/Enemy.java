@@ -114,7 +114,7 @@ public class Enemy extends CapsuleObstacle {
     /**
      * The sprite sheet for the basic goomba right walk
      */
-    private TextureRegion rightMoveSpriteSheet;
+    private TextureRegion moveSpriteSheet;
 
     /**
      * The sprite sheet for the basic goomba left walk
@@ -274,14 +274,17 @@ public class Enemy extends CapsuleObstacle {
     public boolean getIsFacingRight() {
         return isFacingRight;
     }
+    public void setFacingRight(boolean val){
+        isFacingRight = val;
+    }
 
     /**
      * Get basicGoombaRightSpriteSheet.
      *
      * @return The basicGoombaRightSpriteSheet TextureRegion.
      */
-    public TextureRegion getRightMoveSpriteSheet() {
-        return rightMoveSpriteSheet;
+    public TextureRegion getMoveSpriteSheet() {
+        return moveSpriteSheet;
     }
 
     /**
@@ -333,7 +336,7 @@ public class Enemy extends CapsuleObstacle {
         }
     }
 
-    public float getVelocityH() {
+    public float getVelocityX() {
         return velocityH;
     }
 
@@ -465,11 +468,9 @@ public class Enemy extends CapsuleObstacle {
         //Texture
         this.enemyTexture = new TextureRegion(assets.getEntry(TextureAsset, Texture.class));
         this.texture = this.enemyTexture;
-        this.rightMoveSpriteSheet = new TextureRegion(assets.getEntry(enemyData.getString("RightAsset"), Texture.class));
-        this.leftMoveSpriteSheet = new TextureRegion(assets.getEntry(enemyData.getString("LeftAsset"), Texture.class));
+        this.moveSpriteSheet = new TextureRegion(assets.getEntry(enemyData.getString("MoveAsset"), Texture.class));
         animations = new ObjectMap<>();
-        addAnimations(rightMoveSpriteSheet, maxFrame, 1, "rightWalk");
-        addAnimations(leftMoveSpriteSheet, maxFrame, 1, "leftWalk");
+        addAnimations(moveSpriteSheet, maxFrame, 1, "move");
         currentAnimation = "idle";
 
         this.bloodEffectSpriteSheet = new TextureRegion(assets.getEntry("bloodEffect", Texture.class));
@@ -525,6 +526,7 @@ public class Enemy extends CapsuleObstacle {
             this.texture = enemyTexture;
         }
         else{
+            System.out.println(type);
             this.texture = (TextureRegion) animations.get(currentAnimation).getKeyFrame(currentFrame);
         }
 
@@ -534,7 +536,7 @@ public class Enemy extends CapsuleObstacle {
         float ox = this.texture.getRegionWidth() / 2;
         float oy = this.texture.getRegionHeight() / 2 + oyOffset;
 
-        float sx = enemyImageWidth / this.texture.getRegionWidth();
+        float sx = (isFacingRight ? 1 : -1) * enemyImageWidth / this.texture.getRegionWidth();
         float sy = enemyImageHeight / this.texture.getRegionHeight();
 
         canvas.draw(this.texture, Color.WHITE, ox, oy, x, y, projectileEnemyRotation, sx, sy);
@@ -612,7 +614,7 @@ public class Enemy extends CapsuleObstacle {
         }
 
         //if(this.type.equals("Fly")){this.movementV *= this.force; this.movementH *= this.force;}
-        forceCache.set(getVelocityH(), getVelocityV());
+        forceCache.set(getVelocityX(), getVelocityV());
         body.setLinearVelocity(forceCache);
     }
 

@@ -69,9 +69,8 @@
     }
   },
   "Goomba": {
-    "TextureAsset": "platform:pathfindingGoombaR",
-    "RightAsset": "basicGoomba:rightWalk",
-    "LeftAsset": "basicGoomba:leftWalk",
+    "TextureAsset": "enemy:pathfindingGoomba",
+    "MoveAsset": "skeleborg:move",
     "ImageWidth": 1.5,
     "ImageHeight": 1.5,
     "tickFrameSwitch": 5,
@@ -102,12 +101,11 @@
     "spiritLimitation":4
   },
   "GoombaGuardian": {
-    "TextureAsset": "platform:nonTrackingGoomba",
-    "RightAsset": "nonTrackingGoomba:rightWalk",
-    "LeftAsset": "nonTrackingGoomba:leftWalk",
+    "TextureAsset": "enemy:nonTrackingGoomba",
+    "MoveAsset": "nonTrackingGoomba:move",
     "ImageWidth": 0.5,
     "ImageHeight": 0.5,
-    "tickFrameSwitch": 5,
+    "tickFrameSwitch": 3,
     "maxFrame": 6,
     "hitboxWidth": 0.4,
     "hitboxHeight": 0.3,
@@ -136,9 +134,8 @@
     "guardianTime":60
   },
   "Fast": {
-    "TextureAsset": "platform:fastGoombaR",
-    "RightAsset": "fastGoomba:right",
-    "LeftAsset": "fastGoomba:left",
+    "TextureAsset": "enemy:fastGoomba",
+    "MoveAsset": "fastGoomba:move",
     "ImageWidth": 1.5,
     "ImageHeight": 1.5,
     "tickFrameSwitch": 5,
@@ -171,9 +168,8 @@
     "knockbackY":1000
   },
   "FlyGuardian": {
-    "TextureAsset": "platform:nonTrackingFlying",
-    "RightAsset": "nonTrackingFlying:rightFly",
-    "LeftAsset": "nonTrackingFlying:leftFly",
+    "TextureAsset": "enemy:nonTrackingFlying",
+    "MoveAsset": "nonTrackingFlying:move",
     "ImageWidth": 1.7,
     "ImageHeight": 1.7,
     "tickFrameSwitch": 5,
@@ -207,9 +203,8 @@
     "knockbackY":1000
   },
   "Fly": {
-    "TextureAsset": "platform:FlyingR",
-    "RightAsset": "fly:right",
-    "LeftAsset": "fly:left",
+    "TextureAsset": "enemy:Flying",
+    "MoveAsset": "fly:move",
     "ImageWidth": 0.5,
     "ImageHeight": 0.5,
     "tickFrameSwitch": 5,
@@ -242,9 +237,8 @@
     "knockbackY":1000
   },
   "Projectile": {
-    "TextureAsset": "platform:projectileEnemy",
-    "RightAsset": "basicGoomba:rightWalk",
-    "LeftAsset": "basicGoomba:leftWalk",
+    "TextureAsset": "enemy:projectileEnemy",
+    "MoveAsset": "skeleborg:move",
     "ImageWidth": 2,
     "ImageHeight": 2,
     "tickFrameSwitch": 5,
