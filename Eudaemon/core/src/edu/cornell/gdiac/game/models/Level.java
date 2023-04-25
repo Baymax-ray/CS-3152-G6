@@ -461,8 +461,8 @@ public class Level {
             } else if (object.getString("name").equals("Exit")) {
                 float x = (float) object.getInt("x") / 32;
                 float y = heightInTiles - (float) object.getInt("y") / 32;
-                float width = object.getFloat("width") / 32;
-                float height = object.getFloat("height") / 32;
+                float width = object.getFloat("width") / 64;
+                float height = object.getFloat("height") / 50;
                 exit = new Exit(object, assets, x, y, width, height);
             }
         }
@@ -719,9 +719,17 @@ public class Level {
                 canvas.draw(tile.getTexture(), Color.WHITE, 0, 0, tileToLevelCoordinatesX(x), tileToLevelCoordinatesY(y), 0, sx, sy);
             }
         }
-
+        Player p = null;
         for (Obstacle obj : objects) {
-            obj.draw(canvas);
+            if (obj.getClass().equals(Player.class)) {
+                p = (Player) obj;
+            }
+            else{
+                obj.draw(canvas);
+            }
+        }
+        if (p != null){
+            p.draw(canvas);
         }
         canvas.end();
 
@@ -776,12 +784,7 @@ public class Level {
             }
         }
 
-        addObject(player);
         //TODO: enemies activate too
-        for(int i = 0; i < enemies.size(); i++){
-            addObject(enemies.get(i));
-        }
-
         for(int i = 0; i < spikes.size(); i++){
             addObject(spikes.get(i));
         }
@@ -790,7 +793,11 @@ public class Level {
             addObject(billboards.get(i));
         }
 
+        for(int i = 0; i < enemies.size(); i++){
+            addObject(enemies.get(i));
+        }
 
+        addObject(player);
         addObject(exit);
     }
 
