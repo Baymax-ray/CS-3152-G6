@@ -39,9 +39,9 @@ public class ActionController {
     private ObjectMap<String, Animation> animations;
 
     /**
-     * The current animation TextureRegion.
+     * The current animation
      */
-    private Animation currentAnimation;
+    private String currentAnimation;
 
     /**
      * The number of ticks that have occurred since this object was created
@@ -144,9 +144,9 @@ public class ActionController {
      * @param enemyActions the set ofenemy actions to resolve
      */
     public void resolveActions(EnumSet<Action> playerAction, Array<EnumSet<EnemyAction>> enemyActions) {
+        ticks++;
         resolvePlayerActions(playerAction);
         resolveEnemyActions(enemyActions);
-        ticks++;
     }
 
     //#region Player and Enemy Actions
@@ -487,18 +487,24 @@ public class ActionController {
             player.setSxMult(1.0f);
             player.setSyMult(1.0f);
             if (player.isDashing()) {
+                currentAnimation = "momoDash";
                 TextureRegion current = (TextureRegion) (animations.get("momoDash")).getKeyFrame(currentFrame); // Gets the current frame of the animation
                 tickFrameSwitch = 10;
                 maxFrame = 4;
                 player.setTexture(current);
                 player.setOyOffset(-30);
             } else if (player.getIsJumping()) {
+                currentAnimation = "momoJump";
                 TextureRegion current = (TextureRegion) (animations.get("momoJump")).getKeyFrame(currentFrame); // Gets the current frame of the animation
                 tickFrameSwitch = 0;
                 maxFrame = 7;
                 player.setTexture(current);
                 player.setOyOffset(-30);
             } else if (player.getBodyVelocityX() != 0) {
+                if (currentAnimation != "momoRun") {
+                    currentFrame = 0;
+                }
+                currentAnimation = "momoRun";
                 if(player.isGrounded()){
                     if(!soundDictionary.contains(momoRunSound)){
                         soundDictionary.add(momoRunSound);
@@ -509,14 +515,17 @@ public class ActionController {
                     momoRunSound.stop();
                     soundDictionary.remove(momoRunSound);
                 }
+
+
                 TextureRegion current = (TextureRegion) (animations.get("momoRun")).getKeyFrame(currentFrame); // Gets the current frame of the animation
-                tickFrameSwitch = 5;
                 maxFrame = 8;
+                tickFrameSwitch = 5;
                 player.setTexture(current);
                 player.setOyOffset(-47);
                 player.setSxMult(1.2f);
                 player.setSyMult(1.2f);
             } else {
+                currentAnimation = "momoIdle";
                 momoRunSound.stop();
                 soundDictionary.remove(momoRunSound);
                 player.setTexture(player.getMomoTexture());
@@ -530,6 +539,7 @@ public class ActionController {
         else {
             momoRunSound.stop();
             if (player.getBodyVelocityX() != 0) {
+                currentAnimation = "momoRun";
                 if(player.isGrounded()){
                     if(!soundDictionary.contains(chiyoRunSound)) {
                         soundDictionary.add(chiyoRunSound);
@@ -548,6 +558,7 @@ public class ActionController {
                 player.setSxMult(1.5f);
                 player.setSyMult(1.5f);
             } else {
+                currentAnimation = "momoIdle";
                 chiyoRunSound.stop();
                 soundDictionary.remove(chiyoRunSound);
                 player.setTexture(player.getChiyoTexture());
@@ -785,7 +796,7 @@ public class ActionController {
 
     private void addAnimations(TextureRegion spriteSheet, int columns, int rows, String name) {
         TextureRegion[][] frames = spriteSheet.split(spriteSheet.getRegionWidth() / columns, spriteSheet.getRegionHeight() / rows);
-        Animation animation = new Animation<TextureRegion>(0.5f, frames[0]); // Creates an animation with a frame duration of 0.1 seconds
+        Animation animation = new Animation<TextureRegion>(1f, frames[0]); // Creates an animation with a frame duration of 0.1 seconds
         animation.setPlayMode(Animation.PlayMode.NORMAL); // Sets the animation to play normally
         animations.put(name, animation);
     }

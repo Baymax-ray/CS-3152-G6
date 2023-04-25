@@ -106,7 +106,7 @@
           }
         },
         "momo:dash": {
-          "file" : "animations/momoDash.png",
+          "file" : "character/momoDash.png",
           "sprites" : {
             "fire": {
               "rows": 1,
@@ -133,7 +133,7 @@
           }
         },
         "chiyo:run": {
-          "file" : "animations/chiyoRun.png",
+          "file" : "character/chiyoRun.png",
           "sprites" : {
             "fire": {
               "rows": 1,

@@ -530,7 +530,6 @@ public class Enemy extends CapsuleObstacle {
         } else {
             this.setGravityScale(40);
         }
-        System.out.println(projectileEnemyDirection);
     }
 
     /**
@@ -543,7 +542,6 @@ public class Enemy extends CapsuleObstacle {
             this.texture = enemyTexture;
         }
         else{
-            System.out.println(type);
             this.texture = (TextureRegion) animations.get(currentAnimation).getKeyFrame(currentFrame);
         }
 
@@ -608,7 +606,7 @@ public class Enemy extends CapsuleObstacle {
 
     private void addAnimations(TextureRegion spriteSheet, int columns, int rows, String name) {
         TextureRegion[][] frames = spriteSheet.split(spriteSheet.getRegionWidth() / columns, spriteSheet.getRegionHeight() / rows);
-        Animation animation = new Animation<TextureRegion>(0.5f, frames[0]); // Creates an animation with a frame duration of 0.1 seconds
+        Animation animation = new Animation<TextureRegion>(1f, frames[0]); // Creates an animation with a frame duration of 0.1 seconds
         animation.setPlayMode(Animation.PlayMode.NORMAL); // Sets the animation to play normally
         animations.put(name, animation);
     }
@@ -653,7 +651,6 @@ public class Enemy extends CapsuleObstacle {
         } else {
             this.markRemoved(true);
             player.increaseSpiritByKill(); //player gain some spirit when the enemy killed
-//            System.out.println("kill an enemy!");
         }
         if(hearts == 0){
             swordKillingSoundId = playSound(swordKillingSound, swordKillingSoundId, 0.5F);
