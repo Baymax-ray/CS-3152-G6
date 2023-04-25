@@ -208,6 +208,7 @@
         "background:city": "backgrounds/backgroundCityPlaceholder.png",
         "momo:idle":  "character/momo.png",
         "momo:upDash":  "character/momoUpDash.png",
+        "momo:diagonalDash":  "character/momoDiagonalUpDash.png",
         "chiyo:idle":  "character/chiyo.png",
 
         "enemy:nonTrackingGoomba":  "enemy/nonTrackingGoomba.png",

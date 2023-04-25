@@ -482,21 +482,29 @@ public class ActionController {
                 currentFrame = 0;
             }
         }
+
         //Animation if Player is Momo
         if (player.getForm() == 0) {
             chiyoRunSound.stop();
-            player.setSxMult(1.0f);
-            player.setSyMult(1.0f);
             // Momo Dashing
             if (player.isDashing()) {
+                TextureRegion current;
                 currentAnimation = "momoDash";
-                TextureRegion current = (TextureRegion) (animations.get("momoDash")).getKeyFrame(currentFrame); // Gets the current frame of the animation
-                tickFrameSwitch = 7;
-                maxFrame = 5;
+                if (player.getAngleFacing() == 45 || player.getAngleFacing() == 135){
+                    current = player.getMomoDiagonalDashTexture();
+                    player.setSxMult(1.2f);
+                    player.setSyMult(1.2f);
+                    player.setOyOffset(-10);
+                }
+                else{
+                    current = (TextureRegion) (animations.get("momoDash")).getKeyFrame(currentFrame); // Gets the current frame of the animation
+                    tickFrameSwitch = 7;
+                    maxFrame = 5;
+                    player.setSxMult(1.2f);
+                    player.setSyMult(1.2f);
+                    player.setOyOffset(-47);
+                }
                 player.setTexture(current);
-                player.setOyOffset(-47);
-                player.setSxMult(1.2f);
-                player.setSyMult(1.2f);
             }
             // Momo jumping/falling
             else if (!player.isGrounded()) {
@@ -570,7 +578,7 @@ public class ActionController {
         else {
             momoRunSound.stop();
             if (player.getBodyVelocityX() != 0 && player.isGrounded()) {
-                currentAnimation = "chiyoRun";
+                currentAnimation = "momoRun";
                 if(!soundDictionary.contains(chiyoRunSound)) {
                     soundDictionary.add(chiyoRunSound);
                     chiyoRunSound.loop();
@@ -581,40 +589,26 @@ public class ActionController {
                 maxFrame = 7;
                 player.setTexture(current);
                 player.setOyOffset(-25);
-                player.setSxMult(2.0f);
-                player.setSyMult(2.0f);
+                player.setSxMult(1.5f);
+                player.setSyMult(1.5f);
             } else if(!player.isGrounded()){
                 chiyoRunSound.stop();
                 soundDictionary.remove(chiyoRunSound);
-                if (currentAnimation != "chiyoJump") {
-                    currentFrame = 0;
-                }
-                currentAnimation = "chiyoJump";
                 TextureRegion current = (TextureRegion) (animations.get("chiyoJump")).getKeyFrame(currentFrame); // Gets the current frame of the animation
-                tickFrameSwitch = 8;
+                tickFrameSwitch = 0;
                 maxFrame = 8;
-                if (currentFrame == 0 && player.getBodyVelocityY() < 0){
-                    currentFrame = 3;
-                }
-                // Disables animation while rising in the air
-                if (currentFrame == 2 && player.getBodyVelocityY() > 0){
-                    tickFrameSwitch = 0;
-                }
-                if (currentFrame == 4 && player.getBodyVelocityY() < 0){
-                    tickFrameSwitch = 0;
-                }
                 player.setTexture(current);
                 player.setOyOffset(-25);
-                player.setSxMult(2.0f);
-                player.setSyMult(2.0f);
+                player.setSxMult(1.5f);
+                player.setSyMult(1.5f);
             } else {
-                currentAnimation = "chiyoIdle";
+                currentAnimation = "momoIdle";
                 chiyoRunSound.stop();
                 soundDictionary.remove(chiyoRunSound);
                 player.setTexture(player.getChiyoTexture());
                 player.setOyOffset(-29);
-                player.setSxMult(2.3f);
-                player.setSyMult(2.0f);
+                player.setSxMult(1.7f);
+                player.setSyMult(1.7f);
             }
         }
         //Creating impact animation for large jumps
@@ -657,7 +651,7 @@ public class ActionController {
 
         // automatic spirit loss
         if (player.getForm() == 1) { // if player is chiyo
-            //player.decreaseSpirit();
+            player.decreaseSpirit();
             if (player.getSpirit() <= 0) {
                 player.setForm(); // switch back to momo
             }
