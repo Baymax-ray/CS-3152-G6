@@ -831,18 +831,6 @@
                  "width":28.6875,
                  "x":1057.18244589977,
                  "y":1118.86019362187
-                }, 
-                {
-                 "gid":84,
-                 "height":26.6667,
-                 "id":159,
-                 "name":"Goomba",
-                 "rotation":0,
-                 "type":"Enemy",
-                 "visible":true,
-                 "width":29,
-                 "x":410.101366742597,
-                 "y":412.179178473804
                 }],
          "opacity":1,
          "type":"objectgroup",
