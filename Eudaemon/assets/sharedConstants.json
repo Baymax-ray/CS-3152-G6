@@ -91,7 +91,7 @@
     "drawScaleX": 1.5,
     "drawScaleY": 1.5,
     "oxOffset": 0,
-    "oyOffset": 0,
+    "oyOffset": -20,
     "hit_force": 5.5,
     "force": 20.0,
     "dash": 2000.0,

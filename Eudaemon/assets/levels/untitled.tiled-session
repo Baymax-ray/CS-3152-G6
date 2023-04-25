@@ -53,8 +53,8 @@
             "scale": 1,
             "selectedLayer": 3,
             "viewCenter": {
-                "x": 1507.5,
-                "y": 789.5
+                "x": 782.5,
+                "y": 524
             }
         },
         "level0.tmj": {
@@ -70,10 +70,10 @@
                 7
             ],
             "scale": 1,
-            "selectedLayer": 3,
+            "selectedLayer": 1,
             "viewCenter": {
-                "x": 556.5,
-                "y": 791.5
+                "x": 1178.5,
+                "y": 656
             }
         }
     },
