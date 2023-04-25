@@ -785,16 +785,16 @@ public class Level {
         }
 
         //TODO: enemies activate too
-        for(int i = 0; i < enemies.size(); i++){
-            addObject(enemies.get(i));
-        }
-
         for(int i = 0; i < spikes.size(); i++){
             addObject(spikes.get(i));
         }
 
         for(int i = 0; i < billboards.size(); i++){
             addObject(billboards.get(i));
+        }
+
+        for(int i = 0; i < enemies.size(); i++){
+            addObject(enemies.get(i));
         }
 
         addObject(player);
