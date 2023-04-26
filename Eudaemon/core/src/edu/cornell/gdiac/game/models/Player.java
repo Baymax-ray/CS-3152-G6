@@ -1268,6 +1268,7 @@ public class Player extends CapsuleObstacle {
         this.momoJumpSpriteSheet = new TextureRegion(assets.getEntry( "momo:jump", Texture.class));
         this.chiyoRunSpriteSheet = new TextureRegion(assets.getEntry( "chiyo:run", Texture.class));
         this.chiyoJumpSpriteSheet = new TextureRegion(assets.getEntry( "chiyo:jump", Texture.class));
+        this.chiyoAttackSpriteSheet = new TextureRegion(assets.getEntry( "chiyo:attack", Texture.class));
         this.impactEffectSpriteSheet = new TextureRegion(assets.getEntry( "impactEffect", Texture.class));
         //Sound Effect
         this.playerDamageSound = Gdx.audio.newSound(Gdx.files.internal("audio/temp-player-damage.mp3"));

@@ -135,6 +135,7 @@ public class ActionController {
         addAnimations(player.getMomoJumpSpriteSheet(), 7, 1, "momoJump");
         addAnimations(player.getChiyoRunSpriteSheet(), 8, 1, "chiyoRun");
         addAnimations(player.getChiyoJumpSpriteSheet(), 8, 1, "chiyoJump");
+        addAnimations(player.getChiyoAttackSpriteSheet(), 8, 2, "chiyoAttack");
         addAnimations(player.getDashEffectSpriteSheet(), 5, 1, "dashEffect");
         addAnimations(player.getImpactEffectSpriteSheet(), 8, 1, "impactEffect");
     }
@@ -590,7 +591,22 @@ public class ActionController {
         // Animations if Player is Chiyo
         else {
             momoRunSound.stop();
-            if (!player.isGrounded()) {
+            if(player.isAttacking()) {
+                chiyoRunSound.stop();
+                soundDictionary.remove(chiyoRunSound);
+                if (currentAnimation != "chiyoAttack") {
+                    currentFrame = 0;
+                }
+                currentAnimation = "chiyoAttack";
+                TextureRegion current = (TextureRegion) (animations.get("chiyoAttack")).getKeyFrame(currentFrame); // Gets the current frame of the animation
+                tickFrameSwitch = 4;
+                maxFrame = 12;
+                player.setTexture(current);
+                player.setOxOffset(20);
+                player.setOyOffset(-25);
+                player.setSxMult(2.3f);
+                player.setSyMult(2.0f);
+            } else if (!player.isGrounded()) {
                 chiyoRunSound.stop();
                 soundDictionary.remove(chiyoRunSound);
                 if (currentAnimation != "chiyoJump") {
@@ -598,7 +614,6 @@ public class ActionController {
                 }
                 currentAnimation = "chiyoJump";
                 TextureRegion current = (TextureRegion) (animations.get("chiyoJump")).getKeyFrame(currentFrame); // Gets the current frame of the animation
-                tickFrameSwitch = 0;
                 tickFrameSwitch = 8;
                 maxFrame = 8;
                 if (currentFrame == 0 && player.getBodyVelocityY() < 0){
@@ -624,7 +639,6 @@ public class ActionController {
                         chiyoRunSound.loop();
                     }
                 }
-
                 TextureRegion current = (TextureRegion) (animations.get("chiyoRun")).getKeyFrame(currentFrame); // Gets the current frame of the animation
                 tickFrameSwitch = 4;
                 maxFrame = 7;

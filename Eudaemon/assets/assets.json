@@ -150,6 +150,15 @@
             }
           }
         },
+        "chiyo:attack": {
+          "file" : "character/chiyoAttack.png",
+          "sprites" : {
+            "fire": {
+              "rows": 2,
+              "cols": 8
+            }
+          }
+        },
         "momo:spiritDrain": {
           "file" : "animations/momoSpiritAbsorbing.png",
           "sprites" : {
