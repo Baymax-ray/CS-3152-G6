@@ -728,6 +728,24 @@
                  "width":22.8779,
                  "x":1858.61948932623,
                  "y":794.948291216913
+                }, 
+                {
+                 "gid":158,
+                 "height":24.5,
+                 "id":208,
+                 "name":"Billboard",
+                 "properties":[
+                        {
+                         "name":"text",
+                         "type":"string",
+                         "value":"Spacebar or X Button"
+                        }],
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":19.5,
+                 "x":452.62710503261,
+                 "y":1114.97671079529
                 }],
          "opacity":1,
          "properties":[
@@ -742,7 +760,7 @@
          "y":0
         }],
  "nextlayerid":11,
- "nextobjectid":208,
+ "nextobjectid":209,
  "orientation":"orthogonal",
  "renderorder":"right-down",
  "tiledversion":"1.10.0",
