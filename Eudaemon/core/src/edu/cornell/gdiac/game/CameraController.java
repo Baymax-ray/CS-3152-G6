@@ -1,4 +1,5 @@
 package edu.cornell.gdiac.game;
+import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Color;
@@ -16,6 +17,7 @@ import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
+import edu.cornell.gdiac.game.models.Level;
 
 public class CameraController {
     private final OrthographicCamera camera;
@@ -25,6 +27,69 @@ public class CameraController {
         camera = new OrthographicCamera();
         camera.setToOrtho(false);
     }
+
+    public void handleGameplayCamera(GameCanvas canvas, Level level) {
+        if (level.getPlayer().isRemoved()) return;
+
+        if (Gdx.input.isKeyPressed(Input.Keys.O)) {
+            camera.zoom += 0.02;
+        }
+        if (Gdx.input.isKeyPressed(Input.Keys.I)) {
+            camera.zoom -= 0.02;
+        }
+
+        float camZone_x = level.getCamZoneX();
+        float camZone_y = level.getCamZoneY();
+        System.out.println(camZone_x);
+        System.out.println(camZone_y);
+        System.out.println();
+
+        if (Math.abs(camera.position.x - level.getPlayer().getX()) > camZone_x) {
+            if (camera.position.x > level.getPlayer().getX()) {
+                setGameplayCamera(canvas, level.getPlayer().getX()+camZone_x, camera.position.y, level.getCameraWidth(), level.getCameraHeight());
+            }
+
+            else {
+                setGameplayCamera(canvas, level.getPlayer().getX()-camZone_x, camera.position.y, level.getCameraWidth(), level.getCameraHeight());
+            }
+        }
+
+        if (Math.abs(camera.position.y - level.getPlayer().getY()) > camZone_y) {
+            if (camera.position.y > level.getPlayer().getY())
+                setGameplayCamera(canvas, camera.position.x, level.getPlayer().getY()+camZone_y, level.getCameraWidth(), level.getCameraHeight());
+
+            else setGameplayCamera(canvas, camera.position.x, level.getPlayer().getY()-camZone_y, level.getCameraWidth(), level.getCameraHeight());
+        }
+
+        if (camera.position.x < level.getCameraWidth()/2)
+            setGameplayCamera(canvas, level.getCameraWidth()/2, camera.position.y, level.getCameraWidth(), level.getCameraHeight());
+    }
+
+    /**
+     * Sets the projection matrix to draw objects in a level
+     * @param x the x-coordinate of the center of the camera in level coordinates
+     * @param y the y-coordinate of the center of the camera in level coordinates
+     * @param width the width in level coordinates that the window should display horizontally
+     * @param height the height in level coordinates that the window should display vertically
+     */
+    public void setGameplayCamera(GameCanvas canvas, float x, float y, float width, float height) {
+        getCamera().setToOrtho(false, width, height);
+        getCamera().position.set(x, y, 0); // set to some other position to follow player;
+        getCamera().update();
+        canvas.getSpriteBatch().setProjectionMatrix(getCamera().combined);
+    }
+
+
+    /**
+     * Sets the projection matrix to draw overlay and menu elements
+     */
+    public void setOverlayCamera(GameCanvas canvas) {
+        //getCamera().position.set(getWidth() / 2, getHeight() / 2, 0); // set to some other position to follow player;
+        getCamera().setToOrtho(false, canvas.getWidth(), canvas.getHeight());
+        getCamera().update();
+        canvas.getSpriteBatch().setProjectionMatrix(getCamera().combined);
+    }
+
 
     public OrthographicCamera getCamera() {
         return camera;

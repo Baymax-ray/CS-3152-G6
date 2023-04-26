@@ -664,7 +664,8 @@ public class Level {
 
         canvas.begin();
 
-        handleGameplayCamera(canvas);
+        //handleGameplayCamera(canvas);
+        canvas.getCameraController().handleGameplayCamera(canvas, this);
         float cam_x = canvas.getCamera().position.x;
         float cam_y = canvas.getCamera().position.y;
 
@@ -874,6 +875,11 @@ public class Level {
         addQueue = null;
         world  = null;
     }
+
+    public float getCameraWidth() { return cameraWidth; }
+    public float getCameraHeight() { return cameraHeight; }
+    public float getCamZoneX() { return camZoneX; }
+    public float getCamZoneY() { return camZoneY; }
 
 
 
