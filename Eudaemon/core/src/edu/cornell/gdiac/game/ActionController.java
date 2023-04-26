@@ -586,24 +586,7 @@ public class ActionController {
         // Animations if Player is Chiyo
         else {
             momoRunSound.stop();
-            if (player.getBodyVelocityX() != 0) {
-                currentAnimation = "chiyoRun";
-                if(player.isGrounded() && !player.getIsJumping()){
-                    if(!soundDictionary.contains(chiyoRunSound)) {
-                        soundDictionary.add(chiyoRunSound);
-                        chiyoRunSound.loop();
-                    }
-                }
-
-                TextureRegion current = (TextureRegion) (animations.get("chiyoRun")).getKeyFrame(currentFrame); // Gets the current frame of the animation
-                tickFrameSwitch = 4;
-                maxFrame = 7;
-                player.setTexture(current);
-                player.setOxOffset(20);
-                player.setOyOffset(-25);
-                player.setSxMult(2.0f);
-                player.setSyMult(2.0f);
-            } else if(!player.isGrounded() || player.getIsJumping()){
+            if (!player.isGrounded()) {
                 chiyoRunSound.stop();
                 soundDictionary.remove(chiyoRunSound);
                 if (currentAnimation != "chiyoJump") {
@@ -629,6 +612,24 @@ public class ActionController {
                 player.setOyOffset(-25);
                 player.setSxMult(2.0f);
                 player.setSyMult(2.0f);
+            } else if(player.getBodyVelocityX() != 0){
+                currentAnimation = "chiyoRun";
+                if(player.isGrounded() && !player.getIsJumping()){
+                    if(!soundDictionary.contains(chiyoRunSound)) {
+                        soundDictionary.add(chiyoRunSound);
+                        chiyoRunSound.loop();
+                    }
+                }
+
+                TextureRegion current = (TextureRegion) (animations.get("chiyoRun")).getKeyFrame(currentFrame); // Gets the current frame of the animation
+                tickFrameSwitch = 4;
+                maxFrame = 7;
+                player.setTexture(current);
+                player.setOxOffset(20);
+                player.setOyOffset(-25);
+                player.setSxMult(2.0f);
+                player.setSyMult(2.0f);
+
             } else {
                 currentAnimation = "chiyoIdle";
                 chiyoRunSound.stop();
@@ -681,7 +682,7 @@ public class ActionController {
 
         // automatic spirit loss
         if (player.getForm() == 1) { // if player is chiyo
-            player.decreaseSpirit();
+            //player.decreaseSpirit();
             if (player.getSpirit() <= 0) {
                 player.setForm(); // switch back to momo
             }
