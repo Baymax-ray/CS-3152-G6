@@ -27,6 +27,7 @@ public class LevelScreen implements Screen {
     private final ActionController actionController;
 
     private final CollisionController collisionController;
+    private AudioController audio;
 
 
 
@@ -58,6 +59,10 @@ public class LevelScreen implements Screen {
         level.getWorld().setContactListener(collisionController);
         level.activatePhysics();
 
+        audio = new AudioController();
+        audio.playAllSound();
+        audio.muteChiyo();
+
 
     }
 
@@ -68,6 +73,8 @@ public class LevelScreen implements Screen {
             aiControllers.get(i).setEnemyAction(enemyActions.get(i));
         }
         actionController.resolveActions(playerAction, enemyActions);
+
+        audio.updateAudio(this.level.getPlayer().getForm());
 
         level.update(delta);
     }
@@ -139,6 +146,7 @@ public class LevelScreen implements Screen {
         enemyActions.clear();
         canvas = null;
         listener = null;
+        audio.dispose();
     }
 
     public void setScreenListener(ScreenListener listener) {

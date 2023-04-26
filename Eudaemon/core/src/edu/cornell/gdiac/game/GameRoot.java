@@ -19,6 +19,7 @@ public class GameRoot extends Game implements ScreenListener {
 	private AssetDirectory assets;
 	private Sound backgroundMomoSound;
 	private Sound backgroundChiyoSound;
+	private AudioController audio;
 
 	@Override
 	public void create() {
@@ -42,7 +43,7 @@ public class GameRoot extends Game implements ScreenListener {
 		if (canvas != null)	canvas.dispose();
 		if (state != null) state.dispose();
 		if (backgroundMomoSound != null) backgroundMomoSound.dispose();
-
+		if (audio!=null) audio.dispose();
 		super.dispose();
 	}
 
@@ -72,11 +73,14 @@ public class GameRoot extends Game implements ScreenListener {
 
 			if (exitCode == ExitCode.START) {
 				setScreen(levelScreen);
-				backgroundMomoSound = Gdx.audio.newSound(Gdx.files.internal("music/MomoTheme.mp3"));
+				//audio = new AudioController();
+				//backgroundMomoSound = Gdx.audio.newSound(Gdx.files.internal("music/MomoTheme.mp3"));
 //				backgroundChiyoSound = Gdx.audio.newSound(Gdx.files.internal("music/ChiyoTheme.mp3"));
 //				backgroundChiyoSound.loop();
-				backgroundMomoSound.loop();
+				//backgroundMomoSound.loop();
 //				backgroundChiyoSound.setVolume(0,0);
+				//audio.playAllSound();
+				//audio.muteChiyo();
 			} else if (exitCode == ExitCode.LEVEL_SELECT) {
 				setScreen(levelSelectScreen);
 			}
