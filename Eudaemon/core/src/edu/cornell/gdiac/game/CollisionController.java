@@ -53,12 +53,10 @@ public class CollisionController implements ContactListener {
         try {
             if ((bd1.toString().contains("Spike") && bd2 instanceof Player && !fix2.isSensor() ||
                     bd2.toString().contains("Spike") && bd1 instanceof Player && !fix1.isSensor())) {
-                if (!level.getPlayer().isHit()) {
-                    level.getPlayer().setHit(true);
-                    level.getPlayer().hitByEnemy(4, bd2 instanceof Player? bd1: bd2);
-                    //Resets dash when damaged by spike
-                    level.getPlayer().setDashedInAir(false);
-                }
+                level.getPlayer().setHit(true);
+                level.getPlayer().hitByEnemy(4, bd2 instanceof Player? bd1: bd2);
+                //Resets dash when damaged by spike
+                level.getPlayer().setDashedInAir(false);
             }
         } catch (Exception e) { }
 
