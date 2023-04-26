@@ -53,8 +53,8 @@
             "scale": 1.7711,
             "selectedLayer": 1,
             "viewCenter": {
-                "x": 1215.911015752922,
-                "y": 639.4331206594771
+                "x": 1215.6287053243748,
+                "y": 636.3277059454576
             }
         },
         "level0.tmj": {
@@ -72,16 +72,16 @@
             "scale": 0.8672,
             "selectedLayer": 0,
             "viewCenter": {
-                "x": 1199.8385608856088,
-                "y": 639.4142066420663
+                "x": 1199.2619926199263,
+                "y": 639.9907749077491
             }
         },
         "level2.json": {
-            "scale": 0.5,
-            "selectedLayer": 3,
+            "scale": 0.5931,
+            "selectedLayer": 0,
             "viewCenter": {
-                "x": 799,
-                "y": 641
+                "x": 1348.845051424718,
+                "y": 585.0615410554713
             }
         },
         "level3.json": {
@@ -91,8 +91,8 @@
             "scale": 0.5,
             "selectedLayer": 3,
             "viewCenter": {
-                "x": 849,
-                "y": 719
+                "x": 854,
+                "y": 724
             }
         }
     },
@@ -104,14 +104,23 @@
     "map.renderOrder": null,
     "map.width": 50,
     "openFiles": [
+        "level0.json",
+        "level1.json",
+        "level2.json",
+        "level3.json",
+        "F:/Programming/School/CS 3152/Eudaemon/CS-3152-G6/Eudaemon/assets/EudaemonTileset.json"
     ],
     "project": "untitled.tiled-project",
     "property.type": "string",
     "recentFiles": [
-        "level3.json",
-        "level2.json",
+        "level0.json",
         "level1.json",
-        "level0.json"
+        "level2.json",
+        "level3.json",
+        "F:/Programming/School/CS 3152/Eudaemon/CS-3152-G6/Eudaemon/assets/EudaemonTileset.json",
+        "experimentalLevel1.json",
+        "level0.tmj",
+        "F:/Users/neelin2/coding/cs3152/Eudaemon/CS-3152-G6/Eudaemon/assets/EudaemonTileset.json"
     ],
     "tileset.lastUsedFilter": "JSON tileset files (*.tsj *.json)"
 }
