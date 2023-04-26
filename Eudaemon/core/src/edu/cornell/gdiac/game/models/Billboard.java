@@ -89,7 +89,7 @@ public class Billboard extends BoxObstacle {
 
 
         stringCompleteness = 0;
-        textSpeed = 20;
+        textSpeed = 50;
         font = new BitmapFont();
         font.getData().setScale(2.0f);
         this.display = false;

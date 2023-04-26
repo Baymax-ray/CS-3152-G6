@@ -1216,6 +1216,10 @@ public class GameCanvas {
 		return cameraController.getCamera();
 	}
 
+	public CameraController getCameraController() {
+		return cameraController;
+	}
+
 	public Viewport getViewport() { return viewport; }
 
 	public PolygonSpriteBatch getSpriteBatch() { return spriteBatch; }
