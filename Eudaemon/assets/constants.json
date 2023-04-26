@@ -11,8 +11,8 @@
       "tileSize": 1,
       "cameraWidth": 21.35,
       "cameraHeight": 12,
-      "camZoneX": 3,
-      "camZoneY": 3,
+      "camZoneX": 1,
+      "camZoneY": 1,
       "gravity": -1,
       "spike": [
         {
@@ -30,8 +30,46 @@
       "tileSize": 1,
       "cameraWidth": 21.35,
       "cameraHeight": 12,
-      "camZoneX": 3,
-      "camZoneY": 3,
+      "camZoneX": 1,
+      "camZoneY": 1,
+      "gravity": -1,
+      "spike": [
+        {
+          "startX": 9,
+          "startY": 14.2
+        },
+        {
+          "startX": 9.5,
+          "startY": 14.2
+        }
+      ]
+    },
+    {
+      "level": "level2",
+      "tileSize": 1,
+      "cameraWidth": 21.35,
+      "cameraHeight": 12,
+      "camZoneX": 1,
+      "camZoneY": 1,
+      "gravity": -1,
+      "spike": [
+        {
+          "startX": 9,
+          "startY": 14.2
+        },
+        {
+          "startX": 9.5,
+          "startY": 14.2
+        }
+      ]
+    },
+    {
+      "level": "level3",
+      "tileSize": 1,
+      "cameraWidth": 21.35,
+      "cameraHeight": 12,
+      "camZoneX": 1,
+      "camZoneY": 1,
       "gravity": -1,
       "spike": [
         {
