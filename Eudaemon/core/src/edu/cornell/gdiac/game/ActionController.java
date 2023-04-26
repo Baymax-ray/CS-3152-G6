@@ -108,6 +108,7 @@ public class ActionController {
     private ArrayList<Sound> soundDictionary;
 
 
+
     public ActionController(Level level,Array<AIController> aiControllers) {
         enemies = level.getEnemies();
         billboards = level.getBillboards();
@@ -310,46 +311,54 @@ public class ActionController {
 
             //Setting dash according to angles
             if (angleFacing == 0) {
+                player.setVelocity(0,0);
                 dashX = dash;
                 dashY = 0;
                 effectAngle = 1.57f;
                 pOffsetX = -pOffset;
             }
             else if (angleFacing == 45) {
+                player.setVelocity(0,0);
                 dashX = diagonalDashMult * dash;
                 dashY = diagonalDashMult * dash;
                 effectAngle = 2.356f;
                 pOffsetX = -diagonalDashMult * pOffset;
                 pOffsetY = -diagonalDashMult * pOffset;
             } else if (angleFacing == 90) {
+                player.setVelocity(0,0);
                 dashX = 0;
                 dashY = dash;
                 effectAngle = 3.141f;
                 pOffsetY = -pOffset;
                 pOffsetX = 0.1f;
             } else if (angleFacing == 135) {
+                player.setVelocity(0,0);
                 dashX = -diagonalDashMult * dash;
                 dashY = diagonalDashMult * dash;
                 effectAngle = 3.926f;
                 pOffsetX = diagonalDashMult * pOffset;
                 pOffsetY = -diagonalDashMult * pOffset;
             } else if (angleFacing == 180) {
+                player.setVelocity(0,0);
                 dashX = -dash;
                 dashY = 0;
                 effectAngle = 4.712f;
                 pOffsetX = 1.0f;
             } else if (angleFacing == 225) {
+                player.setVelocity(0,0);
                 dashX = - 0.71f * dash;
                 dashY = - 0.71f * dash;
                 effectAngle = 5.497f;
                 pOffsetX = diagonalDashMult * pOffset;
                 pOffsetY = diagonalDashMult * pOffset;
             } else if (angleFacing == 270) {
+                player.setVelocity(0,0);
                 dashX = 0;
                 dashY = - dash;
                 effectAngle = 0.0f;
                 pOffsetY = 1.0f;
             } else if (angleFacing == 315) {
+                player.setVelocity(0,0);
                 dashX = 0.71f * dash;
                 dashY = - 0.71f * dash;
                 effectAngle = 0.785f;
@@ -406,7 +415,7 @@ public class ActionController {
         if (player.getIsJumping()) player.setJumpTimeRemaining(player.getJumpTimeRemaining() - 1);
         else player.setJumpCooldownRemaining(Math.max(0, player.getJumpCooldownRemaining() - 1));
 
-        if (jumpHold && player.getIsJumping() && player.getJumpTimeRemaining() > 0) {
+        if (jumpHold && player.getIsJumping() && player.getJumpTimeRemaining() > 0 && !player.isDashing()) {
             player.setVelocity(player.getBodyVelocityX(), player.getJumpVelocity());
         }
 
@@ -666,6 +675,7 @@ public class ActionController {
         }
         previousX = player.getX();
         movedDuringLastFrame = (leftPressed || rightPressed) && deltaX > 0;
+
 
 
 

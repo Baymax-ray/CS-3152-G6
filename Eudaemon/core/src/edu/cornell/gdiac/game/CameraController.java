@@ -40,9 +40,6 @@ public class CameraController {
 
         float camZone_x = level.getCamZoneX();
         float camZone_y = level.getCamZoneY();
-        System.out.println(camZone_x);
-        System.out.println(camZone_y);
-        System.out.println();
 
         if (Math.abs(camera.position.x - level.getPlayer().getX()) > camZone_x) {
             if (camera.position.x > level.getPlayer().getX()) {
