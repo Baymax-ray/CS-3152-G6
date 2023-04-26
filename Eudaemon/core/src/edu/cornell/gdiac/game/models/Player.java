@@ -1168,6 +1168,7 @@ public class Player extends CapsuleObstacle {
      *                      1 for Spike;
      *                      2 for WheelObstacle;
      *                      3 for SwordWheelObstacle;
+     *                      4 for spike
      */
     public void hitByEnemy(int whichObstacle, Object hitter) {
         if (isHit() && hearts > 0){

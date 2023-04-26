@@ -121,17 +121,17 @@ public class CollisionController implements ContactListener {
             }
 
         }
-
-        if (bd1 instanceof Player && !fix1.isSensor() && bd2 instanceof Enemy ||
-                bd2 instanceof Player && !fix2.isSensor() && bd1 instanceof Enemy) {
-            Enemy enemy = (Enemy) (bd1 instanceof Player ? bd2 : bd1);
-            Player player = (Player) (bd1 instanceof Player ? bd1 : bd2);
-
-            if (!player.isHit() & !player.isDashing()) {
-                player.setHit(true);
-                player.hitByEnemy(0, bd1 instanceof Player? bd2:bd1);
-            }
-        }
+            //I move them to presolve()
+//        if (bd1 instanceof Player && !fix1.isSensor() && bd2 instanceof Enemy ||
+//                bd2 instanceof Player && !fix2.isSensor() && bd1 instanceof Enemy) {
+//            Enemy enemy = (Enemy) (bd1 instanceof Player ? bd2 : bd1);
+//            Player player = (Player) (bd1 instanceof Player ? bd1 : bd2);
+//
+//            if (!player.isHit() & !player.isDashing()) {
+//                player.setHit(true);
+//                player.hitByEnemy(0, bd1 instanceof Player? bd2:bd1);
+//            }
+//        }
 
         if (level.getPlayer().getSpiritSensorName().equals(fd1) && bd2 instanceof Enemy || level.getPlayer().getSpiritSensorName().equals(fd2) && bd1 instanceof Enemy) {
             Enemy enemy = (Enemy) (bd1 instanceof Enemy ? bd1 : bd2);
@@ -237,7 +237,16 @@ public class CollisionController implements ContactListener {
         Object bd1 = body1.getUserData();
         Object bd2 = body2.getUserData();
 
+        if (bd1 instanceof Player && !fix1.isSensor() && bd2 instanceof Enemy ||
+                bd2 instanceof Player && !fix2.isSensor() && bd1 instanceof Enemy) {
+            Enemy enemy = (Enemy) (bd1 instanceof Player ? bd2 : bd1);
+            Player player = (Player) (bd1 instanceof Player ? bd1 : bd2);
 
+            if (!player.isHit() & !player.isDashing()) {
+                player.setHit(true);
+                player.hitByEnemy(0, bd1 instanceof Player? bd2:bd1);
+            }
+        }
         if (bd1 instanceof Player && !fix1.isSensor() && bd2 instanceof Enemy ||
                 bd2 instanceof Player && !fix2.isSensor() && bd1 instanceof Enemy) {
             contact.setEnabled(false);
