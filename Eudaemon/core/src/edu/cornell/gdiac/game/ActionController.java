@@ -757,9 +757,11 @@ public class ActionController {
                 else if(enemy.getType().equals("Fast")){
                     if(enemy.getVelocityX() != 0){
                         enemy.setCurrentAnimation("move");
+                        enemy.setOyOffset(-29);
                     }
                     else{
                         enemy.setCurrentAnimation("idle");
+                        enemy.setOyOffset(-10);
                     }
                 }
                 // Projectile

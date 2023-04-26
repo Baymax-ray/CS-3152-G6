@@ -19,8 +19,8 @@ import java.util.ArrayList;
 public class Enemy extends CapsuleObstacle {
     private int detectDistance;
     private float spiritRemain;
-    private float velocityH;
-    private float velocityV = 0;
+    private float velocityX;
+    private float velocityY = 0;
     /**
      * Cache for internal force calculations
      */
@@ -91,8 +91,11 @@ public class Enemy extends CapsuleObstacle {
     /**
      * The maximum speed that the object can reach.
      */
-    private final float maxSpeed;
-    private final float goombaSpeedCoefficient = 0.2f;
+    private float maxSpeed;
+    /**
+    The Scalar the speed is multiplied by
+     */
+    private float speedMult = 0.2f;
     private final boolean isHit;
     private final boolean isGrounded;
 
@@ -314,43 +317,43 @@ public class Enemy extends CapsuleObstacle {
      */
     public void setVelocity(Vector2 v) {
         double m = Math.sqrt(v.x * v.x + v.y * v.y);
-        velocityH = (float) (v.x / m);
-        velocityV = (float) (v.y / m);
-        if (velocityH < 0) {
+        velocityX = speedMult * (float) (v.x / m);
+        velocityY = speedMult * (float) (v.y / m);
+        if (velocityX < 0) {
             isFacingRight = false;
-        } else if (velocityH > 0) {
+        } else if (velocityX > 0) {
             isFacingRight = true;
         }
     }
 
     public void setMovement(EnemyAction move) {
         if (move == EnemyAction.MOVE_RIGHT) {
-            velocityH = 1 * goombaSpeedCoefficient;
-            velocityV = 0;
+            velocityX = 1 * speedMult;
+            velocityY = 0;
         } else if (move == EnemyAction.MOVE_LEFT) {
-            velocityH = -1 * goombaSpeedCoefficient;
-            velocityV = 0;
+            velocityX = -1 * speedMult;
+            velocityY = 0;
         } else if (move == EnemyAction.STAY) {
-            velocityH = 0;
-            velocityV = 0;
+            velocityX = 0;
+            velocityY = 0;
         }
 
-        velocityV *= this.force;
-        velocityH *= this.force;
+        velocityY *= this.force;
+        velocityX *= this.force;
         // Change facing if appropriate
-        if (velocityH < 0) {
+        if (velocityX < 0) {
             isFacingRight = false;
-        } else if (velocityH > 0) {
+        } else if (velocityX > 0) {
             isFacingRight = true;
         }
     }
 
     public float getVelocityX() {
-        return velocityH;
+        return velocityX;
     }
 
-    public float getVelocityV() {
-        return velocityV;
+    public float getVelocityY() {
+        return velocityY;
     }
 
     public int getAttackCooldown() {
@@ -394,6 +397,7 @@ public class Enemy extends CapsuleObstacle {
         this.startY = y;
         this.projectileEnemyDirection = "Left";
         this.projectileEnemyRotation = 0;
+        this.speedMult = enemyData.getFloat("speedMult");
 
         //Size
         this.enemyImageWidth = enemyData.getFloat("ImageWidth");
@@ -660,7 +664,7 @@ public class Enemy extends CapsuleObstacle {
         }
 
         //if(this.type.equals("Fly")){this.movementV *= this.force; this.movementH *= this.force;}
-        forceCache.set(getVelocityX(), getVelocityV());
+        forceCache.set(getVelocityX(), getVelocityY());
         body.setLinearVelocity(forceCache);
     }
 
