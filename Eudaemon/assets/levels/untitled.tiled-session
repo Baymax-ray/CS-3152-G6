@@ -10,6 +10,9 @@
     ],
     "file.lastUsedOpenFilter": "全部文件 (*)",
     "fileStates": {
+        "/Users/neelin2/coding/cs3152/Eudaemon/CS-3152-G6/Eudaemon/assets/EudaemonTileset.json": {
+            "dynamicWrapping": true
+        },
         "C:/Users/neelin2/coding/cs3152/Eudaemon/CS-3152-G6/Eudaemon/assets/EudaemonTileset.json": {
             "scaleInDock": 1
         },
@@ -50,11 +53,11 @@
             "expandedObjectLayers": [
                 7
             ],
-            "scale": 1,
-            "selectedLayer": 3,
+            "scale": 0.96,
+            "selectedLayer": 2,
             "viewCenter": {
-                "x": 2052.5,
-                "y": 301.5
+                "x": 634.8958333333334,
+                "y": 1108.3333333333335
             }
         },
         "level0.tmj": {
@@ -73,7 +76,7 @@
             "selectedLayer": 3,
             "viewCenter": {
                 "x": 1792.25,
-                "y": 201.25
+                "y": 201
             }
         },
         "level2.json": {
@@ -81,7 +84,7 @@
             "selectedLayer": 3,
             "viewCenter": {
                 "x": 521,
-                "y": 751
+                "y": 750
             }
         },
         "level3.json": {
@@ -92,7 +95,7 @@
             "selectedLayer": 3,
             "viewCenter": {
                 "x": 855,
-                "y": 723
+                "y": 724
             }
         }
     },

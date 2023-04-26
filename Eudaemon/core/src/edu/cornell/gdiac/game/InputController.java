@@ -12,6 +12,7 @@ import edu.cornell.gdiac.util.Controllers;
 import edu.cornell.gdiac.util.XBoxController;
 import java.util.EnumSet;
 import java.util.HashMap;
+//import com.studiohartman.jamepad.ControllerManager;
 
 public class InputController {
 
@@ -24,6 +25,8 @@ public class InputController {
     public InputController(ActionBindings bindings) {
         inputMap = bindings.getInputMap();
         prevAction = EnumSet.noneOf(Action.class);
+//        ControllerManager controllers = new ControllerManager();
+//        controllers.initSDLGamepad();
    }
 
     /**
