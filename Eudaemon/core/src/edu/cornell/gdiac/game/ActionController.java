@@ -271,11 +271,15 @@ public class ActionController {
             player.setTransformCooldownRemaining(player.getTransformCooldown());
             if(player.getForm() == 0){
                 player.setForm();
+                player.setHeight(player.getHeight() * player.getChiyoHitBoxHeightMult());
                 playerChiyoTransformId = playSound( playerChiyoTransformSound, playerChiyoTransformId, 0.1F );
+                player.updateGroundSensor();
             }
             else{
                 player.setForm();
+                player.setHeight(player.getHeight() / player.getChiyoHitBoxHeightMult());
                 playerMomoTransformId = playSound( playerMomoTransformSound, playerMomoTransformId, 0.1F );
+                player.updateGroundSensor();
             }
         }
         //#endregion

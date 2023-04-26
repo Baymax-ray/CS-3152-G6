@@ -107,6 +107,8 @@ public class Player extends CapsuleObstacle {
 
     private final float chiyoJumpTimeMult;
 
+    private final float chiyoHitBoxHeightMult;
+
     //#endregion
 
     //#region TEXTURES
@@ -521,6 +523,16 @@ public class Player extends CapsuleObstacle {
     public void setTouchingWall(boolean slide) {
         isTouchingWall = slide;
     }
+
+    /**
+     * Gets the value of the chiyo's speed multiplier
+     *
+     * @return The value of chiyo's speed multiplier.
+     */
+    public float getChiyoHitBoxHeightMult() {
+        return chiyoHitBoxHeightMult;
+    }
+
     /**
      * Gets the value of the chiyo's speed multiplier
      *
@@ -1094,7 +1106,7 @@ public class Player extends CapsuleObstacle {
     public void draw(GameCanvas canvas) {
         //tile of player character
         float x = getX();
-        float y = getY();
+        float y = getForm() == 0 ? getY() - 0.25f : getY() - 0.45f;
 
         //position of player in tile
         float ox = this.texture.getRegionWidth()/2 + oxOffset;
@@ -1156,6 +1168,22 @@ public class Player extends CapsuleObstacle {
         spiritSensorFixture.setUserData(getSpiritSensorName());
 
         return true;
+    }
+
+    public void updateGroundSensor(){
+        Vector2 sensorCenter = new Vector2(0, -getHeight() / 2);
+        FixtureDef sensorDef = new FixtureDef();
+        sensorDef.density = data.getFloat("density",0);
+        sensorDef.isSensor = true;
+        groundSensorShape = new PolygonShape();
+        JsonValue sensorjv = data.get("sensor");
+        groundSensorShape.setAsBox(sensorjv.getFloat("shrink",0)*getWidth()/2.0f,
+                sensorjv.getFloat("height",0), sensorCenter, 0.0f);
+        sensorDef.shape = groundSensorShape;
+
+        // Ground sensor to represent our feet
+        Fixture sensorFixture = body.createFixture( sensorDef );
+        sensorFixture.setUserData(getSensorName());
     }
 
     /**
@@ -1253,6 +1281,7 @@ public class Player extends CapsuleObstacle {
         this.dashTime = json.getInt("dashTime");
         this.chiyoSpeedMult = json.getFloat("chiyoSpeedMult");
         this.chiyoJumpTimeMult = json.getFloat("chiyoJumpTimeMult");
+        this.chiyoHitBoxHeightMult = json.getFloat("chiyoHitboxHeightMult");
 
         //Attacking
         this.attackPower = json.getInt("attackPower");
