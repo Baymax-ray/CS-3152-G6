@@ -720,17 +720,15 @@ public class Level {
                 canvas.draw(tile.getTexture(), Color.WHITE, 0, 0, tileToLevelCoordinatesX(x), tileToLevelCoordinatesY(y), 0, sx, sy);
             }
         }
-        Player p = null;
         for (Obstacle obj : objects) {
-            if (obj.getClass().equals(Player.class)) {
-                p = (Player) obj;
-            }
-            else{
+            if (obj.getClass().equals(Billboard.class) || obj.getClass().equals(Exit.class)) {
                 obj.draw(canvas);
             }
         }
-        if (p != null){
-            p.draw(canvas);
+        for (Obstacle obj : objects) {
+            if (!obj.getClass().equals(Billboard.class) && !obj.getClass().equals(Exit.class)) {
+                obj.draw(canvas);
+            }
         }
         canvas.end();
 
