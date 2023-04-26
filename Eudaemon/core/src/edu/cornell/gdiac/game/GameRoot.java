@@ -95,6 +95,11 @@ public class GameRoot extends Game implements ScreenListener {
 				levelScreen.setCanvas(canvas);
 				setScreen(levelScreen);
 			}
+			if (exitCode == ExitCode.MAIN_MENU) {
+				screen.pause();
+				loadingScreen.reset();
+				setScreen(loadingScreen);
+			}
 		}
 
 		if (screen == levelSelectScreen) {
