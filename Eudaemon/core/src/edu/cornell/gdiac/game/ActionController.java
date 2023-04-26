@@ -108,6 +108,7 @@ public class ActionController {
     private ArrayList<Sound> soundDictionary;
 
 
+
     public ActionController(Level level,Array<AIController> aiControllers) {
         enemies = level.getEnemies();
         billboards = level.getBillboards();
@@ -310,46 +311,54 @@ public class ActionController {
 
             //Setting dash according to angles
             if (angleFacing == 0) {
+                player.setVelocity(0,0);
                 dashX = dash;
                 dashY = 0;
                 effectAngle = 1.57f;
                 pOffsetX = -pOffset;
             }
             else if (angleFacing == 45) {
+                player.setVelocity(0,0);
                 dashX = diagonalDashMult * dash;
                 dashY = diagonalDashMult * dash;
                 effectAngle = 2.356f;
                 pOffsetX = -diagonalDashMult * pOffset;
                 pOffsetY = -diagonalDashMult * pOffset;
             } else if (angleFacing == 90) {
+                player.setVelocity(0,0);
                 dashX = 0;
                 dashY = dash;
                 effectAngle = 3.141f;
                 pOffsetY = -pOffset;
                 pOffsetX = 0.1f;
             } else if (angleFacing == 135) {
+                player.setVelocity(0,0);
                 dashX = -diagonalDashMult * dash;
                 dashY = diagonalDashMult * dash;
                 effectAngle = 3.926f;
                 pOffsetX = diagonalDashMult * pOffset;
                 pOffsetY = -diagonalDashMult * pOffset;
             } else if (angleFacing == 180) {
+                player.setVelocity(0,0);
                 dashX = -dash;
                 dashY = 0;
                 effectAngle = 4.712f;
                 pOffsetX = 1.0f;
             } else if (angleFacing == 225) {
+                player.setVelocity(0,0);
                 dashX = - 0.71f * dash;
                 dashY = - 0.71f * dash;
                 effectAngle = 5.497f;
                 pOffsetX = diagonalDashMult * pOffset;
                 pOffsetY = diagonalDashMult * pOffset;
             } else if (angleFacing == 270) {
+                player.setVelocity(0,0);
                 dashX = 0;
                 dashY = - dash;
                 effectAngle = 0.0f;
                 pOffsetY = 1.0f;
             } else if (angleFacing == 315) {
+                player.setVelocity(0,0);
                 dashX = 0.71f * dash;
                 dashY = - 0.71f * dash;
                 effectAngle = 0.785f;
@@ -406,7 +415,7 @@ public class ActionController {
         if (player.getIsJumping()) player.setJumpTimeRemaining(player.getJumpTimeRemaining() - 1);
         else player.setJumpCooldownRemaining(Math.max(0, player.getJumpCooldownRemaining() - 1));
 
-        if (jumpHold && player.getIsJumping() && player.getJumpTimeRemaining() > 0) {
+        if (jumpHold && player.getIsJumping() && player.getJumpTimeRemaining() > 0 && !player.isDashing()) {
             player.setVelocity(player.getBodyVelocityX(), player.getJumpVelocity());
         }
 
@@ -577,24 +586,7 @@ public class ActionController {
         // Animations if Player is Chiyo
         else {
             momoRunSound.stop();
-            if (player.getBodyVelocityX() != 0) {
-                currentAnimation = "chiyoRun";
-                if(player.isGrounded() && !player.getIsJumping()){
-                    if(!soundDictionary.contains(chiyoRunSound)) {
-                        soundDictionary.add(chiyoRunSound);
-                        chiyoRunSound.loop();
-                    }
-                }
-
-                TextureRegion current = (TextureRegion) (animations.get("chiyoRun")).getKeyFrame(currentFrame); // Gets the current frame of the animation
-                tickFrameSwitch = 4;
-                maxFrame = 7;
-                player.setTexture(current);
-                player.setOxOffset(20);
-                player.setOyOffset(-25);
-                player.setSxMult(2.0f);
-                player.setSyMult(2.0f);
-            } else if(!player.isGrounded() || player.getIsJumping()){
+            if (!player.isGrounded()) {
                 chiyoRunSound.stop();
                 soundDictionary.remove(chiyoRunSound);
                 if (currentAnimation != "chiyoJump") {
@@ -620,6 +612,24 @@ public class ActionController {
                 player.setOyOffset(-25);
                 player.setSxMult(2.0f);
                 player.setSyMult(2.0f);
+            } else if(player.getBodyVelocityX() != 0){
+                currentAnimation = "chiyoRun";
+                if(player.isGrounded() && !player.getIsJumping()){
+                    if(!soundDictionary.contains(chiyoRunSound)) {
+                        soundDictionary.add(chiyoRunSound);
+                        chiyoRunSound.loop();
+                    }
+                }
+
+                TextureRegion current = (TextureRegion) (animations.get("chiyoRun")).getKeyFrame(currentFrame); // Gets the current frame of the animation
+                tickFrameSwitch = 4;
+                maxFrame = 7;
+                player.setTexture(current);
+                player.setOxOffset(20);
+                player.setOyOffset(-25);
+                player.setSxMult(2.0f);
+                player.setSyMult(2.0f);
+
             } else {
                 currentAnimation = "chiyoIdle";
                 chiyoRunSound.stop();
@@ -669,9 +679,10 @@ public class ActionController {
 
 
 
+
         // automatic spirit loss
         if (player.getForm() == 1) { // if player is chiyo
-            player.decreaseSpirit();
+            //player.decreaseSpirit();
             if (player.getSpirit() <= 0) {
                 player.setForm(); // switch back to momo
             }
