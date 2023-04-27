@@ -23,6 +23,7 @@
 package edu.cornell.gdiac.game;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.controllers.Controller;
@@ -135,6 +136,9 @@ public class LoadingScreen implements Screen, InputProcessor, ControllerListener
 
 	/** Whether or not this player mode is still active */
 	private boolean active;
+
+	/** The state of the escape key */
+	private int escapePressState;
 
 	/**
 	 * Returns the budget for the asset loader.
@@ -374,6 +378,8 @@ public class LoadingScreen implements Screen, InputProcessor, ControllerListener
 				listener.exitScreen(this, ExitCode.START);
 			} else if (levelSelectButtonState == 2) {
 				listener.exitScreen(this, ExitCode.LEVEL_SELECT);
+			} else if (escapePressState == 2) {
+				listener.exitScreen(this, ExitCode.QUIT);
 			}
 		}
 	}
@@ -583,7 +589,11 @@ public class LoadingScreen implements Screen, InputProcessor, ControllerListener
 	 * @param keycode the key pressed
 	 * @return whether to hand the event to other listeners. 
 	 */
-	public boolean keyDown(int keycode) { 
+	public boolean keyDown(int keycode) {
+		if (keycode == Input.Keys.ESCAPE) {
+			escapePressState = 1;
+			return false;
+		}
 		return true; 
 	}
 
@@ -604,7 +614,11 @@ public class LoadingScreen implements Screen, InputProcessor, ControllerListener
 	 * @return whether to hand the event to other listeners. 
 	 */	
 	public boolean keyUp(int keycode) { 
-		return true; 
+		if (keycode == Input.Keys.ESCAPE) {
+			escapePressState = 2;
+			return false;
+		}
+		return true;
 	}
 	
 	/** 

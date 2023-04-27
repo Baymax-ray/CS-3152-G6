@@ -53,6 +53,11 @@ public class GameRoot extends Game implements ScreenListener {
 		System.out.println(screen);
 		System.out.println(exitCode);
 
+		if (exitCode == ExitCode.QUIT) {
+			Gdx.app.exit();
+			System.exit(0);
+		}
+
 		if (screen == loadingScreen) {
 			assets = loadingScreen.getAssets();
 			state = new GameState(assets);

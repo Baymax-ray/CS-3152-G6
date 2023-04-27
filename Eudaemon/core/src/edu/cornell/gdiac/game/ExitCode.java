@@ -9,4 +9,5 @@ public class ExitCode {
     public static final int SETTINGS = 5;
     public static final int PAUSE = 5;
     public static final int MAIN_MENU = 7;
+    public static final int QUIT = 8;
 }
