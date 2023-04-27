@@ -63,7 +63,7 @@ public class SwordWheelObstacle extends WheelObstacle {
         setSensor(true);
 
         //ANIMATION
-        TextureRegion[][] frames = spriteSheet.split(spriteSheet.getRegionWidth()/6, spriteSheet.getRegionHeight());
+        TextureRegion[][] frames = spriteSheet.split(spriteSheet.getRegionWidth()/8, spriteSheet.getRegionHeight()/2);
         animation = new Animation<TextureRegion>(0.5f, frames[0]); // Creates an animation with a frame duration of 0.1 seconds
         animation.setPlayMode(Animation.PlayMode.NORMAL); // Sets the animation to play normally
         currentTicks = 0; // Accumulates the time elapsed since the animation started
