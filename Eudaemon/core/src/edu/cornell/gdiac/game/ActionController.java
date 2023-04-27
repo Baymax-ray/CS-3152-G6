@@ -268,7 +268,6 @@ public class ActionController {
             }
         }
         player.setVelocity(x, y);
-        level.shakeControllerMedium();
         //#endregion
 
         //#region Form Switching
@@ -375,7 +374,7 @@ public class ActionController {
                 pOffsetY = diagonalDashMult * pOffset;
             }
             player.setVelocity(dashX, dashY);
-            level.shakeControllerSmall();
+            level.shakeControllerMedium();
 
             //Creating dash effect
             EffectObstacle dashAnimate = level.getEffectPool().obtainEffect(player.getX(), player.getY(), player.getDashEffectSpriteSheet().getRegionWidth(),
