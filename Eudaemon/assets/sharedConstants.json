@@ -12,7 +12,8 @@
 
 
     "hitboxWidth": 0.6,
-    "hitboxHeight": 0.9,
+    "hitboxHeight": 1.3,
+    "chiyoHitboxHeightMult": 1.5,
 
 
     "maxHearts": 3,
