@@ -219,6 +219,7 @@
         "momo:upDash":  "character/momoUpDash.png",
         "momo:diagonalDash":  "character/momoDiagonalUpDash.png",
         "chiyo:idle":  "character/chiyo.png",
+        "chiyo:slide":  "character/chiyoSlide.png",
 
         "enemy:nonTrackingGoomba":  "enemy/nonTrackingGoomba.png",
         "enemy:pathfindingGoomba": "enemy/pathfindingGoomba.png",

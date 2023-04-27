@@ -318,9 +318,9 @@ public class ActionController {
         //#endregion
 
         //#region Wall Slide
-        if (player.isTouchingWallRight() && rightPressed){
+        if (player.getForm() == 1 && player.isTouchingWallRight() && !player.isGrounded() && rightPressed){
             player.setSliding(true);
-        } else if (player.isTouchingWallLeft() && leftPressed){
+        } else if (player.getForm() == 1 && player.isTouchingWallLeft() && !player.isGrounded() && leftPressed){
             player.setSliding(true);
         } else {
             player.setSliding(false);
@@ -461,18 +461,10 @@ public class ActionController {
         //include all three situations
         //normal jump, coyote, and jump pressed in air
 
-        if ((jumpPressed && player.isGrounded() && player.getJumpCooldownRemaining() == 0) ||
+        if ((jumpPressed && (player.isGrounded() || player.isSliding()) && player.getJumpCooldownRemaining() == 0) ||
                 (jumpPressed && player.getCoyoteFramesRemaining() > 0 && player.getJumpCooldownRemaining() == 0) ||
-                (player.getJumpPressedInAir() && player.getJumpCooldownRemaining() == 0 && player.isGrounded())) {
-            //Sound Effect
-            jumpId = playSound( jumpSound, jumpId, 0.5F );
-            player.setVelocity(player.getBodyVelocityX(), player.getJumpVelocity());
-            player.setJumpCooldownRemaining(player.getJumpCooldown());
-            player.setJumpTimeRemaining(player.getJumpTime());
-            player.setJumpTimeRemaining(
-                    player.getForm()==0 ? player.getJumpTime() : (int) (player.getJumpTime()
-                            * player.getChiyoJumpTimeMult()));
-            player.setIsJumping(true);
+                (player.getJumpPressedInAir() && player.getJumpCooldownRemaining() == 0 && (player.isGrounded() || player.isSliding()))) {
+            jump();
         } else if (player.isGrounded() && player.getBodyVelocityY() == 0) {
             player.setIsJumping(false);
         }
@@ -494,10 +486,10 @@ public class ActionController {
         }
 
         //jump pressed in air
-        if (jumpPressed && !player.isGrounded()) {
+        if (jumpPressed && !(player.isGrounded() || player.isSliding())) {
             player.setJumpToleranceRemaining(player.getJumpTolerance());
             player.setJumpPressedInAir(true);
-        } else if (!player.isGrounded()) {
+        } else if (!(player.isGrounded() || player.isSliding())) {
             player.setJumpToleranceRemaining(Math.max(0, player.getJumpToleranceRemaining() - 1));
             if (player.getJumpToleranceRemaining() == 0) player.setJumpPressedInAir(false);
         }
@@ -624,7 +616,15 @@ public class ActionController {
                 player.setOyOffset(-25);
                 player.setSxMult(2.3f);
                 player.setSyMult(2.0f);
-            } else if (!player.isGrounded()) {
+            }
+            else if (player.isSliding()){
+                player.setTexture(player.getChiyoSlideTexture());
+                player.setOxOffset(2);
+                player.setOyOffset(-29);
+                player.setSxMult(-2.1f);
+                player.setSyMult(1.84f);
+            }
+            else if (!player.isGrounded()) {
                 chiyoRunSound.stop();
                 soundDictionary.remove(chiyoRunSound);
                 if (currentAnimation != "chiyoJump") {
@@ -749,7 +749,21 @@ public class ActionController {
      * Causes the player to jump.
      */
     private void jump() {
+        //Sound Effect
+        jumpId = playSound( jumpSound, jumpId, 0.5F );
 
+        if (player.isSliding()){
+            player.setVelocity((player.isFacingRight() ? -1 : 1) * player.getWallJumpXVelocity(), player.getJumpVelocity());
+        }
+        else{
+            player.setVelocity(player.getBodyVelocityX(), player.getJumpVelocity());
+        }
+        player.setJumpCooldownRemaining(player.getJumpCooldown());
+        player.setJumpTimeRemaining(player.getJumpTime());
+        player.setJumpTimeRemaining(
+                player.getForm()==0 ? player.getJumpTime() : (int) (player.getJumpTime()
+                        * player.getChiyoJumpTimeMult()));
+        player.setIsJumping(true);
     }
 
 

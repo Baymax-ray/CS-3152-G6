@@ -29,9 +29,9 @@
     "dashTime": 500,
     "dashLifespan": 15,
     "dashCooldown": 0.4,
-    "dashCooldownInFrames": 40,
+    "dashCooldownInFrames": 70,
 
-    "wallSlideVelocity": -0.5,
+    "wallSlideVelocity": -0.8,
 
     "jumpCooldown": 10,
     "coyoteTime": 5,
@@ -41,6 +41,7 @@
     "maxJumpyVelocity": 3.2,
     "playerGravity": 20.0,
     "timeForImpact": 35,
+    "wallJumpXVelocity": 10.0,
 
     "swordRadius": 1.2,
     "attackLifespan": 0.4,
@@ -58,7 +59,7 @@
     "transformCooldown": 15,
 
     "maxSpirit": 10,
-    "initialSpirit": 0,
+    "initialSpirit": 10,
     "spiritIncreaseRate": 0.02,
     "spiritKillingEnemy":2.0,
     "spiritDecreaseRate": 0.01,

@@ -75,6 +75,11 @@ public class Player extends CapsuleObstacle {
     private final int jumpTolerance;
     private int jumpToleranceRemaining;
 
+    /**
+     * The horizontal velocity at which the player jumps off a wall.
+     */
+    private final float wallJumpXVelocity;
+
     private final float spiritIncreaseRate;
     private final float spiritDecreaseRate;
     private final float spiritIncreaseDist;
@@ -119,6 +124,7 @@ public class Player extends CapsuleObstacle {
     private final float chiyoImageWidth;
     private final float chiyoImageHeight;
     private final TextureRegion momoDiagonalDashTexture;
+    private final TextureRegion chiyoSlideTexture;
     /**
      * The sprite sheet containing the 0 angle sword attack animation frames.
      */
@@ -341,6 +347,15 @@ public class Player extends CapsuleObstacle {
     }
 
     /**
+     * Returns the {@link com.badlogic.gdx.graphics.g2d.TextureRegion} of the Chiyo slide texture.
+     *
+     * @return the {@link com.badlogic.gdx.graphics.g2d.TextureRegion} of the Chiyo Slide texture.
+     */
+    public TextureRegion getChiyoSlideTexture(){
+        return chiyoSlideTexture;
+    }
+
+    /**
      * Returns the {@link com.badlogic.gdx.graphics.g2d.TextureRegion} of the Momo texture.
      *
      * @return the {@link com.badlogic.gdx.graphics.g2d.TextureRegion} of the Momo texture.
@@ -481,6 +496,14 @@ public class Player extends CapsuleObstacle {
     //#endregion
 
     //#region GETTERS AND SETTERS
+    /**
+     * Returns the horizontal velocity at which the player jumps off a wall.
+     *
+     * @return the wall jump X velocity
+     */
+    public float getWallJumpXVelocity() {
+        return wallJumpXVelocity;
+    }
 
     /**
      * Returns the velocity at which the player slides down a wall.
@@ -1374,6 +1397,7 @@ public class Player extends CapsuleObstacle {
         this.chiyoImageWidth = json.getFloat("chiyo:ImageWidth");
         this.chiyoImageHeight = json.getFloat("chiyo:ImageHeight");
         this.momoDiagonalDashTexture = new TextureRegion(assets.getEntry("momo:diagonalDash", Texture.class));
+        this.chiyoSlideTexture = new TextureRegion(assets.getEntry("chiyo:slide", Texture.class));
 
         //Animations
         this.swordEffectSpriteSheet0 = new TextureRegion(assets.getEntry( "chiyo:swordAttack0", Texture.class));
@@ -1412,6 +1436,7 @@ public class Player extends CapsuleObstacle {
 
         //Sliding
         this.wallSlideVelocity = json.getFloat("wallSlideVelocity");
+        this.wallJumpXVelocity = json.getFloat("wallJumpXVelocity");
 
         //Attacking
         this.attackPower = json.getInt("attackPower");
