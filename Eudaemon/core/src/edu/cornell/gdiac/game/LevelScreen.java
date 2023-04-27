@@ -4,6 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.utils.Array;
+import edu.cornell.gdiac.assets.AssetDirectory;
 import edu.cornell.gdiac.game.models.*;
 import edu.cornell.gdiac.util.ScreenListener;
 
@@ -31,7 +32,7 @@ public class LevelScreen implements Screen {
 
 
 
-    public LevelScreen(Level level, ActionBindings actionBindings) {
+    public LevelScreen(Level level, ActionBindings actionBindings, AssetDirectory assets) {
         this.level = level;
 
         this.active = false;
@@ -59,7 +60,7 @@ public class LevelScreen implements Screen {
         level.getWorld().setContactListener(collisionController);
         level.activatePhysics();
 
-        audio = new AudioController();
+        audio = new AudioController(assets);
         audio.playAllSound();
         audio.muteChiyo();
 

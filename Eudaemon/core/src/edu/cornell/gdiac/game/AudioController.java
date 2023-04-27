@@ -2,6 +2,7 @@ package edu.cornell.gdiac.game;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Sound;
+import edu.cornell.gdiac.assets.AssetDirectory;
 import edu.cornell.gdiac.game.models.Action;
 
 public class AudioController {
@@ -12,7 +13,7 @@ public class AudioController {
     private static long chiyoSoundId;
     private static long momoSoundId;
 
-    public AudioController(){
+    public AudioController(AssetDirectory assets){
         chiyoSound = Gdx.audio.newSound(Gdx.files.internal("music/ChiyoTheme.mp3"));
         momoSound = Gdx.audio.newSound(Gdx.files.internal("music/MomoTheme.mp3"));
         isMomo = true;

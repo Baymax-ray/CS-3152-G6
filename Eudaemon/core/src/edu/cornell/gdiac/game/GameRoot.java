@@ -63,7 +63,7 @@ public class GameRoot extends Game implements ScreenListener {
 			state = new GameState(assets);
 
 			if (levelScreen != null) levelScreen.dispose();
-			this.levelScreen = new LevelScreen(this.state.getCurrentLevel(), this.state.getActionBindings());
+			this.levelScreen = new LevelScreen(this.state.getCurrentLevel(), this.state.getActionBindings(), assets);
 			levelScreen.setScreenListener(this);
 			levelScreen.setCanvas(canvas);
 
@@ -95,7 +95,7 @@ public class GameRoot extends Game implements ScreenListener {
 			if (exitCode == ExitCode.RESET) {
 				this.state.resetCurrentLevel();
 				if (levelScreen != null) levelScreen.dispose();
-				levelScreen = new LevelScreen(this.state.getCurrentLevel(), this.state.getActionBindings());
+				levelScreen = new LevelScreen(this.state.getCurrentLevel(), this.state.getActionBindings(), assets);
 				levelScreen.setScreenListener(this);
 				levelScreen.setCanvas(canvas);
 				setScreen(levelScreen);
@@ -120,7 +120,7 @@ public class GameRoot extends Game implements ScreenListener {
 				this.state.resetCurrentLevel();
 
 				levelScreen.dispose();
-				levelScreen = new LevelScreen(this.state.getCurrentLevel(), this.state.getActionBindings());
+				levelScreen = new LevelScreen(this.state.getCurrentLevel(), this.state.getActionBindings(), assets);
 				levelScreen.setScreenListener(this);
 				levelScreen.setCanvas(canvas);
 				setScreen(levelScreen);
@@ -134,7 +134,7 @@ public class GameRoot extends Game implements ScreenListener {
 				this.state.resetCurrentLevel();
 
 				levelScreen.dispose();
-				levelScreen = new LevelScreen(this.state.getCurrentLevel(), this.state.getActionBindings());
+				levelScreen = new LevelScreen(this.state.getCurrentLevel(), this.state.getActionBindings(), assets);
 				levelScreen.setScreenListener(this);
 				levelScreen.setCanvas(canvas);
 				setScreen(levelScreen);
@@ -152,7 +152,7 @@ public class GameRoot extends Game implements ScreenListener {
 
 				this.state.setCurrentLevel(state.getCurrentLevel().getExit().getNextLevel());
 				this.state.resetCurrentLevel();
-				levelScreen = new LevelScreen(this.state.getCurrentLevel(), this.state.getActionBindings());
+				levelScreen = new LevelScreen(this.state.getCurrentLevel(), this.state.getActionBindings(), assets);
 
 				levelScreen.setScreenListener(this);
 				levelScreen.setCanvas(canvas);
