@@ -53,8 +53,8 @@
             "scale": 1,
             "selectedLayer": 3,
             "viewCenter": {
-                "x": 2052.5,
-                "y": 301.5
+                "x": 1078.5,
+                "y": 768.5
             }
         },
         "level0.tmj": {
@@ -72,16 +72,16 @@
             "scale": 2,
             "selectedLayer": 3,
             "viewCenter": {
-                "x": 1792.25,
-                "y": 201.25
+                "x": 1199.75,
+                "y": 639.75
             }
         },
         "level2.json": {
             "scale": 0.5,
             "selectedLayer": 3,
             "viewCenter": {
-                "x": 521,
-                "y": 751
+                "x": 799,
+                "y": 641
             }
         },
         "level3.json": {
@@ -91,8 +91,8 @@
             "scale": 0.5,
             "selectedLayer": 3,
             "viewCenter": {
-                "x": 855,
-                "y": 723
+                "x": 853,
+                "y": 721
             }
         }
     },
