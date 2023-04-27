@@ -4,6 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.ai.pfa.Connection;
 import com.badlogic.gdx.ai.pfa.indexed.IndexedGraph;
+import com.badlogic.gdx.controllers.Controller;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
@@ -22,6 +23,10 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Hashtable;
 import java.util.Iterator;
+import com.badlogic.gdx.controllers.Controller;
+import com.badlogic.gdx.controllers.ControllerListener;
+import com.badlogic.gdx.controllers.ControllerMapping;
+import edu.cornell.gdiac.util.Controllers;
 
 public class Level {
     private MyGridGraph gridGraph;
@@ -32,6 +37,10 @@ public class Level {
     private ArrayList<Spike> spikes;
 
     private ArrayList<Billboard> billboards;
+
+    private Array<Controller> controllers;
+
+    private Controller controller;
 
     private Exit exit;
 
@@ -362,6 +371,9 @@ public class Level {
         String levelName = json.getString("level");
         camZoneX = json.getFloat("camZoneX");
         camZoneY = json.getFloat("camZoneY");
+
+        controllers = Controllers.get().getControllers();
+        if (controllers.size > 0) controller = controllers.first();
 
         JsonValue levelJson = assets.getEntry(levelName,  JsonValue.class);
 
@@ -888,6 +900,18 @@ public class Level {
     public float getCameraHeight() { return cameraHeight; }
     public float getCamZoneX() { return camZoneX; }
     public float getCamZoneY() { return camZoneY; }
+
+    public void shakeControllerSmall() {
+        controller.startVibration(100,0.3f);
+    }
+
+    public void shakeControllerMedium() {
+        controller.startVibration(100,0.5f);
+    }
+
+    public void shakeControllerHeavy() {
+        controller.startVibration(100,1.0f);
+    }
 
 
 

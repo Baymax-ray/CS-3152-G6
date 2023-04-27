@@ -268,6 +268,7 @@ public class ActionController {
             }
         }
         player.setVelocity(x, y);
+        level.shakeControllerMedium();
         //#endregion
 
         //#region Form Switching
@@ -688,6 +689,7 @@ public class ActionController {
                     1, 1, animations.get("impactEffect"), 5);
             level.addQueuedObject(impactAnimate);
             impactId = playSound(impactSound, impactId, 0.3F);
+            level.shakeControllerSmall();
 
         }
 
@@ -908,6 +910,7 @@ public class ActionController {
         Vector2 scale = new Vector2(64.0f, 64.0f);
         SwordWheelObstacle sword = new SwordWheelObstacle(x, y, player.getSwordRadius(), player, player.getAttackLifespan(), 10.0f, scale, player.getSwordEffectSpriteSheet(angleFacing));
         level.addQueuedObject(sword);
+        level.shakeControllerSmall();
     }
 
     //#endregion

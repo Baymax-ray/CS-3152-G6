@@ -55,6 +55,7 @@ public class CollisionController implements ContactListener {
                     bd2.toString().contains("Spike") && bd1 instanceof Player && !fix1.isSensor())) {
                 level.getPlayer().setHit(true);
                 level.getPlayer().hitByEnemy(4, bd2 instanceof Player? bd1: bd2);
+                level.shakeControllerHeavy();
                 //Resets dash when damaged by spike
                 level.getPlayer().setDashedInAir(false);
             }
@@ -68,6 +69,7 @@ public class CollisionController implements ContactListener {
                 if (!player.isHit() & !player.isDashing()) {
                     player.setHit(true);
                     player.hitByEnemy(2, bd1);
+                    level.shakeControllerMedium();
                 }
             }
         }else if (bd2 instanceof WheelObstacle && !(bd2 instanceof SwordWheelObstacle)&& !(bd1 instanceof Enemy) && !fix1.isSensor() ){
@@ -78,6 +80,7 @@ public class CollisionController implements ContactListener {
                 if (!player.isHit() & !player.isDashing()) {
                     player.setHit(true);
                     player.hitByEnemy(2, bd2);
+                    level.shakeControllerHeavy();
                 }
             }
         }
@@ -105,6 +108,7 @@ public class CollisionController implements ContactListener {
 
                 enemy.hitBySword(level.getPlayer());
                 sword.addHitEnemy(enemy);
+                level.shakeControllerHeavy();
 
                 //create hit by sword effect
                 float effectAngle = (float) Math.toRadians(level.getPlayer().getAngleFacing());
@@ -245,6 +249,7 @@ public class CollisionController implements ContactListener {
             if (!player.isHit() & !player.isDashing()) {
                 player.setHit(true);
                 player.hitByEnemy(0, bd1 instanceof Player? bd2:bd1);
+                level.shakeControllerHeavy();
             }
         }
         if (bd1 instanceof Player && !fix1.isSensor() && bd2 instanceof Enemy ||
