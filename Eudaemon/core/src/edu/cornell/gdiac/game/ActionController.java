@@ -710,20 +710,24 @@ public class ActionController {
         } else if (player.getEnemiesInSpiritRange().size > 0) {
             player.getEnemiesInSpiritRange().get(0).LossSpirit(level.getPlayer().getSpiritIncreaseRate());
             player.increaseSpirit();
-            drawSpiritEffect();
+            spiritDrainEffect = level.getEffectPool().obtainEffect(player.getX(), player.getY(),
+                    player.getSpiritDrainSpriteSheet().getRegionWidth(), player.getSpiritDrainSpriteSheet().getRegionHeight(),
+                    0.01f, 0.01f, 0, 0, 0, true, "spiritDrain", player, 1f,
+                    1, 1, player.getSpiritDrainAnimation(), 5);
+            level.addQueuedObject(spiritDrainEffect);
         }
 
 
 
     }
-    public void drawSpiritEffect(){
-        spiritDrainEffect = level.getEffectPool().obtainEffect(player.getX(), player.getY(),
-                player.getSpiritDrainSpriteSheet().getRegionWidth(), player.getSpiritDrainSpriteSheet().getRegionHeight(),
-                0.01f, 0.01f, 0, 0, 0, true, "spiritDrain", player, 1f,
-                1, 1, player.getSpiritDrainAnimation(), 5);
-        level.addQueuedObject(spiritDrainEffect);
-        level.removeQueuedObject(spiritDrainEffect);
-    }
+//    public void drawSpiritEffect(){
+//        spiritDrainEffect = level.getEffectPool().obtainEffect(player.getX(), player.getY(),
+//                player.getSpiritDrainSpriteSheet().getRegionWidth(), player.getSpiritDrainSpriteSheet().getRegionHeight(),
+//                0.01f, 0.01f, 0, 0, 0, true, "spiritDrain", player, 1f,
+//                1, 1, player.getSpiritDrainAnimation(), 5);
+//        level.addQueuedObject(spiritDrainEffect);
+//        level.removeQueuedObject(spiritDrainEffect);
+//    }
 
     /**
      * Resolves the set of enemy actions
