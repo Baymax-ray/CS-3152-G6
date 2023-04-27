@@ -21,7 +21,7 @@
 
     "startsFacingRight": true,
 
-    "maxSpeed": 4.0,
+    "maxSpeed": 4.5,
     "chiyoSpeedMult": 1.5,
     "horizontalAcceleration": 0.5,
 
