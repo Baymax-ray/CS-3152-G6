@@ -375,6 +375,7 @@ public class ActionController {
                 pOffsetY = diagonalDashMult * pOffset;
             }
             player.setVelocity(dashX, dashY);
+            level.shakeControllerSmall();
 
             //Creating dash effect
             EffectObstacle dashAnimate = level.getEffectPool().obtainEffect(player.getX(), player.getY(), player.getDashEffectSpriteSheet().getRegionWidth(),

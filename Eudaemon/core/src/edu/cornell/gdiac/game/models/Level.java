@@ -903,7 +903,7 @@ public class Level {
 
     public void shakeControllerSmall() {
         try {
-            controller.startVibration(100,0.3f);
+            controller.startVibration(50,0.3f);
         } catch (Exception e) {
 
         }
@@ -911,7 +911,7 @@ public class Level {
 
     public void shakeControllerMedium() {
         try {
-            controller.startVibration(100,0.5f);
+            controller.startVibration(50,0.5f);
         } catch (Exception e) {
 
         }
@@ -919,7 +919,7 @@ public class Level {
 
     public void shakeControllerHeavy() {
         try {
-            controller.startVibration(100,0.5f);
+            controller.startVibration(50,0.5f);
         } catch (Exception e) {
 
         }
