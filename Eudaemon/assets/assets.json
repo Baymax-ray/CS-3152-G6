@@ -164,7 +164,7 @@
           "sprites" : {
             "fire": {
               "rows": 1,
-              "cols": 3
+              "cols": 14
             }
           }
         },

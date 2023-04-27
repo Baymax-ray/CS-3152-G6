@@ -177,6 +177,7 @@ public class EffectObstacle extends BoxObstacle{
         currentTicks++;
         if (currentTicks % tickSpeed == 0){
             currentFrame++;
+            System.out.println("current frame: " + currentFrame);
             TextureRegion current = animation.getKeyFrame(currentFrame); // Gets the current frame of the animation
             setTexture(current);
         }

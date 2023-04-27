@@ -596,6 +596,14 @@ public class Level {
         addQueue.add(obj);
     }
 
+    public boolean inAddQueue(Obstacle obj){
+        return addQueue.contains(obj);
+    }
+
+    public void removeQueuedObject(Obstacle obj){
+        addQueue.remove(obj);
+    }
+
 
     /**
      * Immediately adds the object to the physics world

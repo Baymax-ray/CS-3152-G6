@@ -107,6 +107,8 @@ public class ActionController {
 
     private ArrayList<Sound> soundDictionary;
 
+    private EffectObstacle spiritDrainEffect;
+
 
 
     public ActionController(Level level,Array<AIController> aiControllers) {
@@ -138,6 +140,7 @@ public class ActionController {
         addAnimations(player.getChiyoAttackSpriteSheet(), 8, 2, "chiyoAttack");
         addAnimations(player.getDashEffectSpriteSheet(), 5, 1, "dashEffect");
         addAnimations(player.getImpactEffectSpriteSheet(), 8, 1, "impactEffect");
+        addAnimations(player.getSpiritDrainSpriteSheet(), 13, 1, "spiritDrain");
     }
 
     /**
@@ -685,6 +688,7 @@ public class ActionController {
                     1, 1, animations.get("impactEffect"), 5);
             level.addQueuedObject(impactAnimate);
             impactId = playSound(impactSound, impactId, 0.3F);
+
         }
 
         //#endregion
@@ -697,7 +701,6 @@ public class ActionController {
 
 
 
-
         // automatic spirit loss
         if (player.getForm() == 1) { // if player is chiyo
             player.decreaseSpirit();
@@ -705,14 +708,21 @@ public class ActionController {
                 player.setForm(); // switch back to momo
             }
         } else if (player.getEnemiesInSpiritRange().size > 0) {
-
             player.getEnemiesInSpiritRange().get(0).LossSpirit(level.getPlayer().getSpiritIncreaseRate());
             player.increaseSpirit();
-                EffectObstacle effect = level.getEffectPool().obtainEffect(player.getX(), player.getY(), player.getSpiritDrainSpriteSheet().getRegionWidth(), player.getSpiritDrainSpriteSheet().getRegionHeight(), 0.01f, 0.01f, 0, 0, 0, true, "spiritDrain", player, 1f, 1, 1, player.getSpiritDrainAnimation(), 3);
-                level.addQueuedObject(effect);
+            drawSpiritEffect();
         }
 
 
+
+    }
+    public void drawSpiritEffect(){
+        spiritDrainEffect = level.getEffectPool().obtainEffect(player.getX(), player.getY(),
+                player.getSpiritDrainSpriteSheet().getRegionWidth(), player.getSpiritDrainSpriteSheet().getRegionHeight(),
+                0.01f, 0.01f, 0, 0, 0, true, "spiritDrain", player, 1f,
+                1, 1, player.getSpiritDrainAnimation(), 5);
+        level.addQueuedObject(spiritDrainEffect);
+        level.removeQueuedObject(spiritDrainEffect);
     }
 
     /**

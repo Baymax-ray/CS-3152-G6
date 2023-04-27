@@ -29,17 +29,19 @@ public class UIOverlay {
     }
 
     public void draw(GameCanvas canvas, float playerHearts, float playerSpirit) {
-        float xPos = 74.5F;
-        canvas.draw(uiOutline, Color.WHITE, 0, canvas.getHeight() - 62, 221, 52);
-//        canvas.draw(settingsButton, Color.WHITE, canvas.getWidth()-72, canvas.getHeight()-62, 51, 52);
+//        float xPos = 74.5F;
+        float xPos = 0.05173611111f*canvas.getWidth();
+        System.out.println("canvas width is: " + canvas.getWidth());
+        System.out.println("canvas height is: " + canvas.getHeight());
+        canvas.draw(uiOutline, Color.WHITE, 0, canvas.getHeight()*0.927f, canvas.getWidth()*0.1534722222f, canvas.getHeight()*0.06f);
         for(int i=0; i < playerHearts; i++){
-            canvas.draw(heartRegion, Color.WHITE, xPos,canvas.getHeight() - 32, 23, 20);
-            xPos += 60.5F;
+            canvas.draw(heartRegion, Color.WHITE, xPos,canvas.getHeight()*0.962f, 0.016f*canvas.getWidth(), 0.024f*canvas.getHeight());
+            xPos += 0.042f*canvas.getWidth();
         }
         float spiritPercentage = playerSpirit / 10F;
         int barWidth = (int)(filledSpiritBar.getWidth() * spiritPercentage);
         int barHeight = filledSpiritBar.getHeight();
         TextureRegion croppedBar = new TextureRegion(filledSpiritBar, 0, 0, barWidth, barHeight);
-        canvas.draw(croppedBar, Color.WHITE, 72, canvas.getHeight() - 61, 137 * spiritPercentage, 18.234F);
+        canvas.draw(croppedBar, Color.WHITE, 0.05f* canvas.getWidth(), 0.928f*canvas.getHeight(), canvas.getWidth()*0.095f * spiritPercentage, 0.022f*canvas.getHeight());
     }
 }
