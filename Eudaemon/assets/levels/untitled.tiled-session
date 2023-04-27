@@ -50,11 +50,11 @@
             "expandedObjectLayers": [
                 7
             ],
-            "scale": 0.2402,
-            "selectedLayer": 1,
+            "scale": 1.211,
+            "selectedLayer": 2,
             "viewCenter": {
-                "x": 568.2764363030807,
-                "y": 930.474604496253
+                "x": 1215.5243600330305,
+                "y": 635.0123864574731
             }
         },
         "level0.tmj": {
@@ -69,19 +69,22 @@
             "expandedObjectLayers": [
                 7
             ],
-            "scale": 0.416,
-            "selectedLayer": 0,
+            "scale": 1.4532,
+            "selectedLayer": 2,
             "viewCenter": {
-                "x": 1201.923076923077,
-                "y": 641.8269230769231
+                "x": 1199.421965317919,
+                "y": 639.9669694467383
             }
         },
         "level2.json": {
-            "scale": 0.358,
+            "expandedObjectLayers": [
+                7
+            ],
+            "scale": 0.5931,
             "selectedLayer": 3,
             "viewCenter": {
-                "x": 638.268156424581,
-                "y": 744.413407821229
+                "x": 799.1906929691452,
+                "y": 639.01534311246
             }
         },
         "level3.json": {
@@ -91,8 +94,8 @@
             "scale": 0.5,
             "selectedLayer": 3,
             "viewCenter": {
-                "x": 849,
-                "y": 719
+                "x": 848,
+                "y": 1110
             }
         }
     },
@@ -104,14 +107,23 @@
     "map.renderOrder": null,
     "map.width": 50,
     "openFiles": [
+        "level0.json",
+        "level1.json",
+        "level2.json",
+        "level3.json",
+        "F:/Programming/School/CS 3152/Eudaemon/CS-3152-G6/Eudaemon/assets/EudaemonTileset.json"
     ],
     "project": "untitled.tiled-project",
     "property.type": "string",
     "recentFiles": [
-        "level1.json",
-        "level0.json",
         "level2.json",
-        "level3.json"
+        "level0.json",
+        "level1.json",
+        "level3.json",
+        "F:/Programming/School/CS 3152/Eudaemon/CS-3152-G6/Eudaemon/assets/EudaemonTileset.json",
+        "experimentalLevel1.json",
+        "level0.tmj",
+        "F:/Users/neelin2/coding/cs3152/Eudaemon/CS-3152-G6/Eudaemon/assets/EudaemonTileset.json"
     ],
     "tileset.lastUsedFilter": "JSON tileset files (*.tsj *.json)"
 }
