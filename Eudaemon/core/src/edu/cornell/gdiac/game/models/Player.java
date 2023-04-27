@@ -2,20 +2,16 @@ package edu.cornell.gdiac.game.models;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Sound;
-import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.JsonValue;
 import edu.cornell.gdiac.assets.AssetDirectory;
-import edu.cornell.gdiac.audio.SoundEffect;
 import edu.cornell.gdiac.game.GameCanvas;
-import edu.cornell.gdiac.game.obstacle.BoxObstacle;
 import edu.cornell.gdiac.game.obstacle.CapsuleObstacle;
 import edu.cornell.gdiac.game.obstacle.SwordWheelObstacle;
 import edu.cornell.gdiac.game.obstacle.WheelObstacle;
@@ -39,6 +35,11 @@ public class Player extends CapsuleObstacle {
      */
     private final float chiyoSpeedMult;
     private final boolean startsFacingRight;
+
+    /**
+     * The velocity at which the player slides down a wall.
+     */
+    private float wallSlideVelocity;
 
     /**
      * Time in milliseconds during which gravity doesn't affect the player
@@ -82,8 +83,6 @@ public class Player extends CapsuleObstacle {
      * The distance the center of the attack is offset from the player
      */
     private final float attackOffset;
-    private final int hitCooldown;
-
 
     /**
      * The radius of the sword used by the player.
@@ -209,9 +208,13 @@ public class Player extends CapsuleObstacle {
      */
     private int ticksInAir;
     /**
-     * A boolean variable representing whether the object is sliding or not.
+     * A boolean variable representing whether the player's right is touching the wall or not.
      */
-    private boolean isTouchingWall;
+    private boolean isTouchingWallRight;
+    /**
+     * A boolean variable representing whether the player's left is touching the wall or not.
+     */
+    private boolean isTouchingWallLeft;
     /** The amount player's drawing scale is multiplied by on the x-axis. */
     private float sxMult = 1;
 
@@ -253,10 +256,12 @@ public class Player extends CapsuleObstacle {
      * The angle at which the entity is facing, in degrees.
      */
     private int angleFacing;
-    private boolean isMovingRight;
-    private boolean isMovingLeft;
-    private final boolean isLookingUp;
-    private final boolean isLookingDown;
+
+    /**
+     * Private boolean to describe whether the player is sliding on a wall.
+     */
+    private boolean isSliding;
+
     private boolean jumpPressedInAir;
 
     private int dashCooldownRemaining;
@@ -279,12 +284,20 @@ public class Player extends CapsuleObstacle {
 
     /** The shape for the ground sensor */
     private PolygonShape groundSensorShape;
+    /** The shape for the wall sensor */
+    private PolygonShape wallSensorShapeRight;
+    /** The shape for the wall sensor */
+    private PolygonShape wallSensorShapeLeft;
 
     /** The shape for the spirit sensor */
     private CircleShape spiritSensorShape;
 
-    /** Identifier to allow us to track the sensor in ContactListener */
-    private final String sensorName;
+    /** Identifier to allow us to track the ground sensor in ContactListener */
+    private final String groundSensorName;
+    /** Identifier to allow us to track the right wall sensor in ContactListener */
+    private final String wallSensorNameRight;
+    /** Identifier to allow us to track the left wall sensor in ContactListener */
+    private final String wallSensorNameLeft;
 
     /** Identifier to allow us to track the spirit sensor in ContactListener */
     private final String spiritSensorName;
@@ -469,6 +482,42 @@ public class Player extends CapsuleObstacle {
 
     //#region GETTERS AND SETTERS
 
+    /**
+     * Returns the velocity at which the player slides down a wall.
+     *
+     * @return the wall slide velocity
+     */
+    public float getWallSlideVelocity() {
+        return wallSlideVelocity;
+    }
+
+    /**
+     * Sets the velocity at which the player slides down a wall.
+     *
+     * @param wallSlideVelocity the new wall slide velocity
+     */
+    public void setWallSlideVelocity(float wallSlideVelocity) {
+        this.wallSlideVelocity = wallSlideVelocity;
+    }
+
+    /**
+     * Returns whether the player is currently sliding on a wall.
+     *
+     * @return true if the player is sliding, false otherwise
+     */
+    public boolean isSliding() {
+        return isSliding;
+    }
+
+    /**
+     * Sets whether the player is currently sliding on a wall.
+     *
+     * @param isSliding true if the player is sliding, false otherwise
+     */
+    public void setSliding(boolean isSliding) {
+        this.isSliding = isSliding;
+    }
+
     public Array<Enemy> getEnemiesInSpiritRange() {
         return enemiesInSpiritRange;
     }
@@ -510,19 +559,29 @@ public class Player extends CapsuleObstacle {
         return dashTime;
     }
     /**
-     * Retrieves if the player is sliding
+     * Retrieves if the player is touching the right wall
      *
-     * @return The current sliding state.
+     * @return The touching right wall state.
      */
-    public boolean isTouchingWall() {
-        return isTouchingWall;
+    public boolean isTouchingWallRight() {
+        return isTouchingWallRight;
     }
     /**
-     * Sets if the player is sliding
+     * Sets if the player is touching the right wall
      */
-    public void setTouchingWall(boolean slide) {
-        isTouchingWall = slide;
+    public void setTouchingWallRight(boolean slide) {
+        isTouchingWallRight = slide;
     }
+    /**
+     * Retrieves if the player is touching the left wall
+     *
+     * @return The touching left wall state.
+     */
+    public boolean isTouchingWallLeft() {
+        return isTouchingWallLeft;
+    }
+    /**Sets if the player is touching the left wall*/
+    public void setTouchingWallLeft(boolean slide) {isTouchingWallLeft = slide;}
 
     /**
      * Gets the value of the chiyo's speed multiplier
@@ -950,9 +1009,27 @@ public class Player extends CapsuleObstacle {
      *
      * @return the name of the ground sensor
      */
-    public String getSensorName() {
-        return sensorName;
+    public String getGroundSensorName() {
+        return groundSensorName;
     }
+    /**
+     * Returns the name of the right wall sensor
+     *
+     * This is used by ContactListener
+     *
+     * @return the name of the right wall sensor
+     */
+    public String getWallSensorNameRight() {
+        return wallSensorNameRight;
+    }
+    /**
+     * Returns the name of the left wall sensor
+     *
+     * This is used by ContactListener
+     *
+     * @return the name of the left wall sensor
+     */
+    public String getWallSensorNameLeft() {return wallSensorNameLeft;}
 
     /**
      * Returns the number of frames player can jump again after they jump.
@@ -1126,6 +1203,8 @@ public class Player extends CapsuleObstacle {
         super.drawDebug(canvas);
         canvas.drawPhysics(groundSensorShape,Color.RED,getX(),getY(),getAngle(),drawScale.x,drawScale.y);
         canvas.drawPhysics(spiritSensorShape,Color.CYAN,getX(),getY(),drawScale.x,drawScale.y);
+        canvas.drawPhysics(wallSensorShapeRight,Color.RED,getX(),getY(),getAngle(),drawScale.x,drawScale.y);
+        canvas.drawPhysics(wallSensorShapeLeft,Color.RED,getX(),getY(),getAngle(),drawScale.x,drawScale.y);
     }
 
 
@@ -1135,7 +1214,7 @@ public class Player extends CapsuleObstacle {
         //Set Gravity
         body.setGravityScale(playerGravity);
 
-        // Define Fixture
+        // // Ground sensor to represent our feet
         Vector2 sensorCenter = new Vector2(0, -getHeight() / 2);
         FixtureDef sensorDef = new FixtureDef();
         sensorDef.density = data.getFloat("density",0);
@@ -1145,10 +1224,32 @@ public class Player extends CapsuleObstacle {
         groundSensorShape.setAsBox(sensorjv.getFloat("shrink",0)*getWidth()/2.0f,
                 sensorjv.getFloat("height",0), sensorCenter, 0.0f);
         sensorDef.shape = groundSensorShape;
-
-        // Ground sensor to represent our feet
         Fixture sensorFixture = body.createFixture( sensorDef );
-        sensorFixture.setUserData(getSensorName());
+        sensorFixture.setUserData(getGroundSensorName());
+
+        // Wall sensor to represent our front
+        Vector2 sensorCenter2 = new Vector2(getWidth()/2, 0);
+        FixtureDef sensorDef2 = new FixtureDef();
+        sensorDef2.density = data.getFloat("density",0);
+        sensorDef2.isSensor = true;
+        wallSensorShapeRight = new PolygonShape();
+        JsonValue sensorjv2 = data.get("wallSensor");
+        wallSensorShapeRight.setAsBox(sensorjv2.getFloat("shrink",0)*getWidth()/2.0f,
+                sensorjv2.getFloat("height",0), sensorCenter2, 0.0f);
+        sensorDef2.shape = wallSensorShapeRight;
+        Fixture sensorFixture2 = body.createFixture( sensorDef2 );
+        sensorFixture2.setUserData(getWallSensorNameRight());
+
+        Vector2 sensorCenter3 = new Vector2(-getWidth()/2, 0);
+        FixtureDef sensorDef3 = new FixtureDef();
+        sensorDef3.density = data.getFloat("density",0);
+        sensorDef3.isSensor = true;
+        wallSensorShapeLeft = new PolygonShape();
+        wallSensorShapeLeft.setAsBox(sensorjv2.getFloat("shrink",0)*getWidth()/2.0f,
+                sensorjv2.getFloat("height",0), sensorCenter3, 0.0f);
+        sensorDef3.shape = wallSensorShapeLeft;
+        Fixture sensorFixture3 = body.createFixture( sensorDef3 );
+        sensorFixture3.setUserData(getWallSensorNameLeft());
 
 //        // Rectangle Sensor for Wall Slides
 //        spiritSensorShape = new BoxObstacle();
@@ -1183,7 +1284,32 @@ public class Player extends CapsuleObstacle {
 
         // Ground sensor to represent our feet
         Fixture sensorFixture = body.createFixture( sensorDef );
-        sensorFixture.setUserData(getSensorName());
+        sensorFixture.setUserData(getGroundSensorName());
+    }
+
+    public void updateWallSensor(){
+        Vector2 sensorCenter = new Vector2(getWidth()/2, getHeight() / 2);
+        FixtureDef sensorDef = new FixtureDef();
+        sensorDef.density = data.getFloat("density",0);
+        sensorDef.isSensor = true;
+        wallSensorShapeRight = new PolygonShape();
+        JsonValue sensorjv = data.get("wallSensor");
+        wallSensorShapeRight.setAsBox(sensorjv.getFloat("shrink",0)*getWidth()/2.0f,
+                sensorjv.getFloat("height",0), sensorCenter, 0.0f);
+        sensorDef.shape = wallSensorShapeRight;
+        Fixture sensorFixture = body.createFixture( sensorDef );
+        sensorFixture.setUserData(getWallSensorNameRight());
+
+        Vector2 sensorCenter3 = new Vector2(-getWidth()/2, 0);
+        FixtureDef sensorDef3 = new FixtureDef();
+        sensorDef3.density = data.getFloat("density",0);
+        sensorDef3.isSensor = true;
+        wallSensorShapeLeft = new PolygonShape();
+        wallSensorShapeLeft.setAsBox(sensorjv.getFloat("shrink",0)*getWidth()/2.0f,
+                sensorjv.getFloat("height",0), sensorCenter3, 0.0f);
+        sensorDef3.shape = wallSensorShapeLeft;
+        Fixture sensorFixture3 = body.createFixture( sensorDef3 );
+        sensorFixture3.setUserData(getWallSensorNameLeft());
     }
 
     /**
@@ -1284,6 +1410,9 @@ public class Player extends CapsuleObstacle {
         this.chiyoJumpTimeMult = json.getFloat("chiyoJumpTimeMult");
         this.chiyoHitBoxHeightMult = json.getFloat("chiyoHitboxHeightMult");
 
+        //Sliding
+        this.wallSlideVelocity = json.getFloat("wallSlideVelocity");
+
         //Attacking
         this.attackPower = json.getInt("attackPower");
         this.attackCooldown = json.getInt("attackCooldown");
@@ -1301,7 +1430,6 @@ public class Player extends CapsuleObstacle {
         this.maxSpirit = json.getFloat("maxSpirit");
         this.initialSpirit = json.getFloat("initialSpirit");
         this.startsFacingRight = json.getBoolean("startsFacingRight");
-        this.hitCooldown = json.getInt("hitCooldown");
         this.jumpCooldown = json.getInt("jumpCooldown");
         this.coyoteFrames = json.getInt("coyoteTime");
         this.jumpTolerance = json.getInt("jumpTolerance");
@@ -1329,8 +1457,6 @@ public class Player extends CapsuleObstacle {
         this.isHit = false;
         this.isGrounded = true;
         this.isFacingRight = startsFacingRight;
-        this.isLookingUp = false;
-        this.isLookingDown = false;
         this.jumpPressedInAir = false;
         this.isAttacking = false;
         this.dashedInAir = false;
@@ -1346,7 +1472,9 @@ public class Player extends CapsuleObstacle {
 
         this.texture = momoTexture;
         this.data = json;
-        sensorName = "PlayerGroundSensor";
+        groundSensorName = "PlayerGroundSensor";
+        wallSensorNameRight = "PlayerWallSensorRight";
+        wallSensorNameLeft = "PlayerWallSensorLeft";
         spiritSensorName = "PlayerSpiritSensor";
 
         this.enemiesInSpiritRange = new Array<>();

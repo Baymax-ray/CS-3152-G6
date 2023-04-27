@@ -153,6 +153,10 @@ public class ActionController {
         ticks++;
         resolvePlayerActions(playerAction);
         resolveEnemyActions(enemyActions);
+        System.out.println("Grounded: " + player.isGrounded());
+        System.out.println("Left Wall: " + player.isTouchingWallLeft());
+        System.out.println("Right Wall: " + player.isTouchingWallRight()+ "\n");
+
     }
 
     //#region Player and Enemy Actions
@@ -199,6 +203,14 @@ public class ActionController {
         int dashCooldownRemaining = player.getDashCooldownRemaining();
         if (dashCooldownRemaining > 0) {
             player.setDashCooldownRemaining(dashCooldownRemaining - 1);
+        }
+
+        if (player.getiFramesRemaining() > 0) {
+            player.setiFramesRemaining(Math.max(player.getiFramesRemaining() - 1, 0));
+            if (player.getiFramesRemaining() == 0) {
+                player.setHit(false);
+
+            }
         }
         //#endregion
 
@@ -295,6 +307,27 @@ public class ActionController {
             player.setAttackLifespanRemaining(player.getAttackLifespan());
             createSword();
             swordSwipeSoundId = playSound( swordSwipeSound, swordSwipeSoundId, 0.05F );
+        }
+
+        if (player.getAttackLifespanRemaining() > 0) {
+            player.setAttackLifespanRemaining(Math.max(player.getAttackCooldownRemaining() - 1, 0));
+            if (player.getAttackLifespanRemaining() == 0) {
+                player.setAttacking(false);
+            }
+        }
+        //#endregion
+
+        //#region Wall Slide
+        if (player.isTouchingWallRight() && rightPressed){
+            player.setSliding(true);
+        } else if (player.isTouchingWallLeft() && leftPressed){
+            player.setSliding(true);
+        } else {
+            player.setSliding(false);
+        }
+
+        if (player.isSliding()){
+            player.setVelocity(player.getBodyVelocityX(), player.getWallSlideVelocity());
         }
         //#endregion
 
@@ -398,6 +431,29 @@ public class ActionController {
                 }
             }, player.getDashTime());
         }
+
+        if (player.getDashLifespanRemaining() > 0) {
+            player.setDashLifespanRemaining(Math.max(player.getDashLifespanRemaining() - 1, 0));
+            if (player.getDashLifespanRemaining() == 0) {
+                player.setDashing(false);
+                player.setVelocity(player.getBodyVelocityX() / 3, player.getBodyVelocityY() / 3);
+            }
+
+        }
+
+        if (player.isDashing()) {
+            player.setDashCooldownRemaining(Math.max(player.getDashCooldownRemaining() - 1, 0));
+            if (player.getDashCooldownRemaining() == 0) player.setDashing(false);
+            Filter f =player.getFilterData();
+            f.groupIndex = -1; //cancel its collision with bullet
+            player.setFilterData(f);
+        } else {
+            Filter f =player.getFilterData();
+            f.groupIndex = 0;
+            player.setFilterData(f);
+        }
+
+        if (player.isGrounded() && !player.isDashing()) player.setDashedInAir(false);
         //#endregion
 
         //#region Jump
@@ -446,48 +502,6 @@ public class ActionController {
             if (player.getJumpToleranceRemaining() == 0) player.setJumpPressedInAir(false);
         }
         //#endregion
-
-        //#region Wall Slide
-
-        //#endregion
-
-        if (player.getiFramesRemaining() > 0) {
-            player.setiFramesRemaining(Math.max(player.getiFramesRemaining() - 1, 0));
-            if (player.getiFramesRemaining() == 0) {
-                player.setHit(false);
-
-            }
-        }
-
-        if (player.getAttackLifespanRemaining() > 0) {
-            player.setAttackLifespanRemaining(Math.max(player.getAttackCooldownRemaining() - 1, 0));
-            if (player.getAttackLifespanRemaining() == 0) {
-                player.setAttacking(false);
-            }
-        }
-
-        if (player.getDashLifespanRemaining() > 0) {
-            player.setDashLifespanRemaining(Math.max(player.getDashLifespanRemaining() - 1, 0));
-            if (player.getDashLifespanRemaining() == 0) {
-                player.setDashing(false);
-                player.setVelocity(player.getBodyVelocityX() / 3, player.getBodyVelocityY() / 3);
-            }
-
-        }
-
-        if (player.isDashing()) {
-            player.setDashCooldownRemaining(Math.max(player.getDashCooldownRemaining() - 1, 0));
-            if (player.getDashCooldownRemaining() == 0) player.setDashing(false);
-            Filter f =player.getFilterData();
-            f.groupIndex = -1; //cancel its collision with bullet
-            player.setFilterData(f);
-        } else {
-            Filter f =player.getFilterData();
-            f.groupIndex = 0;
-            player.setFilterData(f);
-        }
-
-        if (player.isGrounded() && !player.isDashing()) player.setDashedInAir(false);
 
         if (debugPressed) {
             level.setDebug(!level.isDebug());
@@ -701,9 +715,7 @@ public class ActionController {
         previousX = player.getX();
         movedDuringLastFrame = (leftPressed || rightPressed) && deltaX > 0;
 
-
-
-        // automatic spirit loss
+        //#region Spirit Loss
         if (player.getForm() == 1) { // if player is chiyo
             player.decreaseSpirit();
             if (player.getSpirit() <= 0) {
@@ -720,7 +732,7 @@ public class ActionController {
                     1, 1, player.getSpiritDrainAnimation(), 5);
             level.addQueuedObject(spiritDrainEffect);
         }
-
+        //#endregion
 
 
     }
@@ -732,6 +744,14 @@ public class ActionController {
 //        level.addQueuedObject(spiritDrainEffect);
 //        level.removeQueuedObject(spiritDrainEffect);
 //    }
+
+    /**
+     * Causes the player to jump.
+     */
+    private void jump() {
+
+    }
+
 
     /**
      * Resolves the set of enemy actions
@@ -796,7 +816,6 @@ public class ActionController {
                 }
                 //Green Mosquito
                 else if(enemy.getType().equals("Fly")){
-//                    System.out.println("Fly is facing" + enemy.getIsFacingRight());
                     enemy.setCurrentAnimation("move");
 
                 }

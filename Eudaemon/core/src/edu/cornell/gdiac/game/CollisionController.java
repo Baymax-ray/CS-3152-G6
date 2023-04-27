@@ -1,29 +1,40 @@
 package edu.cornell.gdiac.game;
 
-import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
 import com.badlogic.gdx.utils.Array;
-import com.badlogic.gdx.utils.ObjectSet;
 import edu.cornell.gdiac.game.models.*;
 import edu.cornell.gdiac.game.obstacle.EffectObstacle;
-import edu.cornell.gdiac.game.obstacle.Obstacle;
 import edu.cornell.gdiac.game.obstacle.SwordWheelObstacle;
 import edu.cornell.gdiac.game.obstacle.WheelObstacle;
-
-import java.util.ArrayList;
 
 public class CollisionController implements ContactListener {
 
     private Level level;
-    private Array<Fixture> sensorFixtures;
+    /**
+     * The list of tile fixtures the player's ground sensor is in contact with
+     */
+    private Array<Fixture> groundSensorFixtures;
+    /**
+     * The list of tile fixtures the player's right wall sensor is in contact with
+     */
+    private Array<Fixture> rightWallSensorFixtures;
+    /**
+     * The list of tile fixtures the player's left wall sensor is in contact with
+     */
+    private Array<Fixture> leftWallSensorFixtures;
+
     public CollisionController(Level level) {
         this.level = level;
-        sensorFixtures = new Array<Fixture>();
+        groundSensorFixtures = new Array<Fixture>();
+        rightWallSensorFixtures = new Array<Fixture>();
+        leftWallSensorFixtures = new Array<Fixture>();
     }
 
     public void dispose() {
         this.level = null;
-        this.sensorFixtures.clear();
+        this.groundSensorFixtures.clear();
+        this.rightWallSensorFixtures.clear();
+        this.leftWallSensorFixtures.clear();
     }
 
     @Override
@@ -40,13 +51,36 @@ public class CollisionController implements ContactListener {
         Object bd1 = body1.getUserData();
         Object bd2 = body2.getUserData();
 
+        // Sees if the player is grounded
         try {
             if ((bd1.toString().contains("Tile") && fix2.getUserData().equals(
-                    level.getPlayer().getSensorName())) ||
+                    level.getPlayer().getGroundSensorName())) ||
                     (bd2.toString().contains("Tile") && fix1.getUserData().equals(
-                            level.getPlayer().getSensorName()))) {
+                            level.getPlayer().getGroundSensorName()))) {
                 level.getPlayer().setGrounded(true);
-                sensorFixtures.add(level.getPlayer() == bd1 ? fix2 : fix1);
+                groundSensorFixtures.add(level.getPlayer() == bd1 ? fix2 : fix1);
+            }
+        } catch (Exception e) { }
+
+        // See if the player's right side is touching the wall
+        try {
+            if ((bd1.toString().contains("Tile") && fix2.getUserData().equals(
+                    level.getPlayer().getWallSensorNameRight())) ||
+                    (bd2.toString().contains("Tile") && fix1.getUserData().equals(
+                            level.getPlayer().getWallSensorNameRight()))) {
+                level.getPlayer().setTouchingWallRight(true);
+                rightWallSensorFixtures.add(level.getPlayer() == bd1 ? fix2 : fix1);
+            }
+        } catch (Exception e) { }
+
+        // See if the player's left side is touching the wall
+        try {
+            if ((bd1.toString().contains("Tile") && fix2.getUserData().equals(
+                    level.getPlayer().getWallSensorNameLeft())) ||
+                    (bd2.toString().contains("Tile") && fix1.getUserData().equals(
+                            level.getPlayer().getWallSensorNameLeft()))) {
+                level.getPlayer().setTouchingWallLeft(true);
+                leftWallSensorFixtures.add(level.getPlayer() == bd1 ? fix2 : fix1);
             }
         } catch (Exception e) { }
 
@@ -62,7 +96,6 @@ public class CollisionController implements ContactListener {
         } catch (Exception e) { }
 
         if (bd1 instanceof WheelObstacle && !(bd1 instanceof SwordWheelObstacle) && !(bd2 instanceof Enemy) && !fix2.isSensor()){
-//            System.out.println(bd2.toString());
             ((WheelObstacle) bd1).markRemoved(true);
             if(bd2 instanceof Player){
                 Player player=level.getPlayer();
@@ -73,7 +106,6 @@ public class CollisionController implements ContactListener {
                 }
             }
         }else if (bd2 instanceof WheelObstacle && !(bd2 instanceof SwordWheelObstacle)&& !(bd1 instanceof Enemy) && !fix1.isSensor() ){
-//            System.out.println(bd1.toString());
             ((WheelObstacle) bd2).markRemoved(true);
             if(bd1 instanceof Player ) {
                 Player player = level.getPlayer();
@@ -201,18 +233,48 @@ public class CollisionController implements ContactListener {
         Object bd1 = body1.getUserData();
         Object bd2 = body2.getUserData();
 
+        // Sees if the player's ground sensor is no longer in contact with any tiles
         try {
             if ((bd1.toString().contains("Tile") && fix2.getUserData().equals(
-                    level.getPlayer().getSensorName())) ||
+                    level.getPlayer().getGroundSensorName())) ||
                     (bd2.toString().contains("Tile") && fix1.getUserData().equals(
-                            level.getPlayer().getSensorName()))) {
+                            level.getPlayer().getGroundSensorName()))) {
 
-                sensorFixtures.removeValue(level.getPlayer() == bd1 ? fix2 : fix1, true);
-                if (sensorFixtures.size == 0) {
+                groundSensorFixtures.removeValue(level.getPlayer() == bd1 ? fix2 : fix1, true);
+                if (groundSensorFixtures.size == 0) {
                     level.getPlayer().setGrounded(false);
                 }
             }
         } catch (Exception e) {}
+
+        // Sees if the player's right wall sensor is no longer in contact with any tiles
+        try {
+            if ((bd1.toString().contains("Tile") && fix2.getUserData().equals(
+                    level.getPlayer().getWallSensorNameRight())) ||
+                    (bd2.toString().contains("Tile") && fix1.getUserData().equals(
+                            level.getPlayer().getWallSensorNameRight()))) {
+
+                rightWallSensorFixtures.removeValue(level.getPlayer() == bd1 ? fix2 : fix1, true);
+                if (rightWallSensorFixtures.size == 0) {
+                    level.getPlayer().setTouchingWallRight(false);
+                }
+            }
+        } catch (Exception e) {}
+
+        // Sees if the player's left wall sensor is no longer in contact with any tiles
+        try {
+            if ((bd1.toString().contains("Tile") && fix2.getUserData().equals(
+                    level.getPlayer().getWallSensorNameLeft())) ||
+                    (bd2.toString().contains("Tile") && fix1.getUserData().equals(
+                            level.getPlayer().getWallSensorNameLeft()))) {
+
+                leftWallSensorFixtures.removeValue(level.getPlayer() == bd1 ? fix2 : fix1, true);
+                if (leftWallSensorFixtures.size == 0) {
+                    level.getPlayer().setTouchingWallLeft(false);
+                }
+            }
+        } catch (Exception e) {}
+
 
         if (level.getPlayer().getSpiritSensorName().equals(fd1) && bd2 instanceof Enemy ||
                 level.getPlayer().getSpiritSensorName().equals(fd2) && bd1 instanceof Enemy) {

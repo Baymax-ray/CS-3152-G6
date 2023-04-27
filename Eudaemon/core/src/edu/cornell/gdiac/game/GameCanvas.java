@@ -301,7 +301,7 @@ public class GameCanvas {
 	 */
 	 public void resize() {
 		// Resizing screws up the spriteBatch projection matrix
-		 System.out.println("resized!");
+//		 System.out.println("resized!");
 		spriteBatch.getProjectionMatrix().setToOrtho2D(0, 0, getWidth(), getHeight());
 	}
 	

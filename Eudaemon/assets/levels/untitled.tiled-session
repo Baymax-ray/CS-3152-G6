@@ -3,10 +3,10 @@
         "height": 4300,
         "width": 2
     },
-    "activeFile": "",
+    "activeFile": "F:/Programming/School/CS 3152/Eudaemon/CS-3152-G6/Eudaemon/assets/EudaemonTileset.json",
     "expandedProjectPaths": [
-        ".",
-        "Templates"
+        "Templates",
+        "."
     ],
     "file.lastUsedOpenFilter": "全部文件 (*)",
     "fileStates": {
@@ -50,11 +50,11 @@
             "expandedObjectLayers": [
                 7
             ],
-            "scale": 1.211,
-            "selectedLayer": 2,
+            "scale": 1,
+            "selectedLayer": 3,
             "viewCenter": {
-                "x": 1215.5243600330305,
-                "y": 635.0123864574731
+                "x": 2052.5,
+                "y": 301.5
             }
         },
         "level0.tmj": {
@@ -69,22 +69,19 @@
             "expandedObjectLayers": [
                 7
             ],
-            "scale": 1.4532,
-            "selectedLayer": 2,
+            "scale": 2,
+            "selectedLayer": 3,
             "viewCenter": {
-                "x": 1199.421965317919,
-                "y": 639.9669694467383
+                "x": 1792.25,
+                "y": 201.25
             }
         },
         "level2.json": {
-            "expandedObjectLayers": [
-                7
-            ],
-            "scale": 0.5931,
+            "scale": 0.5,
             "selectedLayer": 3,
             "viewCenter": {
-                "x": 799.1906929691452,
-                "y": 639.01534311246
+                "x": 521,
+                "y": 751
             }
         },
         "level3.json": {
@@ -94,8 +91,8 @@
             "scale": 0.5,
             "selectedLayer": 3,
             "viewCenter": {
-                "x": 848,
-                "y": 1110
+                "x": 855,
+                "y": 723
             }
         }
     },
@@ -116,9 +113,9 @@
     "project": "untitled.tiled-project",
     "property.type": "string",
     "recentFiles": [
-        "level2.json",
         "level0.json",
         "level1.json",
+        "level2.json",
         "level3.json",
         "F:/Programming/School/CS 3152/Eudaemon/CS-3152-G6/Eudaemon/assets/EudaemonTileset.json",
         "experimentalLevel1.json",

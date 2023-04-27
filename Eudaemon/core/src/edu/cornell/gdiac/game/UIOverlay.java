@@ -31,8 +31,8 @@ public class UIOverlay {
     public void draw(GameCanvas canvas, float playerHearts, float playerSpirit) {
 //        float xPos = 74.5F;
         float xPos = 0.05173611111f*canvas.getWidth();
-        System.out.println("canvas width is: " + canvas.getWidth());
-        System.out.println("canvas height is: " + canvas.getHeight());
+//        System.out.println("canvas width is: " + canvas.getWidth());
+//        System.out.println("canvas height is: " + canvas.getHeight());
         canvas.draw(uiOutline, Color.WHITE, 0, canvas.getHeight()*0.927f, canvas.getWidth()*0.1534722222f, canvas.getHeight()*0.06f);
         for(int i=0; i < playerHearts; i++){
             canvas.draw(heartRegion, Color.WHITE, xPos,canvas.getHeight()*0.962f, 0.016f*canvas.getWidth(), 0.024f*canvas.getHeight());

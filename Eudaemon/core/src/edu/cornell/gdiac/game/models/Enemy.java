@@ -42,7 +42,6 @@ public class Enemy extends CapsuleObstacle {
      * The distance the center of the attack is offset from the enemy
      */
     private final float attackOffset;
-    private final int hitCooldown;
     /**
      * The x-scaling factor for the sprite.
      */
@@ -96,18 +95,12 @@ public class Enemy extends CapsuleObstacle {
     The Scalar the speed is multiplied by
      */
     private float speedMult = 0.2f;
-    private final boolean isHit;
-    private final boolean isGrounded;
 
     //#region NON-FINAL FIELDS
     private int guardianTime = 0;
     private ArrayList<Integer> guardianList;
     private float hearts;
     private boolean isFacingRight = false;
-    /**
-     * The angle at which the entity is facing, in degrees.
-     */
-    private int angleFacing;
 
     /**
      * The offset value along the y-axis.
@@ -432,7 +425,6 @@ public class Enemy extends CapsuleObstacle {
                 for (String s : values) {
                     this.guardianList.add(Integer.parseInt(s));
                 }
-                //System.out.println(this.guardianList.size());
                 break;
             case "GoombaGuardian":
                 this.guardianTime = enemyData.getInt("guardianTime");
@@ -537,7 +529,6 @@ public class Enemy extends CapsuleObstacle {
         this.attackPower = enemyData.getInt("attackPower");
         this.attackCooldown = enemyData.getInt("attackCooldown");
         this.attackOffset = enemyData.getFloat("attackOffset");
-        this.hitCooldown = enemyData.getInt("hitCooldown");
 
         //Sound Effects
         this.swordKillingSound = Gdx.audio.newSound(Gdx.files.internal("audio/temp-sword-killing.mp3"));
@@ -553,8 +544,6 @@ public class Enemy extends CapsuleObstacle {
         this.spiritRemain = enemyData.getFloat(("spiritLimitation"));
         this.isFacingRight = enemyData.getBoolean("startsFacingRight");
 
-        this.isHit = false;
-        this.isGrounded = true;
         if (this.type.equals("Fly") || this.type.equals("FlyGuardian")) {
             this.setGravityScale(0);
         } else {
