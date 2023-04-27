@@ -14,25 +14,23 @@ public class AudioController {
     private static long momoSoundId;
 
     public AudioController(AssetDirectory assets){
-        chiyoSound = Gdx.audio.newSound(Gdx.files.internal("music/ChiyoTheme.mp3"));
-        momoSound = Gdx.audio.newSound(Gdx.files.internal("music/MomoTheme.mp3"));
+        chiyoSound = Gdx.audio.newSound(Gdx.files.internal("music/ChiyoTheme-Ver2.mp3"));
+        momoSound = Gdx.audio.newSound(Gdx.files.internal("music/MomoTheme-Ver2.mp3"));
         isMomo = true;
     }
 
     public static void playAllSound(){
-        chiyoSoundId=chiyoSound.loop();
-        momoSoundId=momoSound.loop();
+        chiyoSoundId=chiyoSound.loop(0.5f);
+        momoSoundId=momoSound.loop(0.5f);
     }
 
     public void updateAudio(float form){
 
         //0: momo, 1: chiyo
         if(form==1 && isMomo){
-            System.out.println("hello? momotochiyo");
             isMomo=false;
             momoToChiyo();
         }else if (form == 0 && !isMomo){
-            System.out.println("hello? chiyotomomo");
             isMomo=true;
             chiyoToMomo();
         }
@@ -48,12 +46,12 @@ public class AudioController {
 
     public static void momoToChiyo(){
         muteMomo();
-        chiyoSound.setVolume(chiyoSoundId,1);
+        chiyoSound.setVolume(chiyoSoundId,0.5f);
     }
 
     public static void chiyoToMomo(){
         muteChiyo();
-        momoSound.setVolume(momoSoundId,1);
+        momoSound.setVolume(momoSoundId,0.5f);
     }
 
     public static void dispose(){
