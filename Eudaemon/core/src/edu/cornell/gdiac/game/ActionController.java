@@ -708,6 +708,8 @@ public class ActionController {
             player.decreaseSpirit();
             if (player.getSpirit() <= 0) {
                 player.setForm(); // switch back to momo
+                player.setHeight(player.getHeight() / player.getChiyoHitBoxHeightMult());
+                player.updateGroundSensor();
             }
         } else if (player.getEnemiesInSpiritRange().size > 0) {
             player.getEnemiesInSpiritRange().get(0).LossSpirit(level.getPlayer().getSpiritIncreaseRate());
