@@ -54,16 +54,17 @@ public class LevelScreen implements Screen {
             enemyActions.add(EnumSet.noneOf(EnemyAction.class));
         }
 
-        actionController = new ActionController(level,aiControllers);
+        audio = new AudioController(assets);
+        audio.playAllSound();
+        audio.muteChiyo();
+
+        actionController = new ActionController(level,aiControllers, audio);
 
         collisionController = new CollisionController(level);
         level.getWorld().setContactListener(collisionController);
         level.activatePhysics();
 
         audio = new AudioController(assets);
-
-
-
     }
 
 

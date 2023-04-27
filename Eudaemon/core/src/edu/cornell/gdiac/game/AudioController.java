@@ -1,25 +1,78 @@
 package edu.cornell.gdiac.game;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Sound;
+import com.badlogic.gdx.utils.ObjectMap;
 import edu.cornell.gdiac.assets.AssetDirectory;
-import edu.cornell.gdiac.game.models.Action;
 
 public class AudioController {
 
-    private static Sound chiyoSound;
-    private static Sound momoSound;
-    private static boolean isMomo;
-    private static long chiyoSoundId;
-    private static long momoSoundId;
+
+    private Sound chiyoSound;
+    private Sound momoSound;
+    private boolean isMomo;
+    private long chiyoSoundId;
+    private long momoSoundId;
+
+    private ObjectMap<String, Sound> effects;
+    private ObjectMap<Sound, Long> effectIds;
+    private ObjectMap<Sound, Long> loopEffectIds;
+    /** The jump sound.  We only want to play once. */
+    private Sound jumpSound;
+
+    /** The impact sound.  We only want to play once. */
+    private Sound impactSound;
+
+    /** The sword swipe sound.  We only want to play once. */
+    private Sound swordSwipeSound;
+
+    /** The player dash sound.  We only want to play once. */
+    private Sound dashSound;
+
+    /** The player transform to Chiyo sound.  We only want to play once. */
+    private Sound playerChiyoTransformSound;
+
+    /** The player transform to momo sound.  We only want to play once. */
+    private Sound playerMomoTransformSound;
+
+    /** The chiyo running sound.  We only want to play once. */
+    private Sound chiyoRunSound;
+
+    /** The momo running sound.  We only want to play once. */
+    private Sound momoRunSound;
+
+    private Sound smallImpactSound;
 
     public AudioController(AssetDirectory assets){
-        chiyoSound = Gdx.audio.newSound(Gdx.files.internal("music/ChiyoTheme-Ver2.mp3"));
-        momoSound = Gdx.audio.newSound(Gdx.files.internal("music/MomoTheme-Ver2.mp3"));
+        chiyoSound = assets.getEntry("music:chiyo", Sound.class);
+        momoSound = assets.getEntry("music:momo", Sound.class);
+
+        jumpSound = assets.getEntry("effect:temp-jump", Sound.class);
+        impactSound = assets.getEntry("effect:temp-impact", Sound.class);
+        swordSwipeSound = assets.getEntry("effect:temp-sword-swipe", Sound.class);
+        dashSound = assets.getEntry("effect:temp-dash", Sound.class);
+        playerChiyoTransformSound = assets.getEntry("effect:se1-trans", Sound.class);
+        playerMomoTransformSound = assets.getEntry("effect:temp-transform-to-momo", Sound.class);
+        chiyoRunSound = assets.getEntry("effect:temp-chiyo-run", Sound.class);
+        momoRunSound = assets.getEntry("effect:temp-momo-run", Sound.class);
+        smallImpactSound = assets.getEntry("effect:temp-small-impact", Sound.class);
+
+        effectIds = new ObjectMap<>();
+        loopEffectIds = new ObjectMap<>();
+        effects = new ObjectMap<>();
+        effects.put("jump", jumpSound);
+        effects.put("impact", impactSound);
+        effects.put("sword-swipe", swordSwipeSound);
+        effects.put("dash", dashSound);
+        effects.put("chiyo-transform", playerChiyoTransformSound);
+        effects.put("momo-transform", playerMomoTransformSound);
+        effects.put("chiyo-run", chiyoRunSound);
+        effects.put("momo-run", momoRunSound);
+        effects.put("small-impact", smallImpactSound);
+
         isMomo = true;
     }
 
-    public static void playAllSound(){
+    public void playAllSound(){
         chiyoSoundId=chiyoSound.loop(0.5f);
         momoSoundId=momoSound.loop(0.5f);
     }
@@ -36,28 +89,75 @@ public class AudioController {
         }
     }
 
-    public static void muteChiyo(){
+    public void muteChiyo(){
         chiyoSound.setVolume(chiyoSoundId,0);
     }
 
-    public static void muteMomo(){
+    public void muteMomo(){
         momoSound.setVolume(momoSoundId,0);
     }
 
-    public static void momoToChiyo(){
+    public void momoToChiyo(){
         muteMomo();
         chiyoSound.setVolume(chiyoSoundId,0.5f);
     }
 
-    public static void chiyoToMomo(){
+    public void chiyoToMomo(){
         muteChiyo();
         momoSound.setVolume(momoSoundId,0.5f);
     }
 
-    public static void dispose(){
-        chiyoSound.dispose();
-        momoSound.dispose();
+    public void dispose(){
         isMomo=true;
+    }
+
+    private void playEffect(Sound effect, float volume) {
+        if (effectIds.containsKey(effect)) {
+            effect.stop(effectIds.get(effect));
+        }
+        if (loopEffectIds.containsKey(effect)) {
+            effect.stop(loopEffectIds.get(effect));
+        }
+        long id = effect.play(volume);
+        effectIds.put(effect, id);
+    }
+
+    public void playEffect(String effectName, float volume) {
+        if (!effects.containsKey(effectName)) {
+            System.out.println("WARNING: sound name " + effectName + " does not exist in AudioController.");
+            return;
+        }
+
+        playEffect(effects.get(effectName), volume);
+    }
+
+    public void loopEffect(Sound effect, float volume) {
+        if (effectIds.containsKey(effect)) {
+            effect.stop(effectIds.get(effect));
+        }
+        if (loopEffectIds.containsKey(effect)) {
+            return; // already looping no need to do anything
+        }
+        long id = effect.loop(volume);
+        loopEffectIds.put(effect, id);
+    }
+
+    public void loopEffect(String effectName, float volume) {
+        if (!effects.containsKey(effectName)) {
+            System.out.println("WARNING: sound name " + effectName + " does not exist in AudioController.");
+            return;
+        }
+
+        loopEffect(effects.get(effectName), volume);
+    }
+
+    public void stopEffect(String effectName) {
+        if (!effects.containsKey(effectName)) {
+            System.out.println("WARNING: sound name " + effectName + " does not exist in AudioController.");
+            return;
+        }
+
+        effects.get(effectName).stop();
     }
 
 }
