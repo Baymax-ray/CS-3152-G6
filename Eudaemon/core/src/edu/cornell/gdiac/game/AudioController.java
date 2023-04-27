@@ -28,11 +28,9 @@ public class AudioController {
 
         //0: momo, 1: chiyo
         if(form==1 && isMomo){
-            System.out.println("hello? momotochiyo");
             isMomo=false;
             momoToChiyo();
         }else if (form == 0 && !isMomo){
-            System.out.println("hello? chiyotomomo");
             isMomo=true;
             chiyoToMomo();
         }
