@@ -902,15 +902,27 @@ public class Level {
     public float getCamZoneY() { return camZoneY; }
 
     public void shakeControllerSmall() {
-        controller.startVibration(100,0.3f);
+        try {
+            controller.startVibration(100,0.3f);
+        } catch (Exception e) {
+
+        }
     }
 
     public void shakeControllerMedium() {
-        controller.startVibration(100,0.5f);
+        try {
+            controller.startVibration(100,0.5f);
+        } catch (Exception e) {
+
+        }
     }
 
     public void shakeControllerHeavy() {
-        controller.startVibration(100,1.0f);
+        try {
+            controller.startVibration(100,0.5f);
+        } catch (Exception e) {
+
+        }
     }
 
 
