@@ -8,5 +8,6 @@
   "attack": "LEFT",
   "transform": "RIGHT",
   "debug":  "T",
-  "reset": "R"
+  "reset": "R",
+  "pause": "Q"
 }

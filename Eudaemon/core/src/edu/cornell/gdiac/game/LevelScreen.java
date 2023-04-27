@@ -61,8 +61,7 @@ public class LevelScreen implements Screen {
         level.activatePhysics();
 
         audio = new AudioController(assets);
-        audio.playAllSound();
-        audio.muteChiyo();
+
 
 
     }
@@ -89,6 +88,9 @@ public class LevelScreen implements Screen {
             listener.exitScreen(this, ExitCode.RESET);
         } else if (level.isCompleted()) {
             listener.exitScreen(this, ExitCode.WIN);
+        } else if (playerAction.contains(Action.PAUSE)) {
+            //TODO: pause screen
+            listener.exitScreen(this, ExitCode.MAIN_MENU);
         }
     }
 
@@ -131,11 +133,15 @@ public class LevelScreen implements Screen {
     @Override
     public void show() {
         active = true;
+        audio.playAllSound();
+        audio.muteChiyo();
     }
 
     @Override
     public void hide() {
         active = false;
+        audio.muteChiyo();
+        audio.muteMomo();
     }
 
     @Override

@@ -19,9 +19,6 @@ public class InputController {
     private final HashMap<String, Integer> inputMap;
     private final EnumSet<Action> prevAction;
 
-    private boolean resetPressed;
-
-
     public InputController(ActionBindings bindings) {
         inputMap = bindings.getInputMap();
         prevAction = EnumSet.noneOf(Action.class);
@@ -117,16 +114,15 @@ public class InputController {
         }
         if (Gdx.input.isKeyPressed(inputMap.get("reset"))) {
             playerAction.add(Action.RESET);
-            resetPressed = true;
+        }
+
+        if (Gdx.input.isKeyPressed(inputMap.get("pause"))) {
+            playerAction.add(Action.PAUSE);
         }
 
         //Only apply the action on the rising edge.
         if (!prevAction.contains(Action.DEBUG) && Gdx.input.isKeyJustPressed(inputMap.get("debug"))) {
             playerAction.add(Action.DEBUG);
         }
-    }
-
-    public boolean didReset() {
-        return resetPressed;
     }
 }

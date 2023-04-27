@@ -39,6 +39,7 @@ public class ActionBindings {
             inputMap.put("right", getInputForKey(json.getString("right")));
             inputMap.put("debug", getInputForKey(json.getString("debug")));
             inputMap.put("reset", getInputForKey(json.getString("reset")));
+            inputMap.put("pause", getInputForKey(json.getString("pause")));
         } catch (Exception e) {
             e.printStackTrace();
         }

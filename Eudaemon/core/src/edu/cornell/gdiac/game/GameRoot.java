@@ -128,6 +128,13 @@ public class GameRoot extends Game implements ScreenListener {
 		}
 
 		if (screen == levelScreen) {
+			if (exitCode == ExitCode.MAIN_MENU) { // should probably refactor exit codes with a diagram
+				levelScreen.pause();
+
+				loadingScreen.reset();
+				setScreen(loadingScreen);
+			}
+
 			if (exitCode == ExitCode.RESET) {
 				levelScreen.pause();
 

@@ -11,5 +11,6 @@ public enum Action {
     LOOK_UP,
     LOOK_DOWN,
     DEBUG,
-    RESET
+    RESET,
+    PAUSE
 }
