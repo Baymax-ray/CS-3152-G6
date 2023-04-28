@@ -82,6 +82,11 @@ public class GameRoot extends Game implements ScreenListener {
 		if (screen == mainMenuScreen) {
 
 			if (exitCode == ExitCode.START) {
+				state.resetCurrentLevel();
+				levelScreen.dispose();
+				levelScreen = new LevelScreen(state.getCurrentLevel(), state.getActionBindings(), assets);
+				levelScreen.setScreenListener(this);
+				levelScreen.setCanvas(canvas);
 				setScreen(levelScreen);
 				//audio = new AudioController();
 				//backgroundMomoSound = Gdx.audio.newSound(Gdx.files.internal("music/MomoTheme.mp3"));
