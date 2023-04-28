@@ -4,7 +4,6 @@ import com.badlogic.gdx.ai.pfa.DefaultGraphPath;
 import com.badlogic.gdx.ai.pfa.GraphPath;
 import com.badlogic.gdx.ai.pfa.Heuristic;
 import com.badlogic.gdx.ai.pfa.indexed.IndexedAStarPathFinder;
-import com.badlogic.gdx.ai.pfa.indexed.IndexedGraph;
 import com.badlogic.gdx.math.Vector2;
 import edu.cornell.gdiac.game.models.Enemy;
 import edu.cornell.gdiac.game.models.EnemyAction;
@@ -245,8 +244,6 @@ public class FlyAI extends AIController{
                     float gx= level.tileToLevelCoordinatesX(goalnode.getX())+this.tileSize/2;
                     float gy= level.tileToLevelCoordinatesY(goalnode.getY())+this.tileSize/2;
                     this.v=new Vector2(gx-ex,gy-ey);
-//                    System.out.println("the current goal is: "+gx+": "+gy );
-//                    System.out.println("I am here "+ex+":"+ey);
                     if ((Math.abs(gx-ex)<0.2) &&(Math.abs(gy-ey)<0.2)){
                         //reach this goal, move to the next goal
 //                        System.out.println("moving to next index");

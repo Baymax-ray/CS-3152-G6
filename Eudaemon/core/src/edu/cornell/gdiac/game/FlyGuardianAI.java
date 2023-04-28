@@ -4,7 +4,6 @@ import com.badlogic.gdx.ai.pfa.DefaultGraphPath;
 import com.badlogic.gdx.ai.pfa.GraphPath;
 import com.badlogic.gdx.ai.pfa.Heuristic;
 import com.badlogic.gdx.ai.pfa.indexed.IndexedAStarPathFinder;
-import com.badlogic.gdx.ai.pfa.indexed.IndexedGraph;
 import com.badlogic.gdx.math.Vector2;
 import edu.cornell.gdiac.game.models.Enemy;
 import edu.cornell.gdiac.game.models.EnemyAction;
@@ -33,21 +32,21 @@ public class FlyGuardianAI extends AIController{
     private boolean needNewPath = true;
     /** do we need to go to the next step in guarding?*/
     private boolean needNewGuardPath =true;
-    private Heuristic<Level.MyNode> heuristic;
-    private Level.MyGridGraph graph;
-    private GraphPath<Level.MyNode> path;
+    private final Heuristic<Level.MyNode> heuristic;
+    private final Level.MyGridGraph graph;
+    private final GraphPath<Level.MyNode> path;
     private int indexAlongPath=0;
-    private int guardianTime;
-    private ArrayList<Integer> guardianList;
+    private final int guardianTime;
+    private final ArrayList<Integer> guardianList;
 
     private enum FSMState {
         /** The enemy just spawned */
         SPAWN,
-        /** The the enemy move between guard positions */
+        /** The enemy move between guard positions */
         GUARD,
         /** The enemy has a target, but must get closer (not in the same tile)*/
         CHASE,
-        /**The the enemy stay in the position*/
+        /**The enemy stay in the position*/
         STAY,
         /** The enemy has a target(in the same tile), but must get closer*/
         CHASE_close,
@@ -62,10 +61,8 @@ public class FlyGuardianAI extends AIController{
         this.level=super.level;
         this.enemy=super.enemy;
         this.tileSize=this.level.gettileSize();
-        Heuristic<Level.MyNode> heuristic = new EuclideanDistance<Level.MyNode>();
-        this.heuristic=heuristic;
-        Level.MyGridGraph graph=level.getGridGraph();
-        this.graph=graph;
+        this.heuristic= new EuclideanDistance();
+        this.graph= level.getGridGraph();
         this.path = new DefaultGraphPath<>();
         ArrayList<Integer> relative = enemy.getGuardianList();
         this.guardianList=new ArrayList<>(relative.size());
@@ -192,8 +189,8 @@ public class FlyGuardianAI extends AIController{
         float ex=enemy.getX();
         float ey=enemy.getY();
 //       System.out.println("position is "+ex+":"+ey);
-        int tx=level.levelToTileCoordinatesX(ex);
-        int ty=level.levelToTileCoordinatesY(ey);//but NO!
+//        int tx=level.levelToTileCoordinatesX(ex);
+//        int ty=level.levelToTileCoordinatesY(ey);
 //        System.out.println("position (in tile) is "+tx+":"+ty );
         switch (state) {
             case STAY:
@@ -233,7 +230,7 @@ public class FlyGuardianAI extends AIController{
                 this.move=EnemyAction.STAY;
                 break;
             case GUARD:
-                IndexedAStarPathFinder<Level.MyNode> pathFinder = new IndexedAStarPathFinder<>((IndexedGraph<Level.MyNode>) graph);
+                IndexedAStarPathFinder<Level.MyNode> pathFinder = new IndexedAStarPathFinder<>(graph);
                 if (needNewGuardPath){
                     Level.MyNode startNode = graph.getNode(level.levelToTileCoordinatesX(ex), level.levelToTileCoordinatesY(ey));
                     Level.MyNode endNode = graph.getNode(level.levelToTileCoordinatesX(goal[0]), level.levelToTileCoordinatesY(goal[1]));
@@ -275,7 +272,7 @@ public class FlyGuardianAI extends AIController{
                 this.v=new Vector2(dx,dy);
                 break;
             case CHASE:
-                pathFinder = new IndexedAStarPathFinder<>((IndexedGraph<Level.MyNode>) graph);
+                pathFinder = new IndexedAStarPathFinder<>(graph);
                 if (needNewPath){
                     Level.MyNode startNode = graph.getNode(level.levelToTileCoordinatesX(ex), level.levelToTileCoordinatesY(ey));
                     Level.MyNode endNode = graph.getNode(level.levelToTileCoordinatesX(goal[0]), level.levelToTileCoordinatesY(goal[1]));
@@ -314,7 +311,7 @@ public class FlyGuardianAI extends AIController{
         }
     }
 
-    private class EuclideanDistance<T> implements Heuristic<Level.MyNode> {
+    private class EuclideanDistance implements Heuristic<Level.MyNode> {
         @Override
         public float estimate(Level.MyNode node, Level.MyNode endNode) {
             float dx = Math.abs(node.getX() - endNode.getX());

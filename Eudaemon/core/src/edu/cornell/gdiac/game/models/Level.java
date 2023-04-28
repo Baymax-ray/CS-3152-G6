@@ -17,16 +17,13 @@ import edu.cornell.gdiac.game.GameCanvas;
 import edu.cornell.gdiac.game.UIOverlay;
 import edu.cornell.gdiac.game.obstacle.EffectObstacle;
 import edu.cornell.gdiac.game.obstacle.Obstacle;
+import edu.cornell.gdiac.util.Controllers;
 import edu.cornell.gdiac.util.PooledList;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Hashtable;
 import java.util.Iterator;
-import com.badlogic.gdx.controllers.Controller;
-import com.badlogic.gdx.controllers.ControllerListener;
-import com.badlogic.gdx.controllers.ControllerMapping;
-import edu.cornell.gdiac.util.Controllers;
 
 public class Level {
     private MyGridGraph gridGraph;
@@ -600,9 +597,7 @@ public class Level {
 
     //#region Other Methods
     /**
-     *
      * Adds a physics object in to the insertion queue.
-     *
      * Objects on the queue are added just before collision processing.  We do this to
      * control object creation.
      * @param obj The object to add
@@ -623,15 +618,12 @@ public class Level {
 
     /**
      * Immediately adds the object to the physics world
-     *
-     * param obj The object to add
+     * @param obj The object to add
      */
     public void addObject(Obstacle obj) {
         assert inBounds(obj) : "Object is not in bounds";
-        if (obj != null) {
             objects.add(obj);
             obj.activatePhysics(world);
-        }
     }
     /**
      * Returns true if the object is in bounds.
@@ -676,8 +668,8 @@ public class Level {
             }
         }
 
-        for (int i = 0; i < billboards.size(); i++) {
-            billboards.get(i).aggregateStringCompleteness(delta);
+        for (Billboard billboard : billboards) {
+            billboard.aggregateStringCompleteness(delta);
         }
         //billboard.aggregateStringCompleteness(delta);
 
@@ -769,9 +761,9 @@ public class Level {
         canvas.begin();
         uiElements.draw(canvas, player.getHearts(), player.getSpirit());
         boolean alreadyDisplay = false;
-        for (int i = 0; i < billboards.size(); i++) {
-            if (billboards.get(i).isDisplay() && !alreadyDisplay) {
-                billboards.get(i).displayDialog(canvas);
+        for (Billboard billboard : billboards) {
+            if (billboard.isDisplay() && !alreadyDisplay) {
+                billboard.displayDialog(canvas);
                 alreadyDisplay = true;
             }
 
@@ -809,16 +801,16 @@ public class Level {
         }
 
         //TODO: enemies activate too
-        for(int i = 0; i < spikes.size(); i++){
-            addObject(spikes.get(i));
+        for (Spike spike : spikes) {
+            addObject(spike);
         }
 
-        for(int i = 0; i < billboards.size(); i++){
-            addObject(billboards.get(i));
+        for (Billboard billboard : billboards) {
+            addObject(billboard);
         }
 
-        for(int i = 0; i < enemies.size(); i++){
-            addObject(enemies.get(i));
+        for (Enemy enemy : enemies) {
+            addObject(enemy);
         }
 
         addObject(player);
@@ -870,7 +862,7 @@ public class Level {
     private ArrayList<Enemy> removeEnemy(ArrayList<Enemy> arr, int index) {
         if (arr == null || index < 0 || index > arr.size()) return arr;
         ArrayList<Enemy> result = new ArrayList<Enemy>();
-        for (int i = 0, k = 0; i < arr.size(); i++) {
+        for (int i = 0; i < arr.size(); i++) {
             if (i == index) {
                 continue;
             }

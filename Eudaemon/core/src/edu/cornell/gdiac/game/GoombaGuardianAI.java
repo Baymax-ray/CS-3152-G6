@@ -19,8 +19,8 @@ public class GoombaGuardianAI extends AIController{
     private EnemyAction move;
     /**the amount of time to wait before back to wander state*/
     private final float[] goal;
-    private int guardianTime;
-    private ArrayList<Integer> guardianList;
+    private final int guardianTime;
+    private final ArrayList<Integer> guardianList;
     private enum FSMState {
         /** The enemy just spawned */
         SPAWN,
@@ -121,9 +121,6 @@ public class GoombaGuardianAI extends AIController{
         float ex=enemy.getX();
         float ey=enemy.getY()-enemyHeight/2+0.1f;//check the feet of the enemy
 //        System.out.println("moving along path, current position is "+ex+":"+ey);
-
-        int tx=level.levelToTileCoordinatesX(ex);
-        int ty=level.levelToTileCoordinatesY(ey);
 
         if(Math.abs(ex-goal[0])<0.1){this.move=EnemyAction.STAY;}
         else if (ex<goal[0]){

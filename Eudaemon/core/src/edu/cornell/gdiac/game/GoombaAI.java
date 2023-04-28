@@ -149,16 +149,13 @@ public class GoombaAI extends AIController{
                         goal[0]=level.tileToLevelCoordinatesX(tx+2);
                     }
                 }
-                else if(goal[0]<ex) { //going left
+                else { //going left
                     if (level.isAirAt(tx-1,ty+1)||!level.isAirAt(tx-1,ty)) { //need to turn
                         goal[0]=level.tileToLevelCoordinatesX(tx+2);
                     }
                     else{
                         goal[0]=level.tileToLevelCoordinatesX(tx-2);
                     }
-                }
-                else {
-                    goal[0]=ex; //should not reach here
                 }
                 break;
             case CHASE:
