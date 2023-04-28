@@ -11,7 +11,6 @@ public class ProjectileAI extends AIController{
     private final int CoolDown;
     private EnemyAction move;
     private FSMState state;
-    private Level.MyGridGraph graph;
     private int ticks=0;
     private Vector2 v;
     private int detectDistance;
@@ -30,8 +29,6 @@ public class ProjectileAI extends AIController{
         this.level=super.level;
         this.enemy=super.enemy;
         this.tileSize=this.level.gettileSize();
-        Level.MyGridGraph graph=level.getGridGraph();
-        this.graph=graph;
         this.CoolDown= enemy.getAttackCooldown();
         this.detectDistance= enemy.getDetectDistance();
     }
