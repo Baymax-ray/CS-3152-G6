@@ -59,7 +59,7 @@ public class LevelScreen implements Screen {
 
         actionController = new ActionController(level,aiControllers, audio);
 
-        collisionController = new CollisionController(level);
+        collisionController = new CollisionController(level, audio);
         level.getWorld().setContactListener(collisionController);
         level.activatePhysics();
 
