@@ -7,7 +7,7 @@
   ],
   "levels": [
     {
-      "level": "level3",
+      "level": "level0",
       "tileSize": 1,
       "cameraWidth": 21.35,
       "cameraHeight": 12,
@@ -65,6 +65,25 @@
     },
     {
       "level": "level3",
+      "tileSize": 1,
+      "cameraWidth": 21.35,
+      "cameraHeight": 12,
+      "camZoneX": 1,
+      "camZoneY": 1,
+      "gravity": -1,
+      "spike": [
+        {
+          "startX": 9,
+          "startY": 14.2
+        },
+        {
+          "startX": 9.5,
+          "startY": 14.2
+        }
+      ]
+    },
+    {
+      "level": "level4",
       "tileSize": 1,
       "cameraWidth": 21.35,
       "cameraHeight": 12,
