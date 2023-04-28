@@ -1,26 +1,24 @@
 package edu.cornell.gdiac.game;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input;
 import com.badlogic.gdx.controllers.Controller;
-import com.badlogic.gdx.controllers.ControllerListener;
 import com.badlogic.gdx.controllers.ControllerMapping;
 import com.badlogic.gdx.utils.Array;
+import com.badlogic.gdx.utils.Predicate;
 import edu.cornell.gdiac.game.models.Action;
 import edu.cornell.gdiac.game.models.ActionBindings;
 import edu.cornell.gdiac.util.Controllers;
-import edu.cornell.gdiac.util.XBoxController;
+
 import java.util.EnumSet;
-import java.util.HashMap;
 //import com.studiohartman.jamepad.ControllerManager;
 
 public class InputController {
 
-    private final HashMap<String, Integer> inputMap;
+    private final ActionBindings bindings;
     private final EnumSet<Action> prevAction;
 
     public InputController(ActionBindings bindings) {
-        inputMap = bindings.getInputMap();
+        this.bindings = bindings;
         prevAction = EnumSet.noneOf(Action.class);
 //        ControllerManager controllers = new ControllerManager();
 //        controllers.initSDLGamepad();
@@ -53,7 +51,7 @@ public class InputController {
                 playerAction.add(Action.ATTACK);
             }
             if (controller.getButton(mapping.buttonA)) {
-                if (!prevAction.contains(Action.HOLD_JUMP)) playerAction.add(Action.JUMP);
+                if (!prevAction.contains(Action.HOLD_JUMP)) playerAction.add(Action.BEGIN_JUMP);
                 playerAction.add(Action.HOLD_JUMP);
             }
 
@@ -85,44 +83,22 @@ public class InputController {
         * */
 
         //Checking for jumps
-        if (Gdx.input.isKeyPressed(inputMap.get("jump"))){
-            if (!prevAction.contains(Action.HOLD_JUMP)) {
-                playerAction.add(Action.JUMP);
+
+        for (Action action : Action.values()) {
+            if (action.risingEdge && checkRisingEdgeAction(action) || !action.risingEdge && checkHeldAction(action)) {
+                playerAction.add(action);
             }
-            playerAction.add(Action.HOLD_JUMP);
-        }
-        if (Gdx.input.isKeyPressed(inputMap.get("up"))){
-            playerAction.add(Action.LOOK_UP);
-        }
-        if (Gdx.input.isKeyPressed(inputMap.get("down"))){
-            playerAction.add(Action.LOOK_DOWN);
-        }
-        if (Gdx.input.isKeyPressed(inputMap.get("left"))){
-            playerAction.add(Action.MOVE_LEFT);
-        }
-        if (Gdx.input.isKeyPressed(inputMap.get("right"))){
-            playerAction.add(Action.MOVE_RIGHT);
-        }
-        if (Gdx.input.isButtonPressed(inputMap.get("transform"))){
-            playerAction.add(Action.TRANSFORM);
-        }
-        if (Gdx.input.isButtonPressed(inputMap.get("attack"))){
-            playerAction.add(Action.ATTACK);
-        }
-        if (Gdx.input.isButtonPressed(inputMap.get("dash"))){
-            playerAction.add(Action.DASH);
-        }
-        if (Gdx.input.isKeyPressed(inputMap.get("reset"))) {
-            playerAction.add(Action.RESET);
-        }
-
-        if (Gdx.input.isKeyPressed(inputMap.get("pause"))) {
-            playerAction.add(Action.PAUSE);
-        }
-
-        //Only apply the action on the rising edge.
-        if (!prevAction.contains(Action.DEBUG) && Gdx.input.isKeyJustPressed(inputMap.get("debug"))) {
-            playerAction.add(Action.DEBUG);
         }
     }
+
+    public boolean checkRisingEdgeAction(Action action) {
+        return bindings.getKeyMap().containsKey(action) && Gdx.input.isKeyJustPressed(bindings.getKeyMap().get(action)) ||
+                bindings.getMouseMap().containsKey(action) && Gdx.input.isButtonJustPressed(bindings.getMouseMap().get(action));
+    }
+
+    public boolean checkHeldAction(Action action) {
+        return bindings.getKeyMap().containsKey(action) && Gdx.input.isKeyPressed(bindings.getKeyMap().get(action)) ||
+                bindings.getMouseMap().containsKey(action) && Gdx.input.isButtonPressed(bindings.getMouseMap().get(action));
+    }
+
 }

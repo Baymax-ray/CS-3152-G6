@@ -170,7 +170,7 @@ public class ActionController {
         currentX = player.getX();
         float deltaX = previousX - currentX;
         //#region Button Inputs
-        boolean jumpPressed = playerAction.contains(Action.JUMP);
+        boolean jumpPressed = playerAction.contains(Action.BEGIN_JUMP);
         boolean jumpHold = playerAction.contains(Action.HOLD_JUMP);
         boolean attackPressed = playerAction.contains(Action.ATTACK);
         boolean dashPressed = playerAction.contains(Action.DASH);
