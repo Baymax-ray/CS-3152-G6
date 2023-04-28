@@ -42,6 +42,9 @@ public class AudioController {
 
     private Sound smallImpactSound;
 
+    private Sound swordKillingSound;
+    private Sound swordHittingSound;
+
     public AudioController(AssetDirectory assets){
         chiyoSound = assets.getEntry("music:chiyo", Sound.class);
         momoSound = assets.getEntry("music:momo", Sound.class);
@@ -55,6 +58,8 @@ public class AudioController {
         chiyoRunSound = assets.getEntry("effect:temp-chiyo-run", Sound.class);
         momoRunSound = assets.getEntry("effect:temp-momo-run", Sound.class);
         smallImpactSound = assets.getEntry("effect:temp-small-impact", Sound.class);
+        swordKillingSound = assets.getEntry("effect:temp-sword-killing", Sound.class);
+        swordHittingSound = assets.getEntry("effect:temp-non-killing", Sound.class);
 
         effectIds = new ObjectMap<>();
         loopEffectIds = new ObjectMap<>();
@@ -68,6 +73,8 @@ public class AudioController {
         effects.put("chiyo-run", chiyoRunSound);
         effects.put("momo-run", momoRunSound);
         effects.put("small-impact", smallImpactSound);
+        effects.put("sword-kill", swordKillingSound);
+        effects.put("sword-hit", swordHittingSound);
 
         isMomo = true;
     }

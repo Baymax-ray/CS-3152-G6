@@ -383,7 +383,9 @@
         "effect:temp-transform-to-momo": "audio/temp-transform-to-momo.mp3",
         "effect:temp-chiyo-run":  "audio/temp-chiyo-run.mp3",
         "effect:temp-momo-run": "audio/temp-momo-run.mp3",
-        "effect:temp-small-impact":  "audio/temp-small-impact.mp3/"
+        "effect:temp-small-impact":  "audio/temp-small-impact.mp3/",
+        "effect:temp-sword-killing": "audio/temp-sword-killing.mp3",
+        "effect:temp-non-killing": "audio/temp-non-killing-sound.mp3"
     },
     "fonts": {
         "shared:retro": {

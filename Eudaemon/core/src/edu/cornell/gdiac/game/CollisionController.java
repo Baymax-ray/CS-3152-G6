@@ -9,6 +9,8 @@ import edu.cornell.gdiac.game.obstacle.WheelObstacle;
 
 public class CollisionController implements ContactListener {
 
+    private AudioController audio;
+
     private Level level;
     /**
      * The list of tile fixtures the player's ground sensor is in contact with
@@ -23,8 +25,9 @@ public class CollisionController implements ContactListener {
      */
     private Array<Fixture> leftWallSensorFixtures;
 
-    public CollisionController(Level level) {
+    public CollisionController(Level level, AudioController audio) {
         this.level = level;
+        this.audio = audio;
         groundSensorFixtures = new Array<Fixture>();
         rightWallSensorFixtures = new Array<Fixture>();
         leftWallSensorFixtures = new Array<Fixture>();
@@ -139,6 +142,12 @@ public class CollisionController implements ContactListener {
                 }
 
                 enemy.hitBySword(level.getPlayer());
+                if(enemy.getHearts() == 0){
+                    audio.playEffect("sword-kill", 0.5f);
+                }
+                else{
+                    audio.playEffect("sword-hit", 0.05f);
+                }
                 sword.addHitEnemy(enemy);
                 level.shakeControllerHeavy();
 
