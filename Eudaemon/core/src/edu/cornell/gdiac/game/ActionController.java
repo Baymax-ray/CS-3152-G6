@@ -81,6 +81,7 @@ public class ActionController {
         movedDuringLastFrame = false;
         this.aiControllers= aiControllers;
         this.audio = audio;
+        this.currentAnimation = "momoIdle";
 
         this.soundDictionary = new ArrayList<Sound>();
         //Creating a Dictionary of Textures
