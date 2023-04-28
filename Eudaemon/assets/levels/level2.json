@@ -718,8 +718,8 @@
                  "type":"Enemy",
                  "visible":true,
                  "width":25.2095,
-                 "x":484.061916666667,
-                 "y":830.30305
+                 "x":485.061916666667,
+                 "y":799.30305
                 }, 
                 {
                  "gid":86,
@@ -772,7 +772,7 @@
  "nextobjectid":119,
  "orientation":"orthogonal",
  "renderorder":"right-down",
- "tiledversion":"1.10.0",
+ "tiledversion":"1.10.1",
  "tileheight":32,
  "tilesets":[
         {
