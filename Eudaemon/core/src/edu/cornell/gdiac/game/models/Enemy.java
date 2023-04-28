@@ -30,7 +30,6 @@ public class Enemy extends CapsuleObstacle {
     private final float startX;
     private final float startY;
 
-    private final int initialHearts;
     private final int attackPower;
 
     /**
@@ -50,11 +49,6 @@ public class Enemy extends CapsuleObstacle {
      * The y-scaling factor for the sprite.
      */
     private float scaleY;
-
-    /**
-     * The amount to slow the character down
-     */
-    private final float damping;
 
     /**
      * The factor to multiply to the movement
@@ -523,7 +517,6 @@ public class Enemy extends CapsuleObstacle {
 
         this.maxSpeed = enemyData.getFloat("maxSpeed");
         this.force = enemyData.getFloat("force");
-        this.damping = enemyData.getFloat("damping");
 
         //Attacking
         this.attackPower = enemyData.getInt("attackPower");
@@ -539,7 +532,7 @@ public class Enemy extends CapsuleObstacle {
         this.sensorName = "EnemyGroundSensor";
 
         //Other Information
-        this.initialHearts = enemyData.getInt("initialHearts");
+        int initialHearts = enemyData.getInt("initialHearts");
         this.hearts = initialHearts;
         this.spiritRemain = enemyData.getFloat(("spiritLimitation"));
         this.isFacingRight = enemyData.getBoolean("startsFacingRight");
