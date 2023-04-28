@@ -55,8 +55,7 @@ public class LevelScreen implements Screen {
         }
 
         audio = new AudioController(assets);
-        audio.playAllSound();
-        audio.muteChiyo();
+        // shouldn't play immediately, other screens might be shown
 
         actionController = new ActionController(level,aiControllers, audio);
 
