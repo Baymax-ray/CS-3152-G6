@@ -13,6 +13,7 @@ public class GameRoot extends Game implements ScreenListener {
 	private GameState state;
 	private LevelScreen levelScreen;
 	private LoadingScreen loadingScreen;
+	private MainMenuScreen mainMenuScreen;
 	private LevelSelectScreen levelSelectScreen;
 	private DeathScreen deathScreen;
 	private GameCanvas canvas;
@@ -62,19 +63,23 @@ public class GameRoot extends Game implements ScreenListener {
 			assets = loadingScreen.getAssets();
 			state = new GameState(assets);
 
-			if (levelScreen != null) levelScreen.dispose();
 			this.levelScreen = new LevelScreen(this.state.getCurrentLevel(), this.state.getActionBindings(), assets);
 			levelScreen.setScreenListener(this);
 			levelScreen.setCanvas(canvas);
 
-			if (this.deathScreen != null) this.deathScreen.dispose();
 			this.deathScreen = new DeathScreen("assets.json", canvas);
 			this.deathScreen.setScreenListener(this);
 
-			if (this.levelSelectScreen != null) levelSelectScreen.dispose();
 			this.levelSelectScreen = new LevelSelectScreen(assets, state, canvas);
 			this.levelSelectScreen.setScreenListener(this);
 
+			this.mainMenuScreen = new MainMenuScreen(assets, canvas);
+			mainMenuScreen.setScreenListener(this);
+
+			setScreen(mainMenuScreen);
+		}
+
+		if (screen == mainMenuScreen) {
 
 			if (exitCode == ExitCode.START) {
 				setScreen(levelScreen);
@@ -87,6 +92,8 @@ public class GameRoot extends Game implements ScreenListener {
 				//audio.playAllSound();
 				//audio.muteChiyo();
 			} else if (exitCode == ExitCode.LEVEL_SELECT) {
+				screen.pause();
+				levelSelectScreen.reset();
 				setScreen(levelSelectScreen);
 			}
 		}
@@ -102,16 +109,16 @@ public class GameRoot extends Game implements ScreenListener {
 			}
 			if (exitCode == ExitCode.MAIN_MENU) {
 				screen.pause();
-				loadingScreen.reset();
-				setScreen(loadingScreen);
+				mainMenuScreen.reset();
+				setScreen(mainMenuScreen);
 			}
 		}
 
 		if (screen == levelSelectScreen) {
 			if (exitCode == ExitCode.MAIN_MENU) {
 				screen.pause();
-				loadingScreen.reset();
-				setScreen(loadingScreen);
+				mainMenuScreen.reset();
+				setScreen(mainMenuScreen);
 			}
 			if (exitCode == ExitCode.START) {
 				screen.pause();
@@ -131,8 +138,8 @@ public class GameRoot extends Game implements ScreenListener {
 			if (exitCode == ExitCode.MAIN_MENU) { // should probably refactor exit codes with a diagram
 				levelScreen.pause();
 
-				loadingScreen.reset();
-				setScreen(loadingScreen);
+				mainMenuScreen.reset();
+				setScreen(mainMenuScreen);
 			}
 
 			if (exitCode == ExitCode.RESET) {

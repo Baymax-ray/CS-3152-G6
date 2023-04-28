@@ -1,3 +1,4 @@
+
 /*
  * LoadingScreen.java
  *
@@ -23,6 +24,7 @@
 package edu.cornell.gdiac.game;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.controllers.Controller;
@@ -33,14 +35,10 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.Texture.TextureFilter;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Rectangle;
-import com.badlogic.gdx.math.Vector2;
 import edu.cornell.gdiac.assets.AssetDirectory;
-import edu.cornell.gdiac.game.models.GameState;
 import edu.cornell.gdiac.util.Controllers;
 import edu.cornell.gdiac.util.ScreenListener;
 import edu.cornell.gdiac.util.XBoxController;
-
-import java.util.Arrays;
 
 /**
  * Class that provides a loading screen for the state of the game.
@@ -55,114 +53,91 @@ import java.util.Arrays;
  * the application.  That is why we try to have as few resources as possible for this
  * loading screen.
  */
-public class LevelSelectScreen implements Screen, InputProcessor, ControllerListener {
+public class MainMenuScreen implements Screen, InputProcessor, ControllerListener {
 
     /** Background texture for start-up */
-    private Texture background;
-
-    /** texture with lights for level completion */
-    private Texture lights;
-
-    /** regions of the lights currently being drawn */
-    private TextureRegion[] litUpLevels;
-
-    /** back button texture*/
-    private Texture backButton;
-
-    /** The hitbox for the back button */
-    private Rectangle backHitbox;
-
-    /** The current state of the back button */
-    private int backPressState;
-
-    /** The hitboxes for the level select buttons */
-    private Rectangle[] levelHitboxes;
-
-    /** The current state of the level buttons */
-    private int[] levelPressState;
-
-    /** The level number textures */
-    private Texture[] levelNumbers;
+    private final Texture background;
+    /** Title texture for start-up */
+    private final Texture title;
+    /** Play button to display when done */
+    private Texture playButton;
+    /** settings button to display when done */
+    private Texture settingsButton;
+    /** level select button to display when done */
+    private Texture levelSelectButton;
 
     /** Standard window size (for scaling) */
-    private static final int STANDARD_WIDTH  = 240;
+    private static final int STANDARD_WIDTH  = 800;
     /** Standard window height (for scaling) */
-    private static final int STANDARD_HEIGHT = 135;
-
+    private static final int STANDARD_HEIGHT = 700;
+    /** Ratio of the bar width to the screen */
+    /** Height of the progress bar */
+    private static final float BUTTON_SCALE  = 0.20f;
+    /** Height of the title */
+    private static final float TITLE_SCALE = 1.3f;
 
     /** Reference to GameCanvas created by the root */
     private GameCanvas canvas;
     /** Listener that will update the player mode when we are done */
     private ScreenListener listener;
 
-
-    /** The y-coordinate of the center of the progress bar */
-    private int centerY;
-    /** The x-coordinate of the center of the progress bar */
-    private int centerX;
     /** The height of the canvas window (necessary since sprite origin != screen origin) */
     private int heightY;
     /** Scaling factor for when the student changes the resolution. */
     private float scale;
 
-    /** the current level (1-based indexing)*/
-    private int numAvailableLevels;
-
-    /** the selected level (0-based indexing) */
-    private int selectedLevel;
+    /** The current state of the play button */
+    private int playButtonState;
+    /** The hitbox of the start button */
+    private Rectangle playButtonHitbox;
+    /** The current state of the level select button */
+    private int levelSelectButtonState;
+    /** The hitbox of the level select button */
+    private Rectangle levelSelectButtonHitbox;
+    /** The current state of the settings button */
+    private int settingsButtonState;
+    /** The hitbox of the settings button */
+    private Rectangle settingsButtonHitbox;
 
 
     /** Whether or not this player mode is still active */
     private boolean active;
 
-    /**
-     * Returns true if all assets are loaded and the player is ready to go.
-     *
-     * @return true if the player is ready to go
-     */
-    public boolean restartIsReady() {
-        return backPressState == 2;
-    }
+    /** The state of the escape key */
+    private int escapePressState;
 
     /**
      * Creates a LoadingScreen with the default budget, size and position.
      *
-     * @param assets  	The asset directory to get assets from
+     * @param assets  	The asset directory for the game
      * @param canvas 	The game canvas to draw to
      */
-    public LevelSelectScreen(AssetDirectory assets, GameState state, GameCanvas canvas) {
+    public MainMenuScreen(AssetDirectory assets, GameCanvas canvas) {
         this.canvas  = canvas;
-
-
-        background = assets.getEntry( "levelSelect:background", Texture.class );
-        background.setFilter(TextureFilter.Nearest, TextureFilter.Nearest);
-
-        lights = assets.getEntry("levelSelect:lights", Texture.class);
-        lights.setFilter(TextureFilter.Nearest, TextureFilter.Nearest);
-
-        numAvailableLevels = state.getLevels().size();
-        setLitUpLevels(numAvailableLevels);
-
-        backButton = assets.getEntry("levelSelect:back", Texture.class);
-        backButton.setFilter(TextureFilter.Nearest, TextureFilter.Nearest);
-
-        backHitbox = new Rectangle();
-        backPressState = 0;
-
-        levelHitboxes = new Rectangle[10];
-        levelPressState = new int[levelHitboxes.length];
-        for (int i = 0; i < levelHitboxes.length; i++) {
-            levelHitboxes[i] = new Rectangle();
-            levelPressState[i] = 0;
-        }
-        levelNumbers = new Texture[10];
-        for (int i = 0; i < levelNumbers.length; i++) {
-            levelNumbers[i] = assets.getEntry("levelSelect:" + (i + 1), Texture.class);
-            levelNumbers[i].setFilter(TextureFilter.Nearest, TextureFilter.Nearest);
-        }
 
         // Compute the dimensions from the canvas
         resize(canvas.getWidth(),canvas.getHeight());
+
+
+        // Load the next two images immediately.
+        background = assets.getEntry( "mainMenu:background", Texture.class ); //todo
+        title = assets.getEntry("mainMenu:title", Texture.class); // todo
+        background.setFilter( TextureFilter.Linear, TextureFilter.Linear );
+
+        playButton = assets.getEntry("mainMenu:start",Texture.class);
+        playButtonHitbox = new Rectangle();
+
+        settingsButton = assets.getEntry("mainMenu:settings", Texture.class);
+        settingsButtonHitbox = new Rectangle();
+
+        levelSelectButton = assets.getEntry("mainMenu:levelSelect", Texture.class);
+        levelSelectButtonHitbox = new Rectangle();
+
+        resize(canvas.getWidth(), canvas.getHeight());
+
+        playButtonState = 0;
+        levelSelectButtonState = 0;
+        settingsButtonState = 0;
 
         Gdx.input.setInputProcessor( this );
 
@@ -178,11 +153,22 @@ public class LevelSelectScreen implements Screen, InputProcessor, ControllerList
      * Called when this screen should release all resources.
      */
     public void dispose() {
-
         canvas = null;
         listener = null;
     }
 
+    /**
+     * Update the status of this player mode.
+     *
+     * We prefer to separate update and draw from one another as separate methods, instead
+     * of using the single render() method that LibGDX does.  We will talk about why we
+     * prefer this in lecture.
+     *
+     * @param delta Number of seconds since last animation frame
+     */
+    private void update(float delta) {
+
+    }
 
     /**
      * Draw the status of this player mode.
@@ -195,56 +181,19 @@ public class LevelSelectScreen implements Screen, InputProcessor, ControllerList
         canvas.setOverlayCamera();
         canvas.begin();
         canvas.draw(background, Color.WHITE, 0, 0, canvas.getWidth(), canvas.getHeight());
-        Color tint = (backPressState == 1 ? Color.GRAY: Color.WHITE);
-        canvas.draw(backButton, tint, 0, 0, canvas.getWidth(), canvas.getHeight());
+        canvas.draw(title, Color.WHITE, title.getWidth()/2f, title.getHeight()/2f, canvas.getWidth()*0.5f, canvas.getHeight()*0.8f, 0, scale*TITLE_SCALE, scale*TITLE_SCALE);
 
-        for (int i = 0; i < litUpLevels.length; i++) {
-            canvas.draw(litUpLevels[i], Color.WHITE, 0, canvas.getHeight() - litUpLevels[i].getRegionHeight() * scale, litUpLevels[i].getRegionWidth() * scale, litUpLevels[i].getRegionHeight() * scale);
-        }
+        Color tint = (playButtonState == 1 ? Color.GRAY: Color.WHITE);
+        canvas.draw(playButton, tint, playButtonHitbox.x, playButtonHitbox.y, playButtonHitbox.width, playButtonHitbox.height);
 
-        canvas.draw(levelNumbers[numAvailableLevels - 1], Color.WHITE, 0, 0, canvas.getWidth(), canvas.getHeight());
+        tint = (settingsButtonState == 1 ? Color.GRAY: Color.WHITE);
+        canvas.draw(settingsButton, tint, settingsButtonHitbox.x, settingsButtonHitbox.y, settingsButtonHitbox.width, settingsButtonHitbox.height);
 
-//        for (int i = 0; i < levelHitboxes.length; i++) {
-//            canvas.draw(background, tint, levelHitboxes[i].x, levelHitboxes[i].y, levelHitboxes[i].width, levelHitboxes[i].height); //for debugging hitboxes
-//        }
+        tint = (levelSelectButtonState == 1 ? Color.GRAY: Color.WHITE);
+        canvas.draw(levelSelectButton, tint, levelSelectButtonHitbox.x, levelSelectButtonHitbox.y, levelSelectButtonHitbox.width, levelSelectButtonHitbox.height);
 
         canvas.end();
     }
-
-    private void setLitUpLevels(int i) {
-
-        int splitX = 106; // this is the coordinate in the texture that splits the two sides of the building
-        int[] splitY = new int[] {40, 55, 70, 85, 100, 115, lights.getHeight()}; // <-- may need to reverse
-
-//        for (int j = 0; j < splitY.length; j++) {
-//            splitY[j] = lights.getHeight() - splitY[j];
-//        }
-
-        if (i <= 0) {
-            litUpLevels = new TextureRegion[0];
-        } else if (i <= 2) {
-            litUpLevels = new TextureRegion[1];
-            int x = (i % 2 == 0) ? lights.getWidth() : splitX;
-            litUpLevels[0] = new TextureRegion(lights, 0, 0, x, splitY[0]);
-        } else if (i <= 4) {
-            litUpLevels = new TextureRegion[2];
-            litUpLevels[0] = new TextureRegion(lights, 0, 0, lights.getWidth(), splitY[0]);
-            int x = (i % 2 == 0) ? lights.getWidth() : splitX;
-            litUpLevels[1] = new TextureRegion(lights, 0, 0, x, splitY[1]);
-        } else if (i <= 6) {
-            litUpLevels = new TextureRegion[2];
-            litUpLevels[0] = new TextureRegion(lights, 0, 0, lights.getWidth(), splitY[1]);
-            int x = (i % 2 == 0) ? lights.getWidth() : splitX;
-            litUpLevels[1] = new TextureRegion(lights, 0, 0, x, splitY[2]);
-        } else {
-            litUpLevels = new TextureRegion[1];
-            int y = splitY[i - 4]; //7 -> 85 -> [3]
-            System.out.println(y);
-            System.out.println(lights.getHeight());
-            litUpLevels[0] = new TextureRegion(lights, 0, 0, lights.getWidth(), y);
-        }
-    }
-
 
     // ADDITIONAL SCREEN METHODS
     /**
@@ -257,29 +206,20 @@ public class LevelSelectScreen implements Screen, InputProcessor, ControllerList
      */
     public void render(float delta) {
         if (active) {
+            update(delta);
             draw();
 
-            // We are are ready, notify our listener
-            if (backPressState == 2 && listener != null) {
-                listener.exitScreen(this, ExitCode.MAIN_MENU);
-            }
-            for (int i = 0; i < levelPressState.length; i++) {
-                if (levelPressState[i] == 2) {
-                    selectedLevel = i;
+            // We are ready, notify our listener
+            if (listener != null) {
+                if (playButtonState == 2) {
                     listener.exitScreen(this, ExitCode.START);
+                } else if (levelSelectButtonState == 2) {
+                    listener.exitScreen(this, ExitCode.LEVEL_SELECT);
+                } else if (escapePressState == 2) {
+                    listener.exitScreen(this, ExitCode.QUIT);
                 }
             }
         }
-    }
-
-
-    /**
-     * Resets the screen so it can be reused
-     */
-    public void reset() {
-        this.backPressState = 0;
-        this.selectedLevel = -1;
-        Arrays.fill(levelPressState, 0);
     }
 
     /**
@@ -297,44 +237,23 @@ public class LevelSelectScreen implements Screen, InputProcessor, ControllerList
         float sy = ((float)height)/STANDARD_HEIGHT;
         scale = (sx < sy ? sx : sy);
 
-        centerY = height/2;
-        centerX = width/2;
+        int progressBarCenterY = (int)(0.25*height);
+
         heightY = height;
 
-        float buttonSpacing = 0.25f;
-        float buttonHeight = 0.1f;
+        if (playButton != null) {
+            float buttonSpacing = 0.25f;
 
-        backHitbox.setSize(10 * scale);
-        backHitbox.setPosition(5 * scale, canvas.getHeight() - 12 * scale);
+            playButtonHitbox.setSize(BUTTON_SCALE*scale*playButton.getWidth(), BUTTON_SCALE*scale*playButton.getHeight());
+            playButtonHitbox.setCenter(canvas.getWidth()/2.0f, progressBarCenterY + playButton.getHeight()*buttonSpacing*scale);
+            float buttonDelta = playButtonHitbox.height * 1.5f;
 
-        for (int i = 0; i < levelHitboxes.length; i++) {
-            levelHitboxes[i].setSize(9 * scale, 5 * scale);
-            levelHitboxes[i].setPosition(getLevelHitboxPosition(i + 1));
+            settingsButtonHitbox.setSize(BUTTON_SCALE*scale*settingsButton.getWidth(), BUTTON_SCALE*scale*settingsButton.getHeight());
+            settingsButtonHitbox.setCenter(canvas.getWidth()/2.0f, progressBarCenterY -settingsButton.getHeight()*buttonSpacing*scale);
+
+            levelSelectButtonHitbox.setSize(BUTTON_SCALE*scale*levelSelectButton.getWidth(), BUTTON_SCALE*scale*levelSelectButton.getHeight());
+            levelSelectButtonHitbox.setCenter(canvas.getWidth()/2.0f, progressBarCenterY);
         }
-    }
-
-    private Vector2 getLevelHitboxPosition(int i) { // uses 1 based indexing
-        float x, y;
-        x = (i % 2 == 0 && i <= 6) ? 109 : 94;
-
-        if (i <=2) {
-            y = lights.getHeight() - 36;
-        } else if (i <= 4) {
-            y = lights.getHeight() - 51;
-        } else if (i <= 6) {
-            y = lights.getHeight() - 66;
-        } else {
-            y = lights.getHeight() - (66 + (i - 6) * 15);
-        }
-
-        System.out.print(x);
-        System.out.print(" ");
-        System.out.println(y);
-        return new Vector2(x * scale, y * scale);
-    }
-
-    public int getSelectedLevel() {
-        return selectedLevel;
     }
 
     /**
@@ -375,6 +294,12 @@ public class LevelSelectScreen implements Screen, InputProcessor, ControllerList
         active = false;
     }
 
+    public void reset() {
+        this.playButtonState = 0;
+        this.levelSelectButtonState = 0;
+        this.settingsButtonState = 0;
+    }
+
     /**
      * Sets the ScreenListener for this mode
      *
@@ -398,21 +323,28 @@ public class LevelSelectScreen implements Screen, InputProcessor, ControllerList
      * @return whether to hand the event to other listeners.
      */
     public boolean touchDown(int screenX, int screenY, int pointer, int button) {
+        if (playButton == null || playButtonState == 2) {
+            return true;
+        }
+
+        // Flip to match graphics coordinates
         screenY = heightY-screenY;
 
-        if (backHitbox.contains(screenX, screenY)) {
-            backPressState = 1;
+        // TODO: Fix scaling
+        // Play button is a circle.
+
+        if (playButtonHitbox.contains(screenX, screenY)) {
+            playButtonState = 1;
         }
 
-        for (int i = 0, levelHitboxesLength = levelHitboxes.length; i < levelHitboxesLength; i++) {
-            Rectangle levelHitbox = levelHitboxes[i];
-            if (levelHitbox.contains(screenX, screenY)) {
-                if (i < numAvailableLevels) {
-                    System.out.println(i);
-                    levelPressState[i] = 1;
-                }
-            }
+        if (settingsButtonHitbox.contains(screenX, screenY)) {
+            settingsButtonState = 1;
         }
+
+        if (levelSelectButtonHitbox.contains(screenX, screenY)) {
+            levelSelectButtonState = 1;
+        }
+
         return false;
     }
 
@@ -428,15 +360,15 @@ public class LevelSelectScreen implements Screen, InputProcessor, ControllerList
      * @return whether to hand the event to other listeners.
      */
     public boolean touchUp(int screenX, int screenY, int pointer, int button) {
-        if (backPressState == 1) {
-            backPressState = 2;
+        if (playButtonState == 1) {
+            playButtonState = 2;
             return false;
         }
-        for (int i = 0; i < levelPressState.length; i++) {
-            if (levelPressState[i] == 1) {
-                levelPressState[i] = 2;
-                return false;
-            }
+        if (settingsButtonState == 1) {
+            settingsButtonState = 2;
+        }
+        if (levelSelectButtonState == 1) {
+            levelSelectButtonState = 2;
         }
         return true;
     }
@@ -453,10 +385,10 @@ public class LevelSelectScreen implements Screen, InputProcessor, ControllerList
      * @return whether to hand the event to other listeners.
      */
     public boolean buttonDown (Controller controller, int buttonCode) {
-        if (backPressState == 0) {
+        if (playButtonState == 0) {
             ControllerMapping mapping = controller.getMapping();
             if (mapping != null && buttonCode == mapping.buttonStart ) {
-                backPressState = 1;
+                playButtonState = 1;
                 return false;
             }
         }
@@ -475,10 +407,10 @@ public class LevelSelectScreen implements Screen, InputProcessor, ControllerList
      * @return whether to hand the event to other listeners.
      */
     public boolean buttonUp (Controller controller, int buttonCode) {
-        if (backPressState == 1) {
+        if (playButtonState == 1) {
             ControllerMapping mapping = controller.getMapping();
             if (mapping != null && buttonCode == mapping.buttonStart ) {
-                backPressState = 2;
+                playButtonState = 2;
                 return false;
             }
         }
@@ -494,6 +426,10 @@ public class LevelSelectScreen implements Screen, InputProcessor, ControllerList
      * @return whether to hand the event to other listeners.
      */
     public boolean keyDown(int keycode) {
+        if (keycode == Input.Keys.ESCAPE) {
+            escapePressState = 1;
+            return false;
+        }
         return true;
     }
 
@@ -514,6 +450,10 @@ public class LevelSelectScreen implements Screen, InputProcessor, ControllerList
      * @return whether to hand the event to other listeners.
      */
     public boolean keyUp(int keycode) {
+        if (keycode == Input.Keys.ESCAPE) {
+            escapePressState = 2;
+            return false;
+        }
         return true;
     }
 

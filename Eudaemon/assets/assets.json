@@ -360,7 +360,13 @@
         "levelSelect:7": "levelSelect/level7icon.png",
         "levelSelect:8": "levelSelect/level8icon.png",
         "levelSelect:9": "levelSelect/level9icon.png",
-        "levelSelect:10": "levelSelect/level10icon.png"
+        "levelSelect:10": "levelSelect/level10icon.png",
+
+        "mainMenu:background": "backgrounds/loading_background.png",
+        "mainMenu:title": "shared/EUDAEMON_title.png",
+        "mainMenu:start": "shared/start_button.png",
+        "mainMenu:levelSelect": "shared/levelselect_button.png",
+        "mainMenu:settings": "shared/settings_button.png"
     },
     "jsons"  : {
         "constants": "constants.json",
