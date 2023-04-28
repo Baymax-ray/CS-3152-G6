@@ -373,9 +373,19 @@
         "tileset": "EudaemonTileset.json"
     },
     "sounds" : {
-        "platform:jump" : "platform/jump.mp3",
-        "platform:pew"  : "platform/pew.mp3",
-        "platform:plop" : "platform/plop.mp3"
+        "music:momo": "music/MomoTheme.mp3",
+        "music:chiyo": "music/ChiyoTheme.mp3",
+        "effect:temp-jump": "audio/temp-jump.mp3",
+        "effect:temp-impact": "audio/temp-impact.mp3",
+        "effect:temp-sword-swipe":  "audio/temp-sword-swipe.mp3",
+        "effect:temp-dash": "audio/temp-dash.mp3",
+        "effect:se1-trans":  "music/se1-trans.mp3",
+        "effect:temp-transform-to-momo": "audio/temp-transform-to-momo.mp3",
+        "effect:temp-chiyo-run":  "audio/temp-chiyo-run.mp3",
+        "effect:temp-momo-run": "audio/temp-momo-run.mp3",
+        "effect:temp-small-impact":  "audio/temp-small-impact.mp3/",
+        "effect:temp-sword-killing": "audio/temp-sword-killing.mp3",
+        "effect:temp-non-killing": "audio/temp-non-killing-sound.mp3"
     },
     "fonts": {
         "shared:retro": {

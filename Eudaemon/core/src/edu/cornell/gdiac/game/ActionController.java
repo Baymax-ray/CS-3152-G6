@@ -64,54 +64,13 @@ public class ActionController {
     private int maxFrame = 6;
     Array<AIController> aiControllers;
 
-    /** The jump sound.  We only want to play once. */
-    private Sound jumpSound;
-    private long jumpId = -1;
-    /** The impact sound.  We only want to play once. */
-    private Sound impactSound;
-
-    private long impactId = -1;
-
-    /** The sword swipe sound.  We only want to play once. */
-    private Sound swordSwipeSound;
-
-    private long swordSwipeSoundId = -1;
-
-    /** The player dash sound.  We only want to play once. */
-    private Sound dashSound;
-
-    private long dashSoundId = -1;
-
-    /** The player transform to Chiyo sound.  We only want to play once. */
-    private Sound playerChiyoTransformSound;
-
-    private long playerChiyoTransformId = -1;
-
-    /** The player transform to momo sound.  We only want to play once. */
-    private Sound playerMomoTransformSound;
-
-    private long playerMomoTransformId = -1;
-
-    /** The chiyo running sound.  We only want to play once. */
-    private Sound chiyoRunSound;
-
-    private long chiyoRunSoundId = -1;
-    /** The momo running sound.  We only want to play once. */
-    private Sound momoRunSound;
-
-    private long momoRunSoundId = -1;
-
-    private Sound smallImpactSound;
-
-    private long smallImpactSoundId = -1;
-
     private ArrayList<Sound> soundDictionary;
 
     private EffectObstacle spiritDrainEffect;
 
+    private AudioController audio;
 
-
-    public ActionController(Level level,Array<AIController> aiControllers) {
+    public ActionController(Level level,Array<AIController> aiControllers, AudioController audio) {
         enemies = level.getEnemies();
         billboards = level.getBillboards();
         player = level.getPlayer();
@@ -121,15 +80,8 @@ public class ActionController {
         currentX = 0;
         movedDuringLastFrame = false;
         this.aiControllers= aiControllers;
-        this.jumpSound = Gdx.audio.newSound(Gdx.files.internal("audio/temp-jump.mp3"));
-        this.impactSound = Gdx.audio.newSound(Gdx.files.internal("audio/temp-impact.mp3"));
-        this.swordSwipeSound = Gdx.audio.newSound(Gdx.files.internal("audio/temp-sword-swipe.mp3"));
-        this.dashSound = Gdx.audio.newSound(Gdx.files.internal("audio/temp-dash.mp3"));
-        this.playerChiyoTransformSound = Gdx.audio.newSound(Gdx.files.internal("music/se1-trans.mp3"));
-        this.playerMomoTransformSound = Gdx.audio.newSound(Gdx.files.internal("audio/temp-transform-to-momo.mp3"));
-        this.chiyoRunSound = Gdx.audio.newSound(Gdx.files.internal("audio/temp-chiyo-run.mp3"));
-        this.momoRunSound = Gdx.audio.newSound(Gdx.files.internal("audio/temp-momo-run.mp3"));
-        this.smallImpactSound = Gdx.audio.newSound(Gdx.files.internal("audio/temp-small-impact.mp3"));
+        this.audio = audio;
+
         this.soundDictionary = new ArrayList<Sound>();
         //Creating a Dictionary of Textures
         addAnimations(player.getMomoRunSpriteSheet(), 8, 1, "momoRun");
@@ -288,13 +240,15 @@ public class ActionController {
             if(player.getForm() == 0){
                 player.setForm();
                 player.setHeight(player.getHeight() * player.getChiyoHitBoxHeightMult());
-                playerChiyoTransformId = playSound( playerChiyoTransformSound, playerChiyoTransformId, 0.1F );
+//                playerChiyoTransformId = playSound( playerChiyoTransformSound, playerChiyoTransformId, 0.1F );
+                audio.playEffect("chiyo-transform", 0.1f);
                 player.updateGroundSensor();
             }
             else{
                 player.setForm();
                 player.setHeight(player.getHeight() / player.getChiyoHitBoxHeightMult());
-                playerMomoTransformId = playSound( playerMomoTransformSound, playerMomoTransformId, 0.1F );
+//                playerMomoTransformId = playSound( playerMomoTransformSound, playerMomoTransformId, 0.1F );
+                audio.playEffect("momo-transform", 0.1f);
                 player.updateGroundSensor();
             }
         }
@@ -306,7 +260,8 @@ public class ActionController {
             player.setAttacking(true);
             player.setAttackLifespanRemaining(player.getAttackLifespan());
             createSword();
-            swordSwipeSoundId = playSound( swordSwipeSound, swordSwipeSoundId, 0.05F );
+//            swordSwipeSoundId = playSound( swordSwipeSound, swordSwipeSoundId, 0.05F );
+            audio.playEffect("sword-swipe", 0.05f);
         }
 
         if (player.getAttackLifespanRemaining() > 0) {
@@ -418,7 +373,8 @@ public class ActionController {
             level.addQueuedObject(dashAnimate);
 
             //Sound effect
-            dashSoundId = playSound(dashSound, dashSoundId, 0.05F);
+//            dashSoundId = playSound(dashSound, dashSoundId, 0.05F);
+            audio.playEffect("dash", 0.05f);
 
             //Setting Gravity to 0 and scheduling to set it back
             player.setPlayerGravity(0.0f);
@@ -509,7 +465,8 @@ public class ActionController {
 
         //Animation if Player is Momo
         if (player.getForm() == 0) {
-            chiyoRunSound.stop();
+//            chiyoRunSound.stop();
+            audio.stopEffect("chiyo-run");
             // Momo Dashing
             if (player.isDashing()) {
                 TextureRegion current;
@@ -532,7 +489,7 @@ public class ActionController {
             }
             // Momo jumping/falling
             else if (!player.isGrounded()) {
-                if (currentAnimation != "momoJump") {
+                if (!currentAnimation.equals("momoJump")) {
                     currentFrame = 0;
                 }
                 currentAnimation = "momoJump";
@@ -565,19 +522,21 @@ public class ActionController {
 //                player.setSyMult(1.2f);
 //            }
             else if (player.getBodyVelocityX() != 0) {
-                if (currentAnimation != "momoRun") {
+                if (!currentAnimation.equals("momoRun")) {
                     currentFrame = 0;
                 }
                 currentAnimation = "momoRun";
                 if(player.isGrounded() && !player.getIsJumping()){
-                    if(!soundDictionary.contains(momoRunSound)){
-                        soundDictionary.add(momoRunSound);
-                        momoRunSound.loop();
-                    }
+//                    if(!soundDictionary.contains(momoRunSound)){
+//                        soundDictionary.add(momoRunSound);
+//                        momoRunSound.loop();
+//                    }
+                    audio.loopEffect("momo-run", 1.0f);
                 }
                 else if(!player.isGrounded() || player.getIsJumping()){
-                    momoRunSound.stop();
-                    soundDictionary.remove(momoRunSound);
+//                    momoRunSound.stop();
+//                    soundDictionary.remove(momoRunSound);
+                    audio.stopEffect("momo-run");
                 }
 
                 TextureRegion current = (TextureRegion) (animations.get("momoRun")).getKeyFrame(currentFrame); // Gets the current frame of the animation
@@ -589,8 +548,9 @@ public class ActionController {
                 player.setSyMult(1.2f);
             } else {
                 currentAnimation = "momoIdle";
-                momoRunSound.stop();
-                soundDictionary.remove(momoRunSound);
+//                momoRunSound.stop();
+//                soundDictionary.remove(momoRunSound);
+                audio.stopEffect("momo-run");
                 player.setTexture(player.getMomoTexture());
 
                 player.setOyOffset(-220);
@@ -600,11 +560,13 @@ public class ActionController {
         }
         // Animations if Player is Chiyo
         else {
-            momoRunSound.stop();
+//            momoRunSound.stop();
+            audio.stopEffect("momo-run");
             if(player.isAttacking()) {
-                chiyoRunSound.stop();
-                soundDictionary.remove(chiyoRunSound);
-                if (currentAnimation != "chiyoAttack") {
+//                chiyoRunSound.stop();
+//                soundDictionary.remove(chiyoRunSound);
+                audio.stopEffect("chiyo-run");
+                if (!currentAnimation.equals("chiyoAttack")) {
                     currentFrame = 0;
                 }
                 currentAnimation = "chiyoAttack";
@@ -625,9 +587,10 @@ public class ActionController {
                 player.setSyMult(1.84f);
             }
             else if (!player.isGrounded()) {
-                chiyoRunSound.stop();
-                soundDictionary.remove(chiyoRunSound);
-                if (currentAnimation != "chiyoJump") {
+//                chiyoRunSound.stop();
+//                soundDictionary.remove(chiyoRunSound);
+                audio.stopEffect("chiyo-run");
+                if (!currentAnimation.equals("chiyoJump")) {
                     currentFrame = 0;
                 }
                 currentAnimation = "chiyoJump";
@@ -652,10 +615,11 @@ public class ActionController {
             } else if(player.getBodyVelocityX() != 0){
                 currentAnimation = "chiyoRun";
                 if(player.isGrounded() && !player.getIsJumping()){
-                    if(!soundDictionary.contains(chiyoRunSound)) {
-                        soundDictionary.add(chiyoRunSound);
-                        chiyoRunSound.loop();
-                    }
+//                    if(!soundDictionary.contains(chiyoRunSound)) {
+//                        soundDictionary.add(chiyoRunSound);
+//                        chiyoRunSound.loop();
+//                    }
+                    audio.loopEffect("chiyo-run", 1.0f);
                 }
                 TextureRegion current = (TextureRegion) (animations.get("chiyoRun")).getKeyFrame(currentFrame); // Gets the current frame of the animation
                 tickFrameSwitch = 4;
@@ -668,8 +632,9 @@ public class ActionController {
 
             } else {
                 currentAnimation = "chiyoIdle";
-                chiyoRunSound.stop();
-                soundDictionary.remove(chiyoRunSound);
+//                chiyoRunSound.stop();
+//                soundDictionary.remove(chiyoRunSound);
+                audio.stopEffect("chiyo-run");
                 player.setTexture(player.getChiyoTexture());
                 player.setOxOffset(0);
                 player.setOyOffset(-29);
@@ -687,7 +652,8 @@ public class ActionController {
         }
         if(smallImpact && player.isGrounded()){
             smallImpact = false;
-            smallImpactSoundId = playSound(smallImpactSound, smallImpactSoundId, 0.8F);
+//            smallImpactSoundId = playSound(smallImpactSound, smallImpactSoundId, 0.8F);
+            audio.playEffect("small-impact", 0.8f);
         }
         //next time the player is grounded, create the impact animation
         if (impact && player.isGrounded()) {
@@ -702,7 +668,8 @@ public class ActionController {
                     "impactEffect", player, 0.35f,
                     1, 1, animations.get("impactEffect"), 5);
             level.addQueuedObject(impactAnimate);
-            impactId = playSound(impactSound, impactId, 0.3F);
+//            impactId = playSound(impactSound, impactId, 0.3F);
+            audio.playEffect("impact", 0.3f);
             level.shakeControllerSmall();
 
         }
@@ -750,7 +717,7 @@ public class ActionController {
      */
     private void jump() {
         //Sound Effect
-        jumpId = playSound( jumpSound, jumpId, 0.5F );
+        //jumpId = playSound( jumpSound, jumpId, 0.5F );
 
         if (player.isSliding()){
             player.setVelocity((player.isFacingRight() ? -1 : 1) * player.getWallJumpXVelocity(), player.getJumpVelocity());
@@ -981,17 +948,7 @@ public class ActionController {
 
 
     public void dispose() {
-        jumpSound.dispose();
-        chiyoRunSound.dispose();
-        dashSound.dispose();
-        smallImpactSound.dispose();
-        impactSound.dispose();
-        momoRunSound.dispose();
-        playerChiyoTransformSound.dispose();
-        playerMomoTransformSound.dispose();
-        swordSwipeSound.dispose();
-        chiyoRunSound.dispose();
-        momoRunSound.dispose();
+
     }
 }
 

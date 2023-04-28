@@ -145,10 +145,6 @@ public class Enemy extends CapsuleObstacle {
     /**
      * The sword killing enemy sound.  We only want to play once.
      */
-    private Sound swordKillingSound;
-    private long swordKillingSoundId = -1;
-    private Sound swordHittingSound;
-    private long swordHittingSoundId = -1;
     private JsonValue bullet;
     private float projectileEnemyRotation;
     private String projectileEnemyDirection;
@@ -251,6 +247,8 @@ public class Enemy extends CapsuleObstacle {
     public void LossSpirit(float rate) {
         this.spiritRemain -= rate;
     }
+
+    public float getHearts() { return hearts; }
 
     /**
      * Retrieves the blood effect sprite sheet of the object.
@@ -521,10 +519,6 @@ public class Enemy extends CapsuleObstacle {
         this.attackCooldown = enemyData.getInt("attackCooldown");
         this.attackOffset = enemyData.getFloat("attackOffset");
 
-        //Sound Effects
-        this.swordKillingSound = Gdx.audio.newSound(Gdx.files.internal("audio/temp-sword-killing.mp3"));
-        this.swordHittingSound = Gdx.audio.newSound(Gdx.files.internal("audio/temp-non-killing-sound.mp3"));
-
         //Sensor. Wtf is this?
         //used for collision detection
         this.sensorName = "EnemyGroundSensor";
@@ -666,13 +660,6 @@ public class Enemy extends CapsuleObstacle {
             this.markRemoved(true);
             player.increaseSpiritByKill(); //player gain some spirit when the enemy killed
         }
-        if(hearts == 0){
-            swordKillingSoundId = playSound(swordKillingSound, swordKillingSoundId, 0.5F);
-        }
-        else{
-            swordHittingSoundId = playSound(swordHittingSound, swordHittingSoundId, 0.05F);
-        }
-
     }
 
     public long playSound(Sound sound, long soundId, float volume) {
@@ -683,8 +670,7 @@ public class Enemy extends CapsuleObstacle {
     }
 
     public void dispose() {
-        this.swordHittingSound.dispose();
-        this.swordKillingSound.dispose();
+
     }
 
 }
