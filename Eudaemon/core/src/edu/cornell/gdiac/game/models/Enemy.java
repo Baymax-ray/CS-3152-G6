@@ -435,8 +435,7 @@ public class Enemy extends CapsuleObstacle {
                 String bulletT = enemyData.getString("BulletTextureAsset");
                 this.bulletTexture = new TextureRegion(assets.getEntry(bulletT, Texture.class));
                 this.detectDistance = enemyData.getInt("detectDistance");
-                // this enemy should be static and not affected by recoil
-                //super.setBodyTypeToStatic();
+
                 // set the direction that this projectile enemy is facing
                 JsonValue projectileProperties = json.get("properties");
                 for (JsonValue property : projectileProperties) {
