@@ -398,9 +398,7 @@ public class Enemy extends CapsuleObstacle {
         this.guardianList = new ArrayList<>();
         switch (this.type) {
             case "Goomba":
-                break;
             case "Fast":
-                break;
             case "Fly":
                 break;
             case "FlyGuardian":
@@ -428,8 +426,8 @@ public class Enemy extends CapsuleObstacle {
                 for (JsonValue property : properties) {
                     list2.add(property.getInt("value"));
                 }
-                for (int i = 0; i < list2.size(); i++) {
-                    this.guardianList.add(list2.get(i));
+                for (Integer integer : list2) {
+                    this.guardianList.add(integer);
                 }
                 break;
             case "Projectile":
@@ -468,6 +466,7 @@ public class Enemy extends CapsuleObstacle {
                         this.projectileEnemyRotation = 0;
                         break;
                     default:
+                        //should not get here
                         System.out.println("something wrong");
                 }
                 switch (projectileSpriteSheetType) {
@@ -532,8 +531,7 @@ public class Enemy extends CapsuleObstacle {
         this.sensorName = "EnemyGroundSensor";
 
         //Other Information
-        int initialHearts = enemyData.getInt("initialHearts");
-        this.hearts = initialHearts;
+        this.hearts = enemyData.getInt("initialHearts");
         this.spiritRemain = enemyData.getFloat(("spiritLimitation"));
         this.isFacingRight = enemyData.getBoolean("startsFacingRight");
 
