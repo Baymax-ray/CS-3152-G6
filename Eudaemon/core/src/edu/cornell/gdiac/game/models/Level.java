@@ -318,13 +318,15 @@ public class Level {
                     // Add diagonal neighboring nodes
                     if (y > 0){
                         toNode=getNode(x-1,y-1);
-                        if (toNode.isPassable()) {
+                        MyNode sideNode=getNode(x,y-1);
+                        if (toNode.isPassable()&& sideNode.isPassable()) {
                             connections.add(new MyConnection<>(fromNode,toNode,1.4f));
                         }
                     }
                     if (y < height - 1){
                         toNode=getNode(x-1,y+1);
-                        if (toNode.isPassable()) {
+                        MyNode sideNode=getNode(x,y+1);
+                        if (toNode.isPassable()&& sideNode.isPassable()) {
                             connections.add(new MyConnection<>(fromNode,toNode,1.4f));
                         }
                     }
@@ -335,15 +337,17 @@ public class Level {
                 if (toNode.isPassable()) {
                     connections.add(new MyConnection<>(fromNode,toNode,1f));
                     // Add diagonal neighboring nodes
-                    if (x < width - 1 && y > 0){
+                    if (y > 0){
                         toNode=getNode(x+1,y-1);
-                        if (toNode.isPassable()) {
+                        MyNode sideNode=getNode(x,y-1);
+                        if (toNode.isPassable()&& sideNode.isPassable()) {
                             connections.add(new MyConnection<>(fromNode,toNode,1.4f));
                         }
                     }
-                    if (x < width - 1 && y < height - 1){
+                    if (y < height - 1){
                         toNode=getNode(x+1,y+1);
-                        if (toNode.isPassable()) {
+                        MyNode sideNode=getNode(x,y+1);
+                        if (toNode.isPassable()&& sideNode.isPassable()) {
                             connections.add(new MyConnection<>(fromNode,toNode,1.4f));
                         }
                     }
@@ -442,9 +446,9 @@ public class Level {
 //        this.backgroundTexture = assets.get(backgroundAsset);
 
         //#region Enemies and Objects
-        this.enemies = new ArrayList<Enemy>();
-        this.spikes = new ArrayList<Spike>();
-        this.billboards = new ArrayList<Billboard>();
+        this.enemies = new ArrayList<>();
+        this.spikes = new ArrayList<>();
+        this.billboards = new ArrayList<>();
 
         int startX = 0;
         int startY = 0;

@@ -30,7 +30,6 @@ public class Enemy extends CapsuleObstacle {
     private final float startX;
     private final float startY;
 
-    private final int initialHearts;
     private final int attackPower;
 
     /**
@@ -50,11 +49,6 @@ public class Enemy extends CapsuleObstacle {
      * The y-scaling factor for the sprite.
      */
     private float scaleY;
-
-    /**
-     * The amount to slow the character down
-     */
-    private final float damping;
 
     /**
      * The factor to multiply to the movement
@@ -404,9 +398,7 @@ public class Enemy extends CapsuleObstacle {
         this.guardianList = new ArrayList<>();
         switch (this.type) {
             case "Goomba":
-                break;
             case "Fast":
-                break;
             case "Fly":
                 break;
             case "FlyGuardian":
@@ -434,8 +426,8 @@ public class Enemy extends CapsuleObstacle {
                 for (JsonValue property : properties) {
                     list2.add(property.getInt("value"));
                 }
-                for (int i = 0; i < list2.size(); i++) {
-                    this.guardianList.add(list2.get(i));
+                for (Integer integer : list2) {
+                    this.guardianList.add(integer);
                 }
                 break;
             case "Projectile":
@@ -443,8 +435,7 @@ public class Enemy extends CapsuleObstacle {
                 String bulletT = enemyData.getString("BulletTextureAsset");
                 this.bulletTexture = new TextureRegion(assets.getEntry(bulletT, Texture.class));
                 this.detectDistance = enemyData.getInt("detectDistance");
-                // this enemy should be static and not affected by recoil
-                //super.setBodyTypeToStatic();
+
                 // set the direction that this projectile enemy is facing
                 JsonValue projectileProperties = json.get("properties");
                 for (JsonValue property : projectileProperties) {
@@ -474,6 +465,7 @@ public class Enemy extends CapsuleObstacle {
                         this.projectileEnemyRotation = 0;
                         break;
                     default:
+                        //should not get here
                         System.out.println("something wrong");
                 }
                 switch (projectileSpriteSheetType) {
@@ -523,7 +515,6 @@ public class Enemy extends CapsuleObstacle {
 
         this.maxSpeed = enemyData.getFloat("maxSpeed");
         this.force = enemyData.getFloat("force");
-        this.damping = enemyData.getFloat("damping");
 
         //Attacking
         this.attackPower = enemyData.getInt("attackPower");
@@ -539,8 +530,7 @@ public class Enemy extends CapsuleObstacle {
         this.sensorName = "EnemyGroundSensor";
 
         //Other Information
-        this.initialHearts = enemyData.getInt("initialHearts");
-        this.hearts = initialHearts;
+        this.hearts = enemyData.getInt("initialHearts");
         this.spiritRemain = enemyData.getFloat(("spiritLimitation"));
         this.isFacingRight = enemyData.getBoolean("startsFacingRight");
 

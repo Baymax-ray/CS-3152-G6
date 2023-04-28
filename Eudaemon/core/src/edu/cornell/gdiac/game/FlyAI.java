@@ -32,9 +32,9 @@ public class FlyAI extends AIController{
     private final float[] goal;
     /** do we need to go to the next step in chasing?*/
     private boolean needNewPath = true;
-    private Heuristic<Level.MyNode> heuristic;
-    private Level.MyGridGraph graph;
-    private GraphPath<Level.MyNode> path;
+    private final Heuristic<Level.MyNode> heuristic;
+    private final Level.MyGridGraph graph;
+    private final GraphPath<Level.MyNode> path;
     private int indexAlongPath=0;
 
     private enum FSMState {
@@ -222,7 +222,7 @@ public class FlyAI extends AIController{
                 break;
             case WANDER:
             case CHASE:
-                IndexedAStarPathFinder<Level.MyNode> pathFinder = new IndexedAStarPathFinder<>((IndexedGraph<Level.MyNode>) graph);
+                IndexedAStarPathFinder<Level.MyNode> pathFinder = new IndexedAStarPathFinder<>(graph);
                 if (needNewPath){
                     Level.MyNode startNode = graph.getNode(level.levelToTileCoordinatesX(ex), level.levelToTileCoordinatesY(ey));
                     Level.MyNode endNode = graph.getNode(level.levelToTileCoordinatesX(goal[0]), level.levelToTileCoordinatesY(goal[1]));
@@ -233,6 +233,7 @@ public class FlyAI extends AIController{
                     if(!foundPath){//did not find the path
 //                        System.out.println("Did not find path, so stay");
                         this.move=EnemyAction.STAY;
+                        break;
                     }else{
                     needNewPath =false;}
                 }

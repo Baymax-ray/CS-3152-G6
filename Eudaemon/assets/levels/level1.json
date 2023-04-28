@@ -914,6 +914,24 @@
                  "width":24.3402,
                  "x":1987.25328186536,
                  "y":923.181250785642
+                }, 
+                {
+                 "gid":158,
+                 "height":24.5,
+                 "id":178,
+                 "name":"Billboard",
+                 "properties":[
+                        {
+                         "name":"text",
+                         "type":"string",
+                         "value":"Right Button when you have spirite"
+                        }],
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":19.5,
+                 "x":630.25,
+                 "y":210.75
                 }],
          "opacity":1,
          "type":"objectgroup",
@@ -922,10 +940,10 @@
          "y":0
         }],
  "nextlayerid":11,
- "nextobjectid":178,
+ "nextobjectid":179,
  "orientation":"orthogonal",
  "renderorder":"right-down",
- "tiledversion":"1.10.0",
+ "tiledversion":"1.10.1",
  "tileheight":32,
  "tilesets":[
         {
