@@ -5,6 +5,6 @@
 WIP Game
 
 CURRENT BUGS
-- player can be caught in a jump in one direction unable to change direction
-- player sometimes can't jump
-- enemy sometimes launches player up in the air
+- momo can “jump into" the wall when dash
+- jump animation is somehow strange
+- walking animation has wrong position
