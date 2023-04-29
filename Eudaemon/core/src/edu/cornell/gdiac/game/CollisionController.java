@@ -314,7 +314,6 @@ public class CollisionController implements ContactListener {
 
         if (bd1 instanceof Player && !fix1.isSensor() && bd2 instanceof Enemy ||
                 bd2 instanceof Player && !fix2.isSensor() && bd1 instanceof Enemy) {
-            Enemy enemy = (Enemy) (bd1 instanceof Player ? bd2 : bd1);
             Player player = (Player) (bd1 instanceof Player ? bd1 : bd2);
 
             if (!player.isHit() & !player.isDashing()) {
@@ -343,89 +342,10 @@ public class CollisionController implements ContactListener {
             contact.setEnabled(false);
         }
 
-        //#region  Attempt to cancel fly enemies collision (failed, commented out)
-        //the following if statement cannot be realized. idk why.
-//        if(bd1 instanceof Enemy && bd2 instanceof Enemy){
-//
-//            System.out.println("flying1, hi!");
-//            System.out.println(((Enemy) bd1).getType());
-//            System.out.println(((Enemy) bd2).getType());
-//            if(
-//                    (((Enemy) bd1).getType().equals( "FlyGuardian") || ((Enemy) bd1).getType().equals( "Fly")) &&
-//                            (((Enemy) bd2).getType().equals( "FlyGuardian") || ((Enemy) bd2).getType().equals( "Fly"))){
-//                System.out.println("flying2, hi!");
-//                Fixture fixture1 = fix1;
-//
-//                Filter filter1 = fixture1.getFilterData();
-//                Fixture fixture2 = fix2;
-//
-//                Filter filter2 = fixture1.getFilterData();
-//                filter1.groupIndex = 1;
-//                filter2.groupIndex = 1;
-//                fixture1.setFilterData(filter1);
-//                fixture2.setFilterData(filter2);
-//            }
-//        }
-    //#endregion
-
-        //#region Attempt to cancel player-enemy collision WHEN DASHING (Not Adopted, Commented Out)
-        //the following code is trying to remove the collision between player and enemy when player is dashing.
-        //this is not used because now the player should not be colliding with enemies anyways.
-//        if((bd1 instanceof Player && bd2 instanceof Enemy && ((Player) bd1).isDashing())||
-//                (bd1 instanceof Enemy && bd2 instanceof Player&& ((Player) bd2).isDashing())){
-//            // Get the two fixtures that you want to ignore each other
-//            Fixture fixture1 = fix1;
-//            Fixture fixture2 = fix2;
-//
-//            // Get the filter data for each fixture
-//            Filter filter1 = fixture1.getFilterData();
-//            Filter filter2 = fixture2.getFilterData();
-//
-//            filter1.groupIndex = -1;
-//            filter2.groupIndex = -1;
-//            // Set the updated filter data for each fixture
-//            fixture1.setFilterData(filter1);
-//            fixture2.setFilterData(filter2);
-//        }
-        //#endregion
     }
 
     @Override
     public void postSolve(Contact contact, ContactImpulse impulse) {
-        //Intended to solve the situation when player is stuck on wall by a flying enemy sticking to it
-        //and cannot escape
-        //BUT FAILED.
-        Fixture fix1 = contact.getFixtureA();
-        Fixture fix2 = contact.getFixtureB();
 
-        Body body1 = fix1.getBody();
-        Body body2 = fix2.getBody();
-
-        Object bd1 = body1.getUserData();
-        Object bd2 = body2.getUserData();
-
-        //#region Attempt to cancel player-enemy collision WHEN DASHING (Not Adopted, Commented Out)
-//      same as above: dash collision, not used.
-//        if(bd1 instanceof Player && !((Player) bd1).isDashing()){
-//            // Get the two fixtures that you want to ignore each other
-//            Fixture fixture1 = fix1;
-//
-//            // Get the filter data for each fixture
-//            Filter filter1 = fixture1.getFilterData();
-//
-//            filter1.groupIndex = 0;
-//            // Set the updated filter data for each fixture
-//            fixture1.setFilterData(filter1);
-//        }else if(bd2 instanceof Player && !((Player) bd2).isDashing()){
-//            Fixture fixture1 = fix2;
-//
-//            // Get the filter data for each fixture
-//            Filter filter1 = fixture1.getFilterData();
-//
-//            filter1.groupIndex = 0;
-//            // Set the updated filter data for each fixture
-//            fixture1.setFilterData(filter1);
-//        }
-        //#endregion
     }
 }
