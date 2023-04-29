@@ -1,8 +1,6 @@
 package edu.cornell.gdiac.game;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
-import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.utils.Array;
 import edu.cornell.gdiac.assets.AssetDirectory;
 import edu.cornell.gdiac.game.models.*;
@@ -44,12 +42,29 @@ public class LevelScreen implements Screen {
         this.aiControllers = new Array<>(enemies.length);
         this.enemyActions = new Array<>(enemies.length);
         for (int i = 0; i < enemies.length; i++) {
-            if (enemies[i].getType().equals("Goomba")){aiControllers.add(new GoombaAI(i, level));}
-            else if (enemies[i].getType().equals("Fly")) {aiControllers.add(new FlyAI(i, level));}
-            else if (enemies[i].getType().equals("FlyGuardian")) {aiControllers.add(new FlyGuardianAI(i, level));}
-            else if (enemies[i].getType().equals("GoombaGuardian")) {aiControllers.add(new GoombaGuardianAI(i, level));}
-            else if (enemies[i].getType().equals("Projectile")){aiControllers.add(new ProjectileAI(i,level));}
-            else if (enemies[i].getType().equals("Fast")){aiControllers.add(new GoombaAI(i, level));};
+            switch (enemies[i].getType()) {
+                case "Goomba":
+                    aiControllers.add(new GoombaAI(i, level));
+                    break;
+                case "Fly":
+                    aiControllers.add(new FlyAI(i, level));
+                    break;
+                case "FlyGuardian":
+                    aiControllers.add(new FlyGuardianAI(i, level));
+                    break;
+                case "GoombaGuardian":
+                    aiControllers.add(new GoombaGuardianAI(i, level));
+                    break;
+                case "Projectile":
+                    aiControllers.add(new ProjectileAI(i, level));
+                    break;
+                case "Fast":
+                    aiControllers.add(new GoombaAI(i, level));
+                    break;
+                default:
+                    //should not get here
+                    throw new IllegalArgumentException("Enemy type does not exist: "+enemies[i].getType());
+            }
             // initializes an empty enumset with the right type
             enemyActions.add(EnumSet.noneOf(EnemyAction.class));
         }

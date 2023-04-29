@@ -91,13 +91,14 @@ public class CollisionController implements ContactListener {
             if ((bd1.toString().contains("Spike") && bd2 instanceof Player && !fix2.isSensor() ||
                     bd2.toString().contains("Spike") && bd1 instanceof Player && !fix1.isSensor())) {
                 level.getPlayer().setHit(true);
-                level.getPlayer().hitByEnemy(4, bd2 instanceof Player? bd1: bd2);
+                level.getPlayer().hitByEnemy(1, bd2 instanceof Player? bd1: bd2);
                 level.shakeControllerHeavy();
                 //Resets dash when damaged by spike
                 level.getPlayer().setDashedInAir(false);
             }
         } catch (Exception e) { }
-
+        //here is the code for bullet
+        //bullet is wheel obstacle but is not sword wheel obstacle
         if (bd1 instanceof WheelObstacle && !(bd1 instanceof SwordWheelObstacle) && !(bd2 instanceof Enemy) && !fix2.isSensor()){
             ((WheelObstacle) bd1).markRemoved(true);
             if(bd2 instanceof Player){

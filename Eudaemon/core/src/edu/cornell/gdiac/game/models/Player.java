@@ -15,6 +15,7 @@ import edu.cornell.gdiac.game.GameCanvas;
 import edu.cornell.gdiac.game.obstacle.CapsuleObstacle;
 import edu.cornell.gdiac.game.obstacle.SwordWheelObstacle;
 import edu.cornell.gdiac.game.obstacle.WheelObstacle;
+import edu.cornell.gdiac.util.XBoxController;
 
 public class Player extends CapsuleObstacle {
 
@@ -1337,42 +1338,60 @@ public class Player extends CapsuleObstacle {
 
     /**
      * Called when the character is hit by an enemy.
-     *
      * This method decrements the number of hearts for the character by 1. If the number of hearts
      * reaches 0, this method destroys the character
      * @param whichObstacle : the parameter specifying which object the player is hit by:
      *                      0 for Enemy;
      *                      1 for Spike;
-     *                      2 for WheelObstacle;
+     *                      2 for WheelObstacle (bullet);
      *                      3 for SwordWheelObstacle;
-     *                      4 for spike
      */
     public void hitByEnemy(int whichObstacle, Object hitter) {
         if (isHit() && hearts > 0){
             hearts--;
             playerDamageSoundId = playSound(playerDamageSound, playerDamageSoundId, 0.1F);
             if (hearts > 0) {
-                float direction = 1;
+                float directionX = 0;
                 float spikeKnockBackVerticalMult = 0;
                 switch (whichObstacle){
                     case 0:
-                        direction = ((Enemy) hitter).getX() - this.getX() >= 0? -1: 1; break;
+                        directionX = ((Enemy) hitter).getX() - this.getX() >= 0? -1: 1; break;
                     case 1:
-                        direction = ((Spike) hitter).getX() - this.getX() >=0? -1:1;break;
-                    case 2:
-                        direction = ((WheelObstacle) hitter).getX() - this.getX() >=0? -1:1;break;
-                    case 3:
-                        direction = ((SwordWheelObstacle) hitter).getX() - this.getX() >=0? -1:1;break;
-                    case 4: //spike
-                        direction = isFacingRight? -0.4f : 0.4f;
-                        spikeKnockBackVerticalMult = 2.0f;
+                        String direction= ((Spike) hitter).getDirection();
+                        System.out.println(direction);
+                        switch (direction){
+                            case "Up":
+                                directionX=0;
+                                spikeKnockBackVerticalMult=2;
+                                break;
+                            case "Down":
+                                directionX=0;
+                                spikeKnockBackVerticalMult=-2;
+                                break;
+                            case "Left":
+                                directionX=-1;
+                                spikeKnockBackVerticalMult=0;
+                                break;
+                            case "Right":
+                                directionX=1;
+                                spikeKnockBackVerticalMult=0;
+                                break;
+                            default:
+                                //should not reach here
+                                throw new IllegalArgumentException("Spike direction does not exist: "+direction);
+                        }
                         break;
+                    case 2:
+                        directionX = ((WheelObstacle) hitter).getX() - this.getX() >=0? -1:1;break;
+                    case 3:
+                        directionX = ((SwordWheelObstacle) hitter).getX() - this.getX() >=0? -1:1;break;
+
                     default:
-                        direction = isFacingRight? -1: 1;
+                        directionX = isFacingRight? -1: 1;
                 }
                 //setVelocity(getBodyVelocityX(), 2.0f);
                 setiFramesRemaining(getIFrames());
-                Vector2 knockback = new Vector2(direction * playerData.getFloat("knockbackX"),
+                Vector2 knockback = new Vector2(directionX * playerData.getFloat("knockbackX"),
                         spikeKnockBackVerticalMult * playerData.getFloat("knockbackY"));
                 setVelocity(knockback.x, knockback.y);
             } else this.markRemoved(true);

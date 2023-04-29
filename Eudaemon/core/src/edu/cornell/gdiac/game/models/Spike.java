@@ -51,7 +51,7 @@ public class Spike extends BoxObstacle {
 
     //#region Getter and Setter
     private String getSensorName() {return this.sensorName;}
-
+    public String getDirection(){return this.direction;}
     //#endregion
 
 
