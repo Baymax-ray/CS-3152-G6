@@ -379,8 +379,8 @@
         "tileset": "EudaemonTileset.json"
     },
     "sounds" : {
-        "music:momo": "music/MomoTheme.mp3",
-        "music:chiyo": "music/ChiyoTheme.mp3",
+        "music:momo": "music/MomoTheme-Ver2.mp3",
+        "music:chiyo": "music/ChiyoTheme-Ver2.mp3",
         "effect:temp-jump": "audio/temp-jump.mp3",
         "effect:temp-impact": "audio/temp-impact.mp3",
         "effect:temp-sword-swipe":  "audio/temp-sword-swipe.mp3",
