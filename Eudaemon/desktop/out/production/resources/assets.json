@@ -360,7 +360,13 @@
         "levelSelect:7": "levelSelect/level7icon.png",
         "levelSelect:8": "levelSelect/level8icon.png",
         "levelSelect:9": "levelSelect/level9icon.png",
-        "levelSelect:10": "levelSelect/level10icon.png"
+        "levelSelect:10": "levelSelect/level10icon.png",
+
+        "mainMenu:background": "backgrounds/loading_background.png",
+        "mainMenu:title": "shared/EUDAEMON_title.png",
+        "mainMenu:start": "shared/start_button.png",
+        "mainMenu:levelSelect": "shared/levelselect_button.png",
+        "mainMenu:settings": "shared/settings_button.png"
     },
     "jsons"  : {
         "constants": "constants.json",
@@ -370,12 +376,23 @@
         "level1": "levels/level1.json",
         "level2": "levels/level2.json",
         "level3": "levels/level3.json",
+        "level4": "levels/level4.json",
         "tileset": "EudaemonTileset.json"
     },
     "sounds" : {
-        "platform:jump" : "platform/jump.mp3",
-        "platform:pew"  : "platform/pew.mp3",
-        "platform:plop" : "platform/plop.mp3"
+        "music:momo": "music/MomoTheme-Ver2.mp3",
+        "music:chiyo": "music/ChiyoTheme-Ver2.mp3",
+        "effect:temp-jump": "audio/temp-jump.mp3",
+        "effect:temp-impact": "audio/temp-impact.mp3",
+        "effect:temp-sword-swipe":  "audio/temp-sword-swipe.mp3",
+        "effect:temp-dash": "audio/temp-dash.mp3",
+        "effect:se1-trans":  "music/se1-trans.mp3",
+        "effect:temp-transform-to-momo": "audio/temp-transform-to-momo.mp3",
+        "effect:temp-chiyo-run":  "audio/temp-chiyo-run.mp3",
+        "effect:temp-momo-run": "audio/temp-momo-run.mp3",
+        "effect:temp-small-impact":  "audio/temp-small-impact.mp3/",
+        "effect:temp-sword-killing": "audio/temp-sword-killing.mp3",
+        "effect:temp-non-killing": "audio/temp-non-killing-sound.mp3"
     },
     "fonts": {
         "shared:retro": {

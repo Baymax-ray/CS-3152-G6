@@ -216,7 +216,7 @@
                         {
                          "name":"text",
                          "type":"string",
-                         "value":"Press X or Left Button"
+                         "value":"Press X or Left Button; try combine WASD with this"
                         }],
                  "rotation":0,
                  "type":"",
@@ -763,7 +763,7 @@
  "nextobjectid":209,
  "orientation":"orthogonal",
  "renderorder":"right-down",
- "tiledversion":"1.10.0",
+ "tiledversion":"1.10.1",
  "tileheight":32,
  "tilesets":[
         {
