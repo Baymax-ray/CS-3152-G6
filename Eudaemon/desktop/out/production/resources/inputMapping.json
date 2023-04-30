@@ -1,13 +1,23 @@
 {
-  "up": "W",
-  "down": "S",
-  "left": "A",
-  "right": "D",
-  "jump": "Space",
-  "dash": "LEFT",
-  "attack": "LEFT",
-  "transform": "RIGHT",
-  "debug":  "T",
-  "reset": "R",
-  "pause": "Q"
+  "keyboard": {
+    "up": "W",
+    "down": "S",
+    "left": "A",
+    "right": "D",
+    "jump": "Space",
+    "dash": "N",
+    "attack": "N",
+    "transform": "M",
+    "debug": "T",
+    "reset": "R",
+    "pause": "Q"
+  },
+  "mouse": {
+    "dash": "LEFT",
+    "attack": "LEFT",
+    "transform": "RIGHT"
+  },
+  "controller": {
+
+  }
 }

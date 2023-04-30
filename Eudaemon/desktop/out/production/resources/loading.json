@@ -13,9 +13,6 @@
                 "foreleft"   : [0,   40,  16, 85],
                 "foreright"  : [384, 40, 400, 85]
             }
-        },
-      "start": "shared/start_button.png",
-      "levelselect": "shared/levelselect_button.png",
-      "settings": "shared/settings_button.png"
+        }
 	}
 }

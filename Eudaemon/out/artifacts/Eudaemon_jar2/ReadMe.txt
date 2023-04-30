@@ -5,6 +5,7 @@ Space-jump
 Right click-transform between Momo(red) and Chiyo(blue)
 Left click-Momo(red) dash; Chiyo(blue) attack
 Notice: holding WASD when left click will dash or attack directionally
+Notice: if you do not have a mouse, M/N can replace Right/Left click
 
 Goal:
 Reach the exit point.
