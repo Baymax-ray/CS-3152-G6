@@ -29,7 +29,6 @@ public class Enemy extends CapsuleObstacle {
     //#region FINAL FIELDS
     private final float startX;
     private final float startY;
-
     private final int attackPower;
 
     /**
