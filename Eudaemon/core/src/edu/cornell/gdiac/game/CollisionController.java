@@ -87,16 +87,7 @@ public class CollisionController implements ContactListener {
             }
         } catch (Exception e) { }
 
-        try {
-            if ((bd1.toString().contains("Spike") && bd2 instanceof Player && !fix2.isSensor() ||
-                    bd2.toString().contains("Spike") && bd1 instanceof Player && !fix1.isSensor())) {
-                level.getPlayer().setHit(true);
-                level.getPlayer().hitByEnemy(1, bd2 instanceof Player? bd1: bd2);
-                level.shakeControllerHeavy();
-                //Resets dash when damaged by spike
-                level.getPlayer().setDashedInAir(false);
-            }
-        } catch (Exception e) { }
+
         //here is the code for bullet
         //bullet is wheel obstacle but is not sword wheel obstacle
         if (bd1 instanceof WheelObstacle && !(bd1 instanceof SwordWheelObstacle) && !(bd2 instanceof Enemy) && !fix2.isSensor()){
@@ -313,6 +304,19 @@ public class CollisionController implements ContactListener {
         Object bd1 = body1.getUserData();
         Object bd2 = body2.getUserData();
 
+        //spike
+        if ((bd1.toString().contains("Spike") && bd2 instanceof Player && !fix2.isSensor() ||
+                    bd2.toString().contains("Spike") && bd1 instanceof Player && !fix1.isSensor())) {
+            Player player = (Player) (bd1 instanceof Player ? bd1 : bd2);
+            if (!player.isHit()){
+            player.setHit(true);
+            player.hitByEnemy(1, bd2 instanceof Player? bd1: bd2);
+            level.shakeControllerHeavy();
+            //Resets dash when damaged by spike
+            player.setDashedInAir(false);}
+        }
+
+        //enemy
         if (bd1 instanceof Player && !fix1.isSensor() && bd2 instanceof Enemy ||
                 bd2 instanceof Player && !fix2.isSensor() && bd1 instanceof Enemy) {
             Player player = (Player) (bd1 instanceof Player ? bd1 : bd2);
@@ -323,6 +327,7 @@ public class CollisionController implements ContactListener {
                 level.shakeControllerHeavy();
             }
         }
+        //cancel collision
         if (bd1 instanceof Player && !fix1.isSensor() && bd2 instanceof Enemy ||
                 bd2 instanceof Player && !fix2.isSensor() && bd1 instanceof Enemy) {
             contact.setEnabled(false);

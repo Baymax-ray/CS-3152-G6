@@ -1358,7 +1358,6 @@ public class Player extends CapsuleObstacle {
                         directionX = ((Enemy) hitter).getX() - this.getX() >= 0? -1: 1; break;
                     case 1:
                         String direction= ((Spike) hitter).getDirection();
-                        System.out.println(direction);
                         switch (direction){
                             case "Up":
                                 directionX=0;
