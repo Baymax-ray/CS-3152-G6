@@ -141,7 +141,6 @@ public class Enemy extends CapsuleObstacle {
      */
     private int currentFrame;
 
-
     /**
      * The sword killing enemy sound.  We only want to play once.
      */
