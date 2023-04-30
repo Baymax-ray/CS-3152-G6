@@ -72,8 +72,8 @@
             "scale": 1,
             "selectedLayer": 3,
             "viewCenter": {
-                "x": 174.5,
-                "y": 541.5
+                "x": 1920.5,
+                "y": 891.5
             }
         },
         "level2.json": {
@@ -83,8 +83,8 @@
             "scale": 1.5,
             "selectedLayer": 3,
             "viewCenter": {
-                "x": 799.6666666666666,
-                "y": 639.6666666666666
+                "x": 565,
+                "y": 639
             }
         },
         "level3.json": {
@@ -92,10 +92,10 @@
                 7
             ],
             "scale": 1,
-            "selectedLayer": 2,
+            "selectedLayer": 3,
             "viewCenter": {
-                "x": 484.5,
-                "y": 988.5
+                "x": 1269.5,
+                "y": 518.5
             }
         },
         "level4.json": {
@@ -105,8 +105,8 @@
             "scale": 1,
             "selectedLayer": 3,
             "viewCenter": {
-                "x": 799.5,
-                "y": 639.5
+                "x": 1093.5,
+                "y": 404.5
             }
         }
     },
