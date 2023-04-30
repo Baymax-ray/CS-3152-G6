@@ -149,7 +149,6 @@ public class Enemy extends CapsuleObstacle {
     private float projectileEnemyRotation;
     private String projectileEnemyDirection;
     private String projectileSpriteSheetType;
-
     //#endregion
 
     //#region Getter and Setter
