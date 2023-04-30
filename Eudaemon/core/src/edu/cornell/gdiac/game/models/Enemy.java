@@ -149,8 +149,6 @@ public class Enemy extends CapsuleObstacle {
     private float projectileEnemyRotation;
     private String projectileEnemyDirection;
     private String projectileSpriteSheetType;
-    private float projectileEnemyOffsetX;
-    private float projectileEnemyOffsetY;
 
     //#endregion
 
@@ -384,8 +382,6 @@ public class Enemy extends CapsuleObstacle {
         this.startY = y;
         this.projectileEnemyDirection = "Left";
         this.projectileEnemyRotation = 0;
-        this.projectileEnemyOffsetX = 0;
-        this.projectileEnemyOffsetY = 0;
         this.speedMult = enemyData.getFloat("speedMult");
 
         //Size
@@ -511,8 +507,6 @@ public class Enemy extends CapsuleObstacle {
             switch (this.projectileEnemyDirection) {
                 case "Up":
                 case "Down":
-                    this.projectileEnemyOffsetX = this.texture.getRegionWidth()/8.0f;
-                    this.projectileEnemyOffsetY = this.texture.getRegionHeight()/2.0f;
                     break;
             }
 
@@ -566,8 +560,8 @@ public class Enemy extends CapsuleObstacle {
         float x = getX();
         float y = getY();
 
-        float ox = this.texture.getRegionWidth() / 2 + oxOffset - projectileEnemyOffsetX;
-        float oy = this.texture.getRegionHeight() / 2 + oyOffset - projectileEnemyOffsetY;
+        float ox = this.texture.getRegionWidth() / 2 + oxOffset;
+        float oy = this.texture.getRegionHeight() / 2 + oyOffset;
 
         float sx = scaleX * (isFacingRight ? 1 : -1) * enemyImageWidth / this.texture.getRegionWidth();
         float sy = scaleY * enemyImageHeight / this.texture.getRegionHeight();
