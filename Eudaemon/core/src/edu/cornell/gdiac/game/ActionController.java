@@ -159,9 +159,8 @@ public class ActionController {
         }
 
         if (player.getiFramesRemaining() > 0) {
-            player.setiFramesRemaining(Math.max(player.getiFramesRemaining() - 1, 0));
-            if (player.getiFramesRemaining() == 0) {
-                //System.out.println("iframe loss");
+            player.setiFramesRemaining(player.getiFramesRemaining() - 1);
+            if (player.getiFramesRemaining() <= 0) {
                 player.setHit(false);
 
             }
