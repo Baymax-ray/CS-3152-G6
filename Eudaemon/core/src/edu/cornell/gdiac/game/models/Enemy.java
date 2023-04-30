@@ -149,6 +149,8 @@ public class Enemy extends CapsuleObstacle {
     private float projectileEnemyRotation;
     private String projectileEnemyDirection;
     private String projectileSpriteSheetType;
+    private float projectileEnemyOffsetX;
+    private float projectileEnemyOffsetY;
 
     //#endregion
 
@@ -382,6 +384,8 @@ public class Enemy extends CapsuleObstacle {
         this.startY = y;
         this.projectileEnemyDirection = "Left";
         this.projectileEnemyRotation = 0;
+        this.projectileEnemyOffsetX = 0;
+        this.projectileEnemyOffsetY = 0;
         this.speedMult = enemyData.getFloat("speedMult");
 
         //Size
@@ -502,7 +506,17 @@ public class Enemy extends CapsuleObstacle {
         this.moveSpriteSheet = new TextureRegion(assets.getEntry(enemyData.getString("MoveAsset"), Texture.class));
         animations = new ObjectMap<>();
         addAnimations(moveSpriteSheet, maxFrame, 1, "move");
-        if (this.type.equals("Projectile")) addAnimations(texture, maxFrame, 1, "projectileIdle");
+        if (this.type.equals("Projectile")) {
+            addAnimations(texture, maxFrame, 1, "projectileIdle");
+            switch (this.projectileEnemyDirection) {
+                case "Up":
+                case "Down":
+                    this.projectileEnemyOffsetX = this.texture.getRegionWidth()/8.0f;
+                    this.projectileEnemyOffsetY = this.texture.getRegionHeight()/2.0f;
+                    break;
+            }
+
+        }
         currentAnimation = "idle";
 
         this.bloodEffectSpriteSheet = new TextureRegion(assets.getEntry("bloodEffect", Texture.class));
@@ -552,8 +566,8 @@ public class Enemy extends CapsuleObstacle {
         float x = getX();
         float y = getY();
 
-        float ox = this.texture.getRegionWidth() / 2 + oxOffset;
-        float oy = this.texture.getRegionHeight() / 2 + oyOffset;
+        float ox = this.texture.getRegionWidth() / 2 + oxOffset - projectileEnemyOffsetX;
+        float oy = this.texture.getRegionHeight() / 2 + oyOffset - projectileEnemyOffsetY;
 
         float sx = scaleX * (isFacingRight ? 1 : -1) * enemyImageWidth / this.texture.getRegionWidth();
         float sy = scaleY * enemyImageHeight / this.texture.getRegionHeight();
