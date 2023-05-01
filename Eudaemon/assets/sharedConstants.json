@@ -84,11 +84,11 @@
     "tickFrameSwitch": 5,
     "maxFrame": 4,
     "hitboxWidth": 1,
-    "hitboxHeight": 1.4,
+    "hitboxHeight": 2.0,
     "drawScaleX": 1.5,
     "drawScaleY": 1.5,
     "oxOffset": 0,
-    "oyOffset": -38,
+    "oyOffset": -10,
 
     "maxSpeed": 2.5,
     "speedMult": 0.2,
@@ -158,15 +158,15 @@
     "tickFrameSwitch": 5,
     "maxFrame": 6,
     "hitboxWidth": 1,
-    "hitboxHeight": 1.4,
+    "hitboxHeight": 1.5,
     "drawScaleX": 1.5,
     "drawScaleY": 1.5,
     "oxOffset": 0,
-    "oyOffset": -29,
+    "oyOffset": -150,
 
-    "maxSpeed": 10,
+    "maxSpeed": 8,
     "speedMult": 0.2,
-    "horizontalAcceleration": 0.12,
+    "horizontalAcceleration": 0.10,
 
     "initialHearts": 3,
     "attackPower": 1,
@@ -185,8 +185,8 @@
       "height" : 0.05
     },
     "spiritLimitation":4,
-    "knockbackX":5000,
-    "knockbackY":1000
+    "knockbackX":8000,
+    "knockbackY":2000
   },
   "FlyGuardian": {
     "TextureAsset": "enemy:nonTrackingFlying",
