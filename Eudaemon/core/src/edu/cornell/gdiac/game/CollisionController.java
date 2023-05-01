@@ -237,9 +237,6 @@ public class CollisionController implements ContactListener {
             Billboard billboard = (Billboard) (bd1 instanceof Billboard? bd1 : bd2);
             billboard.setDisplay(true);
         }
-
-
-
         //#endregion
 
 
