@@ -106,10 +106,6 @@ public class ActionController {
         ticks++;
         resolvePlayerActions(playerAction);
         resolveEnemyActions(enemyActions);
-//        System.out.println("Grounded: " + player.isGrounded());
-//        System.out.println("Left Wall: " + player.isTouchingWallLeft());
-//        System.out.println("Right Wall: " + player.isTouchingWallRight()+ "\n");
-
     }
 
     //#region Player and Enemy Actions

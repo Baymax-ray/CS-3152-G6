@@ -161,6 +161,50 @@ public class CollisionController implements ContactListener {
             }
 
         }
+
+        if (bd1 instanceof SwordWheelObstacle && bd2.toString().contains("Tile") || bd2 instanceof SwordWheelObstacle && bd1.toString().contains("Tile")) {
+            SwordWheelObstacle sword = (SwordWheelObstacle) (bd1 instanceof SwordWheelObstacle ? bd1 : bd2);
+
+            //prints if hit wall
+//            System.out.println("hit wall");
+
+            if (!sword.hasHitWall()) {
+                Player player = level.getPlayer();
+                float x = player.getX();
+                float y = player.getY();
+                //down
+                if (player.getAngleFacing() == 270) {
+
+                }
+
+                //down left
+                else if (player.getAngleFacing() == 225) {
+
+                }
+
+                //down right
+                else if (player.getAngleFacing() == 315) {
+
+                }
+
+                sword.setHasHitWall(true);
+                level.shakeControllerMedium();
+
+                //create hit by hit wall effect
+                float pOffsetX = 0.0f;
+                float pOffsetY = 0.0f;
+                float sx = 1.0f;
+                float sy = 1.0f;
+                EffectObstacle hitWallEffect = level.getEffectPool().obtainEffect(x, y, player.getHitWallEffect().getKeyFrame(0).getRegionWidth(),
+                        player.getHitWallEffect().getKeyFrame(0).getRegionHeight(), sx, sy, 0,
+                        pOffsetX, pOffsetY,false,
+                        "hitEffect", player, 0.35f,
+                        1, 1, player.getHitWallEffect(),3);
+
+                level.addQueuedObject(hitWallEffect);
+            }
+
+        }
             //I move them to presolve()
 //        if (bd1 instanceof Player && !fix1.isSensor() && bd2 instanceof Enemy ||
 //                bd2 instanceof Player && !fix2.isSensor() && bd1 instanceof Enemy) {
