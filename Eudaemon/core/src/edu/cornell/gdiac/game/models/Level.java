@@ -199,6 +199,7 @@ public class Level {
         return effectPool;
     }
 
+
     public void setEffectPool(EffectPool effectPool) {
         this.effectPool = effectPool;
     }

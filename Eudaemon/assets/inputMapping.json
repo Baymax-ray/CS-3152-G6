@@ -10,7 +10,7 @@
     "transform": "M",
     "debug": "T",
     "reset": "R",
-    "pause": "Q"
+    "pause": "Escape"
   },
   "mouse": {
     "dash": "LEFT",

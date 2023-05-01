@@ -14,6 +14,10 @@ public enum Action {
     RESET("reset", false),
     PAUSE("pause", false);
 
+
+
+
+
     public final String name;
     public final boolean risingEdge;
 
