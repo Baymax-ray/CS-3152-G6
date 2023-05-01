@@ -43,7 +43,7 @@
     "timeForImpact": 35,
     "wallJumpXVelocity": 10.0,
 
-    "swordRadius": 1.2,
+    "swordRadius": 1.0,
     "attackLifespan": 0.4,
     "hitCooldown": 1.0,
     "attackPower": 1,
@@ -59,7 +59,7 @@
     "transformCooldown": 15,
 
     "maxSpirit": 10,
-    "initialSpirit": 0,
+    "initialSpirit": 10,
     "spiritIncreaseRate": 0.02,
     "spiritKillingEnemy":2.0,
     "spiritDecreaseRate": 0.01,

@@ -892,7 +892,7 @@ public class ActionController {
             y = player.getY() + 0.71f * currOffset;
         } else if (angleFacing == 90) {
             x = player.getX();
-            y = player.getY() + 1.3f * currOffset;
+            y = player.getY() + 1.1f * currOffset;
         } else if (angleFacing == 135) {
             x = player.getX() - 0.71f * currOffset;
             y = player.getY() + 0.71f * currOffset;
