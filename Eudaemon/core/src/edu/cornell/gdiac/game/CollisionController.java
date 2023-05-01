@@ -98,7 +98,7 @@ public class CollisionController implements ContactListener {
                     player.setHit(true);
                     player.hitByEnemy(2, bd1);
                     level.shakeControllerMedium();
-                    level.setShouldShakeCamera(true);
+                    level.setShouldShakeCamera(true,1);
                 }
             }
         }else if (bd2 instanceof WheelObstacle && !(bd2 instanceof SwordWheelObstacle)&& !(bd1 instanceof Enemy) && !fix1.isSensor() ){
@@ -109,7 +109,7 @@ public class CollisionController implements ContactListener {
                     player.setHit(true);
                     player.hitByEnemy(2, bd2);
                     level.shakeControllerHeavy();
-                    level.setShouldShakeCamera(true);
+                    level.setShouldShakeCamera(true,1);
                 }
             }
         }
@@ -138,7 +138,7 @@ public class CollisionController implements ContactListener {
                 enemy.hitBySword(level.getPlayer());
                 if(enemy.getHearts() == 0){
                     audio.playEffect("sword-kill", 0.5f);
-                    level.setShouldShakeCamera(true);
+                    level.setShouldShakeCamera(true,1);
                 }
                 else{
                     audio.playEffect("sword-hit", 0.05f);
@@ -158,6 +158,50 @@ public class CollisionController implements ContactListener {
                         1, 1, enemy.getBloodEffectAnimation(),3);
 
                 level.addQueuedObject(bloodEffect);
+            }
+
+        }
+
+        if (bd1 instanceof SwordWheelObstacle && bd2.toString().contains("Tile") || bd2 instanceof SwordWheelObstacle && bd1.toString().contains("Tile")) {
+            SwordWheelObstacle sword = (SwordWheelObstacle) (bd1 instanceof SwordWheelObstacle ? bd1 : bd2);
+
+            //prints if hit wall
+//            System.out.println("hit wall");
+
+            if (!sword.hasHitWall()) {
+                Player player = level.getPlayer();
+                float x = player.getX();
+                float y = player.getY();
+                //down
+                if (player.getAngleFacing() == 270) {
+
+                }
+
+                //down left
+                else if (player.getAngleFacing() == 225) {
+
+                }
+
+                //down right
+                else if (player.getAngleFacing() == 315) {
+
+                }
+
+                sword.setHasHitWall(true);
+                level.shakeControllerMedium();
+
+                //create hit by hit wall effect
+                float pOffsetX = 0.0f;
+                float pOffsetY = 0.0f;
+                float sx = 1.0f;
+                float sy = 1.0f;
+                EffectObstacle hitWallEffect = level.getEffectPool().obtainEffect(x, y, player.getHitWallEffect().getKeyFrame(0).getRegionWidth(),
+                        player.getHitWallEffect().getKeyFrame(0).getRegionHeight(), sx, sy, 0,
+                        pOffsetX, pOffsetY,false,
+                        "hitEffect", player, 0.35f,
+                        1, 1, player.getHitWallEffect(),3);
+
+                level.addQueuedObject(hitWallEffect);
             }
 
         }
@@ -315,7 +359,7 @@ public class CollisionController implements ContactListener {
             player.setHit(true);
             player.hitByEnemy(1, bd2 instanceof Player? bd1: bd2);
             level.shakeControllerHeavy();
-            level.setShouldShakeCamera(true);
+            level.setShouldShakeCamera(true,1);
             //Resets dash when damaged by spike
             player.setDashedInAir(false);}
         }
@@ -329,7 +373,7 @@ public class CollisionController implements ContactListener {
                 player.setHit(true);
                 player.hitByEnemy(0, bd1 instanceof Player? bd2:bd1);
                 level.shakeControllerHeavy();
-                level.setShouldShakeCamera(true);
+                level.setShouldShakeCamera(true,1);
             }
         }
         //cancel collision

@@ -159,6 +159,15 @@
             }
           }
         },
+      "chiyo:hitWallEffect": {
+        "file" : "animations/hitWallEffect.png",
+        "sprites" : {
+          "fire": {
+            "rows": 1,
+            "cols": 30
+          }
+        }
+      },
         "momo:spiritDrain": {
           "file" : "animations/momoSpiritAbsorbing.png",
           "sprites" : {
@@ -366,7 +375,20 @@
         "mainMenu:title": "shared/EUDAEMON_title.png",
         "mainMenu:start": "shared/start_button.png",
         "mainMenu:levelSelect": "shared/levelselect_button.png",
-        "mainMenu:settings": "shared/settings_button.png"
+        "mainMenu:settings": "shared/settings_button.png",
+
+        "escapeMenu:background": "backgrounds/escapeMenuBack.png",
+        "escapeMenu:restart": "shared/escapeRestart.png",
+        "escapeMenu:quit": "shared/escapeQuit.png",
+        "escapeMenu:resume": "shared/escapeResume.png",
+        "escapeMenu:settings": "shared/escapeSettings.png",
+
+        "deathScreen:background": "backgrounds/tempDeathScreen.png",
+        "deathScreen:restart": "shared/restartButton.png",
+        "deathScreen:quit": "shared/quitButton.png",
+
+        "settingsScreen:background": "backgrounds/tempSettingsBackground.png",
+        "settingsScreen:back": "levelSelect/backArrow.png"
     },
     "jsons"  : {
         "constants": "constants.json",

@@ -105,7 +105,7 @@ public class LevelScreen implements Screen {
             listener.exitScreen(this, ExitCode.WIN);
         } else if (playerAction.contains(Action.PAUSE)) {
             //TODO: pause screen
-            listener.exitScreen(this, ExitCode.MAIN_MENU);
+            listener.exitScreen(this, ExitCode.PAUSE);
         }
     }
 

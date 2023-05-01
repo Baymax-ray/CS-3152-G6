@@ -126,6 +126,11 @@ public class Player extends CapsuleObstacle {
     private final float chiyoImageHeight;
     private final TextureRegion momoDiagonalDashTexture;
     private final TextureRegion chiyoSlideTexture;
+
+    /**
+     * The sprite sheet containing the wall hit effect animation frames.
+     */
+    private final Animation<TextureRegion> hitWallEffect;
     /**
      * The sprite sheet containing the 0 angle sword attack animation frames.
      */
@@ -337,7 +342,14 @@ public class Player extends CapsuleObstacle {
     //#endregion
 
     //#region TEXTURE GETTERS AND SETTERS
-
+    /**
+     * Gets the texture region for the hit wall effect.
+     *
+     * @return the texture region for the hit wall effect
+     */
+    public Animation<TextureRegion> getHitWallEffect() {
+        return hitWallEffect;
+    }
     /**
      * Returns the {@link com.badlogic.gdx.graphics.g2d.TextureRegion} of the Momo diagonal dash texture.
      *
@@ -1418,6 +1430,9 @@ public class Player extends CapsuleObstacle {
         this.chiyoSlideTexture = new TextureRegion(assets.getEntry("chiyo:slide", Texture.class));
 
         //Animations
+        TextureRegion hitWallEffectSpriteSheet = new TextureRegion(assets.getEntry("chiyo:hitWallEffect", Texture.class));
+        TextureRegion[][] framesHit = hitWallEffectSpriteSheet.split(hitWallEffectSpriteSheet.getRegionWidth() / 30, hitWallEffectSpriteSheet.getRegionHeight());
+        hitWallEffect = new Animation<>(0.5f, framesHit[0]);
         this.swordEffectSpriteSheet0 = new TextureRegion(assets.getEntry( "chiyo:swordAttack0", Texture.class));
         this.swordEffectSpriteSheet45 = new TextureRegion(assets.getEntry( "chiyo:swordAttack45", Texture.class));
         this.swordEffectSpriteSheet90 = new TextureRegion(assets.getEntry( "chiyo:swordAttack90", Texture.class));

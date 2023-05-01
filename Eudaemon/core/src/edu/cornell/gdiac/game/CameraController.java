@@ -24,8 +24,11 @@ import edu.cornell.gdiac.game.models.Level;
 public class CameraController {
     private final OrthographicCamera camera;
     private CameraShaker cameraShaker;
+    private CameraShaker microCameraShaker;
     private final float shakeRadius;
     private final float minimumShakeRadius;
+    private final float microShakeRadius;
+    private final float microMinimumShakeRadius;
     private final float radiusFallOffFactor;
 
     public CameraController(){
@@ -34,8 +37,11 @@ public class CameraController {
         camera.setToOrtho(false);
         shakeRadius = 0.5f;
         minimumShakeRadius = 0.05f;
+        microShakeRadius = 0.1f;
+        microMinimumShakeRadius = 0.01f;
         radiusFallOffFactor = 0.90f;
         cameraShaker = new CameraShaker(camera, shakeRadius, minimumShakeRadius, radiusFallOffFactor);
+        microCameraShaker = new CameraShaker(camera, microShakeRadius, microMinimumShakeRadius, radiusFallOffFactor);
     }
 
     public void handleGameplayCamera(GameCanvas canvas, Level level) {
@@ -74,6 +80,8 @@ public class CameraController {
             setGameplayCamera(canvas, level.getCameraWidth()/2, camera.position.y, level.getCameraWidth(), level.getCameraHeight());
 
         cameraShaker.updateOrigPosition();
+        microCameraShaker.updateOrigPosition();
+
     }
 
     /**
@@ -90,13 +98,7 @@ public class CameraController {
 
         canvas.getSpriteBatch().setProjectionMatrix(getCamera().combined);
         cameraShaker.update(Gdx.graphics.getDeltaTime());
-
-        System.out.println(x);
-        System.out.println(y);
-        System.out.println();
-
-
-
+        microCameraShaker.update(Gdx.graphics.getDeltaTime());
     }
 
 
@@ -116,4 +118,13 @@ public class CameraController {
     }
 
     public CameraShaker getCameraShaker() { return cameraShaker; }
+    public void shakeCamera(int strength) {
+        switch (strength) {
+            case 1:
+                cameraShaker.startShaking();
+                break;
+            case 0:
+                microCameraShaker.startShaking();
+        }
+    }
 }

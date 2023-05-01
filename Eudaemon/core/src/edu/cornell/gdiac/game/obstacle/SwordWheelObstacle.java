@@ -24,6 +24,11 @@ public class SwordWheelObstacle extends WheelObstacle {
     private final ObjectSet<Enemy> hitEnemies;
 
     /**
+     * Whether or not this object has hit a wall.
+     */
+    private boolean hasHitWall;
+
+    /**
      * Accumulates the ticks elapsed since the animation started.
      */
     int currentTicks;
@@ -45,6 +50,20 @@ public class SwordWheelObstacle extends WheelObstacle {
     public Player getPlayer() {
         return player;
     }
+
+    /**
+     * Returns whether or not this object has hit a wall.
+     *
+     * @return Whether or not this object has hit a wall.
+     */
+    public boolean hasHitWall() {return hasHitWall;}
+
+    /**
+     * Sets whether or not this object has hit a wall.
+     *
+     * @param hasHitWall Whether or not this object has hit a wall.
+     */
+    public void setHasHitWall(boolean hasHitWall) {this.hasHitWall = hasHitWall;}
 
     //</editor-fold>
 

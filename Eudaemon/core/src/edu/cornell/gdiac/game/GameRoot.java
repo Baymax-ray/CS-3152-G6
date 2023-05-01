@@ -16,6 +16,8 @@ public class GameRoot extends Game implements ScreenListener {
 	private MainMenuScreen mainMenuScreen;
 	private LevelSelectScreen levelSelectScreen;
 	private DeathScreen deathScreen;
+	private EscapeMenu escapeMenu;
+	private SettingsScreen settingsScreen;
 	private GameCanvas canvas;
 	private AssetDirectory assets;
 	private Sound backgroundMomoSound;
@@ -36,6 +38,8 @@ public class GameRoot extends Game implements ScreenListener {
 		if (levelScreen != null) levelScreen.dispose();
 		if (loadingScreen != null) loadingScreen.dispose();
 		if (deathScreen != null) deathScreen.dispose();
+		if(escapeMenu!=null) escapeMenu.dispose();
+		if(settingsScreen!=null) settingsScreen.dispose();
 		if (assets != null) {
 			assets.unloadAssets();
 			assets.dispose();
@@ -75,6 +79,12 @@ public class GameRoot extends Game implements ScreenListener {
 
 			this.mainMenuScreen = new MainMenuScreen(assets, canvas);
 			mainMenuScreen.setScreenListener(this);
+
+			this.escapeMenu = new EscapeMenu("assets.json", canvas);
+			this.escapeMenu.setScreenListener(this);
+
+			this.settingsScreen = new SettingsScreen("assets.json", canvas);
+			this.settingsScreen.setScreenListener(this);
 
 			setScreen(mainMenuScreen);
 		}
@@ -146,6 +156,11 @@ public class GameRoot extends Game implements ScreenListener {
 				mainMenuScreen.reset();
 				setScreen(mainMenuScreen);
 			}
+			if(exitCode == ExitCode.PAUSE){
+				levelScreen.pause();
+				escapeMenu.reset();
+				setScreen(escapeMenu);
+			}
 
 			if (exitCode == ExitCode.RESET) {
 				levelScreen.pause();
@@ -176,6 +191,38 @@ public class GameRoot extends Game implements ScreenListener {
 				levelScreen.setScreenListener(this);
 				levelScreen.setCanvas(canvas);
 				setScreen(levelScreen);
+			}
+		}
+		if(screen == escapeMenu){
+			if (exitCode == ExitCode.RESET) {
+				this.state.resetCurrentLevel();
+				if (levelScreen != null) levelScreen.dispose();
+				levelScreen = new LevelScreen(this.state.getCurrentLevel(), this.state.getActionBindings(), assets);
+				levelScreen.setScreenListener(this);
+				levelScreen.setCanvas(canvas);
+				setScreen(levelScreen);
+			}
+			if (exitCode == ExitCode.MAIN_MENU) {
+				escapeMenu.pause();
+				mainMenuScreen.reset();
+				setScreen(mainMenuScreen);
+			}
+			if(exitCode == ExitCode.START){
+				escapeMenu.pause();
+				levelScreen.resume();
+				setScreen(levelScreen);
+			}
+			if(exitCode == ExitCode.SETTINGS){
+				escapeMenu.pause();
+				settingsScreen.reset();
+				setScreen(settingsScreen);
+			}
+		}
+		if(screen == settingsScreen){
+			if(exitCode == ExitCode.PAUSE){
+				screen.pause();
+				escapeMenu.reset();
+				setScreen(escapeMenu);
 			}
 		}
 	}
