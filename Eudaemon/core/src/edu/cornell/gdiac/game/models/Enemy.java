@@ -1,21 +1,19 @@
 package edu.cornell.gdiac.game.models;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Sound;
+import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.math.*;
-import com.badlogic.gdx.graphics.*;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
-
 import com.badlogic.gdx.utils.JsonValue;
 import com.badlogic.gdx.utils.ObjectMap;
 import edu.cornell.gdiac.assets.AssetDirectory;
-import edu.cornell.gdiac.game.*;
-import edu.cornell.gdiac.game.obstacle.*;
+import edu.cornell.gdiac.game.GameCanvas;
+import edu.cornell.gdiac.game.obstacle.CapsuleObstacle;
 
 import java.util.ArrayList;
-import java.util.Objects;
 
 public class Enemy extends CapsuleObstacle {
     private int detectDistance;
@@ -486,8 +484,6 @@ public class Enemy extends CapsuleObstacle {
                         TextureAsset = "enemy:projectileEnemyRight";
                         break;
                     case "Up":
-                        TextureAsset = "enemy:projectileEnemyUp";
-                        break;
                     case "Down":
                         TextureAsset = "enemy:projectileEnemyUp";
                         break;
@@ -516,14 +512,6 @@ public class Enemy extends CapsuleObstacle {
         addAnimations(moveSpriteSheet, maxFrame, 1, "move");
         if (this.type.equals("Projectile")) {
             addAnimations(this.texture, maxFrame, 1, "projectileIdle");
-            //TODO ?
-            //this.projectileFrameDuration = animations.get("projectileIdle").getFrameDuration();
-            switch (this.projectileEnemyDirection) {
-                case "Up":
-                case "Down":
-                    break;
-            }
-
         }
         currentAnimation = "idle";
 
@@ -563,9 +551,12 @@ public class Enemy extends CapsuleObstacle {
      * @param canvas Drawing context
      */
     public void draw(GameCanvas canvas) {
-        //TODO ?
+        if (currentAnimation.equals("move") && this.type.equals("Projectile")){
+            System.out.println("Move!");
+        }
         if (currentAnimation.equals("idle")){
             if (this.type.equals("Projectile")){
+                System.out.println("Idle!");
                 this.texture = (TextureRegion) animations.get("projectileIdle").getKeyFrame(currentFrame);
             }
             else{
