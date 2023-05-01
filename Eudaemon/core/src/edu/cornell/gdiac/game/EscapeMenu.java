@@ -293,7 +293,6 @@ public class EscapeMenu implements Screen, InputProcessor, ControllerListener {
 		centerY = (int)(BAR_HEIGHT_RATIO*height);
 		centerX = width/2;
 		heightY = height;
-		System.out.println("canvas height is " + height);
 		if(quitButton != null){
 			quitButtonHitbox.setSize(BUTTON_SCALE *scale*quitButton.getWidth(),BUTTON_SCALE * scale * quitButton.getHeight());
 			quitButtonHitbox.setCenter(canvas.getWidth()/2.0f, centerY + quitButton.getHeight() * scale*0.55f);
