@@ -239,8 +239,8 @@ public class LevelSelectScreen implements Screen, InputProcessor, ControllerList
         } else {
             litUpLevels = new TextureRegion[1];
             int y = splitY[i - 4]; //7 -> 85 -> [3]
-            System.out.println(y);
-            System.out.println(lights.getHeight());
+//            System.out.println(y);
+//            System.out.println(lights.getHeight());
             litUpLevels[0] = new TextureRegion(lights, 0, 0, lights.getWidth(), y);
         }
     }
