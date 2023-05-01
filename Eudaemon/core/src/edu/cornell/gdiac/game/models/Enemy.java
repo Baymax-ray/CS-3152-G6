@@ -1,6 +1,5 @@
 package edu.cornell.gdiac.game.models;
 
-import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
@@ -42,31 +41,17 @@ public class Enemy extends CapsuleObstacle {
     /**
      * The x-scaling factor for the sprite.
      */
-    private float scaleX;
+    private final float scaleX;
     /**
      * The y-scaling factor for the sprite.
      */
-    private float scaleY;
+    private final float scaleY;
 
     /**
      * The factor to multiply to the movement
      */
     private final float force;
 
-    //#endregion
-
-    //#region TEXTURES
-    // TODO: Add texture fields (FilmStrip?)
-    private TextureRegion bulletTexture;
-
-    private final TextureRegion enemyTexture;
-
-    /**
-     * The texture for the enemy's blood
-     */
-    private final TextureRegion bloodEffectSpriteSheet;
-    private final Animation<TextureRegion> bloodEffectAnimation;
-    //#endregion
     private final float enemyImageWidth;
     private final float enemyImageHeight;
     /**
@@ -79,10 +64,25 @@ public class Enemy extends CapsuleObstacle {
      */
     private final String type;
     private final JsonValue enemyData;
+
+    //#endregion
+
+    //#region TEXTURES
+    private TextureRegion bulletTexture;
+
+    private final TextureRegion enemyTexture;
+
+    /**
+     * The texture for the enemy's blood
+     */
+    private final TextureRegion bloodEffectSpriteSheet;
+    private final Animation<TextureRegion> bloodEffectAnimation;
+    //#endregion
+
     /**
      * The maximum speed that the object can reach.
      */
-    private float maxSpeed;
+    private final float maxSpeed;
     /**
     The Scalar the speed is multiplied by
      */
@@ -90,7 +90,7 @@ public class Enemy extends CapsuleObstacle {
 
     //#region NON-FINAL FIELDS
     private int guardianTime = 0;
-    private ArrayList<Integer> guardianList;
+    private final ArrayList<Integer> guardianList;
     private float hearts;
     private boolean isFacingRight = false;
 
@@ -110,18 +110,14 @@ public class Enemy extends CapsuleObstacle {
     /**
      * The sprite sheet for the basic goomba right walk
      */
-    private TextureRegion moveSpriteSheet;
+    private final TextureRegion moveSpriteSheet;
 
-    /**
-     * The sprite sheet for the basic goomba left walk
-     */
-    private TextureRegion leftMoveSpriteSheet;
     /**
      * A HashMap storing 2D TextureRegion arrays with a String identifier.
      * Each key represents an animation name, and the associated value is a 2D TextureRegion array
      * with rows representing different animation states and columns representing individual frames.
      */
-    private ObjectMap<String, Animation> animations;
+    private final ObjectMap<String, Animation> animations;
     /**
      * The current animation state of the enemy.
      */
@@ -276,34 +272,8 @@ public class Enemy extends CapsuleObstacle {
         return bloodEffectAnimation;
     }
 
-    /**
-     * Returns whether enemy is facing right or not
-     *
-     * @return isFacingRight.
-     */
-    public boolean getIsFacingRight() {
-        return isFacingRight;
-    }
     public void setFacingRight(boolean val){
         isFacingRight = val;
-    }
-
-    /**
-     * Get basicGoombaRightSpriteSheet.
-     *
-     * @return The basicGoombaRightSpriteSheet TextureRegion.
-     */
-    public TextureRegion getMoveSpriteSheet() {
-        return moveSpriteSheet;
-    }
-
-    /**
-     * Get basicGoombaLeftSpriteSheet.
-     *
-     * @return The basicGoombaLeftSpriteSheet TextureRegion.
-     */
-    public TextureRegion getLeftMoveSpriteSheet() {
-        return leftMoveSpriteSheet;
     }
 
     /**
@@ -428,15 +398,12 @@ public class Enemy extends CapsuleObstacle {
                 break;
             case "GoombaGuardian":
                 this.guardianTime = enemyData.getInt("guardianTime");
-//                glist = json.get("guardianList");
                 ArrayList<Integer> list2 = new ArrayList<>();
                 JsonValue properties = json.get("properties");
                 for (JsonValue property : properties) {
                     list2.add(property.getInt("value"));
                 }
-                for (Integer integer : list2) {
-                    this.guardianList.add(integer);
-                }
+                this.guardianList.addAll(list2);
                 break;
             case "Projectile":
                 this.bullet = enemyData.get("bullet");
@@ -518,8 +485,6 @@ public class Enemy extends CapsuleObstacle {
         this.bloodEffectSpriteSheet = new TextureRegion(assets.getEntry("bloodEffect", Texture.class));
         TextureRegion[][] frames = bloodEffectSpriteSheet.split(bloodEffectSpriteSheet.getRegionWidth() / 17, bloodEffectSpriteSheet.getRegionHeight());
         bloodEffectAnimation = new Animation<>(0.5f, frames[0]);
-
-
 
         this.maxSpeed = enemyData.getFloat("maxSpeed");
         this.force = enemyData.getFloat("force");
@@ -629,7 +594,7 @@ public class Enemy extends CapsuleObstacle {
     private void addAnimations(TextureRegion spriteSheet, int columns, int rows, String name) {
         if(spriteSheet==null)return;
         TextureRegion[][] frames = spriteSheet.split(spriteSheet.getRegionWidth() / columns, spriteSheet.getRegionHeight() / rows);
-        Animation animation = new Animation<TextureRegion>(1f, frames[0]); // Creates an animation with a frame duration of 0.1 seconds
+        Animation animation = new Animation<>(1f, frames[0]); // Creates an animation with a frame duration of 0.1 seconds
         animation.setPlayMode(Animation.PlayMode.NORMAL); // Sets the animation to play normally
         animations.put(name, animation);
     }
@@ -675,13 +640,6 @@ public class Enemy extends CapsuleObstacle {
             this.markRemoved(true);
             player.increaseSpiritByKill(); //player gain some spirit when the enemy killed
         }
-    }
-
-    public long playSound(Sound sound, long soundId, float volume) {
-        if (soundId != -1) {
-            sound.stop(soundId);
-        }
-        return sound.play(volume);
     }
 
     public void dispose() {
