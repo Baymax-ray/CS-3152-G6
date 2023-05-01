@@ -15,6 +15,7 @@ import edu.cornell.gdiac.game.*;
 import edu.cornell.gdiac.game.obstacle.*;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 public class Enemy extends CapsuleObstacle {
     private int detectDistance;
@@ -139,6 +140,7 @@ public class Enemy extends CapsuleObstacle {
      * The current frame of the video player.
      */
     private int currentFrame;
+    private int durationofmoving=0;
 
     /**
      * The sword killing enemy sound.  We only want to play once.
@@ -174,6 +176,17 @@ public class Enemy extends CapsuleObstacle {
      */
     public int getTickFrameSwitch() {
         return tickFrameSwitch;
+    }
+
+    /**
+    *Reduce the duration by one. If the duration goes to 0, set currentanimation to 'idle'
+     */
+    public void durationloss(){
+        this.durationofmoving=this.durationofmoving-1;
+        if (this.durationofmoving<=0){
+            this.durationofmoving=0;
+            setCurrentAnimation("idle");
+        }
     }
 
     /**
@@ -215,6 +228,11 @@ public class Enemy extends CapsuleObstacle {
      */
     public void setCurrentAnimation(String currentAnimation) {
         this.currentAnimation = currentAnimation;
+    }
+    public void startToMove(String currentAnimation,int duration){
+        this.currentAnimation = currentAnimation;
+        this.durationofmoving=duration;
+
     }
 
     public int getDetectDistance() {
@@ -290,8 +308,6 @@ public class Enemy extends CapsuleObstacle {
         return leftMoveSpriteSheet;
     }
 
-    //#endregion
-
     /**
      * normalize the vector and apply it to velocity
      *
@@ -319,7 +335,6 @@ public class Enemy extends CapsuleObstacle {
             velocityX = 0;
             velocityY = 0;
         }
-
         velocityY *= this.force;
         velocityX *= this.force;
         // Change facing if appropriate
@@ -364,7 +379,7 @@ public class Enemy extends CapsuleObstacle {
     public void setOxOffset(float oxOffset) {
         this.oxOffset = oxOffset;
     }
-
+    //#endregion
     public Enemy(JsonValue json, AssetDirectory assets, float x, float y) {
 //        super(x,y,1f,1.4f);
         super(x, y,
@@ -542,19 +557,16 @@ public class Enemy extends CapsuleObstacle {
         }
     }
 
-    private float projectileFrameDuration=-1;
+
     /**
      * Draws the physics object.
-     *
      * @param canvas Drawing context
      */
     public void draw(GameCanvas canvas) {
         //TODO ?
-        if (currentAnimation == "idle"){
+        if (currentAnimation.equals("idle")){
             if (this.type.equals("Projectile")){
-                System.out.println("now the frame is "+ animations.get("projectileIdle").getFrameDuration());
                 this.texture = (TextureRegion) animations.get("projectileIdle").getKeyFrame(currentFrame);
-//                animations.get("projectileIdle").setFrameDuration(100f);
             }
             else{
                 this.texture = enemyTexture;
@@ -562,10 +574,6 @@ public class Enemy extends CapsuleObstacle {
         }
         else{
             this.texture = (TextureRegion) animations.get(currentAnimation).getKeyFrame(currentFrame);
-//            if(this.type.equals("Projectile")){
-//                this.animations.get("projectileIdle").setFrameDuration(1f);
-//                System.out.println("haha now the frame is "+ animations.get("projectileIdle").getFrameDuration());
-//            }
         }
 
         float x = getX();

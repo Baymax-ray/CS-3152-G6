@@ -3,10 +3,10 @@
         "height": 4300,
         "width": 2
     },
-    "activeFile": "level3.json",
+    "activeFile": "level4.json",
     "expandedProjectPaths": [
-        ".",
-        "Templates"
+        "Templates",
+        "."
     ],
     "file.lastUsedOpenFilter": "全部文件 (*)",
     "fileStates": {
@@ -105,8 +105,8 @@
             "scale": 1,
             "selectedLayer": 3,
             "viewCenter": {
-                "x": 1093.5,
-                "y": 404.5
+                "x": 597.5,
+                "y": 403.5
             }
         }
     },
@@ -121,16 +121,17 @@
         "level4.json",
         "level3.json",
         "level0.json",
-        "level2.json"
+        "level2.json",
+        "level1.json"
     ],
     "project": "untitled.tiled-project",
     "property.type": "string",
     "recentFiles": [
-        "level4.json",
+        "level1.json",
         "level2.json",
         "level0.json",
         "level3.json",
-        "level1.json",
+        "level4.json",
         "F:/Programming/School/CS 3152/Eudaemon/CS-3152-G6/Eudaemon/assets/EudaemonTileset.json",
         "experimentalLevel1.json",
         "level0.tmj",

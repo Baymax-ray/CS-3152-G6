@@ -1,6 +1,5 @@
 package edu.cornell.gdiac.game;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
@@ -14,7 +13,10 @@ import edu.cornell.gdiac.game.obstacle.EffectObstacle;
 import edu.cornell.gdiac.game.obstacle.SwordWheelObstacle;
 import edu.cornell.gdiac.game.obstacle.WheelObstacle;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.EnumSet;
+import java.util.Timer;
+import java.util.TimerTask;
 
 public class ActionController {
 
@@ -83,7 +85,7 @@ public class ActionController {
         this.audio = audio;
         this.currentAnimation = "momoIdle";
 
-        this.soundDictionary = new ArrayList<Sound>();
+        this.soundDictionary = new ArrayList<>();
         //Creating a Dictionary of Textures
         addAnimations(player.getMomoRunSpriteSheet(), 8, 1, "momoRun");
         addAnimations(player.getMomoDashSpriteSheet(), 5, 1, "momoDash");
@@ -176,7 +178,7 @@ public class ActionController {
         if ((rightPressed && !leftPressed && !upPressed && !downPressed) || (rightPressed && !leftPressed && upPressed && downPressed)) {
             player.setAngleFacing(0);
             player.setFacingRight(true);
-        } else if ((rightPressed && !leftPressed && upPressed && !downPressed)) {
+        } else if (rightPressed && !leftPressed && upPressed) {
             player.setAngleFacing(45);
             player.setFacingRight(true);
         } else if ((rightPressed && leftPressed && upPressed && !downPressed) || (!rightPressed && !leftPressed && upPressed && !downPressed)) {
@@ -184,15 +186,15 @@ public class ActionController {
         } else if ((!rightPressed && leftPressed && upPressed && !downPressed)) {
             player.setAngleFacing(135);
             player.setFacingRight(false);
-        } else if ((!rightPressed && leftPressed && !upPressed && !downPressed) || (!rightPressed && leftPressed && upPressed && downPressed)) {
+        } else if (!rightPressed && leftPressed && !upPressed && !downPressed || !rightPressed && leftPressed && upPressed) {
             player.setAngleFacing(180);
             player.setFacingRight(false);
-        } else if ((!rightPressed && leftPressed && !upPressed && downPressed)) {
+        } else if (!rightPressed && leftPressed) {
             player.setAngleFacing(225);
             player.setFacingRight(false);
-        } else if ((!rightPressed && !leftPressed && !upPressed && downPressed) || (rightPressed && leftPressed && !upPressed && downPressed)) {
+        } else if (!rightPressed && !upPressed && downPressed || rightPressed && leftPressed && !upPressed && downPressed) {
             player.setAngleFacing(270);
-        } else if ((rightPressed && !leftPressed && !upPressed && downPressed)) {
+        } else if (rightPressed && !leftPressed) {
             player.setAngleFacing(315);
             player.setFacingRight(true);
         }
@@ -226,7 +228,7 @@ public class ActionController {
                 x = Math.min(x + h_acc, max_speed);
             }
 
-        } else if (leftPressed) {
+        } else {
             if (x > -max_speed) {
                 //x = Math.max(x-h_acc, -max_speed);
                 x = Math.max(x - h_acc, -max_speed);
@@ -276,11 +278,7 @@ public class ActionController {
         //#region Wall Slide
         if (player.getForm() == 1 && player.isTouchingWallRight() && !player.isGrounded() && rightPressed){
             player.setSliding(true);
-        } else if (player.getForm() == 1 && player.isTouchingWallLeft() && !player.isGrounded() && leftPressed){
-            player.setSliding(true);
-        } else {
-            player.setSliding(false);
-        }
+        } else player.setSliding(player.getForm() == 1 && player.isTouchingWallLeft() && !player.isGrounded() && leftPressed);
 
         if (player.isSliding()){
             player.setVelocity(player.getBodyVelocityX(), player.getWallSlideVelocity());
@@ -704,14 +702,6 @@ public class ActionController {
 
 
     }
-//    public void drawSpiritEffect(){
-//        spiritDrainEffect = level.getEffectPool().obtainEffect(player.getX(), player.getY(),
-//                player.getSpiritDrainSpriteSheet().getRegionWidth(), player.getSpiritDrainSpriteSheet().getRegionHeight(),
-//                0.01f, 0.01f, 0, 0, 0, true, "spiritDrain", player, 1f,
-//                1, 1, player.getSpiritDrainAnimation(), 5);
-//        level.addQueuedObject(spiritDrainEffect);
-//        level.removeQueuedObject(spiritDrainEffect);
-//    }
 
     /**
      * Causes the player to jump.
@@ -751,6 +741,7 @@ public class ActionController {
 
                     if (action == EnemyAction.ATTACK) {
                         createBullet(aiControllers.get(i).getVelocity(),enemy);
+                        enemy.startToMove("move",60);
                     } else if(action==EnemyAction.FLY){
                         enemy.setVelocity(aiControllers.get(i).getVelocity());
                         enemy.applyVelocity();
@@ -767,6 +758,7 @@ public class ActionController {
                 }
 
                 //#region Enemy Animation
+
                 if (ticks % enemy.getTickFrameSwitch() == 0) {
                     enemy.setCurrentFrame(enemy.getCurrentFrame() + 1);
                     if (enemy.getCurrentFrame() >= enemy.getMaxFrame()) {
@@ -774,57 +766,41 @@ public class ActionController {
                     }
                 }
                 //Purple Skull Guy
-                if(enemy.getType().equals("Goomba")){
-//                    if(enemy.getVelocityX() != 0){
-//                        enemy.setCurrentAnimation("move");
-//                    }
-//                    else{
-//                        enemy.setCurrentAnimation("idle");
-//                    }
-                    enemy.setCurrentAnimation("move");
-                }
-                //Green Dragon
-                 else if(enemy.getType().equals("FlyGuardian")){
-                    enemy.setCurrentAnimation("move");
-                }
-                 //Green Beetle
-                else if(enemy.getType().equals("GoombaGuardian")){
-                    if(enemy.getVelocityX() != 0){
+                switch (enemy.getType()) {
+                    case "Goomba":
+                    case "Fly":
+                    //Green Dragon
+                    case "FlyGuardian":
                         enemy.setCurrentAnimation("move");
-                    }
-                    else{
-                        enemy.setCurrentAnimation("idle");
-                    }
+                        break;
+                    //Green Beetle
+                    case "GoombaGuardian":
+                        if (enemy.getVelocityX() != 0) {
+                            enemy.setCurrentAnimation("move");
+                        } else {
+                            enemy.setCurrentAnimation("idle");
+                        }
+                        break;
+                    //Tank guy
+                    case "Fast":
+                        if (enemy.getVelocityX() != 0) {
+                            enemy.setCurrentAnimation("move");
+                            enemy.setOyOffset(-29);
+                        } else {
+                            enemy.setCurrentAnimation("idle");
+                            enemy.setOyOffset(-10);
+                        }
+                        break;
+                    // Projectile
+                    case "Projectile":
+                        enemy.durationloss();
+                        break;
                 }
-                //Green Mosquito
-                else if(enemy.getType().equals("Fly")){
-                    enemy.setCurrentAnimation("move");
-
-                }
-                //Tank guy
-                else if(enemy.getType().equals("Fast")){
-                    if(enemy.getVelocityX() != 0){
-                        enemy.setCurrentAnimation("move");
-                        enemy.setOyOffset(-29);
-                    }
-                    else{
-                        enemy.setCurrentAnimation("idle");
-                        enemy.setOyOffset(-10);
-                    }
-                }
-                // Projectile
-                else if(enemy.getType().equals("Projectile")){
-                    if(enemy.getVelocityX() != 0){
-                        enemy.setCurrentAnimation("move");
-                    }
-                    else{
-                        enemy.setCurrentAnimation("idle");
-                    }
                 }
                 //#endregion
 
                 enemyAction.clear();
-            }
+
         }
     }
     /**
@@ -883,7 +859,7 @@ public class ActionController {
                     angleFacing = 180;
                 }
             }
-            else if(angleFacing == 315){
+            else {
                 angleFacing = 0;
             }
         }
@@ -924,29 +900,6 @@ public class ActionController {
         animation.setPlayMode(Animation.PlayMode.NORMAL); // Sets the animation to play normally
         animations.put(name, animation);
     }
-
-    /**
-     * Method to ensure that a sound asset is only played once.
-     *
-     * Every time you play a sound asset, it makes a new instance of that sound.
-     * If you play the sounds to close together, you will have overlapping copies.
-     * To prevent that, you must stop the sound before you play it again.  That
-     * is the purpose of this method.  It stops the current instance playing (if
-     * any) and then returns the id of the new instance for tracking.
-     *
-     * @param sound		The sound asset to play
-     * @param soundId	The previously playing sound instance
-     * @param volume	The sound volume
-     *
-     * @return the new sound instance for this asset.
-     */
-    public long playSound(Sound sound, long soundId, float volume) {
-        if (soundId != -1) {
-            sound.stop( soundId );
-        }
-        return sound.play(volume);
-    }
-
 
     public void dispose() {
 
