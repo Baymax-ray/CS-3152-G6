@@ -500,7 +500,9 @@ public class Enemy extends CapsuleObstacle {
         animations = new ObjectMap<>();
         addAnimations(moveSpriteSheet, maxFrame, 1, "move");
         if (this.type.equals("Projectile")) {
-            addAnimations(texture, maxFrame, 1, "projectileIdle");
+            addAnimations(this.texture, maxFrame, 1, "projectileIdle");
+            //TODO ?
+            //this.projectileFrameDuration = animations.get("projectileIdle").getFrameDuration();
             switch (this.projectileEnemyDirection) {
                 case "Up":
                 case "Down":
@@ -524,7 +526,7 @@ public class Enemy extends CapsuleObstacle {
         this.attackCooldown = enemyData.getInt("attackCooldown");
         this.attackOffset = enemyData.getFloat("attackOffset");
 
-        //Sensor. Wtf is this?
+        //Sensor.
         //used for collision detection
         this.sensorName = "EnemyGroundSensor";
 
@@ -540,18 +542,30 @@ public class Enemy extends CapsuleObstacle {
         }
     }
 
+    private float projectileFrameDuration=-1;
     /**
      * Draws the physics object.
      *
      * @param canvas Drawing context
      */
     public void draw(GameCanvas canvas) {
+        //TODO ?
         if (currentAnimation == "idle"){
-            if (this.type.equals("Projectile")) this.texture = (TextureRegion) animations.get("projectileIdle").getKeyFrame(currentFrame);
-            else this.texture = enemyTexture;
+            if (this.type.equals("Projectile")){
+                System.out.println("now the frame is "+ animations.get("projectileIdle").getFrameDuration());
+                this.texture = (TextureRegion) animations.get("projectileIdle").getKeyFrame(currentFrame);
+//                animations.get("projectileIdle").setFrameDuration(100f);
+            }
+            else{
+                this.texture = enemyTexture;
+            }
         }
         else{
             this.texture = (TextureRegion) animations.get(currentAnimation).getKeyFrame(currentFrame);
+//            if(this.type.equals("Projectile")){
+//                this.animations.get("projectileIdle").setFrameDuration(1f);
+//                System.out.println("haha now the frame is "+ animations.get("projectileIdle").getFrameDuration());
+//            }
         }
 
         float x = getX();
@@ -618,6 +632,7 @@ public class Enemy extends CapsuleObstacle {
     }
 
     private void addAnimations(TextureRegion spriteSheet, int columns, int rows, String name) {
+        if(spriteSheet==null)return;
         TextureRegion[][] frames = spriteSheet.split(spriteSheet.getRegionWidth() / columns, spriteSheet.getRegionHeight() / rows);
         Animation animation = new Animation<TextureRegion>(1f, frames[0]); // Creates an animation with a frame duration of 0.1 seconds
         animation.setPlayMode(Animation.PlayMode.NORMAL); // Sets the animation to play normally

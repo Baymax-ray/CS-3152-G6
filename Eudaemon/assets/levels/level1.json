@@ -251,42 +251,6 @@
                 {
                  "gid":87,
                  "height":22.3413,
-                 "id":170,
-                 "name":"Spike",
-                 "properties":[
-                        {
-                         "name":"Direction",
-                         "type":"string",
-                         "value":"Right"
-                        }],
-                 "rotation":0,
-                 "type":"",
-                 "visible":true,
-                 "width":22.8779,
-                 "x":581.406827594437,
-                 "y":345.361850441982
-                }, 
-                {
-                 "gid":87,
-                 "height":22.3413,
-                 "id":171,
-                 "name":"Spike",
-                 "properties":[
-                        {
-                         "name":"Direction",
-                         "type":"string",
-                         "value":"Left"
-                        }],
-                 "rotation":0,
-                 "type":"",
-                 "visible":true,
-                 "width":22.8779,
-                 "x":516.28819111026,
-                 "y":252.545573466321
-                }, 
-                {
-                 "gid":87,
-                 "height":22.3413,
                  "id":172,
                  "name":"Spike",
                  "properties":[
