@@ -17,19 +17,31 @@ import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
+import edu.cornell.gdiac.game.models.CameraShaker;
 import edu.cornell.gdiac.game.models.Level;
+
 
 public class CameraController {
     private final OrthographicCamera camera;
+    private CameraShaker cameraShaker;
+    private final float shakeRadius;
+    private final float minimumShakeRadius;
+    private final float radiusFallOffFactor;
 
     public CameraController(){
         // Set the projection matrix (for proper scaling)
         camera = new OrthographicCamera();
         camera.setToOrtho(false);
+        shakeRadius = 0.5f;
+        minimumShakeRadius = 0.05f;
+        radiusFallOffFactor = 0.90f;
+        cameraShaker = new CameraShaker(camera, shakeRadius, minimumShakeRadius, radiusFallOffFactor);
     }
 
     public void handleGameplayCamera(GameCanvas canvas, Level level) {
         if (level.getPlayer().isRemoved()) return;
+
+
 
         if (Gdx.input.isKeyPressed(Input.Keys.O)) {
             camera.zoom += 0.02;
@@ -60,6 +72,8 @@ public class CameraController {
 
         if (camera.position.x < level.getCameraWidth()/2)
             setGameplayCamera(canvas, level.getCameraWidth()/2, camera.position.y, level.getCameraWidth(), level.getCameraHeight());
+
+        cameraShaker.updateOrigPosition();
     }
 
     /**
@@ -73,7 +87,16 @@ public class CameraController {
         getCamera().setToOrtho(false, width, height);
         getCamera().position.set(x, y, 0); // set to some other position to follow player;
         getCamera().update();
+
         canvas.getSpriteBatch().setProjectionMatrix(getCamera().combined);
+        cameraShaker.update(Gdx.graphics.getDeltaTime());
+
+        System.out.println(x);
+        System.out.println(y);
+        System.out.println();
+
+
+
     }
 
 
@@ -91,4 +114,6 @@ public class CameraController {
     public OrthographicCamera getCamera() {
         return camera;
     }
+
+    public CameraShaker getCameraShaker() { return cameraShaker; }
 }

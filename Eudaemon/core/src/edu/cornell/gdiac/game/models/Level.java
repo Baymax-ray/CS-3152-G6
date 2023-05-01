@@ -13,6 +13,7 @@ import com.badlogic.gdx.physics.box2d.*;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.JsonValue;
 import edu.cornell.gdiac.assets.AssetDirectory;
+import edu.cornell.gdiac.game.CameraController;
 import edu.cornell.gdiac.game.GameCanvas;
 import edu.cornell.gdiac.game.UIOverlay;
 import edu.cornell.gdiac.game.obstacle.EffectObstacle;
@@ -98,6 +99,8 @@ public class Level {
 
     private final float gravity;
 
+
+
     //#endregion
 
 
@@ -130,6 +133,8 @@ public class Level {
      */
     private float cameraY;
     //private MyGridGraph gridGraph;
+
+    private boolean shouldShakeCamera;
 
     //#endregion
 
@@ -536,6 +541,7 @@ public class Level {
 
         this.debug = false;
         this.isCompleted = false;
+        this.shouldShakeCamera = false;
     }
 
     /**
@@ -770,7 +776,12 @@ public class Level {
         }
         canvas.end();
 
-        canvas.setGameplayCamera(cam_x,cam_y, cameraWidth, cameraHeight);
+        canvas.getCameraController().setGameplayCamera(canvas,cam_x,cam_y, cameraWidth, cameraHeight);
+
+        if (shouldShakeCamera) {
+            canvas.getCameraController().getCameraShaker().startShaking();
+            shouldShakeCamera = false;
+        }
 
     }
 
@@ -921,6 +932,6 @@ public class Level {
         }
     }
 
-
+    public void setShouldShakeCamera(boolean value) { shouldShakeCamera = value; }
 
 }

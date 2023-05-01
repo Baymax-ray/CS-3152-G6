@@ -131,7 +131,7 @@ public class GameCanvas {
 
 		float aspectRatio = (float)Gdx.graphics.getHeight() / (float)Gdx.graphics.getWidth();
 
-		viewport = new ExtendViewport(getWidth(),getHeight(),cameraController.getCamera());
+		viewport = new ExtendViewport(getWidth(),getHeight());
 		viewport.setScreenBounds(0,0,getWidth(),getHeight());
 		viewport.apply();
 
