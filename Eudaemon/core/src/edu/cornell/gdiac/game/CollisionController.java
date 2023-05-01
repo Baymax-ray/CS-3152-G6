@@ -98,7 +98,7 @@ public class CollisionController implements ContactListener {
                     player.setHit(true);
                     player.hitByEnemy(2, bd1);
                     level.shakeControllerMedium();
-                    level.setShouldShakeCamera(true);
+                    level.setShouldShakeCamera(true,1);
                 }
             }
         }else if (bd2 instanceof WheelObstacle && !(bd2 instanceof SwordWheelObstacle)&& !(bd1 instanceof Enemy) && !fix1.isSensor() ){
@@ -109,7 +109,7 @@ public class CollisionController implements ContactListener {
                     player.setHit(true);
                     player.hitByEnemy(2, bd2);
                     level.shakeControllerHeavy();
-                    level.setShouldShakeCamera(true);
+                    level.setShouldShakeCamera(true,1);
                 }
             }
         }
@@ -138,7 +138,7 @@ public class CollisionController implements ContactListener {
                 enemy.hitBySword(level.getPlayer());
                 if(enemy.getHearts() == 0){
                     audio.playEffect("sword-kill", 0.5f);
-                    level.setShouldShakeCamera(true);
+                    level.setShouldShakeCamera(true,1);
                 }
                 else{
                     audio.playEffect("sword-hit", 0.05f);
@@ -315,7 +315,7 @@ public class CollisionController implements ContactListener {
             player.setHit(true);
             player.hitByEnemy(1, bd2 instanceof Player? bd1: bd2);
             level.shakeControllerHeavy();
-            level.setShouldShakeCamera(true);
+            level.setShouldShakeCamera(true,1);
             //Resets dash when damaged by spike
             player.setDashedInAir(false);}
         }
@@ -329,7 +329,7 @@ public class CollisionController implements ContactListener {
                 player.setHit(true);
                 player.hitByEnemy(0, bd1 instanceof Player? bd2:bd1);
                 level.shakeControllerHeavy();
-                level.setShouldShakeCamera(true);
+                level.setShouldShakeCamera(true,1);
             }
         }
         //cancel collision

@@ -136,6 +136,8 @@ public class Level {
 
     private boolean shouldShakeCamera;
 
+    private int cameraShakeType;
+
     //#endregion
 
     //#region GETTERS & SETTERS
@@ -779,7 +781,15 @@ public class Level {
         canvas.getCameraController().setGameplayCamera(canvas,cam_x,cam_y, cameraWidth, cameraHeight);
 
         if (shouldShakeCamera) {
-            canvas.getCameraController().getCameraShaker().startShaking();
+            switch (cameraShakeType) {
+                case 1:
+                    canvas.getCameraController().shakeCamera(1);
+                    break;
+                case 0:
+                    canvas.getCameraController().shakeCamera(0);
+                    break;
+            }
+
             shouldShakeCamera = false;
         }
 
@@ -932,6 +942,10 @@ public class Level {
         }
     }
 
-    public void setShouldShakeCamera(boolean value) { shouldShakeCamera = value; }
+    public void setShouldShakeCamera(boolean value, int strength) {
+        shouldShakeCamera = value;
+        cameraShakeType = strength;
+    }
+
 
 }

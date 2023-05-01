@@ -362,6 +362,7 @@ public class ActionController {
             }
             player.setVelocity(dashX, dashY);
             level.shakeControllerMedium();
+            level.setShouldShakeCamera(true,0);
 
             //Creating dash effect
             EffectObstacle dashAnimate = level.getEffectPool().obtainEffect(player.getX(), player.getY(), player.getDashEffectSpriteSheet().getRegionWidth(),
