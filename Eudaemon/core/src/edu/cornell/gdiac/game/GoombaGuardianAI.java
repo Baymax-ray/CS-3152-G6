@@ -7,6 +7,7 @@ import edu.cornell.gdiac.game.models.Level;
 
 import java.util.ArrayList;
 import java.util.EnumSet;
+import java.util.Random;
 
 public class GoombaGuardianAI extends AIController{
     private final Enemy enemy;
@@ -77,7 +78,9 @@ public class GoombaGuardianAI extends AIController{
     private void changeStateIfApplicable() {
         switch (state) {
             case SPAWN:
-                if (ticks>60){
+                Random rand = new Random();
+                int r=rand.nextInt();
+                if (ticks>60 && r%10==1){ //have some random when they start
                     state=FSMState.GUARD;
                 }
                 break;
