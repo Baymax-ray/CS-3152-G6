@@ -85,7 +85,7 @@ public class ActionController {
         this.audio = audio;
         this.currentAnimation = "momoIdle";
 
-        this.soundDictionary = new ArrayList<Sound>();
+        this.soundDictionary = new ArrayList<>();
         //Creating a Dictionary of Textures
         addAnimations(player.getMomoRunSpriteSheet(), 8, 1, "momoRun");
         addAnimations(player.getMomoDashSpriteSheet(), 5, 1, "momoDash");
@@ -174,7 +174,7 @@ public class ActionController {
         if ((rightPressed && !leftPressed && !upPressed && !downPressed) || (rightPressed && !leftPressed && upPressed && downPressed)) {
             player.setAngleFacing(0);
             player.setFacingRight(true);
-        } else if ((rightPressed && !leftPressed && upPressed && !downPressed)) {
+        } else if (rightPressed && !leftPressed && upPressed) {
             player.setAngleFacing(45);
             player.setFacingRight(true);
         } else if ((rightPressed && leftPressed && upPressed && !downPressed) || (!rightPressed && !leftPressed && upPressed && !downPressed)) {
@@ -182,15 +182,15 @@ public class ActionController {
         } else if ((!rightPressed && leftPressed && upPressed && !downPressed)) {
             player.setAngleFacing(135);
             player.setFacingRight(false);
-        } else if ((!rightPressed && leftPressed && !upPressed && !downPressed) || (!rightPressed && leftPressed && upPressed && downPressed)) {
+        } else if (!rightPressed && leftPressed && !upPressed && !downPressed || !rightPressed && leftPressed && upPressed) {
             player.setAngleFacing(180);
             player.setFacingRight(false);
-        } else if ((!rightPressed && leftPressed && !upPressed && downPressed)) {
+        } else if (!rightPressed && leftPressed) {
             player.setAngleFacing(225);
             player.setFacingRight(false);
-        } else if ((!rightPressed && !leftPressed && !upPressed && downPressed) || (rightPressed && leftPressed && !upPressed && downPressed)) {
+        } else if (!rightPressed && !upPressed && downPressed || rightPressed && leftPressed && !upPressed && downPressed) {
             player.setAngleFacing(270);
-        } else if ((rightPressed && !leftPressed && !upPressed && downPressed)) {
+        } else if (rightPressed && !leftPressed) {
             player.setAngleFacing(315);
             player.setFacingRight(true);
         }
@@ -224,7 +224,7 @@ public class ActionController {
                 x = Math.min(x + h_acc, max_speed);
             }
 
-        } else if (leftPressed) {
+        } else {
             if (x > -max_speed) {
                 //x = Math.max(x-h_acc, -max_speed);
                 x = Math.max(x - h_acc, -max_speed);
@@ -274,11 +274,7 @@ public class ActionController {
         //#region Wall Slide
         if (player.getForm() == 1 && player.isTouchingWallRight() && !player.isGrounded() && rightPressed){
             player.setSliding(true);
-        } else if (player.getForm() == 1 && player.isTouchingWallLeft() && !player.isGrounded() && leftPressed){
-            player.setSliding(true);
-        } else {
-            player.setSliding(false);
-        }
+        } else player.setSliding(player.getForm() == 1 && player.isTouchingWallLeft() && !player.isGrounded() && leftPressed);
 
         if (player.isSliding()){
             player.setVelocity(player.getBodyVelocityX(), player.getWallSlideVelocity());
@@ -866,7 +862,7 @@ public class ActionController {
                     angleFacing = 180;
                 }
             }
-            else if(angleFacing == 315){
+            else {
                 angleFacing = 0;
             }
         }
@@ -903,7 +899,7 @@ public class ActionController {
 
     private void addAnimations(TextureRegion spriteSheet, int columns, int rows, String name) {
         TextureRegion[][] frames = spriteSheet.split(spriteSheet.getRegionWidth() / columns, spriteSheet.getRegionHeight() / rows);
-        Animation animation = new Animation<TextureRegion>(1f, frames[0]); // Creates an animation with a frame duration of 0.1 seconds
+        Animation<TextureRegion> animation = new Animation<TextureRegion>(1f, frames[0]); // Creates an animation with a frame duration of 0.1 seconds
         animation.setPlayMode(Animation.PlayMode.NORMAL); // Sets the animation to play normally
         animations.put(name, animation);
     }
