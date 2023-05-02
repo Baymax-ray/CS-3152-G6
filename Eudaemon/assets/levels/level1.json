@@ -572,6 +572,37 @@
  "nextlayerid":12,
  "nextobjectid":203,
  "orientation":"orthogonal",
+ "properties":[
+   {
+     "name":"camZoneX",
+     "type":"float",
+     "value":1
+   },
+   {
+     "name":"camZoneY",
+     "type":"float",
+     "value":1
+   },
+   {
+     "name":"cameraHeight",
+     "type":"float",
+     "value":12
+   },
+   {
+     "name":"cameraWidth",
+     "type":"float",
+     "value":21.35
+   },
+   {
+     "name":"gravity",
+     "type":"float",
+     "value":-1
+   },
+   {
+     "name":"tileSize",
+     "type":"float",
+     "value":1
+   }],
  "renderorder":"right-down",
  "tiledversion":"1.10.0",
  "tileheight":32,

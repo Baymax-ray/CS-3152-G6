@@ -292,8 +292,6 @@ public class Player extends CapsuleObstacle {
     /** The amount by which the player should move when dashing*/
     private final float dash;
 
-    private final JsonValue data;
-
     /** The shape for the ground sensor */
     private PolygonShape groundSensorShape;
     /** The shape for the wall sensor */
@@ -1253,10 +1251,10 @@ public class Player extends CapsuleObstacle {
         // // Ground sensor to represent our feet
         Vector2 sensorCenter = new Vector2(0, -getHeight() / 2);
         FixtureDef sensorDef = new FixtureDef();
-        sensorDef.density = data.getFloat("density",0);
+        sensorDef.density = playerData.getFloat("density",0);
         sensorDef.isSensor = true;
         groundSensorShape = new PolygonShape();
-        JsonValue sensorjv = data.get("sensor");
+        JsonValue sensorjv = playerData.get("sensor");
         groundSensorShape.setAsBox(sensorjv.getFloat("shrink",0)*getWidth()/2.0f,
                 sensorjv.getFloat("height",0), sensorCenter, 0.0f);
         sensorDef.shape = groundSensorShape;
@@ -1266,10 +1264,10 @@ public class Player extends CapsuleObstacle {
         // Wall sensor to represent our front
         Vector2 sensorCenter2 = new Vector2(getWidth()/2, 0);
         FixtureDef sensorDef2 = new FixtureDef();
-        sensorDef2.density = data.getFloat("density",0);
+        sensorDef2.density = playerData.getFloat("density",0);
         sensorDef2.isSensor = true;
         wallSensorShapeRight = new PolygonShape();
-        JsonValue sensorjv2 = data.get("wallSensor");
+        JsonValue sensorjv2 = playerData.get("wallSensor");
         wallSensorShapeRight.setAsBox(sensorjv2.getFloat("shrink",0)*getWidth()/2.0f,
                 sensorjv2.getFloat("height",0), sensorCenter2, 0.0f);
         sensorDef2.shape = wallSensorShapeRight;
@@ -1278,7 +1276,7 @@ public class Player extends CapsuleObstacle {
 
         Vector2 sensorCenter3 = new Vector2(-getWidth()/2, 0);
         FixtureDef sensorDef3 = new FixtureDef();
-        sensorDef3.density = data.getFloat("density",0);
+        sensorDef3.density = playerData.getFloat("density",0);
         sensorDef3.isSensor = true;
         wallSensorShapeLeft = new PolygonShape();
         wallSensorShapeLeft.setAsBox(sensorjv2.getFloat("shrink",0)*getWidth()/2.0f,
@@ -1310,10 +1308,10 @@ public class Player extends CapsuleObstacle {
     public void updateGroundSensor(){
         Vector2 sensorCenter = new Vector2(0, -getHeight() / 2);
         FixtureDef sensorDef = new FixtureDef();
-        sensorDef.density = data.getFloat("density",0);
+        sensorDef.density = playerData.getFloat("density",0);
         sensorDef.isSensor = true;
         groundSensorShape = new PolygonShape();
-        JsonValue sensorjv = data.get("sensor");
+        JsonValue sensorjv = playerData.get("sensor");
         groundSensorShape.setAsBox(sensorjv.getFloat("shrink",0)*getWidth()/2.0f,
                 sensorjv.getFloat("height",0), sensorCenter, 0.0f);
         sensorDef.shape = groundSensorShape;
@@ -1326,10 +1324,10 @@ public class Player extends CapsuleObstacle {
     public void updateWallSensor(){
         Vector2 sensorCenter = new Vector2(getWidth()/2, getHeight() / 2);
         FixtureDef sensorDef = new FixtureDef();
-        sensorDef.density = data.getFloat("density",0);
+        sensorDef.density = playerData.getFloat("density",0);
         sensorDef.isSensor = true;
         wallSensorShapeRight = new PolygonShape();
-        JsonValue sensorjv = data.get("wallSensor");
+        JsonValue sensorjv = playerData.get("wallSensor");
         wallSensorShapeRight.setAsBox(sensorjv.getFloat("shrink",0)*getWidth()/2.0f,
                 sensorjv.getFloat("height",0), sensorCenter, 0.0f);
         sensorDef.shape = wallSensorShapeRight;
@@ -1338,7 +1336,7 @@ public class Player extends CapsuleObstacle {
 
         Vector2 sensorCenter3 = new Vector2(-getWidth()/2, 0);
         FixtureDef sensorDef3 = new FixtureDef();
-        sensorDef3.density = data.getFloat("density",0);
+        sensorDef3.density = playerData.getFloat("density",0);
         sensorDef3.isSensor = true;
         wallSensorShapeLeft = new PolygonShape();
         wallSensorShapeLeft.setAsBox(sensorjv.getFloat("shrink",0)*getWidth()/2.0f,
@@ -1411,21 +1409,20 @@ public class Player extends CapsuleObstacle {
     }
 
 
-    public Player(JsonValue json, AssetDirectory assets, int startXCoord,int startYCoord) {
+    public Player(AssetDirectory assets, int startXCoord, int startYCoord) {
         super(startXCoord, startYCoord, assets.getEntry("sharedConstants", JsonValue.class).get("player").getFloat("hitboxWidth"), assets.getEntry("sharedConstants", JsonValue.class).get("player").getFloat("hitboxHeight"));
 
         //now the player's shared data is separated into sharedConstants.json, we shall not query them
         //from constants.json, as that file only records changing data.
         this.playerData = assets.getEntry("sharedConstants", JsonValue.class).get("Player");
-        json = playerData;
 
         //Textures
         this.momoTexture = new TextureRegion(assets.getEntry("momo:idle", Texture.class));
-        this.momoImageWidth = json.getFloat("momo:ImageWidth");
-        this.momoImageHeight = json.getFloat("momo:ImageHeight");
+        this.momoImageWidth = playerData.getFloat("momo:ImageWidth");
+        this.momoImageHeight = playerData.getFloat("momo:ImageHeight");
         this.chiyoTexture = new TextureRegion(assets.getEntry("chiyo:idle", Texture.class));
-        this.chiyoImageWidth = json.getFloat("chiyo:ImageWidth");
-        this.chiyoImageHeight = json.getFloat("chiyo:ImageHeight");
+        this.chiyoImageWidth = playerData.getFloat("chiyo:ImageWidth");
+        this.chiyoImageHeight = playerData.getFloat("chiyo:ImageHeight");
         this.momoDiagonalDashTexture = new TextureRegion(assets.getEntry("momo:diagonalDash", Texture.class));
         this.chiyoSlideTexture = new TextureRegion(assets.getEntry("chiyo:slide", Texture.class));
 
@@ -1457,51 +1454,51 @@ public class Player extends CapsuleObstacle {
         this.playerDamageSound = Gdx.audio.newSound(Gdx.files.internal("audio/temp-player-damage.mp3"));
 
         //Position and Movement
-        this.dashCooldown = json.getInt("dashCooldownInFrames");
-        maxSpeed = json.getFloat("maxSpeed");
-        horizontalAcceleration = json.getFloat("horizontalAcceleration");
-        this.dash = json.getFloat("dash", 2000);
-        this.dashLifespan = json.getInt("dashLifespan");
-        this.dashTime = json.getInt("dashTime");
-        this.chiyoSpeedMult = json.getFloat("chiyoSpeedMult");
-        this.chiyoJumpTimeMult = json.getFloat("chiyoJumpTimeMult");
-        this.chiyoHitBoxHeightMult = json.getFloat("chiyoHitboxHeightMult");
+        this.dashCooldown = playerData.getInt("dashCooldownInFrames");
+        maxSpeed = playerData.getFloat("maxSpeed");
+        horizontalAcceleration = playerData.getFloat("horizontalAcceleration");
+        this.dash = playerData.getFloat("dash", 2000);
+        this.dashLifespan = playerData.getInt("dashLifespan");
+        this.dashTime = playerData.getInt("dashTime");
+        this.chiyoSpeedMult = playerData.getFloat("chiyoSpeedMult");
+        this.chiyoJumpTimeMult = playerData.getFloat("chiyoJumpTimeMult");
+        this.chiyoHitBoxHeightMult = playerData.getFloat("chiyoHitboxHeightMult");
 
         //Sliding
-        this.wallSlideVelocity = json.getFloat("wallSlideVelocity");
-        this.wallJumpXVelocity = json.getFloat("wallJumpXVelocity");
+        this.wallSlideVelocity = playerData.getFloat("wallSlideVelocity");
+        this.wallJumpXVelocity = playerData.getFloat("wallJumpXVelocity");
 
         //Attacking
-        this.attackPower = json.getInt("attackPower");
-        this.attackCooldown = json.getInt("attackCooldown");
-        this.timeForImpact = json.getInt("timeForImpact");
-        this.transformCooldown = json.getInt("transformCooldown");
-        this.attackOffset = json.getFloat("attackOffset");
-        this.swordRadius = json.getFloat("swordRadius");
-        this.attackLifespan = json.getFloat("attackLifespan");
-        this.spiritKillingEnemy= json.getFloat("spiritKillingEnemy");
+        this.attackPower = playerData.getInt("attackPower");
+        this.attackCooldown = playerData.getInt("attackCooldown");
+        this.timeForImpact = playerData.getInt("timeForImpact");
+        this.transformCooldown = playerData.getInt("transformCooldown");
+        this.attackOffset = playerData.getFloat("attackOffset");
+        this.swordRadius = playerData.getFloat("swordRadius");
+        this.attackLifespan = playerData.getFloat("attackLifespan");
+        this.spiritKillingEnemy= playerData.getFloat("spiritKillingEnemy");
 
 
         //Other Information
-        this.maxHearts = json.getInt("maxHearts");
-        this.initialHearts = json.getInt("initialHearts");
-        this.maxSpirit = json.getFloat("maxSpirit");
-        this.initialSpirit = json.getFloat("initialSpirit");
-        this.startsFacingRight = json.getBoolean("startsFacingRight");
-        this.jumpCooldown = json.getInt("jumpCooldown");
-        this.coyoteFrames = json.getInt("coyoteTime");
-        this.jumpTolerance = json.getInt("jumpTolerance");
-        this.jumpTime = json.getInt("jumpTime");
-        this.maxJumpVelocity = json.getInt("maxJumpyVelocity");
-        this.playerGravity = json.getFloat("playerGravity");
-        this.spiritIncreaseRate = json.getFloat("spiritIncreaseRate");
-        this.spiritDecreaseRate = json.getFloat("spiritDecreaseRate");
-        this.spiritIncreaseDist = json.getFloat("spiritIncreaseDist");
-        this.hitDist = json.getFloat("hit_dist");
-        this.iFrames = json.getInt("iFrames");
-        this.attackDist = json.getFloat("attack_dist");
-        this.downwardAttackPropelX = json.getFloat("downwardAttackPropelX");
-        this.downwardAttackPropelY = json.getFloat("downwardAttackPropelY");
+        this.maxHearts = playerData.getInt("maxHearts");
+        this.initialHearts = playerData.getInt("initialHearts");
+        this.maxSpirit = playerData.getFloat("maxSpirit");
+        this.initialSpirit = playerData.getFloat("initialSpirit");
+        this.startsFacingRight = playerData.getBoolean("startsFacingRight");
+        this.jumpCooldown = playerData.getInt("jumpCooldown");
+        this.coyoteFrames = playerData.getInt("coyoteTime");
+        this.jumpTolerance = playerData.getInt("jumpTolerance");
+        this.jumpTime = playerData.getInt("jumpTime");
+        this.maxJumpVelocity = playerData.getInt("maxJumpyVelocity");
+        this.playerGravity = playerData.getFloat("playerGravity");
+        this.spiritIncreaseRate = playerData.getFloat("spiritIncreaseRate");
+        this.spiritDecreaseRate = playerData.getFloat("spiritDecreaseRate");
+        this.spiritIncreaseDist = playerData.getFloat("spiritIncreaseDist");
+        this.hitDist = playerData.getFloat("hit_dist");
+        this.iFrames = playerData.getInt("iFrames");
+        this.attackDist = playerData.getFloat("attack_dist");
+        this.downwardAttackPropelX = playerData.getFloat("downwardAttackPropelX");
+        this.downwardAttackPropelY = playerData.getFloat("downwardAttackPropelY");
 
 
         this.isChiyo = false;
@@ -1529,7 +1526,6 @@ public class Player extends CapsuleObstacle {
         this.dashLifespanRemaining = 0;
 
         this.texture = momoTexture;
-        this.data = json;
         groundSensorName = "PlayerGroundSensor";
         wallSensorNameRight = "PlayerWallSensorRight";
         wallSensorNameLeft = "PlayerWallSensorLeft";

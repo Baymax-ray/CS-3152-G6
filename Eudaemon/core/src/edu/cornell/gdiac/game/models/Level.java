@@ -374,17 +374,28 @@ public class Level {
             return connections;
         }
     }
-    public Level(JsonValue json, Tile[] tiles, AssetDirectory assets) {
+    public Level(String levelName, Tile[] tiles, AssetDirectory assets) {
         this.tiles = tiles;
         //this.billboard = new Billboard();
-        String levelName = json.getString("level");
-        camZoneX = json.getFloat("camZoneX");
-        camZoneY = json.getFloat("camZoneY");
 
         controllers = Controllers.get().getControllers();
         if (controllers.size > 0) controller = controllers.first();
 
         JsonValue levelJson = assets.getEntry(levelName,  JsonValue.class);
+
+        // go through properties
+        Hashtable<String, JsonValue> properties = new Hashtable<>();
+        for (JsonValue item : levelJson.get("properties")) {
+            properties.put(item.getString("name"), item);
+        }
+
+        this.gravity = properties.get("gravity").getFloat("value");
+        this.camZoneX = properties.get("camZoneX").getFloat("value");
+        this.camZoneY = properties.get("camZoneY").getFloat("value");
+        this.cameraWidth = properties.get("cameraWidth").getFloat("value");
+        this.cameraHeight = properties.get("cameraHeight").getFloat("value");
+        this.tileSize = properties.get("tileSize").getFloat("value");
+
 
         // Access the JsonValues for each layer in the tilemap
         JsonValue layerArray = levelJson.get("layers");
@@ -437,10 +448,6 @@ public class Level {
             }
         }
 
-        this.tileSize = json.getFloat("tileSize");
-        this.cameraWidth = json.getFloat("cameraWidth");
-        this.cameraHeight = json.getFloat("cameraHeight");
-        this.gravity = json.getFloat("gravity");
         this.background = new TextureRegion(assets.getEntry("background:city", Texture.class));
 
 
@@ -492,8 +499,8 @@ public class Level {
 
         //#endregion
 
+        this.player = new Player(assets, startX, startY);
         JsonValue playerData = assets.getEntry("sharedConstants", JsonValue.class).get("Player");
-        this.player = new Player(json.get("player"), assets, startX, startY);
         uiElements = new UIOverlay(playerData, assets);
 
         // Create the tilemap (background tiles 1)

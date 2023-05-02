@@ -27,7 +27,7 @@ public class GameState {
             }
         }
         this.levels.get(currentLevelName).dispose();
-        this.levels.put(currentLevelName, new Level(currentLevel, tiles, assets));
+        this.levels.put(currentLevelName, new Level(currentLevel.getString("level"), tiles, assets));
     }
 
     public void setCurrentLevel(int i) {
@@ -86,7 +86,7 @@ public class GameState {
         int numLevels = constants.get("levels").size();
         this.levels = new HashMap<>();
         for (int i = 0; i < numLevels; i++) {
-            levels.put(constants.get(("levels")).get(i).getString("level"), new Level(constants.get("levels").get(i), tiles, assets));
+            levels.put(constants.get(("levels")).get(i).getString("level"), new Level(constants.get("levels").get(i).getString("level"), tiles, assets));
         }
 
         //TODO: bindings etc.
