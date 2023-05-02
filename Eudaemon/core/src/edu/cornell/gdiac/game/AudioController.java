@@ -125,9 +125,11 @@ public class AudioController {
     private void playEffect(Sound effect, float volume) {
         if (effectIds.containsKey(effect)) {
             effect.stop(effectIds.get(effect));
+            effectIds.remove(effect);
         }
         if (loopEffectIds.containsKey(effect)) {
             effect.stop(loopEffectIds.get(effect));
+            loopEffectIds.remove(effect);
         }
         long id = effect.play(volume);
         effectIds.put(effect, id);
@@ -169,6 +171,8 @@ public class AudioController {
         }
 
         effects.get(effectName).stop();
+        effectIds.remove(effects.get(effectName));
+        loopEffectIds.remove(effects.get(effectName));
     }
 
 }
