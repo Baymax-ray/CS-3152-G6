@@ -120,8 +120,8 @@ public class MainMenuScreen implements Screen, InputProcessor, ControllerListene
 
 
         // Load the next two images immediately.
-        background = assets.getEntry( "mainMenu:background", Texture.class ); //todo
-        title = assets.getEntry("mainMenu:title", Texture.class); // todo
+        background = assets.getEntry( "mainMenu:background", Texture.class );
+        title = assets.getEntry("mainMenu:title", Texture.class);
         background.setFilter( TextureFilter.Linear, TextureFilter.Linear );
 
         playButton = assets.getEntry("mainMenu:start",Texture.class);
