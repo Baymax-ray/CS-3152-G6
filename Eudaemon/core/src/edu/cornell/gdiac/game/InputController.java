@@ -48,7 +48,8 @@ public class InputController {
             ControllerMapping mapping = controller.getMapping();
 
             if (controller.getButton(mapping.buttonX)) {
-                playerAction.add(Action.DASH);
+                if(!prevAction.contains(Action.HOLD_DASH)) playerAction.add(Action.DASH);
+                playerAction.add(Action.HOLD_DASH);
                 playerAction.add(Action.ATTACK);
             }
             if (controller.getButton(mapping.buttonA)) {

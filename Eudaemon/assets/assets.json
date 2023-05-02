@@ -414,7 +414,8 @@
         "effect:temp-momo-run": "audio/temp-momo-run.mp3",
         "effect:temp-small-impact":  "audio/temp-small-impact.mp3/",
         "effect:temp-sword-killing": "audio/temp-sword-killing.mp3",
-        "effect:temp-non-killing": "audio/temp-non-killing-sound.mp3"
+        "effect:temp-non-killing": "audio/temp-non-killing-sound.mp3",
+        "effect:temp-wall-slide": "audio/temp-wall-slide.mp3"
     },
     "fonts": {
         "shared:retro": {

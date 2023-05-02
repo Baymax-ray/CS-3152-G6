@@ -125,6 +125,7 @@ public class ActionController {
         boolean jumpHold = playerAction.contains(Action.HOLD_JUMP);
         boolean attackPressed = playerAction.contains(Action.ATTACK);
         boolean dashPressed = playerAction.contains(Action.DASH);
+        boolean dashHold = playerAction.contains(Action.HOLD_DASH);
         boolean transformPressed = playerAction.contains(Action.TRANSFORM);
         boolean downPressed = playerAction.contains(Action.LOOK_DOWN);
         boolean upPressed = playerAction.contains(Action.LOOK_UP);
@@ -274,7 +275,9 @@ public class ActionController {
         //#region Wall Slide
         if (player.getForm() == 1 && player.isTouchingWallRight() && !player.isGrounded() && rightPressed){
             player.setSliding(true);
-        } else player.setSliding(player.getForm() == 1 && player.isTouchingWallLeft() && !player.isGrounded() && leftPressed);
+        } else {
+            player.setSliding(player.getForm() == 1 && player.isTouchingWallLeft() && !player.isGrounded() && leftPressed);
+        }
 
         if (player.isSliding()){
             player.setVelocity(player.getBodyVelocityX(), player.getWallSlideVelocity());
@@ -389,20 +392,24 @@ public class ActionController {
                 player.setDashing(false);
                 player.setVelocity(player.getBodyVelocityX() / 3, player.getBodyVelocityY() / 3);
             }
-
         }
 
         if (player.isDashing()) {
             player.setDashCooldownRemaining(Math.max(player.getDashCooldownRemaining() - 1, 0));
-            if (player.getDashCooldownRemaining() == 0) player.setDashing(false);
+            if (player.getDashCooldownRemaining() == 0){ player.setDashing(false);
             Filter f =player.getFilterData();
             f.groupIndex = -1; //cancel its collision with bullet
-            player.setFilterData(f);
+            player.setFilterData(f);}
         } else {
             Filter f =player.getFilterData();
             f.groupIndex = 0;
             player.setFilterData(f);
         }
+//        if (dashHold && player.isDashing() && player.getDashLifespanRemaining() > 0 && !player.getIsJumping()) {
+//            player.setVelocity(player.getBodyVelocityX(), player.getBodyVelocityY());
+//        }
+//
+//        if (!dashHold) player.setDashing(false);
 
         if (player.isGrounded() && !player.isDashing()) player.setDashedInAir(false);
         //#endregion
@@ -436,7 +443,7 @@ public class ActionController {
             player.setCoyoteFramesRemaining(Math.max(0, player.getCoyoteFramesRemaining() - 1));
         }
 
-        //jump pressed in air
+//        //jump pressed in air
         if (jumpPressed && !(player.isGrounded() || player.isSliding())) {
             player.setJumpToleranceRemaining(player.getJumpTolerance());
             player.setJumpPressedInAir(true);
@@ -576,6 +583,7 @@ public class ActionController {
             }
             else if (player.isSliding()){
                 player.setTexture(player.getChiyoSlideTexture());
+                audio.loopEffect("wall-slide", 1f);
                 player.setOxOffset(2);
                 player.setOyOffset(-29);
                 player.setSxMult(-2.1f);
@@ -630,6 +638,7 @@ public class ActionController {
 //                chiyoRunSound.stop();
 //                soundDictionary.remove(chiyoRunSound);
                 audio.stopEffect("chiyo-run");
+                audio.stopEffect("wall-slide");
                 player.setTexture(player.getChiyoTexture());
                 player.setOxOffset(0);
                 player.setOyOffset(-29);

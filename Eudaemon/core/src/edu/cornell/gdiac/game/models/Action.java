@@ -6,6 +6,7 @@ public enum Action {
     BEGIN_JUMP("jump", true),
     HOLD_JUMP("jump", false),
     DASH("dash", false),
+    HOLD_DASH("dash", false),
     ATTACK("attack", false),
     TRANSFORM("transform", false),
     LOOK_UP("up", false),
