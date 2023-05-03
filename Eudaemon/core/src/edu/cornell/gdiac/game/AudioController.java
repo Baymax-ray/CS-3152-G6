@@ -84,8 +84,8 @@ public class AudioController {
     }
 
     public void playAllSound(){
-        chiyoSoundId=chiyoSound.loop(0.5f);
-        momoSoundId=momoSound.loop(0.5f);
+        chiyoSoundId=chiyoSound.loop(0.2f);
+        momoSoundId=momoSound.loop(0.2f);
     }
 
     public void updateAudio(float form){
@@ -110,12 +110,12 @@ public class AudioController {
 
     public void momoToChiyo(){
         muteMomo();
-        chiyoSound.setVolume(chiyoSoundId,0.5f);
+        chiyoSound.setVolume(chiyoSoundId,0.2f);
     }
 
     public void chiyoToMomo(){
         muteChiyo();
-        momoSound.setVolume(momoSoundId,0.5f);
+        momoSound.setVolume(momoSoundId,0.2f);
     }
 
     public void dispose(){

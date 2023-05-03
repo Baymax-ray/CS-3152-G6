@@ -423,6 +423,7 @@ public class ActionController {
                 (jumpPressed && player.getCoyoteFramesRemaining() > 0 && player.getJumpCooldownRemaining() == 0) ||
                 (player.getJumpPressedInAir() && player.getJumpCooldownRemaining() == 0 && (player.isGrounded() || player.isSliding()))) {
             jump();
+            audio.playEffect("jump", 1.0f);
         } else if (player.isGrounded() && player.getBodyVelocityY() == 0) {
             player.setIsJumping(false);
         }
@@ -468,6 +469,7 @@ public class ActionController {
         //Animation if Player is Momo
         if (player.getForm() == 0) {
 //            chiyoRunSound.stop();
+            audio.stopEffect("wall-slide");
             audio.stopEffect("chiyo-run");
             // Momo Dashing
             if (player.isDashing()) {
