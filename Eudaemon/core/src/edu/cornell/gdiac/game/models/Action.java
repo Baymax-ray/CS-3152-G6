@@ -5,7 +5,7 @@ public enum Action {
     MOVE_RIGHT("right", false),
     BEGIN_JUMP("jump", true),
     HOLD_JUMP("jump", false),
-    DASH("dash", false),
+    DASH("dash", true),
     HOLD_DASH("dash", false),
     ATTACK("attack", false),
     TRANSFORM("transform", false),

@@ -405,11 +405,8 @@ public class ActionController {
             f.groupIndex = 0;
             player.setFilterData(f);
         }
-//        if (dashHold && player.isDashing() && player.getDashLifespanRemaining() > 0 && !player.getIsJumping()) {
-//            player.setVelocity(player.getBodyVelocityX(), player.getBodyVelocityY());
-//        }
-//
-//        if (!dashHold) player.setDashing(false);
+
+        if (!dashHold) player.setDashing(false);
 
         if (player.isGrounded() && !player.isDashing()) player.setDashedInAir(false);
         //#endregion
