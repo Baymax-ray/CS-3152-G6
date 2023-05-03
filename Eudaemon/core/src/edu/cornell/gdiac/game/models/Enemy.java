@@ -73,10 +73,16 @@ public class Enemy extends CapsuleObstacle {
     private final TextureRegion enemyTexture;
 
     /**
-     * The texture for the enemy's blood
+     * The texture for the enemy's blood when it gets damaged
      */
     private final TextureRegion bloodEffectSpriteSheet;
     private final Animation<TextureRegion> bloodEffectAnimation;
+    /**
+     * The texture for the enemy's blood when it finally dies
+     */
+    private final TextureRegion killedBloodEffectSpriteSheet;
+    private final Animation<TextureRegion> killedBloodEffectAnimation;
+
     //#endregion
 
     /**
@@ -270,6 +276,13 @@ public class Enemy extends CapsuleObstacle {
 
     public Animation getBloodEffectAnimation() {
         return bloodEffectAnimation;
+    }
+
+    public TextureRegion getKilledBloodEffect(){
+        return killedBloodEffectSpriteSheet;
+    }
+    public Animation getKilledBloodEffectAnimation(){
+        return killedBloodEffectAnimation;
     }
 
     public void setFacingRight(boolean val){
@@ -483,8 +496,12 @@ public class Enemy extends CapsuleObstacle {
         currentAnimation = "idle";
 
         this.bloodEffectSpriteSheet = new TextureRegion(assets.getEntry("bloodEffect", Texture.class));
-        TextureRegion[][] frames = bloodEffectSpriteSheet.split(bloodEffectSpriteSheet.getRegionWidth() / 17, bloodEffectSpriteSheet.getRegionHeight());
-        bloodEffectAnimation = new Animation<>(0.5f, frames[0]);
+        TextureRegion[][] bloodFrames = bloodEffectSpriteSheet.split(bloodEffectSpriteSheet.getRegionWidth() / 17, bloodEffectSpriteSheet.getRegionHeight());
+        bloodEffectAnimation = new Animation<>(0.5f, bloodFrames[0]);
+
+        this.killedBloodEffectSpriteSheet = new TextureRegion(assets.getEntry("killingBloodEffect", Texture.class));
+        TextureRegion[][] killedEffectFrames = killedBloodEffectSpriteSheet.split(killedBloodEffectSpriteSheet.getRegionWidth()/14, killedBloodEffectSpriteSheet.getRegionHeight());
+        killedBloodEffectAnimation = new Animation<>(0.5f, killedEffectFrames[0]);
 
         this.maxSpeed = enemyData.getFloat("maxSpeed");
         this.force = enemyData.getFloat("force");

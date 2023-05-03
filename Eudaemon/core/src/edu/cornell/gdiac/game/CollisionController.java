@@ -146,18 +146,32 @@ public class CollisionController implements ContactListener {
                 sword.addHitEnemy(enemy);
                 level.shakeControllerHeavy();
 
-                //create hit by sword effect
-                float effectAngle = (float) Math.toRadians(level.getPlayer().getAngleFacing());
-                float pOffsetX = 0.0f;
-                float pOffsetY = 0.0f;
-                float sx = 0.02f;
-                EffectObstacle bloodEffect = level.getEffectPool().obtainEffect(enemy.getX(), enemy.getY(), enemy.getBloodEffect().getRegionWidth(),
-                        enemy.getBloodEffect().getRegionHeight(), sx, 0.02f, effectAngle,
-                        pOffsetX, pOffsetY,true,
-                        "bloodEffect", enemy, 0.35f,
-                        1, 1, enemy.getBloodEffectAnimation(),3);
+                if(enemy.getHearts() > 0){
+                    //create hit by sword effect
+                    float effectAngle = (float) Math.toRadians(level.getPlayer().getAngleFacing());
+                    float pOffsetX = 0.0f;
+                    float pOffsetY = 0.0f;
+                    float sx = 0.02f;
+                    EffectObstacle bloodEffect = level.getEffectPool().obtainEffect(enemy.getX(), enemy.getY(), enemy.getBloodEffect().getRegionWidth(),
+                            enemy.getBloodEffect().getRegionHeight(), sx, 0.02f, effectAngle,
+                            pOffsetX, pOffsetY,true,
+                            "bloodEffect", enemy, 0.35f,
+                            1, 1, enemy.getBloodEffectAnimation(),3);
 
-                level.addQueuedObject(bloodEffect);
+                    level.addQueuedObject(bloodEffect);
+                }
+                else{
+                    float effectAngle = (float) Math.toRadians(level.getPlayer().getAngleFacing());
+                    float pOffsetX = 0.0f;
+                    float pOffsetY = 0.0f;
+                    float sx = 0.02f;
+                    EffectObstacle killedBloodEffect = level.getEffectPool().obtainEffect(enemy.getX(), enemy.getY(), enemy.getKilledBloodEffect().getRegionWidth(),
+                            enemy.getKilledBloodEffect().getRegionHeight(), sx, 0.02f, effectAngle,
+                            pOffsetX, pOffsetY,true,
+                            "killedBloodEffect", enemy, 0.35f,
+                            1, 1, enemy.getKilledBloodEffectAnimation(),3);
+                    level.addQueuedObject(killedBloodEffect);
+                }
             }
 
         }

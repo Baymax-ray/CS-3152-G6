@@ -87,6 +87,15 @@
           }
         }
       },
+      "killingBloodEffect": {
+        "file" : "animations/killingHitBloodEffect1.png",
+        "sprites" : {
+          "fire": {
+            "rows": 1,
+            "cols": 14
+          }
+        }
+      },
       "impactEffect": {
         "file" : "animations/impactEffectSpriteSheet.png",
         "sprites" : {
