@@ -195,13 +195,13 @@
                  "id":151,
                  "name":"Billboard",
                  "properties":[
-                        {
-                         "name":"text",
+                       {
+                         "name":"image",
                          "type":"string",
-                         "value":"Testing Facility"
-                        }],
+                         "value":"platform:imageBillboard"
+                       }],
                  "rotation":0,
-                 "type":"",
+                 "type":"image",
                  "visible":true,
                  "width":19.5,
                  "x":324,
@@ -214,12 +214,12 @@
                  "name":"Billboard",
                  "properties":[
                         {
-                         "name":"text",
+                         "name":"image",
                          "type":"string",
-                         "value":"Press X or Left Button; try combine WASD with this"
+                         "value":"platform:imageBillboard"
                         }],
                  "rotation":0,
-                 "type":"",
+                 "type":"image",
                  "visible":true,
                  "width":19.5,
                  "x":1031.15746031346,
@@ -736,12 +736,12 @@
                  "name":"Billboard",
                  "properties":[
                         {
-                         "name":"text",
+                         "name":"image",
                          "type":"string",
-                         "value":"Spacebar or X Button"
+                         "value":"platform:imageBillboard"
                         }],
                  "rotation":0,
-                 "type":"",
+                 "type":"image",
                  "visible":true,
                  "width":19.5,
                  "x":452.62710503261,

@@ -29,9 +29,12 @@ public class Billboard extends BoxObstacle {
     private final TextureRegion billboardTexture;
     private final float billboardImageWidth;
     private final float billboardImageHeight;
+    private float displayImageWidth;
+    private float displayImageHeight;
     private final String sensorName;
     private PolygonShape sensorShape;
     private String text;
+    private String displayTextureAsset;
     private boolean display;
     /**
      * The texture origin offset value along the y-axis.
@@ -58,24 +61,42 @@ public class Billboard extends BoxObstacle {
      */
     private float scaleY;
 
+    /**
+     * "text" or "image"
+     */
+    private String type;
+
+    private TextureRegion displayTexture;
+
 
     public String getSensorName() {return this.sensorName;}
 
     public void setDisplay(boolean value) { this.display = value; }
     public boolean isDisplay() { return display; }
+    public String getType() { return type; }
 
     public Billboard(JsonValue json, AssetDirectory assets, float x, float y){
         super(x, y,
                 assets.getEntry("sharedConstants", JsonValue.class).get("Spike").getFloat("hitboxWidth"),
                 assets.getEntry("sharedConstants", JsonValue.class).get("Spike").getFloat("hitboxHeight"));
-        String TextureAsset = "platform:billboard";
+        this.displayTextureAsset = "";
         this.billboardData = assets.getEntry("sharedConstants", JsonValue.class).get("Billboard");
+        this.type = json.getString("type");
+        String TextureAsset = type.equals("text") ? "platform:textBillboard" : "platform:imageBillboard";
+        this.billboardTexture = new TextureRegion(assets.getEntry(TextureAsset, Texture.class));
+        if (type.equals("text")) {
+            this.text = json.get("properties").get(0).getString("value");
+            displayTexture = new TextureRegion(assets.getEntry(TextureAsset, Texture.class));
+        }
+        else if (type.equals("image")) {
+            this.displayTextureAsset = json.get("properties").get(0).getString("value");
+            displayTexture = new TextureRegion(assets.getEntry(displayTextureAsset, Texture.class));
+        }
+
         this.setWidth(billboardData.getFloat("hitboxWidth"));
         this.setHeight(billboardData.getFloat("hitboxHeight"));
-        this.billboardTexture = new TextureRegion(assets.getEntry(TextureAsset, Texture.class));
         this.billboardImageWidth = billboardData.getFloat("ImageWidth");
         this.billboardImageHeight = billboardData.getFloat("ImageHeight");
-        this.text = json.get("properties").get(0).getString("value");
         this.sensorName = "BillboardSensor";
         this.texture = this.billboardTexture;
         scaleX = billboardData.getFloat("drawScaleX");
@@ -111,6 +132,7 @@ public class Billboard extends BoxObstacle {
         float sy = scaleY * billboardImageHeight / this.texture.getRegionHeight();
 
         canvas.draw(this.texture, Color.WHITE, ox, oy, x, y, 0, sx, sy);
+
     }
 
     public void displayDialog(GameCanvas canvas){
@@ -139,6 +161,33 @@ public class Billboard extends BoxObstacle {
         font.draw(canvas.getSpriteBatch(), glyphLayout, padding*1.5f, canvas.getHeight()/4.0f + padding/2);
 
         //canvas.drawText(myText.substring(0,charCountThisFrame), font, padding*1.5f, canvas.getHeight()/4.0f + padding/2);
+    }
+
+    public void displayImage(GameCanvas canvas, Level level) {
+        //tile of player character
+//        System.out.println(level.getCameraWidth());
+//
+//        float x = (level.getPlayer().getX() % level.getCameraWidth() * 64) % canvas.getWidth();
+//        float y = level.getPlayer().getY() * 64 + canvas.getHeight() / 20.0f;
+
+//        float x = getX();
+//        float y = getY();
+//        System.out.println("yes");
+//
+//        canvas.draw(displayTexture, x,y);
+
+        float x = level.getPlayer().getX();
+        float y = level.getPlayer().getY() + 2;
+
+        float ox = oxOffset + this.texture.getRegionWidth()/2;
+        float oy = oyOffset + this.texture.getRegionHeight()/2;
+
+        float sx = scaleX * billboardImageWidth / this.texture.getRegionWidth();
+        float sy = scaleY * billboardImageHeight / this.texture.getRegionHeight();
+
+        canvas.draw(displayTexture, Color.WHITE, ox, oy, x, y, 0, sx, sy);
+
+
     }
 
     public void aggregateStringCompleteness(float delta) {

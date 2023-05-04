@@ -756,6 +756,13 @@ public class Level {
         for (Obstacle obj : objects) {
             if (obj.getClass().equals(Billboard.class) || obj.getClass().equals(Exit.class)) {
                 obj.draw(canvas);
+                if (obj.getClass().equals(Billboard.class)) {
+                    Billboard billboard = (Billboard) obj;
+                    if (billboard.isDisplay() && billboard.getType().equals("image")) {
+                        billboard.displayImage(canvas, this);
+                    }
+
+                }
             }
         }
         for (Obstacle obj : objects) {
@@ -763,6 +770,7 @@ public class Level {
                 obj.draw(canvas);
             }
         }
+
         canvas.end();
 
         if (debug) {
@@ -778,11 +786,10 @@ public class Level {
         uiElements.draw(canvas, player.getHearts(), player.getSpirit());
         boolean alreadyDisplay = false;
         for (Billboard billboard : billboards) {
-            if (billboard.isDisplay() && !alreadyDisplay) {
+            if (billboard.isDisplay() && !alreadyDisplay && billboard.getType().equals("text")) {
                 billboard.displayDialog(canvas);
                 alreadyDisplay = true;
             }
-
         }
         canvas.end();
 
