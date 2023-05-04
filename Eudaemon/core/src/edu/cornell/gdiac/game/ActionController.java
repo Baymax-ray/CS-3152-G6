@@ -381,6 +381,7 @@ public class ActionController {
             if (player.getDashLifespanRemaining() == 0) {
                 player.setDashing(false);
 //                player.getBody().applyForce();
+                player.setVelocity(player.getBodyVelocityX()/3, player.getBodyVelocityY()/3);
             }
         }
 
@@ -487,10 +488,10 @@ public class ActionController {
         }
 
         // What does this do
-        if (deltaX == 0 && !player.isGrounded() && (leftPressed || rightPressed)
-                && Math.abs(player.getBodyVelocityX()) == player.getHorizontalAcceleration() && movedDuringLastFrame) {
-            player.setVelocity(0, player.getBodyVelocityY());
-        }
+//        if (deltaX == 0 && !player.isGrounded() && (leftPressed || rightPressed)
+//                && Math.abs(player.getBodyVelocityX()) == player.getHorizontalAcceleration() && movedDuringLastFrame) {
+//            player.setVelocity(0, player.getBodyVelocityY());
+//        }
         previousX = player.getX();
         movedDuringLastFrame = (leftPressed || rightPressed) && deltaX > 0;
 
