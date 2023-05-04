@@ -45,10 +45,6 @@ public class ProjectileAI extends AIController{
         // Process the FSM
         changeStateIfApplicable();
         enemyAction.add(move);
-        //TODO
-//        if(enemyAction.contains(EnemyAction.ATTACK)){this.enemy.setCurrentAnimation("notidle");}
-//        else{this.enemy.setCurrentAnimation("idle");}
-//        System.out.println(this.enemy.getCurrentAnimation());
     }
 
     private boolean canAttack(){

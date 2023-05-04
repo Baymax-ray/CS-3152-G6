@@ -535,7 +535,8 @@ public class Enemy extends CapsuleObstacle {
     public void draw(GameCanvas canvas) {
         if (currentAnimation.equals("idle")){
             if (this.type.equals("Projectile")){
-                this.texture = (TextureRegion) animations.get("projectileIdle").getKeyFrame(currentFrame);
+                this.texture = (TextureRegion) animations.get("projectileIdle").getKeyFrame(0);
+
             }
             else{
                 this.texture = enemyTexture;
