@@ -76,8 +76,10 @@ public class CameraController {
             else setGameplayCamera(canvas, camera.position.x, level.getPlayer().getY()-camZone_y, level.getCameraWidth(), level.getCameraHeight());
         }
 
-        if (camera.position.x < level.getCameraWidth()/2)
-            setGameplayCamera(canvas, level.getCameraWidth()/2, camera.position.y, level.getCameraWidth(), level.getCameraHeight());
+        keepCameraInBound(canvas, level);
+
+        cameraShaker.update(Gdx.graphics.getDeltaTime(), this, level);
+        microCameraShaker.update(Gdx.graphics.getDeltaTime(), this, level);
 
         cameraShaker.updateOrigPosition();
         microCameraShaker.updateOrigPosition();
@@ -97,8 +99,7 @@ public class CameraController {
         getCamera().update();
 
         canvas.getSpriteBatch().setProjectionMatrix(getCamera().combined);
-        cameraShaker.update(Gdx.graphics.getDeltaTime());
-        microCameraShaker.update(Gdx.graphics.getDeltaTime());
+
     }
 
 
@@ -117,11 +118,36 @@ public class CameraController {
         return camera;
     }
 
+    public void keepCameraInBound(GameCanvas canvas, Level level) {
+
+        //camera left bound
+        if (camera.position.x < level.getCameraWidth()/2)
+            setGameplayCamera(canvas, level.getCameraWidth()/2, camera.position.y, level.getCameraWidth(), level.getCameraHeight());
+
+        //camera right bound
+        if (camera.position.x + level.getCameraWidth()/2 > level.getWidthInTiles())
+            setGameplayCamera(canvas, level.getWidthInTiles() - level.getCameraWidth()/2, camera.position.y, level.getCameraWidth(), level.getCameraHeight());
+
+        //camera lower bound
+        if (camera.position.y < level.getCameraHeight()/2)
+            setGameplayCamera(canvas, camera.position.x, level.getCameraHeight()/2, level.getCameraWidth(), level.getCameraHeight());
+
+        //camera upper bound
+        if (camera.position.y + level.getCameraHeight()/2 > level.getHeightInTiles())
+            setGameplayCamera(canvas, camera.position.x, level.getHeightInTiles() - level.getCameraHeight()/2, level.getCameraWidth(), level.getCameraHeight());
+    }
+
+    public boolean isCameraInBound(float x, float y, Level level) {
+        return x > level.getCameraWidth()/2 && x + level.getCameraWidth()/2 < level.getWidthInTiles()
+                && y > level.getCameraHeight()/2 && y + level.getCameraHeight()/2 < level.getHeightInTiles();
+    }
+
     public CameraShaker getCameraShaker() { return cameraShaker; }
     public void shakeCamera(int strength) {
         switch (strength) {
             case 1:
                 cameraShaker.startShaking();
+
                 break;
             case 0:
                 microCameraShaker.startShaking();

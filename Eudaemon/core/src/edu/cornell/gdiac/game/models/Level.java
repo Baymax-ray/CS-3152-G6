@@ -99,6 +99,9 @@ public class Level {
 
     private final float gravity;
 
+    private final int widthInTiles;
+    private final int heightInTiles;
+
 
 
     //#endregion
@@ -166,6 +169,9 @@ public class Level {
     public float gettileSize(){
         return tileSize;
     }
+
+    public int getWidthInTiles() { return widthInTiles; }
+    public int getHeightInTiles() { return heightInTiles; }
     /**
      * Returns the player associated with this level instance.
      *
@@ -415,8 +421,8 @@ public class Level {
         JsonValue tilesFGData = tilesFG.get("data");
 
         // Get the width and height of the tilemap in tiles
-        int widthInTiles = tilesFG.getInt("width");
-        int heightInTiles = tilesFG.getInt("height");
+        widthInTiles = tilesFG.getInt("width");
+        heightInTiles = tilesFG.getInt("height");
 
         this.tilemap = new int[heightInTiles][widthInTiles];
         for (int y = 0; y < heightInTiles; y++) {

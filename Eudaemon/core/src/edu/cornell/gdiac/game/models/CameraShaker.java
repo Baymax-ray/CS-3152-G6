@@ -3,6 +3,7 @@ package edu.cornell.gdiac.game.models;
 import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector3;
+import edu.cornell.gdiac.game.CameraController;
 
 public class CameraShaker {
 
@@ -17,6 +18,14 @@ public class CameraShaker {
     private Vector3 offset;
     private Vector3 currentPosition;
     public Vector3 origPosition;
+    public float getOrigPositionX() { return origPosition.x; }
+    public float getOrigPositionY() { return origPosition.y; }
+    public float getCurrentPositionX() { return currentPosition.x; }
+    public void setCurrentPositionX(float value) { currentPosition.x = value; }
+    public float getCurrentPositionY() { return currentPosition.y; }
+    public void setCurrentPositionY(float value) { currentPosition.y = value; }
+
+
 
     /**
      * Constructor
@@ -47,14 +56,14 @@ public class CameraShaker {
      * Call this together with camera's update method.
      * Actually does the shaking.
      */
-    public void update(float delta){
+    public void update(float delta, CameraController cameraController, Level level){
         if (!isCameraShaking()) return;
 
         // only update camera shake 60 times a second max
         timer += delta;
         if (timer >= 1f/60f) {
             computeCameraOffset();
-            computeCurrentPosition();
+            computeCurrentPosition(cameraController, level);
             diminishShake();
             camera.position.set(currentPosition);
             camera.update();
@@ -100,9 +109,11 @@ public class CameraShaker {
         offset.y = sine * shakeRadius;
     }
 
-    private void computeCurrentPosition() {
-        currentPosition.x = origPosition.x + offset.x;
-        currentPosition.y = origPosition.y + offset.y;
+    private void computeCurrentPosition(CameraController cameraController, Level level) {
+        if (cameraController.isCameraInBound(origPosition.x + offset.x, origPosition.y, level))
+            currentPosition.x = origPosition.x + offset.x;
+        if (cameraController.isCameraInBound(origPosition.x, origPosition.y + offset.y, level))
+            currentPosition.y = origPosition.y + offset.y;
     }
 
     private void diminishShake(){
