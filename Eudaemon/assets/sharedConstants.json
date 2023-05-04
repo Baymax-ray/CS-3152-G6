@@ -30,7 +30,7 @@
     "dashLifespan": 15,
     "dashCooldown": 0.4,
     "dashCooldownInFrames": 70,
-    "dashIFrames": 60,
+    "dashIFrames": 40,
 
     "wallSlideVelocity": -1.0,
     "wallJumpCooldownTicks": 60,
@@ -61,7 +61,7 @@
     "transformCooldown": 15,
 
     "maxSpirit": 10,
-    "initialSpirit": 0,
+    "initialSpirit": 10,
     "spiritIncreaseRate": 0.02,
     "spiritKillingEnemy":2.0,
     "spiritDecreaseRate": 0.01,
