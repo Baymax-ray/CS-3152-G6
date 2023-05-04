@@ -592,6 +592,29 @@
                  "width":22.8779,
                  "x":1159.62105,
                  "y":858.66935
+                }, 
+                {
+                 "gid":85,
+                 "height":32,
+                 "id":150,
+                 "name":"Fast",
+                 "properties":[
+                        {
+                         "name":"leftX",
+                         "type":"int",
+                         "value":20
+                        }, 
+                        {
+                         "name":"rightX",
+                         "type":"int",
+                         "value":29
+                        }],
+                 "rotation":0,
+                 "type":"Enemy",
+                 "visible":true,
+                 "width":29,
+                 "x":800.664847102276,
+                 "y":863.474227364076
                 }],
          "opacity":1,
          "type":"objectgroup",
@@ -600,7 +623,7 @@
          "y":0
         }],
  "nextlayerid":11,
- "nextobjectid":150,
+ "nextobjectid":151,
  "orientation":"orthogonal",
  "properties":[
         {
