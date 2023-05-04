@@ -231,11 +231,9 @@ public class ActionController {
                 x = Math.min(x + h_acc, max_speed);
             }
 
-        } else {
-            if (x > -max_speed) {
+        } else if (x > -max_speed && !player.isDashing()) {
                 //x = Math.max(x-h_acc, -max_speed);
                 x = Math.max(x - h_acc, -max_speed);
-            }
         }
         player.setVelocity(x, y);
         //#endregion
@@ -301,9 +299,9 @@ public class ActionController {
             player.setDashedInAir(true);
             player.setDashLifespanRemaining((player.getDashLifespan()));
             int angleFacing = player.getAngleFacing();
-            float dashX = 0;
-            float dashY = 0.4f;
-            float dash = player.getDash();
+
+            //Creates the dash effect
+            //#region Dash Effect
             float diagonalDashMult = 0.71f;
             //direction effect angle
             float effectAngle = 0.0f;
@@ -314,62 +312,37 @@ public class ActionController {
 
             //Setting dash according to angles
             if (angleFacing == 0) {
-                player.setVelocity(0,0);
-                dashX = dash;
-                dashY = 0;
                 effectAngle = 1.57f;
                 pOffsetX = -pOffset;
             }
             else if (angleFacing == 45) {
-                player.setVelocity(0,0);
-                dashX = diagonalDashMult * dash;
-                dashY = diagonalDashMult * dash;
                 effectAngle = 2.356f;
                 pOffsetX = -diagonalDashMult * pOffset;
                 pOffsetY = -diagonalDashMult * pOffset;
             } else if (angleFacing == 90) {
-                player.setVelocity(0,0);
-                dashX = 0;
-                dashY = dash;
                 effectAngle = 3.141f;
                 pOffsetY = -pOffset;
                 pOffsetX = 0.1f;
             } else if (angleFacing == 135) {
-                player.setVelocity(0,0);
-                dashX = -diagonalDashMult * dash;
-                dashY = diagonalDashMult * dash;
                 effectAngle = 3.926f;
                 pOffsetX = diagonalDashMult * pOffset;
                 pOffsetY = -diagonalDashMult * pOffset;
             } else if (angleFacing == 180) {
-                player.setVelocity(0,0);
-                dashX = -dash;
-                dashY = 0;
                 effectAngle = 4.712f;
                 pOffsetX = 1.0f;
             } else if (angleFacing == 225) {
-                player.setVelocity(0,0);
-                dashX = - 0.71f * dash;
-                dashY = - 0.71f * dash;
                 effectAngle = 5.497f;
                 pOffsetX = diagonalDashMult * pOffset;
                 pOffsetY = diagonalDashMult * pOffset;
             } else if (angleFacing == 270) {
-                player.setVelocity(0,0);
-                dashX = 0;
-                dashY = - dash;
                 effectAngle = 0.0f;
                 pOffsetY = 1.0f;
             } else if (angleFacing == 315) {
-                player.setVelocity(0,0);
-                dashX = 0.71f * dash;
-                dashY = - 0.71f * dash;
                 effectAngle = 0.785f;
                 pOffsetX = -diagonalDashMult * pOffset;
                 pOffsetY = diagonalDashMult * pOffset;
             }
-            player.setVelocity(dashX, dashY);
-            level.shakeControllerMedium();
+
 
             //Creating dash effect
             EffectObstacle dashAnimate = level.getEffectPool().obtainEffect(player.getX(), player.getY(), player.getDashEffectSpriteSheet().getRegionWidth(),
@@ -378,6 +351,9 @@ public class ActionController {
                     "dashEffect", player, 0.35f,
                     1, 1, animations.get("dashEffect"),5);
             level.addQueuedObject(dashAnimate);
+            //#endregion
+
+            level.shakeControllerMedium();
 
             //Sound effect
 //            dashSoundId = playSound(dashSound, dashSoundId, 0.05F);
@@ -395,20 +371,62 @@ public class ActionController {
             }, player.getDashTime());
         }
 
+        if (player.isDashing()){
+
+        }
+
         if (player.getDashLifespanRemaining() > 0) {
             player.setDashLifespanRemaining(Math.max(player.getDashLifespanRemaining() - 1, 0));
+
             if (player.getDashLifespanRemaining() == 0) {
                 player.setDashing(false);
-                player.setVelocity(player.getBodyVelocityX() / 3, player.getBodyVelocityY() / 3);
+//                player.getBody().applyForce();
             }
         }
 
         if (player.isDashing()) {
+            // Applies velocity to player
+            int angleFacing = player.getAngleFacing();
+            float dashX = 0;
+            float dashY = 0.4f;
+            float dash = player.getDash();
+            float diagonalDashMult = 0.71f;
+            //Setting dash according to angles
+            if (angleFacing == 0) {
+                dashX = dash;
+                dashY = 0;
+            }
+            else if (angleFacing == 45) {
+                dashX = diagonalDashMult * dash;
+                dashY = diagonalDashMult * dash;
+            } else if (angleFacing == 90) {
+                dashX = 0;
+                dashY = dash;
+            } else if (angleFacing == 135) {
+                dashX = -diagonalDashMult * dash;
+                dashY = diagonalDashMult * dash;
+            } else if (angleFacing == 180) {
+                dashX = -dash;
+                dashY = 0;
+            } else if (angleFacing == 225) {
+                dashX = - 0.71f * dash;
+                dashY = - 0.71f * dash;
+            } else if (angleFacing == 270) {
+                dashX = 0;
+                dashY = - dash;
+            } else if (angleFacing == 315) {
+                dashX = 0.71f * dash;
+                dashY = - 0.71f * dash;
+            }
+            player.setVelocity(dashX, dashY);
+
             player.setDashCooldownRemaining(Math.max(player.getDashCooldownRemaining() - 1, 0));
-            if (player.getDashCooldownRemaining() == 0){ player.setDashing(false);
-            Filter f =player.getFilterData();
-            f.groupIndex = -1; //cancel its collision with bullet
-            player.setFilterData(f);}
+            if (player.getDashCooldownRemaining() == 0){
+                player.setDashing(false);
+                Filter f =player.getFilterData();
+                f.groupIndex = -1; //cancel its collision with bullet
+                player.setFilterData(f);
+            }
         } else {
             Filter f =player.getFilterData();
             f.groupIndex = 0;
@@ -467,6 +485,33 @@ public class ActionController {
         if (debugPressed) {
             level.setDebug(!level.isDebug());
         }
+
+        // What does this do
+        if (deltaX == 0 && !player.isGrounded() && (leftPressed || rightPressed)
+                && Math.abs(player.getBodyVelocityX()) == player.getHorizontalAcceleration() && movedDuringLastFrame) {
+            player.setVelocity(0, player.getBodyVelocityY());
+        }
+        previousX = player.getX();
+        movedDuringLastFrame = (leftPressed || rightPressed) && deltaX > 0;
+
+        //#region Spirit Loss
+        if (player.getForm() == 1) { // if player is chiyo
+            player.decreaseSpirit();
+            if (player.getSpirit() <= 0) {
+                player.setForm(); // switch back to momo
+                player.setHeight(player.getHeight() / player.getChiyoHitBoxHeightMult());
+                player.updateGroundSensor();
+            }
+        } else if (player.getEnemiesInSpiritRange().size > 0) {
+            player.getEnemiesInSpiritRange().get(0).LossSpirit(level.getPlayer().getSpiritIncreaseRate());
+            player.increaseSpirit();
+            spiritDrainEffect = level.getEffectPool().obtainEffect(player.getX(), player.getY(),
+                    player.getSpiritDrainSpriteSheet().getRegionWidth(), player.getSpiritDrainSpriteSheet().getRegionHeight(),
+                    0.01f, 0.01f, 0, 0, 0, true, "spiritDrain", player, 1f,
+                    1, 1, player.getSpiritDrainAnimation(), 5);
+            level.addQueuedObject(spiritDrainEffect);
+        }
+        //#endregion
 
         //#region Textures and Animation
         if (tickFrameSwitch != 0 && ticks % tickFrameSwitch == 0) {
@@ -720,31 +765,7 @@ public class ActionController {
         }
 
         //#endregion
-        if (deltaX == 0 && !player.isGrounded() && (leftPressed || rightPressed)
-                && Math.abs(player.getBodyVelocityX()) == player.getHorizontalAcceleration() && movedDuringLastFrame) {
-            player.setVelocity(0, player.getBodyVelocityY());
-        }
-        previousX = player.getX();
-        movedDuringLastFrame = (leftPressed || rightPressed) && deltaX > 0;
 
-        //#region Spirit Loss
-        if (player.getForm() == 1) { // if player is chiyo
-            player.decreaseSpirit();
-            if (player.getSpirit() <= 0) {
-                player.setForm(); // switch back to momo
-                player.setHeight(player.getHeight() / player.getChiyoHitBoxHeightMult());
-                player.updateGroundSensor();
-            }
-        } else if (player.getEnemiesInSpiritRange().size > 0) {
-            player.getEnemiesInSpiritRange().get(0).LossSpirit(level.getPlayer().getSpiritIncreaseRate());
-            player.increaseSpirit();
-            spiritDrainEffect = level.getEffectPool().obtainEffect(player.getX(), player.getY(),
-                    player.getSpiritDrainSpriteSheet().getRegionWidth(), player.getSpiritDrainSpriteSheet().getRegionHeight(),
-                    0.01f, 0.01f, 0, 0, 0, true, "spiritDrain", player, 1f,
-                    1, 1, player.getSpiritDrainAnimation(), 5);
-            level.addQueuedObject(spiritDrainEffect);
-        }
-        //#endregion
 
 
     }

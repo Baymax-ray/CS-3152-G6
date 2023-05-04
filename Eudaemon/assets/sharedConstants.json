@@ -66,7 +66,7 @@
     "spiritDecreaseRate": 0.01,
     "spiritIncreaseDist": 2.0,
 
-    "iFrames": 50,
+    "iFrames": 60,
 
     "sensor": {
       "shrink" : 0.6,
