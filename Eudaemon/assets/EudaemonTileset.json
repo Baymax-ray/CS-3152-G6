@@ -8,7 +8,7 @@
  "margin":0,
  "name":"Eudaemon Tilleset",
  "spacing":0,
- "tilecount":117,
+ "tilecount":122,
  "tiledversion":"1.10.1",
  "tileheight":42,
  "tiles":[
@@ -585,6 +585,36 @@
         {
          "id":170,
          "image":"tiles\/MetalPlatformExterior.png",
+         "imageheight":32,
+         "imagewidth":32
+        }, 
+        {
+         "id":172,
+         "image":"tiles\/MetalPlatformExterior2.png",
+         "imageheight":32,
+         "imagewidth":32
+        }, 
+        {
+         "id":178,
+         "image":"tiles\/MetalPlatformCornerVert.png",
+         "imageheight":32,
+         "imagewidth":32
+        }, 
+        {
+         "id":177,
+         "image":"tiles\/MetalPlatformCornerVert2.png",
+         "imageheight":32,
+         "imagewidth":32
+        }, 
+        {
+         "id":175,
+         "image":"tiles\/MetalPlatformExteriorCornerVert.png",
+         "imageheight":32,
+         "imagewidth":32
+        }, 
+        {
+         "id":176,
+         "image":"tiles\/MetalPlatformExteriorCornerVert2.png",
          "imageheight":32,
          "imagewidth":32
         }, 

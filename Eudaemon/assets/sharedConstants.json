@@ -270,7 +270,7 @@
   },
   "Projectile": {
     "TextureAsset": "enemy:projectileEnemy",
-    "MoveAsset": "skeleborg:move",
+    "MoveAsset": "enemy:projectileEnemy",
     "ImageWidth": 2,
     "ImageHeight": 2,
     "tickFrameSwitch": 5,
