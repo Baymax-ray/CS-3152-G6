@@ -29,8 +29,6 @@ public class Billboard extends BoxObstacle {
     private final TextureRegion billboardTexture;
     private final float billboardImageWidth;
     private final float billboardImageHeight;
-    private float displayImageWidth;
-    private float displayImageHeight;
     private final String sensorName;
     private PolygonShape sensorShape;
     private String text;
@@ -61,8 +59,6 @@ public class Billboard extends BoxObstacle {
      */
     private float scaleY;
 
-    private TextureRegion displayTexture;
-
 
     public String getSensorName() {return this.sensorName;}
 
@@ -78,14 +74,6 @@ public class Billboard extends BoxObstacle {
         String TextureAsset = "platform:textBillboard";
         this.billboardTexture = new TextureRegion(assets.getEntry(TextureAsset, Texture.class));
         this.text = json.get("properties").get(0).getString("value");
-//        if (type.equals("text")) {
-//            this.text = json.get("properties").get(0).getString("value");
-//            displayTexture = new TextureRegion(assets.getEntry(TextureAsset, Texture.class));
-//        }
-//        else if (type.equals("image")) {
-//            this.displayTextureAsset = json.get("properties").get(0).getString("value");
-//            displayTexture = new TextureRegion(assets.getEntry(displayTextureAsset, Texture.class));
-//        }
 
         this.setWidth(billboardData.getFloat("hitboxWidth"));
         this.setHeight(billboardData.getFloat("hitboxHeight"));
@@ -146,41 +134,12 @@ public class Billboard extends BoxObstacle {
                 0, 2, 3          // Take care of the counter-clockwise direction.
         });
         canvas.draw(polyReg, padding, padding);
-        //String myText = "This is a sample dialog. This is a sample dialog.\nThis is a sample dialog. \nThis is a sample dialog. This is a sample dialog. This is a sample dialog.";
         String myText = this.text;
         int charCountThisFrame = (int)stringCompleteness;
         if (charCountThisFrame > myText.length()) charCountThisFrame = myText.length();
 
         glyphLayout = new GlyphLayout(font, myText.substring(0,charCountThisFrame));
         font.draw(canvas.getSpriteBatch(), glyphLayout, padding*1.5f, canvas.getHeight()/4.0f + padding/2);
-
-        //canvas.drawText(myText.substring(0,charCountThisFrame), font, padding*1.5f, canvas.getHeight()/4.0f + padding/2);
-    }
-
-    public void displayImage(GameCanvas canvas, Level level) {
-        //tile of player character
-//        System.out.println(level.getCameraWidth());
-//
-//        float x = (level.getPlayer().getX() % level.getCameraWidth() * 64) % canvas.getWidth();
-//        float y = level.getPlayer().getY() * 64 + canvas.getHeight() / 20.0f;
-
-//        float x = getX();
-//        float y = getY();
-//        System.out.println("yes");
-//
-//        canvas.draw(displayTexture, x,y);
-
-        float x = level.getPlayer().getX();
-        float y = level.getPlayer().getY() + 2;
-
-        float ox = oxOffset + displayTexture.getRegionWidth()/2;
-        float oy = oyOffset + displayTexture.getRegionHeight()/2;
-
-        float sx = scaleX * 0.7f / displayTexture.getRegionWidth();
-        float sy = scaleY * 0.7f / displayTexture.getRegionHeight();
-
-        canvas.draw(displayTexture, Color.WHITE, ox, oy, x, y, 0, sx, sy);
-
 
     }
 
