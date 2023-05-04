@@ -804,7 +804,7 @@ public class Level {
         uiElements.draw(canvas, player.getHearts(), player.getSpirit());
         boolean alreadyDisplay = false;
         for (Billboard billboard : billboards) {
-            if (billboard.isDisplay() && !alreadyDisplay && billboard.getType().equals("text")) {
+            if (billboard.isDisplay() && !alreadyDisplay) {
                 billboard.displayDialog(canvas);
                 alreadyDisplay = true;
             }

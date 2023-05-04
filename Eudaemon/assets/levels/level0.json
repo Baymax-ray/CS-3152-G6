@@ -196,12 +196,12 @@
                  "name":"Billboard",
                  "properties":[
                        {
-                         "name":"image",
+                         "name":"text",
                          "type":"string",
                          "value":"platform:controllerButton"
                        }],
                  "rotation":0,
-                 "type":"image",
+                  "type": "",
                  "visible":true,
                  "width":19.5,
                  "x":324,
@@ -214,12 +214,12 @@
                  "name":"Billboard",
                  "properties":[
                         {
-                         "name":"image",
+                         "name":"text",
                          "type":"string",
                          "value":"platform:controllerButton"
                         }],
                  "rotation":0,
-                 "type":"image",
+                  "type": "",
                  "visible":true,
                  "width":19.5,
                  "x":1031.15746031346,

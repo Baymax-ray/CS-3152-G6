@@ -61,11 +61,6 @@ public class Billboard extends BoxObstacle {
      */
     private float scaleY;
 
-    /**
-     * "text" or "image"
-     */
-    private String type;
-
     private TextureRegion displayTexture;
 
 
@@ -73,7 +68,6 @@ public class Billboard extends BoxObstacle {
 
     public void setDisplay(boolean value) { this.display = value; }
     public boolean isDisplay() { return display; }
-    public String getType() { return type; }
 
     public Billboard(JsonValue json, AssetDirectory assets, float x, float y){
         super(x, y,
@@ -81,17 +75,17 @@ public class Billboard extends BoxObstacle {
                 assets.getEntry("sharedConstants", JsonValue.class).get("Spike").getFloat("hitboxHeight"));
         this.displayTextureAsset = "";
         this.billboardData = assets.getEntry("sharedConstants", JsonValue.class).get("Billboard");
-        this.type = json.getString("type");
-        String TextureAsset = type.equals("text") ? "platform:textBillboard" : "platform:imageBillboard";
+        String TextureAsset = "platform:textBillboard";
         this.billboardTexture = new TextureRegion(assets.getEntry(TextureAsset, Texture.class));
-        if (type.equals("text")) {
-            this.text = json.get("properties").get(0).getString("value");
-            displayTexture = new TextureRegion(assets.getEntry(TextureAsset, Texture.class));
-        }
-        else if (type.equals("image")) {
-            this.displayTextureAsset = json.get("properties").get(0).getString("value");
-            displayTexture = new TextureRegion(assets.getEntry(displayTextureAsset, Texture.class));
-        }
+        this.text = json.get("properties").get(0).getString("value");
+//        if (type.equals("text")) {
+//            this.text = json.get("properties").get(0).getString("value");
+//            displayTexture = new TextureRegion(assets.getEntry(TextureAsset, Texture.class));
+//        }
+//        else if (type.equals("image")) {
+//            this.displayTextureAsset = json.get("properties").get(0).getString("value");
+//            displayTexture = new TextureRegion(assets.getEntry(displayTextureAsset, Texture.class));
+//        }
 
         this.setWidth(billboardData.getFloat("hitboxWidth"));
         this.setHeight(billboardData.getFloat("hitboxHeight"));
