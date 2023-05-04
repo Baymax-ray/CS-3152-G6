@@ -1,10 +1,10 @@
 {
   "levels": [
     {
-      "level": "level2"
+      "level": "level0"
     },
     {
-      "level": "level0"
+      "level": "level1"
     },
     {
       "level": "level2"
