@@ -15,7 +15,6 @@ import edu.cornell.gdiac.game.GameCanvas;
 import edu.cornell.gdiac.game.obstacle.CapsuleObstacle;
 import edu.cornell.gdiac.game.obstacle.SwordWheelObstacle;
 import edu.cornell.gdiac.game.obstacle.WheelObstacle;
-import edu.cornell.gdiac.util.XBoxController;
 
 public class Player extends CapsuleObstacle {
 
@@ -126,6 +125,13 @@ public class Player extends CapsuleObstacle {
     private final float chiyoImageHeight;
     private final TextureRegion momoDiagonalDashTexture;
     private final TextureRegion chiyoSlideTexture;
+    /** TextureRegion for Momo's up-dash state */
+    private final TextureRegion momoUpDashTexture;
+    /** TextureRegion for Momo's down-dash state */
+    private final TextureRegion momoDownDashTexture;
+    /** TextureRegion for Momo's sliding state */
+    private final TextureRegion momoSlideTexture;
+
 
     /**
      * The sprite sheet containing the wall hit effect animation frames.
@@ -340,6 +346,32 @@ public class Player extends CapsuleObstacle {
     //#endregion
 
     //#region TEXTURE GETTERS AND SETTERS
+    /**
+     * Returns the TextureRegion for Momo's up-dash state.
+     *
+     * @return The TextureRegion for Momo's up-dash state.
+     */
+    public TextureRegion getMomoUpDashTexture() {
+        return momoUpDashTexture;
+    }
+
+    /**
+     * Returns the TextureRegion for Momo's down-dash state.
+     *
+     * @return The TextureRegion for Momo's down-dash state.
+     */
+    public TextureRegion getMomoDownDashTexture() {
+        return momoDownDashTexture;
+    }
+
+    /**
+     * Returns the TextureRegion for Momo's sliding state.
+     *
+     * @return The TextureRegion for Momo's sliding state.
+     */
+    public TextureRegion getMomoSlideTexture() {
+        return momoSlideTexture;
+    }
     /**
      * Gets the texture region for the hit wall effect.
      *
@@ -1214,6 +1246,133 @@ public class Player extends CapsuleObstacle {
 
     //#endregion
 
+    public Player(AssetDirectory assets, int startXCoord, int startYCoord) {
+        super(startXCoord, startYCoord, assets.getEntry("sharedConstants", JsonValue.class).get("player").getFloat("hitboxWidth"), assets.getEntry("sharedConstants", JsonValue.class).get("player").getFloat("hitboxHeight"));
+
+        //now the player's shared data is separated into sharedConstants.json, we shall not query them
+        //from constants.json, as that file only records changing data.
+        this.playerData = assets.getEntry("sharedConstants", JsonValue.class).get("Player");
+
+        //Textures & animations
+        this.momoTexture = new TextureRegion(assets.getEntry("momo:idle", Texture.class));
+        this.momoImageWidth = playerData.getFloat("momo:ImageWidth");
+        this.momoImageHeight = playerData.getFloat("momo:ImageHeight");
+        this.chiyoTexture = new TextureRegion(assets.getEntry("chiyo:idle", Texture.class));
+        this.chiyoImageWidth = playerData.getFloat("chiyo:ImageWidth");
+        this.chiyoImageHeight = playerData.getFloat("chiyo:ImageHeight");
+        this.momoDiagonalDashTexture = new TextureRegion(assets.getEntry("momo:diagonalDash", Texture.class));
+        this.chiyoSlideTexture = new TextureRegion(assets.getEntry("chiyo:slide", Texture.class));
+        this.momoSlideTexture = new TextureRegion(assets.getEntry("momo:slide", Texture.class));
+        this.momoDownDashTexture = new TextureRegion(assets.getEntry("momo:downDash", Texture.class));
+        this.momoUpDashTexture = new TextureRegion(assets.getEntry("momo:upDash", Texture.class));
+
+        TextureRegion hitWallEffectSpriteSheet = new TextureRegion(assets.getEntry("chiyo:hitWallEffect", Texture.class));
+        TextureRegion[][] framesHit = hitWallEffectSpriteSheet.split(hitWallEffectSpriteSheet.getRegionWidth() / 30, hitWallEffectSpriteSheet.getRegionHeight());
+        hitWallEffect = new Animation<>(0.5f, framesHit[0]);
+        this.swordEffectSpriteSheet0 = new TextureRegion(assets.getEntry( "chiyo:swordAttack0", Texture.class));
+        this.swordEffectSpriteSheet45 = new TextureRegion(assets.getEntry( "chiyo:swordAttack45", Texture.class));
+        this.swordEffectSpriteSheet90 = new TextureRegion(assets.getEntry( "chiyo:swordAttack90", Texture.class));
+        this.swordEffectSpriteSheet135 = new TextureRegion(assets.getEntry( "chiyo:swordAttack135", Texture.class));
+        this.swordEffectSpriteSheet180 = new TextureRegion(assets.getEntry( "chiyo:swordAttack180", Texture.class));
+        this.swordEffectSpriteSheet225 = new TextureRegion(assets.getEntry( "chiyo:swordAttack225", Texture.class));
+        this.swordEffectSpriteSheet270 = new TextureRegion(assets.getEntry( "chiyo:swordAttack270", Texture.class));
+        this.swordEffectSpriteSheet315 = new TextureRegion(assets.getEntry( "chiyo:swordAttack315", Texture.class));
+        this.dashEffectSpriteSheet = new TextureRegion(assets.getEntry( "momo:dashEffect", Texture.class));
+        this.spiritDrainSpriteSheet = new TextureRegion(assets.getEntry("momo:spiritDrain", Texture.class));
+        TextureRegion[][] frames = spiritDrainSpriteSheet.split(spiritDrainSpriteSheet.getRegionWidth() /14, spiritDrainSpriteSheet.getRegionHeight());
+        this.spiritDrainAnimation = new Animation<>(0.5f, frames[0]);
+
+        this.momoDashSpriteSheet = new TextureRegion(assets.getEntry( "momo:dash", Texture.class));
+        this.momoRunSpriteSheet = new TextureRegion(assets.getEntry( "momo:run", Texture.class));
+        this.momoJumpSpriteSheet = new TextureRegion(assets.getEntry( "momo:jump", Texture.class));
+        this.chiyoRunSpriteSheet = new TextureRegion(assets.getEntry( "chiyo:run", Texture.class));
+        this.chiyoJumpSpriteSheet = new TextureRegion(assets.getEntry( "chiyo:jump", Texture.class));
+        this.chiyoAttackSpriteSheet = new TextureRegion(assets.getEntry( "chiyo:attack", Texture.class));
+        this.impactEffectSpriteSheet = new TextureRegion(assets.getEntry( "impactEffect", Texture.class));
+        //Sound Effect
+        this.playerDamageSound = Gdx.audio.newSound(Gdx.files.internal("audio/temp-player-damage.mp3"));
+
+        //Position and Movement
+        this.dashCooldown = playerData.getInt("dashCooldownInFrames");
+        maxSpeed = playerData.getFloat("maxSpeed");
+        horizontalAcceleration = playerData.getFloat("horizontalAcceleration");
+        this.dash = playerData.getFloat("dash", 2000);
+        this.dashLifespan = playerData.getInt("dashLifespan");
+        this.dashTime = playerData.getInt("dashTime");
+        this.chiyoSpeedMult = playerData.getFloat("chiyoSpeedMult");
+        this.chiyoJumpTimeMult = playerData.getFloat("chiyoJumpTimeMult");
+        this.chiyoHitBoxHeightMult = playerData.getFloat("chiyoHitboxHeightMult");
+
+        //Sliding
+        this.wallSlideVelocity = playerData.getFloat("wallSlideVelocity");
+        this.wallJumpXVelocity = playerData.getFloat("wallJumpXVelocity");
+
+        //Attacking
+        this.attackPower = playerData.getInt("attackPower");
+        this.attackCooldown = playerData.getInt("attackCooldown");
+        this.timeForImpact = playerData.getInt("timeForImpact");
+        this.transformCooldown = playerData.getInt("transformCooldown");
+        this.attackOffset = playerData.getFloat("attackOffset");
+        this.swordRadius = playerData.getFloat("swordRadius");
+        this.attackLifespan = playerData.getFloat("attackLifespan");
+        this.spiritKillingEnemy= playerData.getFloat("spiritKillingEnemy");
+
+
+        //Other Information
+        this.maxHearts = playerData.getInt("maxHearts");
+        this.initialHearts = playerData.getInt("initialHearts");
+        this.maxSpirit = playerData.getFloat("maxSpirit");
+        this.initialSpirit = playerData.getFloat("initialSpirit");
+        this.startsFacingRight = playerData.getBoolean("startsFacingRight");
+        this.jumpCooldown = playerData.getInt("jumpCooldown");
+        this.coyoteFrames = playerData.getInt("coyoteTime");
+        this.jumpTolerance = playerData.getInt("jumpTolerance");
+        this.jumpTime = playerData.getInt("jumpTime");
+        this.maxJumpVelocity = playerData.getInt("maxJumpyVelocity");
+        this.playerGravity = playerData.getFloat("playerGravity");
+        this.spiritIncreaseRate = playerData.getFloat("spiritIncreaseRate");
+        this.spiritDecreaseRate = playerData.getFloat("spiritDecreaseRate");
+        this.spiritIncreaseDist = playerData.getFloat("spiritIncreaseDist");
+        this.hitDist = playerData.getFloat("hit_dist");
+        this.iFrames = playerData.getInt("iFrames");
+        this.attackDist = playerData.getFloat("attack_dist");
+        this.downwardAttackPropelX = playerData.getFloat("downwardAttackPropelX");
+        this.downwardAttackPropelY = playerData.getFloat("downwardAttackPropelY");
+
+
+        this.isChiyo = false;
+
+        this.hearts = initialHearts;
+        this.spirit = initialSpirit;
+
+        this.isDashing = false;
+        this.isJumping = false;
+        this.isChiyo = false;
+        this.isHit = false;
+        this.isGrounded = true;
+        this.isFacingRight = startsFacingRight;
+        this.jumpPressedInAir = false;
+        this.isAttacking = false;
+        this.dashedInAir = false;
+        this.dashCooldownRemaining = 0;
+        this.attackCooldownRemaining = 0;
+        this.jumpCooldownRemaining = 0;
+        this.coyoteFramesRemaining = 0;
+        this.jumpToleranceRemaining = 0;
+        this.jumpTimeRemaining = 0;
+        this.iFramesRemaining = 0;
+        this.attackLifespanRemaining = 0;
+        this.dashLifespanRemaining = 0;
+
+        this.texture = momoTexture;
+        groundSensorName = "PlayerGroundSensor";
+        wallSensorNameRight = "PlayerWallSensorRight";
+        wallSensorNameLeft = "PlayerWallSensorLeft";
+        spiritSensorName = "PlayerSpiritSensor";
+
+        this.enemiesInSpiritRange = new Array<>();
+    }
+
     public void draw(GameCanvas canvas) {
         //tile of player character
         float x = getX();
@@ -1406,132 +1565,6 @@ public class Player extends CapsuleObstacle {
             } else this.markRemoved(true);
         }
 
-    }
-
-
-    public Player(AssetDirectory assets, int startXCoord, int startYCoord) {
-        super(startXCoord, startYCoord, assets.getEntry("sharedConstants", JsonValue.class).get("player").getFloat("hitboxWidth"), assets.getEntry("sharedConstants", JsonValue.class).get("player").getFloat("hitboxHeight"));
-
-        //now the player's shared data is separated into sharedConstants.json, we shall not query them
-        //from constants.json, as that file only records changing data.
-        this.playerData = assets.getEntry("sharedConstants", JsonValue.class).get("Player");
-
-        //Textures
-        this.momoTexture = new TextureRegion(assets.getEntry("momo:idle", Texture.class));
-        this.momoImageWidth = playerData.getFloat("momo:ImageWidth");
-        this.momoImageHeight = playerData.getFloat("momo:ImageHeight");
-        this.chiyoTexture = new TextureRegion(assets.getEntry("chiyo:idle", Texture.class));
-        this.chiyoImageWidth = playerData.getFloat("chiyo:ImageWidth");
-        this.chiyoImageHeight = playerData.getFloat("chiyo:ImageHeight");
-        this.momoDiagonalDashTexture = new TextureRegion(assets.getEntry("momo:diagonalDash", Texture.class));
-        this.chiyoSlideTexture = new TextureRegion(assets.getEntry("chiyo:slide", Texture.class));
-
-        //Animations
-        TextureRegion hitWallEffectSpriteSheet = new TextureRegion(assets.getEntry("chiyo:hitWallEffect", Texture.class));
-        TextureRegion[][] framesHit = hitWallEffectSpriteSheet.split(hitWallEffectSpriteSheet.getRegionWidth() / 30, hitWallEffectSpriteSheet.getRegionHeight());
-        hitWallEffect = new Animation<>(0.5f, framesHit[0]);
-        this.swordEffectSpriteSheet0 = new TextureRegion(assets.getEntry( "chiyo:swordAttack0", Texture.class));
-        this.swordEffectSpriteSheet45 = new TextureRegion(assets.getEntry( "chiyo:swordAttack45", Texture.class));
-        this.swordEffectSpriteSheet90 = new TextureRegion(assets.getEntry( "chiyo:swordAttack90", Texture.class));
-        this.swordEffectSpriteSheet135 = new TextureRegion(assets.getEntry( "chiyo:swordAttack135", Texture.class));
-        this.swordEffectSpriteSheet180 = new TextureRegion(assets.getEntry( "chiyo:swordAttack180", Texture.class));
-        this.swordEffectSpriteSheet225 = new TextureRegion(assets.getEntry( "chiyo:swordAttack225", Texture.class));
-        this.swordEffectSpriteSheet270 = new TextureRegion(assets.getEntry( "chiyo:swordAttack270", Texture.class));
-        this.swordEffectSpriteSheet315 = new TextureRegion(assets.getEntry( "chiyo:swordAttack315", Texture.class));
-        this.dashEffectSpriteSheet = new TextureRegion(assets.getEntry( "momo:dashEffect", Texture.class));
-        this.spiritDrainSpriteSheet = new TextureRegion(assets.getEntry("momo:spiritDrain", Texture.class));
-        TextureRegion[][] frames = spiritDrainSpriteSheet.split(spiritDrainSpriteSheet.getRegionWidth() /14, spiritDrainSpriteSheet.getRegionHeight());
-        this.spiritDrainAnimation = new Animation<>(0.5f, frames[0]);
-
-        this.momoDashSpriteSheet = new TextureRegion(assets.getEntry( "momo:dash", Texture.class));
-        this.momoRunSpriteSheet = new TextureRegion(assets.getEntry( "momo:run", Texture.class));
-        this.momoJumpSpriteSheet = new TextureRegion(assets.getEntry( "momo:jump", Texture.class));
-        this.chiyoRunSpriteSheet = new TextureRegion(assets.getEntry( "chiyo:run", Texture.class));
-        this.chiyoJumpSpriteSheet = new TextureRegion(assets.getEntry( "chiyo:jump", Texture.class));
-        this.chiyoAttackSpriteSheet = new TextureRegion(assets.getEntry( "chiyo:attack", Texture.class));
-        this.impactEffectSpriteSheet = new TextureRegion(assets.getEntry( "impactEffect", Texture.class));
-        //Sound Effect
-        this.playerDamageSound = Gdx.audio.newSound(Gdx.files.internal("audio/temp-player-damage.mp3"));
-
-        //Position and Movement
-        this.dashCooldown = playerData.getInt("dashCooldownInFrames");
-        maxSpeed = playerData.getFloat("maxSpeed");
-        horizontalAcceleration = playerData.getFloat("horizontalAcceleration");
-        this.dash = playerData.getFloat("dash", 2000);
-        this.dashLifespan = playerData.getInt("dashLifespan");
-        this.dashTime = playerData.getInt("dashTime");
-        this.chiyoSpeedMult = playerData.getFloat("chiyoSpeedMult");
-        this.chiyoJumpTimeMult = playerData.getFloat("chiyoJumpTimeMult");
-        this.chiyoHitBoxHeightMult = playerData.getFloat("chiyoHitboxHeightMult");
-
-        //Sliding
-        this.wallSlideVelocity = playerData.getFloat("wallSlideVelocity");
-        this.wallJumpXVelocity = playerData.getFloat("wallJumpXVelocity");
-
-        //Attacking
-        this.attackPower = playerData.getInt("attackPower");
-        this.attackCooldown = playerData.getInt("attackCooldown");
-        this.timeForImpact = playerData.getInt("timeForImpact");
-        this.transformCooldown = playerData.getInt("transformCooldown");
-        this.attackOffset = playerData.getFloat("attackOffset");
-        this.swordRadius = playerData.getFloat("swordRadius");
-        this.attackLifespan = playerData.getFloat("attackLifespan");
-        this.spiritKillingEnemy= playerData.getFloat("spiritKillingEnemy");
-
-
-        //Other Information
-        this.maxHearts = playerData.getInt("maxHearts");
-        this.initialHearts = playerData.getInt("initialHearts");
-        this.maxSpirit = playerData.getFloat("maxSpirit");
-        this.initialSpirit = playerData.getFloat("initialSpirit");
-        this.startsFacingRight = playerData.getBoolean("startsFacingRight");
-        this.jumpCooldown = playerData.getInt("jumpCooldown");
-        this.coyoteFrames = playerData.getInt("coyoteTime");
-        this.jumpTolerance = playerData.getInt("jumpTolerance");
-        this.jumpTime = playerData.getInt("jumpTime");
-        this.maxJumpVelocity = playerData.getInt("maxJumpyVelocity");
-        this.playerGravity = playerData.getFloat("playerGravity");
-        this.spiritIncreaseRate = playerData.getFloat("spiritIncreaseRate");
-        this.spiritDecreaseRate = playerData.getFloat("spiritDecreaseRate");
-        this.spiritIncreaseDist = playerData.getFloat("spiritIncreaseDist");
-        this.hitDist = playerData.getFloat("hit_dist");
-        this.iFrames = playerData.getInt("iFrames");
-        this.attackDist = playerData.getFloat("attack_dist");
-        this.downwardAttackPropelX = playerData.getFloat("downwardAttackPropelX");
-        this.downwardAttackPropelY = playerData.getFloat("downwardAttackPropelY");
-
-
-        this.isChiyo = false;
-
-        this.hearts = initialHearts;
-        this.spirit = initialSpirit;
-
-        this.isDashing = false;
-        this.isJumping = false;
-        this.isChiyo = false;
-        this.isHit = false;
-        this.isGrounded = true;
-        this.isFacingRight = startsFacingRight;
-        this.jumpPressedInAir = false;
-        this.isAttacking = false;
-        this.dashedInAir = false;
-        this.dashCooldownRemaining = 0;
-        this.attackCooldownRemaining = 0;
-        this.jumpCooldownRemaining = 0;
-        this.coyoteFramesRemaining = 0;
-        this.jumpToleranceRemaining = 0;
-        this.jumpTimeRemaining = 0;
-        this.iFramesRemaining = 0;
-        this.attackLifespanRemaining = 0;
-        this.dashLifespanRemaining = 0;
-
-        this.texture = momoTexture;
-        groundSensorName = "PlayerGroundSensor";
-        wallSensorNameRight = "PlayerWallSensorRight";
-        wallSensorNameLeft = "PlayerWallSensorLeft";
-        spiritSensorName = "PlayerSpiritSensor";
-
-        this.enemiesInSpiritRange = new Array<>();
     }
 
     public long playSound(Sound sound, long soundId, float volume) {

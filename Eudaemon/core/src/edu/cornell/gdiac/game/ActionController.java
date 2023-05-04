@@ -273,10 +273,13 @@ public class ActionController {
         //#endregion
 
         //#region Wall Slide
-        if (player.getForm() == 1 && player.isTouchingWallRight() && !player.isGrounded() && rightPressed){
+        if (player.isTouchingWallRight() && !player.isGrounded() && rightPressed){ //player sliding on right wall
             player.setSliding(true);
-        } else {
-            player.setSliding(player.getForm() == 1 && player.isTouchingWallLeft() && !player.isGrounded() && leftPressed);
+        } else if (player.isTouchingWallLeft() && !player.isGrounded() && leftPressed) { //player is sliding on left wall
+            player.setSliding(true);
+        }
+        else{
+            player.setSliding(false);
         }
 
         if (player.isSliding()){
@@ -476,6 +479,7 @@ public class ActionController {
                     current = player.getMomoDiagonalDashTexture();
                     player.setSxMult(1.2f);
                     player.setSyMult(1.2f);
+                    player.setOxOffset(0);
                     player.setOyOffset(-10);
                 }
                 else{
@@ -484,9 +488,19 @@ public class ActionController {
                     maxFrame = 5;
                     player.setSxMult(1.2f);
                     player.setSyMult(1.2f);
+                    player.setOxOffset(0);
                     player.setOyOffset(-47);
                 }
                 player.setTexture(current);
+            }
+            else if (player.isSliding()){
+                player.setTexture(player.getMomoSlideTexture());
+                audio.loopEffect("wall-slide", 1f);
+                player.setOxOffset(-6);
+                player.setOyOffset(-15);
+                player.setSxMult(-1.2f);
+                player.setSyMult(1.2f);
+                currentAnimation = "momoSlide";
             }
             // Momo jumping/falling
             else if (!player.isGrounded()) {
@@ -508,6 +522,7 @@ public class ActionController {
                     tickFrameSwitch = 0;
                 }
                 player.setTexture(current);
+                player.setOxOffset(0);
                 player.setOyOffset(-47);
                 player.setSxMult(1.2f);
                 player.setSyMult(1.2f);
@@ -544,6 +559,7 @@ public class ActionController {
                 maxFrame = 8;
                 tickFrameSwitch = 5;
                 player.setTexture(current);
+                player.setOxOffset(0);
                 player.setOyOffset(-47);
                 player.setSxMult(1.2f);
                 player.setSyMult(1.2f);
@@ -553,7 +569,7 @@ public class ActionController {
 //                soundDictionary.remove(momoRunSound);
                 audio.stopEffect("momo-run");
                 player.setTexture(player.getMomoTexture());
-
+                player.setOxOffset(0);
                 player.setOyOffset(-220);
                 player.setSxMult(1.2f);
                 player.setSyMult(1.2f);
@@ -580,6 +596,7 @@ public class ActionController {
                 player.setSxMult(2.3f);
                 player.setSyMult(2.0f);
             }
+            // if chiyo is sliding
             else if (player.isSliding()){
                 player.setTexture(player.getChiyoSlideTexture());
                 audio.loopEffect("wall-slide", 1f);
@@ -587,6 +604,7 @@ public class ActionController {
                 player.setOyOffset(-29);
                 player.setSxMult(-2.1f);
                 player.setSyMult(1.84f);
+                currentAnimation = "chiyoSlide";
             }
             else if (!player.isGrounded()) {
 //                chiyoRunSound.stop();

@@ -200,7 +200,7 @@ public class LoadingScreen implements Screen, InputProcessor, ControllerListener
 		// Load the next two images immediately.
 		background = internal.getEntry( "background", Texture.class );
 		title = internal.getEntry("title", Texture.class);
-		background.setFilter( TextureFilter.Linear, TextureFilter.Linear );
+		background.setFilter(Texture.TextureFilter.Nearest, Texture.TextureFilter.Nearest);
 		statusBar = internal.getEntry( "progress", Texture.class );
 
 		// Break up the status bar texture into regions

@@ -232,10 +232,12 @@
           }
         }
       },
-        "background:city": "backgrounds/backgroundCityPlaceholder.png",
+        "background:city": "backgrounds/backgroundCity.png",
         "momo:idle":  "character/momo.png",
         "momo:upDash":  "character/momoUpDash.png",
+        "momo:downDash":  "character/momoDownDash.png",
         "momo:diagonalDash":  "character/momoDiagonalUpDash.png",
+        "momo:slide":  "character/momoSlide.png",
         "chiyo:idle":  "character/chiyo.png",
         "chiyo:slide":  "character/chiyoSlide.png",
 
