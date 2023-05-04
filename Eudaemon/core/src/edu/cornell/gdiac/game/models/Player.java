@@ -40,6 +40,8 @@ public class Player extends CapsuleObstacle {
      * The velocity at which the player slides down a wall.
      */
     private float wallSlideVelocity;
+    /** The number of ticks required between wall jumps*/
+    private final int wallJumpCooldownTicks;
 
     /**
      * Time in milliseconds during which gravity doesn't affect the player
@@ -539,6 +541,14 @@ public class Player extends CapsuleObstacle {
     //#endregion
 
     //#region GETTERS AND SETTERS
+    /**
+     * Returns the number of ticks for the wall jump cooldown.
+     *
+     * @return The number of ticks for the wall jump cooldown.
+     */
+    public int getWallJumpCooldownTicks() {
+        return wallJumpCooldownTicks;
+    }
     /**
      * Returns the horizontal velocity at which the player jumps off a wall.
      *
@@ -1306,6 +1316,7 @@ public class Player extends CapsuleObstacle {
         //Sliding
         this.wallSlideVelocity = playerData.getFloat("wallSlideVelocity");
         this.wallJumpXVelocity = playerData.getFloat("wallJumpXVelocity");
+        this.wallJumpCooldownTicks = playerData.getInt("wallJumpCooldownTicks");
 
         //Attacking
         this.attackPower = playerData.getInt("attackPower");

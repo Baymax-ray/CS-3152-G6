@@ -50,6 +50,12 @@ public class ActionController {
      */
     private int ticks;
 
+    /** The tick of the last time the player wall jumped*/
+    private int lastWallJumpTick = 0;
+
+    /** If the player was facing right during their last walljump*/
+    private boolean facingRightDuringLastWallJump;
+
     /**
      * The current frame of the animation.
      */
@@ -418,12 +424,16 @@ public class ActionController {
         //jump!
         //include all three situations
         //normal jump, coyote, and jump pressed in air
-
-        if ((jumpPressed && (player.isGrounded() || player.isSliding()) && player.getJumpCooldownRemaining() == 0) ||
+        boolean slidingJumpRequirements = player.isSliding() && ((ticks - player.getWallJumpCooldownTicks() > lastWallJumpTick) || player.isFacingRight() && !facingRightDuringLastWallJump || !player.isFacingRight() && facingRightDuringLastWallJump);
+        if ((jumpPressed && (player.isGrounded() || slidingJumpRequirements) && player.getJumpCooldownRemaining() == 0) ||
                 (jumpPressed && player.getCoyoteFramesRemaining() > 0 && player.getJumpCooldownRemaining() == 0) ||
                 (player.getJumpPressedInAir() && player.getJumpCooldownRemaining() == 0 && (player.isGrounded() || player.isSliding()))) {
             jump();
             audio.playEffect("jump", 1.0f);
+            if (slidingJumpRequirements) {
+                lastWallJumpTick = ticks;
+                facingRightDuringLastWallJump = player.isFacingRight();
+            }
         } else if (player.isGrounded() && player.getBodyVelocityY() == 0) {
             player.setIsJumping(false);
         }
@@ -482,6 +492,20 @@ public class ActionController {
                     player.setOxOffset(0);
                     player.setOyOffset(-10);
                 }
+                else if (player.getAngleFacing() == 90){
+                    current = player.getMomoUpDashTexture();
+                    player.setSxMult(1.2f);
+                    player.setSyMult(1.2f);
+                    player.setOxOffset(-0);
+                    player.setOyOffset(-10);
+                }
+                else if (player.getAngleFacing() == 270){
+                    current = player.getMomoDownDashTexture();
+                    player.setSxMult(1.2f);
+                    player.setSyMult(1.2f);
+                    player.setOxOffset(0);
+                    player.setOyOffset(-20);
+                }
                 else{
                     current = (TextureRegion) (animations.get("momoDash")).getKeyFrame(currentFrame); // Gets the current frame of the animation
                     tickFrameSwitch = 7;
@@ -496,7 +520,7 @@ public class ActionController {
             else if (player.isSliding()){
                 player.setTexture(player.getMomoSlideTexture());
                 audio.loopEffect("wall-slide", 1f);
-                player.setOxOffset(-6);
+                player.setOxOffset(-4);
                 player.setOyOffset(-15);
                 player.setSxMult(-1.2f);
                 player.setSyMult(1.2f);

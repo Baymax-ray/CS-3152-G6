@@ -3,7 +3,7 @@
         "height": 4300,
         "width": 2
     },
-    "activeFile": "level3.json",
+    "activeFile": "level1.json",
     "expandedProjectPaths": [
         ".",
         "Templates"
@@ -72,16 +72,19 @@
             "scale": 1,
             "selectedLayer": 3,
             "viewCenter": {
-                "x": 1920.5,
-                "y": 891.5
+                "x": 685.5,
+                "y": 515.5
             }
         },
         "level1old.json": {
-            "scale": 0.3835625,
-            "selectedLayer": 0,
+            "expandedObjectLayers": [
+                7
+            ],
+            "scale": 2,
+            "selectedLayer": 2,
             "viewCenter": {
-                "x": 1200.586605833469,
-                "y": 640.052142740753
+                "x": 1854.75,
+                "y": 457.75
             }
         },
         "level2.json": {
@@ -91,8 +94,8 @@
             "scale": 1.5,
             "selectedLayer": 3,
             "viewCenter": {
-                "x": 564.3333333333334,
-                "y": 638.3333333333334
+                "x": 563.6666666666666,
+                "y": 637.6666666666666
             }
         },
         "level3.json": {
@@ -102,7 +105,7 @@
             "scale": 1,
             "selectedLayer": 3,
             "viewCenter": {
-                "x": 1268.5,
+                "x": 1267.5,
                 "y": 517.5
             }
         },
@@ -126,18 +129,21 @@
     "map.renderOrder": null,
     "map.width": 50,
     "openFiles": [
-        "level4.json",
-        "level3.json",
         "level0.json",
-        "level2.json"
+        "level1old.json",
+        "level1.json",
+        "level2.json",
+        "level3.json",
+        "level4.json"
     ],
     "project": "untitled.tiled-project",
     "property.type": "string",
     "recentFiles": [
-        "level4.json",
-        "level2.json",
         "level0.json",
+        "level1old.json",
+        "level4.json",
         "level3.json",
+        "level2.json",
         "level1.json",
         "F:/Programming/School/CS 3152/Eudaemon/CS-3152-G6/Eudaemon/assets/EudaemonTileset.json",
         "experimentalLevel1.json",
