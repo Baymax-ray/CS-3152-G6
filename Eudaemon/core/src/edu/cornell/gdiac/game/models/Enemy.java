@@ -500,7 +500,7 @@ public class Enemy extends CapsuleObstacle {
         bloodEffectAnimation = new Animation<>(0.5f, bloodFrames[0]);
 
         this.killedBloodEffectSpriteSheet = new TextureRegion(assets.getEntry("killingBloodEffect", Texture.class));
-        TextureRegion[][] killedEffectFrames = killedBloodEffectSpriteSheet.split(killedBloodEffectSpriteSheet.getRegionWidth()/14, killedBloodEffectSpriteSheet.getRegionHeight());
+        TextureRegion[][] killedEffectFrames = killedBloodEffectSpriteSheet.split(killedBloodEffectSpriteSheet.getRegionWidth()/15, killedBloodEffectSpriteSheet.getRegionHeight());
         killedBloodEffectAnimation = new Animation<>(0.5f, killedEffectFrames[0]);
 
         this.maxSpeed = enemyData.getFloat("maxSpeed");

@@ -92,7 +92,7 @@
         "sprites" : {
           "fire": {
             "rows": 1,
-            "cols": 14
+            "cols": 15
           }
         }
       },
