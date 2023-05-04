@@ -198,7 +198,7 @@
                        {
                          "name":"image",
                          "type":"string",
-                         "value":"platform:imageBillboard"
+                         "value":"platform:controllerButton"
                        }],
                  "rotation":0,
                  "type":"image",
@@ -216,7 +216,7 @@
                         {
                          "name":"image",
                          "type":"string",
-                         "value":"platform:imageBillboard"
+                         "value":"platform:controllerButton"
                         }],
                  "rotation":0,
                  "type":"image",
@@ -733,12 +733,12 @@
                  "gid":158,
                  "height":24.5,
                  "id":208,
-                 "name":"Billboard",
+                 "name":"TutorialArea",
                  "properties":[
                         {
                          "name":"image",
                          "type":"string",
-                         "value":"platform:imageBillboard"
+                         "value":"platform:controllerButton"
                         }],
                  "rotation":0,
                  "type":"image",

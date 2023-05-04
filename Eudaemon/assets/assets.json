@@ -262,6 +262,7 @@
         "platform:spike": "platform/spike.png",
         "platform:textBillboard": "platform/textBillboard.png",
         "platform:imageBillboard": "platform/imageBillboard.png",
+        "platform:controllerButton": "platform/controllerButton.png",
         "platform:exit": "platform/exit.png",
 
         "tiles:DeepDirt1x1A.png": "tiles/DeepDirt1x1A.png",

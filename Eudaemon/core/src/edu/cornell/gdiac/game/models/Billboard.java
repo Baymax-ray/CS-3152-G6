@@ -179,11 +179,11 @@ public class Billboard extends BoxObstacle {
         float x = level.getPlayer().getX();
         float y = level.getPlayer().getY() + 2;
 
-        float ox = oxOffset + this.texture.getRegionWidth()/2;
-        float oy = oyOffset + this.texture.getRegionHeight()/2;
+        float ox = oxOffset + displayTexture.getRegionWidth()/2;
+        float oy = oyOffset + displayTexture.getRegionHeight()/2;
 
-        float sx = scaleX * billboardImageWidth / this.texture.getRegionWidth();
-        float sy = scaleY * billboardImageHeight / this.texture.getRegionHeight();
+        float sx = scaleX * 0.7f / displayTexture.getRegionWidth();
+        float sy = scaleY * 0.7f / displayTexture.getRegionHeight();
 
         canvas.draw(displayTexture, Color.WHITE, ox, oy, x, y, 0, sx, sy);
 

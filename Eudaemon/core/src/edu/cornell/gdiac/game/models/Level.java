@@ -36,6 +36,8 @@ public class Level {
 
     private ArrayList<Billboard> billboards;
 
+    private ArrayList<TutorialArea> tutorialAreas;
+
     private Array<Controller> controllers;
 
     private Controller controller;
@@ -165,6 +167,11 @@ public class Level {
     public Billboard[] getBillboards() {
         Billboard[] result = new Billboard[billboards.size()];
         return billboards.toArray(result);
+    }
+
+    public TutorialArea[] getTutorialAreas() {
+        TutorialArea[] result = new TutorialArea[tutorialAreas.size()];
+        return tutorialAreas.toArray(result);
     }
     public float gettileSize(){
         return tileSize;
@@ -467,6 +474,7 @@ public class Level {
         this.enemies = new ArrayList<>();
         this.spikes = new ArrayList<>();
         this.billboards = new ArrayList<>();
+        this.tutorialAreas = new ArrayList<>();
 
         int startX = 0;
         int startY = 0;
@@ -488,6 +496,11 @@ public class Level {
                 float x = (int) (object.getInt("x") / 32);
                 float y = heightInTiles - (int) (object.getInt("y") / 32);
                 billboards.add(new Billboard(object, assets,x,y));
+            }
+            else if (object.getString("name").equals("TutorialArea")) {
+                float x = (int) (object.getInt("x") / 32);
+                float y = heightInTiles - (int) (object.getInt("y") / 32);
+                tutorialAreas.add(new TutorialArea(object, assets,x,y));
             }
             else if (object.getString("name").equals("StartingPoint")) {
                 startX = (int) (object.getInt("x") / 32) + 1;
@@ -760,13 +773,12 @@ public class Level {
             }
         }
         for (Obstacle obj : objects) {
-            if (obj.getClass().equals(Billboard.class) || obj.getClass().equals(Exit.class)) {
+            if (obj.getClass().equals(Billboard.class) || obj.getClass().equals(Exit.class)
+                    || obj.getClass().equals(TutorialArea.class)) {
                 obj.draw(canvas);
-                if (obj.getClass().equals(Billboard.class)) {
-                    Billboard billboard = (Billboard) obj;
-                    if (billboard.isDisplay() && billboard.getType().equals("image")) {
-                        billboard.displayImage(canvas, this);
-                    }
+                if (obj.getClass().equals(TutorialArea.class)) {
+                    TutorialArea tutorialArea = (TutorialArea) obj;
+                    if (tutorialArea.isDisplay()) tutorialArea.displayTutorial(canvas, this);
 
                 }
             }
@@ -855,6 +867,10 @@ public class Level {
             addObject(enemy);
         }
 
+        for (TutorialArea tutorialArea: tutorialAreas) {
+            addObject(tutorialArea);
+        }
+
         addObject(player);
         addObject(exit);
     }
@@ -926,6 +942,7 @@ public class Level {
         objects.clear();
         spikes.clear();
         billboards.clear();
+        tutorialAreas.clear();
         effectPool.clear();
         addQueue.clear();
         world.dispose();

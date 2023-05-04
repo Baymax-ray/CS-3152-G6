@@ -341,5 +341,21 @@
       "shrink" : 0.6,
       "height" : 0.05
     }
+  },
+  "TutorialArea": {
+    "ImageWidth": 0.7,
+    "ImageHeight": 0.7,
+    "hitboxWidth": 4.0,
+    "hitboxHeight": 4.0,
+    "drawScaleX": 1.97,
+    "drawScaleY": 1.97,
+    "oxOffset": 0,
+    "oyOffset": -9.5,
+    "xOffset": 0.5,
+    "yOffset": -0.5,
+    "sensor": {
+      "shrink" : 0.6,
+      "height" : 0.05
+    }
   }
 }

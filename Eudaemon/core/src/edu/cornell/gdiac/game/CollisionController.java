@@ -251,6 +251,12 @@ public class CollisionController implements ContactListener {
             Billboard billboard = (Billboard) (bd1 instanceof Billboard? bd1 : bd2);
             billboard.setDisplay(true);
         }
+
+        if ((bd1 instanceof Player && bd2 instanceof TutorialArea || bd2 instanceof Player && bd1 instanceof TutorialArea)
+                && (!level.getPlayer().getSpiritSensorName().equals(fd1) && !level.getPlayer().getSpiritSensorName().equals(fd2))) {
+            TutorialArea tutorialArea = (TutorialArea) (bd1 instanceof TutorialArea? bd1 : bd2);
+            tutorialArea.setDisplay(true);
+        }
         //#endregion
 
 
@@ -348,6 +354,12 @@ public class CollisionController implements ContactListener {
             billboard.setDisplay(false);
         }
 
+        if (bd1 instanceof Player && bd2 instanceof TutorialArea
+                || bd2 instanceof Player && bd1 instanceof TutorialArea) {
+            TutorialArea tutorialArea = (TutorialArea) (bd1 instanceof TutorialArea? bd1 : bd2);
+            tutorialArea.setDisplay(false);
+        }
+
 
     }
 
@@ -408,6 +420,12 @@ public class CollisionController implements ContactListener {
         if (bd1 instanceof Billboard || bd2 instanceof Billboard) {
             contact.setEnabled(false);
         }
+
+        if (bd1 instanceof TutorialArea || bd2 instanceof TutorialArea) {
+            contact.setEnabled(false);
+        }
+
+
 
     }
 
