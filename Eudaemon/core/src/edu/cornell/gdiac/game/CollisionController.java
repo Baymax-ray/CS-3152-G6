@@ -380,7 +380,7 @@ public class CollisionController implements ContactListener {
                 bd2 instanceof Player && !fix2.isSensor() && bd1 instanceof Enemy) {
             Player player = (Player) (bd1 instanceof Player ? bd1 : bd2);
 
-            if (!player.isHit() & !player.isDashing()) {
+            if (!player.isHit() && !player.isDashing() && player.getiFramesRemaining() <= 0) {
                 player.setHit(true);
                 player.hitByEnemy(0, bd1 instanceof Player? bd2:bd1);
                 level.shakeControllerHeavy();

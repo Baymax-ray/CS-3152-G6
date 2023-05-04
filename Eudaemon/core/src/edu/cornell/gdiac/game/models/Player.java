@@ -329,6 +329,7 @@ public class Player extends CapsuleObstacle {
     private boolean isAttacking;
     private float attackLifespanRemaining;
     private int dashLifespanRemaining;
+    private final int dashIFrames;
 
     /**
      * A float representing the max jump velocity of a game object.
@@ -809,6 +810,7 @@ public class Player extends CapsuleObstacle {
         return dashLifespan;
     }
     public int getDashLifespanRemaining() { return dashLifespanRemaining; }
+    public int getDashIFrames() { return dashIFrames; }
     public void setDashLifespanRemaining(int value) {dashLifespanRemaining = value;}
     public float getX() {
         return body.getPosition().x;
@@ -1309,6 +1311,7 @@ public class Player extends CapsuleObstacle {
         this.dash = playerData.getFloat("dash", 2000);
         this.dashLifespan = playerData.getInt("dashLifespan");
         this.dashTime = playerData.getInt("dashTime");
+        this.dashIFrames = playerData.getInt("dashIFrames");
         this.chiyoSpeedMult = playerData.getFloat("chiyoSpeedMult");
         this.chiyoJumpTimeMult = playerData.getFloat("chiyoJumpTimeMult");
         this.chiyoHitBoxHeightMult = playerData.getFloat("chiyoHitboxHeightMult");
@@ -1397,7 +1400,7 @@ public class Player extends CapsuleObstacle {
         float sx = sxMult * (isFacingRight ? 1 : -1) * momoImageWidth / this.texture.getRegionWidth();
         float sy = syMult * momoImageHeight / this.texture.getRegionHeight();
 
-        if (iFramesRemaining > 0)
+        if (isHit() && iFramesRemaining > 0)
             canvas.draw(this.texture, Color.RED, ox, oy, x, y, 0, sx, sy);
         else canvas.draw(this.texture, Color.WHITE, ox, oy, x, y, 0, sx, sy);
     }

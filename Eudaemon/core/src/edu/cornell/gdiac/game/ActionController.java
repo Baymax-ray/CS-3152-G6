@@ -283,6 +283,7 @@ public class ActionController {
             player.setDashing(true);
             player.setDashedInAir(true);
             player.setDashLifespanRemaining((player.getDashLifespan()));
+            player.setiFramesRemaining(player.getDashIFrames());
             int angleFacing = player.getAngleFacing();
             if (player.getIsJumping()){
                 player.setIsJumping(false);

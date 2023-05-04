@@ -30,6 +30,7 @@
     "dashLifespan": 15,
     "dashCooldown": 0.4,
     "dashCooldownInFrames": 70,
+    "dashIFrames": 60,
 
     "wallSlideVelocity": -1.0,
     "wallJumpCooldownTicks": 60,
