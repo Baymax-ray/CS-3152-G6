@@ -213,7 +213,7 @@ public class ActionController {
             max_speed = player.getChiyoSpeedMult() * player.getMaxSpeed();
         }
         float h_acc = player.getHorizontalAcceleration();
-        if (rightPressed && leftPressed || (!rightPressed && !leftPressed)) {
+        if ((rightPressed && leftPressed) || (!rightPressed && !leftPressed) && player.getDashLifespanRemaining() <= 0) {
             if (x > 0.0f) {
                 x = Math.max(x - h_acc, 0);
                 if (x < 0.0f) {
@@ -276,21 +276,6 @@ public class ActionController {
         }
         //#endregion
 
-        //#region Wall Slide
-        if (player.isTouchingWallRight() && !player.isGrounded() && rightPressed){ //player sliding on right wall
-            player.setSliding(true);
-        } else if (player.isTouchingWallLeft() && !player.isGrounded() && leftPressed) { //player is sliding on left wall
-            player.setSliding(true);
-        }
-        else{
-            player.setSliding(false);
-        }
-
-        if (player.isSliding()){
-            player.setVelocity(player.getBodyVelocityX(), player.getWallSlideVelocity());
-        }
-        //#endregion
-
         //#region Dash
         if (player.getForm() == 0 && dashPressed && player.isGrounded() && player.getDashCooldownRemaining() == 0 && !player.isDashing() && !player.dashedInAir()
                 || player.getForm() == 0 && dashPressed && player.getJumpVelocity() > 0 && player.getDashCooldownRemaining() == 0 && !player.isDashing() && !player.dashedInAir()) {
@@ -299,6 +284,10 @@ public class ActionController {
             player.setDashedInAir(true);
             player.setDashLifespanRemaining((player.getDashLifespan()));
             int angleFacing = player.getAngleFacing();
+            if (player.getIsJumping()){
+                player.setIsJumping(false);
+                player.setJumpTimeRemaining(0);
+            }
 
             //Creates the dash effect
             //#region Dash Effect
@@ -371,16 +360,15 @@ public class ActionController {
             }, player.getDashTime());
         }
 
-        if (player.isDashing()){
-
-        }
-
         if (player.getDashLifespanRemaining() > 0) {
             player.setDashLifespanRemaining(Math.max(player.getDashLifespanRemaining() - 1, 0));
 
             if (player.getDashLifespanRemaining() == 0) {
                 player.setDashing(false);
 //                player.getBody().applyForce();
+                System.out.println("xBody Velocity: " + player.getBodyVelocityX());
+                System.out.println("yBody Velocity: " + player.getBodyVelocityY());
+                System.out.println("isDashing: " + player.isDashing());
                 player.setVelocity(player.getBodyVelocityX()/3, player.getBodyVelocityY()/3);
             }
         }
@@ -446,7 +434,7 @@ public class ActionController {
         boolean slidingJumpRequirements = player.isSliding() && ((ticks - player.getWallJumpCooldownTicks() > lastWallJumpTick) || player.isFacingRight() && !facingRightDuringLastWallJump || !player.isFacingRight() && facingRightDuringLastWallJump);
         if ((jumpPressed && (player.isGrounded() || slidingJumpRequirements) && player.getJumpCooldownRemaining() == 0) ||
                 (jumpPressed && player.getCoyoteFramesRemaining() > 0 && player.getJumpCooldownRemaining() == 0) ||
-                (player.getJumpPressedInAir() && player.getJumpCooldownRemaining() == 0 && (player.isGrounded() || player.isSliding()))) {
+                (player.getJumpPressedInAir() && player.getJumpCooldownRemaining() == 0 && (player.isGrounded() ||slidingJumpRequirements))) {
             jump();
             audio.playEffect("jump", 1.0f);
             if (slidingJumpRequirements) {
@@ -460,7 +448,7 @@ public class ActionController {
         if (player.getIsJumping()) player.setJumpTimeRemaining(player.getJumpTimeRemaining() - 1);
         else player.setJumpCooldownRemaining(Math.max(0, player.getJumpCooldownRemaining() - 1));
 
-        if (jumpHold && player.getIsJumping() && player.getJumpTimeRemaining() > 0 && !player.isDashing()) {
+        if (jumpHold && player.getIsJumping() && player.getJumpTimeRemaining() > 0) {
             player.setVelocity(player.getBodyVelocityX(), player.getJumpVelocity());
         }
 
@@ -483,15 +471,30 @@ public class ActionController {
         }
         //#endregion
 
+        //#region Wall Slide
+        if (player.isTouchingWallRight() && !player.isGrounded() && rightPressed && !jumpHold){ //player sliding on right wall
+            player.setSliding(true);
+        } else if (player.isTouchingWallLeft() && !player.isGrounded() && leftPressed && !jumpHold) { //player is sliding on left wall
+            player.setSliding(true);
+        }
+        else{
+            player.setSliding(false);
+        }
+
+        if (player.isSliding()){
+            player.setVelocity(player.getBodyVelocityX(), player.getWallSlideVelocity());
+        }
+        //#endregion
+
         if (debugPressed) {
             level.setDebug(!level.isDebug());
         }
 
         // What does this do
-//        if (deltaX == 0 && !player.isGrounded() && (leftPressed || rightPressed)
-//                && Math.abs(player.getBodyVelocityX()) == player.getHorizontalAcceleration() && movedDuringLastFrame) {
-//            player.setVelocity(0, player.getBodyVelocityY());
-//        }
+        if (deltaX == 0 && !player.isGrounded() && (leftPressed || rightPressed)
+                && Math.abs(player.getBodyVelocityX()) == player.getHorizontalAcceleration() && movedDuringLastFrame) {
+            player.setVelocity(0, player.getBodyVelocityY());
+        }
         previousX = player.getX();
         movedDuringLastFrame = (leftPressed || rightPressed) && deltaX > 0;
 
