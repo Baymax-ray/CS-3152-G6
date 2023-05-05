@@ -738,7 +738,7 @@
                         {
                          "name":"image",
                          "type":"string",
-                         "value":"platform:controllerButton"
+                         "value":"platform:controllerButtonDown"
                         }],
                  "rotation":0,
                  "type":"image",
