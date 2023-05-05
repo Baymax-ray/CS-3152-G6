@@ -793,42 +793,6 @@
                 {
                  "gid":158,
                  "height":24.5,
-                 "id":175,
-                 "name":"Billboard",
-                 "properties":[
-                        {
-                         "name":"text",
-                         "type":"string",
-                         "value":"You can't be hurt while dashing"
-                        }],
-                 "rotation":0,
-                 "type":"",
-                 "visible":true,
-                 "width":19.5,
-                 "x":805.410955347871,
-                 "y":316.150830737279
-                }, 
-                {
-                 "gid":158,
-                 "height":24.5,
-                 "id":178,
-                 "name":"Billboard",
-                 "properties":[
-                        {
-                         "name":"text",
-                         "type":"string",
-                         "value":"Right Button when you have spirite"
-                        }],
-                 "rotation":0,
-                 "type":"",
-                 "visible":true,
-                 "width":19.5,
-                 "x":630.25,
-                 "y":210.75
-                }, 
-                {
-                 "gid":158,
-                 "height":24.5,
                  "id":179,
                  "name":"Billboard",
                  "properties":[
@@ -847,20 +811,38 @@
                 {
                  "gid":158,
                  "height":24.5,
-                 "id":180,
-                 "name":"Billboard",
+                 "id":181,
+                 "name":"TutorialArea",
                  "properties":[
                         {
-                         "name":"text",
+                         "name":"image",
                          "type":"string",
-                         "value":"Press Y to transform"
+                         "value":"platform:combo_keyboardN_controllerButtonLeft"
                         }],
                  "rotation":0,
-                 "type":"",
+                 "type":"image",
                  "visible":true,
                  "width":19.5,
-                 "x":1126.25,
-                 "y":1182.41666666667
+                 "x":1285.58333333333,
+                 "y":1145.75
+                }, 
+                {
+                 "gid":158,
+                 "height":24.5,
+                 "id":182,
+                 "name":"TutorialArea",
+                 "properties":[
+                        {
+                         "name":"image",
+                         "type":"string",
+                         "value":"platform:combo_keyboardM_controllerButtonUp"
+                        }],
+                 "rotation":0,
+                 "type":"image",
+                 "visible":true,
+                 "width":19.5,
+                 "x":1092.25,
+                 "y":1147.75
                 }],
          "opacity":1,
          "type":"objectgroup",
@@ -869,7 +851,7 @@
          "y":0
         }],
  "nextlayerid":11,
- "nextobjectid":181,
+ "nextobjectid":183,
  "orientation":"orthogonal",
  "properties":[
         {
