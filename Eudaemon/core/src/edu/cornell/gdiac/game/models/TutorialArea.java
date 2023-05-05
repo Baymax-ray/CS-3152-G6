@@ -79,6 +79,13 @@ public class TutorialArea extends BoxObstacle {
         this.display = false;
     }
 
+    /**
+     * Draws the physics object.
+     *
+     * @param canvas Drawing context
+     */
+    public void draw(GameCanvas canvas) { }
+
     public void displayTutorial(GameCanvas canvas, Level level) {
         float x = level.getPlayer().getX();
         float y = level.getPlayer().getY() + 2;
