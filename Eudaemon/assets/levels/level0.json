@@ -198,13 +198,13 @@
                        {
                          "name":"text",
                          "type":"string",
-                         "value":"platform:controllerButton"
+                         "value":"Press this button to jump.Or hold it to jump higher.\nBe careful. Don't touch the spikes."
                        }],
                  "rotation":0,
                   "type": "",
                  "visible":true,
                  "width":19.5,
-                 "x":324,
+                 "x":452.62,
                  "y":1116
                 }, 
                 {
@@ -216,7 +216,7 @@
                         {
                          "name":"text",
                          "type":"string",
-                         "value":"platform:controllerButton"
+                         "value":"Press this button to dash.\nYou can dash in all eight directions. The direction is determined by your joystick.\nTry jump first, push your joystick right, and dash."
                         }],
                  "rotation":0,
                   "type": "",
@@ -746,7 +746,98 @@
                  "width":19.5,
                  "x":452.62710503261,
                  "y":1074.97671079529
-                }],
+                },
+               {
+                 "gid":158,
+                 "height":24.5,
+                 "id":209,
+                 "name":"TutorialArea",
+                 "properties":[
+                   {
+                     "name":"image",
+                     "type":"string",
+                     "value":"platform:controllerButtonRight"
+                   }],
+                 "rotation":0,
+                 "type":"image",
+                 "visible":true,
+                 "width":19.5,
+                 "x":1031.15746031346,
+                 "y":1010.99512347589
+               },
+               {
+                 "gid":158,
+                 "height":24.5,
+                 "id":210,
+                 "name":"Billboard",
+                 "properties":[
+                   {
+                     "name":"text",
+                     "type":"string",
+                     "value":"Now push joystick up, and dash."
+                   }],
+                 "rotation":0,
+                 "type": "",
+                 "visible":true,
+                 "width":19.5,
+                 "x":1379.54986914269,
+                 "y":980.749055965507
+               },
+               {
+                 "gid":158,
+                 "height":24.5,
+                 "id":211,
+                 "name":"TutorialArea",
+                 "properties":[
+                   {
+                     "name":"image",
+                     "type":"string",
+                     "value":"platform:controllerButtonRight"
+                   }],
+                 "rotation":0,
+                 "type":"image",
+                 "visible":true,
+                 "width":19.5,
+                 "x":1379.54986914269,
+                 "y":940.99512347589
+               },
+               {
+                 "gid":158,
+                 "height":24.5,
+                 "id":212,
+                 "name":"Billboard",
+                 "properties":[
+                   {
+                     "name":"text",
+                     "type":"string",
+                     "value":"Good job.\nYou know what to do this time."
+                   }],
+                 "rotation":0,
+                 "type": "",
+                 "visible":true,
+                 "width":19.5,
+                 "x":1509.54986914269,
+                 "y":870.749055965507
+               },
+               {
+                 "gid":158,
+                 "height":24.5,
+                 "id":213,
+                 "name":"Billboard",
+                 "properties":[
+                   {
+                     "name":"text",
+                     "type":"string",
+                     "value":"The exit is right there..."
+                   }],
+                 "rotation":0,
+                 "type": "",
+                 "visible":true,
+                 "width":19.5,
+                 "x":1859.54986914269,
+                 "y":830.749055965507
+               }
+         ],
          "opacity":1,
          "properties":[
                 {
