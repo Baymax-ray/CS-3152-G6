@@ -179,8 +179,18 @@ public class FlyAI extends AIController{
                     needNewPath=true;
                     int randomIntX = random.nextInt(2 * x + 1) - x;
                     nx=nx+randomIntX;
+                    if(nx<0){
+                        nx=0;
+                    }else if (nx>=graph.getWidth()){
+                        nx=graph.getWidth()-1;
+                    }
                     int randomIntY = random.nextInt(2 * x + 1) - x;
                     ny=ny+randomIntY;
+                    if(ny<0){
+                        ny=0;
+                    }else if (ny>=graph.getHeight()){
+                        ny=graph.getHeight()-1;
+                    }
                     // the reason why we call this a second time is we must change the Y coordinate back
                     // to normal cardinality
                     goal[0]=level.tileToLevelCoordinatesX(nx);
