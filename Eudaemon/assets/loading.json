@@ -1,8 +1,7 @@
 {
 	"textures": {
-        "background": "backgrounds/loading_background.png",
+        "background": "backgrounds/mainMenuBackground.png",
 		"play": "shared/play.png",
-        "title": "shared/EUDAEMON_title.png",
         "progress": {
             "file": "shared/progress.png",
             "atlas":     {

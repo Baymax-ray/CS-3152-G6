@@ -644,6 +644,7 @@ public class ActionController {
                 player.setSyMult(1.2f);
             } else {
                 currentAnimation = "momoIdle";
+                audio.stopEffect("wall-slide");
 //                momoRunSound.stop();
 //                soundDictionary.remove(momoRunSound);
                 audio.stopEffect("momo-run");
@@ -657,6 +658,7 @@ public class ActionController {
         // Animations if Player is Chiyo
         else {
 //            momoRunSound.stop();
+            audio.stopEffect("wall-slide");
             audio.stopEffect("momo-run");
             if(player.isAttacking()) {
 //                chiyoRunSound.stop();
