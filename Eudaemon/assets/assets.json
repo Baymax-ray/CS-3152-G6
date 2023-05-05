@@ -196,6 +196,33 @@
             }
           }
         },
+        "projectileEnemy:left":{
+          "file" : "enemy/projectileEnemyLeft.png",
+          "sprites" : {
+            "fire": {
+              "rows": 1,
+              "cols": 4
+            }
+          }
+        },
+        "projectileEnemy:right":{
+          "file" : "enemy/projectileEnemyRight.png",
+          "sprites" : {
+            "fire": {
+              "rows": 1,
+              "cols": 4
+            }
+          }
+        },
+        "projectileEnemy:up":{
+          "file" : "enemy/projectileEnemyUp.png",
+          "sprites" : {
+            "fire": {
+              "rows": 1,
+              "cols": 4
+            }
+          }
+        },
         "nonTrackingFlying:move": {
           "file" : "enemy/nonTrackingFlyingMove.png",
           "sprites" : {
@@ -251,8 +278,6 @@
         "enemy:Flying":"enemy/TrackingFlying.png",
         "enemy:fastGoomba": "enemy/fastGoomba.png",
 
-        "platform:rope":  "platform/ropebridge.png",
-        "platform:barrier": "platform/barrier.png",
         "platform:bullet":  "platform/circularProjectile2.png",
         "platform:heart": "platform/heart.png",
         "platform:emptyspirit": "platform/emptyspirit.png",
