@@ -265,7 +265,7 @@ public class ActionController {
             player.setAttackLifespanRemaining(player.getAttackLifespan());
             createSword();
 //            swordSwipeSoundId = playSound( swordSwipeSound, swordSwipeSoundId, 0.05F );
-            audio.playEffect("sword-swipe", 0.05f);
+            audio.playEffect("sword-swipe", 0.3f);
         }
 
         if (player.getAttackLifespanRemaining() > 0) {
