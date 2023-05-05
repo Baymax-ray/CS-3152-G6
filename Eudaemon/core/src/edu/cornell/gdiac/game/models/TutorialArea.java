@@ -84,10 +84,7 @@ public class TutorialArea extends BoxObstacle {
      *
      * @param canvas Drawing context
      */
-    public void draw(GameCanvas canvas) {
-
-
-    }
+    public void draw(GameCanvas canvas) { }
 
     public void displayTutorial(GameCanvas canvas, Level level) {
         float x = level.getPlayer().getX();
