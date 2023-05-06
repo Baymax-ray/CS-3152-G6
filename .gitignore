@@ -120,6 +120,7 @@ Thumbs.db
 # Eudaemon/desktop/build/tmp/compileJava/previous-compilation-data.bin
 Eudaemon/core/build/
 Eudaemon/desktop/build
+Eudaemon/desktop/out
 Eudaemon/core/bin
 Eudaemon/desktop/bin
 Gameplay-Prototype/core/build

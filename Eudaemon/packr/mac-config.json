@@ -1,0 +1,14 @@
+{
+  "platform": "mac",
+  "jdk": "packr/jre-mac-mini.tar.gz",
+  "executable": "Eudaemon",
+  "classpath": [
+    "out/artifacts/Eudaemon_jar/Eudaemon.jar"
+  ],
+  "removelibs": [
+    "out/artifacts/Eudaemon_jar/Eudaemon.jar"
+  ],
+  "mainclass": "edu.cornell.gdiac.DesktopLauncher",
+  "vmargs": [],
+  "output": "packr/Eudaemon (Mac)"
+}

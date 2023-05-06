@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<template>
- <tileset firstgid="1" source="../../EudaemonTileset.json"/>
- <object name="FlyGuardian" class="Enemy" gid="81" width="20.5" height="25.5">
-  <properties>
-   <property name="StopRelateToSelf" value="2,3,4,3,0,-1"/>
-  </properties>
- </object>
-</template>

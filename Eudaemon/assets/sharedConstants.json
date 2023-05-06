@@ -348,8 +348,8 @@
     }
   },
   "TutorialArea": {
-    "ImageWidth": 0.7,
-    "ImageHeight": 0.7,
+    "ImageWidth": 1.2,
+    "ImageHeight": 1.2,
     "hitboxWidth": 4.0,
     "hitboxHeight": 4.0,
     "drawScaleX": 1.97,

@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<template>
- <tileset firstgid="1" source="../../EudaemonTileset.json"/>
- <object name="Spike" gid="87" width="22.8779" height="22.3413">
-  <properties>
-   <property name="Direction" value="Up"/>
-  </properties>
- </object>
-</template>

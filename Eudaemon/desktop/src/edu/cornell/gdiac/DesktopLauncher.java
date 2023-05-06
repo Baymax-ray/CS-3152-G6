@@ -1,5 +1,6 @@
 package edu.cornell.gdiac;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.backends.lwjgl3.Lwjgl3Application;
 import com.badlogic.gdx.backends.lwjgl3.Lwjgl3ApplicationConfiguration;
 import edu.cornell.gdiac.game.GameRoot;
@@ -12,7 +13,8 @@ public class DesktopLauncher {
 		config.setWindowedMode(1920, 1080);
 		//config.setWindowedMode(1366, 768);
 		//config.setWindowedMode(576, 576);
-		//config.setResizable(false);
+		config.setResizable(false);
+		config.setFullscreenMode(Lwjgl3ApplicationConfiguration.getDisplayMode());
 		config.setForegroundFPS(60);
 		config.setTitle("Eudaemon");
 		new Lwjgl3Application(new GameRoot(), config);
