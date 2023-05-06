@@ -124,6 +124,7 @@ public class Enemy extends CapsuleObstacle {
      * with rows representing different animation states and columns representing individual frames.
      */
     private final ObjectMap<String, Animation> animations;
+    private final ObjectMap<String,TextureRegion> idlediction;
     /**
      * The current animation state of the enemy.
      */
@@ -232,7 +233,6 @@ public class Enemy extends CapsuleObstacle {
     public void startToMove(String currentAnimation,int duration){
         this.currentAnimation = currentAnimation;
         this.durationofmoving=duration;
-
     }
 
     public int getDetectDistance() {
@@ -458,14 +458,14 @@ public class Enemy extends CapsuleObstacle {
                 }
                 switch (projectileSpriteSheetType) {
                     case "Left":
-                        TextureAsset = "enemy:projectileEnemyLeft";
+                        TextureAsset = "enemy:projectileEnemyLeftIdle";
                         break;
                     case "Right":
-                        TextureAsset = "enemy:projectileEnemyRight";
+                        TextureAsset = "enemy:projectileEnemyRightIdle";
                         break;
                     case "Up":
                     case "Down":
-                        TextureAsset = "enemy:projectileEnemyUp";
+                        TextureAsset = "enemy:projectileEnemyUpIdle";
                         break;
                     default:
                         System.out.println("something wrong");
@@ -489,9 +489,16 @@ public class Enemy extends CapsuleObstacle {
         this.texture = this.enemyTexture;
         this.moveSpriteSheet = new TextureRegion(assets.getEntry(enemyData.getString("MoveAsset"), Texture.class));
         animations = new ObjectMap<>();
+        idlediction= new ObjectMap<>();
         addAnimations(moveSpriteSheet, maxFrame, 1, "move");
         if (this.type.equals("Projectile")) {
-            addAnimations(this.texture, maxFrame, 1, "projectileIdle");
+            addAnimations(new TextureRegion(assets.getEntry(enemyData.getString("LeftAttackAsset"), Texture.class)), maxFrame, 1, "LeftAttack");
+            addAnimations(new TextureRegion(assets.getEntry(enemyData.getString("RightAttackAsset"), Texture.class)), maxFrame, 1, "RightAttack");
+            addAnimations(new TextureRegion(assets.getEntry(enemyData.getString("UpAttackAsset"), Texture.class)), maxFrame, 1, "UpAttack");
+            //create a dictionary to store the idle animation
+            idlediction.put("Left", new TextureRegion(assets.getEntry(enemyData.getString("LeftIdleAsset"),Texture.class)));
+            idlediction.put("Right", new TextureRegion(assets.getEntry(enemyData.getString("RightIdleAsset"),Texture.class)));
+            idlediction.put("Up", new TextureRegion(assets.getEntry(enemyData.getString("UpIdleAsset"),Texture.class)));
         }
         currentAnimation = "idle";
 
@@ -527,7 +534,61 @@ public class Enemy extends CapsuleObstacle {
         }
     }
 
+    public void computedirection(Vector2 v){
+        //compute the angle of the projectile
+        float angleRadians = (float) Math.atan2(v.y, v.x);
+        float angleDegrees = (float) Math.toDegrees(angleRadians);
 
+        // If the angle is negative, add 360 to get a positive angle
+        if (angleDegrees < 0) {
+            angleDegrees += 360;
+        }
+        switch (projectileEnemyDirection) {
+            case "Up"://up is actually head to ground
+            if (angleDegrees<=325 && angleDegrees>=235){
+                projectileSpriteSheetType = "Up";
+            }
+            else if (angleDegrees>180 && angleDegrees<235){
+                projectileSpriteSheetType = "Right";
+            }
+            else {
+                projectileSpriteSheetType = "Left";
+            }
+            break;
+            case "Down":
+            if (angleDegrees>=45 && angleDegrees<=135){
+                projectileSpriteSheetType = "Down";
+            }
+            else if (angleDegrees>135 && angleDegrees<270){
+                projectileSpriteSheetType = "Left";
+            }
+            else {
+                projectileSpriteSheetType = "Right";
+            }
+            break;
+            case "Right"://right is actually head to left
+            if (angleDegrees<=135){
+                projectileSpriteSheetType = "Right";
+            }
+            else if (angleDegrees>225){
+                projectileSpriteSheetType = "Left";
+            }
+            else {
+                projectileSpriteSheetType = "Up";
+            }
+            break;
+            case "Left"://left is actually head to right
+            if (angleDegrees>=45&&angleDegrees<=180){
+                projectileSpriteSheetType = "Left";
+            }
+            else if (angleDegrees>180&&angleDegrees<315){
+                projectileSpriteSheetType = "Right";
+            }
+            else {
+                projectileSpriteSheetType = "Up";
+            }
+        }
+    }
     /**
      * Draws the physics object.
      * @param canvas Drawing context
@@ -535,15 +596,42 @@ public class Enemy extends CapsuleObstacle {
     public void draw(GameCanvas canvas) {
         if (currentAnimation.equals("idle")){
             if (this.type.equals("Projectile")){
-                this.texture = (TextureRegion) animations.get("projectileIdle").getKeyFrame(0);
-
+                switch (projectileSpriteSheetType) {
+                    case "Down":
+                    case "Up"://up is actually head to ground
+                        this.texture = idlediction.get("Up");
+                        break;
+                    case "Left":
+                        this.texture = idlediction.get("Left");
+                        break;
+                    case "Right":
+                        this.texture = idlediction.get("Right");
+                        break;
+                }
             }
             else{
                 this.texture = enemyTexture;
             }
         }
-        else{
-            this.texture = (TextureRegion) animations.get(currentAnimation).getKeyFrame(currentFrame);
+        else{//if it is not idle
+            if (this.type.equals("Projectile")){
+                switch(projectileSpriteSheetType){
+                    case "Left":
+                        this.texture = (TextureRegion) animations.get("LeftAttack").getKeyFrame(currentFrame);
+                        break;
+                    case "Right":
+                        this.texture = (TextureRegion) animations.get("RightAttack").getKeyFrame(currentFrame);
+                        break;
+                    case "Up":
+                    case "Down":
+                        this.texture = (TextureRegion) animations.get("UpAttack").getKeyFrame(currentFrame);
+                        break;
+                    default:
+                        //should not get here
+                        System.out.println("something wrong");
+                }
+            }else{
+            this.texture = (TextureRegion) animations.get(currentAnimation).getKeyFrame(currentFrame);}
         }
 
         float x = getX();

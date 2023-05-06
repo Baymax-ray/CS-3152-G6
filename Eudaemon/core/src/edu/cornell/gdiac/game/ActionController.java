@@ -828,6 +828,7 @@ public class ActionController {
 
                     if (action == EnemyAction.ATTACK) {
                         createBullet(aiControllers.get(i).getVelocity(),enemy);
+                        enemy.computedirection(aiControllers.get(i).getVelocity());
                         enemy.startToMove("move",60);
                     } else if(action==EnemyAction.FLY){
                         enemy.setVelocity(aiControllers.get(i).getVelocity());
@@ -854,6 +855,11 @@ public class ActionController {
                                 }
                                 break;
                             case "Projectile":
+                                //create a vector2 for relative position of player and enemy
+                                Vector2 playerPos = new Vector2(player.getX(), player.getY());
+                                Vector2 enemyPos = new Vector2(enemy.getX(), enemy.getY());
+                                Vector2 relativePos = playerPos.sub(enemyPos);
+                                enemy.computedirection(relativePos);
                                 enemy.durationloss();
                                 break;}
                     }
