@@ -187,8 +187,8 @@
       "height" : 0.05
     },
     "spiritLimitation":4,
-    "knockbackX":8000,
-    "knockbackY":2000
+    "knockback":5000
+
   },
   "FlyGuardian": {
     "TextureAsset": "enemy:nonTrackingFlying",
@@ -227,8 +227,7 @@
     },
     "spiritLimitation":8,
     "guardianTime":60,
-    "knockbackX":5000,
-    "knockbackY":1000
+    "knockback":5000
   },
   "Fly": {
     "TextureAsset": "enemy:Flying",
@@ -266,8 +265,7 @@
       "height" : 0.05
     },
     "spiritLimitation":8,
-    "knockbackX":5000,
-    "knockbackY":1000
+    "knockback":5000
   },
   "Projectile": {
     "TextureAsset": "enemy:projectileEnemy",
