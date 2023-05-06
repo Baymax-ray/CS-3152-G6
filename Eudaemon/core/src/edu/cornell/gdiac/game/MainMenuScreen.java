@@ -57,8 +57,7 @@ public class MainMenuScreen implements Screen, InputProcessor, ControllerListene
 
     /** Background texture for start-up */
     private final Texture background;
-    /** Title texture for start-up */
-    private final Texture title;
+
     /** Play button to display when done */
     private Texture playButton;
     /** settings button to display when done */
@@ -66,13 +65,15 @@ public class MainMenuScreen implements Screen, InputProcessor, ControllerListene
     /** level select button to display when done */
     private Texture levelSelectButton;
 
+    private Texture quitButton;
+
     /** Standard window size (for scaling) */
     private static final int STANDARD_WIDTH  = 800;
     /** Standard window height (for scaling) */
     private static final int STANDARD_HEIGHT = 700;
     /** Ratio of the bar width to the screen */
     /** Height of the progress bar */
-    private static final float BUTTON_SCALE  = 0.20f;
+    private static final float BUTTON_SCALE  = 0.70f;
     /** Height of the title */
     private static final float TITLE_SCALE = 1.3f;
 
@@ -98,6 +99,8 @@ public class MainMenuScreen implements Screen, InputProcessor, ControllerListene
     private int settingsButtonState;
     /** The hitbox of the settings button */
     private Rectangle settingsButtonHitbox;
+    private int quitButtonState;
+    private Rectangle quitButtonHitbox;
 
 
     /** Whether or not this player mode is still active */
@@ -121,7 +124,6 @@ public class MainMenuScreen implements Screen, InputProcessor, ControllerListene
 
         // Load the next two images immediately.
         background = assets.getEntry( "mainMenu:background", Texture.class );
-        title = assets.getEntry("mainMenu:title", Texture.class);
         background.setFilter(Texture.TextureFilter.Nearest, Texture.TextureFilter.Nearest);
 
         playButton = assets.getEntry("mainMenu:start",Texture.class);
@@ -133,11 +135,15 @@ public class MainMenuScreen implements Screen, InputProcessor, ControllerListene
         levelSelectButton = assets.getEntry("mainMenu:levelSelect", Texture.class);
         levelSelectButtonHitbox = new Rectangle();
 
+        quitButton = assets.getEntry("mainMenu:quit", Texture.class);
+        quitButtonHitbox = new Rectangle();
+
         resize(canvas.getWidth(), canvas.getHeight());
 
         playButtonState = 0;
         levelSelectButtonState = 0;
         settingsButtonState = 0;
+        quitButtonState = 0;
 
         Gdx.input.setInputProcessor( this );
 
@@ -181,16 +187,18 @@ public class MainMenuScreen implements Screen, InputProcessor, ControllerListene
         canvas.setOverlayCamera();
         canvas.begin();
         canvas.draw(background, Color.WHITE, 0, 0, canvas.getWidth(), canvas.getHeight());
-        canvas.draw(title, Color.WHITE, title.getWidth()/2f, title.getHeight()/2f, canvas.getWidth()*0.5f, canvas.getHeight()*0.8f, 0, scale*TITLE_SCALE, scale*TITLE_SCALE);
 
-        Color tint = (playButtonState == 1 ? Color.GRAY: Color.WHITE);
+        Color tint = (playButtonState == 1 ? Color.ORANGE: Color.WHITE);
         canvas.draw(playButton, tint, playButtonHitbox.x, playButtonHitbox.y, playButtonHitbox.width, playButtonHitbox.height);
 
-        tint = (settingsButtonState == 1 ? Color.GRAY: Color.WHITE);
+        tint = (settingsButtonState == 1 ? Color.ORANGE: Color.WHITE);
         canvas.draw(settingsButton, tint, settingsButtonHitbox.x, settingsButtonHitbox.y, settingsButtonHitbox.width, settingsButtonHitbox.height);
 
-        tint = (levelSelectButtonState == 1 ? Color.GRAY: Color.WHITE);
+        tint = (levelSelectButtonState == 1 ? Color.ORANGE: Color.WHITE);
         canvas.draw(levelSelectButton, tint, levelSelectButtonHitbox.x, levelSelectButtonHitbox.y, levelSelectButtonHitbox.width, levelSelectButtonHitbox.height);
+
+        tint = (quitButtonState == 1 ? Color.ORANGE: Color.WHITE);
+        canvas.draw(quitButton, tint, quitButtonHitbox.x, quitButtonHitbox.y, quitButtonHitbox.width, quitButtonHitbox.height);
 
         canvas.end();
     }
@@ -215,7 +223,7 @@ public class MainMenuScreen implements Screen, InputProcessor, ControllerListene
                     listener.exitScreen(this, ExitCode.START);
                 } else if (levelSelectButtonState == 2) {
                     listener.exitScreen(this, ExitCode.LEVEL_SELECT);
-                } else if (escapePressState == 2) {
+                } else if (quitButtonState == 2 || escapePressState == 2) {
                     listener.exitScreen(this, ExitCode.QUIT);
                 }
             }
@@ -240,19 +248,23 @@ public class MainMenuScreen implements Screen, InputProcessor, ControllerListene
         int progressBarCenterY = (int)(0.25*height);
 
         heightY = height;
-
+        float buttonSpacing = 2f;
+        float shiftUp = 74.38f;
         if (playButton != null) {
-            float buttonSpacing = 0.25f;
 
             playButtonHitbox.setSize(BUTTON_SCALE*scale*playButton.getWidth(), BUTTON_SCALE*scale*playButton.getHeight());
-            playButtonHitbox.setCenter(canvas.getWidth()/2.0f, progressBarCenterY + playButton.getHeight()*buttonSpacing*scale);
+            playButtonHitbox.setCenter(canvas.getWidth()/2.0f, progressBarCenterY + playButton.getHeight()*buttonSpacing*scale + shiftUp*scale);
             float buttonDelta = playButtonHitbox.height * 1.5f;
 
             settingsButtonHitbox.setSize(BUTTON_SCALE*scale*settingsButton.getWidth(), BUTTON_SCALE*scale*settingsButton.getHeight());
-            settingsButtonHitbox.setCenter(canvas.getWidth()/2.0f, progressBarCenterY -settingsButton.getHeight()*buttonSpacing*scale);
+            settingsButtonHitbox.setCenter(canvas.getWidth()/2.0f, progressBarCenterY - settingsButton.getHeight()*buttonSpacing*scale + shiftUp*scale);
 
             levelSelectButtonHitbox.setSize(BUTTON_SCALE*scale*levelSelectButton.getWidth(), BUTTON_SCALE*scale*levelSelectButton.getHeight());
-            levelSelectButtonHitbox.setCenter(canvas.getWidth()/2.0f, progressBarCenterY);
+            levelSelectButtonHitbox.setCenter(canvas.getWidth()/2.0f, progressBarCenterY + shiftUp*scale);
+        }
+        if(quitButton != null){
+            quitButtonHitbox.setSize(BUTTON_SCALE*scale*quitButton.getWidth(), BUTTON_SCALE*scale*quitButton.getHeight());
+            quitButtonHitbox.setCenter(canvas.getWidth()/2.0f, progressBarCenterY - quitButton.getHeight()*buttonSpacing*scale);
         }
     }
 
@@ -298,6 +310,7 @@ public class MainMenuScreen implements Screen, InputProcessor, ControllerListene
         this.playButtonState = 0;
         this.levelSelectButtonState = 0;
         this.settingsButtonState = 0;
+        this.quitButtonState = 0;
     }
 
     /**
@@ -345,6 +358,10 @@ public class MainMenuScreen implements Screen, InputProcessor, ControllerListene
             levelSelectButtonState = 1;
         }
 
+        if (quitButtonHitbox.contains(screenX, screenY)) {
+            quitButtonState = 1;
+        }
+
         return false;
     }
 
@@ -369,6 +386,9 @@ public class MainMenuScreen implements Screen, InputProcessor, ControllerListene
         }
         if (levelSelectButtonState == 1) {
             levelSelectButtonState = 2;
+        }
+        if (quitButtonState == 1) {
+            quitButtonState = 2;
         }
         return true;
     }

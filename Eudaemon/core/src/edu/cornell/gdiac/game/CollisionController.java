@@ -141,7 +141,7 @@ public class CollisionController implements ContactListener {
                     if (!level.getPlayer().isRemoved()) level.setShouldShakeCamera(true,1);
                 }
                 else{
-                    audio.playEffect("sword-hit", 0.05f);
+                    audio.playEffect("sword-hit", 0.3f);
                 }
                 sword.addHitEnemy(enemy);
                 level.shakeControllerHeavy();

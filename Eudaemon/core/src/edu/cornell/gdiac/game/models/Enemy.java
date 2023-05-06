@@ -612,7 +612,7 @@ public class Enemy extends CapsuleObstacle {
     private void addAnimations(TextureRegion spriteSheet, int columns, int rows, String name) {
         if(spriteSheet==null)return;
         TextureRegion[][] frames = spriteSheet.split(spriteSheet.getRegionWidth() / columns, spriteSheet.getRegionHeight() / rows);
-        Animation animation = new Animation<>(1f, frames[0]); // Creates an animation with a frame duration of 0.1 seconds
+        Animation<TextureRegion> animation = new Animation<>(1f, frames[0]); // Creates an animation with a frame duration of 0.1 seconds
         animation.setPlayMode(Animation.PlayMode.NORMAL); // Sets the animation to play normally
         animations.put(name, animation);
     }
@@ -648,9 +648,16 @@ public class Enemy extends CapsuleObstacle {
     public void hitBySword(Player player) {
         hearts--;
         if (hearts > 0) {
-            float direction = player.getX() - this.getX() > 0 ? -1 : 1;
-            Vector2 knockback = new Vector2(direction * enemyData.getFloat("knockbackX"),
-                    enemyData.getFloat("knockbackY"));
+            float directionX =this.getX()-player.getX();
+            float directionY =this.getY()-player.getY();
+            // normalize the direction vector
+            float length = (float) Math.sqrt(directionX * directionX + directionY * directionY);
+            if (length != 0) {
+                directionX = directionX / length;
+                directionY = directionY / length;
+            }
+            Vector2 knockback = new Vector2(directionX * enemyData.getFloat("knockback"),
+            directionY*enemyData.getFloat("knockback"));
             forceCache.set(knockback);
             body.applyForce(forceCache, this.getPosition(), true);
             //body.setLinearVelocity(forceCache);

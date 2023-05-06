@@ -61,8 +61,6 @@ public class LoadingScreen implements Screen, InputProcessor, ControllerListener
 	
 	/** Background texture for start-up */
 	private final Texture background;
-	/** Title texture for start-up */
-	private final Texture title;
 	/** Texture atlas to support a progress bar */
 	private final Texture statusBar;
 	
@@ -199,7 +197,6 @@ public class LoadingScreen implements Screen, InputProcessor, ControllerListener
 
 		// Load the next two images immediately.
 		background = internal.getEntry( "background", Texture.class );
-		title = internal.getEntry("title", Texture.class);
 		background.setFilter(Texture.TextureFilter.Nearest, Texture.TextureFilter.Nearest);
 		statusBar = internal.getEntry( "progress", Texture.class );
 
@@ -260,7 +257,6 @@ public class LoadingScreen implements Screen, InputProcessor, ControllerListener
 		canvas.setOverlayCamera();
 		canvas.begin();
 		canvas.draw(background, Color.WHITE, 0, 0, canvas.getWidth(), canvas.getHeight());
-		canvas.draw(title, Color.WHITE, title.getWidth()/2f, title.getHeight()/2f, progressBarCenterX, canvas.getHeight()*0.8f, 0, scale*TITLE_SCALE, scale*TITLE_SCALE);
 		drawProgress(canvas);
 		canvas.end();
 	}
