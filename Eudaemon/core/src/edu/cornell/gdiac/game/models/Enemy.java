@@ -520,10 +520,10 @@ public class Enemy extends CapsuleObstacle {
         this.spiritRemain = enemyData.getFloat(("spiritLimitation"));
         this.isFacingRight = enemyData.getBoolean("startsFacingRight");
 
-        if (this.type.equals("Fly") || this.type.equals("FlyGuardian")) {
+        if (this.type.equals("Fly") || this.type.equals("FlyGuardian")||this.type.equals("Projectile")) {
             this.setGravityScale(0);
         } else {
-            this.setGravityScale(1);
+            this.setGravityScale(20);
         }
     }
 

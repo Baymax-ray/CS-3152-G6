@@ -150,7 +150,8 @@
       "height" : 0.05
     },
     "spiritLimitation":4,
-    "guardianTime":60
+    "guardianTime":60,
+    "knockback":5000
   },
   "Fast": {
     "TextureAsset": "enemy:fastGoomba",
@@ -164,10 +165,10 @@
     "drawScaleX": 1.5,
     "drawScaleY": 1.5,
     "oxOffset": 0,
-    "oyOffset": -150,
+    "oyOffset": -25,
 
-    "maxSpeed": 8,
-    "speedMult": 0.2,
+    "maxSpeed": 6,
+    "speedMult": 0.05,
     "horizontalAcceleration": 0.10,
 
     "initialHearts": 3,
@@ -270,6 +271,12 @@
   "Projectile": {
     "TextureAsset": "enemy:projectileEnemy",
     "MoveAsset": "enemy:projectileEnemy",
+    "LeftIdleAsset": "enemy:projectileEnemyLeftIdle",
+    "RightIdleAsset": "enemy:projectileEnemyRightIdle",
+    "UpIdleAsset": "enemy:projectileEnemyUpIdle",
+    "LeftAttackAsset": "projectileEnemy:left",
+    "RightAttackAsset": "projectileEnemy:right",
+    "UpAttackAsset": "projectileEnemy:up",
     "ImageWidth": 2,
     "ImageHeight": 2,
     "tickFrameSwitch": 5,

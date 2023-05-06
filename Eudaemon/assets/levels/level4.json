@@ -190,18 +190,6 @@
                  "y":761.554588211407
                 }, 
                 {
-                 "gid":84,
-                 "height":26.6667,
-                 "id":115,
-                 "name":"Goomba",
-                 "rotation":0,
-                 "type":"Enemy",
-                 "visible":true,
-                 "width":29,
-                 "x":224.5,
-                 "y":1082.66665
-                }, 
-                {
                  "gid":87,
                  "height":22.3413,
                  "id":116,
@@ -515,6 +503,18 @@
                  "width":22.8779,
                  "x":361.56105,
                  "y":569.82935
+                }, 
+                {
+                 "gid":85,
+                 "height":25,
+                 "id":163,
+                 "name":"Fast",
+                 "rotation":0,
+                 "type":"Enemy",
+                 "visible":true,
+                 "width":22,
+                 "x":1002,
+                 "y":1081.5
                 }],
          "opacity":1,
          "type":"objectgroup",
@@ -523,39 +523,39 @@
          "y":0
         }],
  "nextlayerid":15,
- "nextobjectid":162,
+ "nextobjectid":164,
  "orientation":"orthogonal",
  "properties":[
-   {
-     "name":"camZoneX",
-     "type":"float",
-     "value":1
-   },
-   {
-     "name":"camZoneY",
-     "type":"float",
-     "value":1
-   },
-   {
-     "name":"cameraHeight",
-     "type":"float",
-     "value":12
-   },
-   {
-     "name":"cameraWidth",
-     "type":"float",
-     "value":21.35
-   },
-   {
-     "name":"gravity",
-     "type":"float",
-     "value":-1
-   },
-   {
-     "name":"tileSize",
-     "type":"float",
-     "value":1
-   }],
+        {
+         "name":"camZoneX",
+         "type":"float",
+         "value":1
+        }, 
+        {
+         "name":"camZoneY",
+         "type":"float",
+         "value":1
+        }, 
+        {
+         "name":"cameraHeight",
+         "type":"float",
+         "value":12
+        }, 
+        {
+         "name":"cameraWidth",
+         "type":"float",
+         "value":21.35
+        }, 
+        {
+         "name":"gravity",
+         "type":"float",
+         "value":-1
+        }, 
+        {
+         "name":"tileSize",
+         "type":"float",
+         "value":1
+        }],
  "renderorder":"right-down",
  "tiledversion":"1.10.1",
  "tileheight":32,

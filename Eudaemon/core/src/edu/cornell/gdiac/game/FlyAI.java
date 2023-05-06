@@ -35,6 +35,7 @@ public class FlyAI extends AIController{
     private final Level.MyGridGraph graph;
     private final GraphPath<Level.MyNode> path;
     private int indexAlongPath=0;
+    private Level.MyNode goalnode;
 
     private enum FSMState {
         /** The enemy just spawned */
@@ -244,13 +245,17 @@ public class FlyAI extends AIController{
                         this.move=EnemyAction.STAY;
                         break;
                     }else{
-                    needNewPath =false;}
+                        needNewPath =false;
+                        if (goalnode!=null && goalnode.equals(path.get(0))){//no need to move back if the next goal is the same
+                        indexAlongPath=1;}
+                    }
                 }
 
                 if (path.getCount()>indexAlongPath) {
                     this.move=EnemyAction.FLY;
 //                    System.out.println("moving along path, index is "+this.indexAlongPath);
                     Level.MyNode goalnode=path.get(indexAlongPath);
+                    this.goalnode=goalnode;
                     float gx= level.tileToLevelCoordinatesX(goalnode.getX())+this.tileSize/2;
                     float gy= level.tileToLevelCoordinatesY(goalnode.getY())+this.tileSize/2;
                     this.v=new Vector2(gx-ex,gy-ey);

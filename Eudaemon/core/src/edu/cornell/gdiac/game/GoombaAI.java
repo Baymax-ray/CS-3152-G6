@@ -59,33 +59,40 @@ public class GoombaAI extends AIController{
         enemyAction.add(move);
 
     }
+    private boolean detectionhelper(int x1,int x2,int y){
+        int start=Math.min(x1,x2);
+        int end=Math.max(x1,x2);
+        for (int i=start;i<=end;i++){
+            //that shall be reachable
+            if(!level.isAirAt(i,y)){
+                return false;
+            }
+        }
+        return true;        
+    }
     private boolean checkDetection(){
         float py=level.getPlayer().getY();
         float px=level.getPlayer().getX();
-        int tpy=level.levelToTileCoordinatesY(py);
+        float pyl=py-level.getPlayer().getHeight()/2;
+        float pyh=py+level.getPlayer().getHeight()/2;
+        int tpyl=level.levelToTileCoordinatesY(pyl);
+        int tpyh=level.levelToTileCoordinatesY(pyh);
         int tpx=level.levelToTileCoordinatesX(px);
         float ey=enemy.getY();
         float ex=enemy.getX();
         int ty=level.levelToTileCoordinatesY(ey);
         int tx=level.levelToTileCoordinatesX(ex);
-        if (ty!=tpy){return false;}
-        else{
-            int start=Math.min(tpx,tx);
-            int end=Math.max(tpx,tx);
-            for (int i=start;i<=end;i++){
-                //that shall be reachable
-                if(!level.isAirAt(i,ey)){
-                    return false;
-                }
-                //also there shall be all land under feet
-//                if(level.isAirAt(i, ey-1)){
-//                    return false;
-//                }
-            }
-            this.WanderWait=0;
-            return true;
+        if (ty!=tpyl && ty!=tpyh){return false;}
+        else if(ty==tpyl && ty!=tpyh){
+            return detectionhelper(tx,tpx,tpyl);
+        }
+        else if(ty!=tpyl && ty==tpyh){
+            return detectionhelper(tx,tpx,tpyh);
+        }else{
+            return detectionhelper(tx,tpx,tpyh)||detectionhelper(tx,tpx,tpyl);
         }
     }
+    
     private boolean canAttack(){
         //ToDo
         return false;

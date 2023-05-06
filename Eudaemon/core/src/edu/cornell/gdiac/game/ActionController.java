@@ -832,9 +832,30 @@ public class ActionController {
                     } else if(action==EnemyAction.FLY){
                         enemy.setVelocity(aiControllers.get(i).getVelocity());
                         enemy.applyVelocity();
+                        enemy.setCurrentAnimation("move");
                     }else{
                         enemy.setMovement(action);
                         enemy.applyVelocity();
+                        switch (enemy.getType()) {
+                            //Green Dragon
+                            case "FlyGuardian":
+                                //Green Mosquito
+                            case "Fly":
+                                enemy.setCurrentAnimation("move");
+                                break;
+                            //Green Beetle
+                            case "Goomba":
+                            case "GoombaGuardian":
+                            case "Fast":
+                                if (action == EnemyAction.STAY) {
+                                    enemy.setCurrentAnimation("idle");
+                                } else {
+                                    enemy.setCurrentAnimation("move");
+                                }
+                                break;
+                            case "Projectile":
+                                enemy.durationloss();
+                                break;}
                     }
                 }
                 if (enemy.getVelocityX() > 0){
@@ -851,39 +872,7 @@ public class ActionController {
                         enemy.setCurrentFrame(0);
                     }
                 }
-                //Purple Skull Guy
-                switch (enemy.getType()) {
-                    case "Goomba":
-                    //Green Dragon
-                    case "FlyGuardian":
-                        //Green Mosquito
-                    case "Fly":
-                        enemy.setCurrentAnimation("move");
-                        break;
-                    //Green Beetle
-                    case "GoombaGuardian":
-                        if (enemy.getVelocityX() != 0) {
-                            enemy.setCurrentAnimation("move");
-                        } else {
-                            enemy.setCurrentAnimation("idle");
-                        }
-                        break;
 
-                    //Tank guy
-                    case "Fast":
-                        if (enemy.getVelocityX() != 0) {
-                            enemy.setCurrentAnimation("move");
-                            enemy.setOyOffset(-29);
-                        } else {
-                            enemy.setCurrentAnimation("idle");
-                            enemy.setOyOffset(-10);
-                        }
-                        break;
-                    // Projectile
-                    case "Projectile":
-                        enemy.durationloss();
-                        break;
-                }
                 //#endregion
                 enemyAction.clear();
             }
