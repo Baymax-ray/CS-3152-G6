@@ -648,9 +648,16 @@ public class Enemy extends CapsuleObstacle {
     public void hitBySword(Player player) {
         hearts--;
         if (hearts > 0) {
-            float direction = player.getX() - this.getX() > 0 ? -1 : 1;
-            Vector2 knockback = new Vector2(direction * enemyData.getFloat("knockbackX"),
-                    enemyData.getFloat("knockbackY"));
+            float directionX =this.getX()-player.getX();
+            float directionY =this.getY()-player.getY();
+            // normalize the direction vector
+            float length = (float) Math.sqrt(directionX * directionX + directionY * directionY);
+            if (length != 0) {
+                directionX = directionX / length;
+                directionY = directionY / length;
+            }
+            Vector2 knockback = new Vector2(direction * enemyData.getFloat("knockback"),
+            direction*enemyData.getFloat("knockback"));
             forceCache.set(knockback);
             body.applyForce(forceCache, this.getPosition(), true);
             //body.setLinearVelocity(forceCache);
