@@ -634,8 +634,17 @@
         "deathScreen:restart": "shared/restartButton.png",
         "deathScreen:quit": "shared/quitButton.png",
 
-        "settingsScreen:background": "backgrounds/tempSettingsBackground.png",
-        "settingsScreen:back": "levelSelect/backArrow.png"
+        "settingsScreen:background": "backgrounds/settingsBackground.png",
+        "settingsScreen:back": "levelSelect/backArrow.png",
+        "settingsScreen:unfilledBar": "shared/unfilledBarSettings.png",
+        "settingsScreen:settingsOn": "shared/settingsOn.png",
+        "settingsScreen:settingsOff": "shared/settingsOff.png",
+        "settingsScreen:normal": "shared/settingsNormal.png",
+        "settingsScreen:hard": "shared/settingsHard.png",
+        "settingsScreen:vet": "shared/settingsVeteran.png",
+        "settingsScreen:filledBar": "shared/settingsFilledBar.png",
+        "settingsScreen:dragToggle": "shared/settingsDragToggle.png"
+
     },
     "jsons"  : {
         "constants": "constants.json",
