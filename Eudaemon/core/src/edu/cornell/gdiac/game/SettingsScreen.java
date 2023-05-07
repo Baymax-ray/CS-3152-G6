@@ -63,6 +63,8 @@ public class SettingsScreen implements Screen, InputProcessor, ControllerListene
 	/** quit button to display when done */
 	private Texture screenSizeButton;
 
+	private boolean isFromMainMenu=false;
+
 
 
 
@@ -133,6 +135,7 @@ public class SettingsScreen implements Screen, InputProcessor, ControllerListene
 	public boolean quitIsReady() {
 		return screenSizePressState == 2;
 	}
+	public void setIsFromMainMenu(boolean isfrom){this.isFromMainMenu = isfrom;}
 
 	/**
 	 * Creates a LoadingScreen with the default budget, size and position.
@@ -159,6 +162,7 @@ public class SettingsScreen implements Screen, InputProcessor, ControllerListene
 	public SettingsScreen(String file, GameCanvas canvas, int millis) {
 		this.canvas  = canvas;
 		budget = millis;
+		this.isFromMainMenu = false;
 
 		// Compute the dimensions from the canvas
 		resize(canvas.getWidth(),canvas.getHeight());
@@ -241,10 +245,10 @@ public class SettingsScreen implements Screen, InputProcessor, ControllerListene
 
 			// We are are ready, notify our listener
 			if (backPressState == 2 && listener != null) {
-				listener.exitScreen(this, ExitCode.PAUSE);
-			}
+				if(isFromMainMenu){listener.exitScreen(this, ExitCode.MAIN_MENU);}
+				else{ listener.exitScreen(this, ExitCode.PAUSE);}
 		}
-	}
+	}}
 
 
 	/**

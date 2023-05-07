@@ -110,6 +110,11 @@ public class GameRoot extends Game implements ScreenListener {
 				screen.pause();
 				levelSelectScreen.reset();
 				setScreen(levelSelectScreen);
+			}else if(exitCode == ExitCode.SETTINGS){
+				screen.pause();
+				settingsScreen.reset();
+				setScreen(settingsScreen);
+				settingsScreen.setIsFromMainMenu(true);
 			}
 		}
 
@@ -223,6 +228,11 @@ public class GameRoot extends Game implements ScreenListener {
 				screen.pause();
 				escapeMenu.reset();
 				setScreen(escapeMenu);
+			}
+			if (exitCode == ExitCode.MAIN_MENU) {
+				screen.pause();
+				mainMenuScreen.reset();
+				setScreen(mainMenuScreen);
 			}
 		}
 	}

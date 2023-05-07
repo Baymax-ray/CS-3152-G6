@@ -138,7 +138,7 @@
     },
     "spiritLimitation":4,
     "guardianTime":60,
-    "knockback":5000
+    "knockback":8000
   },
   "Fast": {
     "TextureAsset": "enemy:fastGoomba",
@@ -202,7 +202,7 @@
     },
     "spiritLimitation":8,
     "guardianTime":60,
-    "knockback":5000
+    "knockback":8000
   },
   "Fly": {
     "TextureAsset": "enemy:Flying",
@@ -234,7 +234,7 @@
       "height" : 0.05
     },
     "spiritLimitation":8,
-    "knockback":5000
+    "knockback":8000
   },
   "Projectile": {
     "TextureAsset": "enemy:projectileEnemy",
