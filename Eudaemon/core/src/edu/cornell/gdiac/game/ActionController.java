@@ -102,6 +102,7 @@ public class ActionController {
         addAnimations(player.getDashEffectSpriteSheet(), 5, 1, "dashEffect");
         addAnimations(player.getImpactEffectSpriteSheet(), 8, 1, "impactEffect");
         addAnimations(player.getSpiritDrainSpriteSheet(), 13, 1, "spiritDrain");
+        addAnimations(player.getTransformSpriteSheet(),7, 1, "playerTransform");
     }
 
     /**
@@ -245,6 +246,19 @@ public class ActionController {
                 player.setForm();
                 player.setHeight(player.getHeight() * player.getChiyoHitBoxHeightMult());
 //                playerChiyoTransformId = playSound( playerChiyoTransformSound, playerChiyoTransformId, 0.1F );
+                float pOffsetX;
+                if(player.isFacingRight()){
+                    pOffsetX = -0.4f;
+                }
+                else{
+                   pOffsetX = 0f;
+                }
+                EffectObstacle transformAnimate = level.getEffectPool().obtainEffect(player.getX(), player.getY(), player.getTransformSpriteSheet().getRegionWidth(),
+                        player.getTransformSpriteSheet().getRegionHeight(), 0.03f, 0.03f, 0, pOffsetX
+                        , 0.8f, true,
+                        "transformEffect", player, 0.35f,
+                        1, 1, animations.get("playerTransform"), 5);
+                level.addQueuedObject(transformAnimate);
                 audio.playEffect("chiyo-transform", 0.1f);
                 player.updateGroundSensor();
             }
@@ -252,6 +266,12 @@ public class ActionController {
                 player.setForm();
                 player.setHeight(player.getHeight() / player.getChiyoHitBoxHeightMult());
 //                playerMomoTransformId = playSound( playerMomoTransformSound, playerMomoTransformId, 0.1F );
+                EffectObstacle transformAnimate = level.getEffectPool().obtainEffect(player.getX(), player.getY(), player.getTransformSpriteSheet().getRegionWidth(),
+                        player.getTransformSpriteSheet().getRegionHeight(), 0.03f, 0.03f, 0,
+                        0, 0.6f, true,
+                        "transformEffect", player, 0.35f,
+                        1, 1, animations.get("playerTransform"), 5);
+                level.addQueuedObject(transformAnimate);
                 audio.playEffect("momo-transform", 0.1f);
                 player.updateGroundSensor();
             }
@@ -509,6 +529,12 @@ public class ActionController {
             player.decreaseSpirit();
             if (player.getSpirit() <= 0) {
                 player.setForm(); // switch back to momo
+                EffectObstacle transformAnimate = level.getEffectPool().obtainEffect(player.getX(), player.getY(), player.getTransformSpriteSheet().getRegionWidth(),
+                        player.getTransformSpriteSheet().getRegionHeight(), 0.03f, 0.03f, 0,
+                        0, 0.6f, true,
+                        "transformEffect", player, 0.35f,
+                        1, 1, animations.get("playerTransform"), 5);
+                level.addQueuedObject(transformAnimate);
                 player.setHeight(player.getHeight() / player.getChiyoHitBoxHeightMult());
                 player.updateGroundSensor();
             }

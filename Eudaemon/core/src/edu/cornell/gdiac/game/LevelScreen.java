@@ -30,6 +30,7 @@ public class LevelScreen implements Screen {
 
 
 
+
     public LevelScreen(Level level, ActionBindings actionBindings, AssetDirectory assets) {
         this.level = level;
 
@@ -115,6 +116,7 @@ public class LevelScreen implements Screen {
     public void draw(float delta) {
         canvas.clear();
         this.level.draw(canvas);
+
     }
 
 
