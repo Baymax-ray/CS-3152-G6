@@ -34,6 +34,7 @@
 
     "wallSlideVelocity": -1.0,
     "wallJumpCooldownTicks": 60,
+    "wallJumpXVelocity": 7.0,
 
     "jumpCooldown": 10,
     "coyoteTime": 5,
@@ -43,7 +44,6 @@
     "maxJumpyVelocity": 3.2,
     "playerGravity": 20.0,
     "timeForImpact": 35,
-    "wallJumpXVelocity": 10.0,
 
     "swordRadius": 1.0,
     "attackLifespan": 0.4,
