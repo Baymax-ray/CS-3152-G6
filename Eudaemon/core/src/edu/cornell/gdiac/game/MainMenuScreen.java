@@ -226,7 +226,6 @@ public class MainMenuScreen implements Screen, InputProcessor, ControllerListene
                 } else if (quitButtonState == 2 || escapePressState == 2) {
                     listener.exitScreen(this, ExitCode.QUIT);
                 }else if (settingsButtonState == 2){
-                    System.out.println("SETTINGS ON!");
                     listener.exitScreen(this, ExitCode.SETTINGS);
                 }
             }
