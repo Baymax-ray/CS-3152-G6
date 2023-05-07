@@ -151,7 +151,7 @@ public class ActionController {
         }
 
         //Sets the player's ticks in air falling
-        if(!player.isGrounded() && player.getBodyVelocityY() < 0){
+        if(!player.isGrounded() && player.getBodyVelocityY() < 0 && !player.isSliding()){
             player.setTicksInAir(player.getTicksInAir()+1);
         }
         else if (player.getTicksInAir() != 0){

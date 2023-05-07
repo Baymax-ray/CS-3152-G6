@@ -659,7 +659,6 @@ public class Player extends CapsuleObstacle {
     }
     /**Sets if the player is touching the left wall*/
     public void setTouchingWallLeft(boolean slide) {isTouchingWallLeft = slide;}
-
     /**
      * Gets the value of the chiyo's speed multiplier
      *

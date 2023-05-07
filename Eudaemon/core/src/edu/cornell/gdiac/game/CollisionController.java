@@ -382,6 +382,7 @@ public class CollisionController implements ContactListener {
             Player player = (Player) (bd1 instanceof Player ? bd1 : bd2);
             if (!player.isHit()){
             player.setHit(true);
+            player.setTicksInAir(0);//Ticks in air should also be reset by hitting spikes
             player.hitByEnemy(1, bd2 instanceof Player? bd1: bd2);
             level.shakeControllerHeavy();
             if (!level.getPlayer().isRemoved())
