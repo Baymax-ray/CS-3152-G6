@@ -189,7 +189,7 @@ public class EscapeMenu implements Screen, InputProcessor, ControllerListener {
 			controller.addListener( this );
 		}
 
-		active = true;
+		active = false;
 	}
 	
 	/**
@@ -198,6 +198,7 @@ public class EscapeMenu implements Screen, InputProcessor, ControllerListener {
 	public void dispose() {
 		canvas = null;
 		listener = null;
+		buttons.clear();
 	}
 
 	private void update() {
@@ -208,7 +209,6 @@ public class EscapeMenu implements Screen, InputProcessor, ControllerListener {
 			} else {
 				hoveredButton = hoveredButton.up;
 			}
-			System.out.println("UP");
 			menuCooldown = COOLDOWN;
 		} else if (menuDown && menuCooldown == 0) {
 			if (hoveredButton == null) {
@@ -216,7 +216,6 @@ public class EscapeMenu implements Screen, InputProcessor, ControllerListener {
 			} else {
 				hoveredButton = hoveredButton.down;
 			}
-			System.out.println("DOWN");
 			menuCooldown = COOLDOWN;
 		}
 
@@ -394,9 +393,10 @@ public class EscapeMenu implements Screen, InputProcessor, ControllerListener {
 	 * @return whether to hand the event to other listeners.
 	 */
 	public boolean touchDown(int screenX, int screenY, int pointer, int button) {
+		if (!active) return false;
 		for (MenuButton menuButton : buttons) {
-			if (menuButton.texture == null || menuButton.pressState == 2) {
-				return true;
+			if (menuButton.pressState == 2) {
+				return false;
 			}
 		}
 
@@ -406,6 +406,7 @@ public class EscapeMenu implements Screen, InputProcessor, ControllerListener {
 		for (MenuButton menuButton : buttons) {
 			if (menuButton.hitbox.contains(screenX, screenY)) {
 				menuButton.pressState = 1;
+				return true;
 			}
 		}
 
@@ -424,14 +425,15 @@ public class EscapeMenu implements Screen, InputProcessor, ControllerListener {
 	 * @return whether to hand the event to other listeners.
 	 */
 	public boolean touchUp(int screenX, int screenY, int pointer, int button) {
+		if (!active) return false;
 		for (MenuButton menuButton : buttons) {
 			if (menuButton.pressState == 1) {
 				menuButton.pressState = 2;
-				return false;
+				return true;
 			}
 		}
 
-		return true;
+		return false;
 	}
 
 	/**
@@ -446,23 +448,24 @@ public class EscapeMenu implements Screen, InputProcessor, ControllerListener {
 	 * @return whether to hand the event to other listeners.
 	 */
 	public boolean buttonDown (Controller controller, int buttonCode) {
+		if (!active) return false;
+		System.out.print("hi");
 		ControllerMapping mapping = controller.getMapping();
+		if (mapping == null) return false;
+		System.out.println("ho");
 
-		if (restartButton.pressState == 0) {
-			if (mapping != null && buttonCode == mapping.buttonStart ) {
-				restartButton.pressState = 1;
-				return false;
-			}
+
+		if (restartButton.pressState == 0 && buttonCode == mapping.buttonStart ) {
+			restartButton.pressState = 1;
+			return true;
 		}
 
-		if (hoveredButton.pressState == 0) {
-			if (mapping != null && buttonCode == mapping.buttonA) {
-				hoveredButton.pressState = 1;
-				return false;
-			}
+		if (hoveredButton.pressState == 0 && buttonCode == mapping.buttonA) {
+			hoveredButton.pressState = 1;
+			return true;
 		}
 
-		return true;
+		return false;
 	}
 
 	/**
@@ -477,22 +480,22 @@ public class EscapeMenu implements Screen, InputProcessor, ControllerListener {
 	 * @return whether to hand the event to other listeners.
 	 */
 	public boolean buttonUp (Controller controller, int buttonCode) {
+		if (!active) return false;
 		ControllerMapping mapping = controller.getMapping();
+		if (mapping == null) return false;
 
-		if (restartButton.pressState == 1) {
-			if (mapping != null && buttonCode == mapping.buttonStart ) {
-				restartButton.pressState = 2;
-				return false;
-			}
-		}
-		if (hoveredButton.pressState == 1) {
-			if (mapping != null && buttonCode == mapping.buttonA) {
-				hoveredButton.pressState = 2;
-				return false;
-			}
+
+		if (restartButton.pressState == 1 && buttonCode == mapping.buttonStart ) {
+			restartButton.pressState = 2;
+			return true;
 		}
 
-		return true;
+		if (hoveredButton.pressState == 1 && buttonCode == mapping.buttonA) {
+			hoveredButton.pressState = 2;
+			return true;
+		}
+
+		return false;
 	}
 
 	// UNSUPPORTED METHODS FROM InputProcessor
@@ -504,18 +507,19 @@ public class EscapeMenu implements Screen, InputProcessor, ControllerListener {
 	 * @return whether to hand the event to other listeners.
 	 */
 	public boolean keyDown(int keycode) {
+		if (!active) return false;
 		menuUp = keycode == Input.Keys.UP;
 		menuDown = keycode == Input.Keys.DOWN;
 
 		if (keycode == Input.Keys.ENTER && hoveredButton.pressState == 0) {
 			hoveredButton.pressState = 1;
-			return false;
+			return true;
 		}
 		if (keycode == Input.Keys.ESCAPE && resumeButton.pressState == 0) {
 			resumeButton.pressState = 1;
-			return false;
+			return true;
 		}
-		return keycode != Input.Keys.UP && keycode != Input.Keys.DOWN;
+		return keycode == Input.Keys.UP || keycode == Input.Keys.DOWN;
 	}
 
 	/**
@@ -525,7 +529,7 @@ public class EscapeMenu implements Screen, InputProcessor, ControllerListener {
 	 * @return whether to hand the event to other listeners.
 	 */
 	public boolean keyTyped(char character) {
-		return true;
+		return false;
 	}
 
 	/**
@@ -535,27 +539,28 @@ public class EscapeMenu implements Screen, InputProcessor, ControllerListener {
 	 * @return whether to hand the event to other listeners.
 	 */
 	public boolean keyUp(int keycode) {
+		if (!active) return false;
 		if (keycode == Input.Keys.UP) {
 			menuUp = false;
 			menuCooldown = 0;
-			return false;
+			return true;
 		}
 		if (keycode == Input.Keys.DOWN) {
 			menuDown = false;
 			menuCooldown = 0;
-			return false;
+			return true;
 		}
 
 		if (keycode == Input.Keys.ENTER && hoveredButton.pressState == 1) {
 			hoveredButton.pressState = 2;
-			return false;
+			return true;
 		}
 		if (keycode == Input.Keys.ESCAPE && resumeButton.pressState == 1) {
 			resumeButton.pressState = 2;
-			return false;
+			return true;
 		}
 
-		return true;
+		return false;
 	}
 
 	/**
@@ -566,15 +571,17 @@ public class EscapeMenu implements Screen, InputProcessor, ControllerListener {
 	 * @return whether to hand the event to other listeners.
 	 */
 	public boolean mouseMoved(int screenX, int screenY) {
+		if (!active) return false;
 		screenY = heightY - screenY;
 		hoveredButton = null;
 		for (MenuButton button : buttons) {
 			if (button.hitbox.contains(screenX, screenY)) {
 				hoveredButton = button;
+				return true;
 			}
 		}
 
-		return true;
+		return false;
 	}
 
 	/**
@@ -586,7 +593,7 @@ public class EscapeMenu implements Screen, InputProcessor, ControllerListener {
 	 * @return whether to hand the event to other listeners.
 	 */
 	public boolean scrolled(float dx, float dy) {
-		return true;
+		return false;
 	}
 
 	/**
@@ -598,7 +605,7 @@ public class EscapeMenu implements Screen, InputProcessor, ControllerListener {
 	 * @return whether to hand the event to other listeners.
 	 */
 	public boolean touchDragged(int screenX, int screenY, int pointer) {
-		return true;
+		return false;
 	}
 
 	// UNSUPPORTED METHODS FROM ControllerListener
@@ -628,21 +635,20 @@ public class EscapeMenu implements Screen, InputProcessor, ControllerListener {
 	 * @return whether to hand the event to other listeners.
 	 */
 	public boolean axisMoved (Controller controller, int axisCode, float value) {
+		if (!active) return false;
+		if (axisCode != 1) return false;
 
-		if (axisCode == 1) { // vertical movement
-
-			if (Math.abs(value) < 0.25) {
-				menuCooldown = 0;
-				menuDown = false;
-				menuUp = false;
-			} else {
-				menuUp = value < 0;
-				menuDown = value > 0;
-			}
-
-			return false;
+		if (Math.abs(value) < 0.25) {
+			menuCooldown = 0;
+			menuDown = false;
+			menuUp = false;
+		} else {
+			menuUp = value < 0;
+			menuDown = value > 0;
 		}
+
 		return true;
+
 	}
 
 }

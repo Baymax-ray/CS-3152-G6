@@ -35,6 +35,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.Texture.TextureFilter;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Rectangle;
+import com.badlogic.gdx.utils.Array;
 import edu.cornell.gdiac.assets.AssetDirectory;
 import edu.cornell.gdiac.util.Controllers;
 import edu.cornell.gdiac.util.ScreenListener;
@@ -58,15 +59,6 @@ public class MainMenuScreen implements Screen, InputProcessor, ControllerListene
     /** Background texture for start-up */
     private final Texture background;
 
-    /** Play button to display when done */
-    private Texture playButton;
-    /** settings button to display when done */
-    private Texture settingsButton;
-    /** level select button to display when done */
-    private Texture levelSelectButton;
-
-    private Texture quitButton;
-
     /** Standard window size (for scaling) */
     private static final int STANDARD_WIDTH  = 800;
     /** Standard window height (for scaling) */
@@ -87,20 +79,19 @@ public class MainMenuScreen implements Screen, InputProcessor, ControllerListene
     /** Scaling factor for when the student changes the resolution. */
     private float scale;
 
-    /** The current state of the play button */
-    private int playButtonState;
-    /** The hitbox of the start button */
-    private Rectangle playButtonHitbox;
-    /** The current state of the level select button */
-    private int levelSelectButtonState;
-    /** The hitbox of the level select button */
-    private Rectangle levelSelectButtonHitbox;
-    /** The current state of the settings button */
-    private int settingsButtonState;
-    /** The hitbox of the settings button */
-    private Rectangle settingsButtonHitbox;
-    private int quitButtonState;
-    private Rectangle quitButtonHitbox;
+    private Array<MenuButton> buttons;
+
+    private MenuButton playButton;
+    private MenuButton settingsButton;
+    private MenuButton levelSelectButton;
+    private MenuButton quitButton;
+
+    private MenuButton hoveredButton;
+
+    private int menuCooldown;
+    private boolean menuUp;
+    private boolean menuDown;
+    private static final int COOLDOWN = 10;
 
 
     /** Whether or not this player mode is still active */
@@ -126,33 +117,42 @@ public class MainMenuScreen implements Screen, InputProcessor, ControllerListene
         background = assets.getEntry( "mainMenu:background", Texture.class );
         background.setFilter(Texture.TextureFilter.Nearest, Texture.TextureFilter.Nearest);
 
-        playButton = assets.getEntry("mainMenu:start",Texture.class);
-        playButtonHitbox = new Rectangle();
+        playButton = new MenuButton(assets.getEntry("mainMenu:start",Texture.class), ExitCode.START);
+        settingsButton = new MenuButton(assets.getEntry("mainMenu:settings", Texture.class), ExitCode.SETTINGS);
+        levelSelectButton = new MenuButton(assets.getEntry("mainMenu:levelSelect", Texture.class), ExitCode.LEVEL_SELECT);
+        quitButton = new MenuButton(assets.getEntry("mainMenu:quit", Texture.class), ExitCode.QUIT);
 
-        settingsButton = assets.getEntry("mainMenu:settings", Texture.class);
-        settingsButtonHitbox = new Rectangle();
+        buttons = new Array<>();
+        buttons.add(playButton);
+        buttons.add(settingsButton);
+        buttons.add(levelSelectButton);
+        buttons.add(quitButton);
 
-        levelSelectButton = assets.getEntry("mainMenu:levelSelect", Texture.class);
-        levelSelectButtonHitbox = new Rectangle();
+        playButton.up = quitButton;
+        playButton.down = levelSelectButton;
 
-        quitButton = assets.getEntry("mainMenu:quit", Texture.class);
-        quitButtonHitbox = new Rectangle();
+        levelSelectButton.up = playButton;
+        levelSelectButton.down = settingsButton;
+
+        settingsButton.up = levelSelectButton;
+        settingsButton.down = quitButton;
+
+        quitButton.up = settingsButton;
+        quitButton.down = playButton;
+
+
+        hoveredButton = playButton;
 
         resize(canvas.getWidth(), canvas.getHeight());
-
-        playButtonState = 0;
-        levelSelectButtonState = 0;
-        settingsButtonState = 0;
-        quitButtonState = 0;
 
         Gdx.input.setInputProcessor( this );
 
         // Let ANY connected controller start the game.
-        for (XBoxController controller : Controllers.get().getXBoxControllers()) {
+        for (Controller controller : Controllers.get().getControllers()) {
             controller.addListener( this );
         }
 
-        active = true;
+        active = false;
     }
 
     /**
@@ -161,6 +161,7 @@ public class MainMenuScreen implements Screen, InputProcessor, ControllerListene
     public void dispose() {
         canvas = null;
         listener = null;
+        buttons.clear();
     }
 
     /**
@@ -173,7 +174,23 @@ public class MainMenuScreen implements Screen, InputProcessor, ControllerListene
      * @param delta Number of seconds since last animation frame
      */
     private void update(float delta) {
+        if (menuUp && menuCooldown == 0) {
+            if (hoveredButton == null) {
+                hoveredButton = quitButton;
+            } else {
+                hoveredButton = hoveredButton.up;
+            }
+            menuCooldown = COOLDOWN;
+        } else if (menuDown && menuCooldown == 0) {
+            if (hoveredButton == null) {
+                hoveredButton = playButton;
+            } else {
+                hoveredButton = hoveredButton.down;
+            }
+            menuCooldown = COOLDOWN;
+        }
 
+        if (menuCooldown > 0) menuCooldown--;
     }
 
     /**
@@ -188,19 +205,18 @@ public class MainMenuScreen implements Screen, InputProcessor, ControllerListene
         canvas.begin();
         canvas.draw(background, Color.WHITE, 0, 0, canvas.getWidth(), canvas.getHeight());
 
-        Color tint = (playButtonState == 1 ? Color.ORANGE: Color.WHITE);
-        canvas.draw(playButton, tint, playButtonHitbox.x, playButtonHitbox.y, playButtonHitbox.width, playButtonHitbox.height);
-
-        tint = (settingsButtonState == 1 ? Color.ORANGE: Color.WHITE);
-        canvas.draw(settingsButton, tint, settingsButtonHitbox.x, settingsButtonHitbox.y, settingsButtonHitbox.width, settingsButtonHitbox.height);
-
-        tint = (levelSelectButtonState == 1 ? Color.ORANGE: Color.WHITE);
-        canvas.draw(levelSelectButton, tint, levelSelectButtonHitbox.x, levelSelectButtonHitbox.y, levelSelectButtonHitbox.width, levelSelectButtonHitbox.height);
-
-        tint = (quitButtonState == 1 ? Color.ORANGE: Color.WHITE);
-        canvas.draw(quitButton, tint, quitButtonHitbox.x, quitButtonHitbox.y, quitButtonHitbox.width, quitButtonHitbox.height);
+        for (MenuButton button : buttons) {
+            button.tint = (button.pressState == 1 ? Color.ORANGE: Color.WHITE);
+            canvas.draw(button.texture, button.tint, button.hitbox.x, button.hitbox.y, button.hitbox.width, button.hitbox.height);
+        }
 
         canvas.end();
+
+        if (hoveredButton != null) {
+            canvas.beginShapes(true);
+            canvas.drawRectangle(hoveredButton.hitbox, hoveredButton.tint, 10);
+            canvas.endShapes();
+        }
     }
 
     // ADDITIONAL SCREEN METHODS
@@ -219,14 +235,13 @@ public class MainMenuScreen implements Screen, InputProcessor, ControllerListene
 
             // We are ready, notify our listener
             if (listener != null) {
-                if (playButtonState == 2) {
-                    listener.exitScreen(this, ExitCode.START);
-                } else if (levelSelectButtonState == 2) {
-                    listener.exitScreen(this, ExitCode.LEVEL_SELECT);
-                } else if (quitButtonState == 2 || escapePressState == 2) {
+                for (MenuButton button : buttons) {
+                    if (button.pressState == 2) {
+                        listener.exitScreen(this, button.exitCode);
+                    }
+                }
+                if (escapePressState == 2) {
                     listener.exitScreen(this, ExitCode.QUIT);
-                }else if (settingsButtonState == 2){
-                    listener.exitScreen(this, ExitCode.SETTINGS);
                 }
             }
         }
@@ -254,19 +269,19 @@ public class MainMenuScreen implements Screen, InputProcessor, ControllerListene
         float shiftUp = 74.38f;
         if (playButton != null) {
 
-            playButtonHitbox.setSize(BUTTON_SCALE*scale*playButton.getWidth(), BUTTON_SCALE*scale*playButton.getHeight());
-            playButtonHitbox.setCenter(canvas.getWidth()/2.0f, progressBarCenterY + playButton.getHeight()*buttonSpacing*scale + shiftUp*scale);
-            float buttonDelta = playButtonHitbox.height * 1.5f;
+            playButton.hitbox.setSize(BUTTON_SCALE*scale*playButton.texture.getWidth(), BUTTON_SCALE*scale*playButton.texture.getHeight());
+            playButton.hitbox.setCenter(canvas.getWidth()/2.0f, progressBarCenterY + playButton.texture.getHeight()*buttonSpacing*scale + shiftUp*scale);
+            float buttonDelta = playButton.hitbox.height * 1.5f;
 
-            settingsButtonHitbox.setSize(BUTTON_SCALE*scale*settingsButton.getWidth(), BUTTON_SCALE*scale*settingsButton.getHeight());
-            settingsButtonHitbox.setCenter(canvas.getWidth()/2.0f, progressBarCenterY - settingsButton.getHeight()*buttonSpacing*scale + shiftUp*scale);
+            settingsButton.hitbox.setSize(BUTTON_SCALE*scale*settingsButton.texture.getWidth(), BUTTON_SCALE*scale*settingsButton.texture.getHeight());
+            settingsButton.hitbox.setCenter(canvas.getWidth()/2.0f, progressBarCenterY - settingsButton.texture.getHeight()*buttonSpacing*scale + shiftUp*scale);
 
-            levelSelectButtonHitbox.setSize(BUTTON_SCALE*scale*levelSelectButton.getWidth(), BUTTON_SCALE*scale*levelSelectButton.getHeight());
-            levelSelectButtonHitbox.setCenter(canvas.getWidth()/2.0f, progressBarCenterY + shiftUp*scale);
+            levelSelectButton.hitbox.setSize(BUTTON_SCALE*scale*levelSelectButton.texture.getWidth(), BUTTON_SCALE*scale*levelSelectButton.texture.getHeight());
+            levelSelectButton.hitbox.setCenter(canvas.getWidth()/2.0f, progressBarCenterY + shiftUp*scale);
         }
         if(quitButton != null){
-            quitButtonHitbox.setSize(BUTTON_SCALE*scale*quitButton.getWidth(), BUTTON_SCALE*scale*quitButton.getHeight());
-            quitButtonHitbox.setCenter(canvas.getWidth()/2.0f, progressBarCenterY - quitButton.getHeight()*buttonSpacing*scale);
+            quitButton.hitbox.setSize(BUTTON_SCALE*scale*quitButton.texture.getWidth(), BUTTON_SCALE*scale*quitButton.texture.getHeight());
+            quitButton.hitbox.setCenter(canvas.getWidth()/2.0f, progressBarCenterY - quitButton.texture.getHeight()*buttonSpacing*scale);
         }
     }
 
@@ -309,10 +324,10 @@ public class MainMenuScreen implements Screen, InputProcessor, ControllerListene
     }
 
     public void reset() {
-        this.playButtonState = 0;
-        this.levelSelectButtonState = 0;
-        this.settingsButtonState = 0;
-        this.quitButtonState = 0;
+        for (MenuButton button : buttons) {
+            button.pressState = 0;
+        }
+        this.hoveredButton = playButton;
     }
 
     /**
@@ -337,31 +352,22 @@ public class MainMenuScreen implements Screen, InputProcessor, ControllerListene
      * @param pointer the button or touch finger number
      * @return whether to hand the event to other listeners.
      */
-    public boolean touchDown(int screenX, int screenY, int pointer, int button) {
-        if (playButton == null || playButtonState == 2) {
-            return true;
+    public boolean touchDown(int screenX, int screenY, int pointer, int buttonCode) {
+        if (!active) return false;
+        for (MenuButton button : buttons) {
+            if (button.pressState == 2) {
+                return true;
+            }
         }
 
         // Flip to match graphics coordinates
         screenY = heightY-screenY;
 
-        // TODO: Fix scaling
-        // Play button is a circle.
-
-        if (playButtonHitbox.contains(screenX, screenY)) {
-            playButtonState = 1;
-        }
-
-        if (settingsButtonHitbox.contains(screenX, screenY)) {
-            settingsButtonState = 1;
-        }
-
-        if (levelSelectButtonHitbox.contains(screenX, screenY)) {
-            levelSelectButtonState = 1;
-        }
-
-        if (quitButtonHitbox.contains(screenX, screenY)) {
-            quitButtonState = 1;
+        for (MenuButton button: buttons) {
+            if (button.hitbox.contains(screenX, screenY) && button.pressState == 0) {
+                button.pressState = 1;
+                return true;
+            }
         }
 
         return false;
@@ -378,21 +384,15 @@ public class MainMenuScreen implements Screen, InputProcessor, ControllerListene
      * @param pointer the button or touch finger number
      * @return whether to hand the event to other listeners.
      */
-    public boolean touchUp(int screenX, int screenY, int pointer, int button) {
-        if (playButtonState == 1) {
-            playButtonState = 2;
-            return false;
+    public boolean touchUp(int screenX, int screenY, int pointer, int buttonCode) {
+        if (!active) return false;
+        for (MenuButton button : buttons) {
+            if (button.pressState == 1) {
+                button.pressState = 2;
+                return true;
+            }
         }
-        if (settingsButtonState == 1) {
-            settingsButtonState = 2;
-        }
-        if (levelSelectButtonState == 1) {
-            levelSelectButtonState = 2;
-        }
-        if (quitButtonState == 1) {
-            quitButtonState = 2;
-        }
-        return true;
+        return false;
     }
 
     /**
@@ -407,14 +407,21 @@ public class MainMenuScreen implements Screen, InputProcessor, ControllerListene
      * @return whether to hand the event to other listeners.
      */
     public boolean buttonDown (Controller controller, int buttonCode) {
-        if (playButtonState == 0) {
-            ControllerMapping mapping = controller.getMapping();
-            if (mapping != null && buttonCode == mapping.buttonStart ) {
-                playButtonState = 1;
-                return false;
-            }
+        if (!active) return false;
+        ControllerMapping mapping = controller.getMapping();
+        if (mapping == null) return false;
+
+        if (playButton.pressState == 0 && buttonCode == mapping.buttonStart ) {
+            playButton.pressState = 1;
+            return true;
         }
-        return true;
+
+        if (hoveredButton.pressState == 0 && buttonCode == mapping.buttonA) {
+            hoveredButton.pressState = 1;
+            return true;
+        }
+
+        return false;
     }
 
     /**
@@ -429,14 +436,21 @@ public class MainMenuScreen implements Screen, InputProcessor, ControllerListene
      * @return whether to hand the event to other listeners.
      */
     public boolean buttonUp (Controller controller, int buttonCode) {
-        if (playButtonState == 1) {
-            ControllerMapping mapping = controller.getMapping();
-            if (mapping != null && buttonCode == mapping.buttonStart ) {
-                playButtonState = 2;
-                return false;
-            }
+        if (!active) return false;
+        ControllerMapping mapping = controller.getMapping();
+        if (mapping == null) return false;
+
+        if (playButton.pressState == 1 && buttonCode == mapping.buttonStart ) {
+            playButton.pressState = 2;
+            return true;
         }
-        return true;
+
+        if (hoveredButton.pressState == 1 && buttonCode == mapping.buttonA) {
+            hoveredButton.pressState = 2;
+            return true;
+        }
+
+        return false;
     }
 
     // UNSUPPORTED METHODS FROM InputProcessor
@@ -448,11 +462,20 @@ public class MainMenuScreen implements Screen, InputProcessor, ControllerListene
      * @return whether to hand the event to other listeners.
      */
     public boolean keyDown(int keycode) {
-        if (keycode == Input.Keys.ESCAPE) {
-            escapePressState = 1;
-            return false;
+        if (!active) return false;
+        menuUp = keycode == Input.Keys.UP;
+        menuDown = keycode == Input.Keys.DOWN;
+
+        if (keycode == Input.Keys.ENTER && hoveredButton.pressState == 0) {
+            hoveredButton.pressState = 1;
+            return true;
         }
-        return true;
+
+        if (keycode == Input.Keys.ESCAPE && escapePressState == 0) {
+            escapePressState = 1;
+            return true;
+        }
+        return false;
     }
 
     /**
@@ -462,7 +485,7 @@ public class MainMenuScreen implements Screen, InputProcessor, ControllerListene
      * @return whether to hand the event to other listeners.
      */
     public boolean keyTyped(char character) {
-        return true;
+        return false;
     }
 
     /**
@@ -472,11 +495,27 @@ public class MainMenuScreen implements Screen, InputProcessor, ControllerListene
      * @return whether to hand the event to other listeners.
      */
     public boolean keyUp(int keycode) {
-        if (keycode == Input.Keys.ESCAPE) {
-            escapePressState = 2;
-            return false;
+        if (!active) return false;
+        if (keycode == Input.Keys.UP) {
+            menuUp = false;
+            menuCooldown = 0;
+            return true;
         }
-        return true;
+        if (keycode == Input.Keys.DOWN) {
+            menuDown = false;
+            menuCooldown = 0;
+            return true;
+        }
+
+        if (keycode == Input.Keys.ENTER && hoveredButton.pressState == 1) {
+            hoveredButton.pressState = 2;
+            return true;
+        }
+        if (keycode == Input.Keys.ESCAPE && escapePressState == 2) {
+            escapePressState = 2;
+            return true;
+        }
+        return false;
     }
 
     /**
@@ -487,7 +526,16 @@ public class MainMenuScreen implements Screen, InputProcessor, ControllerListene
      * @return whether to hand the event to other listeners.
      */
     public boolean mouseMoved(int screenX, int screenY) {
-        return true;
+        if (!active) return false;
+        screenY = heightY - screenY;
+        hoveredButton = null;
+        for (MenuButton button : buttons) {
+            if (button.hitbox.contains(screenX, screenY)) {
+                hoveredButton = button;
+                return true;
+            }
+        }
+        return false;
     }
 
     /**
@@ -499,7 +547,7 @@ public class MainMenuScreen implements Screen, InputProcessor, ControllerListene
      * @return whether to hand the event to other listeners.
      */
     public boolean scrolled(float dx, float dy) {
-        return true;
+        return false;
     }
 
     /**
@@ -511,7 +559,7 @@ public class MainMenuScreen implements Screen, InputProcessor, ControllerListene
      * @return whether to hand the event to other listeners.
      */
     public boolean touchDragged(int screenX, int screenY, int pointer) {
-        return true;
+        return false;
     }
 
     // UNSUPPORTED METHODS FROM ControllerListener
@@ -541,6 +589,20 @@ public class MainMenuScreen implements Screen, InputProcessor, ControllerListene
      * @return whether to hand the event to other listeners.
      */
     public boolean axisMoved (Controller controller, int axisCode, float value) {
+        if (!active) {
+            return false;
+        }
+        if (axisCode != 1) return false;
+
+        if (Math.abs(value) < 0.25) {
+            menuCooldown = 0;
+            menuDown = false;
+            menuUp = false;
+        } else {
+            menuUp = value < 0;
+            menuDown = value > 0;
+        }
+
         return true;
     }
 

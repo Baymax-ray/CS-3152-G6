@@ -403,7 +403,7 @@ public class LoadingScreen implements Screen, InputProcessor, ControllerListener
 	 * @return whether to hand the event to other listeners. 
 	 */
 	public boolean touchDown(int screenX, int screenY, int pointer, int button) {
-		return true;
+		return false;
 	}
 	
 	/** 
@@ -418,7 +418,7 @@ public class LoadingScreen implements Screen, InputProcessor, ControllerListener
 	 * @return whether to hand the event to other listeners. 
 	 */	
 	public boolean touchUp(int screenX, int screenY, int pointer, int button) {
-		return true;
+		return false;
 	}
 	
 	/** 
@@ -433,7 +433,7 @@ public class LoadingScreen implements Screen, InputProcessor, ControllerListener
 	 * @return whether to hand the event to other listeners. 
 	 */
 	public boolean buttonDown (Controller controller, int buttonCode) {
-		return true;
+		return false;
 	}
 	
 	/** 
@@ -448,7 +448,7 @@ public class LoadingScreen implements Screen, InputProcessor, ControllerListener
 	 * @return whether to hand the event to other listeners. 
 	 */
 	public boolean buttonUp (Controller controller, int buttonCode) {
-		return true;
+		return false;
 	}
 	
 	// UNSUPPORTED METHODS FROM InputProcessor
@@ -462,9 +462,9 @@ public class LoadingScreen implements Screen, InputProcessor, ControllerListener
 	public boolean keyDown(int keycode) {
 		if (keycode == Input.Keys.ESCAPE) {
 			escapePressState = 1;
-			return false;
+			return true;
 		}
-		return true; 
+		return false;
 	}
 
 	/** 
@@ -474,7 +474,7 @@ public class LoadingScreen implements Screen, InputProcessor, ControllerListener
 	 * @return whether to hand the event to other listeners. 
 	 */
 	public boolean keyTyped(char character) { 
-		return true; 
+		return false;
 	}
 
 	/** 
@@ -486,9 +486,9 @@ public class LoadingScreen implements Screen, InputProcessor, ControllerListener
 	public boolean keyUp(int keycode) { 
 		if (keycode == Input.Keys.ESCAPE) {
 			escapePressState = 2;
-			return false;
+			return true;
 		}
-		return true;
+		return false;
 	}
 	
 	/** 
@@ -499,7 +499,7 @@ public class LoadingScreen implements Screen, InputProcessor, ControllerListener
 	 * @return whether to hand the event to other listeners. 
 	 */	
 	public boolean mouseMoved(int screenX, int screenY) { 
-		return true; 
+		return false;
 	}
 
 	/**
@@ -511,7 +511,7 @@ public class LoadingScreen implements Screen, InputProcessor, ControllerListener
 	 * @return whether to hand the event to other listeners.
 	 */
 	public boolean scrolled(float dx, float dy) {
-		return true;
+		return false;
 	}
 
 	/** 
@@ -523,7 +523,7 @@ public class LoadingScreen implements Screen, InputProcessor, ControllerListener
 	 * @return whether to hand the event to other listeners. 
 	 */		
 	public boolean touchDragged(int screenX, int screenY, int pointer) { 
-		return true; 
+		return false;
 	}
 	
 	// UNSUPPORTED METHODS FROM ControllerListener
@@ -553,7 +553,7 @@ public class LoadingScreen implements Screen, InputProcessor, ControllerListener
 	 * @return whether to hand the event to other listeners. 
 	 */
 	public boolean axisMoved (Controller controller, int axisCode, float value) {
-		return true;
+		return false;
 	}
 
 }
