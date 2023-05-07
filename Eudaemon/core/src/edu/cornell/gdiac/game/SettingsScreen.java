@@ -121,6 +121,18 @@ public class SettingsScreen implements Screen, InputProcessor, ControllerListene
 
 	/** The current state of the back button */
 	private int backPressState;
+	private Texture unfilledBar;
+	private Texture fullScreenOnButton;
+	private Texture fullScreenOffButton;
+	private Texture difficultyNormalButton;
+	private Texture difficultyHardButton;
+	private Texture difficultyVeteranButton;
+
+	//Texture to visually show the adjustment of settings (e.g volume, screen size)
+	private Texture filledBar;
+
+	//Texture for the circular toggle to drag to adjust setting - should sense user input from touching this
+	private Texture toggle;
 
 
 
@@ -179,6 +191,14 @@ public class SettingsScreen implements Screen, InputProcessor, ControllerListene
 		screenSizeButton = internal.getEntry("deathScreen:quit", Texture.class);
 		backButton = internal.getEntry("settingsScreen:back", Texture.class);
 		backButton.setFilter(TextureFilter.Nearest, TextureFilter.Nearest);
+		unfilledBar = internal.getEntry("settingsScreen:unfilledBar", Texture.class);
+		fullScreenOnButton = internal.getEntry("settingsScreen:settingsOn", Texture.class);
+		fullScreenOffButton = internal.getEntry("settingsScreen:settingsOff", Texture.class);
+		difficultyNormalButton = internal.getEntry("settingsScreen:normal", Texture.class);
+		difficultyHardButton = internal.getEntry("settingsScreen:hard", Texture.class);
+		difficultyVeteranButton = internal.getEntry("settingsScreen:vet", Texture.class);
+		filledBar = internal.getEntry("settingsScreen:filledBar", Texture.class);
+		toggle = internal.getEntry("settingsScreen:dragToggle", Texture.class);
 
 		backHitbox = new Rectangle();
 		backPressState = 0;
@@ -217,6 +237,9 @@ public class SettingsScreen implements Screen, InputProcessor, ControllerListene
 	 * prefer this in lecture.
 	 */
 	private void draw() {
+		float sx = ((float)canvas.getWidth())/STANDARD_WIDTH;
+		float sy = ((float)canvas.getHeight())/STANDARD_HEIGHT;
+		scale = (sx < sy ? sx : sy);
 		canvas.setOverlayCamera();
 		canvas.begin();
 		canvas.draw(background, Color.WHITE, 0, 0, canvas.getWidth(), canvas.getHeight());
@@ -224,8 +247,25 @@ public class SettingsScreen implements Screen, InputProcessor, ControllerListene
 		Color quitTint = (screenSizePressState == 1 ? Color.GRAY: Color.WHITE);
 		Color backTint = (backPressState == 1 ? Color.GRAY: Color.WHITE);
 		canvas.draw(backButton, backTint, 0, 0, canvas.getWidth(), canvas.getHeight());
-//		canvas.draw(volumeButton, playTint, volumeButtonHitbox.x, volumeButtonHitbox.y, volumeButtonHitbox.width, volumeButtonHitbox.height);
-//		canvas.draw(screenSizeButton, quitTint, screenSizeButtonHitbox.x, screenSizeButtonHitbox.y, screenSizeButtonHitbox.width, screenSizeButtonHitbox.height);
+		//Master Volume Bar
+		canvas.draw(unfilledBar,Color.WHITE, (canvas.getWidth() / 1.9f), canvas.getHeight()/1.49f, unfilledBar.getWidth()/scale*2.8f, unfilledBar.getHeight()/scale*2.8f);
+		//Music Volume Bar
+		canvas.draw(unfilledBar,Color.WHITE, (canvas.getWidth() / 1.9f), canvas.getHeight()/1.71f, unfilledBar.getWidth()/scale*2.8f, unfilledBar.getHeight()/scale*2.8f);
+		//SFX Volume Bar
+		canvas.draw(unfilledBar,Color.WHITE, (canvas.getWidth() / 1.9f), canvas.getHeight()/2f, unfilledBar.getWidth()/scale*2.8f, unfilledBar.getHeight()/scale*2.8f);
+		//Brightness Bar
+		canvas.draw(unfilledBar,Color.WHITE, (canvas.getWidth() / 1.9f), canvas.getHeight()/2.4f, unfilledBar.getWidth()/scale*2.8f, unfilledBar.getHeight()/scale*2.8f);
+		//Fullscreen On Button
+		canvas.draw(fullScreenOnButton, Color.WHITE, (canvas.getWidth() / 1.9f), canvas.getHeight()/3f , fullScreenOnButton.getWidth(), fullScreenOnButton.getHeight());
+		//Fullscreen Off Button
+		canvas.draw(fullScreenOffButton, Color.WHITE, (canvas.getWidth() / 1.68f), canvas.getHeight()/3f , fullScreenOffButton.getWidth(), fullScreenOffButton.getHeight());
+		//Level Difficulty Normal Button
+		canvas.draw(difficultyNormalButton, Color.WHITE, (canvas.getWidth() / 1.9f), canvas.getHeight()/6f , difficultyNormalButton.getWidth(), difficultyNormalButton.getHeight());
+		//Level Difficulty Hard Button
+		canvas.draw(difficultyHardButton, Color.WHITE, (canvas.getWidth() / 1.5f), canvas.getHeight()/6f , difficultyHardButton.getWidth(), difficultyHardButton.getHeight());
+		//Level Difficulty Veteran Button
+		canvas.draw(difficultyVeteranButton, Color.WHITE, (canvas.getWidth() / 1.3f), canvas.getHeight()/6f , difficultyVeteranButton.getWidth(), difficultyVeteranButton.getHeight());
+
 		canvas.end();
 	}
 
@@ -295,6 +335,7 @@ public class SettingsScreen implements Screen, InputProcessor, ControllerListene
 			backHitbox.setSize(10 * scale);
 			backHitbox.setPosition(5 * scale, canvas.getHeight() - 12 * scale);
 		}
+
 	}
 
 	/**
@@ -364,7 +405,7 @@ public class SettingsScreen implements Screen, InputProcessor, ControllerListene
 		if(screenSizePressState == 2){
 			return true;
 		}
-		
+
 		// Flip to match graphics coordinates
 		screenY = heightY-screenY;
 
@@ -393,7 +434,7 @@ public class SettingsScreen implements Screen, InputProcessor, ControllerListene
 	 * @param pointer the button or touch finger number
 	 * @return whether to hand the event to other listeners. 
 	 */	
-	public boolean touchUp(int screenX, int screenY, int pointer, int button) { 
+	public boolean touchUp(int screenX, int screenY, int pointer, int button) {
 		if (volumePressState == 1) {
 			volumePressState = 2;
 			return true;

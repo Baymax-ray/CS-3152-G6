@@ -221,6 +221,7 @@ public class GameRoot extends Game implements ScreenListener {
 				escapeMenu.pause();
 				settingsScreen.reset();
 				setScreen(settingsScreen);
+				settingsScreen.setIsFromMainMenu(false);
 			}
 		}
 		if(screen == settingsScreen){
