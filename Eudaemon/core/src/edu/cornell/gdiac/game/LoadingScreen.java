@@ -282,7 +282,7 @@ public class LoadingScreen implements Screen, InputProcessor, ControllerListener
 		canvas.draw(statusFrgLeft,   Color.WHITE, progressBarCenterX - progressBarWidth /2, progressBarCenterY,
 				scale*statusFrgLeft.getRegionWidth(), scale*statusFrgLeft.getRegionHeight());
 		if (progress > 0) {
-			float span = progress*(progressBarWidth -scale*(statusFrgLeft.getRegionWidth()+statusFrgRight.getRegionWidth()))/2.0f;
+			float span = progress*(progressBarWidth -scale*(statusFrgLeft.getRegionWidth()+statusFrgRight.getRegionWidth()));
 			canvas.draw(statusFrgRight,  Color.WHITE, progressBarCenterX - progressBarWidth /2+scale*statusFrgLeft.getRegionWidth()+span, progressBarCenterY,
 					scale*statusFrgRight.getRegionWidth(), scale*statusFrgRight.getRegionHeight());
 			canvas.draw(statusFrgMiddle, Color.WHITE, progressBarCenterX - progressBarWidth /2+scale*statusFrgLeft.getRegionWidth(), progressBarCenterY,

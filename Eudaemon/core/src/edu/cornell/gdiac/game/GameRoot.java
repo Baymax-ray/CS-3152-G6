@@ -83,7 +83,7 @@ public class GameRoot extends Game implements ScreenListener {
 			this.escapeMenu = new EscapeMenu(assets, canvas);
 			this.escapeMenu.setScreenListener(this);
 
-			this.settingsScreen = new SettingsScreen("assets.json", canvas);
+			this.settingsScreen = new SettingsScreen(assets, canvas);
 			this.settingsScreen.setScreenListener(this);
 
 			setScreen(mainMenuScreen);

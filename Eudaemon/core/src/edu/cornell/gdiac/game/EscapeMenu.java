@@ -85,10 +85,6 @@ public class EscapeMenu implements Screen, InputProcessor, ControllerListener {
 	/** Scaling factor for when the student changes the resolution. */
 	private float scale;
 
-	/** Current progress (0 to 1) of the asset manager */
-	private float progress;
-	/** The amount of time to devote to loading assets (as opposed to on screen hints, etc.) */
-	private int   budget;
 
 	/** Whether or not this player mode is still active */
 	private boolean active;
@@ -124,16 +120,6 @@ public class EscapeMenu implements Screen, InputProcessor, ControllerListener {
 	public boolean settingsIsReady() { return settingsButton.pressState == 2; }
 
 	/**
-	 * Creates a LoadingScreen with the default budget, size and position.
-	 *
-	 * @param assets  	The asset directory
-	 * @param canvas 	The game canvas to draw to
-	 */
-	public EscapeMenu(AssetDirectory assets, GameCanvas canvas) {
-		this(assets, canvas, DEFAULT_BUDGET);
-	}
-
-	/**
 	 * Creates a LoadingScreen with the default size and position.
 	 *
 	 * The budget is the number of milliseconds to spend loading assets each animation
@@ -143,11 +129,9 @@ public class EscapeMenu implements Screen, InputProcessor, ControllerListener {
 	 *
 	 * @param assets  	The asset directory
 	 * @param canvas 	The game canvas to draw to
-	 * @param millis The loading budget in milliseconds
 	 */
-	public EscapeMenu(AssetDirectory assets, GameCanvas canvas, int millis) {
+	public EscapeMenu(AssetDirectory assets, GameCanvas canvas) {
 		this.canvas  = canvas;
-		budget = millis;
 
 		buttons = new Array<>();
 
