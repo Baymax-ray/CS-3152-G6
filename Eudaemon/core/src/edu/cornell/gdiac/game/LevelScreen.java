@@ -49,6 +49,9 @@ public class LevelScreen implements Screen {
                 case "Fly":
                     aiControllers.add(new FlyAI(i, level));
                     break;
+                case "FlyRed":
+                    aiControllers.add(new FlyAI(i, level));
+                    break;
                 case "FlyGuardian":
                     aiControllers.add(new FlyGuardianAI(i, level));
                     break;

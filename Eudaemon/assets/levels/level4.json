@@ -1388,6 +1388,29 @@
                  "width":15.5,
                  "x":1063.91666666667,
                  "y":1241.08333333333
+                }, 
+                {
+                 "gid":83,
+                 "height":22,
+                 "id":200,
+                 "name":"GoombaGuardian",
+                 "properties":[
+                        {
+                         "name":"leftX",
+                         "type":"int",
+                         "value":44
+                        }, 
+                        {
+                         "name":"rightX",
+                         "type":"int",
+                         "value":46
+                        }],
+                 "rotation":0,
+                 "type":"Enemy",
+                 "visible":true,
+                 "width":26,
+                 "x":1444.125,
+                 "y":1052.5
                 }],
          "opacity":1,
          "type":"objectgroup",
@@ -1396,7 +1419,7 @@
          "y":0
         }],
  "nextlayerid":11,
- "nextobjectid":200,
+ "nextobjectid":201,
  "orientation":"orthogonal",
  "properties":[
         {

@@ -259,6 +259,15 @@
           }
         }
       },
+      "flyRed:move": {
+        "file" : "enemy/flyMoveRed.png",
+        "sprites" : {
+          "fire": {
+            "rows": 1,
+            "cols": 7
+          }
+        }
+      },
       "fastGoomba:move": {
         "file" : "enemy/fastGoombaMove.png",
         "sprites" : {
@@ -285,6 +294,7 @@
         "enemy:projectileEnemyUpIdle": "enemy/projectileEnemyUpIdle.png",
         "enemy:nonTrackingFlying": "enemy/nonTrackingFlying.png",
         "enemy:Flying":"enemy/TrackingFlying.png",
+        "enemy:FlyingRed": "enemy/TrackingFlyingRed.png",
         "enemy:fastGoomba": "enemy/fastGoomba.png",
 
         "platform:bullet":  "platform/circularProjectile2.png",

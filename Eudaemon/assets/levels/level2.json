@@ -564,8 +564,8 @@
                  "type":"Enemy",
                  "visible":true,
                  "width":24.3402,
-                 "x":1027.43500692974,
-                 "y":568.583115863215
+                 "x":1028.43500692974,
+                 "y":639.583115863215
                 }, 
                 {
                  "gid":83,
@@ -630,90 +630,6 @@
                  "width":20.75,
                  "x":1507.125,
                  "y":378.375
-                }, 
-                {
-                 "gid":89,
-                 "height":23.3218,
-                 "id":225,
-                 "name":"Fly",
-                 "rotation":0,
-                 "type":"Enemy",
-                 "visible":true,
-                 "width":24.3402,
-                 "x":1474.99656666666,
-                 "y":1114.50576666666
-                }, 
-                {
-                 "gid":89,
-                 "height":23.3218,
-                 "id":226,
-                 "name":"Fly",
-                 "rotation":0,
-                 "type":"Enemy",
-                 "visible":true,
-                 "width":24.3402,
-                 "x":1442.99656666667,
-                 "y":986.67243333334
-                }, 
-                {
-                 "gid":89,
-                 "height":23.3218,
-                 "id":227,
-                 "name":"Fly",
-                 "rotation":0,
-                 "type":"Enemy",
-                 "visible":true,
-                 "width":24.3402,
-                 "x":1444.66323333333,
-                 "y":1051.00576666667
-                }, 
-                {
-                 "gid":89,
-                 "height":23.3218,
-                 "id":228,
-                 "name":"Fly",
-                 "rotation":0,
-                 "type":"Enemy",
-                 "visible":true,
-                 "width":24.3402,
-                 "x":1507.3299,
-                 "y":1114.8391
-                }, 
-                {
-                 "gid":89,
-                 "height":23.3218,
-                 "id":231,
-                 "name":"Fly",
-                 "rotation":0,
-                 "type":"Enemy",
-                 "visible":true,
-                 "width":24.3402,
-                 "x":1412.3299,
-                 "y":1020.17243333333
-                }, 
-                {
-                 "gid":89,
-                 "height":23.3218,
-                 "id":234,
-                 "name":"Fly",
-                 "rotation":0,
-                 "type":"Enemy",
-                 "visible":true,
-                 "width":24.3402,
-                 "x":1381.3299,
-                 "y":1019.50576666667
-                }, 
-                {
-                 "gid":89,
-                 "height":23.3218,
-                 "id":235,
-                 "name":"Fly",
-                 "rotation":0,
-                 "type":"Enemy",
-                 "visible":true,
-                 "width":24.3402,
-                 "x":1474.66323333333,
-                 "y":955.3391
                 }, 
                 {
                  "gid":87,
@@ -1276,49 +1192,98 @@
                 {
                  "gid":89,
                  "height":23.3218,
-                 "id":267,
+                 "id":271,
                  "name":"Fly",
                  "rotation":0,
                  "type":"Enemy",
                  "visible":true,
                  "width":24.3402,
-                 "x":1573.3299,
-                 "y":1083.8391
+                 "x":1922.49656666667,
+                 "y":989.3391
                 }, 
                 {
                  "gid":89,
                  "height":23.3218,
-                 "id":268,
+                 "id":272,
                  "name":"Fly",
                  "rotation":0,
                  "type":"Enemy",
                  "visible":true,
                  "width":24.3402,
-                 "x":1506.3299,
-                 "y":1019.3391
+                 "x":2117.16323333333,
+                 "y":793.672433333333
                 }, 
                 {
-                 "gid":86,
-                 "height":28,
-                 "id":270,
-                 "name":"Projectile",
-                 "properties":[
-                        {
-                         "name":"Direction",
-                         "type":"string",
-                         "value":"Down"
-                        }, 
-                        {
-                         "name":"SpriteSheetType",
-                         "type":"string",
-                         "value":"Down"
-                        }],
+                 "gid":336,
+                 "height":16.3333,
+                 "id":276,
+                 "name":"FlyRed",
                  "rotation":0,
                  "type":"Enemy",
                  "visible":true,
-                 "width":32,
-                 "x":1455.99626936108,
-                 "y":541.678104705459
+                 "width":15.3333,
+                 "x":1481.33335,
+                 "y":1051.83335
+                }, 
+                {
+                 "gid":336,
+                 "height":16.3333,
+                 "id":277,
+                 "name":"FlyRed",
+                 "rotation":0,
+                 "type":"Enemy",
+                 "visible":true,
+                 "width":15.3333,
+                 "x":1446.83335,
+                 "y":1017.33335
+                }, 
+                {
+                 "gid":336,
+                 "height":16.3333,
+                 "id":278,
+                 "name":"FlyRed",
+                 "rotation":0,
+                 "type":"Enemy",
+                 "visible":true,
+                 "width":15.3333,
+                 "x":1445.83335,
+                 "y":952.33335
+                }, 
+                {
+                 "gid":336,
+                 "height":16.3333,
+                 "id":279,
+                 "name":"FlyRed",
+                 "rotation":0,
+                 "type":"Enemy",
+                 "visible":true,
+                 "width":15.3333,
+                 "x":1387.83335,
+                 "y":1015.83335
+                }, 
+                {
+                 "gid":336,
+                 "height":16.3333,
+                 "id":280,
+                 "name":"FlyRed",
+                 "rotation":0,
+                 "type":"Enemy",
+                 "visible":true,
+                 "width":15.3333,
+                 "x":1448.83335,
+                 "y":1079.83335
+                }, 
+                {
+                 "gid":336,
+                 "height":16.3333,
+                 "id":281,
+                 "name":"FlyRed",
+                 "rotation":0,
+                 "type":"Enemy",
+                 "visible":true,
+                 "width":15.3333,
+                 "x":1477.83335,
+                 "y":1115.33335
                 }],
          "opacity":1,
          "type":"objectgroup",
@@ -1327,7 +1292,7 @@
          "y":0
         }],
  "nextlayerid":12,
- "nextobjectid":271,
+ "nextobjectid":282,
  "orientation":"orthogonal",
  "properties":[
         {

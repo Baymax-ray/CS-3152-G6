@@ -214,8 +214,40 @@
     "hitboxWidth": 0.5,
     "hitboxHeight": 0.6,
 
-    "maxSpeed": 1.5,
+    "maxSpeed": 2.3,
     "speedMult": 2.0,
+    "horizontalAcceleration": 0.12,
+
+    "initialHearts": 1,
+    "attackPower": 1,
+    "startsFacingRight": false,
+    "attackCooldown": 30,
+    "attackOffset": 0.23,
+    "drawScaleX": 1.5,
+    "drawScaleY": 1.5,
+    "oxOffset": 0,
+    "oyOffset": 0,
+    "force": 20.0,
+    "damping": 100.0,
+    "sensor": {
+      "shrink" : 0.6,
+      "height" : 0.05
+    },
+    "spiritLimitation":8,
+    "knockback":8000
+  },
+  "FlyRed": {
+    "TextureAsset": "enemy:FlyingRed",
+    "MoveAsset": "flyRed:move",
+    "ImageWidth": 0.5,
+    "ImageHeight": 0.5,
+    "tickFrameSwitch": 3,
+    "maxFrame": 7,
+    "hitboxWidth": 0.5,
+    "hitboxHeight": 0.6,
+
+    "maxSpeed": 2.3,
+    "speedMult": 4.0,
     "horizontalAcceleration": 0.12,
 
     "initialHearts": 2,

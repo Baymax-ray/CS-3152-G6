@@ -3,10 +3,10 @@
         "height": 4300,
         "width": 2
     },
-    "activeFile": "level4.json",
+    "activeFile": "level2.json",
     "expandedProjectPaths": [
-        ".",
-        "Templates"
+        "Templates",
+        "."
     ],
     "file.lastUsedOpenFilter": "全部文件 (*)",
     "fileStates": {
@@ -24,7 +24,7 @@
         },
         "F:/Programming/School/CS 3152/Eudaemon/CS-3152-G6/Eudaemon/assets/EudaemonTileset.json": {
             "dynamicWrapping": false,
-            "scaleInDock": 2,
+            "scaleInDock": 1.5,
             "scaleInEditor": 2
         },
         "F:/Users/neelin2/coding/cs3152/Eudaemon/CS-3152-G6/Eudaemon/assets/Assets/Tiles/EudaemonTileset.json": {
@@ -53,8 +53,8 @@
             "scale": 3,
             "selectedLayer": 3,
             "viewCenter": {
-                "x": 2165.5,
-                "y": 816.3333333333333
+                "x": 1216,
+                "y": 639.6666666666666
             }
         },
         "level0.tmj": {
@@ -72,8 +72,8 @@
             "scale": 0.5,
             "selectedLayer": 3,
             "viewCenter": {
-                "x": 1762,
-                "y": 762
+                "x": 1200,
+                "y": 640
             }
         },
         "level1old.json": {
@@ -91,33 +91,33 @@
             "expandedObjectLayers": [
                 7
             ],
-            "scale": 0.33,
+            "scale": 1,
             "selectedLayer": 3,
             "viewCenter": {
-                "x": 1330.3030303030305,
-                "y": 839.3939393939393
+                "x": 1200,
+                "y": 640
             }
         },
         "level3.json": {
             "expandedObjectLayers": [
                 7
             ],
-            "scale": 1,
+            "scale": 0.75,
             "selectedLayer": 3,
             "viewCenter": {
-                "x": 1643,
-                "y": 554
+                "x": 1120,
+                "y": 640
             }
         },
         "level4.json": {
             "expandedObjectLayers": [
                 7
             ],
-            "scale": 0.5,
+            "scale": 0.75,
             "selectedLayer": 3,
             "viewCenter": {
-                "x": 1374,
-                "y": 1434
+                "x": 768,
+                "y": 960
             }
         },
         "level5.json": {
@@ -127,21 +127,21 @@
             "scale": 0.75,
             "selectedLayer": 3,
             "viewCenter": {
-                "x": 929.3333333333334,
-                "y": 793.3333333333333
+                "x": 800,
+                "y": 640
             }
         },
         "level6.json": {
             "scale": 0.5515937499999999,
             "selectedLayer": 0,
             "viewCenter": {
-                "x": 784.9980171095124,
-                "y": 639.9637414310806
+                "x": 801.3143731233359,
+                "y": 641.7766698770611
             }
         }
     },
     "last.externalTilesetPath": "/Users/neelin2/coding/cs3152/Eudaemon/CS-3152-G6/Eudaemon/assets",
-    "last.imagePath": "F:/Programming/School/CS 3152/Eudaemon/CS-3152-G6/Eudaemon/assets/tiles",
+    "last.imagePath": "F:/Programming/School/CS 3152/Eudaemon/CS-3152-G6/Eudaemon/assets/tiles/EnemiesObjects",
     "last.objectTemplatePath": "F:/Programming/School/CS 3152/Eudaemon/CS-3152-G6/Eudaemon/assets/levels/Templates",
     "map.height": 40,
     "map.lastUsedFormat": "json",
@@ -154,18 +154,20 @@
         "level3.json",
         "level4.json",
         "level5.json",
+        "level6.json",
         "F:/Programming/School/CS 3152/Eudaemon/CS-3152-G6/Eudaemon/assets/EudaemonTileset.json"
     ],
     "project": "untitled.tiled-project",
     "property.type": "string",
     "recentFiles": [
-        "level4.json",
         "level0.json",
         "level1.json",
-        "level2.json",
-        "level3.json",
         "F:/Programming/School/CS 3152/Eudaemon/CS-3152-G6/Eudaemon/assets/EudaemonTileset.json",
+        "level6.json",
         "level5.json",
+        "level4.json",
+        "level3.json",
+        "level2.json",
         "level1old.json",
         "experimentalLevel1.json",
         "level0.tmj",

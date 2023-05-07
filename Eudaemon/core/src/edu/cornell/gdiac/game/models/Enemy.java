@@ -392,6 +392,8 @@ public class Enemy extends CapsuleObstacle {
             case "Fast":
             case "Fly":
                 break;
+            case "FlyRed":
+                break;
             case "FlyGuardian":
                 this.guardianTime = enemyData.getInt("guardianTime");
 //                JsonValue glist = json.get("guardianList");
@@ -527,7 +529,7 @@ public class Enemy extends CapsuleObstacle {
         this.spiritRemain = enemyData.getFloat(("spiritLimitation"));
         this.isFacingRight = enemyData.getBoolean("startsFacingRight");
 
-        if (this.type.equals("Fly") || this.type.equals("FlyGuardian")||this.type.equals("Projectile")) {
+        if (this.type.equals("Fly") || this.type.equals("FlyRed") || this.type.equals("FlyGuardian")||this.type.equals("Projectile")) {
             this.setGravityScale(0);
         } else {
             this.setGravityScale(20);
@@ -718,7 +720,7 @@ public class Enemy extends CapsuleObstacle {
         // Velocity too high, clamp it
         if (Math.abs(getVX()) >= this.maxSpeed) {
             setVX(Math.signum(getVX()) * this.maxSpeed);
-        } else if (this.type.equals("Fly") && Math.abs(getVY()) >= this.maxSpeed) {
+        } else if ((this.type.equals("Fly") || this.type.equals("FlyRed")) && Math.abs(getVY()) >= this.maxSpeed) {
             setVY(Math.signum(getVY()) * this.maxSpeed);
         }
 
