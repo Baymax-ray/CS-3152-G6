@@ -358,10 +358,10 @@ public class SettingsScreen implements Screen, InputProcessor, ControllerListene
 	 * @return whether to hand the event to other listeners. 
 	 */
 	public boolean touchDown(int screenX, int screenY, int pointer, int button) {
-		if (volumeButton == null || volumePressState == 2) {
+		if (volumePressState == 2) {
 			return true;
 		}
-		if(screenSizeButton == null || screenSizePressState == 2){
+		if(screenSizePressState == 2){
 			return true;
 		}
 		
@@ -376,6 +376,7 @@ public class SettingsScreen implements Screen, InputProcessor, ControllerListene
 //		}
 		if (backHitbox.contains(screenX, screenY)) {
 			backPressState = 1;
+			return true;
 		}
 
 		return false;
@@ -395,17 +396,17 @@ public class SettingsScreen implements Screen, InputProcessor, ControllerListene
 	public boolean touchUp(int screenX, int screenY, int pointer, int button) { 
 		if (volumePressState == 1) {
 			volumePressState = 2;
-			return false;
+			return true;
 		}
 		if(screenSizePressState == 1){
 			screenSizePressState = 2;
-			return false;
+			return true;
 		}
 		if (backPressState == 1) {
 			backPressState = 2;
-			return false;
+			return true;
 		}
-		return true;
+		return false;
 	}
 	
 	/** 
@@ -424,24 +425,24 @@ public class SettingsScreen implements Screen, InputProcessor, ControllerListene
 			ControllerMapping mapping = controller.getMapping();
 			if (mapping != null && buttonCode == mapping.buttonStart ) {
 				volumePressState = 1;
-				return false;
+				return true;
 			}
 		}
 		if (screenSizePressState == 0) {
 			ControllerMapping mapping = controller.getMapping();
 			if (mapping != null && buttonCode == mapping.buttonStart ) {
 				screenSizePressState = 1;
-				return false;
+				return true;
 			}
 		}
 		if (backPressState == 0) {
 			ControllerMapping mapping = controller.getMapping();
 			if (mapping != null && buttonCode == mapping.buttonStart ) {
 				backPressState = 1;
-				return false;
+				return true;
 			}
 		}
-		return true;
+		return false;
 	}
 	
 	/** 
@@ -460,24 +461,24 @@ public class SettingsScreen implements Screen, InputProcessor, ControllerListene
 			ControllerMapping mapping = controller.getMapping();
 			if (mapping != null && buttonCode == mapping.buttonStart ) {
 				volumePressState = 2;
-				return false;
+				return true;
 			}
 		}
 		if (screenSizePressState == 1) {
 			ControllerMapping mapping = controller.getMapping();
 			if (mapping != null && buttonCode == mapping.buttonStart ) {
 				screenSizePressState = 2;
-				return false;
+				return true;
 			}
 		}
 		if (backPressState == 1) {
 			ControllerMapping mapping = controller.getMapping();
 			if (mapping != null && buttonCode == mapping.buttonStart ) {
 				backPressState = 2;
-				return false;
+				return true;
 			}
 		}
-		return true;
+		return false;
 	}
 	
 	// UNSUPPORTED METHODS FROM InputProcessor
@@ -489,7 +490,7 @@ public class SettingsScreen implements Screen, InputProcessor, ControllerListene
 	 * @return whether to hand the event to other listeners. 
 	 */
 	public boolean keyDown(int keycode) { 
-		return true; 
+		return false;
 	}
 
 	/** 
@@ -499,7 +500,7 @@ public class SettingsScreen implements Screen, InputProcessor, ControllerListene
 	 * @return whether to hand the event to other listeners. 
 	 */
 	public boolean keyTyped(char character) { 
-		return true; 
+		return false;
 	}
 
 	/** 
@@ -509,7 +510,7 @@ public class SettingsScreen implements Screen, InputProcessor, ControllerListene
 	 * @return whether to hand the event to other listeners. 
 	 */	
 	public boolean keyUp(int keycode) { 
-		return true; 
+		return false;
 	}
 	
 	/** 
@@ -520,7 +521,7 @@ public class SettingsScreen implements Screen, InputProcessor, ControllerListene
 	 * @return whether to hand the event to other listeners. 
 	 */	
 	public boolean mouseMoved(int screenX, int screenY) { 
-		return true; 
+		return false;
 	}
 
 	/**
@@ -532,7 +533,7 @@ public class SettingsScreen implements Screen, InputProcessor, ControllerListene
 	 * @return whether to hand the event to other listeners.
 	 */
 	public boolean scrolled(float dx, float dy) {
-		return true;
+		return false;
 	}
 
 	/** 
@@ -544,7 +545,7 @@ public class SettingsScreen implements Screen, InputProcessor, ControllerListene
 	 * @return whether to hand the event to other listeners. 
 	 */		
 	public boolean touchDragged(int screenX, int screenY, int pointer) { 
-		return true; 
+		return false;
 	}
 	
 	// UNSUPPORTED METHODS FROM ControllerListener
@@ -574,7 +575,7 @@ public class SettingsScreen implements Screen, InputProcessor, ControllerListene
 	 * @return whether to hand the event to other listeners. 
 	 */
 	public boolean axisMoved (Controller controller, int axisCode, float value) {
-		return true;
+		return false;
 	}
 
 }

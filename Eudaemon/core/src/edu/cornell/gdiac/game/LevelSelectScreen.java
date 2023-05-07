@@ -402,6 +402,7 @@ public class LevelSelectScreen implements Screen, InputProcessor, ControllerList
 
         if (backHitbox.contains(screenX, screenY)) {
             backPressState = 1;
+            return true;
         }
 
         for (int i = 0, levelHitboxesLength = levelHitboxes.length; i < levelHitboxesLength; i++) {
@@ -410,6 +411,7 @@ public class LevelSelectScreen implements Screen, InputProcessor, ControllerList
                 if (i < numAvailableLevels) {
 //                    System.out.println(i);
                     levelPressState[i] = 1;
+                    return true;
                 }
             }
         }
@@ -430,15 +432,15 @@ public class LevelSelectScreen implements Screen, InputProcessor, ControllerList
     public boolean touchUp(int screenX, int screenY, int pointer, int button) {
         if (backPressState == 1) {
             backPressState = 2;
-            return false;
+            return true;
         }
         for (int i = 0; i < levelPressState.length; i++) {
             if (levelPressState[i] == 1) {
                 levelPressState[i] = 2;
-                return false;
+                return true;
             }
         }
-        return true;
+        return false;
     }
 
     /**
@@ -457,10 +459,10 @@ public class LevelSelectScreen implements Screen, InputProcessor, ControllerList
             ControllerMapping mapping = controller.getMapping();
             if (mapping != null && buttonCode == mapping.buttonStart ) {
                 backPressState = 1;
-                return false;
+                return true;
             }
         }
-        return true;
+        return false;
     }
 
     /**
@@ -479,10 +481,10 @@ public class LevelSelectScreen implements Screen, InputProcessor, ControllerList
             ControllerMapping mapping = controller.getMapping();
             if (mapping != null && buttonCode == mapping.buttonStart ) {
                 backPressState = 2;
-                return false;
+                return true;
             }
         }
-        return true;
+        return false;
     }
 
     // UNSUPPORTED METHODS FROM InputProcessor
@@ -494,7 +496,7 @@ public class LevelSelectScreen implements Screen, InputProcessor, ControllerList
      * @return whether to hand the event to other listeners.
      */
     public boolean keyDown(int keycode) {
-        return true;
+        return false;
     }
 
     /**
@@ -504,7 +506,7 @@ public class LevelSelectScreen implements Screen, InputProcessor, ControllerList
      * @return whether to hand the event to other listeners.
      */
     public boolean keyTyped(char character) {
-        return true;
+        return false;
     }
 
     /**
@@ -514,7 +516,7 @@ public class LevelSelectScreen implements Screen, InputProcessor, ControllerList
      * @return whether to hand the event to other listeners.
      */
     public boolean keyUp(int keycode) {
-        return true;
+        return false;
     }
 
     /**
@@ -525,7 +527,7 @@ public class LevelSelectScreen implements Screen, InputProcessor, ControllerList
      * @return whether to hand the event to other listeners.
      */
     public boolean mouseMoved(int screenX, int screenY) {
-        return true;
+        return false;
     }
 
     /**
@@ -537,7 +539,7 @@ public class LevelSelectScreen implements Screen, InputProcessor, ControllerList
      * @return whether to hand the event to other listeners.
      */
     public boolean scrolled(float dx, float dy) {
-        return true;
+        return false;
     }
 
     /**
@@ -549,7 +551,7 @@ public class LevelSelectScreen implements Screen, InputProcessor, ControllerList
      * @return whether to hand the event to other listeners.
      */
     public boolean touchDragged(int screenX, int screenY, int pointer) {
-        return true;
+        return false;
     }
 
     // UNSUPPORTED METHODS FROM ControllerListener
@@ -579,7 +581,7 @@ public class LevelSelectScreen implements Screen, InputProcessor, ControllerList
      * @return whether to hand the event to other listeners.
      */
     public boolean axisMoved (Controller controller, int axisCode, float value) {
-        return true;
+        return false;
     }
 
 }

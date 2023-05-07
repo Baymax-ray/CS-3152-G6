@@ -334,10 +334,10 @@ public class DeathScreen implements Screen, InputProcessor, ControllerListener {
 	 * @return whether to hand the event to other listeners. 
 	 */
 	public boolean touchDown(int screenX, int screenY, int pointer, int button) {
-		if (playButton == null || pressState == 2) {
+		if (pressState == 2) {
 			return true;
 		}
-		if(quitButton == null || quitPressState == 2){
+		if(quitPressState == 2){
 			return true;
 		}
 		
@@ -346,9 +346,11 @@ public class DeathScreen implements Screen, InputProcessor, ControllerListener {
 
 		if (playButtonHitbox.contains(screenX, screenY)) {
 			pressState = 1;
+			return true;
 		}
 		if(quitButtonHitbox.contains(screenX, screenY)){
 			quitPressState = 1;
+			return true;
 		}
 
 		return false;
@@ -368,13 +370,13 @@ public class DeathScreen implements Screen, InputProcessor, ControllerListener {
 	public boolean touchUp(int screenX, int screenY, int pointer, int button) { 
 		if (pressState == 1) {
 			pressState = 2;
-			return false;
+			return true;
 		}
 		if(quitPressState == 1){
 			quitPressState = 2;
-			return false;
+			return true;
 		}
-		return true;
+		return false;
 	}
 	
 	/** 
@@ -393,17 +395,17 @@ public class DeathScreen implements Screen, InputProcessor, ControllerListener {
 			ControllerMapping mapping = controller.getMapping();
 			if (mapping != null && buttonCode == mapping.buttonStart ) {
 				pressState = 1;
-				return false;
+				return true;
 			}
 		}
 		if (quitPressState == 0) {
 			ControllerMapping mapping = controller.getMapping();
 			if (mapping != null && buttonCode == mapping.buttonStart ) {
 				quitPressState = 1;
-				return false;
+				return true;
 			}
 		}
-		return true;
+		return false;
 	}
 	
 	/** 
@@ -422,17 +424,17 @@ public class DeathScreen implements Screen, InputProcessor, ControllerListener {
 			ControllerMapping mapping = controller.getMapping();
 			if (mapping != null && buttonCode == mapping.buttonStart ) {
 				pressState = 2;
-				return false;
+				return true;
 			}
 		}
 		if (quitPressState == 1) {
 			ControllerMapping mapping = controller.getMapping();
 			if (mapping != null && buttonCode == mapping.buttonStart ) {
 				quitPressState = 2;
-				return false;
+				return true;
 			}
 		}
-		return true;
+		return false;
 	}
 	
 	// UNSUPPORTED METHODS FROM InputProcessor
@@ -444,7 +446,7 @@ public class DeathScreen implements Screen, InputProcessor, ControllerListener {
 	 * @return whether to hand the event to other listeners. 
 	 */
 	public boolean keyDown(int keycode) { 
-		return true; 
+		return false;
 	}
 
 	/** 
@@ -454,7 +456,7 @@ public class DeathScreen implements Screen, InputProcessor, ControllerListener {
 	 * @return whether to hand the event to other listeners. 
 	 */
 	public boolean keyTyped(char character) { 
-		return true; 
+		return false;
 	}
 
 	/** 
@@ -464,7 +466,7 @@ public class DeathScreen implements Screen, InputProcessor, ControllerListener {
 	 * @return whether to hand the event to other listeners. 
 	 */	
 	public boolean keyUp(int keycode) { 
-		return true; 
+		return false;
 	}
 	
 	/** 
@@ -475,7 +477,7 @@ public class DeathScreen implements Screen, InputProcessor, ControllerListener {
 	 * @return whether to hand the event to other listeners. 
 	 */	
 	public boolean mouseMoved(int screenX, int screenY) { 
-		return true; 
+		return false;
 	}
 
 	/**
@@ -487,7 +489,7 @@ public class DeathScreen implements Screen, InputProcessor, ControllerListener {
 	 * @return whether to hand the event to other listeners.
 	 */
 	public boolean scrolled(float dx, float dy) {
-		return true;
+		return false;
 	}
 
 	/** 
@@ -499,7 +501,7 @@ public class DeathScreen implements Screen, InputProcessor, ControllerListener {
 	 * @return whether to hand the event to other listeners. 
 	 */		
 	public boolean touchDragged(int screenX, int screenY, int pointer) { 
-		return true; 
+		return false;
 	}
 	
 	// UNSUPPORTED METHODS FROM ControllerListener
@@ -529,7 +531,7 @@ public class DeathScreen implements Screen, InputProcessor, ControllerListener {
 	 * @return whether to hand the event to other listeners. 
 	 */
 	public boolean axisMoved (Controller controller, int axisCode, float value) {
-		return true;
+		return false;
 	}
 
 }
