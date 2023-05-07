@@ -327,9 +327,9 @@ public class LevelSelectScreen implements Screen, InputProcessor, ControllerList
             y = lights.getHeight() - (66 + (i - 6) * 15);
         }
 
-        System.out.print(x);
-        System.out.print(" ");
-        System.out.println(y);
+//        System.out.print(x);
+//        System.out.print(" ");
+//        System.out.println(y);
         return new Vector2(x * scale, y * scale);
     }
 
@@ -408,7 +408,7 @@ public class LevelSelectScreen implements Screen, InputProcessor, ControllerList
             Rectangle levelHitbox = levelHitboxes[i];
             if (levelHitbox.contains(screenX, screenY)) {
                 if (i < numAvailableLevels) {
-                    System.out.println(i);
+//                    System.out.println(i);
                     levelPressState[i] = 1;
                 }
             }
