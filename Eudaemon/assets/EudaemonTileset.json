@@ -8,7 +8,7 @@
  "margin":0,
  "name":"Eudaemon Tilleset",
  "spacing":0,
- "tilecount":260,
+ "tilecount":268,
  "tiledversion":"1.10.1",
  "tileheight":42,
  "tiles":[
@@ -733,66 +733,6 @@
          "imagewidth":32
         }, 
         {
-         "id":198,
-         "image":"tiles\/MetalPlatformMidsection1.png",
-         "imageheight":32,
-         "imagewidth":32
-        }, 
-        {
-         "id":200,
-         "image":"tiles\/MetalPlatformCornerVert5.png",
-         "imageheight":32,
-         "imagewidth":32
-        }, 
-        {
-         "id":201,
-         "image":"tiles\/MetalPlatformMidsection3.png",
-         "imageheight":32,
-         "imagewidth":32
-        }, 
-        {
-         "id":202,
-         "image":"tiles\/MetalPlatformExteriorMidsection5.png",
-         "imageheight":32,
-         "imagewidth":32
-        }, 
-        {
-         "id":203,
-         "image":"tiles\/MetalPlatformExteriorMidsection6.png",
-         "imageheight":32,
-         "imagewidth":32
-        }, 
-        {
-         "id":204,
-         "image":"tiles\/MetalPlatformExteriorMidsection4.png",
-         "imageheight":32,
-         "imagewidth":32
-        }, 
-        {
-         "id":206,
-         "image":"tiles\/MetalPlatformExteriorMidsection2.png",
-         "imageheight":32,
-         "imagewidth":32
-        }, 
-        {
-         "id":207,
-         "image":"tiles\/MetalPlatformExteriorMidsection3.png",
-         "imageheight":32,
-         "imagewidth":32
-        }, 
-        {
-         "id":208,
-         "image":"tiles\/MetalPlatformMidsection4.png",
-         "imageheight":32,
-         "imagewidth":32
-        }, 
-        {
-         "id":205,
-         "image":"tiles\/MetalPlatformExteriorMidsection1.png",
-         "imageheight":32,
-         "imagewidth":32
-        }, 
-        {
          "id":209,
          "image":"tiles\/MetalPlatformExteriorMidsection8.png",
          "imageheight":32,
@@ -937,14 +877,92 @@
          "imagewidth":32
         }, 
         {
-         "id":55,
-         "image":"tiles\/BGConcreteA.png",
+         "id":320,
+         "image":"tiles\/MetalPlatformExteriorMidsection9.png",
          "imageheight":32,
          "imagewidth":32
         }, 
         {
-         "id":59,
-         "image":"tiles\/BGConcreteE.png",
+         "id":319,
+         "image":"tiles\/MetalPlatformExteriorMidsection12.png",
+         "imageheight":32,
+         "imagewidth":32
+        }, 
+        {
+         "id":321,
+         "image":"tiles\/MetalPlatformExteriorMidsection10.png",
+         "imageheight":32,
+         "imagewidth":32
+        }, 
+        {
+         "id":322,
+         "image":"tiles\/MetalPlatformExteriorMidsection11.png",
+         "imageheight":32,
+         "imagewidth":32
+        }, 
+        {
+         "id":204,
+         "image":"tiles\/MetalPlatformExteriorMidsection4.png",
+         "imageheight":32,
+         "imagewidth":32
+        }, 
+        {
+         "id":200,
+         "image":"tiles\/MetalPlatformCornerVert5.png",
+         "imageheight":32,
+         "imagewidth":32
+        }, 
+        {
+         "id":201,
+         "image":"tiles\/MetalPlatformMidsection3.png",
+         "imageheight":32,
+         "imagewidth":32
+        }, 
+        {
+         "id":202,
+         "image":"tiles\/MetalPlatformExteriorMidsection5.png",
+         "imageheight":32,
+         "imagewidth":32
+        }, 
+        {
+         "id":203,
+         "image":"tiles\/MetalPlatformExteriorMidsection6.png",
+         "imageheight":32,
+         "imagewidth":32
+        }, 
+        {
+         "id":198,
+         "image":"tiles\/MetalPlatformMidsection1.png",
+         "imageheight":32,
+         "imagewidth":32
+        }, 
+        {
+         "id":205,
+         "image":"tiles\/MetalPlatformExteriorMidsection1.png",
+         "imageheight":32,
+         "imagewidth":32
+        }, 
+        {
+         "id":207,
+         "image":"tiles\/MetalPlatformExteriorMidsection3.png",
+         "imageheight":32,
+         "imagewidth":32
+        }, 
+        {
+         "id":208,
+         "image":"tiles\/MetalPlatformMidsection4.png",
+         "imageheight":32,
+         "imagewidth":32
+        }, 
+        {
+         "id":206,
+         "image":"tiles\/MetalPlatformExteriorMidsection2.png",
+         "imageheight":32,
+         "imagewidth":32
+        }, 
+        {
+         "id":55,
+         "image":"tiles\/BGConcreteA.png",
          "imageheight":32,
          "imagewidth":32
         }, 
@@ -969,6 +987,12 @@
         {
          "id":56,
          "image":"tiles\/BGConcreteB.png",
+         "imageheight":32,
+         "imagewidth":32
+        }, 
+        {
+         "id":59,
+         "image":"tiles\/BGConcreteE.png",
          "imageheight":32,
          "imagewidth":32
         }, 
@@ -1569,6 +1593,30 @@
         {
          "id":259,
          "image":"tiles\/RedMetalPlatformMidsection2.png",
+         "imageheight":32,
+         "imagewidth":32
+        }, 
+        {
+         "id":323,
+         "image":"tiles\/RedMetalPlatformExteriorMidsection9.png",
+         "imageheight":32,
+         "imagewidth":32
+        }, 
+        {
+         "id":324,
+         "image":"tiles\/RedMetalPlatformExteriorMidsection10.png",
+         "imageheight":32,
+         "imagewidth":32
+        }, 
+        {
+         "id":325,
+         "image":"tiles\/RedMetalPlatformExteriorMidsection11.png",
+         "imageheight":32,
+         "imagewidth":32
+        }, 
+        {
+         "id":326,
+         "image":"tiles\/RedMetalPlatformExteriorMidsection12.png",
          "imageheight":32,
          "imagewidth":32
         }],
