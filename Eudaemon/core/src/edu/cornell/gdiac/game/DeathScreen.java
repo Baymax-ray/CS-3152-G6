@@ -23,6 +23,7 @@
 package edu.cornell.gdiac.game;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.controllers.Controller;
@@ -36,7 +37,6 @@ import com.badlogic.gdx.math.Rectangle;
 import edu.cornell.gdiac.assets.AssetDirectory;
 import edu.cornell.gdiac.util.Controllers;
 import edu.cornell.gdiac.util.ScreenListener;
-import edu.cornell.gdiac.util.XBoxController;
 
 /**
  * Class that provides a loading screen for the state of the game.
@@ -52,20 +52,9 @@ import edu.cornell.gdiac.util.XBoxController;
  * loading screen.
  */
 public class DeathScreen implements Screen, InputProcessor, ControllerListener {
-	// There are TWO asset managers.  One to load the loading screen.  The other to load the assets
-	/** Internal assets for this loading screen */
-	private final AssetDirectory internal;
 
 	/** Background texture for start-up */
 	private final Texture background;
-
-	/** Play button to display when done */
-	private Texture playButton;
-	/** quit button to display when done */
-	private Texture quitButton;
-
-
-
 
 	/** Default budget for asset loader (do nothing but load 60 fps) */
 	private static final int DEFAULT_BUDGET = 15;
@@ -98,19 +87,21 @@ public class DeathScreen implements Screen, InputProcessor, ControllerListener {
 
 	/** Current progress (0 to 1) of the asset manager */
 	private float progress;
-	/** The current state of the play button */
-	private int   pressState;
 	/** The amount of time to devote to loading assets (as opposed to on screen hints, etc.) */
 	private int   budget;
 
 	/** Whether or not this player mode is still active */
 	private boolean active;
-	/** The hitbox of the start button */
-	private Rectangle playButtonHitbox;
 
-	private Rectangle  quitButtonHitbox;
+	private MenuButton playButton;
+	private MenuButton quitButton;
 
-	private int quitPressState;
+	private MenuButton hoveredButton;
+
+	private int menuCooldown;
+	private boolean menuUp;
+	private boolean menuDown;
+	private static final int COOLDOWN = 10;
 
 
 	/**
@@ -119,20 +110,20 @@ public class DeathScreen implements Screen, InputProcessor, ControllerListener {
 	 * @return true if the player is ready to go
 	 */
 	public boolean restartIsReady() {
-		return pressState == 2;
+		return playButton.pressState == 2;
 	}
 	public boolean quitIsReady() {
-		return quitPressState == 2;
+		return quitButton.pressState == 2;
 	}
 
 	/**
 	 * Creates a LoadingScreen with the default budget, size and position.
 	 *
-	 * @param file  	The asset directory to load in the background
+	 * @param assets  	The asset directory
 	 * @param canvas 	The game canvas to draw to
 	 */
-	public DeathScreen(String file, GameCanvas canvas) {
-		this(file, canvas, DEFAULT_BUDGET);
+	public DeathScreen(AssetDirectory assets, GameCanvas canvas) {
+		this(assets, canvas, DEFAULT_BUDGET);
 	}
 
 	/**
@@ -143,49 +134,46 @@ public class DeathScreen implements Screen, InputProcessor, ControllerListener {
 	 * frame is ~16 milliseconds. So if the budget is 10, you have 6 milliseconds to
 	 * do something else.  This is how game companies animate their loading screens.
 	 *
-	 * @param file  	The asset directory to load in the background
+	 * @param assets  	The asset directory
 	 * @param canvas 	The game canvas to draw to
 	 * @param millis The loading budget in milliseconds
 	 */
-	public DeathScreen(String file, GameCanvas canvas, int millis) {
+	public DeathScreen(AssetDirectory assets, GameCanvas canvas, int millis) {
 		this.canvas  = canvas;
 		budget = millis;
 
 		// Compute the dimensions from the canvas
 		resize(canvas.getWidth(),canvas.getHeight());
 
-		// We need these files loaded immediately
-		internal = new AssetDirectory( "assets.json" );
-		internal.loadAssets();
-		internal.finishLoading();
-
 		// Load the next two images immediately.
-		background = internal.getEntry( "deathScreen:background", Texture.class );
+		background = assets.getEntry( "deathScreen:background", Texture.class );
 		background.setFilter( TextureFilter.Linear, TextureFilter.Linear );
-		playButton = internal.getEntry("deathScreen:restart",Texture.class);
-		quitButton = internal.getEntry("deathScreen:quit", Texture.class);
 
+		playButton = new MenuButton(assets.getEntry("deathScreen:restart",Texture.class), ExitCode.START);
+		quitButton = new MenuButton(assets.getEntry("deathScreen:quit", Texture.class), ExitCode.QUIT);
+
+		playButton.up = quitButton;
+		playButton.down = quitButton;
+
+		quitButton.up = playButton;
+		quitButton.down = playButton;
+
+		hoveredButton = playButton;
 
 		Gdx.input.setInputProcessor( this );
 
-		playButtonHitbox = new Rectangle();
-		quitButtonHitbox = new Rectangle();
-		quitPressState = 0;
-
 		// Let ANY connected controller start the game.
-		for (XBoxController controller : Controllers.get().getXBoxControllers()) {
+		for (Controller controller : Controllers.get().getControllers()) {
 			controller.addListener( this );
 		}
 
-		active = true;
+		active = false;
 	}
 	
 	/**
 	 * Called when this screen should release all resources.
 	 */
 	public void dispose() {
-		internal.unloadAssets();
-		internal.dispose();
 		canvas = null;
 		listener = null;
 	}
@@ -202,11 +190,38 @@ public class DeathScreen implements Screen, InputProcessor, ControllerListener {
 		canvas.setOverlayCamera();
 		canvas.begin();
 		canvas.draw(background, Color.WHITE, 0, 0, canvas.getWidth(), canvas.getHeight());
-		Color playTint = (pressState == 1 ? Color.GRAY: Color.WHITE);
-		Color quitTint = (quitPressState == 1 ? Color.GRAY: Color.WHITE);
-		canvas.draw(playButton, playTint, playButtonHitbox.x, playButtonHitbox.y, playButtonHitbox.width, playButtonHitbox.height);
-		canvas.draw(quitButton, quitTint, quitButtonHitbox.x, quitButtonHitbox.y, quitButtonHitbox.width, quitButtonHitbox.height);
+		Color playTint = (playButton.pressState == 1 ? Color.GRAY: Color.WHITE);
+		Color quitTint = (quitButton.pressState == 1 ? Color.GRAY: Color.WHITE);
+		canvas.draw(playButton.texture, playTint, playButton.hitbox.x, playButton.hitbox.y, playButton.hitbox.width, playButton.hitbox.height);
+		canvas.draw(quitButton.texture, quitTint, quitButton.hitbox.x, quitButton.hitbox.y, quitButton.hitbox.width, quitButton.hitbox.height);
 		canvas.end();
+
+		if (hoveredButton != null) {
+			canvas.beginShapes(true);
+			canvas.drawRectangle(hoveredButton.hitbox, hoveredButton.tint, 10);
+			canvas.endShapes();
+		}
+	}
+
+
+	private void update() {
+		if (menuUp && menuCooldown == 0) {
+			if (hoveredButton == null) {
+				hoveredButton = quitButton;
+			} else {
+				hoveredButton = hoveredButton.up;
+			}
+			menuCooldown = COOLDOWN;
+		} else if (menuDown && menuCooldown == 0) {
+			if (hoveredButton == null) {
+				hoveredButton = playButton;
+			} else {
+				hoveredButton = hoveredButton.down;
+			}
+			menuCooldown = COOLDOWN;
+		}
+
+		if (menuCooldown > 0) menuCooldown--;
 	}
 
 
@@ -221,6 +236,7 @@ public class DeathScreen implements Screen, InputProcessor, ControllerListener {
 	 */
 	public void render(float delta) {
 		if (active) {
+			update();
 			draw();
 
 			// We are are ready, notify our listener
@@ -238,8 +254,9 @@ public class DeathScreen implements Screen, InputProcessor, ControllerListener {
 	 * Resets the screen so it can be reused
 	 */
 	public void reset() {
-		this.pressState = 0;
-		this.quitPressState = 0;
+		this.playButton.pressState = 0;
+		this.quitButton.pressState = 0;
+		this.hoveredButton = playButton;
 	}
 
 	/**
@@ -262,14 +279,14 @@ public class DeathScreen implements Screen, InputProcessor, ControllerListener {
 		centerX = width/2;
 		heightY = height;
 		if(quitButton != null){
-			quitButtonHitbox.setSize(BUTTON_SCALE *scale*quitButton.getWidth(),BUTTON_SCALE * scale * quitButton.getHeight());
-			quitButtonHitbox.setCenter(canvas.getWidth()/2.0f, centerY + quitButton.getHeight()*scale *0.05f);
+			quitButton.hitbox.setSize(BUTTON_SCALE *scale*quitButton.texture.getWidth(),BUTTON_SCALE * scale * quitButton.texture.getHeight());
+			quitButton.hitbox.setCenter(canvas.getWidth()/2.0f, centerY + quitButton.texture.getHeight()*scale *0.05f);
 		}
 
 		if (playButton != null) {
 			float buttonSpacing = 0.35f;
-			playButtonHitbox.setSize(BUTTON_SCALE * scale * playButton.getWidth(), BUTTON_SCALE * scale * playButton.getHeight());
-			playButtonHitbox.setCenter(canvas.getWidth() / 2.0f, centerY + playButton.getHeight() * buttonSpacing * scale);
+			playButton.hitbox.setSize(BUTTON_SCALE * scale * playButton.texture.getWidth(), BUTTON_SCALE * scale * playButton.texture.getHeight());
+			playButton.hitbox.setCenter(canvas.getWidth() / 2.0f, centerY + playButton.texture.getHeight() * buttonSpacing * scale);
 		}
 	}
 
@@ -334,22 +351,22 @@ public class DeathScreen implements Screen, InputProcessor, ControllerListener {
 	 * @return whether to hand the event to other listeners. 
 	 */
 	public boolean touchDown(int screenX, int screenY, int pointer, int button) {
-		if (pressState == 2) {
+		if (playButton.pressState == 2) {
 			return true;
 		}
-		if(quitPressState == 2){
+		if(quitButton.pressState == 2){
 			return true;
 		}
 		
 		// Flip to match graphics coordinates
 		screenY = heightY-screenY;
 
-		if (playButtonHitbox.contains(screenX, screenY)) {
-			pressState = 1;
+		if (playButton.hitbox.contains(screenX, screenY) && playButton.pressState == 0) {
+			playButton.pressState = 1;
 			return true;
 		}
-		if(quitButtonHitbox.contains(screenX, screenY)){
-			quitPressState = 1;
+		if(quitButton.hitbox.contains(screenX, screenY) && quitButton.pressState == 0){
+			quitButton.pressState = 1;
 			return true;
 		}
 
@@ -367,13 +384,16 @@ public class DeathScreen implements Screen, InputProcessor, ControllerListener {
 	 * @param pointer the button or touch finger number
 	 * @return whether to hand the event to other listeners. 
 	 */	
-	public boolean touchUp(int screenX, int screenY, int pointer, int button) { 
-		if (pressState == 1) {
-			pressState = 2;
+	public boolean touchUp(int screenX, int screenY, int pointer, int button) {
+		// Flip to match graphics coordinates
+		screenY = heightY-screenY;
+
+		if (playButton.hitbox.contains(screenX, screenY) && playButton.pressState == 1) {
+			playButton.pressState = 2;
 			return true;
 		}
-		if(quitPressState == 1){
-			quitPressState = 2;
+		if(quitButton.hitbox.contains(screenX, screenY) && quitButton.pressState == 1) {
+			quitButton.pressState = 2;
 			return true;
 		}
 		return false;
@@ -391,20 +411,19 @@ public class DeathScreen implements Screen, InputProcessor, ControllerListener {
 	 * @return whether to hand the event to other listeners. 
 	 */
 	public boolean buttonDown (Controller controller, int buttonCode) {
-		if (pressState == 0) {
-			ControllerMapping mapping = controller.getMapping();
-			if (mapping != null && buttonCode == mapping.buttonStart ) {
-				pressState = 1;
-				return true;
-			}
+		ControllerMapping mapping = controller.getMapping();
+		if (mapping == null) return false;
+
+		if (playButton.pressState == 0 && buttonCode == mapping.buttonStart ) {
+			playButton.pressState = 1;
+			return true;
 		}
-		if (quitPressState == 0) {
-			ControllerMapping mapping = controller.getMapping();
-			if (mapping != null && buttonCode == mapping.buttonStart ) {
-				quitPressState = 1;
-				return true;
-			}
+
+		if (hoveredButton.pressState == 0 && buttonCode == mapping.buttonA ) {
+			hoveredButton.pressState = 1;
+			return true;
 		}
+
 		return false;
 	}
 	
@@ -420,20 +439,19 @@ public class DeathScreen implements Screen, InputProcessor, ControllerListener {
 	 * @return whether to hand the event to other listeners. 
 	 */
 	public boolean buttonUp (Controller controller, int buttonCode) {
-		if (pressState == 1) {
-			ControllerMapping mapping = controller.getMapping();
-			if (mapping != null && buttonCode == mapping.buttonStart ) {
-				pressState = 2;
-				return true;
-			}
+		ControllerMapping mapping = controller.getMapping();
+		if (mapping == null) return false;
+
+		if (playButton.pressState == 1 && buttonCode == mapping.buttonStart ) {
+			playButton.pressState = 2;
+			return true;
 		}
-		if (quitPressState == 1) {
-			ControllerMapping mapping = controller.getMapping();
-			if (mapping != null && buttonCode == mapping.buttonStart ) {
-				quitPressState = 2;
-				return true;
-			}
+
+		if (hoveredButton.pressState == 1 && buttonCode == mapping.buttonA ) {
+			hoveredButton.pressState = 2;
+			return true;
 		}
+
 		return false;
 	}
 	
@@ -445,7 +463,16 @@ public class DeathScreen implements Screen, InputProcessor, ControllerListener {
 	 * @param keycode the key pressed
 	 * @return whether to hand the event to other listeners. 
 	 */
-	public boolean keyDown(int keycode) { 
+	public boolean keyDown(int keycode) {
+		if (!active) return false;
+		menuUp = keycode == Input.Keys.UP;
+		menuDown = keycode == Input.Keys.DOWN;
+
+		if (keycode == Input.Keys.ENTER && hoveredButton.pressState == 0) {
+			hoveredButton.pressState = 1;
+			return true;
+		}
+
 		return false;
 	}
 
@@ -465,7 +492,23 @@ public class DeathScreen implements Screen, InputProcessor, ControllerListener {
 	 * @param keycode the key released
 	 * @return whether to hand the event to other listeners. 
 	 */	
-	public boolean keyUp(int keycode) { 
+	public boolean keyUp(int keycode) {
+		if (!active) return false;
+		if (keycode == Input.Keys.UP) {
+			menuUp = false;
+			menuCooldown = 0;
+			return true;
+		}
+		if (keycode == Input.Keys.DOWN) {
+			menuDown = false;
+			menuCooldown = 0;
+			return true;
+		}
+
+		if (keycode == Input.Keys.ENTER && hoveredButton.pressState == 1) {
+			hoveredButton.pressState = 2;
+			return true;
+		}
 		return false;
 	}
 	
@@ -531,7 +574,21 @@ public class DeathScreen implements Screen, InputProcessor, ControllerListener {
 	 * @return whether to hand the event to other listeners. 
 	 */
 	public boolean axisMoved (Controller controller, int axisCode, float value) {
-		return false;
+		if (!active) {
+			return false;
+		}
+		if (axisCode != 1) return false;
+
+		if (Math.abs(value) < 0.25) {
+			menuCooldown = 0;
+			menuDown = false;
+			menuUp = false;
+		} else {
+			menuUp = value < 0;
+			menuDown = value > 0;
+		}
+		System.out.println("AHLDHKJDSHFKH");
+		return true;
 	}
 
 }

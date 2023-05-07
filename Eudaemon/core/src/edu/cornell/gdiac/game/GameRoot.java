@@ -71,7 +71,7 @@ public class GameRoot extends Game implements ScreenListener {
 			levelScreen.setScreenListener(this);
 			levelScreen.setCanvas(canvas);
 
-			this.deathScreen = new DeathScreen("assets.json", canvas);
+			this.deathScreen = new DeathScreen(assets, canvas);
 			this.deathScreen.setScreenListener(this);
 
 			this.levelSelectScreen = new LevelSelectScreen(assets, state, canvas);
