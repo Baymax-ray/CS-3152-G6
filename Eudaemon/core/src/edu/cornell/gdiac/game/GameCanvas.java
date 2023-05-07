@@ -27,6 +27,7 @@ import com.badlogic.gdx.graphics.g2d.*;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Affine2;
 import com.badlogic.gdx.math.Matrix4;
+import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.CircleShape;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
@@ -104,6 +105,9 @@ public class GameCanvas {
 	/** Affine cache for all sprites this drawing pass */
 	private Matrix4 global;
 	private Vector2 vertex;
+	private Vector2 vertex2;
+	private Vector2 vertex3;
+	private Vector2 vertex4;
 	/** Cache object to handle raw textures */
 	private TextureRegion holder;
 
@@ -143,6 +147,9 @@ public class GameCanvas {
 		local  = new Affine2();
 		global = new Matrix4();
 		vertex = new Vector2();
+		vertex2 = new Vector2();
+		vertex3 = new Vector2();
+		vertex4 = new Vector2();
 	}
 		
     /**
@@ -1193,7 +1200,35 @@ public class GameCanvas {
     	debugRender.setColor(color);
     	debugRender.ellipse(x0-w, y0-h, 2*w, 2*h, 12);
     }
-    
+
+	public void beginShapes(boolean filled) {
+		debugRender.setProjectionMatrix(cameraController.getCamera().combined);
+		ShapeRenderer.ShapeType type = filled
+				? ShapeRenderer.ShapeType.Filled
+				: ShapeRenderer.ShapeType.Line;
+		debugRender.begin(type);
+		active = DrawPass.DEBUG;
+	}
+
+	public void endShapes() {
+		debugRender.end();
+		active = DrawPass.INACTIVE;
+	}
+
+	public void drawRectangle(Rectangle rect, Color color, float lineWidth) {
+		debugRender.setColor(color);
+
+		vertex.set(rect.x - lineWidth, rect.y - lineWidth);
+		vertex2.set(rect.x + rect.width + lineWidth, rect.y - lineWidth);
+		vertex3.set(rect.x + rect.width + lineWidth, rect.y + rect.height + lineWidth);
+		vertex4.set(rect.x - lineWidth, rect.y + rect.height + lineWidth);
+
+		debugRender.rectLine(vertex, vertex2, lineWidth);
+		debugRender.rectLine(vertex2, vertex3, lineWidth);
+		debugRender.rectLine(vertex3, vertex4, lineWidth);
+		debugRender.rectLine(vertex4, vertex, lineWidth);
+	}
+
 	/**
 	 * Compute the affine transform (and store it in local) for this image.
 	 * 

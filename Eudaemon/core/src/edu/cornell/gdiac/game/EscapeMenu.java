@@ -23,6 +23,7 @@
 package edu.cornell.gdiac.game;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.controllers.Controller;
@@ -31,12 +32,10 @@ import com.badlogic.gdx.controllers.ControllerMapping;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.Texture.TextureFilter;
-import com.badlogic.gdx.math.Rectangle;
+import com.badlogic.gdx.utils.Array;
 import edu.cornell.gdiac.assets.AssetDirectory;
 import edu.cornell.gdiac.util.Controllers;
 import edu.cornell.gdiac.util.ScreenListener;
-import edu.cornell.gdiac.util.XBoxController;
-
 /**
  * Class that provides a loading screen for the state of the game.
  *
@@ -52,20 +51,9 @@ import edu.cornell.gdiac.util.XBoxController;
  */
 public class EscapeMenu implements Screen, InputProcessor, ControllerListener {
 	// There are TWO asset managers.  One to load the loading screen.  The other to load the assets
-	/** Internal assets for this loading screen */
-	private final AssetDirectory internal;
 
 	/** Background texture for start-up */
 	private final Texture background;
-
-	/** Play button to display when done */
-	private Texture playButton;
-	/** quit button to display when done */
-	private Texture quitButton;
-	private Texture resumeButton;
-	private Texture settingsButton;
-
-
 
 
 	/** Default budget for asset loader (do nothing but load 60 fps) */
@@ -99,27 +87,25 @@ public class EscapeMenu implements Screen, InputProcessor, ControllerListener {
 
 	/** Current progress (0 to 1) of the asset manager */
 	private float progress;
-	/** The current state of the play button */
-	private int playPressState;
 	/** The amount of time to devote to loading assets (as opposed to on screen hints, etc.) */
 	private int   budget;
 
 	/** Whether or not this player mode is still active */
 	private boolean active;
 	/** The hitbox of the start button */
-	private Rectangle playButtonHitbox;
 
-	private Rectangle  quitButtonHitbox;
+	private MenuButton hoveredButton;
 
-	private Rectangle resumeButtonHitbox;
+	private Array<MenuButton> buttons;
+	private MenuButton resumeButton;
+	private MenuButton settingsButton;
+	private MenuButton restartButton;
+	private MenuButton quitButton;
 
-	private Rectangle settingsButtonHitbox;
-
-	private int quitPressState;
-
-	private int resumePressState;
-
-	private int settingsPressState;
+	private int menuCooldown;
+	private boolean menuUp;
+	private boolean menuDown;
+	private static final int COOLDOWN = 10;
 
 
 
@@ -130,23 +116,21 @@ public class EscapeMenu implements Screen, InputProcessor, ControllerListener {
 	 * @return true if the player is ready to go
 	 */
 	public boolean restartIsReady() {
-		return playPressState == 2;
+		return restartButton.pressState == 2;
 	}
-	public boolean quitIsReady() {
-		return quitPressState == 2;
-	}
+	public boolean quitIsReady() { return quitButton.pressState == 2; }
 
-	public boolean resumeIsReady() { return resumePressState == 2; }
-	public boolean settingsIsReady() { return settingsPressState == 2; }
+	public boolean resumeIsReady() { return resumeButton.pressState == 2; }
+	public boolean settingsIsReady() { return settingsButton.pressState == 2; }
 
 	/**
 	 * Creates a LoadingScreen with the default budget, size and position.
 	 *
-	 * @param file  	The asset directory to load in the background
+	 * @param assets  	The asset directory
 	 * @param canvas 	The game canvas to draw to
 	 */
-	public EscapeMenu(String file, GameCanvas canvas) {
-		this(file, canvas, DEFAULT_BUDGET);
+	public EscapeMenu(AssetDirectory assets, GameCanvas canvas) {
+		this(assets, canvas, DEFAULT_BUDGET);
 	}
 
 	/**
@@ -157,43 +141,51 @@ public class EscapeMenu implements Screen, InputProcessor, ControllerListener {
 	 * frame is ~16 milliseconds. So if the budget is 10, you have 6 milliseconds to
 	 * do something else.  This is how game companies animate their loading screens.
 	 *
-	 * @param file  	The asset directory to load in the background
+	 * @param assets  	The asset directory
 	 * @param canvas 	The game canvas to draw to
 	 * @param millis The loading budget in milliseconds
 	 */
-	public EscapeMenu(String file, GameCanvas canvas, int millis) {
+	public EscapeMenu(AssetDirectory assets, GameCanvas canvas, int millis) {
 		this.canvas  = canvas;
 		budget = millis;
+
+		buttons = new Array<>();
+
+		resumeButton = new MenuButton(assets.getEntry("escapeMenu:resume" , Texture.class), ExitCode.START);
+		settingsButton = new MenuButton(assets.getEntry("escapeMenu:settings", Texture.class), ExitCode.SETTINGS);
+		restartButton = new MenuButton(assets.getEntry("escapeMenu:restart", Texture.class), ExitCode.RESET);
+		quitButton = new MenuButton(assets.getEntry("escapeMenu:quit", Texture.class), ExitCode.MAIN_MENU);
+
+		buttons.add(resumeButton);
+		buttons.add(settingsButton);
+		buttons.add(restartButton);
+		buttons.add(quitButton);
+
+		resumeButton.up = quitButton;
+		resumeButton.down = settingsButton;
+
+		settingsButton.up = resumeButton;
+		settingsButton.down = restartButton;
+
+		restartButton.up = settingsButton;
+		restartButton.down = quitButton;
+
+		quitButton.up = restartButton;
+		quitButton.down = resumeButton;
+
+		hoveredButton = resumeButton;
+
+		// Load the next two images immediately.
+		background = assets.getEntry( "escapeMenu:background", Texture.class );
+		background.setFilter( TextureFilter.Linear, TextureFilter.Linear );
+
+		Gdx.input.setInputProcessor( this );
 
 		// Compute the dimensions from the canvas
 		resize(canvas.getWidth(),canvas.getHeight());
 
-		// We need these files loaded immediately
-		internal = new AssetDirectory( "assets.json" );
-		internal.loadAssets();
-		internal.finishLoading();
-
-		// Load the next two images immediately.
-		background = internal.getEntry( "escapeMenu:background", Texture.class );
-		background.setFilter( TextureFilter.Linear, TextureFilter.Linear );
-		playButton = internal.getEntry("escapeMenu:restart",Texture.class);
-		quitButton = internal.getEntry("escapeMenu:quit", Texture.class);
-		settingsButton = internal.getEntry("escapeMenu:settings", Texture.class);
-		resumeButton = internal.getEntry("escapeMenu:resume", Texture.class);
-
-
-		Gdx.input.setInputProcessor( this );
-
-		playButtonHitbox = new Rectangle();
-		quitButtonHitbox = new Rectangle();
-		resumeButtonHitbox = new Rectangle();
-		settingsButtonHitbox = new Rectangle();
-		quitPressState = 0;
-		resumePressState = 0;
-		settingsPressState = 0;
-
 		// Let ANY connected controller start the game.
-		for (XBoxController controller : Controllers.get().getXBoxControllers()) {
+		for (Controller controller : Controllers.get().getControllers()) {
 			controller.addListener( this );
 		}
 
@@ -204,10 +196,31 @@ public class EscapeMenu implements Screen, InputProcessor, ControllerListener {
 	 * Called when this screen should release all resources.
 	 */
 	public void dispose() {
-		internal.unloadAssets();
-		internal.dispose();
 		canvas = null;
 		listener = null;
+	}
+
+	private void update() {
+
+		if (menuUp && menuCooldown == 0) {
+			if (hoveredButton == null) {
+				hoveredButton = quitButton;
+			} else {
+				hoveredButton = hoveredButton.up;
+			}
+			System.out.println("UP");
+			menuCooldown = COOLDOWN;
+		} else if (menuDown && menuCooldown == 0) {
+			if (hoveredButton == null) {
+				hoveredButton = resumeButton;
+			} else {
+				hoveredButton = hoveredButton.down;
+			}
+			System.out.println("DOWN");
+			menuCooldown = COOLDOWN;
+		}
+
+		if (menuCooldown > 0) menuCooldown--;
 	}
 
 
@@ -222,15 +235,18 @@ public class EscapeMenu implements Screen, InputProcessor, ControllerListener {
 		canvas.setOverlayCamera();
 		canvas.begin();
 		canvas.draw(background, Color.WHITE, 0, 0, canvas.getWidth(), canvas.getHeight());
-		Color playTint = (playPressState == 1 ? Color.ORANGE : Color.WHITE);
-		Color quitTint = (quitPressState == 1 ? Color.ORANGE : Color.WHITE);
-		Color resumeTint = (resumePressState == 1 ? Color.ORANGE : Color.WHITE);
-		Color settingsTint = (settingsPressState == 1 ? Color.ORANGE : Color.WHITE);
-		canvas.draw(playButton, playTint, playButtonHitbox.x, playButtonHitbox.y, playButtonHitbox.width, playButtonHitbox.height);
-		canvas.draw(quitButton, quitTint, quitButtonHitbox.x, quitButtonHitbox.y, quitButtonHitbox.width, quitButtonHitbox.height);
-		canvas.draw(resumeButton, resumeTint, resumeButtonHitbox.x, resumeButtonHitbox.y, resumeButtonHitbox.width, resumeButtonHitbox.height);
-		canvas.draw(settingsButton, settingsTint, settingsButtonHitbox.x, settingsButtonHitbox.y, settingsButtonHitbox.width, settingsButtonHitbox.height);
+
+		for (MenuButton button : buttons) {
+			button.tint = (button.pressState == 1 ? Color.ORANGE : Color.WHITE);
+			canvas.draw(button.texture, button.tint, button.hitbox.x, button.hitbox.y, button.hitbox.width, button.hitbox.height);
+		}
+
 		canvas.end();
+		if (hoveredButton != null) {
+			canvas.beginShapes(true);
+			canvas.drawRectangle(hoveredButton.hitbox, hoveredButton.tint, 10);
+			canvas.endShapes();
+		}
 	}
 
 
@@ -245,6 +261,8 @@ public class EscapeMenu implements Screen, InputProcessor, ControllerListener {
 	 */
 	public void render(float delta) {
 		if (active) {
+			update();
+
 			draw();
 
 			// We are are ready, notify our listener
@@ -268,10 +286,10 @@ public class EscapeMenu implements Screen, InputProcessor, ControllerListener {
 	 * Resets the screen so it can be reused
 	 */
 	public void reset() {
-		this.playPressState = 0;
-		this.quitPressState = 0;
-		this.settingsPressState = 0;
-		this.resumePressState = 0;
+		for (MenuButton button : buttons) {
+			button.pressState = 0;
+		}
+		hoveredButton = resumeButton;
 	}
 
 	/**
@@ -293,23 +311,25 @@ public class EscapeMenu implements Screen, InputProcessor, ControllerListener {
 		centerY = (int)(BAR_HEIGHT_RATIO*height);
 		centerX = width/2;
 		heightY = height;
-		if(quitButton != null){
-			quitButtonHitbox.setSize(BUTTON_SCALE *scale*quitButton.getWidth(),BUTTON_SCALE * scale * quitButton.getHeight());
-			quitButtonHitbox.setCenter(canvas.getWidth()/2.0f, centerY + quitButton.getHeight() * scale*0.55f);
+
+
+		if(quitButton.texture != null){
+			quitButton.hitbox.setSize(BUTTON_SCALE *scale*quitButton.texture.getWidth(),BUTTON_SCALE * scale * quitButton.texture.getHeight());
+			quitButton.hitbox.setCenter(canvas.getWidth()/2.0f, centerY + quitButton.texture.getHeight() * scale*0.55f);
 		}
 
-		if (playButton != null) {
-			playButtonHitbox.setSize(BUTTON_SCALE * scale * playButton.getWidth(), BUTTON_SCALE * scale * playButton.getHeight());
-			playButtonHitbox.setCenter(canvas.getWidth() / 2.0f, centerY + playButton.getHeight() * scale + height/12f);
+		if (restartButton.texture != null) {
+			restartButton.hitbox.setSize(BUTTON_SCALE * scale * restartButton.texture.getWidth(), BUTTON_SCALE * scale * restartButton.texture.getHeight());
+			restartButton.hitbox.setCenter(canvas.getWidth() / 2.0f, centerY + restartButton.texture.getHeight() * scale + height/12f);
 		}
 
-		if (resumeButton != null) {
-			resumeButtonHitbox.setSize(BUTTON_SCALE * scale * resumeButton.getWidth(), BUTTON_SCALE * scale * resumeButton.getHeight());
-			resumeButtonHitbox.setCenter(canvas.getWidth() / 2.0f, centerY + resumeButton.getHeight() * scale + height/3.4f);
+		if (resumeButton.texture != null) {
+			resumeButton.hitbox.setSize(BUTTON_SCALE * scale * resumeButton.texture.getWidth(), BUTTON_SCALE * scale * resumeButton.texture.getHeight());
+			resumeButton.hitbox.setCenter(canvas.getWidth() / 2.0f, centerY + resumeButton.texture.getHeight() * scale + height/3.4f);
 		}
-		if (settingsButton != null) {
-			settingsButtonHitbox.setSize(BUTTON_SCALE * scale * settingsButton.getWidth(), BUTTON_SCALE * scale * settingsButton.getHeight());
-			settingsButtonHitbox.setCenter(canvas.getWidth() / 2.0f, centerY + settingsButton.getHeight() * scale + height/5.3f);
+		if (settingsButton.texture != null) {
+			settingsButton.hitbox.setSize(BUTTON_SCALE * scale * settingsButton.texture.getWidth(), BUTTON_SCALE * scale * settingsButton.texture.getHeight());
+			settingsButton.hitbox.setCenter(canvas.getWidth() / 2.0f, centerY + settingsButton.texture.getHeight() * scale + height / 5.3f);
 		}
 	}
 
@@ -359,9 +379,9 @@ public class EscapeMenu implements Screen, InputProcessor, ControllerListener {
 	public void setScreenListener(ScreenListener listener) {
 		this.listener = listener;
 	}
-	
+
 	// PROCESSING PLAYER INPUT
-	/** 
+	/**
 	 * Called when the screen was touched or a mouse button was pressed.
 	 *
 	 * This method checks to see if the play button is available and if the click
@@ -371,199 +391,190 @@ public class EscapeMenu implements Screen, InputProcessor, ControllerListener {
 	 * @param screenX the x-coordinate of the mouse on the screen
 	 * @param screenY the y-coordinate of the mouse on the screen
 	 * @param pointer the button or touch finger number
-	 * @return whether to hand the event to other listeners. 
+	 * @return whether to hand the event to other listeners.
 	 */
 	public boolean touchDown(int screenX, int screenY, int pointer, int button) {
-		if (playButton == null || playPressState == 2) {
-			return true;
+		for (MenuButton menuButton : buttons) {
+			if (menuButton.texture == null || menuButton.pressState == 2) {
+				return true;
+			}
 		}
-		if(quitButton == null || quitPressState == 2){
-			return true;
-		}
-		if(resumeButton == null || resumePressState == 2){
-			return true;
-		}
-		if(settingsButton == null || settingsPressState == 2){
-			return true;
-		}
-		
+
 		// Flip to match graphics coordinates
 		screenY = heightY-screenY;
 
-		if (playButtonHitbox.contains(screenX, screenY)) {
-			playPressState = 1;
-		}
-		if(quitButtonHitbox.contains(screenX, screenY)){
-			quitPressState = 1;
-		}
-		if(resumeButtonHitbox.contains(screenX, screenY)){
-			resumePressState = 1;
-		}
-		if(settingsButtonHitbox.contains(screenX, screenY)){
-			settingsPressState = 1;
+		for (MenuButton menuButton : buttons) {
+			if (menuButton.hitbox.contains(screenX, screenY)) {
+				menuButton.pressState = 1;
+			}
 		}
 
 		return false;
 	}
-	
-	/** 
+
+	/**
 	 * Called when a finger was lifted or a mouse button was released.
 	 *
-	 * This method checks to see if the play button is currently pressed down. If so, 
+	 * This method checks to see if the play button is currently pressed down. If so,
 	 * it signals the that the player is ready to go.
 	 *
 	 * @param screenX the x-coordinate of the mouse on the screen
 	 * @param screenY the y-coordinate of the mouse on the screen
 	 * @param pointer the button or touch finger number
-	 * @return whether to hand the event to other listeners. 
-	 */	
-	public boolean touchUp(int screenX, int screenY, int pointer, int button) { 
-		if (playPressState == 1) {
-			playPressState = 2;
-			return false;
+	 * @return whether to hand the event to other listeners.
+	 */
+	public boolean touchUp(int screenX, int screenY, int pointer, int button) {
+		for (MenuButton menuButton : buttons) {
+			if (menuButton.pressState == 1) {
+				menuButton.pressState = 2;
+				return false;
+			}
 		}
-		if(quitPressState == 1){
-			quitPressState = 2;
-			return false;
-		}
-		if(resumePressState == 1){
-			resumePressState = 2;
-			return false;
-		}
-		if(settingsPressState == 1){
-			settingsPressState = 2;
-			return false;
-		}
+
 		return true;
 	}
-	
-	/** 
-	 * Called when a button on the Controller was pressed. 
+
+	/**
+	 * Called when a button on the Controller was pressed.
 	 *
 	 * The buttonCode is controller specific. This listener only supports the start
-	 * button on an X-Box controller.  This outcome of this method is identical to 
+	 * button on an X-Box controller.  This outcome of this method is identical to
 	 * pressing (but not releasing) the play button.
 	 *
 	 * @param controller The game controller
 	 * @param buttonCode The button pressed
-	 * @return whether to hand the event to other listeners. 
+	 * @return whether to hand the event to other listeners.
 	 */
 	public boolean buttonDown (Controller controller, int buttonCode) {
-		if (playPressState == 0) {
-			ControllerMapping mapping = controller.getMapping();
+		ControllerMapping mapping = controller.getMapping();
+
+		if (restartButton.pressState == 0) {
 			if (mapping != null && buttonCode == mapping.buttonStart ) {
-				playPressState = 1;
+				restartButton.pressState = 1;
 				return false;
 			}
 		}
-		if (quitPressState == 0) {
-			ControllerMapping mapping = controller.getMapping();
-			if (mapping != null && buttonCode == mapping.buttonStart ) {
-				quitPressState = 1;
+
+		if (hoveredButton.pressState == 0) {
+			if (mapping != null && buttonCode == mapping.buttonA) {
+				hoveredButton.pressState = 1;
 				return false;
 			}
 		}
-		if(resumePressState == 0){
-			ControllerMapping mapping = controller.getMapping();
-			if (mapping != null && buttonCode == mapping.buttonStart ) {
-				resumePressState = 1;
-				return false;
-			}
-		}
-		if(settingsPressState == 0){
-			ControllerMapping mapping = controller.getMapping();
-			if (mapping != null && buttonCode == mapping.buttonStart ) {
-				settingsPressState = 1;
-				return false;
-			}
-		}
+
 		return true;
 	}
-	
-	/** 
-	 * Called when a button on the Controller was released. 
+
+	/**
+	 * Called when a button on the Controller was released.
 	 *
 	 * The buttonCode is controller specific. This listener only supports the start
-	 * button on an X-Box controller.  This outcome of this method is identical to 
+	 * button on an X-Box controller.  This outcome of this method is identical to
 	 * releasing the the play button after pressing it.
 	 *
 	 * @param controller The game controller
 	 * @param buttonCode The button pressed
-	 * @return whether to hand the event to other listeners. 
+	 * @return whether to hand the event to other listeners.
 	 */
 	public boolean buttonUp (Controller controller, int buttonCode) {
-		if (playPressState == 1) {
-			ControllerMapping mapping = controller.getMapping();
+		ControllerMapping mapping = controller.getMapping();
+
+		if (restartButton.pressState == 1) {
 			if (mapping != null && buttonCode == mapping.buttonStart ) {
-				playPressState = 2;
+				restartButton.pressState = 2;
 				return false;
 			}
 		}
-		if (quitPressState == 1) {
-			ControllerMapping mapping = controller.getMapping();
-			if (mapping != null && buttonCode == mapping.buttonStart ) {
-				quitPressState = 2;
+		if (hoveredButton.pressState == 1) {
+			if (mapping != null && buttonCode == mapping.buttonA) {
+				hoveredButton.pressState = 2;
 				return false;
 			}
 		}
-		if (resumePressState == 1) {
-			ControllerMapping mapping = controller.getMapping();
-			if (mapping != null && buttonCode == mapping.buttonStart ) {
-				resumePressState = 2;
-				return false;
-			}
-		}
-		if (settingsPressState == 1) {
-			ControllerMapping mapping = controller.getMapping();
-			if (mapping != null && buttonCode == mapping.buttonStart ) {
-				settingsPressState = 2;
-				return false;
-			}
-		}
+
 		return true;
 	}
-	
+
 	// UNSUPPORTED METHODS FROM InputProcessor
 
-	/** 
+	/**
 	 * Called when a key is pressed (UNSUPPORTED)
 	 *
 	 * @param keycode the key pressed
-	 * @return whether to hand the event to other listeners. 
+	 * @return whether to hand the event to other listeners.
 	 */
-	public boolean keyDown(int keycode) { 
-		return true; 
+	public boolean keyDown(int keycode) {
+		menuUp = keycode == Input.Keys.UP;
+		menuDown = keycode == Input.Keys.DOWN;
+
+		if (keycode == Input.Keys.ENTER && hoveredButton.pressState == 0) {
+			hoveredButton.pressState = 1;
+			return false;
+		}
+		if (keycode == Input.Keys.ESCAPE && resumeButton.pressState == 0) {
+			resumeButton.pressState = 1;
+			return false;
+		}
+		return keycode != Input.Keys.UP && keycode != Input.Keys.DOWN;
 	}
 
-	/** 
+	/**
 	 * Called when a key is typed (UNSUPPORTED)
 	 *
 	 * @param character the key typed
-	 * @return whether to hand the event to other listeners. 
+	 * @return whether to hand the event to other listeners.
 	 */
-	public boolean keyTyped(char character) { 
-		return true; 
+	public boolean keyTyped(char character) {
+		return true;
 	}
 
-	/** 
+	/**
 	 * Called when a key is released (UNSUPPORTED)
 	 *
 	 * @param keycode the key released
-	 * @return whether to hand the event to other listeners. 
-	 */	
-	public boolean keyUp(int keycode) { 
-		return true; 
+	 * @return whether to hand the event to other listeners.
+	 */
+	public boolean keyUp(int keycode) {
+		if (keycode == Input.Keys.UP) {
+			menuUp = false;
+			menuCooldown = 0;
+			return false;
+		}
+		if (keycode == Input.Keys.DOWN) {
+			menuDown = false;
+			menuCooldown = 0;
+			return false;
+		}
+
+		if (keycode == Input.Keys.ENTER && hoveredButton.pressState == 1) {
+			hoveredButton.pressState = 2;
+			return false;
+		}
+		if (keycode == Input.Keys.ESCAPE && resumeButton.pressState == 1) {
+			resumeButton.pressState = 2;
+			return false;
+		}
+
+		return true;
 	}
-	
-	/** 
+
+	/**
 	 * Called when the mouse was moved without any buttons being pressed. (UNSUPPORTED)
 	 *
 	 * @param screenX the x-coordinate of the mouse on the screen
 	 * @param screenY the y-coordinate of the mouse on the screen
-	 * @return whether to hand the event to other listeners. 
-	 */	
-	public boolean mouseMoved(int screenX, int screenY) { 
-		return true; 
+	 * @return whether to hand the event to other listeners.
+	 */
+	public boolean mouseMoved(int screenX, int screenY) {
+		screenY = heightY - screenY;
+		hoveredButton = null;
+		for (MenuButton button : buttons) {
+			if (button.hitbox.contains(screenX, screenY)) {
+				hoveredButton = button;
+			}
+		}
+
+		return true;
 	}
 
 	/**
@@ -578,20 +589,20 @@ public class EscapeMenu implements Screen, InputProcessor, ControllerListener {
 		return true;
 	}
 
-	/** 
+	/**
 	 * Called when the mouse or finger was dragged. (UNSUPPORTED)
 	 *
 	 * @param screenX the x-coordinate of the mouse on the screen
 	 * @param screenY the y-coordinate of the mouse on the screen
 	 * @param pointer the button or touch finger number
-	 * @return whether to hand the event to other listeners. 
-	 */		
-	public boolean touchDragged(int screenX, int screenY, int pointer) { 
-		return true; 
+	 * @return whether to hand the event to other listeners.
+	 */
+	public boolean touchDragged(int screenX, int screenY, int pointer) {
+		return true;
 	}
-	
+
 	// UNSUPPORTED METHODS FROM ControllerListener
-	
+
 	/**
 	 * Called when a controller is connected. (UNSUPPORTED)
 	 *
@@ -606,17 +617,31 @@ public class EscapeMenu implements Screen, InputProcessor, ControllerListener {
 	 */
 	public void disconnected (Controller controller) {}
 
-	/** 
-	 * Called when an axis on the Controller moved. (UNSUPPORTED) 
+	/**
+	 * Called when an axis on the Controller moved. (UNSUPPORTED)
 	 *
-	 * The axisCode is controller specific. The axis value is in the range [-1, 1]. 
+	 * The axisCode is controller specific. The axis value is in the range [-1, 1].
 	 *
 	 * @param controller The game controller
 	 * @param axisCode 	The axis moved
 	 * @param value 	The axis value, -1 to 1
-	 * @return whether to hand the event to other listeners. 
+	 * @return whether to hand the event to other listeners.
 	 */
 	public boolean axisMoved (Controller controller, int axisCode, float value) {
+
+		if (axisCode == 1) { // vertical movement
+
+			if (Math.abs(value) < 0.25) {
+				menuCooldown = 0;
+				menuDown = false;
+				menuUp = false;
+			} else {
+				menuUp = value < 0;
+				menuDown = value > 0;
+			}
+
+			return false;
+		}
 		return true;
 	}
 
