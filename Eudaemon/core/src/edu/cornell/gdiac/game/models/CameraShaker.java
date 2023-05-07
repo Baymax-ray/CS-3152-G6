@@ -9,6 +9,7 @@ public class CameraShaker {
 
     private Camera camera;
     private boolean isShaking = false;
+    private int shakeTimes = 0;
     private float origShakeRadius;
     private float minimumShakeRadius;
     private float radiusFallOffFactor;
@@ -18,13 +19,7 @@ public class CameraShaker {
     private Vector3 offset;
     private Vector3 currentPosition;
     public Vector3 origPosition;
-    public float getOrigPositionX() { return origPosition.x; }
-    public float getOrigPositionY() { return origPosition.y; }
-    public float getCurrentPositionX() { return currentPosition.x; }
-    public void setCurrentPositionX(float value) { currentPosition.x = value; }
-    public float getCurrentPositionY() { return currentPosition.y; }
-    public void setCurrentPositionY(float value) { currentPosition.y = value; }
-
+    public Vector3 startPosition;
 
 
     /**
@@ -48,6 +43,7 @@ public class CameraShaker {
      * Start the camera shaking.
      */
     public void startShaking(){
+        startPosition = camera.position.cpy();
         reset();
         isShaking = true;
     }
@@ -65,7 +61,14 @@ public class CameraShaker {
             computeCameraOffset();
             computeCurrentPosition(cameraController, level);
             diminishShake();
-            camera.position.set(currentPosition);
+            if (shakeTimes < 5) {
+                camera.position.set(currentPosition);
+                shakeTimes += 1;
+            }
+            else {
+                camera.position.set(startPosition);
+                shakeTimes = 0;
+            }
             camera.update();
             timer = 0;
         }
@@ -130,7 +133,7 @@ public class CameraShaker {
         // validation checks on parameters
         if (radiusFallOffFactor >= 1f) radiusFallOffFactor = 0.9f;      // radius fall off factor must be less than 1
         if (radiusFallOffFactor <= 0) radiusFallOffFactor = 0.9f;       // radius fall off factor must be greater than 0
-        if (shakeRadius <= 0) shakeRadius = 0.1f;                        // shake radius must be greater than 0
+        if (shakeRadius <= 0) shakeRadius = 0.1f;                       // shake radius must be greater than 0
         if (minimumShakeRadius < 0) minimumShakeRadius = 0;             // minimum shake radius must be greater than 0
         if (minimumShakeRadius >= shakeRadius)                          // minimum shake radius must be less than shake radius, if not
             minimumShakeRadius = 0.15f * shakeRadius;                   // then set minimum shake radius to 15% of shake radius
