@@ -345,6 +345,11 @@ public class Player extends CapsuleObstacle {
 
     private long playerDamageSoundId = -1;
 
+    /**The sprite sheet for bullet sprite**/
+    private TextureRegion bulletDestroySpriteSheet;
+    /** animation for destroying bullet**/
+    private final Animation<TextureRegion> bulletDestroyAnimation;
+
 
     //#endregion
 
@@ -483,7 +488,12 @@ public class Player extends CapsuleObstacle {
         return spiritDrainAnimation;
     }
 
-
+    public TextureRegion getBulletDestroySpriteSheet(){
+        return bulletDestroySpriteSheet;
+    }
+    public Animation<TextureRegion> getBulletDestroyAnimation(){
+        return bulletDestroyAnimation;
+    }
     /**
      * Get momoDashSpriteSheet.
      *
@@ -1300,6 +1310,9 @@ public class Player extends CapsuleObstacle {
         this.chiyoJumpSpriteSheet = new TextureRegion(assets.getEntry( "chiyo:jump", Texture.class));
         this.chiyoAttackSpriteSheet = new TextureRegion(assets.getEntry( "chiyo:attack", Texture.class));
         this.impactEffectSpriteSheet = new TextureRegion(assets.getEntry( "impactEffect", Texture.class));
+        this.bulletDestroySpriteSheet = new TextureRegion(assets.getEntry("bulletDestroy", Texture.class));
+        TextureRegion[][] bulletDestroyFrames = bulletDestroySpriteSheet.split(bulletDestroySpriteSheet.getRegionWidth()/16, bulletDestroySpriteSheet.getRegionHeight());
+        this.bulletDestroyAnimation = new Animation<>(0.5f, bulletDestroyFrames[0]);
         //Sound Effect
         this.playerDamageSound = Gdx.audio.newSound(Gdx.files.internal("audio/temp-player-damage.mp3"));
 

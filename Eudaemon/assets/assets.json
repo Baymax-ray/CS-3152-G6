@@ -105,6 +105,15 @@
           }
         }
       },
+      "bulletDestroy": {
+        "file" : "animations/projectileDestroy.png",
+        "sprites" : {
+          "fire": {
+            "rows": 1,
+            "cols": 16
+          }
+        }
+      },
         "momo:dashEffect": {
           "file" : "animations/dashEffectSpriteSheet.png",
           "sprites" : {

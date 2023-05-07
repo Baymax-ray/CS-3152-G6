@@ -1,7 +1,10 @@
 package edu.cornell.gdiac.game;
 
+import com.badlogic.gdx.graphics.g2d.Animation;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.physics.box2d.*;
 import com.badlogic.gdx.utils.Array;
+import com.badlogic.gdx.utils.ObjectMap;
 import edu.cornell.gdiac.game.models.*;
 import edu.cornell.gdiac.game.obstacle.EffectObstacle;
 import edu.cornell.gdiac.game.obstacle.SwordWheelObstacle;
@@ -24,6 +27,8 @@ public class CollisionController implements ContactListener {
      * The list of tile fixtures the player's left wall sensor is in contact with
      */
     private Array<Fixture> leftWallSensorFixtures;
+
+    private EffectObstacle bulletDestroyEffect;
 
     public CollisionController(Level level, AudioController audio) {
         this.level = level;
@@ -277,6 +282,11 @@ public class CollisionController implements ContactListener {
         if (bd1 instanceof SwordWheelObstacle && bd2 instanceof WheelObstacle ||
                 bd2 instanceof SwordWheelObstacle && bd1 instanceof WheelObstacle) {
             WheelObstacle bullet = (WheelObstacle) (((WheelObstacle) bd1).getName().equals("bullet") ? bd1 : bd2);
+            bulletDestroyEffect = level.getEffectPool().obtainEffect(bullet.getX(), bullet.getY(),
+                    level.getPlayer().getBulletDestroySpriteSheet().getRegionWidth(), level.getPlayer().getBulletDestroySpriteSheet().getRegionHeight(),
+                    0.01f, 0.01f, 0, 0, 0, true, "bulletDestroy", level.getPlayer(), 1f,
+                    1, 1, level.getPlayer().getBulletDestroyAnimation(), 5);
+            level.addQueuedObject(bulletDestroyEffect);
             bullet.markRemoved(true);
         }
         //#endregion
