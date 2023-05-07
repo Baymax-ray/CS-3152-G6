@@ -61,6 +61,10 @@ public class InputController {
                 playerAction.add(Action.TRANSFORM);
             }
 
+            if (controller.getButton(mapping.buttonBack)) {
+                playerAction.add(Action.PAUSE);
+            }
+
             if (controller.getAxis(0) < -0.5) {
                 playerAction.add(Action.MOVE_LEFT);
             }
