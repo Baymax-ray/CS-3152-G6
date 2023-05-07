@@ -1464,15 +1464,15 @@
                 }, 
                 {
                  "gid":89,
-                 "height":24.25,
+                 "height":22.6900592777474,
                  "id":173,
                  "name":"Fly",
                  "rotation":0,
                  "type":"Enemy",
                  "visible":true,
                  "width":18.6875,
-                 "x":1988.15625,
-                 "y":731.875
+                 "x":2053.67376033461,
+                 "y":666.357489665393
                 }, 
                 {
                  "gid":89,
@@ -1497,24 +1497,6 @@
                  "width":18.6875,
                  "x":1925.15625,
                  "y":411.875
-                }, 
-                {
-                 "gid":87,
-                 "height":22.3413,
-                 "id":176,
-                 "name":"Spike",
-                 "properties":[
-                        {
-                         "name":"Direction",
-                         "type":"string",
-                         "value":"Left"
-                        }],
-                 "rotation":0,
-                 "type":"",
-                 "visible":true,
-                 "width":22.8779,
-                 "x":1989.06105,
-                 "y":570.32935
                 }],
          "opacity":1,
          "type":"objectgroup",

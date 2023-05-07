@@ -460,24 +460,6 @@
                 {
                  "gid":87,
                  "height":22.3413,
-                 "id":136,
-                 "name":"Spike",
-                 "properties":[
-                        {
-                         "name":"Direction",
-                         "type":"string",
-                         "value":"Left"
-                        }],
-                 "rotation":0,
-                 "type":"",
-                 "visible":true,
-                 "width":22.8779,
-                 "x":1925.89857273855,
-                 "y":250.942794683314
-                }, 
-                {
-                 "gid":87,
-                 "height":22.3413,
                  "id":137,
                  "name":"Spike",
                  "properties":[
