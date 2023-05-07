@@ -91,22 +91,22 @@
             "expandedObjectLayers": [
                 7
             ],
-            "scale": 0.75,
-            "selectedLayer": 2,
+            "scale": 1.5,
+            "selectedLayer": 3,
             "viewCenter": {
-                "x": 1984.6666666666665,
-                "y": 410.66666666666663
+                "x": 1466.3333333333333,
+                "y": 428.66666666666663
             }
         },
         "level3.json": {
             "expandedObjectLayers": [
                 7
             ],
-            "scale": 0.5,
+            "scale": 0.75,
             "selectedLayer": 1,
             "viewCenter": {
-                "x": 1653,
-                "y": 338
+                "x": 1344.6666666666665,
+                "y": 725.3333333333333
             }
         },
         "level4.json": {
