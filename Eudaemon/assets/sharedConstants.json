@@ -99,7 +99,6 @@
     "initialHearts": 1,
     "attackPower": 1,
     "startsFacingRight": true,
-    "dashCooldown": 0.4,
     "attackCooldown": 30,
     "attackOffset": 0.23,
     "force": 20.0,
