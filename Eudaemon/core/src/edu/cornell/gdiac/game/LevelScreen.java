@@ -1,5 +1,6 @@
 package edu.cornell.gdiac.game;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.utils.Array;
 import edu.cornell.gdiac.assets.AssetDirectory;
@@ -153,6 +154,7 @@ public class LevelScreen implements Screen {
         active = true;
         audio.playAllSound();
         audio.muteChiyo();
+        Gdx.input.setCursorCatched(true);
     }
 
     @Override

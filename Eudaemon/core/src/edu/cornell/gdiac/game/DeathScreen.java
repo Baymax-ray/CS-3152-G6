@@ -126,15 +126,12 @@ public class DeathScreen implements Screen, InputProcessor, ControllerListener {
 	public DeathScreen(AssetDirectory assets, GameCanvas canvas) {
 		this.canvas  = canvas;
 
-		// Compute the dimensions from the canvas
-		resize(canvas.getWidth(),canvas.getHeight());
-
 		// Load the next two images immediately.
 		background = assets.getEntry( "deathScreen:background", Texture.class );
 		background.setFilter( TextureFilter.Linear, TextureFilter.Linear );
 
-		playButton = new MenuButton(assets.getEntry("deathScreen:restart",Texture.class), ExitCode.START);
-		quitButton = new MenuButton(assets.getEntry("deathScreen:quit", Texture.class), ExitCode.QUIT);
+		playButton = new MenuButton(new TextureRegion(assets.getEntry("deathScreen:restart",Texture.class)), ExitCode.START);
+		quitButton = new MenuButton(new TextureRegion(assets.getEntry("deathScreen:quit", Texture.class)), ExitCode.QUIT);
 
 		playButton.up = quitButton;
 		playButton.down = quitButton;
@@ -143,6 +140,9 @@ public class DeathScreen implements Screen, InputProcessor, ControllerListener {
 		quitButton.down = playButton;
 
 		hoveredButton = playButton;
+
+		// Compute the dimensions from the canvas
+		resize(canvas.getWidth(),canvas.getHeight());
 
 		Gdx.input.setInputProcessor( this );
 
@@ -263,14 +263,14 @@ public class DeathScreen implements Screen, InputProcessor, ControllerListener {
 		centerX = width/2;
 		heightY = height;
 		if(quitButton != null){
-			quitButton.hitbox.setSize(BUTTON_SCALE *scale*quitButton.texture.getWidth(),BUTTON_SCALE * scale * quitButton.texture.getHeight());
-			quitButton.hitbox.setCenter(canvas.getWidth()/2.0f, centerY + quitButton.texture.getHeight()*scale *0.05f);
+			quitButton.hitbox.setSize(BUTTON_SCALE *scale*quitButton.texture.getRegionWidth(),BUTTON_SCALE * scale * quitButton.texture.getRegionHeight());
+			quitButton.hitbox.setCenter(canvas.getWidth()/2.0f, centerY + quitButton.texture.getRegionHeight()*scale *0.05f);
 		}
 
 		if (playButton != null) {
 			float buttonSpacing = 0.35f;
-			playButton.hitbox.setSize(BUTTON_SCALE * scale * playButton.texture.getWidth(), BUTTON_SCALE * scale * playButton.texture.getHeight());
-			playButton.hitbox.setCenter(canvas.getWidth() / 2.0f, centerY + playButton.texture.getHeight() * buttonSpacing * scale);
+			playButton.hitbox.setSize(BUTTON_SCALE * scale * playButton.texture.getRegionWidth(), BUTTON_SCALE * scale * playButton.texture.getRegionHeight());
+			playButton.hitbox.setCenter(canvas.getWidth() / 2.0f, centerY + playButton.texture.getRegionHeight() * buttonSpacing * scale);
 		}
 	}
 
@@ -302,6 +302,7 @@ public class DeathScreen implements Screen, InputProcessor, ControllerListener {
 		// Useless if called in outside animation loop
 		active = true;
 		Gdx.input.setInputProcessor(this);
+		Gdx.input.setCursorCatched(true);
 	}
 
 	/**
@@ -335,6 +336,7 @@ public class DeathScreen implements Screen, InputProcessor, ControllerListener {
 	 * @return whether to hand the event to other listeners. 
 	 */
 	public boolean touchDown(int screenX, int screenY, int pointer, int button) {
+		if (!active) return false;
 		if (playButton.pressState == 2) {
 			return true;
 		}
@@ -369,6 +371,7 @@ public class DeathScreen implements Screen, InputProcessor, ControllerListener {
 	 * @return whether to hand the event to other listeners. 
 	 */	
 	public boolean touchUp(int screenX, int screenY, int pointer, int button) {
+		if (!active) return false;
 		// Flip to match graphics coordinates
 		screenY = heightY-screenY;
 
@@ -395,6 +398,10 @@ public class DeathScreen implements Screen, InputProcessor, ControllerListener {
 	 * @return whether to hand the event to other listeners. 
 	 */
 	public boolean buttonDown (Controller controller, int buttonCode) {
+		if (!active) return false;
+		if (!Gdx.input.isCursorCatched()) {
+			Gdx.input.setCursorCatched(true);
+		}
 		ControllerMapping mapping = controller.getMapping();
 		if (mapping == null) return false;
 
@@ -423,6 +430,7 @@ public class DeathScreen implements Screen, InputProcessor, ControllerListener {
 	 * @return whether to hand the event to other listeners. 
 	 */
 	public boolean buttonUp (Controller controller, int buttonCode) {
+		if (!active) return false;
 		ControllerMapping mapping = controller.getMapping();
 		if (mapping == null) return false;
 
@@ -448,6 +456,10 @@ public class DeathScreen implements Screen, InputProcessor, ControllerListener {
 	 * @return whether to hand the event to other listeners. 
 	 */
 	public boolean keyDown(int keycode) {
+		if (!active) return false;
+		if (!Gdx.input.isCursorCatched()) {
+			Gdx.input.setCursorCatched(true);
+		}
 		if (!active) return false;
 		menuUp = keycode == Input.Keys.UP;
 		menuDown = keycode == Input.Keys.DOWN;
@@ -503,7 +515,25 @@ public class DeathScreen implements Screen, InputProcessor, ControllerListener {
 	 * @param screenY the y-coordinate of the mouse on the screen
 	 * @return whether to hand the event to other listeners. 
 	 */	
-	public boolean mouseMoved(int screenX, int screenY) { 
+	public boolean mouseMoved(int screenX, int screenY) {
+		if (!active) return false;
+		if (Gdx.input.isCursorCatched()) {
+			Gdx.input.setCursorCatched(false);
+			float x = hoveredButton.hitbox.x + hoveredButton.hitbox.width / 2;
+			float y = hoveredButton.hitbox.y + hoveredButton.hitbox.height / 2;
+			Gdx.input.setCursorPosition((int) x, heightY - (int) y);
+			return true;
+		}
+		screenY = heightY - screenY;
+		hoveredButton = null;
+		if (playButton.hitbox.contains(screenX, screenY)) {
+			hoveredButton = playButton;
+			return true;
+		}
+		if (quitButton.hitbox.contains(screenX, screenY)) {
+			hoveredButton = quitButton;
+			return true;
+		}
 		return false;
 	}
 

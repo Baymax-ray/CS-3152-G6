@@ -117,10 +117,10 @@ public class MainMenuScreen implements Screen, InputProcessor, ControllerListene
         background = assets.getEntry( "mainMenu:background", Texture.class );
         background.setFilter(Texture.TextureFilter.Nearest, Texture.TextureFilter.Nearest);
 
-        playButton = new MenuButton(assets.getEntry("mainMenu:start",Texture.class), ExitCode.START);
-        settingsButton = new MenuButton(assets.getEntry("mainMenu:settings", Texture.class), ExitCode.SETTINGS);
-        levelSelectButton = new MenuButton(assets.getEntry("mainMenu:levelSelect", Texture.class), ExitCode.LEVEL_SELECT);
-        quitButton = new MenuButton(assets.getEntry("mainMenu:quit", Texture.class), ExitCode.QUIT);
+        playButton = new MenuButton(new TextureRegion(assets.getEntry("mainMenu:start",Texture.class)), ExitCode.START);
+        settingsButton = new MenuButton(new TextureRegion(assets.getEntry("mainMenu:settings", Texture.class)), ExitCode.SETTINGS);
+        levelSelectButton = new MenuButton(new TextureRegion(assets.getEntry("mainMenu:levelSelect", Texture.class)), ExitCode.LEVEL_SELECT);
+        quitButton = new MenuButton(new TextureRegion(assets.getEntry("mainMenu:quit", Texture.class)), ExitCode.QUIT);
 
         buttons = new Array<>();
         buttons.add(playButton);
@@ -269,19 +269,19 @@ public class MainMenuScreen implements Screen, InputProcessor, ControllerListene
         float shiftUp = 74.38f;
         if (playButton != null) {
 
-            playButton.hitbox.setSize(BUTTON_SCALE*scale*playButton.texture.getWidth(), BUTTON_SCALE*scale*playButton.texture.getHeight());
-            playButton.hitbox.setCenter(canvas.getWidth()/2.0f, progressBarCenterY + playButton.texture.getHeight()*buttonSpacing*scale + shiftUp*scale);
+            playButton.hitbox.setSize(BUTTON_SCALE*scale*playButton.texture.getRegionWidth(), BUTTON_SCALE*scale*playButton.texture.getRegionHeight());
+            playButton.hitbox.setCenter(canvas.getWidth()/2.0f, progressBarCenterY + playButton.texture.getRegionHeight()*buttonSpacing*scale + shiftUp*scale);
             float buttonDelta = playButton.hitbox.height * 1.5f;
 
-            settingsButton.hitbox.setSize(BUTTON_SCALE*scale*settingsButton.texture.getWidth(), BUTTON_SCALE*scale*settingsButton.texture.getHeight());
-            settingsButton.hitbox.setCenter(canvas.getWidth()/2.0f, progressBarCenterY - settingsButton.texture.getHeight()*buttonSpacing*scale + shiftUp*scale);
+            settingsButton.hitbox.setSize(BUTTON_SCALE*scale*settingsButton.texture.getRegionWidth(), BUTTON_SCALE*scale*settingsButton.texture.getRegionHeight());
+            settingsButton.hitbox.setCenter(canvas.getWidth()/2.0f, progressBarCenterY - settingsButton.texture.getRegionHeight()*buttonSpacing*scale + shiftUp*scale);
 
-            levelSelectButton.hitbox.setSize(BUTTON_SCALE*scale*levelSelectButton.texture.getWidth(), BUTTON_SCALE*scale*levelSelectButton.texture.getHeight());
+            levelSelectButton.hitbox.setSize(BUTTON_SCALE*scale*levelSelectButton.texture.getRegionWidth(), BUTTON_SCALE*scale*levelSelectButton.texture.getRegionHeight());
             levelSelectButton.hitbox.setCenter(canvas.getWidth()/2.0f, progressBarCenterY + shiftUp*scale);
         }
         if(quitButton != null){
-            quitButton.hitbox.setSize(BUTTON_SCALE*scale*quitButton.texture.getWidth(), BUTTON_SCALE*scale*quitButton.texture.getHeight());
-            quitButton.hitbox.setCenter(canvas.getWidth()/2.0f, progressBarCenterY - quitButton.texture.getHeight()*buttonSpacing*scale);
+            quitButton.hitbox.setSize(BUTTON_SCALE*scale*quitButton.texture.getRegionWidth(), BUTTON_SCALE*scale*quitButton.texture.getRegionHeight());
+            quitButton.hitbox.setCenter(canvas.getWidth()/2.0f, progressBarCenterY - quitButton.texture.getRegionHeight()*buttonSpacing*scale);
         }
     }
 
@@ -313,6 +313,7 @@ public class MainMenuScreen implements Screen, InputProcessor, ControllerListene
         // Useless if called in outside animation loop
         active = true;
         Gdx.input.setInputProcessor(this);
+        Gdx.input.setCursorCatched(true);
     }
 
     /**
@@ -408,6 +409,9 @@ public class MainMenuScreen implements Screen, InputProcessor, ControllerListene
      */
     public boolean buttonDown (Controller controller, int buttonCode) {
         if (!active) return false;
+        if (!Gdx.input.isCursorCatched()) {
+            Gdx.input.setCursorCatched(true);
+        }
         ControllerMapping mapping = controller.getMapping();
         if (mapping == null) return false;
 
@@ -463,6 +467,9 @@ public class MainMenuScreen implements Screen, InputProcessor, ControllerListene
      */
     public boolean keyDown(int keycode) {
         if (!active) return false;
+        if (!Gdx.input.isCursorCatched()) {
+            Gdx.input.setCursorCatched(true);
+        }
         menuUp = keycode == Input.Keys.UP;
         menuDown = keycode == Input.Keys.DOWN;
 
@@ -527,6 +534,13 @@ public class MainMenuScreen implements Screen, InputProcessor, ControllerListene
      */
     public boolean mouseMoved(int screenX, int screenY) {
         if (!active) return false;
+        if (Gdx.input.isCursorCatched()) {
+            Gdx.input.setCursorCatched(false);
+            float x = hoveredButton.hitbox.x + hoveredButton.hitbox.width / 2;
+            float y = hoveredButton.hitbox.y + hoveredButton.hitbox.height / 2;
+            Gdx.input.setCursorPosition((int) x, heightY - (int) y);
+            return true;
+        }
         screenY = heightY - screenY;
         hoveredButton = null;
         for (MenuButton button : buttons) {
