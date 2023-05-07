@@ -72,8 +72,8 @@
             "scale": 0.5,
             "selectedLayer": 3,
             "viewCenter": {
-                "x": 1781,
-                "y": 766
+                "x": 1762,
+                "y": 762
             }
         },
         "level1old.json": {
@@ -94,8 +94,8 @@
             "scale": 0.33,
             "selectedLayer": 3,
             "viewCenter": {
-                "x": 1356.0606060606062,
-                "y": 842.4242424242423
+                "x": 1330.3030303030305,
+                "y": 839.3939393939393
             }
         },
         "level3.json": {
@@ -105,8 +105,8 @@
             "scale": 0.5,
             "selectedLayer": 3,
             "viewCenter": {
-                "x": 1293,
-                "y": 200
+                "x": 1274,
+                "y": 196
             }
         },
         "level4.json": {
@@ -114,10 +114,10 @@
                 7
             ],
             "scale": 0.75,
-            "selectedLayer": 3,
+            "selectedLayer": 2,
             "viewCenter": {
-                "x": 1459.3333333333335,
-                "y": 1238.6666666666665
+                "x": 836,
+                "y": 569.3333333333333
             }
         },
         "level5.json": {
@@ -127,16 +127,16 @@
             "scale": 0.75,
             "selectedLayer": 3,
             "viewCenter": {
-                "x": 570,
-                "y": 802.6666666666666
+                "x": 929.3333333333334,
+                "y": 793.3333333333333
             }
         },
         "level6.json": {
             "scale": 0.5515937499999999,
             "selectedLayer": 0,
             "viewCenter": {
-                "x": 800.4079089003457,
-                "y": 641.7766698770611
+                "x": 784.9980171095124,
+                "y": 639.9637414310806
             }
         }
     },
@@ -159,13 +159,13 @@
     "project": "untitled.tiled-project",
     "property.type": "string",
     "recentFiles": [
+        "level4.json",
         "level0.json",
         "level1.json",
         "level2.json",
         "level3.json",
         "F:/Programming/School/CS 3152/Eudaemon/CS-3152-G6/Eudaemon/assets/EudaemonTileset.json",
         "level5.json",
-        "level4.json",
         "level1old.json",
         "experimentalLevel1.json",
         "level0.tmj",
