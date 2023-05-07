@@ -74,7 +74,7 @@
       "height" : 0.05
     },
     "wallSensor": {
-      "shrink" : 0.2,
+      "shrink" : 0.5,
       "height" : 0.4
     }
   },
