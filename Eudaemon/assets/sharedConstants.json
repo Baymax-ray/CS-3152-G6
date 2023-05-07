@@ -181,7 +181,7 @@
     "tickFrameSwitch": 5,
     "maxFrame": 6,
     "hitboxWidth": 0.8,
-    "hitboxHeight": 0.9,
+    "hitboxHeight": 1.5,
     "maxSpeed": 1,
     "speedMult": 1.0,
     "horizontalAcceleration": 0.12,
