@@ -60,7 +60,8 @@ public class SettingsScreen implements Screen, InputProcessor, ControllerListene
 	private Texture volumeButton;
 	/** quit button to display when done */
 	private Texture screenSizeButton;
-
+	/** are we coming from the main menu to the setting screen?
+	 * This is for judging if we should go back to menu or level*/
 	private boolean isFromMainMenu=false;
 
 
@@ -69,7 +70,7 @@ public class SettingsScreen implements Screen, InputProcessor, ControllerListene
 	/** Default budget for asset loader (do nothing but load 60 fps) */
 	private static final int DEFAULT_BUDGET = 15;
 	/** Standard window size (for scaling) */
-	private static final int STANDARD_WIDTH  = 240;
+	private static final int STANDARD_WIDTH  = 260;
 	/** Standard window height (for scaling) */
 	private static final int STANDARD_HEIGHT = 135;
 	/** Ratio of the bar width to the screen */
@@ -77,7 +78,7 @@ public class SettingsScreen implements Screen, InputProcessor, ControllerListene
 	/** Ration of the bar height to the screen */
 	private static final float BAR_HEIGHT_RATIO = 0.25f;
 	/** Height of the progress bar */
-	private static final float BUTTON_SCALE  = 0.20f;
+	private static final float BUTTON_SCALE  = 0.05f;
 
 	/** Reference to GameCanvas created by the root */
 	private GameCanvas canvas;
@@ -249,13 +250,13 @@ public class SettingsScreen implements Screen, InputProcessor, ControllerListene
 		Color backTint = (backPressState == 1 ? Color.GRAY: Color.WHITE);
 		canvas.draw(backButton, backTint, 0, 0, canvas.getWidth(), canvas.getHeight());
 		//Master Volume Bar
-		canvas.draw(unfilledBar,Color.WHITE, (canvas.getWidth() / 1.9f), canvas.getHeight()/1.49f, unfilledBar.getWidth()/scale*2.8f, unfilledBar.getHeight()/scale*2.8f);
+		canvas.draw(unfilledBar,Color.WHITE, (canvas.getWidth() / 1.9f), canvas.getHeight()/1.49f, unfilledBar.getWidth()/scale, unfilledBar.getHeight()/scale*2.8f);
 		//Music Volume Bar
-		canvas.draw(unfilledBar,Color.WHITE, (canvas.getWidth() / 1.9f), canvas.getHeight()/1.71f, unfilledBar.getWidth()/scale*2.8f, unfilledBar.getHeight()/scale*2.8f);
+		canvas.draw(unfilledBar,Color.WHITE, (canvas.getWidth() / 1.9f), canvas.getHeight()/1.71f, unfilledBar.getWidth()/scale, unfilledBar.getHeight()/scale*2.8f);
 		//SFX Volume Bar
-		canvas.draw(unfilledBar,Color.WHITE, (canvas.getWidth() / 1.9f), canvas.getHeight()/2f, unfilledBar.getWidth()/scale*2.8f, unfilledBar.getHeight()/scale*2.8f);
+		canvas.draw(unfilledBar,Color.WHITE, (canvas.getWidth() / 1.9f), canvas.getHeight()/2f, unfilledBar.getWidth()/scale, unfilledBar.getHeight()/scale*2.8f);
 		//Brightness Bar
-		canvas.draw(unfilledBar,Color.WHITE, (canvas.getWidth() / 1.9f), canvas.getHeight()/2.4f, unfilledBar.getWidth()/scale*2.8f, unfilledBar.getHeight()/scale*2.8f);
+		canvas.draw(unfilledBar,Color.WHITE, (canvas.getWidth() / 1.9f), canvas.getHeight()/2.4f, unfilledBar.getWidth()/scale, unfilledBar.getHeight()/scale*2.8f);
 		//Fullscreen On Button
 		canvas.draw(fullScreenOnButton, Color.WHITE, (canvas.getWidth() / 1.9f), canvas.getHeight()/3f , fullScreenOnButton.getWidth(), fullScreenOnButton.getHeight());
 		//Fullscreen Off Button
@@ -425,6 +426,8 @@ public class SettingsScreen implements Screen, InputProcessor, ControllerListene
 
 		// Flip to match graphics coordinates
 		screenY = heightY-screenY;
+
+
 
 		if (backHitbox.contains(screenX, screenY)) {
 			backPressState = 1;
