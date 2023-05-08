@@ -666,10 +666,8 @@ public class GameCanvas {
 	 * @param y                  The y-coordinate of the texture origin (on screen)
 	 * @param width              The texture width
 	 * @param height             The texture height
-	 * @param scaleforBackground
-	 * @param background
 	 */
-	public void draw(TextureRegion region, Color tint, float ox, float oy, float x, float y, float width, float height, float scaleforBackground, float background) {
+	public void draw(TextureRegion region, Color tint, float ox, float oy, float x, float y, float width, float height) {
 		if (active != DrawPass.STANDARD) {
 			Gdx.app.error("GameCanvas", "Cannot draw without active begin()", new IllegalStateException());
 			return;
