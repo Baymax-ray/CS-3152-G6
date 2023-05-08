@@ -99,12 +99,12 @@ public class Level {
     /**
      * How far the player can move before the camera starts moving, x-coords
      */
-    private float camZoneX;
+    private final float camZoneX;
 
     /**
      * How far the player can move before the camera starts moving, y-coords
      */
-    private float camZoneY;
+    private final float camZoneY;
 
     private final float gravity;
 
@@ -739,7 +739,7 @@ public class Level {
     }
     /**
      * Returns true if the object is in bounds.
-     *
+     * <p>
      * This assertion is useful for debugging the physics.
      *
      * @param obj The object to check.
@@ -1005,7 +1005,7 @@ public class Level {
      */
     private ArrayList<Enemy> removeEnemy(ArrayList<Enemy> arr, int index) {
         if (arr == null || index < 0 || index > arr.size()) return arr;
-        ArrayList<Enemy> result = new ArrayList<Enemy>();
+        ArrayList<Enemy> result = new ArrayList<>();
         for (int i = 0; i < arr.size(); i++) {
             if (i == index) {
                 continue;
