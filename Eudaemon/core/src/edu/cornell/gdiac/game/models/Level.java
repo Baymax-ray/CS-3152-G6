@@ -245,6 +245,11 @@ public class Level {
     public boolean isVeteranDifficulty(){
         return veteranDifficulty;
     }
+    public void setDifficulty(int difficulty){
+        if(difficulty == 0){setNormalDifficulty(true);}
+        else if (difficulty ==1){setHardDifficulty(true);}
+        else if (difficulty == 2){setVeteranDifficulty(true);}
+    }
     public void setNormalDifficulty(boolean bool){
         normalDifficulty = bool;
         hardDifficulty = !bool;

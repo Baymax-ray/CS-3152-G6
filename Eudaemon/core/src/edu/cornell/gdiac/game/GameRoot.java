@@ -23,6 +23,7 @@ public class GameRoot extends Game implements ScreenListener {
 	private Sound backgroundMomoSound;
 	private Sound backgroundChiyoSound;
 	private AudioController audio;
+	private int levelDifficulty;
 
 	@Override
 	public void create() {
@@ -70,6 +71,7 @@ public class GameRoot extends Game implements ScreenListener {
 			this.levelScreen = new LevelScreen(this.state.getCurrentLevel(), this.state.getActionBindings(), assets);
 			levelScreen.setScreenListener(this);
 			levelScreen.setCanvas(canvas);
+			levelScreen.getLevel().setDifficulty(this.levelDifficulty);
 
 			this.deathScreen = new DeathScreen(assets, canvas);
 			this.deathScreen.setScreenListener(this);
@@ -97,15 +99,8 @@ public class GameRoot extends Game implements ScreenListener {
 				levelScreen = new LevelScreen(state.getCurrentLevel(), state.getActionBindings(), assets);
 				levelScreen.setScreenListener(this);
 				levelScreen.setCanvas(canvas);
+				levelScreen.getLevel().setDifficulty(this.levelDifficulty);
 				setScreen(levelScreen);
-				//audio = new AudioController();
-				//backgroundMomoSound = Gdx.audio.newSound(Gdx.files.internal("music/MomoTheme.mp3"));
-//				backgroundChiyoSound = Gdx.audio.newSound(Gdx.files.internal("music/ChiyoTheme.mp3"));
-//				backgroundChiyoSound.loop();
-				//backgroundMomoSound.loop();
-//				backgroundChiyoSound.setVolume(0,0);
-				//audio.playAllSound();
-				//audio.muteChiyo();
 			} else if (exitCode == ExitCode.LEVEL_SELECT) {
 				screen.pause();
 				levelSelectScreen.reset();
@@ -125,6 +120,7 @@ public class GameRoot extends Game implements ScreenListener {
 				levelScreen = new LevelScreen(this.state.getCurrentLevel(), this.state.getActionBindings(), assets);
 				levelScreen.setScreenListener(this);
 				levelScreen.setCanvas(canvas);
+
 				setScreen(levelScreen);
 			}
 			if (exitCode == ExitCode.MAIN_MENU) {
@@ -205,6 +201,7 @@ public class GameRoot extends Game implements ScreenListener {
 				levelScreen = new LevelScreen(this.state.getCurrentLevel(), this.state.getActionBindings(), assets);
 				levelScreen.setScreenListener(this);
 				levelScreen.setCanvas(canvas);
+				levelScreen.getLevel().setDifficulty(this.levelDifficulty);
 				setScreen(levelScreen);
 			}
 			if (exitCode == ExitCode.MAIN_MENU) {
@@ -219,22 +216,27 @@ public class GameRoot extends Game implements ScreenListener {
 				levelScreen = new LevelScreen(this.state.getCurrentLevel(), this.state.getActionBindings(), assets);
 				levelScreen.setScreenListener(this);
 				levelScreen.setCanvas(canvas);
+				levelScreen.getLevel().setDifficulty(this.levelDifficulty);
 				setScreen(levelScreen);
 			}
 			if(exitCode == ExitCode.START && !levelScreen.getLevel().isSettingsChanged()){
 				escapeMenu.pause();
 				levelScreen.resume();
+				levelScreen.getLevel().setDifficulty(this.levelDifficulty);
 				setScreen(levelScreen);
 			}
 			if(exitCode == ExitCode.SETTINGS){
 				escapeMenu.pause();
 				settingsScreen.reset();
 				setScreen(settingsScreen);
+				levelScreen.getLevel().setDifficulty(this.levelDifficulty);
 				settingsScreen.setIsFromMainMenu(false);
 			}
 		}
 		if(screen == settingsScreen){
+			this.levelDifficulty = settingsScreen.currentDifficulty;
 			if(exitCode == ExitCode.PAUSE){
+				System.out.println("Alright");
 				screen.pause();
 				escapeMenu.reset();
 				setScreen(escapeMenu);
