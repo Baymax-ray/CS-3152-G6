@@ -18,7 +18,9 @@ public class UIOverlay {
     private final Texture filledSpiritBar;
 
     /** Texture for outline of bar/hearts*/
-    private final Texture uiOutline;
+    private final Texture vetUI;
+    private final Texture hardUI;
+    private final Texture normalUI;
 
     private final Texture settingsButton;
 
@@ -29,13 +31,9 @@ public class UIOverlay {
         this.filledSpiritBar = assets.getEntry(json.getString("filled"), Texture.class);
         this.settingsButton = assets.getEntry(json.getString("settings"), Texture.class);
         this.numHearts = level.getLevelDifficulty();
-        this.uiOutline = assets.getEntry(json.getString("uioutline3"), Texture.class);
-//        if(numHearts == 3){
-//            this.uiOutline = assets.getEntry(json.getString("uioutline3"), Texture.class);
-//        }
-//        else{
-//            this.uiOutline = assets.getEntry(json.getString("uioutline5"), Texture.class);
-//        }
+        this.vetUI = assets.getEntry(json.getString("vetUI"), Texture.class);
+        this.hardUI = assets.getEntry(json.getString("hardUI"), Texture.class);
+        this.normalUI = assets.getEntry(json.getString("normalUI"), Texture.class);
 
 
     }
@@ -43,7 +41,16 @@ public class UIOverlay {
     public void draw(GameCanvas canvas, float playerSpirit, float playerHearts) {
 //        float xPos = 74.5F;
         float xPos = 0.05173611111f*canvas.getWidth();
-        canvas.draw(uiOutline, Color.WHITE, 0, canvas.getHeight()*0.927f, canvas.getWidth()*0.1534722222f, canvas.getHeight()*0.06f);
+        if(playerHearts == 3){
+            canvas.draw(vetUI, Color.WHITE, 0, canvas.getHeight()*0.927f, canvas.getWidth()*0.1534722222f, canvas.getHeight()*0.06f);
+        }
+        else if(playerHearts == 4){
+            canvas.draw(hardUI, Color.WHITE, 0, canvas.getHeight()*0.927f, canvas.getWidth()*0.1534722222f, canvas.getHeight()*0.06f);
+        }
+        else{
+            canvas.draw(normalUI, Color.WHITE, 0, canvas.getHeight()*0.927f, canvas.getWidth()*0.1534722222f, canvas.getHeight()*0.06f);
+        }
+
         for(int i=0; i < playerHearts; i++){
             canvas.draw(heartRegion, Color.WHITE, xPos,canvas.getHeight()*0.962f, 0.016f*canvas.getWidth(), 0.024f*canvas.getHeight());
             xPos += 0.042f*canvas.getWidth();
