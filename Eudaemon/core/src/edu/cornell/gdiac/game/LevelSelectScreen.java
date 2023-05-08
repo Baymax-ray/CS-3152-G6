@@ -107,7 +107,7 @@ public class LevelSelectScreen implements Screen, InputProcessor, ControllerList
     private float scale;
 
     /** the current level (1-based indexing)*/
-    private int numAvailableLevels;
+    private int numLevelsAvailable;
 
     /** the selected level (0-based indexing) */
     private int selectedLevel;
@@ -140,7 +140,7 @@ public class LevelSelectScreen implements Screen, InputProcessor, ControllerList
         lights = assets.getEntry("levelSelect:lights", Texture.class);
         lights.setFilter(TextureFilter.Nearest, TextureFilter.Nearest);
 
-        numAvailableLevels = state.getLevels().size();
+        numLevelsAvailable = state.getLevels().size();
 
         buttons = new Array<>();
 
@@ -153,7 +153,8 @@ public class LevelSelectScreen implements Screen, InputProcessor, ControllerList
         for (int i = 0; i < 10; i++) {
             MenuButton button = new MenuButton(new TextureRegion(lights), ExitCode.START);
             levelButtons.add(button);
-            buttons.add(button);
+            if (i < numLevelsAvailable)
+                buttons.add(button);
 
             levelNumbers.put(button, assets.getEntry("levelSelect:" + (i + 1), Texture.class));
             levelNumbers.get(button).setFilter(TextureFilter.Nearest, TextureFilter.Nearest);
@@ -262,21 +263,21 @@ public class LevelSelectScreen implements Screen, InputProcessor, ControllerList
             if (menuUp) {
                 if (hoveredButton == null) {
                     hoveredButton = levelButtons.get(0);
-                } else {
+                } else if (buttons.contains(hoveredButton.up, true)) {
                     hoveredButton = hoveredButton.up;
                 }
                 menuCooldown = COOLDOWN;
             } else if (menuDown) {
                 if (hoveredButton == null) {
-                    hoveredButton = levelButtons.get(9);
-                } else {
+                    hoveredButton = levelButtons.get(numLevelsAvailable - 1);
+                } else if (buttons.contains(hoveredButton.down, true)){
                     hoveredButton = hoveredButton.down;
                 }
                 menuCooldown = COOLDOWN;
             } else if (menuLeft) {
                 if (hoveredButton == null) {
-                    hoveredButton = levelButtons.get(9);
-                } else {
+                    hoveredButton = levelButtons.get(numLevelsAvailable - 1);
+                } else if (buttons.contains(hoveredButton.down, true)) {
                     if (hoveredButton.left == backButton && hoveredButton != backButton) {
                         backButton.right = hoveredButton;
                     }
@@ -285,8 +286,8 @@ public class LevelSelectScreen implements Screen, InputProcessor, ControllerList
                 menuCooldown = COOLDOWN;
             } else if (menuRight) {
                 if (hoveredButton == null) {
-                    hoveredButton = levelButtons.get(0);
-                } else {
+                    hoveredButton = levelButtons.get(numLevelsAvailable - 1);
+                } else if (buttons.contains(hoveredButton.down, true)) {
                     hoveredButton = hoveredButton.right;
                 }
                 menuCooldown = COOLDOWN;
@@ -314,7 +315,7 @@ public class LevelSelectScreen implements Screen, InputProcessor, ControllerList
             if (listener != null) {
                 for (MenuButton button : buttons) {
                     if (button.pressState == 2) {
-
+                        selectedLevel = levelButtons.indexOf(button, true);
                         listener.exitScreen(this, button.exitCode);
                     }
                 }
@@ -353,7 +354,7 @@ public class LevelSelectScreen implements Screen, InputProcessor, ControllerList
         heightY = height;
 
         backButton.hitbox.setSize(10 * scale, 9 * scale);
-        backButton.hitbox.setPosition(5 * scale, canvas.getHeight() - 12 * scale);
+        backButton.hitbox.setPosition(5 * scale, canvas.getHeight() - 13 * scale);
         backButton.texture.setRegion(5, 4, 10, 9);
 
         for (int i = 0; i < levelButtons.size; i++) {
@@ -739,6 +740,14 @@ public class LevelSelectScreen implements Screen, InputProcessor, ControllerList
         }
 
         return true;
+    }
+
+    /** sets the number of levels that will be able to click on. putting a negative number or 0 will allow all levels to be started. */
+    public void setNumLevelsAvailable(int i) {
+        if (i <= 0)
+            numLevelsAvailable = 10;
+        else
+            numLevelsAvailable = i;
     }
 
 }
