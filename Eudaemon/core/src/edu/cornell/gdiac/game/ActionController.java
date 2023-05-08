@@ -654,6 +654,19 @@ public class ActionController {
                 player.setOyOffset(-47);
                 player.setSxMult(1.2f);
                 player.setSyMult(1.2f);
+            } else if (frameAfterLanding < 16 && frameAfterLanding > 1) { // landing
+                currentAnimation = "momoJump";
+                currentFrame = frameAfterLanding / 8 + 5;
+                System.out.println(currentFrame);
+                TextureRegion current = (TextureRegion) (animations.get("momoJump")).getKeyFrame(
+                        currentFrame);
+                tickFrameSwitch = 4;
+                maxFrame = 2;
+                player.setTexture(current);
+                player.setOxOffset(0);
+                player.setOyOffset(-47);
+                player.setSxMult(1.2f);
+                player.setSyMult(1.2f);
             }
 //            else if (player.isGrounded() && currentAnimation == "momoJump"){
 //                currentAnimation = "momoLand";
