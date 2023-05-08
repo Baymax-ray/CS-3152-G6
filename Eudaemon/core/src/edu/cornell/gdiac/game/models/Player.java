@@ -24,7 +24,7 @@ public class Player extends CapsuleObstacle {
 
     private final float spiritKillingEnemy;
     private final int maxHearts;
-    private final int initialHearts;
+    private final float initialHearts;
     private final float maxSpirit;
     private final float initialSpirit;
     private final int attackPower;
@@ -984,7 +984,7 @@ public class Player extends CapsuleObstacle {
      *
      * @param value number of hearts.
      */
-    public void setHearts(int value) {
+    public void setHearts(float value) {
         if (value <= maxHearts) {
             hearts = value;
         } else {
@@ -1277,7 +1277,7 @@ public class Player extends CapsuleObstacle {
 
     //#endregion
 
-    public Player(AssetDirectory assets, int startXCoord, int startYCoord) {
+    public Player(AssetDirectory assets, int startXCoord, int startYCoord, float levelDifficulty) {
         super(startXCoord, startYCoord, assets.getEntry("sharedConstants", JsonValue.class).get("player").getFloat("hitboxWidth"), assets.getEntry("sharedConstants", JsonValue.class).get("player").getFloat("hitboxHeight"));
 
         //now the player's shared data is separated into sharedConstants.json, we shall not query them

@@ -2,7 +2,8 @@
   "Player": {
     "momo:ImageWidth": 1.5,
     "momo:ImageHeight": 1.5,
-    "uioutline": "platform:uioutline",
+    "uioutline3": "platform:uioutline3",
+    "uioutline5": "platform:uioutline5",
     "settings": "platform:settings",
     "chiyo:ImageWidth": 1.3,
     "chiyo:ImageHeight": 1.3,
@@ -16,7 +17,7 @@
     "chiyoHitboxHeightMult": 1.5,
 
 
-    "maxHearts": 3,
+    "maxHearts": 5,
     "initialHearts": 3,
 
     "startsFacingRight": true,

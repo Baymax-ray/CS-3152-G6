@@ -157,6 +157,8 @@ public class Level {
     public boolean hardDifficulty;
     public boolean veteranDifficulty;
 
+    public boolean settingsChanged;
+
     //#endregion
 
     //#region GETTERS & SETTERS
@@ -242,16 +244,34 @@ public class Level {
     }
     public void setNormalDifficulty(boolean bool){
         normalDifficulty = bool;
+        hardDifficulty = !bool;
+        veteranDifficulty = !bool;
+        levelDifficulty = 5;
+        player.setHearts(levelDifficulty);
+        settingsChanged = true;
     }
     public void setHardDifficulty(boolean bool){
         hardDifficulty = bool;
+        veteranDifficulty = !bool;
+        normalDifficulty = !bool;
+        levelDifficulty = 4;
+        player.setHearts(levelDifficulty);
+        settingsChanged = true;
     }
     public void setVeteranDifficulty(boolean bool){
         veteranDifficulty = bool;
+        hardDifficulty = !bool;
+        normalDifficulty = !bool;
+        levelDifficulty = 3;
+        player.setHearts(levelDifficulty);
+        settingsChanged = true;
     }
 
     public float getLevelDifficulty() {
         return levelDifficulty;
+    }
+    public boolean isSettingsChanged(){
+        return settingsChanged;
     }
     //#endregion
 
@@ -430,18 +450,19 @@ public class Level {
         this.normalDifficulty = true;
         this.hardDifficulty = false;
         this.veteranDifficulty = false;
+        this.settingsChanged = false;
 
         if(veteranDifficulty){
             levelDifficulty = 3;
-            uiElements = new UIOverlay(assets.getEntry("sharedConstants", JsonValue.class).get("Player"), assets, levelDifficulty);
+            uiElements = new UIOverlay(assets.getEntry("sharedConstants", JsonValue.class).get("Player"), assets, this);
         }
         else if(hardDifficulty){
             levelDifficulty = 4;
-            uiElements = new UIOverlay(assets.getEntry("sharedConstants", JsonValue.class).get("Player"), assets, levelDifficulty);
+            uiElements = new UIOverlay(assets.getEntry("sharedConstants", JsonValue.class).get("Player"), assets, this);
         }
         else{
             levelDifficulty = 5;
-            uiElements = new UIOverlay(assets.getEntry("sharedConstants", JsonValue.class).get("Player"), assets, levelDifficulty);
+            uiElements = new UIOverlay(assets.getEntry("sharedConstants", JsonValue.class).get("Player"), assets, this);
         }
 
         controllers = Controllers.get().getControllers();
@@ -574,7 +595,7 @@ public class Level {
 
         //#endregion
 
-        this.player = new Player(assets, startX, startY);
+        this.player = new Player(assets, startX, startY, levelDifficulty);
 //        JsonValue playerData = assets.getEntry("sharedConstants", JsonValue.class).get("Player");
         this.assets = assets;
 //        uiElements = new UIOverlay(playerData, assets);
@@ -728,6 +749,7 @@ public class Level {
     //#endregion
 
     public void update(float delta){
+        System.out.println("level difficulty: " + levelDifficulty);
         while (!addQueue.isEmpty()) {
             addObject(addQueue.poll());
         }
@@ -855,6 +877,7 @@ public class Level {
         canvas.setOverlayCamera();
         canvas.begin();
         uiElements.draw(canvas, player.getSpirit(), player.getHearts());
+        System.out.println("hello");
         boolean alreadyDisplay = false;
         for (Billboard billboard : billboards) {
             if (billboard.isDisplay() && !alreadyDisplay) {

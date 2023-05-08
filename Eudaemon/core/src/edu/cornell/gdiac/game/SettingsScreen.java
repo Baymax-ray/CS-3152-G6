@@ -33,6 +33,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.Texture.TextureFilter;
 import com.badlogic.gdx.math.Rectangle;
 import edu.cornell.gdiac.assets.AssetDirectory;
+import edu.cornell.gdiac.game.models.Level;
 import edu.cornell.gdiac.util.Controllers;
 import edu.cornell.gdiac.util.ScreenListener;
 import edu.cornell.gdiac.util.XBoxController;
@@ -128,11 +129,21 @@ public class SettingsScreen implements Screen, InputProcessor, ControllerListene
 	private Texture difficultyHardButton;
 	private Texture difficultyVeteranButton;
 
+	private Rectangle normalHitbox;
+	private Rectangle hardHitbox;
+	private Rectangle veteranHitbox;
+	private int normalPressState;
+	private int hardPressState;
+	private int veteranPressState;
+
+
 	//Texture to visually show the adjustment of settings (e.g volume, screen size)
 	private Texture filledBar;
 
 	//Texture for the circular toggle to drag to adjust setting - should sense user input from touching this
 	private Texture toggle;
+
+	private Level level;
 
 
 
@@ -155,8 +166,8 @@ public class SettingsScreen implements Screen, InputProcessor, ControllerListene
 	 * @param file  	The asset directory to load in the background
 	 * @param canvas 	The game canvas to draw to
 	 */
-	public SettingsScreen(String file, GameCanvas canvas) {
-		this(file, canvas, DEFAULT_BUDGET);
+	public SettingsScreen(String file, GameCanvas canvas, Level currentLevel) {
+		this(file, canvas, DEFAULT_BUDGET, currentLevel);
 	}
 
 	/**
@@ -171,10 +182,11 @@ public class SettingsScreen implements Screen, InputProcessor, ControllerListene
 	 * @param canvas 	The game canvas to draw to
 	 * @param millis The loading budget in milliseconds
 	 */
-	public SettingsScreen(String file, GameCanvas canvas, int millis) {
+	public SettingsScreen(String file, GameCanvas canvas, int millis, Level currentLevel) {
 		this.canvas  = canvas;
 		budget = millis;
 		this.isFromMainMenu = false;
+		this.level = currentLevel;
 
 		// Compute the dimensions from the canvas
 		resize(canvas.getWidth(),canvas.getHeight());
@@ -202,6 +214,12 @@ public class SettingsScreen implements Screen, InputProcessor, ControllerListene
 
 		backHitbox = new Rectangle();
 		backPressState = 0;
+		normalHitbox = new Rectangle();
+		hardHitbox = new Rectangle();
+		veteranHitbox = new Rectangle();
+		normalPressState = 0;
+		hardPressState = 0;
+		veteranPressState = 0;
 
 
 		Gdx.input.setInputProcessor( this );
@@ -243,8 +261,9 @@ public class SettingsScreen implements Screen, InputProcessor, ControllerListene
 		canvas.setOverlayCamera();
 		canvas.begin();
 		canvas.draw(background, Color.WHITE, 0, 0, canvas.getWidth(), canvas.getHeight());
-		Color playTint = (volumePressState == 1 ? Color.GRAY: Color.WHITE);
-		Color quitTint = (screenSizePressState == 1 ? Color.GRAY: Color.WHITE);
+		Color normalTint = (level.isNormalDifficulty() ? Color.ORANGE: Color.WHITE);
+		Color hardTint = (level.isHardDifficulty() ? Color.ORANGE: Color.WHITE);
+		Color veteranTint = (level.isVeteranDifficulty() ? Color.ORANGE: Color.WHITE);
 		Color backTint = (backPressState == 1 ? Color.GRAY: Color.WHITE);
 		canvas.draw(backButton, backTint, 0, 0, canvas.getWidth(), canvas.getHeight());
 		//Master Volume Bar
@@ -260,11 +279,11 @@ public class SettingsScreen implements Screen, InputProcessor, ControllerListene
 		//Fullscreen Off Button
 		canvas.draw(fullScreenOffButton, Color.WHITE, (canvas.getWidth() / 1.68f), canvas.getHeight()/3f , fullScreenOffButton.getWidth(), fullScreenOffButton.getHeight());
 		//Level Difficulty Normal Button
-		canvas.draw(difficultyNormalButton, Color.WHITE, (canvas.getWidth() / 1.9f), canvas.getHeight()/6f , difficultyNormalButton.getWidth(), difficultyNormalButton.getHeight());
+		canvas.draw(difficultyNormalButton, normalTint, (canvas.getWidth() / 1.9f), canvas.getHeight()/6f , difficultyNormalButton.getWidth(), difficultyNormalButton.getHeight());
 		//Level Difficulty Hard Button
-		canvas.draw(difficultyHardButton, Color.WHITE, (canvas.getWidth() / 1.5f), canvas.getHeight()/6f , difficultyHardButton.getWidth(), difficultyHardButton.getHeight());
+		canvas.draw(difficultyHardButton, hardTint, (canvas.getWidth() / 1.5f), canvas.getHeight()/6f , difficultyHardButton.getWidth(), difficultyHardButton.getHeight());
 		//Level Difficulty Veteran Button
-		canvas.draw(difficultyVeteranButton, Color.WHITE, (canvas.getWidth() / 1.3f), canvas.getHeight()/6f , difficultyVeteranButton.getWidth(), difficultyVeteranButton.getHeight());
+		canvas.draw(difficultyVeteranButton, veteranTint, (canvas.getWidth() / 1.3f), canvas.getHeight()/6f , difficultyVeteranButton.getWidth(), difficultyVeteranButton.getHeight());
 
 		canvas.end();
 	}
@@ -298,6 +317,9 @@ public class SettingsScreen implements Screen, InputProcessor, ControllerListene
 		this.volumePressState = 0;
 		this.screenSizePressState = 0;
 		this.backPressState = 0;
+		this.normalPressState = 0;
+		this.hardPressState = 0;
+		this.veteranPressState = 0;
 	}
 
 	/**
@@ -334,6 +356,19 @@ public class SettingsScreen implements Screen, InputProcessor, ControllerListene
 		if(backButton != null){
 			backHitbox.setSize(10 * scale);
 			backHitbox.setPosition(5 * scale, canvas.getHeight() - 12 * scale);
+		}
+
+		if(difficultyNormalButton != null){
+			normalHitbox.setSize(difficultyNormalButton.getWidth(), difficultyNormalButton.getHeight());
+			normalHitbox.setPosition((canvas.getWidth() / 1.9f), canvas.getHeight()/6f);
+		}
+		if(difficultyHardButton!=null){
+			hardHitbox.setSize(difficultyHardButton.getWidth(), difficultyHardButton.getHeight());
+			hardHitbox.setPosition((canvas.getWidth() / 1.5f), canvas.getHeight()/6f);
+		}
+		if(difficultyVeteranButton!=null){
+			veteranHitbox.setSize(difficultyVeteranButton.getWidth(), difficultyVeteranButton.getHeight());
+			veteranHitbox.setPosition((canvas.getWidth() / 1.3f), canvas.getHeight()/6f);
 		}
 
 	}
@@ -409,14 +444,29 @@ public class SettingsScreen implements Screen, InputProcessor, ControllerListene
 		// Flip to match graphics coordinates
 		screenY = heightY-screenY;
 
-//		if (volumeButtonHitbox.contains(screenX, screenY)) {
-//			volumePressState = 1;
-//		}
-//		if(screenSizeButtonHitbox.contains(screenX, screenY)){
-//			screenSizePressState = 1;
-//		}
 		if (backHitbox.contains(screenX, screenY)) {
 			backPressState = 1;
+			return true;
+		}
+		if(normalHitbox.contains(screenX, screenY)){
+			normalPressState = 1;
+			level.setNormalDifficulty(true);
+			level.settingsChanged = true;
+			level.getPlayer().setHearts(5);
+			return true;
+		}
+		if(hardHitbox.contains(screenX, screenY)){
+			hardPressState = 1;
+			level.setHardDifficulty(true);
+			level.settingsChanged = true;
+			level.getPlayer().setHearts(4);
+			return true;
+		}
+		if(veteranHitbox.contains(screenX, screenY)){
+			veteranPressState = 1;
+			level.setVeteranDifficulty(true);
+			level.settingsChanged = true;
+			level.getPlayer().setHearts(3);
 			return true;
 		}
 
@@ -447,6 +497,18 @@ public class SettingsScreen implements Screen, InputProcessor, ControllerListene
 			backPressState = 2;
 			return true;
 		}
+//		if(normalPressState == 1){
+//			normalPressState = 2;
+//			return true;
+//		}
+//		if(hardPressState == 1){
+//			hardPressState = 2;
+//			return true;
+//		}
+//		if(veteranPressState == 1){
+//			veteranPressState = 2;
+//			return true;
+//		}
 		return false;
 	}
 	

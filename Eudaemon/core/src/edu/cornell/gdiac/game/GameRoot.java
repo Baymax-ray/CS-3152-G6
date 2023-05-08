@@ -83,7 +83,7 @@ public class GameRoot extends Game implements ScreenListener {
 			this.escapeMenu = new EscapeMenu(assets, canvas);
 			this.escapeMenu.setScreenListener(this);
 
-			this.settingsScreen = new SettingsScreen("assets.json", canvas);
+			this.settingsScreen = new SettingsScreen("assets.json", canvas, levelScreen.getLevel());
 			this.settingsScreen.setScreenListener(this);
 
 			setScreen(mainMenuScreen);
@@ -212,7 +212,16 @@ public class GameRoot extends Game implements ScreenListener {
 				mainMenuScreen.reset();
 				setScreen(mainMenuScreen);
 			}
-			if(exitCode == ExitCode.START){
+			if(exitCode == ExitCode.START && levelScreen.getLevel().isSettingsChanged()){
+				escapeMenu.pause();
+				this.state.resetCurrentLevel();
+				if (levelScreen != null) levelScreen.dispose();
+				levelScreen = new LevelScreen(this.state.getCurrentLevel(), this.state.getActionBindings(), assets);
+				levelScreen.setScreenListener(this);
+				levelScreen.setCanvas(canvas);
+				setScreen(levelScreen);
+			}
+			if(exitCode == ExitCode.START && !levelScreen.getLevel().isSettingsChanged()){
 				escapeMenu.pause();
 				levelScreen.resume();
 				setScreen(levelScreen);
