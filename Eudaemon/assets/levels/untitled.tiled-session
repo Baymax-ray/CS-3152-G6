@@ -94,19 +94,19 @@
             "scale": 1.5,
             "selectedLayer": 1,
             "viewCenter": {
-                "x": 157.66666666666663,
-                "y": 275.99999999999994
+                "x": 420.99999999999994,
+                "y": 310.66666666666663
             }
         },
         "level3.json": {
             "expandedObjectLayers": [
                 7
             ],
-            "scale": 2,
-            "selectedLayer": 1,
+            "scale": 0.5,
+            "selectedLayer": 3,
             "viewCenter": {
-                "x": 374.75,
-                "y": 793.5
+                "x": 221,
+                "y": 298
             }
         },
         "level4.json": {
@@ -138,8 +138,8 @@
             "scale": 0.75,
             "selectedLayer": 1,
             "viewCenter": {
-                "x": 549.9999999999999,
-                "y": 559.9999999999999
+                "x": 548.6666666666667,
+                "y": 558.6666666666666
             }
         },
         "level7.json": {
@@ -183,6 +183,7 @@
     "project": "untitled.tiled-project",
     "property.type": "string",
     "recentFiles": [
+        "level2.json",
         "level0.json",
         "level1.json",
         "level7.json",
@@ -191,7 +192,6 @@
         "level5.json",
         "level4.json",
         "level3.json",
-        "level2.json",
         "level1old.json",
         "experimentalLevel1.json",
         "level0.tmj"
