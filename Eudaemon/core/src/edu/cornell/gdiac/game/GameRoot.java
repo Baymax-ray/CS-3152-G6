@@ -76,7 +76,7 @@ public class GameRoot extends Game implements ScreenListener {
 			this.deathScreen = new DeathScreen(assets, canvas);
 			this.deathScreen.setScreenListener(this);
 
-			this.levelSelectScreen = new LevelSelectScreen(assets, state, canvas);
+			this.levelSelectScreen = new LevelSelectScreen(assets, state, canvas, state.getSettings());
 			this.levelSelectScreen.setScreenListener(this);
 
 			this.mainMenuScreen = new MainMenuScreen(assets, canvas);
@@ -184,7 +184,8 @@ public class GameRoot extends Game implements ScreenListener {
 			if (exitCode == ExitCode.WIN) {
 				screen.pause();
 				levelScreen.dispose();
-
+				state.unlockNextLevel();
+				state.save();
 				this.state.setCurrentLevel(state.getCurrentLevel().getExit().getNextLevel());
 				this.state.resetCurrentLevel();
 				levelScreen = new LevelScreen(this.state.getCurrentLevel(), this.state.getActionBindings(), assets);
