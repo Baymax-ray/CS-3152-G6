@@ -749,7 +749,6 @@ public class Level {
     //#endregion
 
     public void update(float delta){
-        System.out.println("level difficulty: " + levelDifficulty);
         while (!addQueue.isEmpty()) {
             addObject(addQueue.poll());
         }
@@ -877,7 +876,6 @@ public class Level {
         canvas.setOverlayCamera();
         canvas.begin();
         uiElements.draw(canvas, player.getSpirit(), player.getHearts());
-        System.out.println("hello");
         boolean alreadyDisplay = false;
         for (Billboard billboard : billboards) {
             if (billboard.isDisplay() && !alreadyDisplay) {
