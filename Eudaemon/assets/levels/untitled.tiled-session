@@ -53,8 +53,8 @@
             "scale": 0.75,
             "selectedLayer": 2,
             "viewCenter": {
-                "x": 1215.3333333333333,
-                "y": 632
+                "x": 1549.3333333333333,
+                "y": 966.6666666666666
             }
         },
         "level0.tmj": {
@@ -72,8 +72,8 @@
             "scale": 1,
             "selectedLayer": 1,
             "viewCenter": {
-                "x": 1199.5,
-                "y": 640
+                "x": 1071,
+                "y": 600
             }
         },
         "level1old.json": {
@@ -94,52 +94,52 @@
             "scale": 0.75,
             "selectedLayer": 2,
             "viewCenter": {
-                "x": 731.3333333333333,
-                "y": 482.66666666666663
+                "x": 600,
+                "y": 481.33333333333337
             }
         },
         "level3.json": {
             "expandedObjectLayers": [
                 7
             ],
-            "scale": 0.3698,
+            "scale": 1.4601,
             "selectedLayer": 3,
             "viewCenter": {
-                "x": 812.6014061654948,
-                "y": 854.5159545700377
+                "x": 1110.1979316485172,
+                "y": 399.97260461612217
             }
         },
         "level4.json": {
             "expandedObjectLayers": [
                 7
             ],
-            "scale": 0.2995,
+            "scale": 0.667,
             "selectedLayer": 3,
             "viewCenter": {
-                "x": 1701.168614357262,
-                "y": 681.1352253756261
+                "x": 571.2143928035981,
+                "y": 487.2563718140929
             }
         },
         "level5.json": {
             "expandedObjectLayers": [
                 7
             ],
-            "scale": 1.5,
+            "scale": 2.3704,
             "selectedLayer": 3,
             "viewCenter": {
-                "x": 767.6666666666666,
-                "y": 960
+                "x": 452.6662166722916,
+                "y": 380.9483631454607
             }
         },
         "level6.json": {
             "expandedObjectLayers": [
                 7
             ],
-            "scale": 0.75,
-            "selectedLayer": 3,
+            "scale": 0.1831,
+            "selectedLayer": 2,
             "viewCenter": {
-                "x": 545.9999999999999,
-                "y": 559.9999999999999
+                "x": 218.45985800109224,
+                "y": 404.1507373020206
             }
         },
         "level7.json": {
@@ -149,8 +149,8 @@
             "scale": 0.5,
             "selectedLayer": 3,
             "viewCenter": {
-                "x": 801,
-                "y": 640
+                "x": 684,
+                "y": 416
             }
         },
         "level8.json": {

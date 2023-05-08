@@ -93,6 +93,8 @@
     "drawScaleY": 1.5,
     "oxOffset": 0,
     "oyOffset": -10,
+    "xOffset": 0,
+    "yOffset": 0,
 
     "maxSpeed": 2.5,
     "speedMult": 0.2,

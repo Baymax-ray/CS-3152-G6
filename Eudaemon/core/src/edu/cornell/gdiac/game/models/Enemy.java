@@ -109,6 +109,9 @@ public class Enemy extends CapsuleObstacle {
      */
     private float oxOffset;
     /**
+     * The offset value along the y-axis.
+     */
+    /**
      * The physics shape of this object
      */
     private PolygonShape sensorShape;
@@ -360,6 +363,7 @@ public class Enemy extends CapsuleObstacle {
     public void setOxOffset(float oxOffset) {
         this.oxOffset = oxOffset;
     }
+
     //#endregion
     public Enemy(JsonValue json, AssetDirectory assets, float x, float y) {
 //        super(x,y,1f,1.4f);
@@ -442,6 +446,9 @@ public class Enemy extends CapsuleObstacle {
                     case "Left":
                         this.projectileEnemyRotation = -(float) Math.PI/2;
                         this.setAngle((float) Math.PI/2);
+                        this.setX(x + 1.0f);
+                        this.setY(y + 0.5f);
+                        this.setOxOffset(35f);
                         break;
                     case "Right":
                         this.projectileEnemyRotation = (float) Math.PI/2;
@@ -450,9 +457,13 @@ public class Enemy extends CapsuleObstacle {
                     case "Up":
                         this.projectileEnemyRotation = (float) Math.PI;
                         //this.setOyOffset(-110f);
+                        this.setX(x + 0.5f);
+                        this.setOyOffset(-15f);
                         break;
                     case "Down":
                         this.projectileEnemyRotation = 0;
+                        this.setY(y - 1f);
+                        this.setOyOffset(20f);
                         break;
                     default:
                         //should not get here
