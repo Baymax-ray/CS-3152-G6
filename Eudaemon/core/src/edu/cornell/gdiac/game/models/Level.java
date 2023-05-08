@@ -27,6 +27,9 @@ import java.util.Hashtable;
 import java.util.Iterator;
 
 public class Level {
+    private final float scaleforBackground;
+    private int startX;
+    private int startY;
     private MyGridGraph gridGraph;
     //#region FINAL FIELDS
     private final Player player;
@@ -516,11 +519,16 @@ public class Level {
         }
 
         this.background_L1 = new TextureRegion(assets.getEntry("background:L1", Texture.class));
+        //get the size of the background
+        //int background_L1Width = background_L1.getRegionWidth();
+        //System.out.println("background_L1Width: " + background_L1Width);
+        //int background_L1Height = background_L1.getRegionHeight();
+        //System.out.println("background_L1Height: " + background_L1Height);
         this.background_L2 = new TextureRegion(assets.getEntry("background:L2", Texture.class));
         this.background_L3 = new TextureRegion(assets.getEntry("background:L3", Texture.class));
         this.background_L4 = new TextureRegion(assets.getEntry("background:L4", Texture.class));
         this.background_L5 = new TextureRegion(assets.getEntry("background:L5", Texture.class));
-
+        this.scaleforBackground = 0.3f;
 
         // Define the world
         this.world = new World(new Vector2(0, gravity), true);
@@ -532,8 +540,7 @@ public class Level {
         this.billboards = new ArrayList<>();
         this.tutorialAreas = new ArrayList<>();
 
-        int startX = 0;
-        int startY = 0;
+
         JsonValue objectLayer = layerData.get("ObjectLayer");
         JsonValue objects = objectLayer.get("objects");
 
@@ -769,13 +776,18 @@ public class Level {
         float cam_x = canvas.getCamera().position.x;
         float cam_y = canvas.getCamera().position.y;
 
-
-//        canvas.draw(background, 0, 0);
-        canvas.draw(background_L1, Color.WHITE, 0, 0, 0, 0, 0, 1F, 1F);
-        canvas.draw(background_L2, Color.WHITE, 0, 0, 0, 0, 0, 1F, 1F);
-        canvas.draw(background_L3, Color.WHITE, 0, 0, 0, 0, 0, 1F, 1F);
-        canvas.draw(background_L4, Color.WHITE, 0, 0, 0, 0, 0, 1F, 1F);
-        canvas.draw(background_L5, Color.WHITE, 0, 0, 0, 0, 0, 1F, 1F);
+        float px=canvas.getCamera().position.x;
+        float py=canvas.getCamera().position.y;
+        float stx=levelToTileCoordinatesX(this.startX);
+        float sty=levelToTileCoordinatesY(this.startY);
+        float diffX=px-stx;
+        float diffY=py-sty;
+        //the background moves with the player,the farther back the faster the speed
+        canvas.draw(background_L1, Color.WHITE, 30, 0, diffX, diffY, 0, this.scaleforBackground, this.scaleforBackground);
+        canvas.draw(background_L2, Color.WHITE, 0, 0, diffX, diffY, 0,  this.scaleforBackground, this.scaleforBackground);
+        canvas.draw(background_L3, Color.WHITE, 0f, 0f, diffX*0.7f, diffY*0.7f, 0,  this.scaleforBackground, this.scaleforBackground);
+        canvas.draw(background_L4, Color.WHITE, 0f, 0f, diffX*0.4f, diffY*0.4f, 0,  this.scaleforBackground, this.scaleforBackground);
+        canvas.draw(background_L5, Color.WHITE, 0f, 0f, diffX*0.1f, diffY*0.1f, 0,  this.scaleforBackground, this.scaleforBackground);
 //        canvas.draw(background, Color.CLEAR, background.getRegionWidth()/2, background.getRegionHeight()/2, 0, 0, 1 / background.getRegionWidth(), 1/ background.getRegionHeight());
 
         //Drawing background 2 tiles

@@ -18,7 +18,6 @@
 package edu.cornell.gdiac.game;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
@@ -32,8 +31,6 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.CircleShape;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
-import com.badlogic.gdx.utils.viewport.FitViewport;
-import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 
 /**
@@ -653,24 +650,26 @@ public class GameCanvas {
 	
 	/**
 	 * Draws the tinted texture at the given position.
-	 *
+	 * <p>
 	 * The texture colors will be multiplied by the given color.  This will turn
 	 * any white into the given color.  Other colors will be similarly affected.
-	 *
+	 * <p>
 	 * Unless otherwise transformed by the global transform (@see begin(Affine2)),
 	 * the texture will be unscaled.  The bottom left of the texture will be positioned
 	 * at the given coordinates.
 	 *
-	 * @param region The texture to draw
-	 * @param tint  The color tint
-	 * @param ox 	The x-coordinate of texture origin (in pixels)
-	 * @param oy 	The y-coordinate of texture origin (in pixels)
-	 * @param x 	The x-coordinate of the texture origin (on screen)
-	 * @param y 	The y-coordinate of the texture origin (on screen)
-	 * @param width	The texture width
-	 * @param height The texture height
-	 */	
-	public void draw(TextureRegion region, Color tint, float ox, float oy, float x, float y, float width, float height) {
+	 * @param region             The texture to draw
+	 * @param tint               The color tint
+	 * @param ox                 The x-coordinate of texture origin (in pixels)
+	 * @param oy                 The y-coordinate of texture origin (in pixels)
+	 * @param x                  The x-coordinate of the texture origin (on screen)
+	 * @param y                  The y-coordinate of the texture origin (on screen)
+	 * @param width              The texture width
+	 * @param height             The texture height
+	 * @param scaleforBackground
+	 * @param background
+	 */
+	public void draw(TextureRegion region, Color tint, float ox, float oy, float x, float y, float width, float height, float scaleforBackground, float background) {
 		if (active != DrawPass.STANDARD) {
 			Gdx.app.error("GameCanvas", "Cannot draw without active begin()", new IllegalStateException());
 			return;
