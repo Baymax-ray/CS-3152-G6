@@ -161,7 +161,7 @@ public class CollisionController implements ContactListener {
                             enemy.getBloodEffect().getRegionHeight(), sx, 0.02f, effectAngle,
                             pOffsetX, pOffsetY,true,
                             "bloodEffect", enemy, 0.35f,
-                            1, 1, enemy.getBloodEffectAnimation(),3);
+                            1, 1, enemy.getBloodEffectAnimation(),3, 0, false);
 
                     level.addQueuedObject(bloodEffect);
                 }
@@ -174,7 +174,7 @@ public class CollisionController implements ContactListener {
                             enemy.getKilledBloodEffect().getRegionHeight(), sx, 0.02f, effectAngle,
                             pOffsetX, pOffsetY,true,
                             "killedBloodEffect", enemy, 0.35f,
-                            1, 1, enemy.getKilledBloodEffectAnimation(),3);
+                            1, 1, enemy.getKilledBloodEffectAnimation(),3, 0, false);
                     level.addQueuedObject(killedBloodEffect);
                 }
             }
@@ -218,7 +218,7 @@ public class CollisionController implements ContactListener {
                         player.getHitWallEffect().getKeyFrame(0).getRegionHeight(), sx, sy, 0,
                         pOffsetX, pOffsetY,false,
                         "hitEffect", player, 0.35f,
-                        1, 1, player.getHitWallEffect(),3);
+                        1, 1, player.getHitWallEffect(),3, 0, false);
 
                 level.addQueuedObject(hitWallEffect);
             }
@@ -285,7 +285,7 @@ public class CollisionController implements ContactListener {
             bulletDestroyEffect = level.getEffectPool().obtainEffect(bullet.getX(), bullet.getY(),
                     level.getPlayer().getBulletDestroySpriteSheet().getRegionWidth(), level.getPlayer().getBulletDestroySpriteSheet().getRegionHeight(),
                     0.01f, 0.01f, 0, 0, 0, true, "bulletDestroy", level.getPlayer(), 1f,
-                    1, 1, level.getPlayer().getBulletDestroyAnimation(), 5);
+                    1, 1, level.getPlayer().getBulletDestroyAnimation(), 5, 0, false);
             level.addQueuedObject(bulletDestroyEffect);
             bullet.markRemoved(true);
         }

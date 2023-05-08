@@ -86,9 +86,14 @@ public class EffectObstacle extends BoxObstacle{
         this.lifespan = lifespan;
     }
 
-    public void setAnimation(Animation<TextureRegion> animation) {
+    public void setAnimation(Animation<TextureRegion> animation, int thisFrame, boolean constantLooping) {
         this.animation = animation;
-        currentFrame = 0;
+        if(constantLooping){
+            currentFrame = thisFrame;
+        }
+        else{
+            currentFrame = 0;
+        }
         currentTicks = 0;
         setTexture(animation.getKeyFrame(currentFrame));
     }

@@ -19,7 +19,7 @@ public class EffectPool extends Pool<EffectObstacle> {
         return new EffectObstacle();
     }
 
-    public EffectObstacle obtainEffect(float x, float y, float width, float height, float sx, float sy, float angle, float pOffsetX, float pOffsetY, Boolean trackPlayer, String name, CapsuleObstacle avatar, float lifespan, float drawScaleX, float drawScaleY, Animation animation, int tickSpeed) {
+    public EffectObstacle obtainEffect(float x, float y, float width, float height, float sx, float sy, float angle, float pOffsetX, float pOffsetY, Boolean trackPlayer, String name, CapsuleObstacle avatar, float lifespan, float drawScaleX, float drawScaleY, Animation animation, int tickSpeed, int currentFrame, boolean constantLoop) {
 
         EffectObstacle effect = obtain();
         /* set up effect */
@@ -41,8 +41,7 @@ public class EffectPool extends Pool<EffectObstacle> {
         effect.setSensor(true);
         effect.setAngle(angle);
         effect.setTickSpeed(tickSpeed);
-
-        effect.setAnimation(animation);
+        effect.setAnimation(animation, currentFrame, constantLoop);
         effect.markRemoved(false);
 
 
