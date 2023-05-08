@@ -110,7 +110,7 @@ public class Level {
 
 
     //#region NONFINAL FIELDS
-    private final UIOverlay uiElements;
+//    private final UIOverlay uiElements;
     private World world;
 
     /** Queue for adding objects */
@@ -142,6 +142,16 @@ public class Level {
     private boolean shouldShakeCamera;
 
     private int cameraShakeType;
+
+    private AssetDirectory assets;
+
+    public float levelDifficulty;
+
+    private UIOverlay uiElements;
+
+    public boolean normalDifficulty;
+    public boolean hardDifficulty;
+    public boolean veteranDifficulty;
 
     //#endregion
 
@@ -217,6 +227,28 @@ public class Level {
         this.effectPool = effectPool;
     }
 
+    public boolean isNormalDifficulty(){
+        return normalDifficulty;
+    }
+    public boolean isHardDifficulty(){
+        return hardDifficulty;
+    }
+    public boolean isVeteranDifficulty(){
+        return veteranDifficulty;
+    }
+    public void setNormalDifficulty(boolean bool){
+        normalDifficulty = bool;
+    }
+    public void setHardDifficulty(boolean bool){
+        hardDifficulty = bool;
+    }
+    public void setVeteranDifficulty(boolean bool){
+        veteranDifficulty = bool;
+    }
+
+    public float getLevelDifficulty() {
+        return levelDifficulty;
+    }
     //#endregion
 
     public class MyConnection<MyNode> implements Connection<MyNode> {
@@ -391,6 +423,22 @@ public class Level {
     public Level(String levelName, Tile[] tiles, AssetDirectory assets) {
         this.tiles = tiles;
         //this.billboard = new Billboard();
+        this.normalDifficulty = true;
+        this.hardDifficulty = false;
+        this.veteranDifficulty = false;
+
+        if(veteranDifficulty){
+            levelDifficulty = 3;
+            uiElements = new UIOverlay(assets.getEntry("sharedConstants", JsonValue.class).get("Player"), assets, levelDifficulty);
+        }
+        else if(hardDifficulty){
+            levelDifficulty = 4;
+            uiElements = new UIOverlay(assets.getEntry("sharedConstants", JsonValue.class).get("Player"), assets, levelDifficulty);
+        }
+        else{
+            levelDifficulty = 5;
+            uiElements = new UIOverlay(assets.getEntry("sharedConstants", JsonValue.class).get("Player"), assets, levelDifficulty);
+        }
 
         controllers = Controllers.get().getControllers();
         if (controllers.size > 0) controller = controllers.first();
@@ -521,8 +569,9 @@ public class Level {
         //#endregion
 
         this.player = new Player(assets, startX, startY);
-        JsonValue playerData = assets.getEntry("sharedConstants", JsonValue.class).get("Player");
-        uiElements = new UIOverlay(playerData, assets);
+//        JsonValue playerData = assets.getEntry("sharedConstants", JsonValue.class).get("Player");
+        this.assets = assets;
+//        uiElements = new UIOverlay(playerData, assets);
 
         // Create the tilemap (background tiles 1)
         JsonValue tilesBG1 = layerData.get("TileLayerBG");
@@ -642,14 +691,6 @@ public class Level {
     public void addQueuedObject(Obstacle obj) {
         assert inBounds(obj) : "Object is not in bounds";
         addQueue.add(obj);
-    }
-
-    public boolean inAddQueue(Obstacle obj){
-        return addQueue.contains(obj);
-    }
-
-    public void removeQueuedObject(Obstacle obj){
-        addQueue.remove(obj);
     }
 
 
@@ -803,7 +844,7 @@ public class Level {
 
         canvas.setOverlayCamera();
         canvas.begin();
-        uiElements.draw(canvas, player.getHearts(), player.getSpirit());
+        uiElements.draw(canvas, player.getSpirit(), player.getHearts());
         boolean alreadyDisplay = false;
         for (Billboard billboard : billboards) {
             if (billboard.isDisplay() && !alreadyDisplay) {

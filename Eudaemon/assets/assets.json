@@ -277,6 +277,15 @@
           }
         }
       },
+      "player:transform": {
+        "file" : "animations/transformSpriteSheet.png",
+        "sprites" : {
+          "fire": {
+            "rows": 1,
+            "cols": 7
+          }
+        }
+      },
         "background:city": "backgrounds/backgroundCity.png",
         "momo:idle":  "character/momo.png",
         "momo:upDash":  "character/momoUpDash.png",

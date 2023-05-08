@@ -350,6 +350,10 @@ public class Player extends CapsuleObstacle {
     /** animation for destroying bullet**/
     private final Animation<TextureRegion> bulletDestroyAnimation;
 
+    private TextureRegion transformSpriteSheet;
+    private final Animation<TextureRegion> transformAnimation;
+
+
 
     //#endregion
 
@@ -493,6 +497,12 @@ public class Player extends CapsuleObstacle {
     }
     public Animation<TextureRegion> getBulletDestroyAnimation(){
         return bulletDestroyAnimation;
+    }
+    public TextureRegion getTransformSpriteSheet(){
+        return transformSpriteSheet;
+    }
+    public Animation<TextureRegion> getTransformAnimation(){
+        return transformAnimation;
     }
     /**
      * Get momoDashSpriteSheet.
@@ -1315,6 +1325,9 @@ public class Player extends CapsuleObstacle {
         this.bulletDestroyAnimation = new Animation<>(0.5f, bulletDestroyFrames[0]);
         //Sound Effect
         this.playerDamageSound = Gdx.audio.newSound(Gdx.files.internal("audio/temp-player-damage.mp3"));
+        this.transformSpriteSheet = new TextureRegion(assets.getEntry("player:transform", Texture.class));
+        TextureRegion[][] transformFrames = transformSpriteSheet.split(transformSpriteSheet.getRegionWidth()/7, transformSpriteSheet.getRegionHeight());
+        this.transformAnimation = new Animation<>(0.5f, transformFrames[0]);
 
         //Position and Movement
         this.dashCooldown = playerData.getInt("dashCooldownInFrames");
