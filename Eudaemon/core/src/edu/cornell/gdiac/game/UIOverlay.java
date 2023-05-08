@@ -8,6 +8,7 @@ import com.badlogic.gdx.graphics.g2d.freetype.FreeType;
 import com.badlogic.gdx.utils.JsonValue;
 import edu.cornell.gdiac.assets.AssetDirectory;
 import edu.cornell.gdiac.game.models.Action;
+import edu.cornell.gdiac.game.models.Level;
 
 public class UIOverlay {
     /** Texture for hearts*/
@@ -21,14 +22,19 @@ public class UIOverlay {
 
     private final Texture settingsButton;
 
-    public UIOverlay(JsonValue json, AssetDirectory assets){
+    private final float numHearts;
+
+    public UIOverlay(JsonValue json, AssetDirectory assets, float levelDifficulty){
         this.heartRegion = assets.getEntry(json.getString("heart"), Texture.class);
         this.filledSpiritBar = assets.getEntry(json.getString("filled"), Texture.class);
         this.uiOutline = assets.getEntry(json.getString("uioutline"), Texture.class);
         this.settingsButton = assets.getEntry(json.getString("settings"), Texture.class);
+        this.numHearts = levelDifficulty;
+
+
     }
 
-    public void draw(GameCanvas canvas, float playerHearts, float playerSpirit) {
+    public void draw(GameCanvas canvas, float playerSpirit, float playerHearts) {
 //        float xPos = 74.5F;
         float xPos = 0.05173611111f*canvas.getWidth();
         canvas.draw(uiOutline, Color.WHITE, 0, canvas.getHeight()*0.927f, canvas.getWidth()*0.1534722222f, canvas.getHeight()*0.06f);

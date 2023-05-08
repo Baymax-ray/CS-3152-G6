@@ -32,6 +32,7 @@ import com.badlogic.gdx.controllers.ControllerMapping;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.Texture.TextureFilter;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.utils.Array;
 import edu.cornell.gdiac.assets.AssetDirectory;
 import edu.cornell.gdiac.util.Controllers;
@@ -85,10 +86,6 @@ public class EscapeMenu implements Screen, InputProcessor, ControllerListener {
 	/** Scaling factor for when the student changes the resolution. */
 	private float scale;
 
-	/** Current progress (0 to 1) of the asset manager */
-	private float progress;
-	/** The amount of time to devote to loading assets (as opposed to on screen hints, etc.) */
-	private int   budget;
 
 	/** Whether or not this player mode is still active */
 	private boolean active;
@@ -124,16 +121,6 @@ public class EscapeMenu implements Screen, InputProcessor, ControllerListener {
 	public boolean settingsIsReady() { return settingsButton.pressState == 2; }
 
 	/**
-	 * Creates a LoadingScreen with the default budget, size and position.
-	 *
-	 * @param assets  	The asset directory
-	 * @param canvas 	The game canvas to draw to
-	 */
-	public EscapeMenu(AssetDirectory assets, GameCanvas canvas) {
-		this(assets, canvas, DEFAULT_BUDGET);
-	}
-
-	/**
 	 * Creates a LoadingScreen with the default size and position.
 	 *
 	 * The budget is the number of milliseconds to spend loading assets each animation
@@ -143,18 +130,16 @@ public class EscapeMenu implements Screen, InputProcessor, ControllerListener {
 	 *
 	 * @param assets  	The asset directory
 	 * @param canvas 	The game canvas to draw to
-	 * @param millis The loading budget in milliseconds
 	 */
-	public EscapeMenu(AssetDirectory assets, GameCanvas canvas, int millis) {
+	public EscapeMenu(AssetDirectory assets, GameCanvas canvas) {
 		this.canvas  = canvas;
-		budget = millis;
 
 		buttons = new Array<>();
 
-		resumeButton = new MenuButton(assets.getEntry("escapeMenu:resume" , Texture.class), ExitCode.START);
-		settingsButton = new MenuButton(assets.getEntry("escapeMenu:settings", Texture.class), ExitCode.SETTINGS);
-		restartButton = new MenuButton(assets.getEntry("escapeMenu:restart", Texture.class), ExitCode.RESET);
-		quitButton = new MenuButton(assets.getEntry("escapeMenu:quit", Texture.class), ExitCode.MAIN_MENU);
+		resumeButton = new MenuButton(new TextureRegion(assets.getEntry("escapeMenu:resume" , Texture.class)), ExitCode.START);
+		settingsButton = new MenuButton(new TextureRegion(assets.getEntry("escapeMenu:settings", Texture.class)), ExitCode.SETTINGS);
+		restartButton = new MenuButton(new TextureRegion(assets.getEntry("escapeMenu:restart", Texture.class)), ExitCode.RESET);
+		quitButton = new MenuButton(new TextureRegion(assets.getEntry("escapeMenu:quit", Texture.class)), ExitCode.MAIN_MENU);
 
 		buttons.add(resumeButton);
 		buttons.add(settingsButton);
@@ -313,22 +298,22 @@ public class EscapeMenu implements Screen, InputProcessor, ControllerListener {
 
 
 		if(quitButton.texture != null){
-			quitButton.hitbox.setSize(BUTTON_SCALE *scale*quitButton.texture.getWidth(),BUTTON_SCALE * scale * quitButton.texture.getHeight());
-			quitButton.hitbox.setCenter(canvas.getWidth()/2.0f, centerY + quitButton.texture.getHeight() * scale*0.55f);
+			quitButton.hitbox.setSize(BUTTON_SCALE *scale*quitButton.texture.getRegionWidth(),BUTTON_SCALE * scale * quitButton.texture.getRegionHeight());
+			quitButton.hitbox.setCenter(canvas.getWidth()/2.0f, centerY + quitButton.texture.getRegionHeight() * scale*0.55f);
 		}
 
 		if (restartButton.texture != null) {
-			restartButton.hitbox.setSize(BUTTON_SCALE * scale * restartButton.texture.getWidth(), BUTTON_SCALE * scale * restartButton.texture.getHeight());
-			restartButton.hitbox.setCenter(canvas.getWidth() / 2.0f, centerY + restartButton.texture.getHeight() * scale + height/12f);
+			restartButton.hitbox.setSize(BUTTON_SCALE * scale * restartButton.texture.getRegionWidth(), BUTTON_SCALE * scale * restartButton.texture.getRegionHeight());
+			restartButton.hitbox.setCenter(canvas.getWidth() / 2.0f, centerY + restartButton.texture.getRegionHeight() * scale + height/12f);
 		}
 
 		if (resumeButton.texture != null) {
-			resumeButton.hitbox.setSize(BUTTON_SCALE * scale * resumeButton.texture.getWidth(), BUTTON_SCALE * scale * resumeButton.texture.getHeight());
-			resumeButton.hitbox.setCenter(canvas.getWidth() / 2.0f, centerY + resumeButton.texture.getHeight() * scale + height/3.4f);
+			resumeButton.hitbox.setSize(BUTTON_SCALE * scale * resumeButton.texture.getRegionWidth(), BUTTON_SCALE * scale * resumeButton.texture.getRegionHeight());
+			resumeButton.hitbox.setCenter(canvas.getWidth() / 2.0f, centerY + resumeButton.texture.getRegionHeight() * scale + height/3.4f);
 		}
 		if (settingsButton.texture != null) {
-			settingsButton.hitbox.setSize(BUTTON_SCALE * scale * settingsButton.texture.getWidth(), BUTTON_SCALE * scale * settingsButton.texture.getHeight());
-			settingsButton.hitbox.setCenter(canvas.getWidth() / 2.0f, centerY + settingsButton.texture.getHeight() * scale + height / 5.3f);
+			settingsButton.hitbox.setSize(BUTTON_SCALE * scale * settingsButton.texture.getRegionWidth(), BUTTON_SCALE * scale * settingsButton.texture.getRegionHeight());
+			settingsButton.hitbox.setCenter(canvas.getWidth() / 2.0f, centerY + settingsButton.texture.getRegionHeight() * scale + height / 5.3f);
 		}
 	}
 
@@ -360,6 +345,7 @@ public class EscapeMenu implements Screen, InputProcessor, ControllerListener {
 		// Useless if called in outside animation loop
 		active = true;
 		Gdx.input.setInputProcessor(this);
+		Gdx.input.setCursorCatched(true);
 	}
 
 	/**
@@ -449,10 +435,11 @@ public class EscapeMenu implements Screen, InputProcessor, ControllerListener {
 	 */
 	public boolean buttonDown (Controller controller, int buttonCode) {
 		if (!active) return false;
-		System.out.print("hi");
+		if (!Gdx.input.isCursorCatched()) {
+			Gdx.input.setCursorCatched(true);
+		}
 		ControllerMapping mapping = controller.getMapping();
 		if (mapping == null) return false;
-		System.out.println("ho");
 
 
 		if (restartButton.pressState == 0 && buttonCode == mapping.buttonStart ) {
@@ -508,6 +495,9 @@ public class EscapeMenu implements Screen, InputProcessor, ControllerListener {
 	 */
 	public boolean keyDown(int keycode) {
 		if (!active) return false;
+		if (!Gdx.input.isCursorCatched()) {
+			Gdx.input.setCursorCatched(true);
+		}
 		menuUp = keycode == Input.Keys.UP;
 		menuDown = keycode == Input.Keys.DOWN;
 
@@ -572,6 +562,13 @@ public class EscapeMenu implements Screen, InputProcessor, ControllerListener {
 	 */
 	public boolean mouseMoved(int screenX, int screenY) {
 		if (!active) return false;
+		if (Gdx.input.isCursorCatched()) {
+			Gdx.input.setCursorCatched(false);
+			float x = hoveredButton.hitbox.x + hoveredButton.hitbox.width / 2;
+			float y = hoveredButton.hitbox.y + hoveredButton.hitbox.height / 2;
+			Gdx.input.setCursorPosition((int) x, heightY - (int) y);
+			return true;
+		}
 		screenY = heightY - screenY;
 		hoveredButton = null;
 		for (MenuButton button : buttons) {
