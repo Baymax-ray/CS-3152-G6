@@ -821,7 +821,7 @@ public class Level {
         float diffY=py-sty;
         //the background moves with the player,the farther back the faster the speed
         canvas.draw(background_L1, Color.WHITE, backgroundOx + 30, backgroundOy, diffX, diffY, 0, this.scaleforBackground, this.scaleforBackground);
-        canvas.draw(background_L2, Color.WHITE, backgroundOx, backgroundOy, diffX*0.8f, diffY*0.8f, 0,  this.scaleforBackground *0.7f, this.scaleforBackground*0.7f);
+        canvas.draw(background_L2, Color.WHITE, backgroundOx, backgroundOy, diffX*0.8f, diffY*0.8f, 0,  this.scaleforBackground, this.scaleforBackground);
         canvas.draw(background_L3, Color.WHITE, backgroundOx, backgroundOy, diffX*0.7f, diffY*0.7f, 0,  this.scaleforBackground, this.scaleforBackground);
         canvas.draw(background_L4, Color.WHITE, backgroundOx, backgroundOy, diffX*0.4f, diffY*0.4f, 0,  this.scaleforBackground, this.scaleforBackground);
         canvas.draw(background_L5, Color.WHITE, backgroundOx, backgroundOy, diffX*0.1f, diffY*0.1f, 0,  this.scaleforBackground, this.scaleforBackground);

@@ -98,7 +98,7 @@ public class Exit extends BoxObstacle {
 
         elapsedTime++;
         float dist = 5f;
-        if (player != null && player.getX() > getX() - dist && player.getX() < getX() + dist && player.getY() > getY() - dist && player.getY() < getY() + dist) {
+        if (player.getBody() != null && player.getX() > getX() - dist && player.getX() < getX() + dist && player.getY() > getY() - dist && player.getY() < getY() + dist) {
             if (!zoneFlag) {
                 zoneFlag = true;
                 elapsedTime = 0;

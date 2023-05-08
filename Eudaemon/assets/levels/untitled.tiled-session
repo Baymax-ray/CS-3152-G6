@@ -72,8 +72,8 @@
             "scale": 2,
             "selectedLayer": 1,
             "viewCenter": {
-                "x": 194.25,
-                "y": 494
+                "x": 469.75,
+                "y": 552
             }
         },
         "level1old.json": {
@@ -91,11 +91,11 @@
             "expandedObjectLayers": [
                 7
             ],
-            "scale": 1.5,
-            "selectedLayer": 1,
+            "scale": 0.75,
+            "selectedLayer": 2,
             "viewCenter": {
-                "x": 420.99999999999994,
-                "y": 310.66666666666663
+                "x": 353.99999999999994,
+                "y": 81.33333333333337
             }
         },
         "level3.json": {
@@ -105,8 +105,8 @@
             "scale": 0.5,
             "selectedLayer": 3,
             "viewCenter": {
-                "x": 221,
-                "y": 298
+                "x": 563,
+                "y": 346
             }
         },
         "level4.json": {
