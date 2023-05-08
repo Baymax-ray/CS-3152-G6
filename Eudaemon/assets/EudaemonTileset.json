@@ -8,9 +8,9 @@
  "margin":0,
  "name":"Eudaemon Tilleset",
  "spacing":0,
- "tilecount":278,
+ "tilecount":282,
  "tiledversion":"1.10.1",
- "tileheight":80,
+ "tileheight":42,
  "tiles":[
         {
          "id":10,
@@ -1663,6 +1663,18 @@
          "imagewidth":32
         }, 
         {
+         "id":337,
+         "image":"tiles\/entranceA.png",
+         "imageheight":32,
+         "imagewidth":32
+        }, 
+        {
+         "id":338,
+         "image":"tiles\/entranceB.png",
+         "imageheight":32,
+         "imagewidth":32
+        }, 
+        {
          "id":85,
          "image":"tiles\/EnemiesObjects\/projectile.png",
          "imageheight":28,
@@ -1677,10 +1689,22 @@
         {
          "id":336,
          "image":"tiles\/EnemiesObjects\/exit.png",
-         "imageheight":80,
-         "imagewidth":62
+         "imageheight":32,
+         "imagewidth":25
+        }, 
+        {
+         "id":339,
+         "image":"tiles\/entranceC.png",
+         "imageheight":32,
+         "imagewidth":32
+        }, 
+        {
+         "id":340,
+         "image":"tiles\/entranceD.png",
+         "imageheight":32,
+         "imagewidth":32
         }],
- "tilewidth":62,
+ "tilewidth":32,
  "type":"tileset",
  "version":"1.10",
  "wangsets":[
