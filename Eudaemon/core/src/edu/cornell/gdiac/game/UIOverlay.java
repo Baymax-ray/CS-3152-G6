@@ -24,12 +24,18 @@ public class UIOverlay {
 
     private final float numHearts;
 
-    public UIOverlay(JsonValue json, AssetDirectory assets, float levelDifficulty){
+    public UIOverlay(JsonValue json, AssetDirectory assets, Level level){
         this.heartRegion = assets.getEntry(json.getString("heart"), Texture.class);
         this.filledSpiritBar = assets.getEntry(json.getString("filled"), Texture.class);
-        this.uiOutline = assets.getEntry(json.getString("uioutline"), Texture.class);
         this.settingsButton = assets.getEntry(json.getString("settings"), Texture.class);
-        this.numHearts = levelDifficulty;
+        this.numHearts = level.getLevelDifficulty();
+        this.uiOutline = assets.getEntry(json.getString("uioutline3"), Texture.class);
+//        if(numHearts == 3){
+//            this.uiOutline = assets.getEntry(json.getString("uioutline3"), Texture.class);
+//        }
+//        else{
+//            this.uiOutline = assets.getEntry(json.getString("uioutline5"), Texture.class);
+//        }
 
 
     }

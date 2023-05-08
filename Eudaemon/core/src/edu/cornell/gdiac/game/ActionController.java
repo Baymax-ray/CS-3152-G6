@@ -33,6 +33,9 @@ public class ActionController {
 
     private boolean smallImpact = false;
 
+    private boolean groundedLastFrame = false;
+    private int frameAfterLanding = 0;
+
     /**
      * A HashMap storing 2D TextureRegion arrays with a String identifier.
      * Each key represents an animation name, and the associated value is a 2D TextureRegion array
@@ -152,10 +155,9 @@ public class ActionController {
         }
 
         //Sets the player's ticks in air falling
-        if(!player.isGrounded() && player.getBodyVelocityY() < 0 && !player.isSliding()){
-            player.setTicksInAir(player.getTicksInAir()+1);
-        }
-        else if (player.getTicksInAir() != 0){
+        if (!player.isGrounded() && player.getBodyVelocityY() < 0 && !player.isSliding()) {
+            player.setTicksInAir(player.getTicksInAir() + 1);
+        } else if (player.getTicksInAir() != 0) {
             player.setTicksInAir(0);
         }
 
@@ -179,24 +181,28 @@ public class ActionController {
         } else {
             player.setAngleFacing(180);
         }
-        if ((rightPressed && !leftPressed && !upPressed && !downPressed) || (rightPressed && !leftPressed && upPressed && downPressed)) {
+        if ((rightPressed && !leftPressed && !upPressed && !downPressed) || (rightPressed
+                && !leftPressed && upPressed && downPressed)) {
             player.setAngleFacing(0);
             player.setFacingRight(true);
         } else if (rightPressed && !leftPressed && upPressed) {
             player.setAngleFacing(45);
             player.setFacingRight(true);
-        } else if ((rightPressed && leftPressed && upPressed && !downPressed) || (!rightPressed && !leftPressed && upPressed && !downPressed)) {
+        } else if ((rightPressed && leftPressed && upPressed && !downPressed) || (!rightPressed
+                && !leftPressed && upPressed && !downPressed)) {
             player.setAngleFacing(90);
         } else if ((!rightPressed && leftPressed && upPressed && !downPressed)) {
             player.setAngleFacing(135);
             player.setFacingRight(false);
-        } else if (!rightPressed && leftPressed && !upPressed && !downPressed || !rightPressed && leftPressed && upPressed) {
+        } else if (!rightPressed && leftPressed && !upPressed && !downPressed
+                || !rightPressed && leftPressed && upPressed) {
             player.setAngleFacing(180);
             player.setFacingRight(false);
         } else if (!rightPressed && leftPressed) {
             player.setAngleFacing(225);
             player.setFacingRight(false);
-        } else if (!rightPressed && !upPressed && downPressed || rightPressed && leftPressed && !upPressed && downPressed) {
+        } else if (!rightPressed && !upPressed && downPressed
+                || rightPressed && leftPressed && !upPressed && downPressed) {
             player.setAngleFacing(270);
         } else if (rightPressed && !leftPressed) {
             player.setAngleFacing(315);
@@ -214,7 +220,8 @@ public class ActionController {
             max_speed = player.getChiyoSpeedMult() * player.getMaxSpeed();
         }
         float h_acc = player.getHorizontalAcceleration();
-        if ((rightPressed && leftPressed) || (!rightPressed && !leftPressed) && player.getDashLifespanRemaining() <= 0) {
+        if ((rightPressed && leftPressed)
+                || (!rightPressed && !leftPressed) && player.getDashLifespanRemaining() <= 0) {
             if (x > 0.0f) {
                 x = Math.max(x - h_acc, 0);
                 if (x < 0.0f) {
@@ -233,16 +240,17 @@ public class ActionController {
             }
 
         } else if (x > -max_speed && !player.isDashing()) {
-                //x = Math.max(x-h_acc, -max_speed);
-                x = Math.max(x - h_acc, -max_speed);
+            //x = Math.max(x-h_acc, -max_speed);
+            x = Math.max(x - h_acc, -max_speed);
         }
         player.setVelocity(x, y);
         //#endregion
 
         //#region Form Switching
-        if (transformPressed && player.getTransformCooldownRemaining() == 0 && player.getSpirit() > 1.0f) {
+        if (transformPressed && player.getTransformCooldownRemaining() == 0
+                && player.getSpirit() > 1.0f) {
             player.setTransformCooldownRemaining(player.getTransformCooldown());
-            if(player.getForm() == 0){
+            if (player.getForm() == 0) {
                 player.setForm();
                 player.setHeight(player.getHeight() * player.getChiyoHitBoxHeightMult());
 //                playerChiyoTransformId = playSound( playerChiyoTransformSound, playerChiyoTransformId, 0.1F );
@@ -261,8 +269,7 @@ public class ActionController {
                 level.addQueuedObject(transformAnimate);
                 audio.playEffect("chiyo-transform", 0.1f);
                 player.updateGroundSensor();
-            }
-            else{
+            } else {
                 player.setForm();
                 player.setHeight(player.getHeight() / player.getChiyoHitBoxHeightMult());
 //                playerMomoTransformId = playSound( playerMomoTransformSound, playerMomoTransformId, 0.1F );
@@ -297,15 +304,19 @@ public class ActionController {
         //#endregion
 
         //#region Dash
-        if (player.getForm() == 0 && dashPressed && player.isGrounded() && player.getDashCooldownRemaining() == 0 && !player.isDashing() && !player.dashedInAir()
-                || player.getForm() == 0 && dashPressed && player.getJumpVelocity() > 0 && player.getDashCooldownRemaining() == 0 && !player.isDashing() && !player.dashedInAir()) {
+        if (player.getForm() == 0 && dashPressed && player.isGrounded()
+                && player.getDashCooldownRemaining() == 0 && !player.isDashing()
+                && !player.dashedInAir()
+                || player.getForm() == 0 && dashPressed && player.getJumpVelocity() > 0
+                && player.getDashCooldownRemaining() == 0 && !player.isDashing()
+                && !player.dashedInAir()) {
             player.setDashCooldownRemaining(player.getDashCooldown());
             player.setDashing(true);
             player.setDashedInAir(true);
             player.setDashLifespanRemaining((player.getDashLifespan()));
             player.setiFramesRemaining(player.getDashIFrames());
             int angleFacing = player.getAngleFacing();
-            if (player.getIsJumping()){
+            if (player.getIsJumping()) {
                 player.setIsJumping(false);
                 player.setJumpTimeRemaining(0);
             }
@@ -324,8 +335,7 @@ public class ActionController {
             if (angleFacing == 0) {
                 effectAngle = 1.57f;
                 pOffsetX = -pOffset;
-            }
-            else if (angleFacing == 45) {
+            } else if (angleFacing == 45) {
                 effectAngle = 2.356f;
                 pOffsetX = -diagonalDashMult * pOffset;
                 pOffsetY = -diagonalDashMult * pOffset;
@@ -353,13 +363,15 @@ public class ActionController {
                 pOffsetY = diagonalDashMult * pOffset;
             }
 
-
             //Creating dash effect
-            EffectObstacle dashAnimate = level.getEffectPool().obtainEffect(player.getX(), player.getY(), player.getDashEffectSpriteSheet().getRegionWidth(),
-                    player.getDashEffectSpriteSheet().getRegionHeight(), 0.025f, 0.025f, effectAngle,
-                    pOffsetX, pOffsetY,true,
-                    "dashEffect", player, 0.35f,
-                    1, 1, animations.get("dashEffect"),5);
+            EffectObstacle dashAnimate = level.getEffectPool()
+                    .obtainEffect(player.getX(), player.getY(),
+                            player.getDashEffectSpriteSheet().getRegionWidth(),
+                            player.getDashEffectSpriteSheet().getRegionHeight(), 0.025f, 0.025f,
+                            effectAngle,
+                            pOffsetX, pOffsetY, true,
+                            "dashEffect", player, 0.35f,
+                            1, 1, animations.get("dashEffect"), 5);
             level.addQueuedObject(dashAnimate);
             //#endregion
 
@@ -375,7 +387,8 @@ public class ActionController {
             timer.schedule(new TimerTask() {
                 @Override
                 public void run() {
-                    if(player.isRemoved()) return;
+                    if (player.isRemoved())
+                        return;
                     player.setPlayerGravity(player.getPlayerGravity());
                 }
             }, player.getDashTime());
@@ -390,7 +403,7 @@ public class ActionController {
                 System.out.println("xBody Velocity: " + player.getBodyVelocityX());
                 System.out.println("yBody Velocity: " + player.getBodyVelocityY());
                 System.out.println("isDashing: " + player.isDashing());
-                player.setVelocity(player.getBodyVelocityX()/3, player.getBodyVelocityY()/3);
+                player.setVelocity(player.getBodyVelocityX() / 3, player.getBodyVelocityY() / 3);
             }
         }
 
@@ -405,8 +418,7 @@ public class ActionController {
             if (angleFacing == 0) {
                 dashX = dash;
                 dashY = 0;
-            }
-            else if (angleFacing == 45) {
+            } else if (angleFacing == 45) {
                 dashX = diagonalDashMult * dash;
                 dashY = diagonalDashMult * dash;
             } else if (angleFacing == 90) {
@@ -419,43 +431,51 @@ public class ActionController {
                 dashX = -dash;
                 dashY = 0;
             } else if (angleFacing == 225) {
-                dashX = - 0.71f * dash;
-                dashY = - 0.71f * dash;
+                dashX = -0.71f * dash;
+                dashY = -0.71f * dash;
             } else if (angleFacing == 270) {
                 dashX = 0;
-                dashY = - dash;
+                dashY = -dash;
             } else if (angleFacing == 315) {
                 dashX = 0.71f * dash;
-                dashY = - 0.71f * dash;
+                dashY = -0.71f * dash;
             }
             player.setVelocity(dashX, dashY);
 
             player.setDashCooldownRemaining(Math.max(player.getDashCooldownRemaining() - 1, 0));
-            if (player.getDashCooldownRemaining() == 0){
+            if (player.getDashCooldownRemaining() == 0) {
                 player.setDashing(false);
-                Filter f =player.getFilterData();
+                Filter f = player.getFilterData();
                 f.groupIndex = -1; //cancel its collision with bullet
                 player.setFilterData(f);
             }
         } else {
-            Filter f =player.getFilterData();
+            Filter f = player.getFilterData();
             f.groupIndex = 0;
             player.setFilterData(f);
         }
 
-        if (!dashHold) player.setDashing(false);
+        if (!dashHold)
+            player.setDashing(false);
 
-        if (player.isGrounded() && !player.isDashing()) player.setDashedInAir(false);
+        if (player.isGrounded() && !player.isDashing())
+            player.setDashedInAir(false);
         //#endregion
 
         //#region Jump
         //jump!
         //include all three situations
         //normal jump, coyote, and jump pressed in air
-        boolean slidingJumpRequirements = player.isSliding() && ((ticks - player.getWallJumpCooldownTicks() > lastWallJumpTick) || (player.isFacingRight() && !facingRightDuringLastWallJump) || (!player.isFacingRight() && facingRightDuringLastWallJump));
-        if ((jumpPressed && (slidingJumpRequirements || (player.isGrounded() && player.getJumpCooldownRemaining() == 0))) ||
-                (jumpPressed && player.getCoyoteFramesRemaining() > 0 && player.getJumpCooldownRemaining() == 0) ||
-                (player.getJumpPressedInAir() && player.getJumpCooldownRemaining() == 0 && (player.isGrounded() ||slidingJumpRequirements))) {
+        boolean slidingJumpRequirements = player.isSliding() && (
+                (ticks - player.getWallJumpCooldownTicks() > lastWallJumpTick) || (
+                        player.isFacingRight() && !facingRightDuringLastWallJump) || (
+                        !player.isFacingRight() && facingRightDuringLastWallJump));
+        if ((jumpPressed && (slidingJumpRequirements || (player.isGrounded()
+                && player.getJumpCooldownRemaining() == 0))) ||
+                (jumpPressed && player.getCoyoteFramesRemaining() > 0
+                        && player.getJumpCooldownRemaining() == 0) ||
+                (player.getJumpPressedInAir() && player.getJumpCooldownRemaining() == 0 && (
+                        player.isGrounded() || slidingJumpRequirements))) {
             jump();
             audio.playEffect("jump", 1.0f);
             if (slidingJumpRequirements) {
@@ -467,10 +487,9 @@ public class ActionController {
             player.setIsJumping(false);
         }
 
-        if (player.getIsJumping()){
+        if (player.getIsJumping()) {
             player.setJumpTimeRemaining(player.getJumpTimeRemaining() - 1);
-        }
-        else {
+        } else {
             player.setJumpCooldownRemaining(Math.max(0, player.getJumpCooldownRemaining() - 1));
         }
 
@@ -478,7 +497,8 @@ public class ActionController {
             player.setVelocity(player.getBodyVelocityX(), player.getJumpVelocity());
         }
 
-        if (!jumpHold) player.setIsJumping(false);
+        if (!jumpHold)
+            player.setIsJumping(false);
 
         //calculate coyote time
         if (player.isGrounded()) {
@@ -493,21 +513,23 @@ public class ActionController {
             player.setJumpPressedInAir(true);
         } else if (!(player.isGrounded() || player.isSliding())) {
             player.setJumpToleranceRemaining(Math.max(0, player.getJumpToleranceRemaining() - 1));
-            if (player.getJumpToleranceRemaining() == 0) player.setJumpPressedInAir(false);
+            if (player.getJumpToleranceRemaining() == 0)
+                player.setJumpPressedInAir(false);
         }
         //#endregion
 
         //#region Wall Slide
-        if (player.isTouchingWallRight() && !player.isGrounded() && rightPressed && !player.getIsJumping()){ //player sliding on right wall
+        if (player.isTouchingWallRight() && !player.isGrounded() && rightPressed
+                && !player.getIsJumping()) { //player sliding on right wall
             player.setSliding(true);
-        } else if (player.isTouchingWallLeft() && !player.isGrounded() && leftPressed && !player.getIsJumping()) { //player is sliding on left wall
+        } else if (player.isTouchingWallLeft() && !player.isGrounded() && leftPressed
+                && !player.getIsJumping()) { //player is sliding on left wall
             player.setSliding(true);
-        }
-        else{
+        } else {
             player.setSliding(false);
         }
 
-        if (player.isSliding()){
+        if (player.isSliding()) {
             player.setVelocity(player.getBodyVelocityX(), player.getWallSlideVelocity());
         }
         //#endregion
@@ -518,7 +540,8 @@ public class ActionController {
 
         // What does this do
         if (deltaX == 0 && !player.isGrounded() && (leftPressed || rightPressed)
-                && Math.abs(player.getBodyVelocityX()) == player.getHorizontalAcceleration() && movedDuringLastFrame) {
+                && Math.abs(player.getBodyVelocityX()) == player.getHorizontalAcceleration()
+                && movedDuringLastFrame) {
             player.setVelocity(0, player.getBodyVelocityY());
         }
         previousX = player.getX();
@@ -526,7 +549,7 @@ public class ActionController {
 
         //#region Spirit Loss
         if (player.getForm() == 1) { // if player is chiyo
-            player.decreaseSpirit();
+            //player.decreaseSpirit();
             if (player.getSpirit() <= 0) {
                 player.setForm(); // switch back to momo
                 EffectObstacle transformAnimate = level.getEffectPool().obtainEffect(player.getX(), player.getY(), player.getTransformSpriteSheet().getRegionWidth(),
@@ -539,10 +562,12 @@ public class ActionController {
                 player.updateGroundSensor();
             }
         } else if (player.getEnemiesInSpiritRange().size > 0) {
-            player.getEnemiesInSpiritRange().get(0).LossSpirit(level.getPlayer().getSpiritIncreaseRate());
+            player.getEnemiesInSpiritRange().get(0)
+                    .LossSpirit(level.getPlayer().getSpiritIncreaseRate());
             player.increaseSpirit();
             spiritDrainEffect = level.getEffectPool().obtainEffect(player.getX(), player.getY(),
-                    player.getSpiritDrainSpriteSheet().getRegionWidth(), player.getSpiritDrainSpriteSheet().getRegionHeight(),
+                    player.getSpiritDrainSpriteSheet().getRegionWidth(),
+                    player.getSpiritDrainSpriteSheet().getRegionHeight(),
                     0.01f, 0.01f, 0, 0, 0, true, "spiritDrain", player, 1f,
                     1, 1, player.getSpiritDrainAnimation(), 5);
             level.addQueuedObject(spiritDrainEffect);
@@ -566,29 +591,27 @@ public class ActionController {
             if (player.isDashing()) {
                 TextureRegion current;
                 currentAnimation = "momoDash";
-                if (player.getAngleFacing() == 45 || player.getAngleFacing() == 135){
+                if (player.getAngleFacing() == 45 || player.getAngleFacing() == 135) {
                     current = player.getMomoDiagonalDashTexture();
                     player.setSxMult(1.2f);
                     player.setSyMult(1.2f);
                     player.setOxOffset(0);
                     player.setOyOffset(-10);
-                }
-                else if (player.getAngleFacing() == 90){
+                } else if (player.getAngleFacing() == 90) {
                     current = player.getMomoUpDashTexture();
                     player.setSxMult(1.2f);
                     player.setSyMult(1.2f);
                     player.setOxOffset(-0);
                     player.setOyOffset(-10);
-                }
-                else if (player.getAngleFacing() == 270){
+                } else if (player.getAngleFacing() == 270) {
                     current = player.getMomoDownDashTexture();
                     player.setSxMult(1.2f);
                     player.setSyMult(1.2f);
                     player.setOxOffset(0);
                     player.setOyOffset(-20);
-                }
-                else{
-                    current = (TextureRegion) (animations.get("momoDash")).getKeyFrame(currentFrame); // Gets the current frame of the animation
+                } else {
+                    current = (TextureRegion) (animations.get("momoDash")).getKeyFrame(
+                            currentFrame); // Gets the current frame of the animation
                     tickFrameSwitch = 7;
                     maxFrame = 5;
                     player.setSxMult(1.2f);
@@ -597,8 +620,7 @@ public class ActionController {
                     player.setOyOffset(-47);
                 }
                 player.setTexture(current);
-            }
-            else if (player.isSliding()){
+            } else if (player.isSliding()) {
                 player.setTexture(player.getMomoSlideTexture());
                 audio.loopEffect("wall-slide", 1f);
                 player.setOxOffset(-4);
@@ -613,19 +635,33 @@ public class ActionController {
                     currentFrame = 0;
                 }
                 currentAnimation = "momoJump";
-                TextureRegion current = (TextureRegion) (animations.get("momoJump")).getKeyFrame(currentFrame); // Gets the current frame of the animation
+                TextureRegion current = (TextureRegion) (animations.get("momoJump")).getKeyFrame(
+                        currentFrame); // Gets the current frame of the animation
                 tickFrameSwitch = 7;
                 maxFrame = 7;
-                if (currentFrame == 0 && player.getBodyVelocityY() < 0){
+                if (currentFrame == 0 && player.getBodyVelocityY() < 0) {
                     currentFrame = 3;
                 }
                 // Disables animation while rising in the air
-                if (currentFrame == 2 && player.getBodyVelocityY() > 0){
+                if (currentFrame == 2 && player.getBodyVelocityY() > 0) {
                     tickFrameSwitch = 0;
                 }
-                if (currentFrame == 4 && player.getBodyVelocityY() < 0){
+                if (currentFrame == 4 && player.getBodyVelocityY() < 0) {
                     tickFrameSwitch = 0;
                 }
+                player.setTexture(current);
+                player.setOxOffset(0);
+                player.setOyOffset(-47);
+                player.setSxMult(1.2f);
+                player.setSyMult(1.2f);
+            } else if (frameAfterLanding < 16 && frameAfterLanding > 1) { // landing
+                currentAnimation = "momoJump";
+                currentFrame = frameAfterLanding / 8 + 5;
+                System.out.println(currentFrame);
+                TextureRegion current = (TextureRegion) (animations.get("momoJump")).getKeyFrame(
+                        currentFrame);
+                tickFrameSwitch = 4;
+                maxFrame = 2;
                 player.setTexture(current);
                 player.setOxOffset(0);
                 player.setOyOffset(-47);
@@ -647,20 +683,20 @@ public class ActionController {
                     currentFrame = 0;
                 }
                 currentAnimation = "momoRun";
-                if(player.isGrounded() && !player.getIsJumping()){
+                if (player.isGrounded() && !player.getIsJumping()) {
 //                    if(!soundDictionary.contains(momoRunSound)){
 //                        soundDictionary.add(momoRunSound);
 //                        momoRunSound.loop();
 //                    }
                     audio.loopEffect("momo-run", 1.0f);
-                }
-                else if(!player.isGrounded() || player.getIsJumping()){
+                } else if (!player.isGrounded() || player.getIsJumping()) {
 //                    momoRunSound.stop();
 //                    soundDictionary.remove(momoRunSound);
                     audio.stopEffect("momo-run");
                 }
 
-                TextureRegion current = (TextureRegion) (animations.get("momoRun")).getKeyFrame(currentFrame); // Gets the current frame of the animation
+                TextureRegion current = (TextureRegion) (animations.get("momoRun")).getKeyFrame(
+                        currentFrame); // Gets the current frame of the animation
                 maxFrame = 8;
                 tickFrameSwitch = 5;
                 player.setTexture(current);
@@ -686,7 +722,7 @@ public class ActionController {
 //            momoRunSound.stop();
             audio.stopEffect("wall-slide");
             audio.stopEffect("momo-run");
-            if(player.isAttacking()) {
+            if (player.isAttacking()) {
 //                chiyoRunSound.stop();
 //                soundDictionary.remove(chiyoRunSound);
                 audio.stopEffect("chiyo-run");
@@ -694,7 +730,8 @@ public class ActionController {
                     currentFrame = 0;
                 }
                 currentAnimation = "chiyoAttack";
-                TextureRegion current = (TextureRegion) (animations.get("chiyoAttack")).getKeyFrame(currentFrame); // Gets the current frame of the animation
+                TextureRegion current = (TextureRegion) (animations.get("chiyoAttack")).getKeyFrame(
+                        currentFrame); // Gets the current frame of the animation
                 tickFrameSwitch = 4;
                 maxFrame = 12;
                 player.setTexture(current);
@@ -704,7 +741,7 @@ public class ActionController {
                 player.setSyMult(2.0f);
             }
             // if chiyo is sliding
-            else if (player.isSliding()){
+            else if (player.isSliding()) {
                 player.setTexture(player.getChiyoSlideTexture());
                 audio.loopEffect("wall-slide", 1f);
                 player.setOxOffset(2);
@@ -712,8 +749,7 @@ public class ActionController {
                 player.setSxMult(-2.1f);
                 player.setSyMult(1.84f);
                 currentAnimation = "chiyoSlide";
-            }
-            else if (!player.isGrounded()) {
+            } else if (!player.isGrounded()) {
 //                chiyoRunSound.stop();
 //                soundDictionary.remove(chiyoRunSound);
                 audio.stopEffect("chiyo-run");
@@ -721,17 +757,18 @@ public class ActionController {
                     currentFrame = 0;
                 }
                 currentAnimation = "chiyoJump";
-                TextureRegion current = (TextureRegion) (animations.get("chiyoJump")).getKeyFrame(currentFrame); // Gets the current frame of the animation
+                TextureRegion current = (TextureRegion) (animations.get("chiyoJump")).getKeyFrame(
+                        currentFrame); // Gets the current frame of the animation
                 tickFrameSwitch = 8;
                 maxFrame = 8;
-                if (currentFrame == 0 && player.getBodyVelocityY() < 0){
+                if (currentFrame == 0 && player.getBodyVelocityY() < 0) {
                     currentFrame = 3;
                 }
                 // Disables animation while rising in the air
-                if (currentFrame == 2 && player.getBodyVelocityY() > 0){
+                if (currentFrame == 2 && player.getBodyVelocityY() > 0) {
                     tickFrameSwitch = 0;
                 }
-                if (currentFrame == 4 && player.getBodyVelocityY() < 0){
+                if (currentFrame == 4 && player.getBodyVelocityY() < 0) {
                     tickFrameSwitch = 0;
                 }
                 player.setTexture(current);
@@ -739,16 +776,30 @@ public class ActionController {
                 player.setOyOffset(-25);
                 player.setSxMult(2.0f);
                 player.setSyMult(2.0f);
-            } else if(player.getBodyVelocityX() != 0){
+            } else if (frameAfterLanding < 16 && frameAfterLanding > 1) { // landing
+                currentAnimation = "chiyoJump";
+                currentFrame = frameAfterLanding / 8 + 6;
+                System.out.println(currentFrame);
+                TextureRegion current = (TextureRegion) (animations.get("chiyoJump")).getKeyFrame(
+                        currentFrame);
+                tickFrameSwitch = 4;
+                maxFrame = 2;
+                player.setTexture(current);
+                player.setOxOffset(20);
+                player.setOyOffset(-25);
+                player.setSxMult(2.0f);
+                player.setSyMult(2.0f);
+            } else if (player.getBodyVelocityX() != 0) {
                 currentAnimation = "chiyoRun";
-                if(player.isGrounded() && !player.getIsJumping()){
+                if (player.isGrounded() && !player.getIsJumping()) {
 //                    if(!soundDictionary.contains(chiyoRunSound)) {
 //                        soundDictionary.add(chiyoRunSound);
 //                        chiyoRunSound.loop();
 //                    }
                     audio.loopEffect("chiyo-run", 1.0f);
                 }
-                TextureRegion current = (TextureRegion) (animations.get("chiyoRun")).getKeyFrame(currentFrame); // Gets the current frame of the animation
+                TextureRegion current = (TextureRegion) (animations.get("chiyoRun")).getKeyFrame(
+                        currentFrame); // Gets the current frame of the animation
                 tickFrameSwitch = 4;
                 maxFrame = 7;
                 player.setTexture(current);
@@ -778,7 +829,7 @@ public class ActionController {
         if (!player.isGrounded() && player.getTicksInAir() <= player.getTimeForImpact()) {
             smallImpact = true;
         }
-        if(smallImpact && player.isGrounded()){
+        if (smallImpact && player.isGrounded()) {
             smallImpact = false;
 //            smallImpactSoundId = playSound(smallImpactSound, smallImpactSoundId, 0.8F);
             audio.playEffect("small-impact", 0.8f);
@@ -790,11 +841,14 @@ public class ActionController {
             //offset of effect from player
             float pOffsetX = 0.0f;
             float pOffsetY = -0.33f;
-            EffectObstacle impactAnimate = level.getEffectPool().obtainEffect(player.getX(), player.getY(), player.getImpactEffectSpriteSheet().getRegionWidth(),
-                    player.getImpactEffectSpriteSheet().getRegionHeight(), 0.02f, 0.02f, effectAngle,
-                    pOffsetX, pOffsetY, true,
-                    "impactEffect", player, 0.35f,
-                    1, 1, animations.get("impactEffect"), 5);
+            EffectObstacle impactAnimate = level.getEffectPool()
+                    .obtainEffect(player.getX(), player.getY(),
+                            player.getImpactEffectSpriteSheet().getRegionWidth(),
+                            player.getImpactEffectSpriteSheet().getRegionHeight(), 0.02f, 0.02f,
+                            effectAngle,
+                            pOffsetX, pOffsetY, true,
+                            "impactEffect", player, 0.35f,
+                            1, 1, animations.get("impactEffect"), 5);
             level.addQueuedObject(impactAnimate);
 //            impactId = playSound(impactSound, impactId, 0.3F);
             audio.playEffect("impact", 0.3f);
@@ -803,6 +857,18 @@ public class ActionController {
         }
 
         //#endregion
+
+        if (!groundedLastFrame && player.isGrounded()) frameAfterLanding += 1;
+        else if (frameAfterLanding >= 1) frameAfterLanding = Math.min(frameAfterLanding+1, 17);
+
+
+        if (player.isGrounded()) {
+            groundedLastFrame = true;
+        }
+        else {
+            groundedLastFrame = false;
+            frameAfterLanding = 0;
+        }
 
 
 

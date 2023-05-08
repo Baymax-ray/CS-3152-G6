@@ -30,7 +30,9 @@ public class LevelScreen implements Screen {
     private AudioController audio;
 
 
-
+    public Level getLevel() {
+        return level;
+    }
 
     public LevelScreen(Level level, ActionBindings actionBindings, AssetDirectory assets) {
         this.level = level;
@@ -149,6 +151,7 @@ public class LevelScreen implements Screen {
     @Override
     public void resume() {
         //empty in labs
+
     }
 
     @Override
