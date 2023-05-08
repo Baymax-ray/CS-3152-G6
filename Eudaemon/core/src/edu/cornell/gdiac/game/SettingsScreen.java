@@ -52,9 +52,6 @@ import edu.cornell.gdiac.util.XBoxController;
  * loading screen.
  */
 public class SettingsScreen implements Screen, InputProcessor, ControllerListener {
-	// There are TWO asset managers.  One to load the loading screen.  The other to load the assets
-	/** Internal assets for this loading screen */
-	private final AssetDirectory internal;
 
 	/** Background texture for start-up */
 	private final Texture background;
@@ -161,16 +158,6 @@ public class SettingsScreen implements Screen, InputProcessor, ControllerListene
 	public void setIsFromMainMenu(boolean isfrom){this.isFromMainMenu = isfrom;}
 
 	/**
-	 * Creates a LoadingScreen with the default budget, size and position.
-	 *
-	 * @param file  	The asset directory to load in the background
-	 * @param canvas 	The game canvas to draw to
-	 */
-	public SettingsScreen(String file, GameCanvas canvas, Level currentLevel) {
-		this(file, canvas, DEFAULT_BUDGET, currentLevel);
-	}
-
-	/**
 	 * Creates a LoadingScreen with the default size and position.
 	 *
 	 * The budget is the number of milliseconds to spend loading assets each animation
@@ -178,39 +165,32 @@ public class SettingsScreen implements Screen, InputProcessor, ControllerListene
 	 * frame is ~16 milliseconds. So if the budget is 10, you have 6 milliseconds to
 	 * do something else.  This is how game companies animate their loading screens.
 	 *
-	 * @param file  	The asset directory to load in the background
+	 * @param assets  	The asset directory
 	 * @param canvas 	The game canvas to draw to
-	 * @param millis The loading budget in milliseconds
 	 */
-	public SettingsScreen(String file, GameCanvas canvas, int millis, Level currentLevel) {
+	public SettingsScreen(AssetDirectory assets, GameCanvas canvas, Level currentLevel) {
 		this.canvas  = canvas;
-		budget = millis;
 		this.isFromMainMenu = false;
 		this.level = currentLevel;
 
 		// Compute the dimensions from the canvas
 		resize(canvas.getWidth(),canvas.getHeight());
 
-		// We need these files loaded immediately
-		internal = new AssetDirectory( "assets.json" );
-		internal.loadAssets();
-		internal.finishLoading();
-
 		// Load the next two images immediately.
-		background = internal.getEntry( "settingsScreen:background", Texture.class );
+		background = assets.getEntry( "settingsScreen:background", Texture.class );
 		background.setFilter( TextureFilter.Linear, TextureFilter.Linear );
-		volumeButton = internal.getEntry("deathScreen:restart",Texture.class);
-		screenSizeButton = internal.getEntry("deathScreen:quit", Texture.class);
-		backButton = internal.getEntry("settingsScreen:back", Texture.class);
+		volumeButton = assets.getEntry("deathScreen:restart",Texture.class);
+		screenSizeButton = assets.getEntry("deathScreen:quit", Texture.class);
+		backButton = assets.getEntry("settingsScreen:back", Texture.class);
 		backButton.setFilter(TextureFilter.Nearest, TextureFilter.Nearest);
-		unfilledBar = internal.getEntry("settingsScreen:unfilledBar", Texture.class);
-		fullScreenOnButton = internal.getEntry("settingsScreen:settingsOn", Texture.class);
-		fullScreenOffButton = internal.getEntry("settingsScreen:settingsOff", Texture.class);
-		difficultyNormalButton = internal.getEntry("settingsScreen:normal", Texture.class);
-		difficultyHardButton = internal.getEntry("settingsScreen:hard", Texture.class);
-		difficultyVeteranButton = internal.getEntry("settingsScreen:vet", Texture.class);
-		filledBar = internal.getEntry("settingsScreen:filledBar", Texture.class);
-		toggle = internal.getEntry("settingsScreen:dragToggle", Texture.class);
+		unfilledBar = assets.getEntry("settingsScreen:unfilledBar", Texture.class);
+		fullScreenOnButton = assets.getEntry("settingsScreen:settingsOn", Texture.class);
+		fullScreenOffButton = assets.getEntry("settingsScreen:settingsOff", Texture.class);
+		difficultyNormalButton = assets.getEntry("settingsScreen:normal", Texture.class);
+		difficultyHardButton = assets.getEntry("settingsScreen:hard", Texture.class);
+		difficultyVeteranButton = assets.getEntry("settingsScreen:vet", Texture.class);
+		filledBar = assets.getEntry("settingsScreen:filledBar", Texture.class);
+		toggle = assets.getEntry("settingsScreen:dragToggle", Texture.class);
 
 		backHitbox = new Rectangle();
 		backPressState = 0;
@@ -240,8 +220,6 @@ public class SettingsScreen implements Screen, InputProcessor, ControllerListene
 	 * Called when this screen should release all resources.
 	 */
 	public void dispose() {
-		internal.unloadAssets();
-		internal.dispose();
 		canvas = null;
 		listener = null;
 	}
@@ -623,7 +601,8 @@ public class SettingsScreen implements Screen, InputProcessor, ControllerListene
 	 * @param screenY the y-coordinate of the mouse on the screen
 	 * @return whether to hand the event to other listeners. 
 	 */	
-	public boolean mouseMoved(int screenX, int screenY) { 
+	public boolean mouseMoved(int screenX, int screenY) {
+		Gdx.input.setCursorCatched(false);
 		return false;
 	}
 
