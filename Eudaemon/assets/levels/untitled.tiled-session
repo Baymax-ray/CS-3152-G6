@@ -50,11 +50,11 @@
             "expandedObjectLayers": [
                 7
             ],
-            "scale": 1.5,
+            "scale": 0.75,
             "selectedLayer": 3,
             "viewCenter": {
-                "x": 2030.9999999999998,
-                "y": 727.3333333333333
+                "x": 1131.3333333333335,
+                "y": 1084
             }
         },
         "level0.tmj": {
@@ -69,11 +69,11 @@
             "expandedObjectLayers": [
                 7
             ],
-            "scale": 2,
+            "scale": 0.75,
             "selectedLayer": 3,
             "viewCenter": {
-                "x": 1950.75,
-                "y": 390
+                "x": 482,
+                "y": 193.33333333333337
             }
         },
         "level1old.json": {
@@ -95,7 +95,7 @@
             "selectedLayer": 3,
             "viewCenter": {
                 "x": 1590,
-                "y": -400
+                "y": -404
             }
         },
         "level3.json": {
@@ -138,8 +138,8 @@
             "scale": 0.75,
             "selectedLayer": 3,
             "viewCenter": {
-                "x": 1074,
-                "y": 590.6666666666666
+                "x": 1072.6666666666665,
+                "y": 589.3333333333333
             }
         },
         "level7.json": {

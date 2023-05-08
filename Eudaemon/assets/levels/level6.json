@@ -631,7 +631,7 @@
                         {
                          "name":"NextLevel",
                          "type":"string",
-                         "value":"level3"
+                         "value":"level7"
                         }],
                  "rotation":0,
                  "type":"",
@@ -650,6 +650,21 @@
  "nextobjectid":153,
  "orientation":"orthogonal",
  "properties":[
+        {
+         "name":"backgroundOx",
+         "type":"string",
+         "value":"0"
+        }, 
+        {
+         "name":"backgroundOy",
+         "type":"string",
+         "value":"0"
+        }, 
+        {
+         "name":"backgroundScale",
+         "type":"string",
+         "value":"0.2"
+        }, 
         {
          "name":"camZoneX",
          "type":"float",

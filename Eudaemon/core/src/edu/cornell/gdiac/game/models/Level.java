@@ -144,6 +144,11 @@ public class Level {
      * The y position of the camera in level coordinates
      */
     private float cameraY;
+
+    /**The drawing x-origin of the background */
+    private float backgroundOx;
+    /** The drawing y-origin of the background */
+    private float backgroundOy;
     //private MyGridGraph gridGraph;
 
     private boolean shouldShakeCamera;
@@ -490,6 +495,9 @@ public class Level {
         this.cameraWidth = properties.get("cameraWidth").getFloat("value");
         this.cameraHeight = properties.get("cameraHeight").getFloat("value");
         this.tileSize = properties.get("tileSize").getFloat("value");
+        this.scaleforBackground = properties.get("backgroundScale").getFloat("value");
+        this.backgroundOx = properties.get("backgroundOx").getFloat("value");
+        this.backgroundOy = properties.get("backgroundOy").getFloat("value");
 
 
         // Access the JsonValues for each layer in the tilemap
@@ -554,7 +562,6 @@ public class Level {
         this.background_L3 = new TextureRegion(assets.getEntry("background:L3", Texture.class));
         this.background_L4 = new TextureRegion(assets.getEntry("background:L4", Texture.class));
         this.background_L5 = new TextureRegion(assets.getEntry("background:L5", Texture.class));
-        this.scaleforBackground = 0.3f;
 
         // Define the world
         this.world = new World(new Vector2(0, gravity), true);
@@ -812,14 +819,12 @@ public class Level {
         float sty=levelToTileCoordinatesY(this.startY);
         float diffX=px-stx;
         float diffY=py-sty;
-        float ox = 0f;
-        float oy= 0f;
         //the background moves with the player,the farther back the faster the speed
-        canvas.draw(background_L1, Color.WHITE, ox + 30, oy, diffX, diffY, 0, this.scaleforBackground, this.scaleforBackground);
-        canvas.draw(background_L2, Color.WHITE, ox, oy, diffX, diffY, 0,  this.scaleforBackground, this.scaleforBackground);
-        canvas.draw(background_L3, Color.WHITE, ox, oy, diffX*0.7f, diffY*0.7f, 0,  this.scaleforBackground, this.scaleforBackground);
-        canvas.draw(background_L4, Color.WHITE, ox, oy, diffX*0.4f, diffY*0.4f, 0,  this.scaleforBackground, this.scaleforBackground);
-        canvas.draw(background_L5, Color.WHITE, ox-30, oy, diffX*0.1f, diffY*0.1f, 0,  this.scaleforBackground, this.scaleforBackground);
+        canvas.draw(background_L1, Color.WHITE, backgroundOx + 30, backgroundOy, diffX, diffY, 0, this.scaleforBackground, this.scaleforBackground);
+        canvas.draw(background_L2, Color.WHITE, backgroundOx, backgroundOy, diffX, diffY, 0,  this.scaleforBackground, this.scaleforBackground);
+        canvas.draw(background_L3, Color.WHITE, backgroundOx, backgroundOy, diffX*0.7f, diffY*0.7f, 0,  this.scaleforBackground, this.scaleforBackground);
+        canvas.draw(background_L4, Color.WHITE, backgroundOx, backgroundOy, diffX*0.4f, diffY*0.4f, 0,  this.scaleforBackground, this.scaleforBackground);
+        canvas.draw(background_L5, Color.WHITE, backgroundOx, backgroundOy, diffX*0.1f, diffY*0.1f, 0,  this.scaleforBackground, this.scaleforBackground);
 //        canvas.draw(background, Color.CLEAR, background.getRegionWidth()/2, background.getRegionHeight()/2, 0, 0, 1 / background.getRegionWidth(), 1/ background.getRegionHeight());
 
         //Drawing background 2 tiles

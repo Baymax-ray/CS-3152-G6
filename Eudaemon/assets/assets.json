@@ -679,6 +679,8 @@
         "level3": "levels/level3.json",
         "level4": "levels/level4.json",
         "level5": "levels/level5.json",
+        "level6": "levels/level6.json",
+        "level7": "levels/level7.json",
         "tileset": "EudaemonTileset.json"
     },
     "sounds" : {

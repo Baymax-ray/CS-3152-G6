@@ -1424,6 +1424,21 @@
  "orientation":"orthogonal",
  "properties":[
         {
+         "name":"backgroundOx",
+         "type":"string",
+         "value":"0"
+        }, 
+        {
+         "name":"backgroundOy",
+         "type":"string",
+         "value":"0"
+        }, 
+        {
+         "name":"backgroundScale",
+         "type":"string",
+         "value":"0.2"
+        }, 
+        {
          "name":"camZoneX",
          "type":"float",
          "value":1
