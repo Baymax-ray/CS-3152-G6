@@ -544,7 +544,7 @@ public class ActionController {
             spiritDrainEffect = level.getEffectPool().obtainEffect(player.getX(), player.getY(),
                     player.getSpiritDrainSpriteSheet().getRegionWidth(), player.getSpiritDrainSpriteSheet().getRegionHeight(),
                     0.01f, 0.01f, 0, 0, 0, true, "spiritDrain", player, 1f,
-                    1, 1, player.getSpiritDrainAnimation(), 5, 0, false);
+                    1, 1, player.getSpiritDrainAnimation(), 5, currentFrame, true);
             level.addQueuedObject(spiritDrainEffect);
         }
         //#endregion
