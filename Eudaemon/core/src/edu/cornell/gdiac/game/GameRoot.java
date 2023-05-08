@@ -120,7 +120,7 @@ public class GameRoot extends Game implements ScreenListener {
 				levelScreen = new LevelScreen(this.state.getCurrentLevel(), this.state.getActionBindings(), assets);
 				levelScreen.setScreenListener(this);
 				levelScreen.setCanvas(canvas);
-
+				levelScreen.getLevel().setDifficulty(this.levelDifficulty);
 				setScreen(levelScreen);
 			}
 			if (exitCode == ExitCode.MAIN_MENU) {
@@ -146,6 +146,7 @@ public class GameRoot extends Game implements ScreenListener {
 				levelScreen = new LevelScreen(this.state.getCurrentLevel(), this.state.getActionBindings(), assets);
 				levelScreen.setScreenListener(this);
 				levelScreen.setCanvas(canvas);
+				levelScreen.getLevel().setDifficulty(this.levelDifficulty);
 				setScreen(levelScreen);
 			}
 		}
@@ -189,9 +190,9 @@ public class GameRoot extends Game implements ScreenListener {
 				this.state.setCurrentLevel(state.getCurrentLevel().getExit().getNextLevel());
 				this.state.resetCurrentLevel();
 				levelScreen = new LevelScreen(this.state.getCurrentLevel(), this.state.getActionBindings(), assets);
-
 				levelScreen.setScreenListener(this);
 				levelScreen.setCanvas(canvas);
+				levelScreen.getLevel().setDifficulty(this.levelDifficulty);
 				setScreen(levelScreen);
 			}
 		}
