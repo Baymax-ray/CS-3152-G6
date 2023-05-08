@@ -72,7 +72,11 @@ public class Level {
      */
     private final HashMap<Integer, TextureRegion> texturePaths;
     /** Background texture for start-up */
-    private final TextureRegion background;
+    private final TextureRegion background_L1;
+    private final TextureRegion background_L2;
+    private final TextureRegion background_L3;
+    private final TextureRegion background_L4;
+    private final TextureRegion background_L5;
 
     /**
      * In level coordinates (not pixels), the width and height of a single tile.
@@ -463,14 +467,16 @@ public class Level {
             }
         }
 
-        this.background = new TextureRegion(assets.getEntry("background:city", Texture.class));
+        this.background_L1 = new TextureRegion(assets.getEntry("background:L1", Texture.class));
+        this.background_L2 = new TextureRegion(assets.getEntry("background:L2", Texture.class));
+        this.background_L3 = new TextureRegion(assets.getEntry("background:L3", Texture.class));
+        this.background_L4 = new TextureRegion(assets.getEntry("background:L4", Texture.class));
+        this.background_L5 = new TextureRegion(assets.getEntry("background:L5", Texture.class));
 
 
         // Define the world
         this.world = new World(new Vector2(0, gravity), true);
 
-//        String backgroundAsset = json.getString("backgroundAsset");
-//        this.backgroundTexture = assets.get(backgroundAsset);
 
         //#region Enemies and Objects
         this.enemies = new ArrayList<>();
@@ -724,7 +730,11 @@ public class Level {
 
 
 //        canvas.draw(background, 0, 0);
-        canvas.draw(background, Color.WHITE, 0, 0, -3, 0, 0, 0.03F, 0.03F);
+        canvas.draw(background_L1, Color.WHITE, 0, 0, 0, 0, 0, 1F, 1F);
+        canvas.draw(background_L2, Color.WHITE, 0, 0, 0, 0, 0, 1F, 1F);
+        canvas.draw(background_L3, Color.WHITE, 0, 0, 0, 0, 0, 1F, 1F);
+        canvas.draw(background_L4, Color.WHITE, 0, 0, 0, 0, 0, 1F, 1F);
+        canvas.draw(background_L5, Color.WHITE, 0, 0, 0, 0, 0, 1F, 1F);
 //        canvas.draw(background, Color.CLEAR, background.getRegionWidth()/2, background.getRegionHeight()/2, 0, 0, 1 / background.getRegionWidth(), 1/ background.getRegionHeight());
 
         //Drawing background 2 tiles

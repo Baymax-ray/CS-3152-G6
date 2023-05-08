@@ -277,7 +277,11 @@
           }
         }
       },
-        "background:city": "backgrounds/backgroundCity.png",
+        "background:L1": "backgrounds/backgroundL1.png",
+        "background:L2": "backgrounds/backgroundL2.png",
+        "background:L3": "backgrounds/backgroundL3.png",
+        "background:L4": "backgrounds/backgroundL4.png",
+        "background:L5": "backgrounds/backgroundL5.png",
         "momo:idle":  "character/momo.png",
         "momo:upDash":  "character/momoUpDash.png",
         "momo:downDash":  "character/momoDownDash.png",
