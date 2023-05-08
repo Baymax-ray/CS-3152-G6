@@ -559,7 +559,6 @@ public class Level {
         // Define the world
         this.world = new World(new Vector2(0, gravity), true);
 
-
         //#region Enemies and Objects
         this.enemies = new ArrayList<>();
         this.spikes = new ArrayList<>();
@@ -594,12 +593,6 @@ public class Level {
             else if (object.getString("name").equals("StartingPoint")) {
                 startX = (int) (object.getInt("x") / 32) + 1;
                 startY = heightInTiles - (int) (object.getInt("y") / 32);
-            } else if (object.getString("name").equals("Exit")) {
-                float x = (float) object.getInt("x") / 32;
-                float y = heightInTiles - (float) object.getInt("y") / 32;
-                float width = object.getFloat("width") / 64;
-                float height = object.getFloat("height") / 50;
-                exit = new Exit(object, assets, x, y, width, height);
             }
         }
 
@@ -607,10 +600,21 @@ public class Level {
 
         //#endregion
 
+        // Create the player
         this.player = new Player(assets, startX, startY, levelDifficulty);
 //        JsonValue playerData = assets.getEntry("sharedConstants", JsonValue.class).get("Player");
         this.assets = assets;
 //        uiElements = new UIOverlay(playerData, assets);
+
+        for (JsonValue object : objects) {
+            if (object.getString("name").equals("Exit")) {
+                float x = (float) object.getInt("x") / 32;
+                float y = heightInTiles - (float) object.getInt("y") / 32;
+                float width = 1.15f;
+                float height = 1.7f;
+                exit = new Exit(object, assets, x, y, width, height, player);
+            }
+        }
 
         // Create the tilemap (background tiles 1)
         JsonValue tilesBG1 = layerData.get("TileLayerBG");
@@ -808,12 +812,14 @@ public class Level {
         float sty=levelToTileCoordinatesY(this.startY);
         float diffX=px-stx;
         float diffY=py-sty;
+        float ox = 0f;
+        float oy= 0f;
         //the background moves with the player,the farther back the faster the speed
-        canvas.draw(background_L1, Color.WHITE, 30, 0, diffX, diffY, 0, this.scaleforBackground, this.scaleforBackground);
-        canvas.draw(background_L2, Color.WHITE, 0, 0, diffX, diffY, 0,  this.scaleforBackground, this.scaleforBackground);
-        canvas.draw(background_L3, Color.WHITE, 0f, 0f, diffX*0.7f, diffY*0.7f, 0,  this.scaleforBackground, this.scaleforBackground);
-        canvas.draw(background_L4, Color.WHITE, 0f, 0f, diffX*0.4f, diffY*0.4f, 0,  this.scaleforBackground, this.scaleforBackground);
-        canvas.draw(background_L5, Color.WHITE, 0f, 0f, diffX*0.1f, diffY*0.1f, 0,  this.scaleforBackground, this.scaleforBackground);
+        canvas.draw(background_L1, Color.WHITE, ox + 30, oy, diffX, diffY, 0, this.scaleforBackground, this.scaleforBackground);
+        canvas.draw(background_L2, Color.WHITE, ox, oy, diffX, diffY, 0,  this.scaleforBackground, this.scaleforBackground);
+        canvas.draw(background_L3, Color.WHITE, ox, oy, diffX*0.7f, diffY*0.7f, 0,  this.scaleforBackground, this.scaleforBackground);
+        canvas.draw(background_L4, Color.WHITE, ox, oy, diffX*0.4f, diffY*0.4f, 0,  this.scaleforBackground, this.scaleforBackground);
+        canvas.draw(background_L5, Color.WHITE, ox-30, oy, diffX*0.1f, diffY*0.1f, 0,  this.scaleforBackground, this.scaleforBackground);
 //        canvas.draw(background, Color.CLEAR, background.getRegionWidth()/2, background.getRegionHeight()/2, 0, 0, 1 / background.getRegionWidth(), 1/ background.getRegionHeight());
 
         //Drawing background 2 tiles

@@ -1449,7 +1449,7 @@ public class Player extends CapsuleObstacle {
         // // Ground sensor to represent our feet
         Vector2 sensorCenter = new Vector2(0, -getHeight() / 2);
         FixtureDef sensorDef = new FixtureDef();
-        sensorDef.density = playerData.getFloat("density",0);
+        sensorDef.density = 0;
         sensorDef.isSensor = true;
         groundSensorShape = new PolygonShape();
         JsonValue sensorjv = playerData.get("sensor");
@@ -1460,9 +1460,10 @@ public class Player extends CapsuleObstacle {
         sensorFixture.setUserData(getGroundSensorName());
 
         // Wall sensor to represent our front
-        Vector2 sensorCenter2 = new Vector2(getWidth()/2, 0);
+        Vector2 sensorCenter2 = new Vector2(getWidth()/1.8f, 0);
         FixtureDef sensorDef2 = new FixtureDef();
-        sensorDef2.density = playerData.getFloat("density",0);
+//        sensorDef2.density = playerData.getFloat("density",0);
+        sensorDef2.density = 0;
         sensorDef2.isSensor = true;
         wallSensorShapeRight = new PolygonShape();
         JsonValue sensorjv2 = playerData.get("wallSensor");
@@ -1472,7 +1473,7 @@ public class Player extends CapsuleObstacle {
         Fixture sensorFixture2 = body.createFixture( sensorDef2 );
         sensorFixture2.setUserData(getWallSensorNameRight());
 
-        Vector2 sensorCenter3 = new Vector2(-getWidth()/2, 0);
+        Vector2 sensorCenter3 = new Vector2(-getWidth()/1.8f, 0);
         FixtureDef sensorDef3 = new FixtureDef();
         sensorDef3.density = playerData.getFloat("density",0);
         sensorDef3.isSensor = true;

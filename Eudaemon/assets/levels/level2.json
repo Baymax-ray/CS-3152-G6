@@ -173,23 +173,6 @@
                  "y":314.506440732962
                 }, 
                 {
-                 "height":62.7272727272727,
-                 "id":138,
-                 "name":"Exit",
-                 "properties":[
-                        {
-                         "name":"NextLevel",
-                         "type":"string",
-                         "value":"level3"
-                        }],
-                 "rotation":0,
-                 "type":"",
-                 "visible":true,
-                 "width":63.6363636363635,
-                 "x":1802.85250553132,
-                 "y":664.563031548868
-                }, 
-                {
                  "gid":89,
                  "height":23.3218,
                  "id":176,
@@ -1222,8 +1205,8 @@
                  "type":"Enemy",
                  "visible":true,
                  "width":15.3333,
-                 "x":1481.33335,
-                 "y":1051.83335
+                 "x":1482.33335,
+                 "y":1077.83335
                 }, 
                 {
                  "gid":336,
@@ -1234,8 +1217,8 @@
                  "type":"Enemy",
                  "visible":true,
                  "width":15.3333,
-                 "x":1446.83335,
-                 "y":1017.33335
+                 "x":1408.83335,
+                 "y":1110.33335
                 }, 
                 {
                  "gid":336,
@@ -1246,8 +1229,8 @@
                  "type":"Enemy",
                  "visible":true,
                  "width":15.3333,
-                 "x":1445.83335,
-                 "y":952.33335
+                 "x":1407.83335,
+                 "y":1074.33335
                 }, 
                 {
                  "gid":336,
@@ -1258,8 +1241,8 @@
                  "type":"Enemy",
                  "visible":true,
                  "width":15.3333,
-                 "x":1387.83335,
-                 "y":1015.83335
+                 "x":1441.83335,
+                 "y":1105.83335
                 }, 
                 {
                  "gid":336,
@@ -1284,6 +1267,24 @@
                  "width":15.3333,
                  "x":1477.83335,
                  "y":1115.33335
+                }, 
+                {
+                 "gid":337,
+                 "height":25.5,
+                 "id":282,
+                 "name":"Exit",
+                 "properties":[
+                        {
+                         "name":"NextLevel",
+                         "type":"string",
+                         "value":"level3"
+                        }],
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":23,
+                 "x":1702.33333333333,
+                 "y":733.166666666667
                 }],
          "opacity":1,
          "type":"objectgroup",
@@ -1292,7 +1293,7 @@
          "y":0
         }],
  "nextlayerid":12,
- "nextobjectid":282,
+ "nextobjectid":283,
  "orientation":"orthogonal",
  "properties":[
         {

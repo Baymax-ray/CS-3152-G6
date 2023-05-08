@@ -277,6 +277,15 @@
           }
         }
       },
+      "platform:exit": {
+        "file" : "platform/exitSpriteSheet.png",
+        "sprites" : {
+          "fire": {
+            "rows": 1,
+            "cols": 3
+          }
+        }
+      },
         "background:L1": "backgrounds/backgroundL1.png",
         "background:L2": "backgrounds/backgroundL2.png",
         "background:L3": "backgrounds/backgroundL3.png",
@@ -321,7 +330,6 @@
         "platform:spike": "platform/spike.png",
         "platform:textBillboard": "platform/textBillboard.png",
         "platform:imageBillboard": "platform/imageBillboard.png",
-        "platform:exit": "platform/exit.png",
 
         "platform:controllerButton": "platform/controllerButton.png",
         "platform:controllerButtonUp": "platform/controllerButtonUp.png",

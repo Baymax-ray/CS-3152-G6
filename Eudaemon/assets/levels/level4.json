@@ -989,23 +989,6 @@
                  "y":413.25
                 }, 
                 {
-                 "height":63,
-                 "id":178,
-                 "name":"Exit",
-                 "properties":[
-                        {
-                         "name":"NextLevel",
-                         "type":"string",
-                         "value":"level5"
-                        }],
-                 "rotation":0,
-                 "type":"",
-                 "visible":true,
-                 "width":63.875,
-                 "x":1118.72916666667,
-                 "y":1596.5
-                }, 
-                {
                  "gid":86,
                  "height":25.3939,
                  "id":179,
@@ -1081,8 +1064,7 @@
                  "width":22.8779,
                  "x":1188.20971666667,
                  "y":957.702683333333
-                },
-            
+                }, 
                 {
                  "gid":87,
                  "height":22.3413,
@@ -1100,7 +1082,8 @@
                  "width":22.8779,
                  "x":1157.12971666667,
                  "y":956.622683333333
-                }, 
+                },
+            
                 {
                  "gid":87,
                  "height":22.3413,
@@ -1411,6 +1394,24 @@
                  "width":26,
                  "x":1444.125,
                  "y":1052.5
+                }, 
+                {
+                 "gid":337,
+                 "height":25.5,
+                 "id":202,
+                 "name":"Exit",
+                 "properties":[
+                        {
+                         "name":"NextLevel",
+                         "type":"string",
+                         "value":"level5"
+                        }],
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":23,
+                 "x":1157.16666666667,
+                 "y":1693.25
                 }],
          "opacity":1,
          "type":"objectgroup",
@@ -1419,7 +1420,7 @@
          "y":0
         }],
  "nextlayerid":11,
- "nextobjectid":201,
+ "nextobjectid":203,
  "orientation":"orthogonal",
  "properties":[
         {
