@@ -140,8 +140,8 @@ public class Spike extends BoxObstacle {
         float ox = this.texture.getRegionWidth()/2;
         float oy = this.texture.getRegionHeight() * this.getHeight()/2;
 
-        float sx = 1.97f * spikeImageWidth / this.texture.getRegionWidth();
-        float sy = 1.97f * spikeImageHeight / this.texture.getRegionHeight();
+        float sx = 2.5f * spikeImageWidth / this.texture.getRegionWidth();
+        float sy = 2.2f * spikeImageHeight / this.texture.getRegionHeight();
 
         canvas.draw(this.texture, Color.WHITE, ox, oy, x, y, rotationAngle, sx, sy);
     }

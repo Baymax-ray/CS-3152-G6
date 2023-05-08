@@ -314,7 +314,7 @@
     }
   },
   "Spike": {
-    "ImageWidth": 0.5,
+    "ImageWidth": 0.4,
     "ImageHeight": 0.5,
     "hitboxWidth": 0.9,
     "hitboxHeight": 0.2,
