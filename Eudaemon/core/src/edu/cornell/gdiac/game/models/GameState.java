@@ -1,6 +1,10 @@
 package edu.cornell.gdiac.game.models;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.files.FileHandle;
+import com.badlogic.gdx.utils.Json;
 import com.badlogic.gdx.utils.JsonValue;
+import com.badlogic.gdx.utils.JsonWriter;
 import edu.cornell.gdiac.assets.AssetDirectory;
 
 import java.util.Collection;
@@ -9,6 +13,7 @@ import java.util.HashMap;
 public class GameState {
     private final AssetDirectory assets;
     private final ActionBindings bindings;
+    private Settings settings;
     //other global settings go here
     private final Tile[] tiles;
     private final HashMap<String, Level> levels;
@@ -63,6 +68,15 @@ public class GameState {
         }
     }
 
+    public Settings getSettings() {
+        return settings;
+    }
+
+    public void unlockNextLevel() {
+        if (Character.getNumericValue(currentLevelName.charAt(currentLevelName.length() - 1)) == settings.numLevelsAvailable - 1 && settings.numLevelsAvailable < levels.size() - 1)
+            settings.numLevelsAvailable++;
+    }
+
     public GameState(AssetDirectory assets) {
         this.currentLevelName = assets.getEntry("constants", JsonValue.class).get("levels").get(0).getString("level");
 
@@ -71,6 +85,17 @@ public class GameState {
         JsonValue constants = assets.getEntry("constants",  JsonValue.class);
 
         bindings = new ActionBindings(assets.getEntry("inputMappings", JsonValue.class));
+
+        try {
+            FileHandle saveFile = Gdx.files.local("eudaemon-save-data.json");
+            Json json = new Json();
+            System.out.println(saveFile.readString());
+            settings = json.fromJson(Settings.class, saveFile.readString());
+            System.out.println("here");
+        } catch (Exception e) {
+            settings = Settings.defaultSettings();
+            save();
+        }
 
         String levelName = constants.get("levels").get(0).getString("level");
 //        System.out.println(levelName);
@@ -91,5 +116,13 @@ public class GameState {
 
         //TODO: bindings etc.
 
+    }
+
+    public void save() {
+        FileHandle saveFile = Gdx.files.local("eudaemon-save-data.json");
+        Json json = new Json();
+        json.setOutputType(JsonWriter.OutputType.json);
+        String saveData = json.toJson(settings);
+        saveFile.writeString(saveData, false);
     }
 }

@@ -39,6 +39,7 @@ import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.ObjectMap;
 import edu.cornell.gdiac.assets.AssetDirectory;
 import edu.cornell.gdiac.game.models.GameState;
+import edu.cornell.gdiac.game.models.Settings;
 import edu.cornell.gdiac.util.Controllers;
 import edu.cornell.gdiac.util.ScreenListener;
 
@@ -106,8 +107,7 @@ public class LevelSelectScreen implements Screen, InputProcessor, ControllerList
     /** Scaling factor for when the student changes the resolution. */
     private float scale;
 
-    /** the current level (1-based indexing)*/
-    private int numLevelsAvailable;
+    private Settings settings;
 
     /** the selected level (0-based indexing) */
     private int selectedLevel;
@@ -130,17 +130,15 @@ public class LevelSelectScreen implements Screen, InputProcessor, ControllerList
      * @param assets  	The asset directory to get assets from
      * @param canvas 	The game canvas to draw to
      */
-    public LevelSelectScreen(AssetDirectory assets, GameState state, GameCanvas canvas) {
+    public LevelSelectScreen(AssetDirectory assets, GameState state, GameCanvas canvas, Settings settings) {
         this.canvas  = canvas;
-
+        this.settings = settings;
 
         background = assets.getEntry( "levelSelect:background", Texture.class );
         background.setFilter(TextureFilter.Nearest, TextureFilter.Nearest);
 
         lights = assets.getEntry("levelSelect:lights", Texture.class);
         lights.setFilter(TextureFilter.Nearest, TextureFilter.Nearest);
-
-        numLevelsAvailable = state.getLevels().size();
 
         buttons = new Array<>();
 
@@ -153,7 +151,7 @@ public class LevelSelectScreen implements Screen, InputProcessor, ControllerList
         for (int i = 0; i < 10; i++) {
             MenuButton button = new MenuButton(new TextureRegion(lights), ExitCode.START);
             levelButtons.add(button);
-            if (i < numLevelsAvailable)
+            if (i < settings.numLevelsAvailable)
                 buttons.add(button);
 
             levelNumbers.put(button, assets.getEntry("levelSelect:" + (i + 1), Texture.class));
@@ -269,14 +267,14 @@ public class LevelSelectScreen implements Screen, InputProcessor, ControllerList
                 menuCooldown = COOLDOWN;
             } else if (menuDown) {
                 if (hoveredButton == null) {
-                    hoveredButton = levelButtons.get(numLevelsAvailable - 1);
+                    hoveredButton = levelButtons.get(settings.numLevelsAvailable - 1);
                 } else if (buttons.contains(hoveredButton.down, true)){
                     hoveredButton = hoveredButton.down;
                 }
                 menuCooldown = COOLDOWN;
             } else if (menuLeft) {
                 if (hoveredButton == null) {
-                    hoveredButton = levelButtons.get(numLevelsAvailable - 1);
+                    hoveredButton = levelButtons.get(settings.numLevelsAvailable - 1);
                 } else if (buttons.contains(hoveredButton.down, true)) {
                     if (hoveredButton.left == backButton && hoveredButton != backButton) {
                         backButton.right = hoveredButton;
@@ -286,7 +284,7 @@ public class LevelSelectScreen implements Screen, InputProcessor, ControllerList
                 menuCooldown = COOLDOWN;
             } else if (menuRight) {
                 if (hoveredButton == null) {
-                    hoveredButton = levelButtons.get(numLevelsAvailable - 1);
+                    hoveredButton = levelButtons.get(settings.numLevelsAvailable - 1);
                 } else if (buttons.contains(hoveredButton.down, true)) {
                     hoveredButton = hoveredButton.right;
                 }
@@ -426,6 +424,14 @@ public class LevelSelectScreen implements Screen, InputProcessor, ControllerList
         active = true;
         Gdx.input.setInputProcessor(this);
         Gdx.input.setCursorCatched(true);
+
+        buttons.clear();
+        buttons.add(backButton);
+        for (int i = 0; i < 10; i++) {
+            MenuButton button = levelButtons.get(i);
+            if (i < settings.numLevelsAvailable)
+                buttons.add(button);
+        }
     }
 
     /**
@@ -741,13 +747,4 @@ public class LevelSelectScreen implements Screen, InputProcessor, ControllerList
 
         return true;
     }
-
-    /** sets the number of levels that will be able to click on. putting a negative number or 0 will allow all levels to be started. */
-    public void setNumLevelsAvailable(int i) {
-        if (i <= 0)
-            numLevelsAvailable = 10;
-        else
-            numLevelsAvailable = i;
-    }
-
 }
