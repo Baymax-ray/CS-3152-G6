@@ -261,11 +261,11 @@ public class SettingsScreen implements Screen, InputProcessor, ControllerListene
 		//Fullscreen Off Button
 		canvas.draw(fullScreenOffButton, Color.WHITE, (canvas.getWidth() / 1.68f), canvas.getHeight()/3f , fullScreenOffButton.getWidth(), fullScreenOffButton.getHeight());
 		//Level Difficulty Normal Button
-		canvas.draw(difficultyNormalButton, normalTint, (canvas.getWidth() / 1.9f), canvas.getHeight()/6f , difficultyNormalButton.getWidth(), difficultyNormalButton.getHeight());
+		canvas.draw(difficultyNormalButton, normalTint, (canvas.getWidth() / 1.9f), canvas.getHeight()/6f , difficultyNormalButton.getWidth()/2, difficultyNormalButton.getHeight());
 		//Level Difficulty Hard Button
-		canvas.draw(difficultyHardButton, hardTint, (canvas.getWidth() / 1.5f), canvas.getHeight()/6f , difficultyHardButton.getWidth(), difficultyHardButton.getHeight());
+		canvas.draw(difficultyHardButton, hardTint, (canvas.getWidth() / 1.5f), canvas.getHeight()/6f , difficultyHardButton.getWidth()/2, difficultyHardButton.getHeight());
 		//Level Difficulty Veteran Button
-		canvas.draw(difficultyVeteranButton, veteranTint, (canvas.getWidth() / 1.3f), canvas.getHeight()/6f , difficultyVeteranButton.getWidth(), difficultyVeteranButton.getHeight());
+		canvas.draw(difficultyVeteranButton, veteranTint, (canvas.getWidth() / 1.3f), canvas.getHeight()/6f , difficultyVeteranButton.getWidth()/2, difficultyVeteranButton.getHeight());
 
 		canvas.end();
 	}
