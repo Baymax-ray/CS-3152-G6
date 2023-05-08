@@ -103,6 +103,7 @@ public class ActionController {
         addAnimations(player.getImpactEffectSpriteSheet(), 8, 1, "impactEffect");
         addAnimations(player.getSpiritDrainSpriteSheet(), 13, 1, "spiritDrain");
         addAnimations(player.getTransformSpriteSheet(),7, 1, "playerTransform");
+        addAnimations(player.getRegainHealthSpriteSheet(), 8, 2, "playerRegainHealth");
     }
 
     /**
@@ -800,6 +801,19 @@ public class ActionController {
             audio.playEffect("impact", 0.3f);
             level.shakeControllerSmall();
 
+        }
+
+        // heart animation for regaining health
+        if (player.isGainingHealth()) {
+            player.setGainingHealth(false);
+            float pOffsetX = 0.0f;
+            float pOffsetY = 2.0f;
+            EffectObstacle regainHealthAnimation = level.getEffectPool().obtainEffect(player.getX(), player.getY(), player.getRegainHealthSpriteSheet().getRegionWidth(),
+                    player.getRegainHealthSpriteSheet().getRegionHeight(), 0.05f, 0.05f, 0,
+                    pOffsetX, pOffsetY, true,
+                    "playerRegainHealth", player, 0.35f,
+                    1, 1, animations.get("playerRegainHealth"), 10, 0, false);
+            level.addQueuedObject(regainHealthAnimation);
         }
 
         //#endregion

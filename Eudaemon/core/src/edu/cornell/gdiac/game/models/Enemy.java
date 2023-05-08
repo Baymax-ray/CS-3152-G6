@@ -754,6 +754,7 @@ public class Enemy extends CapsuleObstacle {
         } else {
             this.markRemoved(true);
             player.increaseSpiritByKill(); //player gain some spirit when the enemy killed
+            player.gainHealth(); // player has a 20% chance gain 1 health when killing an enemy
         }
     }
 

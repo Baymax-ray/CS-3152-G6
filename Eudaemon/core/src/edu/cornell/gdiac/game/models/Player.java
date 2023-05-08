@@ -15,6 +15,7 @@ import edu.cornell.gdiac.game.GameCanvas;
 import edu.cornell.gdiac.game.obstacle.CapsuleObstacle;
 import edu.cornell.gdiac.game.obstacle.SwordWheelObstacle;
 import edu.cornell.gdiac.game.obstacle.WheelObstacle;
+import java.util.Random;
 
 public class Player extends CapsuleObstacle {
 
@@ -220,6 +221,8 @@ public class Player extends CapsuleObstacle {
      */
     private TextureRegion chiyoJumpSpriteSheet;
 
+    private TextureRegion regainHealthSpriteSheet;
+
     //#endregion
 
     //#region NONFINAL FIELDS
@@ -270,6 +273,8 @@ public class Player extends CapsuleObstacle {
     private boolean isFacingRight;
     private boolean dashedInAir;
     private boolean isGainingSpirit;
+    private boolean isGainingHealth;
+    private Random random;
 
     private Array<Enemy> enemiesInSpiritRange;
     /**
@@ -558,6 +563,7 @@ public class Player extends CapsuleObstacle {
         return chiyoJumpSpriteSheet;
     }
 
+    public TextureRegion getRegainHealthSpriteSheet() { return regainHealthSpriteSheet; }
 
     //#endregion
 
@@ -630,6 +636,10 @@ public class Player extends CapsuleObstacle {
     public void setGainingSpirit(boolean gainingSpirit) {
         isGainingSpirit = gainingSpirit;
     }
+
+    public boolean isGainingHealth() {return isGainingHealth; }
+
+    public void setGainingHealth(boolean value) { isGainingHealth = value; }
 
     /**
      * Gets the number of ticks the player spends falling.
@@ -1321,6 +1331,7 @@ public class Player extends CapsuleObstacle {
         this.chiyoAttackSpriteSheet = new TextureRegion(assets.getEntry( "chiyo:attack", Texture.class));
         this.impactEffectSpriteSheet = new TextureRegion(assets.getEntry( "impactEffect", Texture.class));
         this.bulletDestroySpriteSheet = new TextureRegion(assets.getEntry("bulletDestroy", Texture.class));
+        this.regainHealthSpriteSheet = new TextureRegion(assets.getEntry("platform:regainHealth", Texture.class));
         TextureRegion[][] bulletDestroyFrames = bulletDestroySpriteSheet.split(bulletDestroySpriteSheet.getRegionWidth()/16, bulletDestroySpriteSheet.getRegionHeight());
         this.bulletDestroyAnimation = new Animation<>(0.5f, bulletDestroyFrames[0]);
         //Sound Effect
@@ -1410,6 +1421,8 @@ public class Player extends CapsuleObstacle {
         spiritSensorName = "PlayerSpiritSensor";
 
         this.enemiesInSpiritRange = new Array<>();
+
+        this.random = new Random();
     }
 
     public void draw(GameCanvas canvas) {
@@ -1613,6 +1626,18 @@ public class Player extends CapsuleObstacle {
         }
         return sound.play(volume);
     }
+
+    public void gainHealth() {
+        if (getHearts() < maxHearts) {
+            int randomNumber = random.nextInt(5) + 1;
+            setGainingHealth(true);
+            hearts++;
+//        if (randomNumber == 3) {
+//            hearts++;
+//        }
+        }
+    }
+
 
     public void dispose() {
         playerDamageSound.dispose();

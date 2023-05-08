@@ -322,6 +322,7 @@
 
         "platform:bullet":  "platform/circularProjectile2.png",
         "platform:heart": "platform/heart.png",
+        "platform:regainHealth": "platform/regainHealth.png",
         "platform:emptyspirit": "platform/emptyspirit.png",
         "platform:filled": "platform/filled.png",
         "platform:vetUI": "platform/UIOutline3.png",
