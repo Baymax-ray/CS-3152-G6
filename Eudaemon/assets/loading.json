@@ -5,12 +5,12 @@
         "progress": {
             "file": "shared/progress.png",
             "atlas":     {
-                "background" : [16,   0, 216, 45],
-                "backleft"   : [0,    0,  15, 45],
-                "backright"  : [384,  0, 400, 45],
-                "foreground" : [16,  40, 216, 85],
-                "foreleft"   : [0,   40,  16, 85],
-                "foreright"  : [384, 40, 400, 85]
+                "background" : [16,   0, 216, 39],
+                "backleft"   : [0,    0,  15, 39],
+                "backright"  : [384,  0, 400, 39],
+                "foreground" : [16,  45, 216, 84],
+                "foreleft"   : [0,   45,  16, 84],
+                "foreright"  : [384, 45, 400, 84]
             }
         }
 	}
