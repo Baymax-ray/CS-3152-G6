@@ -19,7 +19,7 @@
 
 
     "maxHearts": 5,
-    "initialHearts": 3,
+    "initialHearts": 5,
 
     "startsFacingRight": true,
 

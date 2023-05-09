@@ -746,7 +746,7 @@ public class Enemy extends CapsuleObstacle {
      * This method decrements the number of hearts for this enemy by 1. If the number of hearts
      * reaches 0, this method destroys the enemy
      */
-    public void hitBySword(Player player) {
+    public void hitBySword(Player player, Level currentLevel) {
         hearts--;
         if (hearts > 0) {
             float directionX =this.getX()-player.getX();
@@ -765,7 +765,7 @@ public class Enemy extends CapsuleObstacle {
         } else {
             this.markRemoved(true);
             player.increaseSpiritByKill(); //player gain some spirit when the enemy killed
-            player.gainHealth(); // player has a 20% chance gain 1 health when killing an enemy
+            player.gainHealth(currentLevel); // player has a 20% chance gain 1 health when killing an enemy
         }
     }
 

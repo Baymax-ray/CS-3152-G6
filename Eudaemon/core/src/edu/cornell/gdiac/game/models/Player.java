@@ -1370,7 +1370,8 @@ public class Player extends CapsuleObstacle {
 
         //Other Information
         this.maxHearts = playerData.getInt("maxHearts");
-        this.initialHearts = playerData.getInt("initialHearts");
+//        this.initialHearts = playerData.getInt("initialHearts");
+        this.initialHearts = levelDifficulty;
         this.maxSpirit = playerData.getFloat("maxSpirit");
         this.initialSpirit = playerData.getFloat("initialSpirit");
         this.startsFacingRight = playerData.getBoolean("startsFacingRight");
@@ -1627,8 +1628,8 @@ public class Player extends CapsuleObstacle {
         return sound.play(volume);
     }
 
-    public void gainHealth() {
-        if (getHearts() < maxHearts) {
+    public void gainHealth(Level thisLevel) {
+        if (getHearts() < maxHearts && getHearts() < thisLevel.getLevelDifficulty()) {
             int randomNumber = random.nextInt(5) + 1;
             setGainingHealth(true);
             hearts++;

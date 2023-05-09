@@ -140,7 +140,7 @@ public class CollisionController implements ContactListener {
                     player.setVelocity(-player.getDownwardAttackPropelX(), player.getDownwardAttackPropelY());
                 }
 
-                enemy.hitBySword(level.getPlayer());
+                enemy.hitBySword(level.getPlayer(), level);
                 if(enemy.getHearts() == 0){
                     audio.playEffect("sword-kill", 0.5f);
                     if (!level.getPlayer().isRemoved()) level.setShouldShakeCamera(true,1);
