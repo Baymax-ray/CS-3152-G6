@@ -53,8 +53,8 @@
             "scale": 0.75,
             "selectedLayer": 2,
             "viewCenter": {
-                "x": 1549.3333333333333,
-                "y": 966.6666666666666
+                "x": 1215.3333333333333,
+                "y": 639.3333333333333
             }
         },
         "level0.tmj": {
@@ -72,8 +72,8 @@
             "scale": 1,
             "selectedLayer": 1,
             "viewCenter": {
-                "x": 1071,
-                "y": 600
+                "x": 1199.5,
+                "y": 639.5
             }
         },
         "level1old.json": {
@@ -94,8 +94,8 @@
             "scale": 0.75,
             "selectedLayer": 2,
             "viewCenter": {
-                "x": 600,
-                "y": 481.33333333333337
+                "x": 2208.6666666666665,
+                "y": 791.3333333333334
             }
         },
         "level3.json": {
@@ -105,8 +105,8 @@
             "scale": 1.4601,
             "selectedLayer": 3,
             "viewCenter": {
-                "x": 1110.1979316485172,
-                "y": 399.97260461612217
+                "x": 671.5293473049791,
+                "y": 639.3397712485446
             }
         },
         "level4.json": {
@@ -116,41 +116,41 @@
             "scale": 0.667,
             "selectedLayer": 3,
             "viewCenter": {
-                "x": 571.2143928035981,
-                "y": 487.2563718140929
+                "x": 1386.0569715142428,
+                "y": 661.9190404797602
             }
         },
         "level5.json": {
             "expandedObjectLayers": [
                 7
             ],
-            "scale": 2.3704,
+            "scale": 1,
             "selectedLayer": 3,
             "viewCenter": {
-                "x": 452.6662166722916,
-                "y": 380.9483631454607
+                "x": 791.5,
+                "y": 1046.5
             }
         },
         "level6.json": {
             "expandedObjectLayers": [
                 7
             ],
-            "scale": 0.1831,
+            "scale": 1,
             "selectedLayer": 2,
             "viewCenter": {
-                "x": 218.45985800109224,
-                "y": 404.1507373020206
+                "x": 648.5,
+                "y": 458.5
             }
         },
         "level7.json": {
             "expandedObjectLayers": [
                 7
             ],
-            "scale": 0.5,
-            "selectedLayer": 3,
+            "scale": 1,
+            "selectedLayer": 2,
             "viewCenter": {
-                "x": 684,
-                "y": 416
+                "x": 913.5,
+                "y": 645.5
             }
         },
         "level8.json": {
@@ -183,12 +183,12 @@
     "project": "untitled.tiled-project",
     "property.type": "string",
     "recentFiles": [
+        "level6.json",
+        "level7.json",
         "level2.json",
         "level0.json",
         "level1.json",
-        "level7.json",
         "F:/Programming/School/CS 3152/Eudaemon/CS-3152-G6/Eudaemon/assets/EudaemonTileset.json",
-        "level6.json",
         "level5.json",
         "level4.json",
         "level3.json",
