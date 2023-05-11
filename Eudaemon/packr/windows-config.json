@@ -1,12 +1,12 @@
 {
   "platform": "windows64",
-  "jdk": "packr/jre-windows-mini.zip",
+  "jdk": "jre-windows-mini.zip",
   "executable": "Eudaemon",
   "classpath": [
-    "out/artifacts/Eudaemon_jar/Eudaemon.jar"
+    "Eudaemon.jar"
   ],
   "removelibs": [
-    "out/artifacts/Eudaemon_jar/Eudaemon.jar"
+    "Eudaemon.jar"
   ],
   "mainclass": "edu.cornell.gdiac.DesktopLauncher",
   "vmargs": [],
