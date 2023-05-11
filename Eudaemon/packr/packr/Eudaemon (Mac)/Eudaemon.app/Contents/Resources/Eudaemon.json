@@ -1,0 +1,11 @@
+{
+  "jrePath": "jre",
+  "classPath": [
+    "Eudaemon.jar"
+  ],
+  "mainClass": "edu.cornell.gdiac.DesktopLauncher",
+  "useZgcIfSupportedOs": false,
+  "vmArgs": [
+    "-XstartOnFirstThread"
+  ]
+}
