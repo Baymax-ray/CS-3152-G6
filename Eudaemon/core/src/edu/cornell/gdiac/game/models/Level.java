@@ -13,7 +13,6 @@ import com.badlogic.gdx.physics.box2d.*;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.JsonValue;
 import edu.cornell.gdiac.assets.AssetDirectory;
-import edu.cornell.gdiac.game.CameraController;
 import edu.cornell.gdiac.game.GameCanvas;
 import edu.cornell.gdiac.game.UIOverlay;
 import edu.cornell.gdiac.game.obstacle.EffectObstacle;

@@ -232,6 +232,24 @@
             }
           }
         },
+        "projectileEnemy:leftup":{
+          "file" : "enemy/projectileEnemyLeftUp.png",
+          "sprites" : {
+            "fire": {
+              "rows": 1,
+              "cols": 4
+            }
+          }
+        },
+        "projectileEnemy:rightup":{
+          "file" : "enemy/projectileEnemyRightUp.png",
+          "sprites" : {
+            "fire": {
+              "rows": 1,
+              "cols": 4
+            }
+          }
+        },
         "nonTrackingFlying:move": {
           "file" : "enemy/nonTrackingFlyingMove.png",
           "sprites" : {
@@ -315,6 +333,8 @@
         "enemy:projectileEnemyLeftIdle": "enemy/projectileEnemyLeftIdle.png",
         "enemy:projectileEnemyRightIdle": "enemy/projectileEnemyRightIdle.png",
         "enemy:projectileEnemyUpIdle": "enemy/projectileEnemyUpIdle.png",
+        "enemy:projectileEnemyLeftUpIdle": "enemy/projectileEnemyLeftUpIdle.png",
+        "enemy:projectileEnemyRightUpIdle": "enemy/projectileEnemyRightUpIdle.png",
         "enemy:nonTrackingFlying": "enemy/nonTrackingFlying.png",
         "enemy:Flying":"enemy/TrackingFlying.png",
         "enemy:FlyingRed": "enemy/TrackingFlyingRed.png",

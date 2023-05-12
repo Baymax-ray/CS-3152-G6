@@ -108,9 +108,7 @@ public class Enemy extends CapsuleObstacle {
      * The offset value along the y-axis.
      */
     private float oxOffset;
-    /**
-     * The offset value along the y-axis.
-     */
+
     /**
      * The physics shape of this object
      */
@@ -395,7 +393,6 @@ public class Enemy extends CapsuleObstacle {
             case "Goomba":
             case "Fast":
             case "Fly":
-                break;
             case "FlyRed":
                 break;
             case "FlyGuardian":
@@ -508,10 +505,14 @@ public class Enemy extends CapsuleObstacle {
             addAnimations(new TextureRegion(assets.getEntry(enemyData.getString("LeftAttackAsset"), Texture.class)), maxFrame, 1, "LeftAttack");
             addAnimations(new TextureRegion(assets.getEntry(enemyData.getString("RightAttackAsset"), Texture.class)), maxFrame, 1, "RightAttack");
             addAnimations(new TextureRegion(assets.getEntry(enemyData.getString("UpAttackAsset"), Texture.class)), maxFrame, 1, "UpAttack");
+            addAnimations(new TextureRegion(assets.getEntry(enemyData.getString("RightUpAttackAsset"), Texture.class)), maxFrame, 1, "RightUpAttack");
+            addAnimations(new TextureRegion(assets.getEntry(enemyData.getString("LeftUpAttackAsset"), Texture.class)), maxFrame, 1, "LeftUpAttack");
             //create a dictionary to store the idle animation
             idlediction.put("Left", new TextureRegion(assets.getEntry(enemyData.getString("LeftIdleAsset"),Texture.class)));
             idlediction.put("Right", new TextureRegion(assets.getEntry(enemyData.getString("RightIdleAsset"),Texture.class)));
             idlediction.put("Up", new TextureRegion(assets.getEntry(enemyData.getString("UpIdleAsset"),Texture.class)));
+            idlediction.put("RightUp", new TextureRegion(assets.getEntry(enemyData.getString("RightUpIdleAsset"),Texture.class)));
+            idlediction.put("LeftUp", new TextureRegion(assets.getEntry(enemyData.getString("LeftUpIdleAsset"),Texture.class)));
         }
         currentAnimation = "idle";
 
@@ -558,46 +559,54 @@ public class Enemy extends CapsuleObstacle {
         }
         switch (projectileEnemyDirection) {
             case "Up"://up is actually head to ground
-            if (angleDegrees<=325 && angleDegrees>=235){
+            if (angleDegrees<=300 && angleDegrees>=240){
                 projectileSpriteSheetType = "Up";
-            }
-            else if (angleDegrees>180 && angleDegrees<235){
+            }else if(angleDegrees<=330 && angleDegrees>300){
+                projectileSpriteSheetType = "LeftUp";
+            }else if(angleDegrees>=210 && angleDegrees<240){
+                projectileSpriteSheetType = "RightUp";
+            }else if (angleDegrees>180 && angleDegrees<210){
                 projectileSpriteSheetType = "Right";
-            }
-            else {
+            }else {
                 projectileSpriteSheetType = "Left";
             }
             break;
             case "Down":
-            if (angleDegrees>=45 && angleDegrees<=135){
-                projectileSpriteSheetType = "Down";
-            }
-            else if (angleDegrees>135 && angleDegrees<270){
+            if (angleDegrees>=60 && angleDegrees<=120){
+                projectileSpriteSheetType = "Up";
+            }else if(angleDegrees>=30 && angleDegrees<60){
+                projectileSpriteSheetType = "LeftUp";
+            }else if(angleDegrees<=150 && angleDegrees>120){
+                projectileSpriteSheetType = "RightUp";
+            }else if (angleDegrees>150 && angleDegrees<270){
                 projectileSpriteSheetType = "Left";
-            }
-            else {
+            }else {
                 projectileSpriteSheetType = "Right";
             }
             break;
             case "Right"://right is actually head to left
-            if (angleDegrees<=135){
+            if (angleDegrees<=120){
                 projectileSpriteSheetType = "Right";
-            }
-            else if (angleDegrees>225){
+            }else if (angleDegrees>=240){
                 projectileSpriteSheetType = "Left";
-            }
-            else {
+            }else if (angleDegrees>120&&angleDegrees<150){
+                projectileSpriteSheetType = "RightUp";
+            }else if (angleDegrees>210&&angleDegrees<240){
+                projectileSpriteSheetType = "LeftUp";
+            }else {
                 projectileSpriteSheetType = "Up";
             }
             break;
             case "Left"://left is actually head to right
-            if (angleDegrees>=45&&angleDegrees<=180){
+            if (angleDegrees>=60&&angleDegrees<=180){
                 projectileSpriteSheetType = "Left";
-            }
-            else if (angleDegrees>180&&angleDegrees<315){
+            }else if (angleDegrees>180&&angleDegrees<=300){
                 projectileSpriteSheetType = "Right";
-            }
-            else {
+            }else if(angleDegrees>=30&&angleDegrees<60){
+                projectileSpriteSheetType = "LeftUp";
+            }else if(angleDegrees>300&&angleDegrees<=330){
+                projectileSpriteSheetType = "RightUp";
+            }else {
                 projectileSpriteSheetType = "Up";
             }
         }
@@ -620,6 +629,12 @@ public class Enemy extends CapsuleObstacle {
                     case "Right":
                         this.texture = idlediction.get("Right");
                         break;
+                    case "LeftUp":
+                        this.texture = idlediction.get("LeftUp");
+                        break;
+                    case "RightUp":
+                        this.texture = idlediction.get("RightUp");
+                        break;
                 }
             }
             else{
@@ -634,6 +649,12 @@ public class Enemy extends CapsuleObstacle {
                         break;
                     case "Right":
                         this.texture = (TextureRegion) animations.get("RightAttack").getKeyFrame(currentFrame);
+                        break;
+                    case "LeftUp":
+                        this.texture = (TextureRegion) animations.get("LeftUpAttack").getKeyFrame(currentFrame);
+                        break;
+                    case "RightUp":
+                        this.texture = (TextureRegion) animations.get("RightUpAttack").getKeyFrame(currentFrame);
                         break;
                     case "Up":
                     case "Down":
