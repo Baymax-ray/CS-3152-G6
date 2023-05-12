@@ -144,7 +144,7 @@ public class SettingsScreen implements Screen, InputProcessor, ControllerListene
 	private Level level;
 
 	//0 for easy, 1 for hard, 2 for veteran
-	public int currentDifficulty;
+	private int currentDifficulty;
 
 
 
@@ -211,7 +211,7 @@ public class SettingsScreen implements Screen, InputProcessor, ControllerListene
 		volumeButtonHitbox = new Rectangle();
 		screenSizeButtonHitbox = new Rectangle();
 		screenSizePressState = 0;
-		currentDifficulty = 0;
+		setCurrentDifficulty(0);
 
 		// Let ANY connected controller start the game.
 		for (XBoxController controller : Controllers.get().getXBoxControllers()) {
@@ -436,7 +436,7 @@ public class SettingsScreen implements Screen, InputProcessor, ControllerListene
 		if(normalHitbox.contains(screenX, screenY)){
 			normalPressState = 1;
 			level.setNormalDifficulty(true);
-			this.currentDifficulty = 0;
+			this.setCurrentDifficulty(0);
 			level.settingsChanged = true;
 			level.getPlayer().setHearts(5);
 			return true;
@@ -444,7 +444,7 @@ public class SettingsScreen implements Screen, InputProcessor, ControllerListene
 		if(hardHitbox.contains(screenX, screenY)){
 			hardPressState = 1;
 			level.setHardDifficulty(true);
-			this.currentDifficulty = 1;
+			this.setCurrentDifficulty(1);
 			level.settingsChanged = true;
 			level.getPlayer().setHearts(4);
 			return true;
@@ -452,7 +452,7 @@ public class SettingsScreen implements Screen, InputProcessor, ControllerListene
 		if(veteranHitbox.contains(screenX, screenY)){
 			veteranPressState = 1;
 			level.setVeteranDifficulty(true);
-			this.currentDifficulty = 2;
+			this.setCurrentDifficulty(2);
 			level.settingsChanged = true;
 			level.getPlayer().setHearts(3);
 			return true;
@@ -670,4 +670,11 @@ public class SettingsScreen implements Screen, InputProcessor, ControllerListene
 		return false;
 	}
 
+	public int getCurrentDifficulty() {
+		return currentDifficulty;
+	}
+
+	public void setCurrentDifficulty(int currentDifficulty) {
+		this.currentDifficulty = currentDifficulty;
+	}
 }

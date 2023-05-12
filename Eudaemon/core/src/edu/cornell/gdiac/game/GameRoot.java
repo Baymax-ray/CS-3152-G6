@@ -236,7 +236,7 @@ public class GameRoot extends Game implements ScreenListener {
 			}
 		}
 		if(screen == settingsScreen){
-			this.levelDifficulty = settingsScreen.currentDifficulty;
+			this.levelDifficulty = settingsScreen.getCurrentDifficulty();
 			if(exitCode == ExitCode.PAUSE){
 				System.out.println("Alright");
 				screen.pause();
