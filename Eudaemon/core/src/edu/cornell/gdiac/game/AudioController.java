@@ -3,8 +3,9 @@ package edu.cornell.gdiac.game;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.utils.ObjectMap;
 import edu.cornell.gdiac.assets.AssetDirectory;
+import edu.cornell.gdiac.game.models.Settings;
 
-public class AudioController {
+public class AudioController implements SettingsObserver {
 
 
     private Sound chiyoSound;
@@ -47,7 +48,12 @@ public class AudioController {
 
     private Sound wallSlideSound;
 
-    public AudioController(AssetDirectory assets){
+    private Settings settings;
+
+    public AudioController(AssetDirectory assets, Settings settings){
+        this.settings = settings;
+        settings.addObserver(this);
+
         chiyoSound = assets.getEntry("music:chiyo", Sound.class);
         momoSound = assets.getEntry("music:momo", Sound.class);
 
@@ -120,6 +126,7 @@ public class AudioController {
 
     public void dispose(){
         isMomo=true;
+        settings.removeObserver(this);
     }
 
     private void playEffect(Sound effect, float volume) {
@@ -175,4 +182,18 @@ public class AudioController {
         loopEffectIds.remove(effects.get(effectName));
     }
 
+    @Override
+    public void onMasterVolumeChange(float newVolume) {
+        //TODO
+    }
+
+    @Override
+    public void onMusicVolumeChange(float newVolume) {
+        //TODO
+    }
+
+    @Override
+    public void onSfxVolumeChange(float newVolume) {
+        //TODO
+    }
 }

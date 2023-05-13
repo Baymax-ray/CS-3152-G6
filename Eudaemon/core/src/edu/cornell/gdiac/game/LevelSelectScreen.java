@@ -151,7 +151,7 @@ public class LevelSelectScreen implements Screen, InputProcessor, ControllerList
         for (int i = 0; i < 10; i++) {
             MenuButton button = new MenuButton(new TextureRegion(lights), ExitCode.START);
             levelButtons.add(button);
-            if (i < settings.numLevelsAvailable)
+            if (i < settings.getNumLevelsAvailable())
                 buttons.add(button);
 
             levelNumbers.put(button, assets.getEntry("levelSelect:" + (i + 1), Texture.class));
@@ -267,14 +267,14 @@ public class LevelSelectScreen implements Screen, InputProcessor, ControllerList
                 menuCooldown = COOLDOWN;
             } else if (menuDown) {
                 if (hoveredButton == null) {
-                    hoveredButton = levelButtons.get(settings.numLevelsAvailable - 1);
+                    hoveredButton = levelButtons.get(settings.getNumLevelsAvailable() - 1);
                 } else if (buttons.contains(hoveredButton.down, true)){
                     hoveredButton = hoveredButton.down;
                 }
                 menuCooldown = COOLDOWN;
             } else if (menuLeft) {
                 if (hoveredButton == null) {
-                    hoveredButton = levelButtons.get(settings.numLevelsAvailable - 1);
+                    hoveredButton = levelButtons.get(settings.getNumLevelsAvailable() - 1);
                 } else if (buttons.contains(hoveredButton.down, true)) {
                     if (hoveredButton.left == backButton && hoveredButton != backButton) {
                         backButton.right = hoveredButton;
@@ -284,7 +284,7 @@ public class LevelSelectScreen implements Screen, InputProcessor, ControllerList
                 menuCooldown = COOLDOWN;
             } else if (menuRight) {
                 if (hoveredButton == null) {
-                    hoveredButton = levelButtons.get(settings.numLevelsAvailable - 1);
+                    hoveredButton = levelButtons.get(settings.getNumLevelsAvailable() - 1);
                 } else if (buttons.contains(hoveredButton.down, true)) {
                     hoveredButton = hoveredButton.right;
                 }
@@ -429,7 +429,7 @@ public class LevelSelectScreen implements Screen, InputProcessor, ControllerList
         buttons.add(backButton);
         for (int i = 0; i < 10; i++) {
             MenuButton button = levelButtons.get(i);
-            if (i < settings.numLevelsAvailable)
+            if (i < settings.getNumLevelsAvailable())
                 buttons.add(button);
         }
     }

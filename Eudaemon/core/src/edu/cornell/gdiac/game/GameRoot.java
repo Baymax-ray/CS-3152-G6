@@ -23,7 +23,6 @@ public class GameRoot extends Game implements ScreenListener {
 	private Sound backgroundMomoSound;
 	private Sound backgroundChiyoSound;
 	private AudioController audio;
-	private int levelDifficulty;
 
 	@Override
 	public void create() {
@@ -68,10 +67,10 @@ public class GameRoot extends Game implements ScreenListener {
 			assets = loadingScreen.getAssets();
 			state = new GameState(assets);
 
-			this.levelScreen = new LevelScreen(this.state.getCurrentLevel(), this.state.getActionBindings(), assets);
+			this.levelScreen = new LevelScreen(this.state.getCurrentLevel(), this.state.getActionBindings(), assets, state.getSettings());
 			levelScreen.setScreenListener(this);
 			levelScreen.setCanvas(canvas);
-			levelScreen.getLevel().setDifficulty(this.levelDifficulty);
+			levelScreen.getLevel().setDifficulty(state.getSettings().getLevelDifficulty());
 
 			this.deathScreen = new DeathScreen(assets, canvas);
 			this.deathScreen.setScreenListener(this);
@@ -85,7 +84,7 @@ public class GameRoot extends Game implements ScreenListener {
 			this.escapeMenu = new EscapeMenu(assets, canvas);
 			this.escapeMenu.setScreenListener(this);
 
-			this.settingsScreen = new SettingsScreen(assets, canvas, levelScreen.getLevel());
+			this.settingsScreen = new SettingsScreen(assets, canvas, state.getSettings());
 			this.settingsScreen.setScreenListener(this);
 
 			setScreen(mainMenuScreen);
@@ -96,10 +95,9 @@ public class GameRoot extends Game implements ScreenListener {
 			if (exitCode == ExitCode.START) {
 				state.resetCurrentLevel();
 				levelScreen.dispose();
-				levelScreen = new LevelScreen(state.getCurrentLevel(), state.getActionBindings(), assets);
+				levelScreen = new LevelScreen(state.getCurrentLevel(), state.getActionBindings(), assets, state.getSettings());
 				levelScreen.setScreenListener(this);
 				levelScreen.setCanvas(canvas);
-				levelScreen.getLevel().setDifficulty(this.levelDifficulty);
 				setScreen(levelScreen);
 			} else if (exitCode == ExitCode.LEVEL_SELECT) {
 				screen.pause();
@@ -117,10 +115,9 @@ public class GameRoot extends Game implements ScreenListener {
 			if (exitCode == ExitCode.RESET) {
 				this.state.resetCurrentLevel();
 				if (levelScreen != null) levelScreen.dispose();
-				levelScreen = new LevelScreen(this.state.getCurrentLevel(), this.state.getActionBindings(), assets);
+				levelScreen = new LevelScreen(this.state.getCurrentLevel(), this.state.getActionBindings(), assets, state.getSettings());
 				levelScreen.setScreenListener(this);
 				levelScreen.setCanvas(canvas);
-				levelScreen.getLevel().setDifficulty(this.levelDifficulty);
 				setScreen(levelScreen);
 			}
 			if (exitCode == ExitCode.MAIN_MENU) {
@@ -143,10 +140,9 @@ public class GameRoot extends Game implements ScreenListener {
 				this.state.resetCurrentLevel();
 
 				levelScreen.dispose();
-				levelScreen = new LevelScreen(this.state.getCurrentLevel(), this.state.getActionBindings(), assets);
+				levelScreen = new LevelScreen(this.state.getCurrentLevel(), this.state.getActionBindings(), assets, state.getSettings());
 				levelScreen.setScreenListener(this);
 				levelScreen.setCanvas(canvas);
-				levelScreen.getLevel().setDifficulty(this.levelDifficulty);
 				setScreen(levelScreen);
 			}
 		}
@@ -170,7 +166,7 @@ public class GameRoot extends Game implements ScreenListener {
 				this.state.resetCurrentLevel();
 
 				levelScreen.dispose();
-				levelScreen = new LevelScreen(this.state.getCurrentLevel(), this.state.getActionBindings(), assets);
+				levelScreen = new LevelScreen(this.state.getCurrentLevel(), this.state.getActionBindings(), assets, state.getSettings());
 				levelScreen.setScreenListener(this);
 				levelScreen.setCanvas(canvas);
 				setScreen(levelScreen);
@@ -186,13 +182,12 @@ public class GameRoot extends Game implements ScreenListener {
 				screen.pause();
 				levelScreen.dispose();
 				state.unlockNextLevel();
-				state.save();
+				state.getSettings().save();
 				this.state.setCurrentLevel(state.getCurrentLevel().getExit().getNextLevel());
 				this.state.resetCurrentLevel();
-				levelScreen = new LevelScreen(this.state.getCurrentLevel(), this.state.getActionBindings(), assets);
+				levelScreen = new LevelScreen(this.state.getCurrentLevel(), this.state.getActionBindings(), assets, state.getSettings());
 				levelScreen.setScreenListener(this);
 				levelScreen.setCanvas(canvas);
-				levelScreen.getLevel().setDifficulty(this.levelDifficulty);
 				setScreen(levelScreen);
 			}
 		}
@@ -200,10 +195,9 @@ public class GameRoot extends Game implements ScreenListener {
 			if (exitCode == ExitCode.RESET) {
 				this.state.resetCurrentLevel();
 				if (levelScreen != null) levelScreen.dispose();
-				levelScreen = new LevelScreen(this.state.getCurrentLevel(), this.state.getActionBindings(), assets);
+				levelScreen = new LevelScreen(this.state.getCurrentLevel(), this.state.getActionBindings(), assets, state.getSettings());
 				levelScreen.setScreenListener(this);
 				levelScreen.setCanvas(canvas);
-				levelScreen.getLevel().setDifficulty(this.levelDifficulty);
 				setScreen(levelScreen);
 			}
 			if (exitCode == ExitCode.MAIN_MENU) {
@@ -211,34 +205,20 @@ public class GameRoot extends Game implements ScreenListener {
 				mainMenuScreen.reset();
 				setScreen(mainMenuScreen);
 			}
-			if(exitCode == ExitCode.START && levelScreen.getLevel().isSettingsChanged()){
-				escapeMenu.pause();
-				this.state.resetCurrentLevel();
-				if (levelScreen != null) levelScreen.dispose();
-				levelScreen = new LevelScreen(this.state.getCurrentLevel(), this.state.getActionBindings(), assets);
-				levelScreen.setScreenListener(this);
-				levelScreen.setCanvas(canvas);
-				levelScreen.getLevel().setDifficulty(this.levelDifficulty);
-				setScreen(levelScreen);
-			}
-			if(exitCode == ExitCode.START && !levelScreen.getLevel().isSettingsChanged()){
+			if(exitCode == ExitCode.START){
 				escapeMenu.pause();
 				levelScreen.resume();
-				levelScreen.getLevel().setDifficulty(this.levelDifficulty);
 				setScreen(levelScreen);
 			}
 			if(exitCode == ExitCode.SETTINGS){
 				escapeMenu.pause();
 				settingsScreen.reset();
 				setScreen(settingsScreen);
-				levelScreen.getLevel().setDifficulty(this.levelDifficulty);
 				settingsScreen.setIsFromMainMenu(false);
 			}
 		}
 		if(screen == settingsScreen){
-			this.levelDifficulty = settingsScreen.getCurrentDifficulty();
 			if(exitCode == ExitCode.PAUSE){
-				System.out.println("Alright");
 				screen.pause();
 				escapeMenu.reset();
 				setScreen(escapeMenu);
