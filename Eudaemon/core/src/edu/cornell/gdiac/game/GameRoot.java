@@ -20,9 +20,6 @@ public class GameRoot extends Game implements ScreenListener {
 	private SettingsScreen settingsScreen;
 	private GameCanvas canvas;
 	private AssetDirectory assets;
-	private Sound backgroundMomoSound;
-	private Sound backgroundChiyoSound;
-	private AudioController audio;
 
 	@Override
 	public void create() {
@@ -45,10 +42,9 @@ public class GameRoot extends Game implements ScreenListener {
 			assets.dispose();
 			assets = null;
 		}
+		state.getSettings().removeObserver(canvas);
 		if (canvas != null)	canvas.dispose();
 		if (state != null) state.dispose();
-		if (backgroundMomoSound != null) backgroundMomoSound.dispose();
-		if (audio!=null) audio.dispose();
 		super.dispose();
 	}
 
@@ -66,6 +62,9 @@ public class GameRoot extends Game implements ScreenListener {
 		if (screen == loadingScreen) {
 			assets = loadingScreen.getAssets();
 			state = new GameState(assets);
+
+			state.getSettings().addObserver(canvas);
+			canvas.onBrightnessChange(state.getSettings().getBrightness());
 
 			this.levelScreen = new LevelScreen(this.state.getCurrentLevel(), this.state.getActionBindings(), assets, state.getSettings());
 			levelScreen.setScreenListener(this);

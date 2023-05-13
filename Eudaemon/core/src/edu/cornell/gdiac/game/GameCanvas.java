@@ -40,7 +40,7 @@ import com.badlogic.gdx.utils.viewport.Viewport;
  * drawing.  It also supports a debug mode that draws polygonal outlines.  However,
  * that mode must be done in a separate begin/end pass.
  */
-public class GameCanvas {
+public class GameCanvas implements SettingsObserver {
 
 
 
@@ -96,6 +96,12 @@ public class GameCanvas {
 	/** Value to cache window height (if we are currently full screen) */
 	int height;
 
+	public static final float MAX_BRIGHTNESS = 1.0f;
+	public static final float MIN_BRIGHTNESS = 0.5f;
+	/** brightness value - actual grayscale value used */
+	private float brightness;
+	private Color tempColor;
+
 	// CACHE OBJECTS
 	/** Affine cache for current sprite to draw */
 	private Affine2 local;
@@ -147,6 +153,9 @@ public class GameCanvas {
 		vertex2 = new Vector2();
 		vertex3 = new Vector2();
 		vertex4 = new Vector2();
+
+		brightness = 1.0f;
+		this.tempColor = new Color();
 	}
 		
     /**
@@ -464,7 +473,7 @@ public class GameCanvas {
 		}
 		
 		// Unlike Lab 1, we can shortcut without a master drawing method
-    	spriteBatch.setColor(Color.WHITE);
+    	spriteBatch.setColor(colorWithBrightness(Color.WHITE));
 		spriteBatch.draw(image, x,  y);
 	}
 	
@@ -492,7 +501,7 @@ public class GameCanvas {
 		}
 		
 		// Unlike Lab 1, we can shortcut without a master drawing method
-    	spriteBatch.setColor(tint);
+    	spriteBatch.setColor(colorWithBrightness(tint));
 		spriteBatch.draw(image, x,  y, width, height);
 	}
 	
@@ -616,7 +625,7 @@ public class GameCanvas {
 		}
 		
 		// Unlike Lab 1, we can shortcut without a master drawing method
-    	spriteBatch.setColor(Color.WHITE);
+    	spriteBatch.setColor(colorWithBrightness(Color.WHITE));
 		spriteBatch.draw(region, x,  y);
 	}
 
@@ -644,7 +653,7 @@ public class GameCanvas {
 		}
 		
 		// Unlike Lab 1, we can shortcut without a master drawing method
-    	spriteBatch.setColor(tint);
+    	spriteBatch.setColor(colorWithBrightness(tint));
 		spriteBatch.draw(region, x,  y, width, height);
 	}
 	
@@ -674,7 +683,7 @@ public class GameCanvas {
 		}
 		
 		// Unlike Lab 1, we can shortcut without a master drawing method
-    	spriteBatch.setColor(tint);
+    	spriteBatch.setColor(colorWithBrightness(tint));
 		spriteBatch.draw(region, x-ox, y-oy, width, height);
 	}
 
@@ -716,7 +725,7 @@ public class GameCanvas {
 		// For now, it is better to set the affine transform directly.
 		computeTransform(ox,oy,x,y,angle,sx,sy);
 		region.getTexture().setFilter(Texture.TextureFilter.Nearest, Texture.TextureFilter.Nearest);
-		spriteBatch.setColor(tint);
+		spriteBatch.setColor(colorWithBrightness(tint));
 		spriteBatch.draw(region, region.getRegionWidth(), region.getRegionHeight(), local);
 	}
 
@@ -747,7 +756,7 @@ public class GameCanvas {
 
 		local.set(affine);
 		local.translate(-ox,-oy);				
-		spriteBatch.setColor(tint);
+		spriteBatch.setColor(colorWithBrightness(tint));
 		spriteBatch.draw(region, region.getRegionWidth(), region.getRegionHeight(), local);
 	}
 
@@ -778,7 +787,7 @@ public class GameCanvas {
 		}
 		
 		// Unlike Lab 1, we can shortcut without a master drawing method
-    	spriteBatch.setColor(Color.WHITE);
+    	spriteBatch.setColor(colorWithBrightness(Color.WHITE));
 		spriteBatch.draw(region, x,  y);
 	}
 	
@@ -812,7 +821,7 @@ public class GameCanvas {
 		}
 		
 		// Unlike Lab 1, we can shortcut without a master drawing method
-    	spriteBatch.setColor(tint);
+    	spriteBatch.setColor(colorWithBrightness(tint));
 		spriteBatch.draw(region, x,  y, width, height);
 	}
 	
@@ -848,7 +857,7 @@ public class GameCanvas {
 		}
 		
 		// Unlike Lab 1, we can shortcut without a master drawing method
-    	spriteBatch.setColor(tint);
+    	spriteBatch.setColor(colorWithBrightness(tint));
 		spriteBatch.draw(region, x-ox, y-oy, width, height);
 	}
 	
@@ -886,7 +895,7 @@ public class GameCanvas {
 		}
 		
 		TextureRegion bounds = region.getRegion();
-		spriteBatch.setColor(tint);
+		spriteBatch.setColor(colorWithBrightness(tint));
 		spriteBatch.draw(region, x, y, ox, oy, 
 						 bounds.getRegionWidth(), bounds.getRegionHeight(), 
 						 sx, sy, 180.0f*angle/(float)Math.PI);
@@ -924,7 +933,7 @@ public class GameCanvas {
 		local.translate(-ox,-oy);
 		computeVertices(local,region.getVertices());
 
-		spriteBatch.setColor(tint);
+		spriteBatch.setColor(colorWithBrightness(tint));
 		spriteBatch.draw(region, 0, 0);
 		
 		// Invert and restore
@@ -1022,7 +1031,7 @@ public class GameCanvas {
     public void beginDebug() {
     	debugRender.setProjectionMatrix(cameraController.getCamera().combined);
     	debugRender.begin(ShapeRenderer.ShapeType.Filled);
-    	debugRender.setColor(Color.RED);
+    	debugRender.setColor(colorWithBrightness(Color.RED));
     	debugRender.circle(0, 0, 10);
     	debugRender.end();
     	
@@ -1053,7 +1062,7 @@ public class GameCanvas {
 		}
 		
     	float x0, y0, x1, y1;
-    	debugRender.setColor(color);
+    	debugRender.setColor(colorWithBrightness(color));
     	for(int ii = 0; ii < shape.getVertexCount()-1; ii++) {
     		shape.getVertex(ii  ,vertex);
     		x0 = x+vertex.x; y0 = y+vertex.y;
@@ -1088,7 +1097,7 @@ public class GameCanvas {
 		local.rotateRad(angle);
 		
     	float x0, y0, x1, y1;
-    	debugRender.setColor(color);
+    	debugRender.setColor(colorWithBrightness(color));
     	for(int ii = 0; ii < shape.getVertexCount()-1; ii++) {
     		shape.getVertex(ii  ,vertex);
     		local.applyTo(vertex);
@@ -1130,8 +1139,8 @@ public class GameCanvas {
 		local.rotateRad(angle);
 		
     	float x0, y0, x1, y1;
-    	debugRender.setColor(color);
-    	for(int ii = 0; ii < shape.getVertexCount()-1; ii++) {
+		debugRender.setColor(colorWithBrightness(color));
+		for(int ii = 0; ii < shape.getVertexCount()-1; ii++) {
     		shape.getVertex(ii  ,vertex);
     		local.applyTo(vertex);
     		x0 = vertex.x; y0 = vertex.y;
@@ -1166,9 +1175,9 @@ public class GameCanvas {
 			Gdx.app.error("GameCanvas", "Cannot draw without active beginDebug()", new IllegalStateException());
 			return;
 		}
-		
-    	debugRender.setColor(color);
-    	debugRender.circle(x, y, shape.getRadius(),12);
+
+		debugRender.setColor(colorWithBrightness(color));
+		debugRender.circle(x, y, shape.getRadius(),12);
     }
     
     /** 
@@ -1194,8 +1203,8 @@ public class GameCanvas {
 		float y0 = y*sy;
 		float w = shape.getRadius()*sx;
 		float h = shape.getRadius()*sy;
-    	debugRender.setColor(color);
-    	debugRender.ellipse(x0-w, y0-h, 2*w, 2*h, 12);
+		debugRender.setColor(colorWithBrightness(color));
+		debugRender.ellipse(x0-w, y0-h, 2*w, 2*h, 12);
     }
 
 	public void beginShapes(boolean filled) {
@@ -1213,7 +1222,7 @@ public class GameCanvas {
 	}
 
 	public void drawRectangle(Rectangle rect, Color color, float lineWidth) {
-		debugRender.setColor(color);
+		debugRender.setColor(colorWithBrightness(color));
 
 		vertex.set(rect.x - lineWidth, rect.y - lineWidth);
 		vertex2.set(rect.x + rect.width + lineWidth, rect.y - lineWidth);
@@ -1257,7 +1266,18 @@ public class GameCanvas {
 	public PolygonSpriteBatch getSpriteBatch() { return spriteBatch; }
 
 
+	public Color colorWithBrightness(Color color) {
+		tempColor.r = color.r * brightness;
+		tempColor.g = color.g * brightness;
+		tempColor.b = color.b * brightness;
+		tempColor.a = color.a;
 
+		return tempColor;
+	}
 
+	@Override
+	public void onBrightnessChange(float newBrightness) {
+		this.brightness = MIN_BRIGHTNESS + (MAX_BRIGHTNESS - MIN_BRIGHTNESS) * newBrightness;
+	}
 
 }
