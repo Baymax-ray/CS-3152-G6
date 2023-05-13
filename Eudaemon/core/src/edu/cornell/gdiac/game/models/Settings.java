@@ -15,7 +15,7 @@ public class Settings {
     private float musicVolume;
     private float sfxVolume;
     private float brightness;
-    private boolean fullscreen;
+    private transient boolean fullscreen;
     private int windowedWidth;
     private int windowedHeight;
     private int levelDifficulty;
@@ -26,6 +26,7 @@ public class Settings {
 
     public Settings() {
         this.observers = new Array<>();
+        this.fullscreen = true;
     }
 
     public static Settings defaultSettings() {
@@ -184,5 +185,9 @@ public class Settings {
 
     public void removeObserver(SettingsObserver o) {
         observers.removeValue(o, true);
+    }
+
+    public void dispose() {
+        observers.clear();
     }
 }
