@@ -66,6 +66,7 @@ public class GameState {
         for (Level level : levels.values()) {
             level.dispose();
         }
+        settings.dispose();
     }
 
     public Settings getSettings() {

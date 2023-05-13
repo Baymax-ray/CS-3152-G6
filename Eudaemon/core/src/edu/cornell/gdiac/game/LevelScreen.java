@@ -37,9 +37,11 @@ public class LevelScreen implements Screen, SettingsObserver {
     }
 
     public LevelScreen(Level level, ActionBindings actionBindings, AssetDirectory assets, Settings settings) {
-        this.level = level;
         this.settings = settings;
         this.settings.addObserver(this);
+
+        this.level = level;
+        level.setDifficulty(settings.getLevelDifficulty());
 
         this.active = false;
         this.inputController = new InputController(actionBindings);
