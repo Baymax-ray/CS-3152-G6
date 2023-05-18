@@ -183,7 +183,7 @@ public class LevelScreen implements Screen, SettingsObserver {
         settings.removeObserver(this);
         canvas = null;
         listener = null;
-        audio.dispose();
+        //audio.dispose();
     }
 
     public void setScreenListener(ScreenListener listener) {

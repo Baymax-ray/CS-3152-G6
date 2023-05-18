@@ -13,6 +13,9 @@ public class AudioController implements SettingsObserver {
     private boolean isMomo;
     private long chiyoSoundId;
     private long momoSoundId;
+    private static float masterMultipler;
+    private static float sfxMultiplier;
+    private static float bgmMultiplier;
 
     private ObjectMap<String, Sound> effects;
     private ObjectMap<Sound, Long> effectIds;
@@ -90,8 +93,8 @@ public class AudioController implements SettingsObserver {
     }
 
     public void playAllSound(){
-        chiyoSoundId=chiyoSound.loop(0.2f);
-        momoSoundId=momoSound.loop(0.2f);
+        chiyoSoundId=chiyoSound.loop(1 * masterMultipler* bgmMultiplier );
+        momoSoundId=momoSound.loop(1 * masterMultipler* bgmMultiplier );
     }
 
     public void updateAudio(float form){
@@ -116,12 +119,12 @@ public class AudioController implements SettingsObserver {
 
     public void momoToChiyo(){
         muteMomo();
-        chiyoSound.setVolume(chiyoSoundId,0.2f);
+        chiyoSound.setVolume(chiyoSoundId,1 * masterMultipler* bgmMultiplier );
     }
 
     public void chiyoToMomo(){
         muteChiyo();
-        momoSound.setVolume(momoSoundId,0.2f);
+        momoSound.setVolume(momoSoundId,1 * masterMultipler * bgmMultiplier);
     }
 
     public void dispose(){
@@ -138,7 +141,7 @@ public class AudioController implements SettingsObserver {
             effect.stop(loopEffectIds.get(effect));
             loopEffectIds.remove(effect);
         }
-        long id = effect.play(volume);
+        long id = effect.play(volume * masterMultipler * sfxMultiplier);
         effectIds.put(effect, id);
     }
 
@@ -184,16 +187,19 @@ public class AudioController implements SettingsObserver {
 
     @Override
     public void onMasterVolumeChange(float newVolume) {
+        this.masterMultipler = newVolume;
         //TODO
     }
 
     @Override
     public void onMusicVolumeChange(float newVolume) {
+        this.bgmMultiplier = newVolume;
         //TODO
     }
 
     @Override
     public void onSfxVolumeChange(float newVolume) {
+        this.sfxMultiplier = newVolume;
         //TODO
     }
 }
