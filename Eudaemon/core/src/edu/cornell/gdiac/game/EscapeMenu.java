@@ -563,11 +563,14 @@ public class EscapeMenu implements Screen, InputProcessor, ControllerListener {
 	public boolean mouseMoved(int screenX, int screenY) {
 		if (!active) return false;
 		if (Gdx.input.isCursorCatched()) {
-			Gdx.input.setCursorCatched(false);
-			float x = hoveredButton.hitbox.x + hoveredButton.hitbox.width / 2;
-			float y = hoveredButton.hitbox.y + hoveredButton.hitbox.height / 2;
-			Gdx.input.setCursorPosition((int) x, heightY - (int) y);
-			return true;
+			float x = 0;  // Default value
+			float y = 0;
+			if(hoveredButton != null && hoveredButton.hitbox != null) {
+				x = hoveredButton.hitbox.x + hoveredButton.hitbox.width / 2;
+				y = hoveredButton.hitbox.y + hoveredButton.hitbox.height / 2;
+				Gdx.input.setCursorCatched(false);
+				Gdx.input.setCursorPosition((int) x, heightY - (int) y);
+				return true;}
 		}
 		screenY = heightY - screenY;
 		hoveredButton = null;
