@@ -51,6 +51,8 @@ public class AudioController implements SettingsObserver {
 
     private Sound wallSlideSound;
 
+    private Sound playerDamageSound;
+
     private Settings settings;
 
     public AudioController(AssetDirectory assets, Settings settings){
@@ -72,6 +74,7 @@ public class AudioController implements SettingsObserver {
         swordKillingSound = assets.getEntry("effect:temp-sword-killing", Sound.class);
         swordHittingSound = assets.getEntry("effect:temp-non-killing", Sound.class);
         wallSlideSound = assets.getEntry("effect:temp-wall-slide", Sound.class);
+        playerDamageSound = assets.getEntry("effect:temp-player-damage", Sound.class);
 
         effectIds = new ObjectMap<>();
         loopEffectIds = new ObjectMap<>();
@@ -88,6 +91,7 @@ public class AudioController implements SettingsObserver {
         effects.put("sword-kill", swordKillingSound);
         effects.put("sword-hit", swordHittingSound);
         effects.put("wall-slide", wallSlideSound);
+        effects.put("player-damage", playerDamageSound);
 
         isMomo = true;
     }
@@ -130,10 +134,13 @@ public class AudioController implements SettingsObserver {
     public void dispose(){
         isMomo=true;
         //TODO: STOP ALL EFFECTs to prevent continuous playing after death
-        for (Sound effect:effects.values()
-             ) {effect.stop();
-
+        for (Sound effect:effects.values()) {
+            effect.stop();
         }
+        effects.clear();
+        effectIds.clear();
+        momoSound.stop();
+        chiyoSound.stop();
         settings.removeObserver(this);
     }
 

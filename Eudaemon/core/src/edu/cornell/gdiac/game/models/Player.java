@@ -1,7 +1,6 @@
 package edu.cornell.gdiac.game.models;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
@@ -350,9 +349,6 @@ public class Player extends CapsuleObstacle {
      * A final float representing the gravity affecting the player.
      */
     private final float playerGravity;
-
-    /** The player dash sound.  We only want to play once. */
-    private Sound playerDamageSound;
 
     private long playerDamageSoundId = -1;
 
@@ -1361,7 +1357,6 @@ public class Player extends CapsuleObstacle {
         TextureRegion[][] bulletDestroyFrames = bulletDestroySpriteSheet.split(bulletDestroySpriteSheet.getRegionWidth()/16, bulletDestroySpriteSheet.getRegionHeight());
         this.bulletDestroyAnimation = new Animation<>(0.5f, bulletDestroyFrames[0]);
         //Sound Effect
-        this.playerDamageSound = Gdx.audio.newSound(Gdx.files.internal("audio/temp-player-damage.mp3"));
         this.transformSpriteSheet = new TextureRegion(assets.getEntry("player:transform", Texture.class));
         TextureRegion[][] transformFrames = transformSpriteSheet.split(transformSpriteSheet.getRegionWidth()/7, transformSpriteSheet.getRegionHeight());
         this.transformAnimation = new Animation<>(0.5f, transformFrames[0]);
@@ -1600,71 +1595,65 @@ public class Player extends CapsuleObstacle {
      *                      2 for WheelObstacle (bullet);
      *                      3 for SwordWheelObstacle;
      */
-    public void hitByEnemy(int whichObstacle, Object hitter) {
-        if (isHit() && hearts > 0){
-            hearts--;
-            playerDamageSoundId = playSound(playerDamageSound, playerDamageSoundId, 0.1F);
-            if (hearts > 0) {
-                float directionX = 0;
-                float spikeKnockBackVerticalMult = 0;
-                switch (whichObstacle){
-                    case 0:
-                        directionX = ((Enemy) hitter).getX() - this.getX() >= 0? -1: 1; break;
-                    case 1:
-                        Spike spike = (Spike) hitter;
-                        if (!spike.getRespawn()) { //knock player back
-                            String direction= spike.getDirection();
-                            switch (direction){
-                                case "Up":
-                                    directionX=0;
-                                    spikeKnockBackVerticalMult=2;
-                                    break;
-                                case "Down":
-                                    directionX=0;
-                                    spikeKnockBackVerticalMult=-2;
-                                    break;
-                                case "Left":
-                                    directionX=-1;
-                                    spikeKnockBackVerticalMult=0;
-                                    break;
-                                case "Right":
-                                    directionX=1;
-                                    spikeKnockBackVerticalMult=0;
-                                    break;
-                                default:
-                                    //should not reach here
-                                    throw new IllegalArgumentException("Spike direction does not exist: "+direction);
-                            }
-                        } else { //teleport player to platform
-                            this.shouldRespawn = true;
-                            this.respawnPosition.x = spike.getRespawnCoordinateX();
-                            this.respawnPosition.y = spike.getRespawnCoordinateY();
+    public boolean hitByEnemy(int whichObstacle, Object hitter) {
+        if (!isHit() || hearts <= 0)
+            return false;
+
+        hearts--;
+        if (hearts > 0) {
+            float directionX = 0;
+            float spikeKnockBackVerticalMult = 0;
+            switch (whichObstacle){
+                case 0:
+                    directionX = ((Enemy) hitter).getX() - this.getX() >= 0? -1: 1; break;
+                case 1:
+                    Spike spike = (Spike) hitter;
+                    if (!spike.getRespawn()) { //knock player back
+                        String direction= spike.getDirection();
+                        switch (direction){
+                            case "Up":
+                                directionX=0;
+                                spikeKnockBackVerticalMult=2;
+                                break;
+                            case "Down":
+                                directionX=0;
+                                spikeKnockBackVerticalMult=-2;
+                                break;
+                            case "Left":
+                                directionX=-1;
+                                spikeKnockBackVerticalMult=0;
+                                break;
+                            case "Right":
+                                directionX=1;
+                                spikeKnockBackVerticalMult=0;
+                                break;
+                            default:
+                                //should not reach here
+                                throw new IllegalArgumentException("Spike direction does not exist: "+direction);
                         }
+                    } else { //teleport player to platform
+                        this.shouldRespawn = true;
+                        this.respawnPosition.x = spike.getRespawnCoordinateX();
+                        this.respawnPosition.y = spike.getRespawnCoordinateY();
+                    }
 
-                        break;
-                    case 2:
-                        directionX = ((WheelObstacle) hitter).getX() - this.getX() >=0? -1:1;break;
-                    case 3:
-                        directionX = ((SwordWheelObstacle) hitter).getX() - this.getX() >=0? -1:1;break;
+                    break;
+                case 2:
+                    directionX = ((WheelObstacle) hitter).getX() - this.getX() >=0? -1:1;break;
+                case 3:
+                    directionX = ((SwordWheelObstacle) hitter).getX() - this.getX() >=0? -1:1;break;
 
-                    default:
-                        directionX = isFacingRight? -1: 1;
-                }
-                //setVelocity(getBodyVelocityX(), 2.0f);
-                setiFramesRemaining(getIFrames());
-                Vector2 knockback = new Vector2(directionX * playerData.getFloat("knockbackX"),
-                        spikeKnockBackVerticalMult * playerData.getFloat("knockbackY"));
-                setVelocity(knockback.x, knockback.y);
-            } else this.markRemoved(true);
-        }
+                default:
+                    directionX = isFacingRight? -1: 1;
+            }
+            //setVelocity(getBodyVelocityX(), 2.0f);
+            setiFramesRemaining(getIFrames());
+            Vector2 knockback = new Vector2(directionX * playerData.getFloat("knockbackX"),
+                    spikeKnockBackVerticalMult * playerData.getFloat("knockbackY"));
+            setVelocity(knockback.x, knockback.y);
+        } else this.markRemoved(true);
 
-    }
-
-    public long playSound(Sound sound, long soundId, float volume) {
-        if (soundId != -1) {
-            sound.stop( soundId );
-        }
-        return sound.play(volume);
+        return true;
     }
 
     public void gainHealth(Level thisLevel) {
@@ -1679,9 +1668,7 @@ public class Player extends CapsuleObstacle {
     }
 
 
-    public void dispose() {
-        playerDamageSound.dispose();
-    }
+    public void dispose() {}
 
 
 }

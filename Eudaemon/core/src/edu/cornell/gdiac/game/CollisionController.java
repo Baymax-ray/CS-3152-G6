@@ -98,7 +98,7 @@ public class CollisionController implements ContactListener {
                 Player player=level.getPlayer();
                 if (!player.isHit() & !player.isDashing()) {
                     player.setHit(true);
-                    player.hitByEnemy(2, bd1);
+                    hitPlayer(2, bd1);
                     level.shakeControllerMedium();
                     if (!level.getPlayer().isRemoved()) level.setShouldShakeCamera(true,1);
                 }
@@ -109,7 +109,7 @@ public class CollisionController implements ContactListener {
                 Player player = level.getPlayer();
                 if (!player.isHit() & !player.isDashing()) {
                     player.setHit(true);
-                    player.hitByEnemy(2, bd2);
+                    hitPlayer(2, bd2);
                     level.shakeControllerHeavy();
                     if (!level.getPlayer().isRemoved()) level.setShouldShakeCamera(true,1);
                 }
@@ -229,7 +229,7 @@ public class CollisionController implements ContactListener {
 //
 //            if (!player.isHit() & !player.isDashing()) {
 //                player.setHit(true);
-//                player.hitByEnemy(0, bd1 instanceof Player? bd2:bd1);
+//                hitPlayer(0, bd1 instanceof Player? bd2:bd1);
 //            }
 //        }
 
@@ -390,7 +390,7 @@ public class CollisionController implements ContactListener {
             if (!player.isHit()){
             player.setHit(true);
             player.setTicksFalling(0);//Ticks in air should also be reset by hitting spikes
-            player.hitByEnemy(1, bd2 instanceof Player? bd1: bd2);
+            hitPlayer(1, bd2 instanceof Player? bd1: bd2);
             level.shakeControllerHeavy();
             if (!level.getPlayer().isRemoved())
                 level.setShouldShakeCamera(true,1);
@@ -405,7 +405,7 @@ public class CollisionController implements ContactListener {
 
             if (!player.isHit() && !player.isDashing() && player.getiFramesRemaining() <= 0) {
                 player.setHit(true);
-                player.hitByEnemy(0, bd1 instanceof Player? bd2:bd1);
+                hitPlayer(0, bd1 instanceof Player? bd2:bd1);
                 level.shakeControllerHeavy();
                 if (!level.getPlayer().isRemoved()) level.setShouldShakeCamera(true,1);
             }
@@ -442,5 +442,12 @@ public class CollisionController implements ContactListener {
     @Override
     public void postSolve(Contact contact, ContactImpulse impulse) {
 
+    }
+
+
+    private void hitPlayer(int whichObstable, Object hitter) {
+        if (level.getPlayer().hitByEnemy(whichObstable, hitter)) {
+            audio.playEffect("player-damage", 0.1F);
+        }
     }
 }
