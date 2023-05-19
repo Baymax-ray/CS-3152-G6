@@ -35,8 +35,8 @@ public class CameraController {
         // Set the projection matrix (for proper scaling)
         camera = new OrthographicCamera();
         camera.setToOrtho(false);
-        shakeRadius = 0.8f;
-        minimumShakeRadius = 0.08f;
+        shakeRadius = 0.15f;
+        minimumShakeRadius = 0.015f;
         microShakeRadius = 0.1f;
         microMinimumShakeRadius = 0.01f;
         radiusFallOffFactor = 0.90f;
