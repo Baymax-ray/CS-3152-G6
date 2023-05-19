@@ -672,6 +672,7 @@
         "mainMenu:levelSelect": "shared/mainMenuLevelSelect.png",
         "mainMenu:settings": "shared/mainMenuSettings.png",
         "mainMenu:quit": "shared/mainMenuQuit.png",
+        "mainMenu:suggest": "shared/mainMenuSuggestion.png",
 
         "escapeMenu:background": "backgrounds/escapeMenuBack.png",
         "escapeMenu:restart": "shared/escapeRestart.png",
