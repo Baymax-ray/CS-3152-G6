@@ -136,7 +136,7 @@ public class GameCanvas implements SettingsObserver {
 		cameraController = new CameraController();
 
 
-		float aspectRatio = (float)Gdx.graphics.getHeight() / (float)Gdx.graphics.getWidth();
+		float aspectRatio = (float)Gdx.graphics.getBackBufferHeight() / (float)Gdx.graphics.getBackBufferWidth();
 
 		viewport = new ExtendViewport(getWidth(),getHeight());
 		viewport.setScreenBounds(0,0,getWidth(),getHeight());
@@ -177,12 +177,12 @@ public class GameCanvas implements SettingsObserver {
 	/**
 	 * Returns the width of this canvas
 	 * <p>
-	 * This currently gets its value from Gdx.graphics.getWidth()
+	 * This currently gets its value from Gdx.graphics.getBackBufferWidth()
 	 *
 	 * @return the width of this canvas
 	 */
 	public int getWidth() {
-		return Gdx.graphics.getWidth();
+		return Gdx.graphics.getBackBufferWidth();
 	}
 	
 	/**
@@ -209,12 +209,12 @@ public class GameCanvas implements SettingsObserver {
 	/**
 	 * Returns the height of this canvas
 	 * <p>
-	 * This currently gets its value from Gdx.graphics.getHeight()
+	 * This currently gets its value from Gdx.graphics.getBackBufferHeight()
 	 *
 	 * @return the height of this canvas
 	 */
 	public int getHeight() {
-		return Gdx.graphics.getHeight();
+		return Gdx.graphics.getBackBufferHeight();
 	}
 	
 	/**
@@ -244,7 +244,7 @@ public class GameCanvas implements SettingsObserver {
 	 * @return the dimensions of this canvas
 	 */
 	public Vector2 getSize() {
-		return new Vector2(Gdx.graphics.getWidth(),Gdx.graphics.getHeight());
+		return new Vector2(Gdx.graphics.getBackBufferWidth(),Gdx.graphics.getBackBufferHeight());
 	}
 	
 	/**
