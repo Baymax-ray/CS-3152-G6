@@ -125,3 +125,4 @@ Eudaemon/core/bin
 Eudaemon/desktop/bin
 Gameplay-Prototype/core/build
 Gameplay-Prototype/desktop/build
+Eudaemon/packr/out/*
