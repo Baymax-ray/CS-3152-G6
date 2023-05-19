@@ -35,6 +35,7 @@ public class LevelScreen implements Screen, SettingsObserver {
     public Level getLevel() {
         return level;
     }
+    public AudioController getAudio(){return this.audio;}
 
     public LevelScreen(Level level, ActionBindings actionBindings, AssetDirectory assets, Settings settings) {
         this.settings = settings;
@@ -161,6 +162,7 @@ public class LevelScreen implements Screen, SettingsObserver {
     @Override
     public void show() {
         active = true;
+
         audio.playAllSound();
         audio.muteChiyo();
         Gdx.input.setCursorCatched(true);

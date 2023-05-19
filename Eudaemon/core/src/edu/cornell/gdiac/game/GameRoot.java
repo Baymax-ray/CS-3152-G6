@@ -70,6 +70,9 @@ public class GameRoot extends Game implements ScreenListener {
 			levelScreen.setScreenListener(this);
 			levelScreen.setCanvas(canvas);
 			levelScreen.getLevel().setDifficulty(state.getSettings().getLevelDifficulty());
+			levelScreen.getAudio().onMasterVolumeChange(state.getSettings().getMasterVolume());
+			levelScreen.getAudio().onMusicVolumeChange(state.getSettings().getMusicVolume());
+			levelScreen.getAudio().onSfxVolumeChange(state.getSettings().getSfxVolume());
 
 			this.deathScreen = new DeathScreen(assets, canvas);
 			this.deathScreen.setScreenListener(this);

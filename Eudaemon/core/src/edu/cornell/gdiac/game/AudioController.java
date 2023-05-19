@@ -141,7 +141,11 @@ public class AudioController implements SettingsObserver {
             effect.stop(loopEffectIds.get(effect));
             loopEffectIds.remove(effect);
         }
-        long id = effect.play(volume * masterMultipler * sfxMultiplier);
+        volume *= masterMultipler * sfxMultiplier;
+        System.out.println("sfx: "+sfxMultiplier);
+        System.out.println("Master: "+masterMultipler);
+        System.out.println("I am playing an effect, the volume is "+volume);
+        long id = effect.play(volume);
         effectIds.put(effect, id);
     }
 
@@ -150,6 +154,8 @@ public class AudioController implements SettingsObserver {
             System.out.println("WARNING: sound name " + effectName + " does not exist in AudioController.");
             return;
         }
+        System.out.println("I am playing an effect,"+effectName+" and the volume is "+volume);
+
 
         playEffect(effects.get(effectName), volume);
     }
@@ -161,6 +167,7 @@ public class AudioController implements SettingsObserver {
         if (loopEffectIds.containsKey(effect)) {
             return; // already looping no need to do anything
         }
+        volume *= masterMultipler * sfxMultiplier;
         long id = effect.loop(volume);
         loopEffectIds.put(effect, id);
     }
