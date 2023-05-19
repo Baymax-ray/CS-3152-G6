@@ -154,17 +154,20 @@ public class Level {
 
     private int cameraShakeType;
 
+    private boolean cameraShakeOn;
+
     private AssetDirectory assets;
 
     public float levelDifficulty;
 
     private UIOverlay uiElements;
 
+
     public boolean normalDifficulty;
     public boolean hardDifficulty;
     public boolean veteranDifficulty;
-
     public boolean settingsChanged;
+
 
     //#endregion
 
@@ -285,6 +288,8 @@ public class Level {
     public boolean isSettingsChanged(){
         return settingsChanged;
     }
+
+    public void setCameraShakeOn(boolean value) { this.cameraShakeOn = value; }
     //#endregion
 
     public class MyConnection<MyNode> implements Connection<MyNode> {
@@ -671,6 +676,7 @@ public class Level {
         this.debug = false;
         this.isCompleted = false;
         this.shouldShakeCamera = false;
+        this.cameraShakeOn = true;
     }
 
     /**
@@ -914,7 +920,7 @@ public class Level {
 
         canvas.getCameraController().setGameplayCamera(canvas,cam_x,cam_y, cameraWidth, cameraHeight);
 
-        if (shouldShakeCamera) {
+        if (shouldShakeCamera && cameraShakeOn) {
             switch (cameraShakeType) {
                 case 1:
                     canvas.getCameraController().shakeCamera(1);

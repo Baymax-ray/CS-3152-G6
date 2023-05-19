@@ -16,6 +16,7 @@ public class Settings {
     private float sfxVolume;
     private float brightness;
     private transient boolean fullscreen;
+    private transient boolean screenShake;
     private int windowedWidth;
     private int windowedHeight;
     private int levelDifficulty;
@@ -28,6 +29,7 @@ public class Settings {
     public Settings() {
         this.observers = new Array<>();
         this.fullscreen = true;
+        this.screenShake = true;
     }
 
     public static Settings defaultSettings() {
@@ -37,6 +39,7 @@ public class Settings {
         s.sfxVolume = 1;
         s.brightness = 1;
         s.fullscreen = true;
+        s.screenShake = true;
         s.windowedWidth = 800;
         s.windowedHeight = 450;
         s.levelDifficulty = NORMAL_DIFFICULTY;
@@ -111,6 +114,15 @@ public class Settings {
             } else {
                 Gdx.graphics.setWindowedMode(windowedWidth, windowedHeight);
             }
+        }
+    }
+
+    public boolean isScreenShake() { return this.screenShake; }
+
+    public void setScreenShake (boolean screenShake) {
+        if (isScreenShake() != screenShake) {
+            this.screenShake = screenShake;
+            save();
         }
     }
 

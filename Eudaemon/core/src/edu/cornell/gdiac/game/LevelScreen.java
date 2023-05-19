@@ -43,6 +43,7 @@ public class LevelScreen implements Screen, SettingsObserver {
 
         this.level = level;
         level.setDifficulty(settings.getLevelDifficulty());
+        level.setCameraShakeOn(settings.isScreenShake());
 
         this.active = false;
         this.inputController = new InputController(actionBindings);
