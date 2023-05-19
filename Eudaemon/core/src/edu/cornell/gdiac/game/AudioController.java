@@ -129,6 +129,11 @@ public class AudioController implements SettingsObserver {
 
     public void dispose(){
         isMomo=true;
+        //TODO: STOP ALL EFFECTs to prevent continuous playing after death
+        for (Sound effect:effects.values()
+             ) {effect.stop();
+
+        }
         settings.removeObserver(this);
     }
 
