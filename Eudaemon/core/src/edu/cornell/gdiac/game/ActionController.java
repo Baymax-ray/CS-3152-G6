@@ -122,8 +122,6 @@ public class ActionController {
      * @param playerAction the set of player actions to resolve
      */
     private void resolvePlayerActions(EnumSet<Action> playerAction) {
-//        System.out.println(player.getX());
-//        System.out.println(player.getY());
         if (player.shouldRespawn()) {
             System.out.println("x: " + player.getRespawnPosition().x);
             System.out.println("y: " + player.getRespawnPosition().y);
