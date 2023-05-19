@@ -1659,11 +1659,10 @@ public class Player extends CapsuleObstacle {
     public void gainHealth(Level thisLevel) {
         if (getHearts() < maxHearts && getHearts() < thisLevel.getLevelDifficulty()) {
             int randomNumber = random.nextInt(5) + 1;
-            setGainingHealth(true);
-            hearts++;
-//        if (randomNumber == 3) {
-//            hearts++;
-//        }
+            if (randomNumber == 3) {
+                setGainingHealth(true);
+                hearts++;
+            }
         }
     }
 
