@@ -680,9 +680,9 @@
         "escapeMenu:resume": "shared/escapeResume.png",
         "escapeMenu:settings": "shared/escapeSettings.png",
 
-        "deathScreen:background": "backgrounds/tempDeathScreen.png",
-        "deathScreen:restart": "shared/restartButton.png",
-        "deathScreen:quit": "shared/quitButton.png",
+        "deathScreen:background": "backgrounds/deathScreenBackground.png",
+        "deathScreen:restart": "shared/deathRestart.png",
+        "deathScreen:quit": "shared/deathExit.png",
 
         "settingsScreen:background": "backgrounds/settingsBackground.png",
         "settingsScreen:back": "levelSelect/backArrow.png",
