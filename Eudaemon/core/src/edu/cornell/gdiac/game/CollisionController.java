@@ -1,10 +1,7 @@
 package edu.cornell.gdiac.game;
 
-import com.badlogic.gdx.graphics.g2d.Animation;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.physics.box2d.*;
 import com.badlogic.gdx.utils.Array;
-import com.badlogic.gdx.utils.ObjectMap;
 import edu.cornell.gdiac.game.models.*;
 import edu.cornell.gdiac.game.obstacle.EffectObstacle;
 import edu.cornell.gdiac.game.obstacle.SwordWheelObstacle;
@@ -392,7 +389,7 @@ public class CollisionController implements ContactListener {
             Player player = (Player) (bd1 instanceof Player ? bd1 : bd2);
             if (!player.isHit()){
             player.setHit(true);
-            player.setTicksInAir(0);//Ticks in air should also be reset by hitting spikes
+            player.setTicksFalling(0);//Ticks in air should also be reset by hitting spikes
             player.hitByEnemy(1, bd2 instanceof Player? bd1: bd2);
             level.shakeControllerHeavy();
             if (!level.getPlayer().isRemoved())

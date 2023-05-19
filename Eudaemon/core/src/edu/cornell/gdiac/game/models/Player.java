@@ -229,7 +229,11 @@ public class Player extends CapsuleObstacle {
     /**
      * The amount of ticks the player has spent falling
      */
-    private int ticksInAir;
+    private int ticksFalling;
+    /**
+     * The amount of ticks the player has spent since touching the ground
+     */
+    private int ticksSinceGround;
     /**
      * A boolean variable representing whether the player's right is touching the wall or not.
      */
@@ -646,17 +650,34 @@ public class Player extends CapsuleObstacle {
      *
      * @return the number of ticks in the air
      */
-    public int getTicksInAir() {
-        return ticksInAir;
+    public int getTicksFalling() {
+        return ticksFalling;
     }
 
     /**
      * Sets the number of ticks the player spends falling.
      *
-     * @param ticksInAir the new number of ticks in the air
+     * @param ticksFalling the new number of ticks in the air
      */
-    public void setTicksInAir(int ticksInAir) {
-        this.ticksInAir = ticksInAir;
+    public void setTicksFalling(int ticksFalling) {
+        this.ticksFalling = ticksFalling;
+    }
+    /**
+     * Gets the number of ticks the player spends since touching the ground.
+     *
+     * @return the number of ticks in the air
+     */
+    public int getTicksSinceGround() {
+        return ticksSinceGround;
+    }
+
+    /**
+     * Sets the number of ticks the player spends falling.
+     *
+     * @param ticksSinceGround the new number of ticks since touching the ground
+     */
+    public void setTicksSinceGround(int ticksSinceGround) {
+        this.ticksSinceGround = ticksSinceGround;
     }
     /**
      *  Returns the variable representing how many milliseconds gravity is turned off for the player when they dash
