@@ -13,7 +13,7 @@ public class DesktopLauncher {
 //		config.setWindowedMode(1920 1080);
 		//config.setWindowedMode(1366, 768);
 		//config.setWindowedMode(576, 576);
-		config.setResizable(false);
+		config.setResizable(true);
 		config.setFullscreenMode(Lwjgl3ApplicationConfiguration.getDisplayMode());
 		config.setForegroundFPS(60);
 		config.setTitle("Eudaemon");

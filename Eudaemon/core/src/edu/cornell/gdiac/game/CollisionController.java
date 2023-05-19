@@ -242,7 +242,6 @@ public class CollisionController implements ContactListener {
         if (bd1 instanceof Player && !fix1.isSensor() && bd2 instanceof Exit ||
                 bd2 instanceof Player && !fix2.isSensor() && bd1 instanceof Exit) {
             Exit exit = (Exit) (bd1 instanceof Player ? bd2 : bd1);
-            Player player = (Player) (bd1 instanceof Player ? bd1 : bd2);
 
             exit.setReached(true);
             level.setCompleted(true);
@@ -389,13 +388,15 @@ public class CollisionController implements ContactListener {
             Player player = (Player) (bd1 instanceof Player ? bd1 : bd2);
             if (!player.isHit()){
             player.setHit(true);
+            player.setDashing(false);
             player.setTicksFalling(0);//Ticks in air should also be reset by hitting spikes
             hitPlayer(1, bd2 instanceof Player? bd1: bd2);
             level.shakeControllerHeavy();
             if (!level.getPlayer().isRemoved())
                 level.setShouldShakeCamera(true,1);
             //Resets dash when damaged by spike
-            player.setDashedInAir(false);}
+            player.setDashedInAir(false);
+            }
         }
 
         //enemy

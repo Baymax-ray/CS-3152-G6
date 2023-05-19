@@ -1296,7 +1296,10 @@ public class Player extends CapsuleObstacle {
     public boolean isAttacking() { return isAttacking;}
     public void setAttacking(boolean value) { isAttacking = value; }
     public boolean isDashing() { return isDashing;}
-    public void setDashing(boolean value) { isDashing = value; }
+    public void setDashing(boolean value) { isDashing = value;
+    if (value==false){
+        setDashLifespanRemaining(0);
+    }}
     public float getAttackDist() { return attackDist; }
     public boolean dashedInAir() { return dashedInAir; }
     public void setDashedInAir(boolean value) { dashedInAir = value; }
