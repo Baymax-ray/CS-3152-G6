@@ -47,11 +47,19 @@ public class Spike extends BoxObstacle {
     private float offsetX;
     private float offsetY;
 
+    private boolean respawn;
+    private float respawnCoordinateX;
+    private float respawnCoordinateY;
+
     //#endregion
 
     //#region Getter and Setter
     private String getSensorName() {return this.sensorName;}
     public String getDirection(){return this.direction;}
+    public boolean getRespawn() { return this.respawn;}
+    public float getRespawnCoordinateX() { return this.respawnCoordinateX; }
+    public float getRespawnCoordinateY() { return this.respawnCoordinateY; }
+
     //#endregion
 
 
@@ -87,7 +95,8 @@ public class Spike extends BoxObstacle {
         //used for collision detection
         this.sensorName = "SpikeGroundSensor";
 
-
+        this.respawnCoordinateX = -1;
+        this.respawnCoordinateY = -1;
         JsonValue properties = json.get("properties");
         this.direction = "Up";
         for (JsonValue property : properties) {
@@ -120,6 +129,15 @@ public class Spike extends BoxObstacle {
                     default:
                         System.out.println("something wrong");
                 }
+            }
+            else if (property.getString("name").equals("Respawn")) { //Whether this spike will teleport player back to platform
+                this.respawn = property.getBoolean("value");
+            }
+            else if (property.getString("name").equals("RespawnCoordinateX")) {
+                this.respawnCoordinateX = property.getFloat("value");
+            }
+            else if (property.getString("name").equals("RespawnCoordinateY")) {
+                this.respawnCoordinateY = property.getFloat("value");
             }
         }
         this.setX(this.getX() - offsetX);
