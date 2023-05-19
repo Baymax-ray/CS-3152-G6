@@ -676,7 +676,7 @@
 
         "escapeMenu:background": "backgrounds/escapeMenuBack.png",
         "escapeMenu:restart": "shared/escapeRestart.png",
-        "escapeMenu:quit": "shared/escapeQuit.png",
+        "escapeMenu:quit": "shared/escapeExit.png",
         "escapeMenu:resume": "shared/escapeResume.png",
         "escapeMenu:settings": "shared/escapeSettings.png",
 
