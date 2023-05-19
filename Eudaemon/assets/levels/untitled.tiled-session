@@ -127,8 +127,8 @@
             "scale": 0.75,
             "selectedLayer": 3,
             "viewCenter": {
-                "x": 1054,
-                "y": 1013.9999999999999
+                "x": 667.3333333333333,
+                "y": 1134
             }
         },
         "level6.json": {
@@ -183,8 +183,8 @@
     "project": "untitled.tiled-project",
     "property.type": "string",
     "recentFiles": [
-        "level2.json",
         "level0.json",
+        "level2.json",
         "level1.json",
         "level7.json",
         "F:/Programming/School/CS 3152/Eudaemon/CS-3152-G6/Eudaemon/assets/EudaemonTileset.json",
