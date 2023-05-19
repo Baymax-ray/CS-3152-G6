@@ -19,6 +19,7 @@ public class Settings {
     private int windowedWidth;
     private int windowedHeight;
     private int levelDifficulty;
+    public boolean settingsChanged;
     private int numLevelsAvailable;
 
     private transient Array<SettingsObserver> observers;
@@ -39,6 +40,7 @@ public class Settings {
         s.windowedWidth = 800;
         s.windowedHeight = 450;
         s.levelDifficulty = NORMAL_DIFFICULTY;
+        s.settingsChanged = false;
         s.numLevelsAvailable = 1;
 
         return s;
@@ -67,6 +69,7 @@ public class Settings {
     public void setNormalDifficulty() {
         if (!isNormalDifficulty()) {
             this.levelDifficulty = NORMAL_DIFFICULTY;
+            this.settingsChanged = true;
             save();
             observers.forEach(o->o.onDifficultyChange(NORMAL_DIFFICULTY));
         }
@@ -75,6 +78,7 @@ public class Settings {
     public void setHardDifficulty() {
         if (!isHardDifficulty()) {
             this.levelDifficulty = HARD_DIFFICULTY;
+            this.settingsChanged = true;
             save();
             observers.forEach(o->o.onDifficultyChange(HARD_DIFFICULTY));
         }
@@ -83,6 +87,7 @@ public class Settings {
     public void setVeteranDifficulty() {
         if (!isVeteranDifficulty()) {
             this.levelDifficulty = VETERAN_DIFFICULTY;
+            this.settingsChanged = true;
             save();
             observers.forEach(o->o.onDifficultyChange(VETERAN_DIFFICULTY));
         }
@@ -132,6 +137,9 @@ public class Settings {
             observers.forEach(o->o.onMusicVolumeChange(musicVolume));
         }
     }
+
+    public boolean getSettingsChanged(){return settingsChanged;}
+    public void setSettingsChanged(boolean bool){settingsChanged = bool;}
 
     public float getSfxVolume() {
         return sfxVolume;

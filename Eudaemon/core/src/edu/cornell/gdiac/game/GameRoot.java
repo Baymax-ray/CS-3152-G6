@@ -207,9 +207,18 @@ public class GameRoot extends Game implements ScreenListener {
 				mainMenuScreen.reset();
 				setScreen(mainMenuScreen);
 			}
-			if(exitCode == ExitCode.START){
+			if(exitCode == ExitCode.START && !state.getSettings().getSettingsChanged()){
 				escapeMenu.pause();
 				levelScreen.resume();
+				setScreen(levelScreen);
+			}
+			if(exitCode == ExitCode.START && state.getSettings().getSettingsChanged()){
+				this.state.resetCurrentLevel();
+				if (levelScreen != null) levelScreen.dispose();
+				levelScreen = new LevelScreen(this.state.getCurrentLevel(), this.state.getActionBindings(), assets, state.getSettings());
+				levelScreen.setScreenListener(this);
+				levelScreen.setCanvas(canvas);
+				state.getSettings().setSettingsChanged(false);
 				setScreen(levelScreen);
 			}
 			if(exitCode == ExitCode.SETTINGS){
