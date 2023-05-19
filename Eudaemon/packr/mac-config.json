@@ -10,5 +10,5 @@
   ],
   "mainclass": "edu.cornell.gdiac.DesktopLauncher",
   "vmargs": ["XstartOnFirstThread"],
-  "output": "packr/packr/Eudaemon (Mac)/Eudaemon.app"
+  "output": "packr/out/Eudaemon (Mac)/Eudaemon.app"
 }

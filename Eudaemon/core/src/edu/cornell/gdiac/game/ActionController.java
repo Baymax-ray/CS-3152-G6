@@ -278,6 +278,7 @@ public class ActionController {
                         "transformEffect", player, 0.35f,
                         1, 1, animations.get("playerTransform"), 5, 0, false);
                 level.addQueuedObject(transformAnimate);
+
                 audio.playEffect("chiyo-transform", 0.1f);
                 player.updateGroundSensor();
             }

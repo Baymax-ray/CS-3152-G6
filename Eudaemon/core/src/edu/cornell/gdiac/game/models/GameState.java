@@ -66,6 +66,7 @@ public class GameState {
         for (Level level : levels.values()) {
             level.dispose();
         }
+        settings.dispose();
     }
 
     public Settings getSettings() {
@@ -73,8 +74,8 @@ public class GameState {
     }
 
     public void unlockNextLevel() {
-        if (Character.getNumericValue(currentLevelName.charAt(currentLevelName.length() - 1)) == settings.numLevelsAvailable - 1 && settings.numLevelsAvailable < levels.size() - 1)
-            settings.numLevelsAvailable++;
+        if (Character.getNumericValue(currentLevelName.charAt(currentLevelName.length() - 1)) == settings.getNumLevelsAvailable() - 1 && settings.getNumLevelsAvailable() < levels.size() - 1)
+            settings.incrementNumLevelsAvailable();
     }
 
     public GameState(AssetDirectory assets) {
@@ -91,10 +92,9 @@ public class GameState {
             Json json = new Json();
             System.out.println(saveFile.readString());
             settings = json.fromJson(Settings.class, saveFile.readString());
-            System.out.println("here");
         } catch (Exception e) {
             settings = Settings.defaultSettings();
-            save();
+            settings.save();
         }
 
         String levelName = constants.get("levels").get(0).getString("level");
@@ -116,13 +116,5 @@ public class GameState {
 
         //TODO: bindings etc.
 
-    }
-
-    public void save() {
-        FileHandle saveFile = Gdx.files.local("eudaemon-save-data.json");
-        Json json = new Json();
-        json.setOutputType(JsonWriter.OutputType.json);
-        String saveData = json.toJson(settings);
-        saveFile.writeString(saveData, false);
     }
 }

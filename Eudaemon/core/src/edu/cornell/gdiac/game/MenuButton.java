@@ -14,10 +14,8 @@ public class MenuButton {
 
     public MenuButton up, down, left, right;
 
-    public MenuButton() {
-        this.hitbox = new Rectangle();
-        this.tint = Color.WHITE;
-        this.pressState = 0;
+    public MenuButton(TextureRegion texture) {
+        this(texture, -1);
     }
 
     public MenuButton(TextureRegion texture, int exitCode) {
@@ -26,6 +24,5 @@ public class MenuButton {
         this.exitCode = exitCode;
         this.tint = Color.WHITE;
         this.pressState = 0;
-
     }
 }
