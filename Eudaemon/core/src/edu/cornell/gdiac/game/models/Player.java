@@ -229,7 +229,11 @@ public class Player extends CapsuleObstacle {
     /**
      * The amount of ticks the player has spent falling
      */
-    private int ticksInAir;
+    private int ticksFalling;
+    /**
+     * The amount of ticks the player has spent since touching the ground
+     */
+    private int ticksSinceGround;
     /**
      * A boolean variable representing whether the player's right is touching the wall or not.
      */
@@ -275,6 +279,8 @@ public class Player extends CapsuleObstacle {
     private boolean isGainingSpirit;
     private boolean isGainingHealth;
     private Random random;
+    private boolean shouldRespawn;
+    private Vector2 respawnPosition;
 
     private Array<Enemy> enemiesInSpiritRange;
     /**
@@ -646,17 +652,34 @@ public class Player extends CapsuleObstacle {
      *
      * @return the number of ticks in the air
      */
-    public int getTicksInAir() {
-        return ticksInAir;
+    public int getTicksFalling() {
+        return ticksFalling;
     }
 
     /**
      * Sets the number of ticks the player spends falling.
      *
-     * @param ticksInAir the new number of ticks in the air
+     * @param ticksFalling the new number of ticks in the air
      */
-    public void setTicksInAir(int ticksInAir) {
-        this.ticksInAir = ticksInAir;
+    public void setTicksFalling(int ticksFalling) {
+        this.ticksFalling = ticksFalling;
+    }
+    /**
+     * Gets the number of ticks the player spends since touching the ground.
+     *
+     * @return the number of ticks in the air
+     */
+    public int getTicksSinceGround() {
+        return ticksSinceGround;
+    }
+
+    /**
+     * Sets the number of ticks the player spends falling.
+     *
+     * @param ticksSinceGround the new number of ticks since touching the ground
+     */
+    public void setTicksSinceGround(int ticksSinceGround) {
+        this.ticksSinceGround = ticksSinceGround;
     }
     /**
      *  Returns the variable representing how many milliseconds gravity is turned off for the player when they dash
@@ -1283,6 +1306,9 @@ public class Player extends CapsuleObstacle {
     public void setDashedInAir(boolean value) { dashedInAir = value; }
     public float getDownwardAttackPropelX() {return downwardAttackPropelX; }
     public float getDownwardAttackPropelY() {return downwardAttackPropelY; }
+    public boolean shouldRespawn() { return shouldRespawn; }
+    public void setShouldRespawn(boolean value) { shouldRespawn = value; }
+    public Vector2 getRespawnPosition() { return respawnPosition; }
 
 
     //#endregion
@@ -1421,6 +1447,10 @@ public class Player extends CapsuleObstacle {
         wallSensorNameLeft = "PlayerWallSensorLeft";
         spiritSensorName = "PlayerSpiritSensor";
 
+        //respawn when hit by certain spike
+        this.shouldRespawn = false;
+        this.respawnPosition = new Vector2();
+
         this.enemiesInSpiritRange = new Array<>();
 
         this.random = new Random();
@@ -1515,6 +1545,7 @@ public class Player extends CapsuleObstacle {
         Fixture spiritSensorFixture = body.createFixture(sensorDef);
         spiritSensorFixture.setUserData(getSpiritSensorName());
 
+
         return true;
     }
 
@@ -1571,7 +1602,7 @@ public class Player extends CapsuleObstacle {
      */
     public void hitByEnemy(int whichObstacle, Object hitter) {
         if (isHit() && hearts > 0){
-            hearts--;
+            //hearts--;
             playerDamageSoundId = playSound(playerDamageSound, playerDamageSoundId, 0.1F);
             if (hearts > 0) {
                 float directionX = 0;
@@ -1580,28 +1611,36 @@ public class Player extends CapsuleObstacle {
                     case 0:
                         directionX = ((Enemy) hitter).getX() - this.getX() >= 0? -1: 1; break;
                     case 1:
-                        String direction= ((Spike) hitter).getDirection();
-                        switch (direction){
-                            case "Up":
-                                directionX=0;
-                                spikeKnockBackVerticalMult=2;
-                                break;
-                            case "Down":
-                                directionX=0;
-                                spikeKnockBackVerticalMult=-2;
-                                break;
-                            case "Left":
-                                directionX=-1;
-                                spikeKnockBackVerticalMult=0;
-                                break;
-                            case "Right":
-                                directionX=1;
-                                spikeKnockBackVerticalMult=0;
-                                break;
-                            default:
-                                //should not reach here
-                                throw new IllegalArgumentException("Spike direction does not exist: "+direction);
+                        Spike spike = (Spike) hitter;
+                        if (!spike.getRespawn()) { //knock player back
+                            String direction= spike.getDirection();
+                            switch (direction){
+                                case "Up":
+                                    directionX=0;
+                                    spikeKnockBackVerticalMult=2;
+                                    break;
+                                case "Down":
+                                    directionX=0;
+                                    spikeKnockBackVerticalMult=-2;
+                                    break;
+                                case "Left":
+                                    directionX=-1;
+                                    spikeKnockBackVerticalMult=0;
+                                    break;
+                                case "Right":
+                                    directionX=1;
+                                    spikeKnockBackVerticalMult=0;
+                                    break;
+                                default:
+                                    //should not reach here
+                                    throw new IllegalArgumentException("Spike direction does not exist: "+direction);
+                            }
+                        } else { //teleport player to platform
+                            this.shouldRespawn = true;
+                            this.respawnPosition.x = spike.getRespawnCoordinateX();
+                            this.respawnPosition.y = spike.getRespawnCoordinateY();
                         }
+
                         break;
                     case 2:
                         directionX = ((WheelObstacle) hitter).getX() - this.getX() >=0? -1:1;break;

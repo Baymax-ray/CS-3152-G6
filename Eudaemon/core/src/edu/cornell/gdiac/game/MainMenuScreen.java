@@ -93,6 +93,10 @@ public class MainMenuScreen implements Screen, InputProcessor, ControllerListene
     private boolean menuDown;
     private static final int COOLDOWN = 10;
 
+    private TextureRegion suggestion;
+
+    private Rectangle suggestionHitbox;
+
 
     /** Whether or not this player mode is still active */
     private boolean active;
@@ -121,6 +125,8 @@ public class MainMenuScreen implements Screen, InputProcessor, ControllerListene
         settingsButton = new MenuButton(new TextureRegion(assets.getEntry("mainMenu:settings", Texture.class)), ExitCode.SETTINGS);
         levelSelectButton = new MenuButton(new TextureRegion(assets.getEntry("mainMenu:levelSelect", Texture.class)), ExitCode.LEVEL_SELECT);
         quitButton = new MenuButton(new TextureRegion(assets.getEntry("mainMenu:quit", Texture.class)), ExitCode.QUIT);
+        suggestion = new TextureRegion(assets.getEntry("mainMenu:suggest", Texture.class));
+        suggestionHitbox = new Rectangle();
 
         buttons = new Array<>();
         buttons.add(playButton);
@@ -209,6 +215,7 @@ public class MainMenuScreen implements Screen, InputProcessor, ControllerListene
             button.tint = (button.pressState == 1 ? Color.ORANGE: Color.WHITE);
             canvas.draw(button.texture, button.tint, button.hitbox.x, button.hitbox.y, button.hitbox.width, button.hitbox.height);
         }
+        canvas.draw(suggestion, Color.WHITE, suggestionHitbox.x, suggestionHitbox.y, suggestionHitbox.width, suggestionHitbox.height);
 
         canvas.end();
 
@@ -267,6 +274,7 @@ public class MainMenuScreen implements Screen, InputProcessor, ControllerListene
         heightY = height;
         float buttonSpacing = 2f;
         float shiftUp = 74.38f;
+        float shiftDown = 45f;
         if (playButton != null) {
 
             playButton.hitbox.setSize(BUTTON_SCALE*scale*playButton.texture.getRegionWidth(), BUTTON_SCALE*scale*playButton.texture.getRegionHeight());
@@ -282,6 +290,10 @@ public class MainMenuScreen implements Screen, InputProcessor, ControllerListene
         if(quitButton != null){
             quitButton.hitbox.setSize(BUTTON_SCALE*scale*quitButton.texture.getRegionWidth(), BUTTON_SCALE*scale*quitButton.texture.getRegionHeight());
             quitButton.hitbox.setCenter(canvas.getWidth()/2.0f, progressBarCenterY - quitButton.texture.getRegionHeight()*buttonSpacing*scale);
+        }
+        if(suggestion!=null){
+            suggestionHitbox.setCenter(canvas.getWidth()/2.0f, progressBarCenterY - suggestion.getRegionHeight()*buttonSpacing*scale -shiftDown*scale);
+            suggestionHitbox.setSize(BUTTON_SCALE*scale*suggestion.getRegionWidth(), BUTTON_SCALE*scale*suggestion.getRegionHeight());
         }
     }
 

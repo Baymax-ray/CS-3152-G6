@@ -126,6 +126,16 @@ public class ActionController {
      * @param playerAction the set of player actions to resolve
      */
     private void resolvePlayerActions(EnumSet<Action> playerAction) {
+        System.out.println(player.getX());
+        System.out.println(player.getY());
+        if (player.shouldRespawn()) {
+            System.out.println("x: " + player.getRespawnPosition().x);
+            System.out.println("y: " + player.getRespawnPosition().y);
+
+            player.setX(player.getRespawnPosition().x);
+            player.setY(player.getRespawnPosition().y);
+            player.setShouldRespawn(false);
+        }
         currentX = player.getX();
         float deltaX = previousX - currentX;
         //#region Button Inputs
@@ -154,10 +164,18 @@ public class ActionController {
 
         //Sets the player's ticks in air falling
         if(!player.isGrounded() && player.getBodyVelocityY() < 0 && !player.isSliding()){
-            player.setTicksInAir(player.getTicksInAir()+1);
+            player.setTicksFalling(player.getTicksFalling()+1);
         }
-        else if (player.getTicksInAir() != 0){
-            player.setTicksInAir(0);
+        else if (player.getTicksFalling() != 0){
+            player.setTicksFalling(0);
+        }
+
+        //Sets the player's ticks since ground
+        if(!player.isGrounded()){
+            player.setTicksSinceGround(player.getTicksSinceGround()+1);
+        }
+        else if (player.getTicksSinceGround() != 0){
+            player.setTicksSinceGround(0);
         }
 
         int dashCooldownRemaining = player.getDashCooldownRemaining();
@@ -389,9 +407,6 @@ public class ActionController {
             if (player.getDashLifespanRemaining() == 0) {
                 player.setDashing(false);
 //                player.getBody().applyForce();
-                System.out.println("xBody Velocity: " + player.getBodyVelocityX());
-                System.out.println("yBody Velocity: " + player.getBodyVelocityY());
-                System.out.println("isDashing: " + player.isDashing());
                 player.setVelocity(player.getBodyVelocityX()/3, player.getBodyVelocityY()/3);
             }
         }
@@ -454,6 +469,7 @@ public class ActionController {
         //jump!
         //include all three situations
         //normal jump, coyote, and jump pressed in air
+        if (!jumpHold) player.setIsJumping(false);
         boolean slidingJumpRequirements = player.isSliding() && ((ticks - player.getWallJumpCooldownTicks() > lastWallJumpTick) || (player.isFacingRight() && !facingRightDuringLastWallJump) || (!player.isFacingRight() && facingRightDuringLastWallJump));
         if ((jumpPressed && (slidingJumpRequirements || (player.isGrounded() && player.getJumpCooldownRemaining() == 0))) ||
                 (jumpPressed && player.getCoyoteFramesRemaining() > 0 && player.getJumpCooldownRemaining() == 0) ||
@@ -461,10 +477,10 @@ public class ActionController {
             jump();
             audio.playEffect("jump", 1.0f);
             if (slidingJumpRequirements) {
+                player.setSliding(false);
                 lastWallJumpTick = ticks;
                 facingRightDuringLastWallJump = player.isFacingRight();
             }
-            System.out.println("test" + ticks);
         } else if ((player.isGrounded() && player.getBodyVelocityY() == 0) || player.isSliding()) {
             player.setIsJumping(false);
         }
@@ -479,8 +495,6 @@ public class ActionController {
         if (jumpHold && player.getIsJumping() && player.getJumpTimeRemaining() > 0) {
             player.setVelocity(player.getBodyVelocityX(), player.getJumpVelocity());
         }
-
-        if (!jumpHold) player.setIsJumping(false);
 
         //calculate coyote time
         if (player.isGrounded()) {
@@ -500,9 +514,9 @@ public class ActionController {
         //#endregion
 
         //#region Wall Slide
-        if (player.isTouchingWallRight() && !player.isGrounded() && rightPressed && !player.getIsJumping()){ //player sliding on right wall
+        if (player.isTouchingWallRight() && !player.isGrounded() && rightPressed && player.getTicksSinceGround() > 20 && !player.getIsJumping()){ //player sliding on right wall
             player.setSliding(true);
-        } else if (player.isTouchingWallLeft() && !player.isGrounded() && leftPressed && !player.getIsJumping()) { //player is sliding on left wall
+        } else if (player.isTouchingWallLeft() && !player.isGrounded() && leftPressed && player.getTicksSinceGround() > 20 && !player.getIsJumping()) { //player is sliding on left wall
             player.setSliding(true);
         }
         else{
@@ -773,11 +787,11 @@ public class ActionController {
             }
         }
         //Creating impact animation for large jumps
-        if (!player.isGrounded() && player.getTicksInAir() > player.getTimeForImpact()) {
+        if (!player.isGrounded() && player.getTicksFalling() > player.getTimeForImpact()) {
             impact = true;
         }
         //Small impact sound effect for smaller jumps
-        if (!player.isGrounded() && player.getTicksInAir() <= player.getTimeForImpact()) {
+        if (!player.isGrounded() && player.getTicksFalling() <= player.getTimeForImpact()) {
             smallImpact = true;
         }
         if(smallImpact && player.isGrounded()){
