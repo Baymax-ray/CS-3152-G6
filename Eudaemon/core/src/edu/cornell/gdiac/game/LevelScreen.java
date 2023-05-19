@@ -9,7 +9,7 @@ import edu.cornell.gdiac.util.ScreenListener;
 
 import java.util.EnumSet;
 
-public class LevelScreen implements Screen {
+public class LevelScreen implements Screen, SettingsObserver {
 
     private boolean active;
 
@@ -29,13 +29,20 @@ public class LevelScreen implements Screen {
     private final CollisionController collisionController;
     private AudioController audio;
 
+    private Settings settings;
+
 
     public Level getLevel() {
         return level;
     }
+    public AudioController getAudio(){return this.audio;}
 
-    public LevelScreen(Level level, ActionBindings actionBindings, AssetDirectory assets) {
+    public LevelScreen(Level level, ActionBindings actionBindings, AssetDirectory assets, Settings settings) {
+        this.settings = settings;
+        this.settings.addObserver(this);
+
         this.level = level;
+        level.setDifficulty(settings.getLevelDifficulty());
 
         this.active = false;
         this.inputController = new InputController(actionBindings);
@@ -76,7 +83,7 @@ public class LevelScreen implements Screen {
             enemyActions.add(EnumSet.noneOf(EnemyAction.class));
         }
 
-        audio = new AudioController(assets);
+        audio = new AudioController(assets, settings);
         // shouldn't play immediately, other screens might be shown
 
         actionController = new ActionController(level,aiControllers, audio);
@@ -84,8 +91,6 @@ public class LevelScreen implements Screen {
         collisionController = new CollisionController(level, audio);
         level.getWorld().setContactListener(collisionController);
         level.activatePhysics();
-
-        audio = new AudioController(assets);
     }
 
 
@@ -157,6 +162,7 @@ public class LevelScreen implements Screen {
     @Override
     public void show() {
         active = true;
+
         audio.playAllSound();
         audio.muteChiyo();
         Gdx.input.setCursorCatched(true);
@@ -176,13 +182,20 @@ public class LevelScreen implements Screen {
         actionController.dispose();
         aiControllers.clear();
         enemyActions.clear();
+        settings.removeObserver(this);
         canvas = null;
         listener = null;
-        audio.dispose();
+        //audio.dispose();
     }
 
     public void setScreenListener(ScreenListener listener) {
         this.listener = listener;
+    }
+
+    @Override
+    public void onDifficultyChange(int newDifficulty) {
+        level.settingsChanged = true;
+		level.setDifficulty(newDifficulty);
     }
 
 }

@@ -3,8 +3,9 @@ package edu.cornell.gdiac.game;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.utils.ObjectMap;
 import edu.cornell.gdiac.assets.AssetDirectory;
+import edu.cornell.gdiac.game.models.Settings;
 
-public class AudioController {
+public class AudioController implements SettingsObserver {
 
 
     private Sound chiyoSound;
@@ -12,6 +13,9 @@ public class AudioController {
     private boolean isMomo;
     private long chiyoSoundId;
     private long momoSoundId;
+    private static float masterMultipler;
+    private static float sfxMultiplier;
+    private static float bgmMultiplier;
 
     private ObjectMap<String, Sound> effects;
     private ObjectMap<Sound, Long> effectIds;
@@ -47,7 +51,12 @@ public class AudioController {
 
     private Sound wallSlideSound;
 
-    public AudioController(AssetDirectory assets){
+    private Settings settings;
+
+    public AudioController(AssetDirectory assets, Settings settings){
+        this.settings = settings;
+        settings.addObserver(this);
+
         chiyoSound = assets.getEntry("music:chiyo", Sound.class);
         momoSound = assets.getEntry("music:momo", Sound.class);
 
@@ -84,8 +93,8 @@ public class AudioController {
     }
 
     public void playAllSound(){
-        chiyoSoundId=chiyoSound.loop(0.2f);
-        momoSoundId=momoSound.loop(0.2f);
+        chiyoSoundId=chiyoSound.loop(1 * masterMultipler* bgmMultiplier );
+        momoSoundId=momoSound.loop(1 * masterMultipler* bgmMultiplier );
     }
 
     public void updateAudio(float form){
@@ -110,16 +119,17 @@ public class AudioController {
 
     public void momoToChiyo(){
         muteMomo();
-        chiyoSound.setVolume(chiyoSoundId,0.2f);
+        chiyoSound.setVolume(chiyoSoundId,1 * masterMultipler* bgmMultiplier );
     }
 
     public void chiyoToMomo(){
         muteChiyo();
-        momoSound.setVolume(momoSoundId,0.2f);
+        momoSound.setVolume(momoSoundId,1 * masterMultipler * bgmMultiplier);
     }
 
     public void dispose(){
         isMomo=true;
+        settings.removeObserver(this);
     }
 
     private void playEffect(Sound effect, float volume) {
@@ -131,6 +141,10 @@ public class AudioController {
             effect.stop(loopEffectIds.get(effect));
             loopEffectIds.remove(effect);
         }
+        volume *= masterMultipler * sfxMultiplier;
+        System.out.println("sfx: "+sfxMultiplier);
+        System.out.println("Master: "+masterMultipler);
+        System.out.println("I am playing an effect, the volume is "+volume);
         long id = effect.play(volume);
         effectIds.put(effect, id);
     }
@@ -140,6 +154,8 @@ public class AudioController {
             System.out.println("WARNING: sound name " + effectName + " does not exist in AudioController.");
             return;
         }
+        System.out.println("I am playing an effect,"+effectName+" and the volume is "+volume);
+
 
         playEffect(effects.get(effectName), volume);
     }
@@ -151,6 +167,7 @@ public class AudioController {
         if (loopEffectIds.containsKey(effect)) {
             return; // already looping no need to do anything
         }
+        volume *= masterMultipler * sfxMultiplier;
         long id = effect.loop(volume);
         loopEffectIds.put(effect, id);
     }
@@ -175,4 +192,21 @@ public class AudioController {
         loopEffectIds.remove(effects.get(effectName));
     }
 
+    @Override
+    public void onMasterVolumeChange(float newVolume) {
+        this.masterMultipler = newVolume;
+        //TODO
+    }
+
+    @Override
+    public void onMusicVolumeChange(float newVolume) {
+        this.bgmMultiplier = newVolume;
+        //TODO
+    }
+
+    @Override
+    public void onSfxVolumeChange(float newVolume) {
+        this.sfxMultiplier = newVolume;
+        //TODO
+    }
 }

@@ -23,6 +23,7 @@
 package edu.cornell.gdiac.game;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.controllers.Controller;
@@ -31,12 +32,17 @@ import com.badlogic.gdx.controllers.ControllerMapping;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.Texture.TextureFilter;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Rectangle;
+import com.badlogic.gdx.utils.Array;
+import com.badlogic.gdx.utils.PerformanceCounter;
 import edu.cornell.gdiac.assets.AssetDirectory;
-import edu.cornell.gdiac.game.models.Level;
+import edu.cornell.gdiac.game.models.Settings;
 import edu.cornell.gdiac.util.Controllers;
 import edu.cornell.gdiac.util.ScreenListener;
 import edu.cornell.gdiac.util.XBoxController;
+
+import static java.lang.Math.round;
 
 /**
  * Class that provides a loading screen for the state of the game.
@@ -56,23 +62,15 @@ public class SettingsScreen implements Screen, InputProcessor, ControllerListene
 	/** Background texture for start-up */
 	private final Texture background;
 
-	/** Play button to display when done */
-	private Texture volumeButton;
-	/** quit button to display when done */
-	private Texture screenSizeButton;
 	/** are we coming from the main menu to the setting screen?
 	 * This is for judging if we should go back to menu or level*/
-	private boolean isFromMainMenu=false;
+	private boolean isFromMainMenu;
 
 
-
-
-	/** Default budget for asset loader (do nothing but load 60 fps) */
-	private static final int DEFAULT_BUDGET = 15;
 	/** Standard window size (for scaling) */
-	private static final int STANDARD_WIDTH  = 260;
+	private static final int STANDARD_WIDTH  = 1920;
 	/** Standard window height (for scaling) */
-	private static final int STANDARD_HEIGHT = 135;
+	private static final int STANDARD_HEIGHT = 1080;
 	/** Ratio of the bar width to the screen */
 	private static final float BAR_WIDTH_RATIO  = 0.66f;
 	/** Ration of the bar height to the screen */
@@ -85,6 +83,9 @@ public class SettingsScreen implements Screen, InputProcessor, ControllerListene
 	/** Listener that will update the player mode when we are done */
 	private ScreenListener listener;
 
+	/** the settings of the game */
+	private Settings settings;
+
 	/** The width of the progress bar */
 	private int width;
 	/** The y-coordinate of the center of the progress bar */
@@ -96,43 +97,31 @@ public class SettingsScreen implements Screen, InputProcessor, ControllerListene
 	/** Scaling factor for when the student changes the resolution. */
 	private float scale;
 
-	/** Current progress (0 to 1) of the asset manager */
-	private float progress;
-	/** The current state of the play button */
-	private int volumePressState;
-	/** The amount of time to devote to loading assets (as opposed to on screen hints, etc.) */
-	private int   budget;
 
 	/** Whether this player mode is still active */
 	private boolean active;
-	/** The hitbox of the start button */
-	private Rectangle volumeButtonHitbox;
 
-	private Rectangle  screenSizeButtonHitbox;
-
-	private int screenSizePressState;
-
-	/** back button texture*/
-	private Texture backButton;
-
-	/** The hitbox for the back button */
-	private Rectangle backHitbox;
-
-	/** The current state of the back button */
-	private int backPressState;
 	private Texture unfilledBar;
-	private Texture fullScreenOnButton;
-	private Texture fullScreenOffButton;
-	private Texture difficultyNormalButton;
-	private Texture difficultyHardButton;
-	private Texture difficultyVeteranButton;
 
-	private Rectangle normalHitbox;
-	private Rectangle hardHitbox;
-	private Rectangle veteranHitbox;
-	private int normalPressState;
-	private int hardPressState;
-	private int veteranPressState;
+	private MenuButton backButton;
+
+	private MenuSlider volumeSlider;
+	private MenuSlider musicSlider;
+	private MenuSlider sfxSlider;
+	private MenuSlider brightnessSlider;
+
+	private MenuButton difficultyNormalButton;
+	private MenuButton difficultyHardButton;
+	private MenuButton difficultyVeteranButton;
+
+	private MenuButton fullScreenOnButton;
+	private MenuButton fullScreenOffButton;
+
+	private Array<MenuButton> buttons;
+
+	private Array<MenuSlider> sliders;
+
+	private MenuButton hoveredButton;
 
 
 	//Texture to visually show the adjustment of settings (e.g volume, screen size)
@@ -141,80 +130,140 @@ public class SettingsScreen implements Screen, InputProcessor, ControllerListene
 	//Texture for the circular toggle to drag to adjust setting - should sense user input from touching this
 	private Texture toggle;
 
-	private Level level;
+	private int menuCooldown;
+	private boolean menuUp;
+	private boolean menuDown;
+	private boolean menuLeft;
+	private boolean menuRight;
+	private static final int COOLDOWN = 20;
 
-	//0 for easy, 1 for hard, 2 for veteran
-	private int currentDifficulty;
 
-
-
-	/**
-	 * Returns true if all assets are loaded and the player is ready to go.
-	 *
-	 * @return true if the player is ready to go
-	 */
-	public boolean restartIsReady() {
-		return volumePressState == 2;
-	}
-	public boolean quitIsReady() {
-		return screenSizePressState == 2;
-	}
 	public void setIsFromMainMenu(boolean isfrom){this.isFromMainMenu = isfrom;}
 
 	/**
-	 * Creates a LoadingScreen with the default size and position.
-	 *
-	 * The budget is the number of milliseconds to spend loading assets each animation
-	 * frame.  This allows you to do something other than load assets.  An animation
-	 * frame is ~16 milliseconds. So if the budget is 10, you have 6 milliseconds to
-	 * do something else.  This is how game companies animate their loading screens.
+	 * Creates a SettingsScreen with the default size and position.
 	 *
 	 * @param assets  	The asset directory
 	 * @param canvas 	The game canvas to draw to
 	 */
-	public SettingsScreen(AssetDirectory assets, GameCanvas canvas, Level currentLevel) {
+	public SettingsScreen(AssetDirectory assets, GameCanvas canvas, final Settings settings) {
 		this.canvas  = canvas;
 		this.isFromMainMenu = false;
-		this.level = currentLevel;
+		this.settings = settings;
+
+		background = assets.getEntry( "settingsScreen:background", Texture.class );
+		background.setFilter( TextureFilter.Linear, TextureFilter.Linear );
+		unfilledBar = assets.getEntry("settingsScreen:unfilledBar", Texture.class);
+		filledBar = assets.getEntry("settingsScreen:filledBar", Texture.class);
+		toggle = assets.getEntry("settingsScreen:dragToggle", Texture.class);
+
+		backButton = new MenuButton(new TextureRegion(assets.getEntry("settingsScreen:back", Texture.class))); // we are not adding the exitCode here, it is determined by `isFromMainMenu`
+		backButton.texture.getTexture().setFilter(TextureFilter.Nearest, TextureFilter.Nearest);
+
+		volumeSlider = new MenuSlider(filledBar, unfilledBar, toggle) {
+			@Override
+			public float getValue() {
+				return settings.getMasterVolume();
+			}
+
+			@Override
+			protected void updateValue(float value) {
+				settings.setMasterVolume(value);
+			}
+		};
+
+		musicSlider = new MenuSlider(filledBar, unfilledBar, toggle) {
+			@Override
+			public float getValue() {
+				return settings.getMusicVolume();
+			}
+
+			@Override
+			protected void updateValue(float value) {
+				settings.setMusicVolume(value);
+			}
+		};
+
+		sfxSlider = new MenuSlider(filledBar, unfilledBar, toggle) {
+			@Override
+			public float getValue() {
+				return settings.getSfxVolume();
+			}
+
+			@Override
+			protected void updateValue(float value) {
+				settings.setSfxVolume(value);
+			}
+		};
+
+		brightnessSlider = new MenuSlider(filledBar, unfilledBar, toggle) {
+			@Override
+			public float getValue() {
+				return settings.getBrightness();
+			}
+
+			@Override
+			protected void updateValue(float value) {
+				settings.setBrightness(value);
+			}
+		};
+
+		fullScreenOnButton = new MenuButton(new TextureRegion(assets.getEntry("settingsScreen:settingsOn", Texture.class)));
+		fullScreenOffButton = new MenuButton(new TextureRegion(assets.getEntry("settingsScreen:settingsOff", Texture.class)));
+		difficultyNormalButton = new MenuButton(new TextureRegion(assets.getEntry("settingsScreen:normal", Texture.class)));
+		difficultyHardButton = new MenuButton(new TextureRegion(assets.getEntry("settingsScreen:hard", Texture.class)));
+		difficultyVeteranButton = new MenuButton(new TextureRegion(assets.getEntry("settingsScreen:vet", Texture.class)));
+
+		buttons = new Array<>();
+		buttons.add(backButton);
+		buttons.add(fullScreenOnButton);
+		buttons.add(fullScreenOffButton);
+		buttons.add(difficultyNormalButton);
+		buttons.add(difficultyHardButton);
+		buttons.add(difficultyVeteranButton);
+
+		sliders = new Array<>();
+		sliders.add(volumeSlider);
+		sliders.add(musicSlider);
+		sliders.add(sfxSlider);
+		sliders.add(brightnessSlider);
+
+		hoveredButton = volumeSlider;
+
+		volumeSlider.down = musicSlider;
+		musicSlider.up = volumeSlider;
+		musicSlider.down = sfxSlider;
+		sfxSlider.up = musicSlider;
+		sfxSlider.down = brightnessSlider;
+		brightnessSlider.up = sfxSlider;
+		brightnessSlider.down = fullScreenOnButton;
+
+		fullScreenOnButton.up = brightnessSlider;
+		fullScreenOnButton.right = fullScreenOffButton;
+		fullScreenOnButton.down = difficultyNormalButton;
+		fullScreenOffButton.up = brightnessSlider;
+		fullScreenOffButton.left = fullScreenOnButton;
+		fullScreenOffButton.down = difficultyHardButton;
+
+		difficultyNormalButton.up = fullScreenOnButton;
+		difficultyNormalButton.right = difficultyHardButton;
+		difficultyHardButton.up = fullScreenOffButton;
+		difficultyHardButton.left = difficultyNormalButton;
+		difficultyHardButton.right = difficultyVeteranButton;
+		difficultyVeteranButton.up = fullScreenOffButton;
+		difficultyVeteranButton.left = difficultyHardButton;
+
+		volumeSlider.up = backButton;
+		fullScreenOnButton.left = backButton;
+		difficultyNormalButton.left = backButton;
 
 		// Compute the dimensions from the canvas
 		resize(canvas.getWidth(),canvas.getHeight());
 
-		// Load the next two images immediately.
-		background = assets.getEntry( "settingsScreen:background", Texture.class );
-		background.setFilter( TextureFilter.Linear, TextureFilter.Linear );
-		volumeButton = assets.getEntry("deathScreen:restart",Texture.class);
-		screenSizeButton = assets.getEntry("deathScreen:quit", Texture.class);
-		backButton = assets.getEntry("settingsScreen:back", Texture.class);
-		backButton.setFilter(TextureFilter.Nearest, TextureFilter.Nearest);
-		unfilledBar = assets.getEntry("settingsScreen:unfilledBar", Texture.class);
-		fullScreenOnButton = assets.getEntry("settingsScreen:settingsOn", Texture.class);
-		fullScreenOffButton = assets.getEntry("settingsScreen:settingsOff", Texture.class);
-		difficultyNormalButton = assets.getEntry("settingsScreen:normal", Texture.class);
-		difficultyHardButton = assets.getEntry("settingsScreen:hard", Texture.class);
-		difficultyVeteranButton = assets.getEntry("settingsScreen:vet", Texture.class);
-		filledBar = assets.getEntry("settingsScreen:filledBar", Texture.class);
-		toggle = assets.getEntry("settingsScreen:dragToggle", Texture.class);
-
-		backHitbox = new Rectangle();
-		backPressState = 0;
-		normalHitbox = new Rectangle();
-		hardHitbox = new Rectangle();
-		veteranHitbox = new Rectangle();
-		normalPressState = 0;
-		hardPressState = 0;
-		veteranPressState = 0;
-
-
 		Gdx.input.setInputProcessor( this );
 
-		volumeButtonHitbox = new Rectangle();
-		screenSizeButtonHitbox = new Rectangle();
-		screenSizePressState = 0;
-		setCurrentDifficulty(0);
-
 		// Let ANY connected controller start the game.
-		for (XBoxController controller : Controllers.get().getXBoxControllers()) {
+		for (Controller controller : Controllers.get().getControllers()) {
 			controller.addListener( this );
 		}
 
@@ -227,6 +276,83 @@ public class SettingsScreen implements Screen, InputProcessor, ControllerListene
 	public void dispose() {
 		canvas = null;
 		listener = null;
+	}
+
+	private void update() {
+
+		if (fullScreenOnButton.pressState == 2) {
+			settings.setFullscreen(true);
+			fullScreenOnButton.pressState = 0;
+		}
+		if (fullScreenOffButton.pressState == 2) {
+			settings.setFullscreen(false);
+			fullScreenOffButton.pressState = 0;
+		}
+		if (difficultyNormalButton.pressState == 2) {
+			settings.setNormalDifficulty();
+			difficultyNormalButton.pressState = 0;
+		}
+		if (difficultyHardButton.pressState == 2) {
+			settings.setHardDifficulty();
+			difficultyHardButton.pressState = 0;
+		}
+		if (difficultyVeteranButton.pressState == 2) {
+			settings.setVeteranDifficulty();
+			difficultyVeteranButton.pressState = 0;
+		}
+
+		if (menuCooldown == 0) {
+			if (menuUp) {
+				if (hoveredButton == null) {
+					hoveredButton = difficultyNormalButton;
+				} else if (hoveredButton.up != null) {
+					hoveredButton = hoveredButton.up;
+				}
+				menuCooldown = COOLDOWN;
+			} else if (menuDown) {
+				if (hoveredButton == null) {
+					hoveredButton = volumeSlider;
+				} else if (hoveredButton.down != null){
+					hoveredButton = hoveredButton.down;
+				}
+				menuCooldown = COOLDOWN;
+			} else if (menuLeft) {
+				if (hoveredButton == null) {
+					hoveredButton = volumeSlider;
+				} else if (hoveredButton instanceof MenuSlider) {
+					MenuSlider slider = (MenuSlider) hoveredButton;
+					float value = slider.getValue();
+					value *= 10;
+					value = Math.round(value);
+					value -= 1;
+					value /= 10;
+					slider.setValue(value);
+				} else if (hoveredButton.left != null) {
+					if (hoveredButton.left == backButton && hoveredButton != backButton) {
+						backButton.right = hoveredButton;
+					}
+					hoveredButton = hoveredButton.left;
+				}
+				menuCooldown = COOLDOWN;
+			} else if (menuRight) {
+				if (hoveredButton == null) {
+					hoveredButton = volumeSlider;
+				} else if (hoveredButton instanceof MenuSlider) {
+					MenuSlider slider = (MenuSlider) hoveredButton;
+					float value = slider.getValue();
+					value *= 10;
+					value = Math.round(value);
+					value += 1;
+					value /= 10;
+					slider.setValue(value);
+				} else if (hoveredButton.right != null) {
+					hoveredButton = hoveredButton.right;
+				}
+				menuCooldown = COOLDOWN;
+			}
+		}
+
+		if (menuCooldown > 0) menuCooldown--;
 	}
 
 
@@ -244,31 +370,31 @@ public class SettingsScreen implements Screen, InputProcessor, ControllerListene
 		canvas.setOverlayCamera();
 		canvas.begin();
 		canvas.draw(background, Color.WHITE, 0, 0, canvas.getWidth(), canvas.getHeight());
-		Color normalTint = (level.isNormalDifficulty() ? Color.ORANGE: Color.WHITE);
-		Color hardTint = (level.isHardDifficulty() ? Color.ORANGE: Color.WHITE);
-		Color veteranTint = (level.isVeteranDifficulty() ? Color.ORANGE: Color.WHITE);
-		Color backTint = (backPressState == 1 ? Color.GRAY: Color.WHITE);
-		canvas.draw(backButton, backTint, 0, 0, canvas.getWidth(), canvas.getHeight());
-		//Master Volume Bar
-		canvas.draw(unfilledBar,Color.WHITE, (canvas.getWidth() / 1.9f), canvas.getHeight()/1.49f, unfilledBar.getWidth()/scale, unfilledBar.getHeight()/scale*2.8f);
-		//Music Volume Bar
-		canvas.draw(unfilledBar,Color.WHITE, (canvas.getWidth() / 1.9f), canvas.getHeight()/1.71f, unfilledBar.getWidth()/scale, unfilledBar.getHeight()/scale*2.8f);
-		//SFX Volume Bar
-		canvas.draw(unfilledBar,Color.WHITE, (canvas.getWidth() / 1.9f), canvas.getHeight()/2f, unfilledBar.getWidth()/scale, unfilledBar.getHeight()/scale*2.8f);
-		//Brightness Bar
-		canvas.draw(unfilledBar,Color.WHITE, (canvas.getWidth() / 1.9f), canvas.getHeight()/2.4f, unfilledBar.getWidth()/scale, unfilledBar.getHeight()/scale*2.8f);
-		//Fullscreen On Button
-		canvas.draw(fullScreenOnButton, Color.WHITE, (canvas.getWidth() / 1.9f), canvas.getHeight()/3f , fullScreenOnButton.getWidth(), fullScreenOnButton.getHeight());
-		//Fullscreen Off Button
-		canvas.draw(fullScreenOffButton, Color.WHITE, (canvas.getWidth() / 1.68f), canvas.getHeight()/3f , fullScreenOffButton.getWidth(), fullScreenOffButton.getHeight());
-		//Level Difficulty Normal Button
-		canvas.draw(difficultyNormalButton, normalTint, (canvas.getWidth() / 1.9f), canvas.getHeight()/6f , difficultyNormalButton.getWidth()/2, difficultyNormalButton.getHeight());
-		//Level Difficulty Hard Button
-		canvas.draw(difficultyHardButton, hardTint, (canvas.getWidth() / 1.5f), canvas.getHeight()/6f , difficultyHardButton.getWidth()/2, difficultyHardButton.getHeight());
-		//Level Difficulty Veteran Button
-		canvas.draw(difficultyVeteranButton, veteranTint, (canvas.getWidth() / 1.3f), canvas.getHeight()/6f , difficultyVeteranButton.getWidth()/2, difficultyVeteranButton.getHeight());
+
+		fullScreenOnButton.tint = (settings.isFullscreen()) ? Color.ORANGE : Color.WHITE;
+		fullScreenOffButton.tint = (!settings.isFullscreen()) ? Color.ORANGE : Color.WHITE;
+
+		difficultyNormalButton.tint = (settings.isNormalDifficulty() ? Color.ORANGE: Color.WHITE);
+		difficultyHardButton.tint = (settings.isHardDifficulty() ? Color.ORANGE: Color.WHITE);
+		difficultyVeteranButton.tint = (settings.isVeteranDifficulty() ? Color.ORANGE: Color.WHITE);
+		backButton.tint = (backButton.pressState == 1 ? Color.GRAY: Color.WHITE);
+
+		for (MenuButton button : buttons) {
+			canvas.draw(button.texture, button.tint, button.hitbox.x, button.hitbox.y, button.hitbox.width, button.hitbox.height);
+		}
+
+		for (MenuSlider slider : sliders) {
+			slider.draw(canvas);
+		}
 
 		canvas.end();
+
+		if (hoveredButton != null) {
+			canvas.beginShapes(true);
+			float lineWidth = (hoveredButton == backButton) ? 5 : 10;
+			canvas.drawRectangle(hoveredButton.hitbox, hoveredButton.tint, lineWidth);
+			canvas.endShapes();
+		}
 	}
 
 
@@ -283,10 +409,11 @@ public class SettingsScreen implements Screen, InputProcessor, ControllerListene
 	 */
 	public void render(float delta) {
 		if (active) {
+			update();
 			draw();
 
 			// We are are ready, notify our listener
-			if (backPressState == 2 && listener != null) {
+			if (backButton.pressState == 2 && listener != null) {
 				if(isFromMainMenu){listener.exitScreen(this, ExitCode.MAIN_MENU);}
 				else{ listener.exitScreen(this, ExitCode.PAUSE);}
 		}
@@ -297,12 +424,13 @@ public class SettingsScreen implements Screen, InputProcessor, ControllerListene
 	 * Resets the screen so it can be reused
 	 */
 	public void reset() {
-		this.volumePressState = 0;
-		this.screenSizePressState = 0;
-		this.backPressState = 0;
-		this.normalPressState = 0;
-		this.hardPressState = 0;
-		this.veteranPressState = 0;
+		for (MenuButton button : buttons) {
+			button.pressState = 0;
+		}
+		for (MenuSlider slider : sliders) {
+			slider.pressState = 0;
+		}
+		hoveredButton = volumeSlider;
 	}
 
 	/**
@@ -325,34 +453,54 @@ public class SettingsScreen implements Screen, InputProcessor, ControllerListene
 		centerX = width/2;
 		heightY = height;
 
-		if(screenSizeButton != null){
-			screenSizeButtonHitbox.setSize(BUTTON_SCALE *scale*screenSizeButton.getWidth(),BUTTON_SCALE * scale * screenSizeButton.getHeight());
-			screenSizeButtonHitbox.setCenter(canvas.getWidth()/2.0f, centerY + screenSizeButton.getHeight()*scale *0.05f);
-		}
+//		screenSizeButtonHitbox.setSize(BUTTON_SCALE *scale*screenSizeButton.getWidth(),BUTTON_SCALE * scale * screenSizeButton.getHeight());
+//		screenSizeButtonHitbox.setCenter(canvas.getWidth()/2.0f, centerY + screenSizeButton.getHeight()*scale *0.05f);
 
-		if (volumeButton != null) {
-			float buttonSpacing = 0.35f;
-			volumeButtonHitbox.setSize(BUTTON_SCALE * scale * volumeButton.getWidth(), BUTTON_SCALE * scale * volumeButton.getHeight());
-			volumeButtonHitbox.setCenter(canvas.getWidth() / 2.0f, centerY + volumeButton.getHeight() * buttonSpacing * scale);
-		}
+		float backButtonScale = 8 * scale;
+		backButton.hitbox.setSize(10 * backButtonScale, 9 * backButtonScale);
+		backButton.hitbox.setPosition(5 * backButtonScale, canvas.getHeight() - 12 * backButtonScale);
+		backButton.texture.setRegion(5, 4, 10, 9);
 
-		if(backButton != null){
-			backHitbox.setSize(10 * scale);
-			backHitbox.setPosition(5 * scale, canvas.getHeight() - 12 * scale);
-		}
+		fullScreenOnButton.hitbox.setSize(fullScreenOnButton.texture.getRegionWidth() * scale, fullScreenOnButton.texture.getRegionHeight() * scale);
+		fullScreenOnButton.hitbox.setPosition(canvas.getWidth() / 1.9f, canvas.getHeight() * 0.33f);
 
-		if(difficultyNormalButton != null){
-			normalHitbox.setSize(difficultyNormalButton.getWidth(), difficultyNormalButton.getHeight());
-			normalHitbox.setPosition((canvas.getWidth() / 1.9f), canvas.getHeight()/6f);
-		}
-		if(difficultyHardButton!=null){
-			hardHitbox.setSize(difficultyHardButton.getWidth(), difficultyHardButton.getHeight());
-			hardHitbox.setPosition((canvas.getWidth() / 1.5f), canvas.getHeight()/6f);
-		}
-		if(difficultyVeteranButton!=null){
-			veteranHitbox.setSize(difficultyVeteranButton.getWidth(), difficultyVeteranButton.getHeight());
-			veteranHitbox.setPosition((canvas.getWidth() / 1.3f), canvas.getHeight()/6f);
-		}
+		fullScreenOffButton.hitbox.setSize(fullScreenOffButton.texture.getRegionWidth() * scale, fullScreenOffButton.texture.getRegionHeight() * scale);
+		fullScreenOffButton.hitbox.setPosition(canvas.getWidth() / 1.7f, canvas.getHeight() * 0.33f);
+
+		difficultyNormalButton.hitbox.setSize(difficultyNormalButton.texture.getRegionWidth() * scale, difficultyNormalButton.texture.getRegionHeight() * scale);
+		difficultyNormalButton.hitbox.setPosition((canvas.getWidth() / 1.9f), canvas.getHeight() * 0.16f);
+
+		difficultyHardButton.hitbox.setSize(difficultyHardButton.texture.getRegionWidth() * scale, difficultyHardButton.texture.getRegionHeight() * scale);
+		difficultyHardButton.hitbox.setPosition((canvas.getWidth() / 1.5f), canvas.getHeight() * 0.16f);
+
+		difficultyVeteranButton.hitbox.setSize(difficultyVeteranButton.texture.getRegionWidth() * scale, difficultyVeteranButton.texture.getRegionHeight() * scale);
+		difficultyVeteranButton.hitbox.setPosition((canvas.getWidth() / 1.3f), canvas.getHeight() * 0.16f);
+
+		//slider sizing
+
+		volumeSlider.unfilledRect.setSize(canvas.getWidth() * 0.3f, unfilledBar.getHeight() / (float) unfilledBar.getWidth() * canvas.getWidth() * 0.3f);
+		volumeSlider.unfilledRect.setPosition( canvas.getWidth() / 1.9f, canvas.getHeight() * 0.67f);
+
+		volumeSlider.hitbox.setSize(volumeSlider.unfilledRect.height * 8.0f/6.0f);
+		volumeSlider.hitbox.setCenter(volumeSlider.unfilledRect.x + volumeSlider.unfilledRect.width * volumeSlider.getValue(), volumeSlider.unfilledRect.y + volumeSlider.unfilledRect.height/2);
+
+		musicSlider.unfilledRect.setSize(canvas.getWidth() * 0.3f, unfilledBar.getHeight() / (float) unfilledBar.getWidth() * canvas.getWidth() * 0.3f);
+		musicSlider.unfilledRect.setPosition( canvas.getWidth() / 1.9f, canvas.getHeight() * 0.586f);
+
+		musicSlider.hitbox.setSize(musicSlider.unfilledRect.height * 8.0f/6.0f);
+		musicSlider.hitbox.setCenter(musicSlider.unfilledRect.x + musicSlider.unfilledRect.width * musicSlider.getValue(), musicSlider.unfilledRect.y + musicSlider.unfilledRect.height/2);
+
+		sfxSlider.unfilledRect.setSize(canvas.getWidth() * 0.3f, unfilledBar.getHeight() / (float) unfilledBar.getWidth() * canvas.getWidth() * 0.3f);
+		sfxSlider.unfilledRect.setPosition( canvas.getWidth() / 1.9f, canvas.getHeight() * 0.503f);
+
+		sfxSlider.hitbox.setSize(sfxSlider.unfilledRect.height * 8.0f/6.0f);
+		sfxSlider.hitbox.setCenter(sfxSlider.unfilledRect.x + sfxSlider.unfilledRect.width * sfxSlider.getValue(), sfxSlider.unfilledRect.y + sfxSlider.unfilledRect.height/2);
+
+		brightnessSlider.unfilledRect.setSize(canvas.getWidth() * 0.3f, unfilledBar.getHeight() / (float) unfilledBar.getWidth() * canvas.getWidth() * 0.3f);
+		brightnessSlider.unfilledRect.setPosition( canvas.getWidth() / 1.9f, canvas.getHeight() * 0.42f);
+
+		brightnessSlider.hitbox.setSize(brightnessSlider.unfilledRect.height * 8.0f/6.0f);
+		brightnessSlider.hitbox.setCenter(brightnessSlider.unfilledRect.x + brightnessSlider.unfilledRect.width * brightnessSlider.getValue(), brightnessSlider.unfilledRect.y + brightnessSlider.unfilledRect.height/2);
 
 	}
 
@@ -384,6 +532,7 @@ public class SettingsScreen implements Screen, InputProcessor, ControllerListene
 		// Useless if called in outside animation loop
 		active = true;
 		Gdx.input.setInputProcessor(this);
+		Gdx.input.setCursorCatched(true);
 	}
 
 	/**
@@ -416,11 +565,10 @@ public class SettingsScreen implements Screen, InputProcessor, ControllerListene
 	 * @param pointer the button or touch finger number
 	 * @return whether to hand the event to other listeners. 
 	 */
-	public boolean touchDown(int screenX, int screenY, int pointer, int button) {
-		if (volumePressState == 2) {
-			return true;
-		}
-		if(screenSizePressState == 2){
+	public boolean touchDown(int screenX, int screenY, int pointer, int buttonCode) {
+		if (!active) return false;
+
+		if (backButton.pressState == 2) {
 			return true;
 		}
 
@@ -429,35 +577,44 @@ public class SettingsScreen implements Screen, InputProcessor, ControllerListene
 
 
 
-		if (backHitbox.contains(screenX, screenY)) {
-			backPressState = 1;
-			return true;
+//		if (backButton.hitbox.contains(screenX, screenY)) {
+//			backButton.pressState = 1;
+//			return true;
+//		}
+//		if(difficultyNormalButton.hitbox.contains(screenX, screenY)){
+//			difficultyNormalButton.pressState = 1;
+////			level.settingsChanged = true;
+////			level.getPlayer().setHearts(5);
+//			return true;
+//		}
+//		if(difficultyHardButton.hitbox.contains(screenX, screenY)){
+//			difficultyHardButton.pressState = 1;
+////			level.settingsChanged = true;
+////			level.getPlayer().setHearts(4);
+//			return true;
+//		}
+//		if(difficultyVeteranButton.hitbox.contains(screenX, screenY)){
+//			difficultyVeteranButton.pressState = 1;
+////			level.settingsChanged = true;
+////			level.getPlayer().setHearts(3); //TODO fix
+//			return true;
+//		}
+//		if (fullScreenOnButton.hitbox.contains(screenX, screenY)) {
+//			fullScreenOnButton.pressState = 1;
+//		}
+//		if (fullScreenOffButton.hitbox.contains(screenX, screenY)) {
+//			fullScreenOffButton.pressState = 1;
+//		}
+		for (MenuButton button : buttons) {
+			if (button.hitbox.contains(screenX, screenY) && button.pressState == 0) {
+				button.pressState = 1;
+			}
 		}
-		if(normalHitbox.contains(screenX, screenY)){
-			normalPressState = 1;
-			level.setNormalDifficulty(true);
-			this.setCurrentDifficulty(0);
-			level.settingsChanged = true;
-			level.getPlayer().setHearts(5);
-			return true;
+		for (MenuSlider slider : sliders) {
+			if (slider.hitbox.contains(screenX, screenY) && slider.pressState == 0) {
+				slider.pressState = 1;
+			}
 		}
-		if(hardHitbox.contains(screenX, screenY)){
-			hardPressState = 1;
-			level.setHardDifficulty(true);
-			this.setCurrentDifficulty(1);
-			level.settingsChanged = true;
-			level.getPlayer().setHearts(4);
-			return true;
-		}
-		if(veteranHitbox.contains(screenX, screenY)){
-			veteranPressState = 1;
-			level.setVeteranDifficulty(true);
-			this.setCurrentDifficulty(2);
-			level.settingsChanged = true;
-			level.getPlayer().setHearts(3);
-			return true;
-		}
-
 		return false;
 	}
 	
@@ -472,31 +629,29 @@ public class SettingsScreen implements Screen, InputProcessor, ControllerListene
 	 * @param pointer the button or touch finger number
 	 * @return whether to hand the event to other listeners. 
 	 */	
-	public boolean touchUp(int screenX, int screenY, int pointer, int button) {
-		if (volumePressState == 1) {
-			volumePressState = 2;
-			return true;
+	public boolean touchUp(int screenX, int screenY, int pointer, int buttonCode) {
+		if (!active) return false;
+
+		screenY = heightY - screenY;
+
+		for (MenuButton button : buttons) {
+			if (button.pressState == 1) {
+				if (button.hitbox.contains(screenX, screenY)) {
+					button.pressState = 2;
+					return true;
+				} else {
+					button.pressState = 0;
+				}
+			}
 		}
-		if(screenSizePressState == 1){
-			screenSizePressState = 2;
-			return true;
+
+		for (MenuSlider slider : sliders) {
+			if (slider.hitbox.contains(screenX, screenY) && slider.pressState == 1) {
+				slider.pressState = 0;
+				return true;
+			}
 		}
-		if (backPressState == 1) {
-			backPressState = 2;
-			return true;
-		}
-//		if(normalPressState == 1){
-//			normalPressState = 2;
-//			return true;
-//		}
-//		if(hardPressState == 1){
-//			hardPressState = 2;
-//			return true;
-//		}
-//		if(veteranPressState == 1){
-//			veteranPressState = 2;
-//			return true;
-//		}
+
 		return false;
 	}
 	
@@ -512,27 +667,23 @@ public class SettingsScreen implements Screen, InputProcessor, ControllerListene
 	 * @return whether to hand the event to other listeners. 
 	 */
 	public boolean buttonDown (Controller controller, int buttonCode) {
-		if (volumePressState == 0) {
-			ControllerMapping mapping = controller.getMapping();
-			if (mapping != null && buttonCode == mapping.buttonStart ) {
-				volumePressState = 1;
-				return true;
-			}
+		if (!active) return false;
+
+		Gdx.input.setCursorCatched(true);
+
+		ControllerMapping mapping = controller.getMapping();
+		if (mapping == null) return true;
+
+		if (backButton.pressState == 0 && buttonCode == mapping.buttonStart ) {
+			backButton.pressState = 1;
+			return true;
 		}
-		if (screenSizePressState == 0) {
-			ControllerMapping mapping = controller.getMapping();
-			if (mapping != null && buttonCode == mapping.buttonStart ) {
-				screenSizePressState = 1;
-				return true;
-			}
+
+		if (hoveredButton.pressState == 0 && buttonCode == mapping.buttonA) {
+			hoveredButton.pressState = 1;
+			return true;
 		}
-		if (backPressState == 0) {
-			ControllerMapping mapping = controller.getMapping();
-			if (mapping != null && buttonCode == mapping.buttonStart ) {
-				backPressState = 1;
-				return true;
-			}
-		}
+
 		return false;
 	}
 	
@@ -548,27 +699,22 @@ public class SettingsScreen implements Screen, InputProcessor, ControllerListene
 	 * @return whether to hand the event to other listeners. 
 	 */
 	public boolean buttonUp (Controller controller, int buttonCode) {
-		if (volumePressState == 1) {
-			ControllerMapping mapping = controller.getMapping();
-			if (mapping != null && buttonCode == mapping.buttonStart ) {
-				volumePressState = 2;
-				return true;
-			}
+		if (!active) return false;
+
+		Gdx.input.setCursorCatched(true);
+		ControllerMapping mapping = controller.getMapping();
+		if (mapping == null) return true;
+
+		if (backButton.pressState == 1 && buttonCode == mapping.buttonStart ) {
+			backButton.pressState = 2;
+			return true;
 		}
-		if (screenSizePressState == 1) {
-			ControllerMapping mapping = controller.getMapping();
-			if (mapping != null && buttonCode == mapping.buttonStart ) {
-				screenSizePressState = 2;
-				return true;
-			}
+
+		if (hoveredButton.pressState == 1 && buttonCode == mapping.buttonA) {
+			hoveredButton.pressState = 2;
+			return true;
 		}
-		if (backPressState == 1) {
-			ControllerMapping mapping = controller.getMapping();
-			if (mapping != null && buttonCode == mapping.buttonStart ) {
-				backPressState = 2;
-				return true;
-			}
-		}
+
 		return false;
 	}
 	
@@ -580,7 +726,21 @@ public class SettingsScreen implements Screen, InputProcessor, ControllerListene
 	 * @param keycode the key pressed
 	 * @return whether to hand the event to other listeners. 
 	 */
-	public boolean keyDown(int keycode) { 
+	public boolean keyDown(int keycode) {
+		if (!active) return false;
+		if (!Gdx.input.isCursorCatched()) {
+			Gdx.input.setCursorCatched(true);
+		}
+		menuUp = keycode == Input.Keys.UP;
+		menuDown = keycode == Input.Keys.DOWN;
+		menuLeft = keycode == Input.Keys.LEFT;
+		menuRight = keycode == Input.Keys.RIGHT;
+
+		if (keycode == Input.Keys.ENTER && hoveredButton != null && hoveredButton.pressState == 0) {
+			hoveredButton.pressState = 1;
+			return true;
+		}
+
 		return false;
 	}
 
@@ -600,7 +760,33 @@ public class SettingsScreen implements Screen, InputProcessor, ControllerListene
 	 * @param keycode the key released
 	 * @return whether to hand the event to other listeners. 
 	 */	
-	public boolean keyUp(int keycode) { 
+	public boolean keyUp(int keycode) {
+		if (!active) return false;
+		if (keycode == Input.Keys.UP) {
+			menuUp = false;
+			menuCooldown = 0;
+			return true;
+		}
+		if (keycode == Input.Keys.DOWN) {
+			menuDown = false;
+			menuCooldown = 0;
+			return true;
+		}
+		if (keycode == Input.Keys.LEFT) {
+			menuLeft = false;
+			menuCooldown = 0;
+			return true;
+		}
+		if (keycode == Input.Keys.RIGHT) {
+			menuRight = false;
+			menuCooldown = 0;
+			return true;
+		}
+
+		if (keycode == Input.Keys.ENTER && hoveredButton != null && hoveredButton.pressState == 1) {
+			hoveredButton.pressState = 2;
+			return true;
+		}
 		return false;
 	}
 	
@@ -612,7 +798,31 @@ public class SettingsScreen implements Screen, InputProcessor, ControllerListene
 	 * @return whether to hand the event to other listeners. 
 	 */	
 	public boolean mouseMoved(int screenX, int screenY) {
-		Gdx.input.setCursorCatched(false);
+		if (!active) return false;
+		if (Gdx.input.isCursorCatched()) {
+			Gdx.input.setCursorCatched(false);
+			if (hoveredButton != null) {
+				float x = hoveredButton.hitbox.x + hoveredButton.hitbox.width / 2;
+				float y = hoveredButton.hitbox.y + hoveredButton.hitbox.height / 2;
+				Gdx.input.setCursorPosition((int) x, heightY - (int) y);
+			}
+			return true;
+		}
+
+		screenY = heightY - screenY;
+		hoveredButton = null;
+		for (MenuButton button : buttons) {
+			if (button.hitbox.contains(screenX, screenY)) {
+				hoveredButton = button;
+				return true;
+			}
+		}
+		for (MenuSlider slider : sliders) {
+			if (slider.hitbox.contains(screenX, screenY)) {
+				hoveredButton = slider;
+				return true;
+			}
+		}
 		return false;
 	}
 
@@ -636,8 +846,15 @@ public class SettingsScreen implements Screen, InputProcessor, ControllerListene
 	 * @param pointer the button or touch finger number
 	 * @return whether to hand the event to other listeners. 
 	 */		
-	public boolean touchDragged(int screenX, int screenY, int pointer) { 
-		return false;
+	public boolean touchDragged(int screenX, int screenY, int pointer) {
+		if (!active) return false;
+		if (!(hoveredButton instanceof MenuSlider)) return false;
+		if (hoveredButton.pressState != 1) return false;
+
+		MenuSlider slider = (MenuSlider) hoveredButton;
+		float value = (screenX - slider.unfilledRect.x) / slider.unfilledRect.width;
+		slider.setValue(value);
+		return true;
 	}
 	
 	// UNSUPPORTED METHODS FROM ControllerListener
@@ -667,14 +884,32 @@ public class SettingsScreen implements Screen, InputProcessor, ControllerListene
 	 * @return whether to hand the event to other listeners. 
 	 */
 	public boolean axisMoved (Controller controller, int axisCode, float value) {
-		return false;
-	}
+		if (!active) {
+			return false;
+		}
 
-	public int getCurrentDifficulty() {
-		return currentDifficulty;
-	}
+		if (axisCode == 0) {
+			if (Math.abs(value) < 0.25) {
+				menuLeft = false;
+				menuRight = false;
+			} else {
+				menuLeft = value < 0;
+				menuRight = value > 0;
+			}
+		} else if (axisCode == 1) {
+			if (Math.abs(value) < 0.25) {
+				menuDown = false;
+				menuUp = false;
+			} else {
+				menuUp = value < 0;
+				menuDown = value > 0;
+			}
+		}
 
-	public void setCurrentDifficulty(int currentDifficulty) {
-		this.currentDifficulty = currentDifficulty;
+		if (!menuUp && !menuDown && !menuLeft && !menuRight) {
+			menuCooldown = 0;
+		}
+
+		return true;
 	}
 }
