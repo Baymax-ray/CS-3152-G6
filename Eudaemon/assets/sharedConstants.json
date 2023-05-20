@@ -34,7 +34,7 @@
     "dashCooldownInFrames": 70,
     "dashIFrames": 40,
 
-    "wallSlideVelocity": -1.0,
+    "wallSlideVelocity": -0.5,
     "wallJumpCooldownTicks": 60,
     "wallJumpXVelocity": 7.0,
 
