@@ -11,6 +11,7 @@
     "file.lastUsedOpenFilter": "全部文件 (*)",
     "fileStates": {
         "/Users/neelin2/coding/cs3152/Eudaemon/CS-3152-G6/Eudaemon/assets/EudaemonTileset.json": {
+            "dynamicWrapping": true,
             "scaleInDock": 1
         },
         "C:/Users/neelin2/coding/cs3152/Eudaemon/CS-3152-G6/Eudaemon/assets/EudaemonTileset.json": {
@@ -72,11 +73,11 @@
             "expandedObjectLayers": [
                 7
             ],
-            "scale": 1.3721,
+            "scale": 0.7645,
             "selectedLayer": 3,
             "viewCenter": {
-                "x": 1596.8223890386994,
-                "y": 951.8256686830405
+                "x": 1232.1778940483978,
+                "y": 814.911706998038
             }
         },
         "level10.json": {
@@ -119,41 +120,41 @@
             "scale": 0.6365,
             "selectedLayer": 3,
             "viewCenter": {
-                "x": 1293.0086410054992,
-                "y": 653.5742340926946
+                "x": 1253.7313432835822,
+                "y": 898.6645718774549
             }
         },
         "level4.json": {
             "expandedObjectLayers": [
                 7
             ],
-            "scale": 0.8626,
+            "scale": 0.7205,
             "selectedLayer": 3,
             "viewCenter": {
-                "x": -8.115001159285953,
-                "y": 521.6786459540922
+                "x": 620.4024982650936,
+                "y": 725.8848022206801
             }
         },
         "level5.json": {
             "expandedObjectLayers": [
                 7
             ],
-            "scale": 1.5046,
+            "scale": 0.47,
             "selectedLayer": 3,
             "viewCenter": {
-                "x": 1119.898976472152,
-                "y": 639.3725907217865
+                "x": 1661.7021276595744,
+                "y": 770.2127659574467
             }
         },
         "level6.json": {
             "expandedObjectLayers": [
                 7
             ],
-            "scale": 0.9868,
-            "selectedLayer": 3,
+            "scale": 1.0062,
+            "selectedLayer": 0,
             "viewCenter": {
-                "x": 767.1260640453993,
-                "y": 959.6676124847993
+                "x": 717.5511826674617,
+                "y": 611.2104949314252
             }
         },
         "level7.json": {
@@ -191,7 +192,7 @@
         }
     },
     "last.externalTilesetPath": "/Users/neelin2/coding/cs3152/Eudaemon/CS-3152-G6/Eudaemon/assets",
-    "last.imagePath": "F:/Programming/School/CS 3152/Eudaemon/CS-3152-G6/Eudaemon/assets/tiles",
+    "last.imagePath": "/Users/neelin2/coding/cs3152/Eudaemon/CS-3152-G6/Eudaemon/assets/tiles",
     "last.objectTemplatePath": "F:/Programming/School/CS 3152/Eudaemon/CS-3152-G6/Eudaemon/assets/levels/Templates",
     "map.height": 40,
     "map.lastUsedFormat": "json",
