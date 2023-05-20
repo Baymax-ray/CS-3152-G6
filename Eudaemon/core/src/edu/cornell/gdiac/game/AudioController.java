@@ -144,6 +144,13 @@ public class AudioController implements SettingsObserver {
         settings.removeObserver(this);
     }
 
+    public void stopAllEffects(){
+        for(Sound effect: effects.values()){
+            effect.stop();
+        }
+    }
+
+
     private void playEffect(Sound effect, float volume) {
         if (effectIds.containsKey(effect)) {
             effect.stop(effectIds.get(effect));
