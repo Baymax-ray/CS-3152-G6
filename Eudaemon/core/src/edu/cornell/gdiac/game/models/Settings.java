@@ -5,7 +5,6 @@ import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Json;
 import com.badlogic.gdx.utils.JsonWriter;
-import com.badlogic.gdx.utils.ObjectMap;
 import edu.cornell.gdiac.game.SettingsObserver;
 
 public class Settings {
@@ -28,14 +27,14 @@ public class Settings {
     private String customJumpKey;
     private String customDashKey;
     private String customAttackKey;
+    private String customTransformKey;
     private String customResetKey;
 
     private transient Array<SettingsObserver> observers;
+    private transient ActionBindings actionBindings;
 
     public Settings() {
         this.observers = new Array<>();
-        this.fullscreen = true;
-        this.screenShake = true;
     }
 
     public static Settings defaultSettings() {
@@ -55,6 +54,7 @@ public class Settings {
         s.customJumpKey = null;
         s.customDashKey = null;
         s.customAttackKey = null;
+        s.customTransformKey = null;
         s.customResetKey = null;
 
         return s;
@@ -66,6 +66,20 @@ public class Settings {
         json.setOutputType(JsonWriter.OutputType.json);
         String saveData = json.toJson(this);
         saveFile.writeString(saveData, false);
+    }
+
+    public void setActionBindings(ActionBindings actionBindings) {
+        this.actionBindings = actionBindings;
+        setUseArrowKeys(useArrowKeys);
+        setCustomJumpKey(customJumpKey);
+        setCustomDashKey(customDashKey);
+        setCustomAttackKey(customAttackKey);
+        setCustomTransformKey(customTransformKey);
+        setCustomResetKey(customResetKey);
+    }
+
+    public ActionBindings getActionBindings() {
+        return actionBindings;
     }
 
     public boolean isNormalDifficulty() {
@@ -216,20 +230,51 @@ public class Settings {
 
     public void setUseArrowKeys(boolean useArrowKeys) {
         this.useArrowKeys = useArrowKeys;
+        if (useArrowKeys) {
+            if (setArrowKeyBindings()) {
+                observers.forEach(o -> o.onUseArrowKeys(true));
+            }
+        } else {
+            if (setWasdBindings()) {
+                observers.forEach(o -> o.onUseArrowKeys(false));
+            }
+        }
         save();
-        observers.forEach(o -> o.onUseArrowKeys(useArrowKeys));
+    }
+
+    private boolean setArrowKeyBindings() {
+         return actionBindings.addCustomKeyForAction(Action.LOOK_UP, "Up")
+                | actionBindings.addCustomKeyForAction(Action.LOOK_DOWN, "Down")
+                | actionBindings.addCustomKeyForAction(Action.MOVE_LEFT, "Left")
+                | actionBindings.addCustomKeyForAction(Action.MOVE_RIGHT, "Right");
+    }
+
+    private boolean setWasdBindings() {
+        return actionBindings.addCustomKeyForAction(Action.LOOK_UP, "W")
+                | actionBindings.addCustomKeyForAction(Action.LOOK_DOWN, "S")
+                | actionBindings.addCustomKeyForAction(Action.MOVE_LEFT, "A")
+                | actionBindings.addCustomKeyForAction(Action.MOVE_RIGHT, "D");
     }
 
     public void setDefault() {
-        useArrowKeys = false;
+        setUseArrowKeys(false);
+
+        setCustomJumpKey(getDefaultJumpKey());
+        setCustomDashKey(getDefaultDashKey());
+        setCustomAttackKey(getDefaultAttackKey());
+        setCustomTransformKey(getDefaultTransformKey());
+        setCustomResetKey(getDefaultResetKey());
+
         customJumpKey = null;
         customDashKey = null;
         customAttackKey = null;
+        customTransformKey = null;
         customResetKey = null;
-
         save();
+    }
 
-        observers.forEach(o -> o.onDefault());
+    public String getDefaultJumpKey() {
+        return actionBindings.getDefaultJump();
     }
 
     public String getCustomJumpKey() {
@@ -238,9 +283,17 @@ public class Settings {
 
     public void setCustomJumpKey(String customJumpKey) {
         this.customJumpKey = customJumpKey;
+        if (this.actionBindings.addCustomKeyForAction(Action.BEGIN_JUMP, customJumpKey)) {
+            observers.forEach(o -> o.onCustomBinding(Action.BEGIN_JUMP, customJumpKey));
+        }
+        if (this.actionBindings.addCustomKeyForAction(Action.HOLD_JUMP, customJumpKey)) {
+            observers.forEach(o -> o.onCustomBinding(Action.HOLD_JUMP, customJumpKey));
+        }
         save();
-        observers.forEach(o -> o.onCustomBinding(Action.BEGIN_JUMP, customJumpKey));
-        observers.forEach(o -> o.onCustomBinding(Action.HOLD_JUMP, customJumpKey));
+    }
+
+    public String getDefaultDashKey() {
+        return actionBindings.getDefaultDash();
     }
 
     public String getCustomDashKey() {
@@ -249,9 +302,17 @@ public class Settings {
 
     public void setCustomDashKey(String customDashKey) {
         this.customDashKey = customDashKey;
+        if (this.actionBindings.addCustomKeyForAction(Action.DASH, customDashKey)) {
+            observers.forEach(o -> o.onCustomBinding(Action.DASH, customDashKey));
+        }
+        if (this.actionBindings.addCustomKeyForAction(Action.HOLD_DASH, customDashKey)) {
+            observers.forEach(o -> o.onCustomBinding(Action.HOLD_DASH, customDashKey));
+        }
         save();
-        observers.forEach(o -> o.onCustomBinding(Action.DASH, customDashKey));
-        observers.forEach(o -> o.onCustomBinding(Action.HOLD_DASH, customDashKey));
+    }
+
+    public String getDefaultAttackKey() {
+        return actionBindings.getDefaultAttack();
     }
 
     public String getCustomAttackKey() {
@@ -260,8 +321,30 @@ public class Settings {
 
     public void setCustomAttackKey(String customAttackKey) {
         this.customAttackKey = customAttackKey;
+        if (this.actionBindings.addCustomKeyForAction(Action.ATTACK, customAttackKey)) {
+            observers.forEach(o -> o.onCustomBinding(Action.ATTACK, customAttackKey));
+        }
         save();
-        observers.forEach(o -> o.onCustomBinding(Action.ATTACK, customAttackKey));
+    }
+
+    public String getDefaultTransformKey() {
+        return actionBindings.getDefaultTransform();
+    }
+
+    public String getCustomTransformKey() {
+        return customTransformKey;
+    }
+
+    public void setCustomTransformKey(String customTransformKey) {
+        this.customAttackKey = customAttackKey;
+        if (this.actionBindings.addCustomKeyForAction(Action.TRANSFORM, customTransformKey)) {
+            observers.forEach(o -> o.onCustomBinding(Action.TRANSFORM, customTransformKey));
+        }
+        save();
+    }
+
+    public String getDefaultResetKey() {
+        return actionBindings.getDefaultReset();
     }
 
     public String getCustomResetKey() {
@@ -270,10 +353,11 @@ public class Settings {
 
     public void setCustomResetKey(String customResetKey) {
         this.customResetKey = customResetKey;
+        if (this.actionBindings.addCustomKeyForAction(Action.RESET, customResetKey)) {
+            observers.forEach(o -> o.onCustomBinding(Action.RESET, customResetKey));
+        }
         save();
-        observers.forEach(o -> o.onCustomBinding(Action.RESET, customResetKey));
     }
-
 
 
     public void addObserver(SettingsObserver o) {

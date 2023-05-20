@@ -4,7 +4,6 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.utils.Json;
 import com.badlogic.gdx.utils.JsonValue;
-import com.badlogic.gdx.utils.JsonWriter;
 import edu.cornell.gdiac.assets.AssetDirectory;
 
 import java.util.Collection;
@@ -12,7 +11,6 @@ import java.util.HashMap;
 
 public class GameState {
     private final AssetDirectory assets;
-    private final ActionBindings bindings;
     private Settings settings;
     //other global settings go here
     private final Tile[] tiles;
@@ -56,7 +54,7 @@ public class GameState {
     }
 
     public ActionBindings getActionBindings() {
-        return bindings;
+        return settings.getActionBindings();
     }
 
     public void dispose() {
@@ -85,8 +83,6 @@ public class GameState {
 
         JsonValue constants = assets.getEntry("constants",  JsonValue.class);
 
-        bindings = new ActionBindings(assets.getEntry("inputMappings", JsonValue.class));
-
         try {
             FileHandle saveFile = Gdx.files.local("eudaemon-save-data.json");
             Json json = new Json();
@@ -96,6 +92,8 @@ public class GameState {
             settings = Settings.defaultSettings();
             settings.save();
         }
+
+        settings.setActionBindings(new ActionBindings(assets.getEntry("inputMappings", JsonValue.class)));
 
         String levelName = constants.get("levels").get(0).getString("level");
 //        System.out.println(levelName);

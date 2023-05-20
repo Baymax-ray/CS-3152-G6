@@ -10,6 +10,5 @@ public interface SettingsObserver {
     default void onBrightnessChange(float newVolume) {}
     default void onNumLevelsAvailable(float newNumLevels) {}
     default void onUseArrowKeys(boolean useArrowKeys) {}
-    default void onDefault() {}
     default void onCustomBinding(Action action, String binding) {}
 }

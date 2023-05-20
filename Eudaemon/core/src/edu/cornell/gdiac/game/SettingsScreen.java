@@ -274,10 +274,15 @@ public class SettingsScreen implements Screen, InputProcessor, ControllerListene
 		difficultyVeteranButton.up = screenShakeOffButton;
 		difficultyVeteranButton.left = difficultyHardButton;
 
-		volumeSlider.up = backButton;
+		volumeSlider.up = controlsButton;
+		controlsButton.down = volumeSlider;
+		backButton.down = volumeSlider;
+
+
 		fullScreenOnButton.left = backButton;
 		screenShakeOnButton.left = backButton;
 		difficultyNormalButton.left = backButton;
+		controlsButton.left = backButton;
 
 		// Compute the dimensions from the canvas
 		resize(canvas.getWidth(),canvas.getHeight());
