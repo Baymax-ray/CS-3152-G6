@@ -89,7 +89,6 @@ public class GameState {
         try {
             FileHandle saveFile = Gdx.files.local("eudaemon-save-data.json");
             Json json = new Json();
-            System.out.println(saveFile.readString());
             settings = json.fromJson(Settings.class, saveFile.readString());
         } catch (Exception e) {
             settings = Settings.defaultSettings();

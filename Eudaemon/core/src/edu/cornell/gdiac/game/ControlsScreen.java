@@ -348,7 +348,6 @@ public class ControlsScreen implements Screen, InputProcessor, ControllerListene
      * Resets the screen so it can be reused
      */
     public void reset() {
-        System.out.println("WHATS GOIND ON HERE");
         for (MenuButton button : buttons) {
             button.pressState = 0;
         }
@@ -671,7 +670,6 @@ public class ControlsScreen implements Screen, InputProcessor, ControllerListene
                 else if  (hoveredButton == transformButton)
                     settings.setCustomTransformKey(keyName);
                 else {
-                    System.out.println("Invalid State, weird");
                     mappingMode = false;
                     return true;
                 }
