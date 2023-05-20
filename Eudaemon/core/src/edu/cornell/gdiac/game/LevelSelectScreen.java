@@ -189,11 +189,11 @@ public class LevelSelectScreen implements Screen, InputProcessor, ControllerList
         levelButtons.get(8).left = levelButtons.get(7);
         levelButtons.get(8).up = levelButtons.get(10);
 
-        levelButtons.get(9).left = levelButtons.get(10);
+        levelButtons.get(9).right = levelButtons.get(10);
         levelButtons.get(9).down = levelButtons.get(7);
 
         levelButtons.get(10).down = levelButtons.get(8);
-        levelButtons.get(10).right = levelButtons.get(9);
+        levelButtons.get(10).left = levelButtons.get(9);
 
         levelButtons.get(0).left = backButton;
         levelButtons.get(1).left = backButton;
