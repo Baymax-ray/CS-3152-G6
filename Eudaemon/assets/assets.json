@@ -379,6 +379,7 @@
         "platform:combo_keyboardN+W_controllerButtonLeft+joystickUp": "platform/combo_keyboardN+W_controllerButtonLeft+joystickUp.png",
         "platform:combo_keyboardM_controllerButtonUp": "platform/combo_keyboardM_controllerButtonUp.png",
         "platform:combo_keyboardA+D_joystickLeftRight": "platform/combo_keyboardA+D_joystickLeftRight.png",
+        "platform:wallJumpTutorial": "platform/wallJumpTutorial.png",
 
         "tiles:DeepDirt1x1A.png": "tiles/DeepDirt1x1A.png",
         "tiles:DeepDirt1x1B.png": "tiles/DeepDirt1x1B.png",
@@ -713,7 +714,6 @@
         "level10": "levels/level10.json",
         "tileset": "EudaemonTileset.json"
     },
-
     "sounds" : {
         "music:momo": "music/MomoTheme-Ver2.mp3",
         "music:chiyo": "music/ChiyoTheme-Ver2.mp3",
