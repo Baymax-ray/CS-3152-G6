@@ -1245,78 +1245,6 @@
                  "y":633.245352634742
                 }, 
                 {
-                 "gid":88,
-                 "height":32,
-                 "id":241,
-                 "name":"MOMO",
-                 "rotation":0,
-                 "type":"Enemy",
-                 "visible":true,
-                 "width":32,
-                 "x":802.619287539547,
-                 "y":1118.63854234274
-                }, 
-                {
-                 "gid":88,
-                 "height":32,
-                 "id":247,
-                 "name":"MOMO",
-                 "rotation":0,
-                 "type":"Enemy",
-                 "visible":true,
-                 "width":32,
-                 "x":768.330622246139,
-                 "y":1117.94860170971
-                }, 
-                {
-                 "gid":88,
-                 "height":32,
-                 "id":248,
-                 "name":"MOMO",
-                 "rotation":0,
-                 "type":"Enemy",
-                 "visible":true,
-                 "width":32,
-                 "x":737.508325274875,
-                 "y":1119.04975585517
-                }, 
-                {
-                 "gid":88,
-                 "height":32,
-                 "id":249,
-                 "name":"MOMO",
-                 "rotation":0,
-                 "type":"Enemy",
-                 "visible":true,
-                 "width":32,
-                 "x":479.678849766522,
-                 "y":1119.4534083442
-                }, 
-                {
-                 "gid":88,
-                 "height":32,
-                 "id":251,
-                 "name":"MOMO",
-                 "rotation":0,
-                 "type":"Enemy",
-                 "visible":true,
-                 "width":32,
-                 "x":447.84363205233,
-                 "y":1120.26946852003
-                }, 
-                {
-                 "gid":88,
-                 "height":32,
-                 "id":252,
-                 "name":"MOMO",
-                 "rotation":0,
-                 "type":"Enemy",
-                 "visible":true,
-                 "width":32,
-                 "x":513.886248008209,
-                 "y":1120.00734816837
-                }, 
-                {
                  "gid":85,
                  "height":23,
                  "id":253,
@@ -1455,7 +1383,7 @@
          "value":1
         }],
  "renderorder":"right-down",
- "tiledversion":"1.10.0",
+ "tiledversion":"1.10.1",
  "tileheight":32,
  "tilesets":[
         {
