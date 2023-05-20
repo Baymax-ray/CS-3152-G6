@@ -205,6 +205,10 @@ public class Player extends CapsuleObstacle {
      * The sprite sheet containing the momo run animation frames.
      */
     private final TextureRegion momoRunSpriteSheet;
+    /**
+     * The sprite sheet containing the momo idle animation frames.
+     */
+    private final TextureRegion momoIdleSpriteSheet;
 
     /**
      * The sprite sheet containing the momo jump animation frames.
@@ -533,6 +537,14 @@ public class Player extends CapsuleObstacle {
      */
     public TextureRegion getMomoRunSpriteSheet() {
         return momoRunSpriteSheet;
+    }
+    /**
+     * Get momoIdleSpriteSheet.
+     *
+     * @return The momoIdleSpriteSheet TextureRegion.
+     */
+    public TextureRegion getMomoIdleSpriteSheet() {
+        return momoIdleSpriteSheet;
     }
 
     /**
@@ -1361,6 +1373,7 @@ public class Player extends CapsuleObstacle {
 
         this.momoDashSpriteSheet = new TextureRegion(assets.getEntry( "momo:dash", Texture.class));
         this.momoRunSpriteSheet = new TextureRegion(assets.getEntry( "momo:run", Texture.class));
+        this.momoIdleSpriteSheet = new TextureRegion(assets.getEntry( "momo:idle", Texture.class));
         this.momoJumpSpriteSheet = new TextureRegion(assets.getEntry( "momo:jump", Texture.class));
         this.chiyoRunSpriteSheet = new TextureRegion(assets.getEntry( "chiyo:run", Texture.class));
         this.chiyoJumpSpriteSheet = new TextureRegion(assets.getEntry( "chiyo:jump", Texture.class));
