@@ -710,6 +710,7 @@
         "level7": "levels/level7.json",
         "tileset": "EudaemonTileset.json"
     },
+
     "sounds" : {
         "music:momo": "music/MomoTheme-Ver2.mp3",
         "music:chiyo": "music/ChiyoTheme-Ver2.mp3",
