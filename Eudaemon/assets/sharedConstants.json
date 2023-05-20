@@ -190,7 +190,7 @@
     "maxSpeed": 1,
     "speedMult": 1.0,
     "horizontalAcceleration": 0.12,
-    "initialHearts": 5,
+    "initialHearts": 3,
     "attackPower": 1,
     "startsFacingRight": false,
     "attackCooldown": 30,
