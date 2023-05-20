@@ -47,14 +47,12 @@ public class CameraController {
     public void handleGameplayCamera(GameCanvas canvas, Level level) {
         if (level.getPlayer().isRemoved()) return;
 
-
-
-        if (Gdx.input.isKeyPressed(Input.Keys.O)) {
-            camera.zoom += 0.02;
-        }
-        if (Gdx.input.isKeyPressed(Input.Keys.I)) {
-            camera.zoom -= 0.02;
-        }
+//        if (Gdx.input.isKeyPressed(Input.Keys.O)) {
+//            camera.zoom += 0.02;
+//        }
+//        if (Gdx.input.isKeyPressed(Input.Keys.I)) {
+//            camera.zoom -= 0.02;
+//        }
 
         float camZone_x = level.getCamZoneX();
         float camZone_y = level.getCamZoneY();
