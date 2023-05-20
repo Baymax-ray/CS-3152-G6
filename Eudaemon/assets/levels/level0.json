@@ -1195,7 +1195,7 @@
                         {
                          "name":"NextLevel",
                          "type":"string",
-                         "value":"level10"
+                         "value":"win"
                         }],
                  "rotation":0,
                  "type":"",

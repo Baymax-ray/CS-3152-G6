@@ -70,11 +70,15 @@ public class Exit extends BoxObstacle {
         setX(x + xOffset);
         setY(y + yOffset);
 
+        boolean hasNext = false;
+
         for (JsonValue prop : props) {
             if (prop.getString("name").equals("NextLevel")) {
                 this.nextLevel = prop.getString("value");
+                hasNext = true;
             }
         }
+        if(!hasNext)this.nextLevel = "win";
 
         this.isReached = false;
         this.bodyinfo.type = BodyDef.BodyType.StaticBody;
