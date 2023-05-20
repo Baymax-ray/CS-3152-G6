@@ -181,9 +181,6 @@ public class CollisionController implements ContactListener {
         if ((bd1 instanceof SwordWheelObstacle && bd2.toString().contains("Tile")) || (bd2 instanceof SwordWheelObstacle && bd1.toString().contains("Tile"))) {
             SwordWheelObstacle sword = (SwordWheelObstacle) (bd1 instanceof SwordWheelObstacle ? bd1 : bd2);
 
-            //prints if hit wall
-            System.out.println("hit wall");
-
             if (!sword.hasHitWall()) {
                 Player player = level.getPlayer();
                 float x = player.getX();

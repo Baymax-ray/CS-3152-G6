@@ -123,7 +123,7 @@ public class Spike extends BoxObstacle {
                         this.offsetY = 0.5f;
                         break;
                     default:
-                        System.out.println("something wrong");
+                        System.out.println("Error: invalid state");
                 }
             }
             else if (property.getString("name").equals("Respawn")) { //Whether this spike will teleport player back to platform

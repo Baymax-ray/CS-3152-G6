@@ -604,7 +604,6 @@ public class DeathScreen implements Screen, InputProcessor, ControllerListener {
 			menuUp = value < 0;
 			menuDown = value > 0;
 		}
-		System.out.println("AHLDHKJDSHFKH");
 		return true;
 	}
 

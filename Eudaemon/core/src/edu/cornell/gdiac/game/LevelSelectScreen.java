@@ -366,8 +366,6 @@ public class LevelSelectScreen implements Screen, InputProcessor, ControllerList
 
             button.texture.setRegion((int) pos.x, STANDARD_HEIGHT - (int) pos.y - LEVEL_BUTTON_HEIGHT, levelButtonWidth, LEVEL_BUTTON_HEIGHT);
 
-            System.out.println(button.texture.getRegionX() + " " + button.texture.getRegionY() + " " + button.texture.getRegionWidth() + " " + button.texture.getRegionHeight());
-
             button.hitbox.setPosition(pos.scl(scale));
             button.hitbox.setSize(levelButtonWidth * scale, LEVEL_BUTTON_HEIGHT * scale);
 

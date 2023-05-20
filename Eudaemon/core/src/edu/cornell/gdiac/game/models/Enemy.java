@@ -467,7 +467,7 @@ public class Enemy extends CapsuleObstacle {
                         break;
                     default:
                         //should not get here
-                        System.out.println("something wrong");
+                        System.out.println("Error: invalid state");
                 }
                 switch (projectileSpriteSheetType) {
                     case "Left":
@@ -481,7 +481,7 @@ public class Enemy extends CapsuleObstacle {
                         TextureAsset = "enemy:projectileEnemyUpIdle";
                         break;
                     default:
-                        System.out.println("something wrong");
+                        System.out.println("Error: invalid state");
                 }
                 break;
             default:
@@ -665,7 +665,7 @@ public class Enemy extends CapsuleObstacle {
                         break;
                     default:
                         //should not get here
-                        System.out.println("something wrong");
+                        System.out.println("Error: invalid state");
                 }
             }else{
             this.texture = (TextureRegion) animations.get(currentAnimation).getKeyFrame(currentFrame);}

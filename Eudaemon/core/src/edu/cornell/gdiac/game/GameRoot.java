@@ -55,8 +55,6 @@ public class GameRoot extends Game implements ScreenListener {
 
 	@Override
 	public void exitScreen(Screen screen, int exitCode) {
-		System.out.println(screen);
-		System.out.println(exitCode);
 
 		if (exitCode == ExitCode.QUIT) {
 			Gdx.app.exit();
