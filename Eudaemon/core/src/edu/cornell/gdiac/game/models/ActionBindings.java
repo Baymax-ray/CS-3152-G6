@@ -13,6 +13,12 @@ public class ActionBindings {
     private final ObjectMap<Action, Integer> mouseMap;
     private final ObjectMap<Action, Integer> controllerMap;
 
+    private String defaultJump;
+    private String defaultDash;
+    private String defaultAttack;
+    private String defaultTransform;
+    private String defaultReset;
+
     /**
      * Gets the map of input actions to input keys/buttons.
      *
@@ -26,10 +32,6 @@ public class ActionBindings {
         return mouseMap;
     }
 
-    public ObjectMap<Action, Integer> getControllerMap() {
-        return controllerMap;
-    }
-
     public ActionBindings(JsonValue json) {
         //Initialize map
         keyMap = new ObjectMap<>();
@@ -40,7 +42,45 @@ public class ActionBindings {
             String name = action.name;
             addKeyForAction(action, json);
             addMouseButtonForAction(action, json);
-//            controllerMap.put(action, getInputForKey(name, json)); // TODO: currently gets key name;
+        }
+
+        defaultJump = json.get("keyboard").getString(Action.BEGIN_JUMP.name);
+        defaultDash = json.get("keyboard").getString(Action.DASH.name);
+        defaultAttack = json.get("keyboard").getString(Action.ATTACK.name);
+        defaultTransform = json.get("keyboard").getString(Action.TRANSFORM.name);
+        defaultReset = json.get("keyboard").getString(Action.RESET.name);
+    }
+
+    public String getDefaultJump() {
+        return defaultJump;
+    }
+
+    public String getDefaultDash() {
+        return defaultDash;
+    }
+
+    public String getDefaultAttack() {
+        return defaultAttack;
+    }
+
+    public String getDefaultTransform() {
+        return defaultTransform;
+    }
+
+    public String getDefaultReset() {
+        return defaultReset;
+    }
+
+    /** returns true if the key value has changed */
+    public boolean addCustomKeyForAction(Action action, String keyName) {
+        try {
+            int keyCode = Input.Keys.valueOf(keyName);
+            if (keyCode == keyMap.get(action))
+                return false;
+            keyMap.put(action, keyCode);
+            return true;
+        } catch (Exception ignore) {
+            return false;
         }
     }
 

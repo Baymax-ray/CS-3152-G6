@@ -806,9 +806,9 @@
                  "name":"TutorialArea",
                  "properties":[
                         {
-                         "name":"image",
+                         "name":"type",
                          "type":"string",
-                         "value":"platform:combo_keyboardSpace_controllerButtonDown"
+                         "value":"JUMP"
                         }],
                  "rotation":0,
                  "type":"image",
@@ -824,9 +824,9 @@
                  "name":"TutorialArea",
                  "properties":[
                         {
-                         "name":"image",
+                         "name":"type",
                          "type":"string",
-                         "value":"platform:combo_keyboardN_controllerButtonLeft"
+                         "value":"DASH_MULTIDIRECTIONAL"
                         }],
                  "rotation":0,
                  "type":"image",
@@ -842,9 +842,9 @@
                  "name":"TutorialArea",
                  "properties":[
                         {
-                         "name":"image",
+                         "name":"type",
                          "type":"string",
-                         "value":"platform:combo_keyboardN+W_controllerButtonLeft+joystickUp"
+                         "value":"DASH_JUMP"
                         }],
                  "rotation":0,
                  "type":"image",
@@ -860,9 +860,9 @@
                  "name":"TutorialArea",
                  "properties":[
                         {
-                         "name":"image",
+                         "name":"type",
                          "type":"string",
-                         "value":"platform:combo_keyboardSpace_controllerButtonDown"
+                         "value":"JUMP"
                         }],
                  "rotation":0,
                  "type":"image",
@@ -878,9 +878,9 @@
                  "name":"TutorialArea",
                  "properties":[
                         {
-                         "name":"image",
+                         "name":"type",
                          "type":"string",
-                         "value":"platform:combo_keyboardA+D_joystickLeftRight"
+                         "value":"MOVE"
                         }],
                  "rotation":0,
                  "type":"image",

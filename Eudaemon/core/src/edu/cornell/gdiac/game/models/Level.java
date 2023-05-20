@@ -14,6 +14,7 @@ import com.badlogic.gdx.physics.box2d.*;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.JsonValue;
 import edu.cornell.gdiac.assets.AssetDirectory;
+import edu.cornell.gdiac.game.FontTextureLoader;
 import edu.cornell.gdiac.game.GameCanvas;
 import edu.cornell.gdiac.game.UIOverlay;
 import edu.cornell.gdiac.game.obstacle.EffectObstacle;
@@ -466,7 +467,7 @@ public class Level {
             return connections;
         }
     }
-    public Level(String levelName, Tile[] tiles, AssetDirectory assets) {
+    public Level(String levelName, Tile[] tiles, AssetDirectory assets, FontTextureLoader fontTextureLoader, Settings settings) {
         this.tiles = tiles;
         //this.billboard = new Billboard();
         this.normalDifficulty = true;
@@ -604,7 +605,7 @@ public class Level {
             else if (object.getString("name").equals("TutorialArea")) {
                 float x = (int) (object.getInt("x") / 32);
                 float y = heightInTiles - (int) (object.getInt("y") / 32);
-                tutorialAreas.add(new TutorialArea(object, assets,x,y));
+                tutorialAreas.add(new TutorialArea(object, assets,x,y, fontTextureLoader, settings));
             }
             else if (object.getString("name").equals("StartingPoint")) {
                 startX = (int) (object.getInt("x") / 32) + 1;
