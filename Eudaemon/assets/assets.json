@@ -669,6 +669,7 @@
         "levelSelect:8": "levelSelect/level8icon.png",
         "levelSelect:9": "levelSelect/level9icon.png",
         "levelSelect:10": "levelSelect/level10icon.png",
+        "levelSelect:11": "levelSelect/level11icon.png",
 
         "mainMenu:background": "backgrounds/mainMenuBackground.png",
         "mainMenu:start": "shared/mainMenuStart.png",
