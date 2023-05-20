@@ -18,8 +18,6 @@ import edu.cornell.gdiac.game.models.Settings;
 import edu.cornell.gdiac.util.Controllers;
 import edu.cornell.gdiac.util.ScreenListener;
 
-import java.util.Locale;
-
 public class ControlsScreen implements Screen, InputProcessor, ControllerListener {
     /** Background texture */
     private final Texture background;
@@ -80,6 +78,8 @@ public class ControlsScreen implements Screen, InputProcessor, ControllerListene
     private MenuLabel attackLabel;
     private MenuLabel transformLabel;
     private MenuLabel resetLabel;
+    private MenuLabel titleLabel;
+    private MenuLabel instructionsLabel;
 
     private Array<MenuLabel> labels;
 
@@ -107,7 +107,7 @@ public class ControlsScreen implements Screen, InputProcessor, ControllerListene
         this.canvas  = canvas;
         this.settings = settings;
 
-        background = assets.getEntry( "mainMenu:background", Texture.class ); // todo: get correct background
+        background = assets.getEntry( "settingsScreen:textlessBackground", Texture.class );
         background.setFilter( Texture.TextureFilter.Linear, Texture.TextureFilter.Linear );
 
         backButton = new MenuButton(new TextureRegion(assets.getEntry("settingsScreen:back", Texture.class)), ExitCode.SETTINGS);
@@ -116,9 +116,9 @@ public class ControlsScreen implements Screen, InputProcessor, ControllerListene
         menuFont = assets.getEntry("font:menu", BitmapFont.class);
         this.fontTextureLoader = fontTextureLoader;
 
-        wasdButton = new MenuButton(new TextureRegion(fontTextureLoader.createTexture(menuFont, "WASD")));
-        arrowsButton = new MenuButton(new TextureRegion(fontTextureLoader.createTexture(menuFont, "ARROW KEYS")));
-        defaultButton = new MenuButton(new TextureRegion(fontTextureLoader.createTexture(menuFont, "DEFAULT")));
+        wasdButton = new MenuButton(new TextureRegion(fontTextureLoader.createFontTexture(menuFont, "WASD")));
+        arrowsButton = new MenuButton(new TextureRegion(fontTextureLoader.createFontTexture(menuFont, "ARROW KEYS")));
+        defaultButton = new MenuButton(new TextureRegion(fontTextureLoader.createFontTexture(menuFont, "DEFAULT")));
 
         buttons = new Array<>();
         buttons.add(backButton);
@@ -128,17 +128,21 @@ public class ControlsScreen implements Screen, InputProcessor, ControllerListene
 
         hoveredButton = wasdButton;
 
-        directionalLabel = new MenuLabel(new TextureRegion(fontTextureLoader.createTexture(menuFont, "DIRECTIONAL CONTROLS")));
-        jumpLabel = new MenuLabel(new TextureRegion(fontTextureLoader.createTexture(menuFont, "JUMP")));
-        dashLabel = new MenuLabel(new TextureRegion(fontTextureLoader.createTexture(menuFont, "DASH")));
-        attackLabel = new MenuLabel(new TextureRegion(fontTextureLoader.createTexture(menuFont, "ATTACK")));
-        transformLabel = new MenuLabel(new TextureRegion(fontTextureLoader.createTexture(menuFont, "TRANSFORM")));
-        resetLabel = new MenuLabel(new TextureRegion(fontTextureLoader.createTexture(menuFont, "RESET")));
+        directionalLabel = new MenuLabel(new TextureRegion(fontTextureLoader.createFontTexture(menuFont, "DIRECTIONAL CONTROLS")));
+        jumpLabel = new MenuLabel(new TextureRegion(fontTextureLoader.createFontTexture(menuFont, "JUMP")));
+        dashLabel = new MenuLabel(new TextureRegion(fontTextureLoader.createFontTexture(menuFont, "DASH")));
+        attackLabel = new MenuLabel(new TextureRegion(fontTextureLoader.createFontTexture(menuFont, "ATTACK")));
+        transformLabel = new MenuLabel(new TextureRegion(fontTextureLoader.createFontTexture(menuFont, "TRANSFORM")));
+        resetLabel = new MenuLabel(new TextureRegion(fontTextureLoader.createFontTexture(menuFont, "RESET")));
+        titleLabel = new MenuLabel(new TextureRegion(fontTextureLoader.createFontTexture(menuFont, "KEYBOARD CONTROLS")));
+        titleLabel.tint = Color.YELLOW;
+        instructionsLabel = new MenuLabel(new TextureRegion(fontTextureLoader.createFontTexture(menuFont, "CLICK TO REBIND")));
+
 
         labels = new Array<>();
         labels.add(directionalLabel);
         labels.add(jumpLabel, dashLabel, attackLabel, resetLabel);
-        labels.add(transformLabel);
+        labels.add(transformLabel, titleLabel, instructionsLabel);
 
         jumpButton = new MappingButton(fontTextureLoader, menuFont, Input.Keys.toString(settings.getActionBindings().getKeyMap().get(Action.BEGIN_JUMP)));
         dashButton = new MappingButton(fontTextureLoader, menuFont, Input.Keys.toString(settings.getActionBindings().getKeyMap().get(Action.DASH)));
@@ -305,7 +309,7 @@ public class ControlsScreen implements Screen, InputProcessor, ControllerListene
         }
 
         for (MenuLabel label : labels) {
-            canvas.draw(label.texture, Color.WHITE, label.position.x, label.position.y, label.position.width, label.position.height);
+            canvas.draw(label.texture, label.tint, label.position.x, label.position.y, label.position.width, label.position.height);
         }
 
         canvas.end();
@@ -382,8 +386,14 @@ public class ControlsScreen implements Screen, InputProcessor, ControllerListene
         defaultButton.hitbox.setSize(defaultButton.texture.getRegionWidth() * scale, defaultButton.texture.getRegionHeight() * scale);
         defaultButton.hitbox.setPosition(canvas.getWidth() * 0.8f, canvas.getHeight() - 96 * scale);
 
+        titleLabel.position.setSize(titleLabel.texture.getRegionWidth() * scale * 1.5f, titleLabel.texture.getRegionHeight() * scale * 1.5f);
+        titleLabel.position.setCenter(canvas.getWidth() * 0.5f, 0.9f * canvas.getHeight());
+
+        instructionsLabel.position.setSize(instructionsLabel.texture.getRegionWidth() * scale, instructionsLabel.texture.getRegionHeight() * scale);
+        instructionsLabel.position.setCenter(canvas.getWidth() * 0.5f, 0.83f * canvas.getHeight());
+
         directionalLabel.position.setSize(directionalLabel.texture.getRegionWidth() * scale, directionalLabel.texture.getRegionHeight() * scale);
-        directionalLabel.position.setPosition(canvas.getWidth() * 0.1f, canvas.getHeight() * 0.67f);
+        directionalLabel.position.setPosition(canvas.getWidth() * (1 - 1/1.9f) - directionalLabel.texture.getRegionWidth() * scale, canvas.getHeight() * 0.67f);
 
         wasdButton.hitbox.setSize(wasdButton.texture.getRegionWidth() * scale, wasdButton.texture.getRegionHeight() * scale);
         wasdButton.hitbox.setPosition(canvas.getWidth() / 1.9f, canvas.getHeight() * 0.67f);
@@ -392,31 +402,31 @@ public class ControlsScreen implements Screen, InputProcessor, ControllerListene
         arrowsButton.hitbox.setPosition(canvas.getWidth() / 1.6f, canvas.getHeight() * 0.67f);
 
         jumpLabel.position.setSize(jumpLabel.texture.getRegionWidth() * scale, jumpLabel.texture.getRegionHeight() * scale);
-        jumpLabel.position.setPosition(canvas.getWidth() * 0.1f, canvas.getHeight() * 0.586f);
+        jumpLabel.position.setPosition(canvas.getWidth() * (1 - 1/1.9f) - jumpLabel.texture.getRegionWidth() * scale, canvas.getHeight() * 0.586f);
 
         jumpButton.hitbox.setSize(jumpButton.texture.getRegionWidth() * scale, jumpButton.texture.getRegionHeight() * scale);
         jumpButton.hitbox.setPosition(canvas.getWidth() / 1.9f, canvas.getHeight() * 0.586f);
 
         dashLabel.position.setSize(dashLabel.texture.getRegionWidth() * scale, dashLabel.texture.getRegionHeight() * scale);
-        dashLabel.position.setPosition(canvas.getWidth() * 0.1f, canvas.getHeight() * 0.503f);
+        dashLabel.position.setPosition(canvas.getWidth() * (1 - 1/1.9f) - dashLabel.texture.getRegionWidth() * scale, canvas.getHeight() * 0.503f);
 
         dashButton.hitbox.setSize(dashButton.texture.getRegionWidth() * scale, dashButton.texture.getRegionHeight() * scale);
         dashButton.hitbox.setPosition(canvas.getWidth() / 1.9f, canvas.getHeight() * 0.503f);
 
         attackLabel.position.setSize(attackLabel.texture.getRegionWidth() * scale, attackLabel.texture.getRegionHeight() * scale);
-        attackLabel.position.setPosition(canvas.getWidth() * 0.1f, canvas.getHeight() * 0.42f);
+        attackLabel.position.setPosition(canvas.getWidth() * (1 - 1/1.9f) - attackLabel.texture.getRegionWidth() * scale, canvas.getHeight() * 0.42f);
 
         attackButton.hitbox.setSize(attackButton.texture.getRegionWidth() * scale, attackButton.texture.getRegionHeight() * scale);
         attackButton.hitbox.setPosition(canvas.getWidth() / 1.9f, canvas.getHeight() * 0.42f);
 
         transformLabel.position.setSize(transformLabel.texture.getRegionWidth() * scale, transformLabel.texture.getRegionHeight() * scale);
-        transformLabel.position.setPosition(canvas.getWidth() * 0.1f, canvas.getHeight() * 0.337f);
+        transformLabel.position.setPosition(canvas.getWidth() * (1 - 1/1.9f) - transformLabel.texture.getRegionWidth() * scale, canvas.getHeight() * 0.337f);
 
         transformButton.hitbox.setSize(transformButton.texture.getRegionWidth() * scale, transformButton.texture.getRegionHeight() * scale);
         transformButton.hitbox.setPosition(canvas.getWidth() / 1.9f, canvas.getHeight() * 0.337f);
 
         resetLabel.position.setSize(resetLabel.texture.getRegionWidth() * scale, resetLabel.texture.getRegionHeight() * scale);
-        resetLabel.position.setPosition(canvas.getWidth() * 0.1f, canvas.getHeight() * 0.254f);
+        resetLabel.position.setPosition(canvas.getWidth() * (1 - 1/1.9f) - resetLabel.texture.getRegionWidth() * scale, canvas.getHeight() * 0.254f);
 
         resetButton.hitbox.setSize(resetButton.texture.getRegionWidth() * scale, resetButton.texture.getRegionHeight() * scale);
         resetButton.hitbox.setPosition(canvas.getWidth() / 1.9f, canvas.getHeight() * 0.254f);

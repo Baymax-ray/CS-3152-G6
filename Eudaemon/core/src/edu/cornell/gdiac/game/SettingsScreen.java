@@ -33,16 +33,12 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.Texture.TextureFilter;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
-import com.badlogic.gdx.graphics.g2d.NinePatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.utils.Array;
-import com.badlogic.gdx.utils.PerformanceCounter;
 import edu.cornell.gdiac.assets.AssetDirectory;
 import edu.cornell.gdiac.game.models.Settings;
 import edu.cornell.gdiac.util.Controllers;
 import edu.cornell.gdiac.util.ScreenListener;
-import edu.cornell.gdiac.util.XBoxController;
 
 import static java.lang.Math.round;
 
@@ -167,7 +163,7 @@ public class SettingsScreen implements Screen, InputProcessor, ControllerListene
 		backButton = new MenuButton(new TextureRegion(assets.getEntry("settingsScreen:back", Texture.class))); // we are not adding the exitCode here, it is determined by `isFromMainMenu`
 		backButton.texture.getTexture().setFilter(TextureFilter.Nearest, TextureFilter.Nearest);
 
-		controlsButton = new MenuButton(new TextureRegion(fontTextureLoader.createTexture(assets.getEntry("font:menu", BitmapFont.class), "CONTROLS")), ExitCode.CONTROLS);
+		controlsButton = new MenuButton(new TextureRegion(fontTextureLoader.createFontTexture(assets.getEntry("font:menu", BitmapFont.class), "CONTROLS")), ExitCode.CONTROLS);
 
 		volumeSlider = new MenuSlider(filledBar, unfilledBar, toggle) {
 			@Override

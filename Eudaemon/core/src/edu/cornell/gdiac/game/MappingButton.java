@@ -8,7 +8,7 @@ import java.util.Locale;
 public class MappingButton extends MenuButton {
 
     public MappingButton(FontTextureLoader fontTextureLoader, BitmapFont font, String binding) {
-        super(new TextureRegion(fontTextureLoader.createTexture(font, binding.toUpperCase(Locale.ROOT))));
+        super(new TextureRegion(fontTextureLoader.createFontTexture(font, binding.toUpperCase(Locale.ROOT))));
     }
 
     // button needs to be resized
@@ -17,6 +17,6 @@ public class MappingButton extends MenuButton {
             fontTextureLoader.disposeTexture(texture.getTexture());
         }
 
-        texture = new TextureRegion(fontTextureLoader.createTexture(font, newBinding.toUpperCase(Locale.ROOT)));
+        texture = new TextureRegion(fontTextureLoader.createFontTexture(font, newBinding.toUpperCase(Locale.ROOT)));
     }
 }

@@ -528,9 +528,9 @@
                  "name":"TutorialArea",
                  "properties":[
                         {
-                         "name":"image",
+                         "name":"type",
                          "type":"string",
-                         "value":"platform:combo_keyboardN_controllerButtonLeft"
+                         "value":"ATTACK_MULTIDIRECTIONAL"
                         }],
                  "rotation":0,
                  "type":"image",
@@ -546,9 +546,9 @@
                  "name":"TutorialArea",
                  "properties":[
                         {
-                         "name":"image",
+                         "name":"type",
                          "type":"string",
-                         "value":"platform:combo_keyboardM_controllerButtonUp"
+                         "value":"TRANSFORM"
                         }],
                  "rotation":0,
                  "type":"image",

@@ -5,6 +5,7 @@ import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.utils.Json;
 import com.badlogic.gdx.utils.JsonValue;
 import edu.cornell.gdiac.assets.AssetDirectory;
+import edu.cornell.gdiac.game.FontTextureLoader;
 
 import java.util.Collection;
 import java.util.HashMap;
@@ -16,6 +17,8 @@ public class GameState {
     private final Tile[] tiles;
     private final HashMap<String, Level> levels;
     private String currentLevelName;
+
+    private FontTextureLoader fontTextureLoader;
 
     public Level getCurrentLevel() {
         return levels.get(currentLevelName);
@@ -30,7 +33,7 @@ public class GameState {
             }
         }
         this.levels.get(currentLevelName).dispose();
-        this.levels.put(currentLevelName, new Level(currentLevel.getString("level"), tiles, assets));
+        this.levels.put(currentLevelName, new Level(currentLevel.getString("level"), tiles, assets, fontTextureLoader, settings));
     }
 
     public void setCurrentLevel(int i) {
@@ -76,9 +79,9 @@ public class GameState {
             settings.incrementNumLevelsAvailable();
     }
 
-    public GameState(AssetDirectory assets) {
+    public GameState(AssetDirectory assets, FontTextureLoader fontTextureLoader) {
         this.currentLevelName = assets.getEntry("constants", JsonValue.class).get("levels").get(0).getString("level");
-
+        this.fontTextureLoader = fontTextureLoader;
         this.assets = assets;
 
         JsonValue constants = assets.getEntry("constants",  JsonValue.class);
@@ -109,7 +112,7 @@ public class GameState {
         int numLevels = constants.get("levels").size();
         this.levels = new HashMap<>();
         for (int i = 0; i < numLevels; i++) {
-            levels.put(constants.get(("levels")).get(i).getString("level"), new Level(constants.get("levels").get(i).getString("level"), tiles, assets));
+            levels.put(constants.get(("levels")).get(i).getString("level"), new Level(constants.get("levels").get(i).getString("level"), tiles, assets, fontTextureLoader, settings));
         }
 
         //TODO: bindings etc.

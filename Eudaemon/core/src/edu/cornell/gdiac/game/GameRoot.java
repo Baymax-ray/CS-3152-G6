@@ -63,9 +63,10 @@ public class GameRoot extends Game implements ScreenListener {
 
 		if (screen == loadingScreen) {
 			assets = loadingScreen.getAssets();
-			state = new GameState(assets);
-
 			fontTextureLoader = new FontTextureLoader();
+
+			state = new GameState(assets, fontTextureLoader);
+
 
 			state.getSettings().addObserver(canvas);
 			canvas.onBrightnessChange(state.getSettings().getBrightness());

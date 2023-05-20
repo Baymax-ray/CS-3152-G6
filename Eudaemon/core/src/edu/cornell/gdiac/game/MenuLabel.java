@@ -8,10 +8,12 @@ public class MenuLabel {
 
     public Rectangle position;
     public TextureRegion texture;
+    public Color tint;
 
     public MenuLabel(TextureRegion texture) {
         this.position = new Rectangle();
         this.texture = texture;
+        this.tint = Color.WHITE;
     }
 
 }
