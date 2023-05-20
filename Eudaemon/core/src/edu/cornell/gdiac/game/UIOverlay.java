@@ -50,21 +50,21 @@ public class UIOverlay {
     public void draw(GameCanvas canvas, float playerSpirit, float playerHearts) {
         float heart_xPos = 0.0422f*canvas.getWidth();
         if(level.getLevelDifficulty() == 3){
-            canvas.draw(vetUI, Color.WHITE, 8f, canvas.getHeight()*0.875f, canvas.getWidth()*0.15469f*1.5f, canvas.getHeight()*0.07578f*1.5f);
+            canvas.draw(vetUI, Color.WHITE, 0.015625f*canvas.getWidth(), canvas.getHeight()*0.845f, canvas.getWidth()*0.15469f*1.5f, canvas.getHeight()*0.07578f*1.5f);
             for(int i=0; i < playerHearts; i++){
-                canvas.draw(heartRegion, Color.WHITE, heart_xPos,canvas.getHeight()*0.948f, 0.016f*canvas.getWidth()*1.5f, 0.024f*canvas.getHeight()*1.5f);
+                canvas.draw(heartRegion, Color.WHITE, heart_xPos,canvas.getHeight()*0.918f, 0.016f*canvas.getWidth()*1.5f, 0.024f*canvas.getHeight()*1.5f);
                 heart_xPos += 0.0422f*canvas.getWidth();
             }
         }
         else if(level.getLevelDifficulty() == 4){
-            canvas.draw(hardUI, Color.WHITE, 8f, canvas.getHeight()*0.875f, canvas.getWidth()*0.15469f*1.5f, canvas.getHeight()*0.07578f*1.5f);
+            canvas.draw(hardUI, Color.WHITE, 0.015625f*canvas.getWidth(), canvas.getHeight()*0.845f, canvas.getWidth()*0.15469f*1.5f, canvas.getHeight()*0.07578f*1.5f);
             for(int i=0; i < playerHearts; i++){
-                canvas.draw(heartRegion, Color.WHITE, heart_xPos,canvas.getHeight()*0.948f, 0.016f*canvas.getWidth()*1.5f, 0.024f*canvas.getHeight()*1.5f);
+                canvas.draw(heartRegion, Color.WHITE, heart_xPos,canvas.getHeight()*0.918f, 0.016f*canvas.getWidth()*1.5f, 0.024f*canvas.getHeight()*1.5f);
                 heart_xPos += 0.0422f*canvas.getWidth();
             }
         }
         else{
-            canvas.draw(normalUI, Color.WHITE, 30f, canvas.getHeight()*0.845f, canvas.getWidth()*0.15469f*1.5f, canvas.getHeight()*0.07578f*1.5f);
+            canvas.draw(normalUI, Color.WHITE, 0.015625f*canvas.getWidth(), canvas.getHeight()*0.845f, canvas.getWidth()*0.15469f*1.5f, canvas.getHeight()*0.07578f*1.5f);
             for(int i=0; i < playerHearts; i++){
                 canvas.draw(heartRegion, Color.WHITE, heart_xPos,canvas.getHeight()*0.918f, 0.016f*canvas.getWidth()*1.5f, 0.024f*canvas.getHeight()*1.5f);
                 heart_xPos += 0.0422f*canvas.getWidth();
