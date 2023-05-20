@@ -199,8 +199,8 @@
                  "type":"Enemy",
                  "visible":true,
                  "width":24.3402,
-                 "x":1091.8299,
-                 "y":671.3391
+                 "x":259.3299,
+                 "y":731.8391
                 }, 
                 {
                  "gid":86,
@@ -247,24 +247,6 @@
                  "width":25.2095,
                  "x":1262.39525,
                  "y":216.30305
-                }, 
-                {
-                 "gid":81,
-                 "height":25.5,
-                 "id":126,
-                 "name":"FlyGuardian",
-                 "properties":[
-                        {
-                         "name":"StopRelateToSelf",
-                         "type":"string",
-                         "value":"-2,0,2,-1"
-                        }],
-                 "rotation":0,
-                 "type":"Enemy",
-                 "visible":true,
-                 "width":20.5,
-                 "x":294.416666666667,
-                 "y":731.916666666667
                 }, 
                 {
                  "gid":84,
