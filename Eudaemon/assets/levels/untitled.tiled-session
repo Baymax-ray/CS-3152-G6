@@ -53,11 +53,11 @@
             "expandedObjectLayers": [
                 7
             ],
-            "scale": 0.3904,
-            "selectedLayer": 2,
+            "scale": 0.6379,
+            "selectedLayer": 3,
             "viewCenter": {
-                "x": 1358.8627049180327,
-                "y": 450.8196721311475
+                "x": 1078.5389559492082,
+                "y": 913.9363536604484
             }
         },
         "level0.tmj": {
@@ -72,11 +72,11 @@
             "expandedObjectLayers": [
                 7
             ],
-            "scale": 0.3545,
-            "selectedLayer": 1,
+            "scale": 0.7378,
+            "selectedLayer": 3,
             "viewCenter": {
-                "x": 1592.383638928068,
-                "y": 643.1593794076164
+                "x": 1714.5567904581187,
+                "y": 767.1455679045812
             }
         },
         "level1old.json": {
@@ -105,62 +105,62 @@
             "expandedObjectLayers": [
                 7
             ],
-            "scale": 0.4111,
+            "scale": 0.6365,
             "selectedLayer": 3,
             "viewCenter": {
-                "x": 777.1831671126245,
-                "y": 722.4519581610313
+                "x": 1135.8994501178322,
+                "y": 507.4626865671642
             }
         },
         "level4.json": {
             "expandedObjectLayers": [
                 7
             ],
-            "scale": 0.667,
-            "selectedLayer": 3,
+            "scale": 0.8626,
+            "selectedLayer": 0,
             "viewCenter": {
-                "x": 657.4212893553224,
-                "y": 488.7556221889055
+                "x": 605.147229306747,
+                "y": 1047.9944354277766
             }
         },
         "level5.json": {
             "expandedObjectLayers": [
                 7
             ],
-            "scale": 0.75,
+            "scale": 1.5046,
             "selectedLayer": 3,
             "viewCenter": {
-                "x": 1062,
-                "y": 1222.6666666666665
+                "x": 1276.7512960255217,
+                "y": 845.4074172537553
             }
         },
         "level6.json": {
             "expandedObjectLayers": [
                 7
             ],
-            "scale": 0.9647,
-            "selectedLayer": 2,
+            "scale": 1.0532,
+            "selectedLayer": 0,
             "viewCenter": {
-                "x": 427.59407069555306,
-                "y": 886.2858919871464
+                "x": 973.2244587922523,
+                "y": 1433.72578807444
             }
         },
         "level7.json": {
             "expandedObjectLayers": [
                 7
             ],
-            "scale": 0.5,
-            "selectedLayer": 3,
+            "scale": 0.6307,
+            "selectedLayer": 0,
             "viewCenter": {
-                "x": 742,
-                "y": 440
+                "x": 692.8809259552878,
+                "y": 637.3870302838117
             }
         },
         "level8.json": {
             "scale": 0.49815625,
             "selectedLayer": 3,
             "viewCenter": {
-                "x": 815.0053321623485,
+                "x": 815.0053321623486,
                 "y": 596.1984819020137
             }
         }
@@ -186,10 +186,10 @@
     "project": "untitled.tiled-project",
     "property.type": "string",
     "recentFiles": [
+        "level6.json",
         "level0.json",
         "level8.json",
         "level7.json",
-        "level6.json",
         "level5.json",
         "level4.json",
         "level3.json",

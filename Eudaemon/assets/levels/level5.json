@@ -1462,6 +1462,24 @@
                  "width":23,
                  "x":2022.5,
                  "y":443.75
+                }, 
+                {
+                 "gid":158,
+                 "height":24.5,
+                 "id":178,
+                 "name":"Billboard",
+                 "properties":[
+                        {
+                         "name":"text",
+                         "type":"string",
+                         "value":"Downward Attack an Enemy and You Will Be Projected Into the Air"
+                        }],
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":19.5,
+                 "x":1157.39422158548,
+                 "y":828.883397007323
                 }],
          "opacity":1,
          "type":"objectgroup",
@@ -1470,7 +1488,7 @@
          "y":0
         }],
  "nextlayerid":11,
- "nextobjectid":178,
+ "nextobjectid":179,
  "orientation":"orthogonal",
  "properties":[
         {
@@ -1519,7 +1537,7 @@
          "value":1
         }],
  "renderorder":"right-down",
- "tiledversion":"1.10.1",
+ "tiledversion":"1.10.0",
  "tileheight":32,
  "tilesets":[
         {
