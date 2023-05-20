@@ -1063,7 +1063,7 @@
                 {
                  "gid":158,
                  "height":24.5,
-                 "id":189,
+                 "id":190,
                  "name":"Billboard",
                  "properties":[
                         {
@@ -1075,8 +1075,8 @@
                  "type":"",
                  "visible":true,
                  "width":19.5,
-                 "x":1254.25,
-                 "y":508.75
+                 "x":1253,
+                 "y":509.25
                 }],
          "opacity":1,
          "type":"objectgroup",
@@ -1085,7 +1085,7 @@
          "y":0
         }],
  "nextlayerid":11,
- "nextobjectid":190,
+ "nextobjectid":191,
  "orientation":"orthogonal",
  "properties":[
         {
