@@ -9,6 +9,7 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.physics.box2d.*;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.JsonValue;
@@ -156,6 +157,8 @@ public class Level {
 
     private boolean cameraShakeOn;
 
+    private boolean cameraShaked;
+
     private AssetDirectory assets;
 
     public float levelDifficulty;
@@ -167,6 +170,8 @@ public class Level {
     public boolean hardDifficulty;
     public boolean veteranDifficulty;
     public boolean settingsChanged;
+
+    private Vector3 origCameraPosition;
 
 
     //#endregion
@@ -677,6 +682,9 @@ public class Level {
         this.isCompleted = false;
         this.shouldShakeCamera = false;
         this.cameraShakeOn = true;
+        this.cameraShaked = false;
+
+        this.origCameraPosition = new Vector3();
     }
 
     /**
@@ -818,18 +826,44 @@ public class Level {
         float cam_x = canvas.getCamera().position.x;
         float cam_y = canvas.getCamera().position.y;
 
-        float px=canvas.getCamera().position.x;
-        float py=canvas.getCamera().position.y;
+        float px;
+        float py;
+//        if (!cameraShaked) {
+//            px=canvas.getCamera().position.x;
+//            py=canvas.getCamera().position.y;
+//        } else if (canvas.getCameraController().getCameraShaker().isCameraShaking()){
+//            px = canvas.getCameraController().getCameraShaker().getStartPosition().x;
+//            py = canvas.getCameraController().getCameraShaker().getStartPosition().y;
+//        } else if (cameraShaked && canvas.getCamera().position.equals(origCameraPosition)){
+//            px = origCameraPosition.x;
+//            py = origCameraPosition.y;
+//        } else {
+//            px=canvas.getCamera().position.x;
+//            py=canvas.getCamera().position.y;
+//        }
+//        if (canvas.getCameraController().getCameraShaker().isCameraShaking()) {
+//            float deltaX = canvas.getCameraController().getCamera().position.x - origCameraPosition.x;
+//            float deltaY = canvas.getCameraController().getCamera().position.y - origCameraPosition.y;
+//            px = canvas.getCameraController().getCameraShaker().getStartPosition().x + deltaX;
+//            py = canvas.getCameraController().getCameraShaker().getStartPosition().y - deltaY;
+//        } else {
+//            px = canvas.getCameraController().getCamera().position.x;
+//            py = canvas.getCameraController().getCamera().position.y;
+//        }
+        Vector3 offset = canvas.getCameraController().getCameraShaker().getOffset();
+        px = canvas.getCameraController().getBackgroundCoordinates().x;
+        py = canvas.getCameraController().getBackgroundCoordinates().y;
         float stx=levelToTileCoordinatesX(this.startX);
         float sty=levelToTileCoordinatesY(this.startY);
-        float diffX=px-stx;
-        float diffY=py-sty;
+        float diffX=px-stx - offset.x;
+        float diffY=py-sty - offset.y;
         //the background moves with the player,the farther back the faster the speed
         canvas.draw(background_L1, Color.WHITE, backgroundOx + 30, backgroundOy, diffX, diffY, 0, this.scaleforBackground, this.scaleforBackground);
         canvas.draw(background_L2, Color.WHITE, backgroundOx, backgroundOy, diffX*0.8f, diffY*0.8f, 0,  this.scaleforBackground, this.scaleforBackground);
         canvas.draw(background_L3, Color.WHITE, backgroundOx, backgroundOy, diffX*0.7f, diffY*0.7f, 0,  this.scaleforBackground, this.scaleforBackground);
         canvas.draw(background_L4, Color.WHITE, backgroundOx, backgroundOy, diffX*0.4f, diffY*0.4f, 0,  this.scaleforBackground, this.scaleforBackground);
         canvas.draw(background_L5, Color.WHITE, backgroundOx, backgroundOy, diffX*0.1f, diffY*0.1f, 0,  this.scaleforBackground, this.scaleforBackground);
+
 //        canvas.draw(background, Color.CLEAR, background.getRegionWidth()/2, background.getRegionHeight()/2, 0, 0, 1 / background.getRegionWidth(), 1/ background.getRegionHeight());
 
         //Drawing background 2 tiles
@@ -921,6 +955,7 @@ public class Level {
         canvas.getCameraController().setGameplayCamera(canvas,cam_x,cam_y, cameraWidth, cameraHeight);
 
         if (shouldShakeCamera && cameraShakeOn) {
+            origCameraPosition = canvas.getCamera().position.cpy();
             switch (cameraShakeType) {
                 case 1:
                     canvas.getCameraController().shakeCamera(1);
@@ -931,6 +966,7 @@ public class Level {
             }
 
             shouldShakeCamera = false;
+            cameraShaked = true;
         }
 
     }
