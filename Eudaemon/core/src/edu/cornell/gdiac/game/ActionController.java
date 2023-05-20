@@ -800,7 +800,6 @@ public class ActionController {
                 player.setTexture(current);
                 audio.stopEffect("chiyo-run");
                 audio.stopEffect("wall-slide");
-                //player.setTexture(player.getChiyoTexture());
                 player.setOxOffset(20);
                 player.setOyOffset(-29);
                 player.setSxMult(2.3f);
