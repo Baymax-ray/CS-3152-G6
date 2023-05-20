@@ -1334,7 +1334,7 @@
         {
          "name":"backgroundOy",
          "type":"string",
-         "value":"0"
+         "value":"-100"
         }, 
         {
          "name":"backgroundScale",
