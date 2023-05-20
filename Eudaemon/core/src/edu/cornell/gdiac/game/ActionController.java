@@ -93,9 +93,11 @@ public class ActionController {
 
         //Creating a Dictionary of Textures
         addAnimations(player.getMomoRunSpriteSheet(), 8, 1, "momoRun");
+        addAnimations(player.getMomoIdleSpriteSheet(), 4, 1, "momoIdle");
         addAnimations(player.getMomoDashSpriteSheet(), 5, 1, "momoDash");
         addAnimations(player.getMomoJumpSpriteSheet(), 7, 1, "momoJump");
         addAnimations(player.getChiyoRunSpriteSheet(), 8, 1, "chiyoRun");
+        addAnimations(player.getChiyoIdleSpriteSheet(), 5, 1, "chiyoIdle");
         addAnimations(player.getChiyoJumpSpriteSheet(), 8, 1, "chiyoJump");
         addAnimations(player.getChiyoAttackSpriteSheet(), 8, 2, "chiyoAttack");
         addAnimations(player.getDashEffectSpriteSheet(), 5, 1, "dashEffect");
@@ -103,8 +105,6 @@ public class ActionController {
         addAnimations(player.getSpiritDrainSpriteSheet(), 13, 1, "spiritDrain");
         addAnimations(player.getTransformSpriteSheet(),7, 1, "playerTransform");
         addAnimations(player.getRegainHealthSpriteSheet(), 8, 2, "playerRegainHealth");
-        addAnimations(player.getMomoTexture(), 4, 1, "momoIdle");
-        addAnimations(player.getChiyoTexture(), 5, 1, "chiyoIdle");
     }
 
     /**
@@ -263,7 +263,7 @@ public class ActionController {
 //                playerChiyoTransformId = playSound( playerChiyoTransformSound, playerChiyoTransformId, 0.1F );
                 float pOffsetX;
                 if(player.isFacingRight()){
-                    pOffsetX = -0.4f;
+                    pOffsetX = 0.25f;
                 }
                 else{
                    pOffsetX = 0f;
@@ -699,17 +699,16 @@ public class ActionController {
                 player.setSyMult(1.2f);
             } else {
                 currentAnimation = "momoIdle";
-                TextureRegion current = (TextureRegion) (animations.get("momoIdle")).getKeyFrame(currentFrame);
-                maxFrame = 8;
-                tickFrameSwitch = 5;
-                player.setTexture(current);
                 audio.stopEffect("wall-slide");
 //                momoRunSound.stop();
 //                soundDictionary.remove(momoRunSound);
                 audio.stopEffect("momo-run");
-                //player.setTexture(player.getMomoTexture());
+                TextureRegion current = (TextureRegion) (animations.get("momoIdle")).getKeyFrame(currentFrame);
+                maxFrame = 4;
+                tickFrameSwitch = 7;
+                player.setTexture(current);
                 player.setOxOffset(0);
-                player.setOyOffset(-47);
+                player.setOyOffset(-52);
                 player.setSxMult(1.2f);
                 player.setSyMult(1.2f);
             }
@@ -794,12 +793,12 @@ public class ActionController {
                 currentAnimation = "chiyoIdle";
 //                chiyoRunSound.stop();
 //                soundDictionary.remove(chiyoRunSound);
-                TextureRegion current = (TextureRegion) (animations.get("chiyoIdle")).getKeyFrame(currentFrame);
-                maxFrame = 8;
-                tickFrameSwitch = 5;
-                player.setTexture(current);
                 audio.stopEffect("chiyo-run");
                 audio.stopEffect("wall-slide");
+                TextureRegion current = (TextureRegion) (animations.get("chiyoIdle")).getKeyFrame(currentFrame);
+                maxFrame = 5;
+                tickFrameSwitch = 7;
+                player.setTexture(current);
                 player.setOxOffset(20);
                 player.setOyOffset(-29);
                 player.setSxMult(2.3f);

@@ -146,9 +146,9 @@ public class LevelSelectScreen implements Screen, InputProcessor, ControllerList
         backButton.texture.getTexture().setFilter(TextureFilter.Nearest, TextureFilter.Nearest);
         buttons.add(backButton);
 
-        levelButtons = new Array<>(10);
-        levelNumbers = new ObjectMap<>(10);
-        for (int i = 0; i < 10; i++) {
+        levelButtons = new Array<>(11);
+        levelNumbers = new ObjectMap<>(11);
+        for (int i = 0; i < 11; i++) {
             MenuButton button = new MenuButton(new TextureRegion(lights), ExitCode.START);
             levelButtons.add(button);
             if (i < settings.getNumLevelsAvailable())
@@ -160,46 +160,48 @@ public class LevelSelectScreen implements Screen, InputProcessor, ControllerList
 
         hoveredButton = levelButtons.get(0);
 
-        levelButtons.get(0).down = levelButtons.get(0);
-        for (int i = 0; i < 4; i++) {
-            levelButtons.get(i).left = backButton;
-            levelButtons.get(i).up = levelButtons.get(i+1);
-            levelButtons.get(i+1).down = levelButtons.get(i);
-            levelButtons.get(i).right = levelButtons.get(i);
-        }
+        levelButtons.get(0).up = levelButtons.get(1);
 
-        levelButtons.get(4).right = levelButtons.get(5);
-        levelButtons.get(4).up = levelButtons.get(6);
-        levelButtons.get(4).left = backButton;
+        levelButtons.get(1).down = levelButtons.get(0);
+        levelButtons.get(1).up = levelButtons.get(2);
 
-        levelButtons.get(5).right = levelButtons.get(5);
+        levelButtons.get(2).down = levelButtons.get(1);
+        levelButtons.get(2).right = levelButtons.get(3);
+        levelButtons.get(2).up = levelButtons.get(4);
+
+        levelButtons.get(3).left = levelButtons.get(2);
+
+        levelButtons.get(4).down = levelButtons.get(2);
+        levelButtons.get(4).up = levelButtons.get(5);
+
+        levelButtons.get(5).down = levelButtons.get(4);
         levelButtons.get(5).up = levelButtons.get(7);
-        levelButtons.get(5).left = levelButtons.get(4);
-        levelButtons.get(5).down = levelButtons.get(3);
+        levelButtons.get(5).right = levelButtons.get(6);
 
-        levelButtons.get(6).right = levelButtons.get(7);
+        levelButtons.get(6).left = levelButtons.get(5);
         levelButtons.get(6).up = levelButtons.get(8);
-        levelButtons.get(6).left = backButton;
-        levelButtons.get(6).down = levelButtons.get(4);
 
-        levelButtons.get(7).right = levelButtons.get(7);
-        levelButtons.get(7).up = levelButtons.get(9);
-        levelButtons.get(7).left = levelButtons.get(6);
         levelButtons.get(7).down = levelButtons.get(5);
+        levelButtons.get(7).right = levelButtons.get(8);
+        levelButtons.get(7).up = levelButtons.get(9);
 
-        levelButtons.get(8).right = levelButtons.get(9);
-        levelButtons.get(8).up = levelButtons.get(8);
-        levelButtons.get(8).left = backButton;
         levelButtons.get(8).down = levelButtons.get(6);
+        levelButtons.get(8).left = levelButtons.get(7);
+        levelButtons.get(8).up = levelButtons.get(10);
 
-        levelButtons.get(9).right = levelButtons.get(9);
-        levelButtons.get(9).up = levelButtons.get(9);
-        levelButtons.get(9).left = levelButtons.get(8);
+        levelButtons.get(9).left = levelButtons.get(10);
         levelButtons.get(9).down = levelButtons.get(7);
 
-        backButton.up = backButton;
-        backButton.left = backButton;
-        backButton.down = backButton;
+        levelButtons.get(10).down = levelButtons.get(8);
+        levelButtons.get(10).right = levelButtons.get(9);
+
+        levelButtons.get(0).left = backButton;
+        levelButtons.get(1).left = backButton;
+        levelButtons.get(2).left = backButton;
+        levelButtons.get(4).left = backButton;
+        levelButtons.get(5).left = backButton;
+        levelButtons.get(7).left = backButton;
+        levelButtons.get(9).left = backButton;
 
         // Compute the dimensions from the canvas
         resize(canvas.getWidth(),canvas.getHeight());
@@ -275,7 +277,7 @@ public class LevelSelectScreen implements Screen, InputProcessor, ControllerList
             } else if (menuLeft) {
                 if (hoveredButton == null) {
                     hoveredButton = levelButtons.get(settings.getNumLevelsAvailable() - 1);
-                } else if (buttons.contains(hoveredButton.down, true)) {
+                } else if (buttons.contains(hoveredButton.left, true)) {
                     if (hoveredButton.left == backButton && hoveredButton != backButton) {
                         backButton.right = hoveredButton;
                     }
@@ -285,7 +287,7 @@ public class LevelSelectScreen implements Screen, InputProcessor, ControllerList
             } else if (menuRight) {
                 if (hoveredButton == null) {
                     hoveredButton = levelButtons.get(settings.getNumLevelsAvailable() - 1);
-                } else if (buttons.contains(hoveredButton.down, true)) {
+                } else if (buttons.contains(hoveredButton.right, true)) {
                     hoveredButton = hoveredButton.right;
                 }
                 menuCooldown = COOLDOWN;
@@ -358,7 +360,8 @@ public class LevelSelectScreen implements Screen, InputProcessor, ControllerList
         for (int i = 0; i < levelButtons.size; i++) {
             MenuButton button = levelButtons.get(i);
 
-            int levelButtonWidth = (i < 5 || i % 2 == 0) ? LEVEL_BUTTON_WIDTH : LEVEL_BUTTON_WIDTH_2;
+            int levelButtonWidth = (i == 3 || i % 2 == 0 && i > 5) ? LEVEL_BUTTON_WIDTH_2 : LEVEL_BUTTON_WIDTH;
+
             Vector2 pos = getLevelHitboxPosition(i);
 
             button.texture.setRegion((int) pos.x, STANDARD_HEIGHT - (int) pos.y - LEVEL_BUTTON_HEIGHT, levelButtonWidth, LEVEL_BUTTON_HEIGHT);
@@ -371,16 +374,20 @@ public class LevelSelectScreen implements Screen, InputProcessor, ControllerList
         }
     }
 
-    private Vector2 getLevelHitboxPosition(int i) { // uses 1 based indexing
+    private Vector2 getLevelHitboxPosition(int i) { // uses 0 based indexing
         float x, y;
-        x = (i < 5 || i % 2 == 0) ? LEVEL_BUTTON_START_X : LEVEL_BUTTON_START_X + LEVEL_BUTTON_OFFSET_X;
+        x = (i == 3 || i % 2 == 0 && i > 5)  ? LEVEL_BUTTON_START_X  + LEVEL_BUTTON_OFFSET_X : LEVEL_BUTTON_START_X;
 
         int row;
-        if (i < 5) {
+        if (i < 2) {
             row = i;
-        } else if (i < 6){
+        } else if (i < 4){
+            row = 2;
+        } else if (i == 4) {
+            row = 3;
+        } else if (i < 7) {
             row = 4;
-        } else if (i < 8) {
+        } else if (i < 9) {
             row = 5;
         } else {
             row = 6;
@@ -427,7 +434,7 @@ public class LevelSelectScreen implements Screen, InputProcessor, ControllerList
 
         buttons.clear();
         buttons.add(backButton);
-        for (int i = 0; i < 10; i++) {
+        for (int i = 0; i < 11; i++) {
             MenuButton button = levelButtons.get(i);
             if (i < settings.getNumLevelsAvailable())
                 buttons.add(button);
