@@ -702,7 +702,7 @@
         "sharedConstants": "sharedConstants.json",
         "level0": "levels/level0.json",
         "level1": "levels/level1.json",
-        "level2": "levels/level1(1).json",
+        "level2": "levels/level2.json",
         "level3": "levels/level3.json",
         "level4": "levels/level4.json",
         "level5": "levels/level5.json",
