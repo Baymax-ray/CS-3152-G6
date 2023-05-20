@@ -1391,7 +1391,7 @@ public class Player extends CapsuleObstacle {
         this.wallSlideVelocity = playerData.getFloat("wallSlideVelocity");
         this.wallJumpXVelocity = playerData.getFloat("wallJumpXVelocity");
         this.wallJumpCooldownTicks = playerData.getInt("wallJumpCooldownTicks");
-        this.wallJumpYMult = playerData.getFloat("wallJumpYMultiplier");
+        this.wallJumpYMult = playerData.getFloat("wallJumpYVelocityMult");
 
         //Attacking
         this.attackPower = playerData.getInt("attackPower");
