@@ -434,7 +434,7 @@ public class LevelSelectScreen implements Screen, InputProcessor, ControllerList
 
         buttons.clear();
         buttons.add(backButton);
-        for (int i = 0; i < 10; i++) {
+        for (int i = 0; i < 11; i++) {
             MenuButton button = levelButtons.get(i);
             if (i < settings.getNumLevelsAvailable())
                 buttons.add(button);
