@@ -799,7 +799,7 @@ public class ActionController {
                 maxFrame = 5;
                 tickFrameSwitch = 7;
                 player.setTexture(current);
-                player.setOxOffset(5f);
+                player.setOxOffset(2f);
                 player.setOyOffset(-29);
                 player.setSxMult(2.3f);
                 player.setSyMult(2.0f);

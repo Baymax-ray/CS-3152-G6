@@ -1456,7 +1456,7 @@ public class Player extends CapsuleObstacle {
         this.isChiyo = false;
 
         this.hearts = initialHearts;
-        this.spirit = 10;
+        this.spirit = initialSpirit;
 
         this.isDashing = false;
         this.isJumping = false;
