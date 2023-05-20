@@ -30,19 +30,19 @@ public class UIOverlay {
 
     public UIOverlay(JsonValue json, AssetDirectory assets, Level level){
         this.heartRegion = assets.getEntry(json.getString("heart"), Texture.class);
-        heartRegion.setFilter( Texture.TextureFilter.Linear, Texture.TextureFilter.Linear );
+        heartRegion.setFilter( Texture.TextureFilter.Nearest, Texture.TextureFilter.Nearest);
         this.filledSpiritBar = assets.getEntry(json.getString("filled"), Texture.class);
-        filledSpiritBar.setFilter( Texture.TextureFilter.Linear, Texture.TextureFilter.Linear );
+        filledSpiritBar.setFilter( Texture.TextureFilter.Nearest, Texture.TextureFilter.Nearest );
         this.settingsButton = assets.getEntry(json.getString("settings"), Texture.class);
-        settingsButton.setFilter( Texture.TextureFilter.Linear, Texture.TextureFilter.Linear );
+        settingsButton.setFilter( Texture.TextureFilter.Nearest, Texture.TextureFilter.Nearest );
         this.level = level;
         this.numHearts = level.getLevelDifficulty();
         this.vetUI = assets.getEntry(json.getString("vetUI"), Texture.class);
-        vetUI.setFilter( Texture.TextureFilter.Linear, Texture.TextureFilter.Linear );
+        vetUI.setFilter( Texture.TextureFilter.Nearest, Texture.TextureFilter.Nearest );
         this.hardUI = assets.getEntry(json.getString("hardUI"), Texture.class);
-        hardUI.setFilter( Texture.TextureFilter.Linear, Texture.TextureFilter.Linear );
+        hardUI.setFilter( Texture.TextureFilter.Nearest, Texture.TextureFilter.Nearest );
         this.normalUI = assets.getEntry(json.getString("normalUI"), Texture.class);
-        normalUI.setFilter( Texture.TextureFilter.Linear, Texture.TextureFilter.Linear );
+        normalUI.setFilter( Texture.TextureFilter.Nearest, Texture.TextureFilter.Nearest );
 
 
     }
