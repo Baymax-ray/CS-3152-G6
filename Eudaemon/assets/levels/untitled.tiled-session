@@ -73,10 +73,10 @@
                 7
             ],
             "scale": 0.7378,
-            "selectedLayer": 1,
+            "selectedLayer": 3,
             "viewCenter": {
-                "x": 840.3361344537816,
-                "y": 623.4751965302249
+                "x": 1714.5567904581187,
+                "y": 767.1455679045812
             }
         },
         "level1old.json": {
@@ -119,49 +119,49 @@
             "scale": 0.8626,
             "selectedLayer": 0,
             "viewCenter": {
-                "x": 1036.4015766287966,
-                "y": 785.9958265708324
+                "x": 605.147229306747,
+                "y": 1047.9944354277766
             }
         },
         "level5.json": {
             "expandedObjectLayers": [
                 7
             ],
-            "scale": 0.5702,
+            "scale": 1.5046,
             "selectedLayer": 3,
             "viewCenter": {
-                "x": 1357.4184496667835,
-                "y": 648.895124517713
+                "x": 1276.7512960255217,
+                "y": 845.4074172537553
             }
         },
         "level6.json": {
             "expandedObjectLayers": [
                 7
             ],
-            "scale": 1.3066,
-            "selectedLayer": 2,
+            "scale": 1.0532,
+            "selectedLayer": 0,
             "viewCenter": {
-                "x": 1101.3317005969693,
-                "y": 998.0101025562528
+                "x": 973.2244587922523,
+                "y": 1433.72578807444
             }
         },
         "level7.json": {
             "expandedObjectLayers": [
                 7
             ],
-            "scale": 0.9238,
+            "scale": 0.6307,
             "selectedLayer": 0,
             "viewCenter": {
-                "x": 508.768131630223,
-                "y": 731.7601212383634
+                "x": 692.8809259552878,
+                "y": 637.3870302838117
             }
         },
         "level8.json": {
             "scale": 0.49815625,
             "selectedLayer": 3,
             "viewCenter": {
-                "x": 799.9498149426007,
-                "y": 640.3613324132739
+                "x": 815.0053321623486,
+                "y": 596.1984819020137
             }
         }
     },
