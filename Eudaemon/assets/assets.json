@@ -323,7 +323,7 @@
         "momo:upDash":  "character/momoUpDash.png",
         "momo:downDash":  "character/momoDownDash.png",
         "momo:diagonalDash":  "character/momoDiagonalUpDash.png",
-        "momo:slide":  "character/momoSlide.png",
+        "momo:slide":  "character/momoNewSlideFlip.png",
         "chiyo:idle":  "character/chiyo.png",
         "chiyo:slide":  "character/chiyoSlide.png",
 
