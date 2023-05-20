@@ -3,7 +3,6 @@ package edu.cornell.gdiac.game;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
-import com.badlogic.gdx.audio.Sound;
 import edu.cornell.gdiac.assets.AssetDirectory;
 import edu.cornell.gdiac.game.models.GameState;
 import edu.cornell.gdiac.util.ScreenListener;
@@ -18,8 +17,10 @@ public class GameRoot extends Game implements ScreenListener {
 	private DeathScreen deathScreen;
 	private EscapeMenu escapeMenu;
 	private SettingsScreen settingsScreen;
+	private ControlsScreen controlsScreen;
 	private GameCanvas canvas;
 	private AssetDirectory assets;
+	private FontTextureLoader fontTextureLoader;
 
 	@Override
 	public void create() {
@@ -45,6 +46,7 @@ public class GameRoot extends Game implements ScreenListener {
 		state.getSettings().removeObserver(canvas);
 		if (canvas != null)	canvas.dispose();
 		if (state != null) state.dispose();
+		if (fontTextureLoader != null) fontTextureLoader.dispose();
 		super.dispose();
 	}
 
@@ -62,6 +64,8 @@ public class GameRoot extends Game implements ScreenListener {
 		if (screen == loadingScreen) {
 			assets = loadingScreen.getAssets();
 			state = new GameState(assets);
+
+			fontTextureLoader = new FontTextureLoader();
 
 			state.getSettings().addObserver(canvas);
 			canvas.onBrightnessChange(state.getSettings().getBrightness());
@@ -86,8 +90,11 @@ public class GameRoot extends Game implements ScreenListener {
 			this.escapeMenu = new EscapeMenu(assets, canvas);
 			this.escapeMenu.setScreenListener(this);
 
-			this.settingsScreen = new SettingsScreen(assets, canvas, state.getSettings());
+			this.settingsScreen = new SettingsScreen(assets, canvas, state.getSettings(), fontTextureLoader);
 			this.settingsScreen.setScreenListener(this);
+
+			this.controlsScreen = new ControlsScreen(assets, canvas, state.getSettings(), fontTextureLoader);
+			this.controlsScreen.setScreenListener(this);
 
 			setScreen(mainMenuScreen);
 		}
@@ -238,6 +245,18 @@ public class GameRoot extends Game implements ScreenListener {
 				screen.pause();
 				mainMenuScreen.reset();
 				setScreen(mainMenuScreen);
+			}
+			if (exitCode == ExitCode.CONTROLS) {
+				screen.pause();
+				controlsScreen.reset();
+				setScreen(controlsScreen);
+			}
+		}
+		if (screen == controlsScreen) {
+			if (exitCode == ExitCode.SETTINGS) {
+				screen.pause();
+				settingsScreen.reset();
+				setScreen(settingsScreen);
 			}
 		}
 	}

@@ -734,9 +734,13 @@
         "effect:temp-player-damage": "audio/temp-player-damage.mp3"
     },
     "fonts": {
-        "shared:retro": {
-            "file": "shared/RetroGame.ttf",
-            "size": 64
+        "font:keycap": {
+            "file": "shared/dogicapixel.ttf",
+            "size": 32
+        },
+        "font:menu": {
+            "file": "shared/dogicapixelbold.ttf",
+            "size": 32
         }
     }
 }
