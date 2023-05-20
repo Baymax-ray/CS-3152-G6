@@ -182,6 +182,21 @@
                          "name":"Direction",
                          "type":"string",
                          "value":"Up"
+                        }, 
+                        {
+                         "name":"Respawn",
+                         "type":"bool",
+                         "value":true
+                        }, 
+                        {
+                         "name":"RespawnCoordinateX",
+                         "type":"float",
+                         "value":20
+                        }, 
+                        {
+                         "name":"RespawnCoordinateY",
+                         "type":"float",
+                         "value":33
                         }],
                  "rotation":0,
                  "type":"",
@@ -200,6 +215,21 @@
                          "name":"Direction",
                          "type":"string",
                          "value":"Up"
+                        }, 
+                        {
+                         "name":"Respawn",
+                         "type":"bool",
+                         "value":true
+                        }, 
+                        {
+                         "name":"RespawnCoordinateX",
+                         "type":"float",
+                         "value":20
+                        }, 
+                        {
+                         "name":"RespawnCoordinateY",
+                         "type":"float",
+                         "value":33
                         }],
                  "rotation":0,
                  "type":"",
@@ -218,6 +248,21 @@
                          "name":"Direction",
                          "type":"string",
                          "value":"Up"
+                        }, 
+                        {
+                         "name":"Respawn",
+                         "type":"bool",
+                         "value":true
+                        }, 
+                        {
+                         "name":"RespawnCoordinateX",
+                         "type":"float",
+                         "value":20
+                        }, 
+                        {
+                         "name":"RespawnCoordinateY",
+                         "type":"float",
+                         "value":33
                         }],
                  "rotation":0,
                  "type":"",
@@ -236,6 +281,21 @@
                          "name":"Direction",
                          "type":"string",
                          "value":"Up"
+                        }, 
+                        {
+                         "name":"Respawn",
+                         "type":"bool",
+                         "value":true
+                        }, 
+                        {
+                         "name":"RespawnCoordinateX",
+                         "type":"float",
+                         "value":20
+                        }, 
+                        {
+                         "name":"RespawnCoordinateY",
+                         "type":"float",
+                         "value":33
                         }],
                  "rotation":0,
                  "type":"",
@@ -254,6 +314,21 @@
                          "name":"Direction",
                          "type":"string",
                          "value":"Up"
+                        }, 
+                        {
+                         "name":"Respawn",
+                         "type":"bool",
+                         "value":true
+                        }, 
+                        {
+                         "name":"RespawnCoordinateX",
+                         "type":"float",
+                         "value":20
+                        }, 
+                        {
+                         "name":"RespawnCoordinateY",
+                         "type":"float",
+                         "value":33
                         }],
                  "rotation":0,
                  "type":"",
@@ -272,6 +347,21 @@
                          "name":"Direction",
                          "type":"string",
                          "value":"Up"
+                        }, 
+                        {
+                         "name":"Respawn",
+                         "type":"bool",
+                         "value":true
+                        }, 
+                        {
+                         "name":"RespawnCoordinateX",
+                         "type":"float",
+                         "value":20
+                        }, 
+                        {
+                         "name":"RespawnCoordinateY",
+                         "type":"float",
+                         "value":33
                         }],
                  "rotation":0,
                  "type":"",
@@ -290,6 +380,21 @@
                          "name":"Direction",
                          "type":"string",
                          "value":"Up"
+                        }, 
+                        {
+                         "name":"Respawn",
+                         "type":"bool",
+                         "value":true
+                        }, 
+                        {
+                         "name":"RespawnCoordinateX",
+                         "type":"float",
+                         "value":20
+                        }, 
+                        {
+                         "name":"RespawnCoordinateY",
+                         "type":"float",
+                         "value":33
                         }],
                  "rotation":0,
                  "type":"",
@@ -308,6 +413,21 @@
                          "name":"Direction",
                          "type":"string",
                          "value":"Up"
+                        }, 
+                        {
+                         "name":"Respawn",
+                         "type":"bool",
+                         "value":true
+                        }, 
+                        {
+                         "name":"RespawnCoordinateX",
+                         "type":"float",
+                         "value":20
+                        }, 
+                        {
+                         "name":"RespawnCoordinateY",
+                         "type":"float",
+                         "value":33
                         }],
                  "rotation":0,
                  "type":"",
@@ -326,6 +446,21 @@
                          "name":"Direction",
                          "type":"string",
                          "value":"Up"
+                        }, 
+                        {
+                         "name":"Respawn",
+                         "type":"bool",
+                         "value":true
+                        }, 
+                        {
+                         "name":"RespawnCoordinateX",
+                         "type":"float",
+                         "value":20
+                        }, 
+                        {
+                         "name":"RespawnCoordinateY",
+                         "type":"float",
+                         "value":33
                         }],
                  "rotation":0,
                  "type":"",
@@ -344,6 +479,21 @@
                          "name":"Direction",
                          "type":"string",
                          "value":"Up"
+                        }, 
+                        {
+                         "name":"Respawn",
+                         "type":"bool",
+                         "value":true
+                        }, 
+                        {
+                         "name":"RespawnCoordinateX",
+                         "type":"float",
+                         "value":20
+                        }, 
+                        {
+                         "name":"RespawnCoordinateY",
+                         "type":"float",
+                         "value":33
                         }],
                  "rotation":0,
                  "type":"",
@@ -362,6 +512,21 @@
                          "name":"Direction",
                          "type":"string",
                          "value":"Up"
+                        }, 
+                        {
+                         "name":"Respawn",
+                         "type":"bool",
+                         "value":true
+                        }, 
+                        {
+                         "name":"RespawnCoordinateX",
+                         "type":"float",
+                         "value":20
+                        }, 
+                        {
+                         "name":"RespawnCoordinateY",
+                         "type":"float",
+                         "value":33
                         }],
                  "rotation":0,
                  "type":"",
@@ -380,6 +545,21 @@
                          "name":"Direction",
                          "type":"string",
                          "value":"Up"
+                        }, 
+                        {
+                         "name":"Respawn",
+                         "type":"bool",
+                         "value":true
+                        }, 
+                        {
+                         "name":"RespawnCoordinateX",
+                         "type":"float",
+                         "value":20
+                        }, 
+                        {
+                         "name":"RespawnCoordinateY",
+                         "type":"float",
+                         "value":33
                         }],
                  "rotation":0,
                  "type":"",
@@ -398,6 +578,21 @@
                          "name":"Direction",
                          "type":"string",
                          "value":"Up"
+                        }, 
+                        {
+                         "name":"Respawn",
+                         "type":"bool",
+                         "value":true
+                        }, 
+                        {
+                         "name":"RespawnCoordinateX",
+                         "type":"float",
+                         "value":20
+                        }, 
+                        {
+                         "name":"RespawnCoordinateY",
+                         "type":"float",
+                         "value":33
                         }],
                  "rotation":0,
                  "type":"",
@@ -416,6 +611,21 @@
                          "name":"Direction",
                          "type":"string",
                          "value":"Up"
+                        }, 
+                        {
+                         "name":"Respawn",
+                         "type":"bool",
+                         "value":true
+                        }, 
+                        {
+                         "name":"RespawnCoordinateX",
+                         "type":"float",
+                         "value":20
+                        }, 
+                        {
+                         "name":"RespawnCoordinateY",
+                         "type":"float",
+                         "value":33
                         }],
                  "rotation":0,
                  "type":"",
@@ -434,6 +644,21 @@
                          "name":"Direction",
                          "type":"string",
                          "value":"Up"
+                        }, 
+                        {
+                         "name":"Respawn",
+                         "type":"bool",
+                         "value":true
+                        }, 
+                        {
+                         "name":"RespawnCoordinateX",
+                         "type":"float",
+                         "value":20
+                        }, 
+                        {
+                         "name":"RespawnCoordinateY",
+                         "type":"float",
+                         "value":33
                         }],
                  "rotation":0,
                  "type":"",
@@ -452,6 +677,21 @@
                          "name":"Direction",
                          "type":"string",
                          "value":"Up"
+                        }, 
+                        {
+                         "name":"Respawn",
+                         "type":"bool",
+                         "value":true
+                        }, 
+                        {
+                         "name":"RespawnCoordinateX",
+                         "type":"float",
+                         "value":20
+                        }, 
+                        {
+                         "name":"RespawnCoordinateY",
+                         "type":"float",
+                         "value":33
                         }],
                  "rotation":0,
                  "type":"",
@@ -470,6 +710,21 @@
                          "name":"Direction",
                          "type":"string",
                          "value":"Up"
+                        }, 
+                        {
+                         "name":"Respawn",
+                         "type":"bool",
+                         "value":true
+                        }, 
+                        {
+                         "name":"RespawnCoordinateX",
+                         "type":"float",
+                         "value":20
+                        }, 
+                        {
+                         "name":"RespawnCoordinateY",
+                         "type":"float",
+                         "value":33
                         }],
                  "rotation":0,
                  "type":"",
@@ -488,6 +743,21 @@
                          "name":"Direction",
                          "type":"string",
                          "value":"Up"
+                        }, 
+                        {
+                         "name":"Respawn",
+                         "type":"bool",
+                         "value":true
+                        }, 
+                        {
+                         "name":"RespawnCoordinateX",
+                         "type":"float",
+                         "value":20
+                        }, 
+                        {
+                         "name":"RespawnCoordinateY",
+                         "type":"float",
+                         "value":33
                         }],
                  "rotation":0,
                  "type":"",
@@ -506,6 +776,21 @@
                          "name":"Direction",
                          "type":"string",
                          "value":"Up"
+                        }, 
+                        {
+                         "name":"Respawn",
+                         "type":"bool",
+                         "value":true
+                        }, 
+                        {
+                         "name":"RespawnCoordinateX",
+                         "type":"float",
+                         "value":20
+                        }, 
+                        {
+                         "name":"RespawnCoordinateY",
+                         "type":"float",
+                         "value":33
                         }],
                  "rotation":0,
                  "type":"",
@@ -524,6 +809,21 @@
                          "name":"Direction",
                          "type":"string",
                          "value":"Up"
+                        }, 
+                        {
+                         "name":"Respawn",
+                         "type":"bool",
+                         "value":true
+                        }, 
+                        {
+                         "name":"RespawnCoordinateX",
+                         "type":"float",
+                         "value":20
+                        }, 
+                        {
+                         "name":"RespawnCoordinateY",
+                         "type":"float",
+                         "value":33
                         }],
                  "rotation":0,
                  "type":"",
@@ -542,6 +842,21 @@
                          "name":"Direction",
                          "type":"string",
                          "value":"Up"
+                        }, 
+                        {
+                         "name":"Respawn",
+                         "type":"bool",
+                         "value":true
+                        }, 
+                        {
+                         "name":"RespawnCoordinateX",
+                         "type":"float",
+                         "value":20
+                        }, 
+                        {
+                         "name":"RespawnCoordinateY",
+                         "type":"float",
+                         "value":33
                         }],
                  "rotation":0,
                  "type":"",
@@ -560,6 +875,21 @@
                          "name":"Direction",
                          "type":"string",
                          "value":"Up"
+                        }, 
+                        {
+                         "name":"Respawn",
+                         "type":"bool",
+                         "value":true
+                        }, 
+                        {
+                         "name":"RespawnCoordinateX",
+                         "type":"float",
+                         "value":20
+                        }, 
+                        {
+                         "name":"RespawnCoordinateY",
+                         "type":"float",
+                         "value":33
                         }],
                  "rotation":0,
                  "type":"",
@@ -578,6 +908,21 @@
                          "name":"Direction",
                          "type":"string",
                          "value":"Up"
+                        }, 
+                        {
+                         "name":"Respawn",
+                         "type":"bool",
+                         "value":true
+                        }, 
+                        {
+                         "name":"RespawnCoordinateX",
+                         "type":"float",
+                         "value":20
+                        }, 
+                        {
+                         "name":"RespawnCoordinateY",
+                         "type":"float",
+                         "value":33
                         }],
                  "rotation":0,
                  "type":"",
@@ -596,6 +941,21 @@
                          "name":"Direction",
                          "type":"string",
                          "value":"Up"
+                        }, 
+                        {
+                         "name":"Respawn",
+                         "type":"bool",
+                         "value":true
+                        }, 
+                        {
+                         "name":"RespawnCoordinateX",
+                         "type":"float",
+                         "value":20
+                        }, 
+                        {
+                         "name":"RespawnCoordinateY",
+                         "type":"float",
+                         "value":33
                         }],
                  "rotation":0,
                  "type":"",
@@ -614,6 +974,21 @@
                          "name":"Direction",
                          "type":"string",
                          "value":"Up"
+                        }, 
+                        {
+                         "name":"Respawn",
+                         "type":"bool",
+                         "value":true
+                        }, 
+                        {
+                         "name":"RespawnCoordinateX",
+                         "type":"float",
+                         "value":20
+                        }, 
+                        {
+                         "name":"RespawnCoordinateY",
+                         "type":"float",
+                         "value":33
                         }],
                  "rotation":0,
                  "type":"",
@@ -632,6 +1007,21 @@
                          "name":"Direction",
                          "type":"string",
                          "value":"Up"
+                        }, 
+                        {
+                         "name":"Respawn",
+                         "type":"bool",
+                         "value":true
+                        }, 
+                        {
+                         "name":"RespawnCoordinateX",
+                         "type":"float",
+                         "value":20
+                        }, 
+                        {
+                         "name":"RespawnCoordinateY",
+                         "type":"float",
+                         "value":33
                         }],
                  "rotation":0,
                  "type":"",
@@ -650,6 +1040,21 @@
                          "name":"Direction",
                          "type":"string",
                          "value":"Up"
+                        }, 
+                        {
+                         "name":"Respawn",
+                         "type":"bool",
+                         "value":true
+                        }, 
+                        {
+                         "name":"RespawnCoordinateX",
+                         "type":"float",
+                         "value":20
+                        }, 
+                        {
+                         "name":"RespawnCoordinateY",
+                         "type":"float",
+                         "value":33
                         }],
                  "rotation":0,
                  "type":"",
@@ -668,6 +1073,21 @@
                          "name":"Direction",
                          "type":"string",
                          "value":"Up"
+                        }, 
+                        {
+                         "name":"Respawn",
+                         "type":"bool",
+                         "value":true
+                        }, 
+                        {
+                         "name":"RespawnCoordinateX",
+                         "type":"float",
+                         "value":20
+                        }, 
+                        {
+                         "name":"RespawnCoordinateY",
+                         "type":"float",
+                         "value":33
                         }],
                  "rotation":0,
                  "type":"",
@@ -686,6 +1106,21 @@
                          "name":"Direction",
                          "type":"string",
                          "value":"Up"
+                        }, 
+                        {
+                         "name":"Respawn",
+                         "type":"bool",
+                         "value":true
+                        }, 
+                        {
+                         "name":"RespawnCoordinateX",
+                         "type":"float",
+                         "value":20
+                        }, 
+                        {
+                         "name":"RespawnCoordinateY",
+                         "type":"float",
+                         "value":33
                         }],
                  "rotation":0,
                  "type":"",
@@ -704,6 +1139,21 @@
                          "name":"Direction",
                          "type":"string",
                          "value":"Up"
+                        }, 
+                        {
+                         "name":"Respawn",
+                         "type":"bool",
+                         "value":true
+                        }, 
+                        {
+                         "name":"RespawnCoordinateX",
+                         "type":"float",
+                         "value":20
+                        }, 
+                        {
+                         "name":"RespawnCoordinateY",
+                         "type":"float",
+                         "value":33
                         }],
                  "rotation":0,
                  "type":"",
@@ -722,6 +1172,21 @@
                          "name":"Direction",
                          "type":"string",
                          "value":"Up"
+                        }, 
+                        {
+                         "name":"Respawn",
+                         "type":"bool",
+                         "value":true
+                        }, 
+                        {
+                         "name":"RespawnCoordinateX",
+                         "type":"float",
+                         "value":20
+                        }, 
+                        {
+                         "name":"RespawnCoordinateY",
+                         "type":"float",
+                         "value":33
                         }],
                  "rotation":0,
                  "type":"",
@@ -998,6 +1463,21 @@
                          "name":"Direction",
                          "type":"string",
                          "value":"Up"
+                        }, 
+                        {
+                         "name":"Respawn",
+                         "type":"bool",
+                         "value":true
+                        }, 
+                        {
+                         "name":"RespawnCoordinateX",
+                         "type":"float",
+                         "value":20
+                        }, 
+                        {
+                         "name":"RespawnCoordinateY",
+                         "type":"float",
+                         "value":33
                         }],
                  "rotation":0,
                  "type":"",
@@ -1016,6 +1496,21 @@
                          "name":"Direction",
                          "type":"string",
                          "value":"Up"
+                        }, 
+                        {
+                         "name":"Respawn",
+                         "type":"bool",
+                         "value":true
+                        }, 
+                        {
+                         "name":"RespawnCoordinateX",
+                         "type":"float",
+                         "value":20
+                        }, 
+                        {
+                         "name":"RespawnCoordinateY",
+                         "type":"float",
+                         "value":33
                         }],
                  "rotation":0,
                  "type":"",
@@ -1034,6 +1529,21 @@
                          "name":"Direction",
                          "type":"string",
                          "value":"Up"
+                        }, 
+                        {
+                         "name":"Respawn",
+                         "type":"bool",
+                         "value":true
+                        }, 
+                        {
+                         "name":"RespawnCoordinateX",
+                         "type":"float",
+                         "value":20
+                        }, 
+                        {
+                         "name":"RespawnCoordinateY",
+                         "type":"float",
+                         "value":33
                         }],
                  "rotation":0,
                  "type":"",
@@ -1052,6 +1562,21 @@
                          "name":"Direction",
                          "type":"string",
                          "value":"Up"
+                        }, 
+                        {
+                         "name":"Respawn",
+                         "type":"bool",
+                         "value":true
+                        }, 
+                        {
+                         "name":"RespawnCoordinateX",
+                         "type":"float",
+                         "value":20
+                        }, 
+                        {
+                         "name":"RespawnCoordinateY",
+                         "type":"float",
+                         "value":33
                         }],
                  "rotation":0,
                  "type":"",
@@ -1152,7 +1677,7 @@
          "value":1
         }],
  "renderorder":"right-down",
- "tiledversion":"1.10.0",
+ "tiledversion":"1.10.1",
  "tileheight":32,
  "tilesets":[
         {
