@@ -201,7 +201,7 @@
             0, 0, 0, 0, 0, 0, 0, 0, 278, 0, 0, 0, 0, 0, 0, 0, 0, 0, 296, 0, 0, 0, 291, 297, 297, 297, 297, 297, 297, 297, 272, 276, 0, 0, 0, 0, 0, 0, 0, 0,
             0, 0, 0, 0, 0, 0, 0, 0, 278, 0, 0, 0, 0, 0, 0, 0, 0, 0, 256, 0, 0, 147, 298, 0, 0, 0, 0, 0, 0, 0, 0, 277, 0, 0, 0, 0, 0, 0, 0, 0,
             0, 0, 0, 0, 0, 0, 0, 0, 278, 0, 0, 0, 0, 0, 0, 0, 0, 0, 289, 0, 0, 0, 300, 0, 0, 0, 0, 0, 0, 0, 0, 277, 0, 0, 0, 0, 0, 0, 0, 0,
-            0, 0, 0, 0, 0, 0, 0, 0, 278, 0, 0, 0, 0, 0, 0, 0, 0, 0, 287, 0, 0, 0, 296, 0, 0, 0, 0, 0, 0, 0, 0, 277, 0, 0, 0, 0, 0, 0, 0, 0,
+            0, 0, 0, 0, 0, 0, 0, 0, 278, 0, 0, 0, 0, 88, 88, 88, 88, 88, 287, 0, 0, 0, 296, 88, 88, 88, 0, 88, 0, 0, 0, 277, 0, 0, 0, 0, 0, 0, 0, 0,
             0, 0, 0, 0, 0, 0, 0, 0, 278, 0, 0, 0, 291, 297, 297, 297, 297, 297, 293, 145, 0, 0, 294, 297, 297, 297, 297, 263, 0, 0, 0, 277, 0, 0, 0, 0, 0, 0, 0, 0,
             0, 0, 0, 0, 0, 0, 0, 0, 278, 0, 0, 0, 298, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 277, 0, 0, 0, 0, 0, 0, 0, 0,
             0, 0, 0, 0, 0, 0, 0, 0, 278, 0, 0, 0, 256, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 257, 276, 0, 0, 0, 0, 0, 0, 0, 0,
@@ -612,8 +612,8 @@
                  "type":"Enemy",
                  "visible":true,
                  "width":25.2095,
-                 "x":302.5260947573,
-                 "y":1725.27242614641
+                 "x":321.561627752224,
+                 "y":1725.90694391291
                 }, 
                 {
                  "gid":158,
@@ -642,7 +642,7 @@
                         {
                          "name":"text",
                          "type":"string",
-                         "value":"Research Log - Project Momo - [Dr. Madretsma, May 20, 2023]\nResearch Entry: It is with great concern that I document the unexpected breach of containment by Momo. \nThe security team has notified me of a series of unsettling events that transpired within the \nlaboratory, resulting in the escape of the hybrid creature."
+                         "value":"Research Log - Project Momo - [Dr. Madretsma, May 20, 2023]\nResearch Entry: It is with great concern that I document the unexpected breach of containment by \nMomo. The security team has notified me of a series of unsettling events that transpired within \nthe laboratory, resulting in the escape of the hybrid creature."
                         }],
                  "rotation":0,
                  "type":"",
@@ -671,8 +671,8 @@
                  "type":"Enemy",
                  "visible":true,
                  "width":28.5,
-                 "x":417.770330368488,
-                 "y":1597.71671236541
+                 "x":416.091985216808,
+                 "y":1598.13629865333
                 }, 
                 {
                  "gid":83,
@@ -711,14 +711,14 @@
                         {
                          "name":"rightX",
                          "type":"int",
-                         "value":21
+                         "value":19
                         }],
                  "rotation":0,
                  "type":"Enemy",
                  "visible":true,
                  "width":28.5,
-                 "x":672.798196498142,
-                 "y":1597.23088336015
+                 "x":672.378610210221,
+                 "y":1598.07005593599
                 }, 
                 {
                  "gid":83,
@@ -1181,7 +1181,7 @@
                         {
                          "name":"text",
                          "type":"string",
-                         "value":"Research Log - Project Momo - [Dr. Madretsma, Jan. 17, 2023]\nResearch Entry: ...In response to the hybrid's inborn tendency to be drawn towards any source of red light, \nI am now requesting the entire laboratory to be repainted in red.\n"
+                         "value":"Research Log - Project Momo - [Dr. Madretsma, Jan. 17, 2023]\nResearch Entry: ...In response to the hybrid's inborn tendency to be drawn towards any source of red \nlight, I am now requesting the entire laboratory to be repainted in red.\n"
                         }],
                  "rotation":0,
                  "type":"",
@@ -1217,7 +1217,7 @@
                         {
                          "name":"text",
                          "type":"string",
-                         "value":"Research Log - Project Momo - [Dr. Madretsma, Dec. 30, 2022]\nResearch Entry: Through careful observation and analysis, it has become apparent that the process of \nfusing different species' DNA within the Chimera has resulted in a unique manifestation of \npsychological disorder\u2014schizophrenia."
+                         "value":"Research Log - Project Momo - [Dr. Madretsma, Dec. 30, 2022]\nResearch Entry: Through careful observation and analysis, it has become apparent that the process of \nfusing different species' DNA within Momo has resulted in a unique manifestation of \npsychological disorder - schizophrenia."
                         }],
                  "rotation":0,
                  "type":"",
@@ -1225,6 +1225,24 @@
                  "width":19.5,
                  "x":471.331476594053,
                  "y":1304.96635376981
+                }, 
+                {
+                 "gid":158,
+                 "height":24.5,
+                 "id":237,
+                 "name":"Billboard",
+                 "properties":[
+                        {
+                         "name":"text",
+                         "type":"string",
+                         "value":"We have been expecting you, Momo No.13.\n"
+                        }],
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":19.5,
+                 "x":741.825157515752,
+                 "y":535.004725472547
                 }],
          "opacity":1,
          "type":"objectgroup",
@@ -1233,7 +1251,7 @@
          "y":0
         }],
  "nextlayerid":11,
- "nextobjectid":237,
+ "nextobjectid":238,
  "orientation":"orthogonal",
  "properties":[
         {
