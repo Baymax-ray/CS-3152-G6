@@ -1321,8 +1321,8 @@
          "imagewidth":32
         }, 
         {
-         "id":308,
-         "image":"tiles\/RedMetalPlatformExteriorB.png",
+         "id":300,
+         "image":"tiles\/RedMetalPlatformExterior.png",
          "imageheight":32,
          "imagewidth":32
         }, 
@@ -1579,8 +1579,8 @@
          "imagewidth":32
         }, 
         {
-         "id":300,
-         "image":"tiles\/RedMetalPlatformExterior.png",
+         "id":308,
+         "image":"tiles\/RedMetalPlatformExteriorB.png",
          "imageheight":32,
          "imagewidth":32
         }, 
