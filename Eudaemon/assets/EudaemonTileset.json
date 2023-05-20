@@ -8,8 +8,8 @@
  "margin":0,
  "name":"Eudaemon Tilleset",
  "spacing":0,
- "tilecount":284,
- "tiledversion":"1.10.1",
+ "tilecount":296,
+ "tiledversion":"1.10.0",
  "tileheight":42,
  "tiles":[
         {
@@ -1645,8 +1645,20 @@
          "imagewidth":32
         }, 
         {
-         "id":162,
-         "image":"tiles\/shrooms.png",
+         "id":343,
+         "image":"tiles\/wallJumpTutorial1.png",
+         "imageheight":32,
+         "imagewidth":32
+        }, 
+        {
+         "id":344,
+         "image":"tiles\/wallJumpTutorial2.png",
+         "imageheight":32,
+         "imagewidth":32
+        }, 
+        {
+         "id":345,
+         "image":"tiles\/wallJumpTutorial3.png",
          "imageheight":32,
          "imagewidth":32
         }, 
@@ -1663,20 +1675,20 @@
          "imagewidth":32
         }, 
         {
-         "id":341,
-         "image":"tiles\/rock2.png",
+         "id":346,
+         "image":"tiles\/wallJumpTutorial4.png",
          "imageheight":32,
          "imagewidth":32
         }, 
         {
-         "id":163,
-         "image":"tiles\/rock.png",
+         "id":347,
+         "image":"tiles\/wallJumpTutorial5.png",
          "imageheight":32,
          "imagewidth":32
         }, 
         {
-         "id":342,
-         "image":"tiles\/stalagtite.png",
+         "id":348,
+         "image":"tiles\/wallJumpTutorial6.png",
          "imageheight":32,
          "imagewidth":32
         }, 
@@ -1689,6 +1701,66 @@
         {
          "id":340,
          "image":"tiles\/entranceD.png",
+         "imageheight":32,
+         "imagewidth":32
+        }, 
+        {
+         "id":349,
+         "image":"tiles\/wallJumpTutorial7.png",
+         "imageheight":32,
+         "imagewidth":32
+        }, 
+        {
+         "id":350,
+         "image":"tiles\/wallJumpTutorial8.png",
+         "imageheight":32,
+         "imagewidth":32
+        }, 
+        {
+         "id":351,
+         "image":"tiles\/wallJumpTutorial9.png",
+         "imageheight":32,
+         "imagewidth":32
+        }, 
+        {
+         "id":163,
+         "image":"tiles\/rock.png",
+         "imageheight":32,
+         "imagewidth":32
+        }, 
+        {
+         "id":341,
+         "image":"tiles\/rock2.png",
+         "imageheight":32,
+         "imagewidth":32
+        }, 
+        {
+         "id":352,
+         "image":"tiles\/wallJumpTutorial10.png",
+         "imageheight":32,
+         "imagewidth":32
+        }, 
+        {
+         "id":353,
+         "image":"tiles\/wallJumpTutorial11.png",
+         "imageheight":32,
+         "imagewidth":32
+        }, 
+        {
+         "id":354,
+         "image":"tiles\/wallJumpTutorial12.png",
+         "imageheight":32,
+         "imagewidth":32
+        }, 
+        {
+         "id":162,
+         "image":"tiles\/shrooms.png",
+         "imageheight":32,
+         "imagewidth":32
+        }, 
+        {
+         "id":342,
+         "image":"tiles\/stalagtite.png",
          "imageheight":32,
          "imagewidth":32
         }, 
