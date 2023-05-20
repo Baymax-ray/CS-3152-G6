@@ -445,11 +445,14 @@ public class Enemy extends CapsuleObstacle {
                         this.setAngle((float) Math.PI/2);
                         this.setX(x + 1.0f);
                         this.setY(y + 0.5f);
-                        this.setOxOffset(50f);
+                        this.setOxOffset(20f);
+                        this.setOyOffset(-15f);
                         break;
                     case "Right":
                         this.projectileEnemyRotation = (float) Math.PI/2;
                         this.setAngle((float) Math.PI/2);
+                        this.setOyOffset(-15f);
+                        this.setY(y + 0.5f);
                         break;
                     case "Up":
                         this.projectileEnemyRotation = (float) Math.PI;
@@ -459,7 +462,7 @@ public class Enemy extends CapsuleObstacle {
                         break;
                     case "Down":
                         this.projectileEnemyRotation = 0;
-                        this.setOyOffset(-15f);
+                        this.setOyOffset(-20f);
                         break;
                     default:
                         //should not get here
