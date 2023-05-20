@@ -93,6 +93,7 @@ public class ActionController {
 
         //Creating a Dictionary of Textures
         addAnimations(player.getMomoRunSpriteSheet(), 8, 1, "momoRun");
+        addAnimations(player.getMomoIdleSpriteSheet(), 4, 1, "momoIdle");
         addAnimations(player.getMomoDashSpriteSheet(), 5, 1, "momoDash");
         addAnimations(player.getMomoJumpSpriteSheet(), 7, 1, "momoJump");
         addAnimations(player.getChiyoRunSpriteSheet(), 8, 1, "chiyoRun");
@@ -701,9 +702,12 @@ public class ActionController {
 //                momoRunSound.stop();
 //                soundDictionary.remove(momoRunSound);
                 audio.stopEffect("momo-run");
-                player.setTexture(player.getMomoTexture());
+                TextureRegion current = (TextureRegion) (animations.get("momoIdle")).getKeyFrame(currentFrame);
+                maxFrame = 4;
+                tickFrameSwitch = 7;
+                player.setTexture(current);
                 player.setOxOffset(0);
-                player.setOyOffset(-220);
+                player.setOyOffset(-52);
                 player.setSxMult(1.2f);
                 player.setSyMult(1.2f);
             }

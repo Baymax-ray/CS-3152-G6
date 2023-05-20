@@ -141,6 +141,15 @@
             }
           }
         },
+      "momo:idle": {
+        "file" : "character/momoIdleRight.png",
+        "sprites" : {
+          "fire": {
+            "rows": 1,
+            "cols": 4
+          }
+        }
+      },
         "momo:jump": {
           "file" : "character/momoJump.png",
           "sprites" : {
@@ -319,11 +328,10 @@
         }
       },
         "background:city": "backgrounds/backgroundCity.png",
-        "momo:idle":  "character/momo.png",
         "momo:upDash":  "character/momoUpDash.png",
         "momo:downDash":  "character/momoDownDash.png",
         "momo:diagonalDash":  "character/momoDiagonalUpDash.png",
-        "momo:slide":  "character/momoNewSlideFlip.png",
+        "momo:slide":  "character/momoNewSlide.png",
         "chiyo:idle":  "character/chiyo.png",
         "chiyo:slide":  "character/chiyoSlide.png",
 
