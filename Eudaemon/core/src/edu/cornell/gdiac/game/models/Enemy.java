@@ -459,8 +459,7 @@ public class Enemy extends CapsuleObstacle {
                         break;
                     case "Down":
                         this.projectileEnemyRotation = 0;
-                        this.setY(y - 1f);
-                        this.setOyOffset(20f);
+                        this.setOyOffset(-15f);
                         break;
                     default:
                         //should not get here
