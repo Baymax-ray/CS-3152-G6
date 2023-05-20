@@ -673,7 +673,7 @@
         {
          "name":"backgroundScale",
          "type":"string",
-         "value":"0.2"
+         "value":"0.008"
         }, 
         {
          "name":"camZoneX",
