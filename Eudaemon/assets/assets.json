@@ -338,6 +338,7 @@
       },
         "background:city": "backgrounds/backgroundCity.png",
         "momo:upDash":  "character/momoUpDash.png",
+        "momo:enemy":  "character/momo.png",
         "momo:downDash":  "character/momoDownDash.png",
         "momo:diagonalDash":  "character/momoDiagonalUpDash.png",
         "momo:slide":  "character/momoSlide.png",
