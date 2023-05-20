@@ -48,7 +48,7 @@ public class UIOverlay {
     }
 
     public void draw(GameCanvas canvas, float playerSpirit, float playerHearts) {
-        float heart_xPos = 0.0314f*canvas.getWidth();
+        float heart_xPos = 0.0422f*canvas.getWidth();
         if(level.getLevelDifficulty() == 3){
             canvas.draw(vetUI, Color.WHITE, 8f, canvas.getHeight()*0.875f, canvas.getWidth()*0.15469f*1.5f, canvas.getHeight()*0.07578f*1.5f);
             for(int i=0; i < playerHearts; i++){
@@ -64,9 +64,9 @@ public class UIOverlay {
             }
         }
         else{
-            canvas.draw(normalUI, Color.WHITE, 8f, canvas.getHeight()*0.875f, canvas.getWidth()*0.15469f*1.5f, canvas.getHeight()*0.07578f*1.5f);
+            canvas.draw(normalUI, Color.WHITE, 30f, canvas.getHeight()*0.845f, canvas.getWidth()*0.15469f*1.5f, canvas.getHeight()*0.07578f*1.5f);
             for(int i=0; i < playerHearts; i++){
-                canvas.draw(heartRegion, Color.WHITE, heart_xPos,canvas.getHeight()*0.948f, 0.016f*canvas.getWidth()*1.5f, 0.024f*canvas.getHeight()*1.5f);
+                canvas.draw(heartRegion, Color.WHITE, heart_xPos,canvas.getHeight()*0.918f, 0.016f*canvas.getWidth()*1.5f, 0.024f*canvas.getHeight()*1.5f);
                 heart_xPos += 0.0422f*canvas.getWidth();
             }
         }
@@ -74,6 +74,6 @@ public class UIOverlay {
         int barWidth = (int)(filledSpiritBar.getWidth() * spiritPercentage);
         int barHeight = filledSpiritBar.getHeight();
         TextureRegion croppedBar = new TextureRegion(filledSpiritBar, 0, 0, barWidth, barHeight);
-        canvas.draw(croppedBar, Color.WHITE, 0.003f* canvas.getWidth(), 0.870f*canvas.getHeight(), canvas.getWidth()*0.156f * spiritPercentage*1.5f, 0.1f*canvas.getHeight()*1.5f);
+        canvas.draw(croppedBar, Color.WHITE, 0.015f* canvas.getWidth(), 0.840f*canvas.getHeight(), canvas.getWidth()*0.156f * spiritPercentage*1.5f, 0.1f*canvas.getHeight()*1.5f);
     }
 }
