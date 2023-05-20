@@ -1384,8 +1384,8 @@
                  "type":"Enemy",
                  "visible":true,
                  "width":25.2095,
-                 "x":1059.4099434924,
-                 "y":1724.98808353217
+                 "x":1059.9099434924,
+                 "y":1692.73808353217
                 }, 
                 {
                  "gid":86,
@@ -1466,7 +1466,7 @@
          "value":1
         }],
  "renderorder":"right-down",
- "tiledversion":"1.10.0",
+ "tiledversion":"1.10.1",
  "tileheight":32,
  "tilesets":[
         {

@@ -307,19 +307,19 @@
                         {
                          "name":"Direction",
                          "type":"string",
-                         "value":"Down"
+                         "value":"Right"
                         }, 
                         {
                          "name":"SpriteSheetType",
                          "type":"string",
-                         "value":"Down"
+                         "value":"Right"
                         }],
                  "rotation":0,
                  "type":"Enemy",
                  "visible":true,
                  "width":25.2095,
-                 "x":1412.89525,
-                 "y":540.30305
+                 "x":1412.22858333333,
+                 "y":539.969716666667
                 }, 
                 {
                  "gid":86,
@@ -330,12 +330,12 @@
                         {
                          "name":"Direction",
                          "type":"string",
-                         "value":"Down"
+                         "value":"Right"
                         }, 
                         {
                          "name":"SpriteSheetType",
                          "type":"string",
-                         "value":"Down"
+                         "value":"Right"
                         }],
                  "rotation":0,
                  "type":"Enemy",
@@ -1746,7 +1746,7 @@
          "y":0
         }],
  "nextlayerid":15,
- "nextobjectid":210,
+ "nextobjectid":212,
  "orientation":"orthogonal",
  "properties":[
         {
