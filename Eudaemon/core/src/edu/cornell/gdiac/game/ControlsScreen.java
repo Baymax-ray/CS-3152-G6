@@ -488,7 +488,10 @@ public class ControlsScreen implements Screen, InputProcessor, ControllerListene
     public boolean touchDown(int screenX, int screenY, int pointer, int buttonCode) {
         if (!active) return false;
 
-        if (mappingMode) mappingMode = false;
+        if (mappingMode) {
+            mappingMode = false;
+            hoveredButton.pressState = 0;
+        }
 
         if (backButton.pressState == 2) {
             return true;
@@ -524,7 +527,10 @@ public class ControlsScreen implements Screen, InputProcessor, ControllerListene
     public boolean touchUp(int screenX, int screenY, int pointer, int buttonCode) {
         if (!active) return false;
 
-        if (mappingMode) mappingMode = false;
+        if (mappingMode) {
+            mappingMode = false;
+            hoveredButton.pressState = 0;
+        }
 
         screenY = heightY - screenY;
 
@@ -566,7 +572,10 @@ public class ControlsScreen implements Screen, InputProcessor, ControllerListene
     public boolean buttonDown (Controller controller, int buttonCode) {
         if (!active) return false;
 
-        if (mappingMode) mappingMode = false;
+        if (mappingMode) {
+            mappingMode = false;
+            hoveredButton.pressState = 0;
+        }
 
         Gdx.input.setCursorCatched(true);
 
@@ -600,7 +609,10 @@ public class ControlsScreen implements Screen, InputProcessor, ControllerListene
     public boolean buttonUp (Controller controller, int buttonCode) {
         if (!active) return false;
 
-        if (mappingMode) mappingMode = false;
+        if (mappingMode) {
+            mappingMode = false;
+            hoveredButton.pressState = 0;
+        }
 
         Gdx.input.setCursorCatched(true);
         ControllerMapping mapping = controller.getMapping();
