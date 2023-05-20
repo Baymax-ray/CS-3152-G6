@@ -150,6 +150,15 @@
             }
           }
         },
+      "momo:idle": {
+        "file" : "character/momoIdle.png",
+        "sprites" : {
+          "fire": {
+            "rows": 1,
+            "cols": 4
+          }
+        }
+      },
         "chiyo:run": {
           "file" : "character/chiyoRun.png",
           "sprites" : {
@@ -177,6 +186,15 @@
             }
           }
         },
+      "chiyo:idle": {
+        "file" : "character/chiyoIdle.png",
+        "sprites" : {
+          "fire": {
+            "rows": 1,
+            "cols": 5
+          }
+        }
+      },
       "chiyo:hitWallEffect": {
         "file" : "animations/hitWallEffect.png",
         "sprites" : {
@@ -319,12 +337,10 @@
         }
       },
         "background:city": "backgrounds/backgroundCity.png",
-        "momo:idle":  "character/momo.png",
         "momo:upDash":  "character/momoUpDash.png",
         "momo:downDash":  "character/momoDownDash.png",
         "momo:diagonalDash":  "character/momoDiagonalUpDash.png",
         "momo:slide":  "character/momoSlide.png",
-        "chiyo:idle":  "character/chiyo.png",
         "chiyo:slide":  "character/chiyoSlide.png",
 
         "enemy:nonTrackingGoomba":  "enemy/nonTrackingGoomba.png",
@@ -695,6 +711,7 @@
         "deathScreen:background": "backgrounds/deathScreenBackground.png",
         "deathScreen:restart": "shared/deathRestart.png",
         "deathScreen:quit": "shared/deathExit.png",
+        "winningScreen:background" : "shared/endscene.png",
 
         "settingsScreen:background": "backgrounds/settingsBackground.png",
         "settingsScreen:back": "levelSelect/backArrow.png",

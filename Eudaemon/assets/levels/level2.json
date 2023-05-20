@@ -242,6 +242,21 @@
                          "name":"Direction",
                          "type":"string",
                          "value":"Up"
+                        }, 
+                        {
+                         "name":"Respawn",
+                         "type":"bool",
+                         "value":true
+                        }, 
+                        {
+                         "name":"RespawnCoordinateX",
+                         "type":"float",
+                         "value":11
+                        }, 
+                        {
+                         "name":"RespawnCoordinateY",
+                         "type":"float",
+                         "value":51
                         }],
                  "rotation":0,
                  "type":"",
@@ -260,6 +275,21 @@
                          "name":"Direction",
                          "type":"string",
                          "value":"Up"
+                        }, 
+                        {
+                         "name":"Respawn",
+                         "type":"bool",
+                         "value":true
+                        }, 
+                        {
+                         "name":"RespawnCoordinateX",
+                         "type":"float",
+                         "value":11
+                        }, 
+                        {
+                         "name":"RespawnCoordinateY",
+                         "type":"float",
+                         "value":51
                         }],
                  "rotation":0,
                  "type":"",
@@ -278,6 +308,21 @@
                          "name":"Direction",
                          "type":"string",
                          "value":"Up"
+                        }, 
+                        {
+                         "name":"Respawn",
+                         "type":"bool",
+                         "value":true
+                        }, 
+                        {
+                         "name":"RespawnCoordinateX",
+                         "type":"float",
+                         "value":11
+                        }, 
+                        {
+                         "name":"RespawnCoordinateY",
+                         "type":"float",
+                         "value":51
                         }],
                  "rotation":0,
                  "type":"",
@@ -296,6 +341,21 @@
                          "name":"Direction",
                          "type":"string",
                          "value":"Up"
+                        }, 
+                        {
+                         "name":"Respawn",
+                         "type":"bool",
+                         "value":true
+                        }, 
+                        {
+                         "name":"RespawnCoordinateX",
+                         "type":"float",
+                         "value":11
+                        }, 
+                        {
+                         "name":"RespawnCoordinateY",
+                         "type":"float",
+                         "value":51
                         }],
                  "rotation":0,
                  "type":"",
@@ -314,6 +374,21 @@
                          "name":"Direction",
                          "type":"string",
                          "value":"Up"
+                        }, 
+                        {
+                         "name":"Respawn",
+                         "type":"bool",
+                         "value":true
+                        }, 
+                        {
+                         "name":"RespawnCoordinateX",
+                         "type":"float",
+                         "value":11
+                        }, 
+                        {
+                         "name":"RespawnCoordinateY",
+                         "type":"float",
+                         "value":51
                         }],
                  "rotation":0,
                  "type":"",
@@ -332,6 +407,21 @@
                          "name":"Direction",
                          "type":"string",
                          "value":"Up"
+                        }, 
+                        {
+                         "name":"Respawn",
+                         "type":"bool",
+                         "value":true
+                        }, 
+                        {
+                         "name":"RespawnCoordinateX",
+                         "type":"float",
+                         "value":11
+                        }, 
+                        {
+                         "name":"RespawnCoordinateY",
+                         "type":"float",
+                         "value":51
                         }],
                  "rotation":0,
                  "type":"",
@@ -350,6 +440,21 @@
                          "name":"Direction",
                          "type":"string",
                          "value":"Up"
+                        }, 
+                        {
+                         "name":"Respawn",
+                         "type":"bool",
+                         "value":true
+                        }, 
+                        {
+                         "name":"RespawnCoordinateX",
+                         "type":"float",
+                         "value":11
+                        }, 
+                        {
+                         "name":"RespawnCoordinateY",
+                         "type":"float",
+                         "value":51
                         }],
                  "rotation":0,
                  "type":"",
@@ -368,6 +473,21 @@
                          "name":"Direction",
                          "type":"string",
                          "value":"Up"
+                        }, 
+                        {
+                         "name":"Respawn",
+                         "type":"bool",
+                         "value":true
+                        }, 
+                        {
+                         "name":"RespawnCoordinateX",
+                         "type":"float",
+                         "value":11
+                        }, 
+                        {
+                         "name":"RespawnCoordinateY",
+                         "type":"float",
+                         "value":51
                         }],
                  "rotation":0,
                  "type":"",
@@ -426,7 +546,7 @@
                         {
                          "name":"Respawn",
                          "type":"bool",
-                         "value":false
+                         "value":true
                         }, 
                         {
                          "name":"RespawnCoordinateX",
@@ -459,7 +579,7 @@
                         {
                          "name":"Respawn",
                          "type":"bool",
-                         "value":false
+                         "value":true
                         }, 
                         {
                          "name":"RespawnCoordinateX",

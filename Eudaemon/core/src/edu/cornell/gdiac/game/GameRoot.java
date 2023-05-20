@@ -21,6 +21,7 @@ public class GameRoot extends Game implements ScreenListener {
 	private GameCanvas canvas;
 	private AssetDirectory assets;
 	private FontTextureLoader fontTextureLoader;
+	private WinningScreen winningScreen;
 
 	@Override
 	public void create() {
@@ -38,6 +39,7 @@ public class GameRoot extends Game implements ScreenListener {
 		if (deathScreen != null) deathScreen.dispose();
 		if(escapeMenu!=null) escapeMenu.dispose();
 		if(settingsScreen!=null) settingsScreen.dispose();
+		if(winningScreen !=null)winningScreen.dispose();
 		if (assets != null) {
 			assets.unloadAssets();
 			assets.dispose();
@@ -96,6 +98,9 @@ public class GameRoot extends Game implements ScreenListener {
 
 			this.controlsScreen = new ControlsScreen(assets, canvas, state.getSettings(), fontTextureLoader);
 			this.controlsScreen.setScreenListener(this);
+			
+			this.winningScreen = new WinningScreen(assets, canvas);
+			this.winningScreen.setScreenListener(this);
 
 			setScreen(mainMenuScreen);
 		}
@@ -192,6 +197,13 @@ public class GameRoot extends Game implements ScreenListener {
 				screen.pause();
 				state.unlockNextLevel();
 				state.getSettings().save();
+				if(state.getCurrentLevel().getExit().getNextLevel().equals("win")){
+					//WINNING ALL LEVELS
+					levelScreen.dispose();
+					winningScreen.reset();
+					setScreen(winningScreen);
+				}
+				else{
 				this.state.setCurrentLevel(state.getCurrentLevel().getExit().getNextLevel());
 				this.state.resetCurrentLevel();
 				levelScreen.dispose();
@@ -199,6 +211,7 @@ public class GameRoot extends Game implements ScreenListener {
 				levelScreen.setScreenListener(this);
 				levelScreen.setCanvas(canvas);
 				setScreen(levelScreen);
+				}
 			}
 		}
 		if(screen == escapeMenu){
@@ -258,6 +271,19 @@ public class GameRoot extends Game implements ScreenListener {
 				screen.pause();
 				settingsScreen.reset();
 				setScreen(settingsScreen);
+			}
+		}
+		if (screen == winningScreen) {
+			if (exitCode == ExitCode.RESET) {
+				//NO.
+				screen.pause();
+				mainMenuScreen.reset();
+				setScreen(mainMenuScreen);
+			}
+			if (exitCode == ExitCode.MAIN_MENU) {
+				screen.pause();
+				mainMenuScreen.reset();
+				setScreen(mainMenuScreen);
 			}
 		}
 	}

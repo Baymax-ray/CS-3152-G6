@@ -17,9 +17,14 @@ public class CameraShaker {
     private float randomAngle;
     private float timer;
     private Vector3 offset;
+    private Vector3 backgroundShakeOffset;
     private Vector3 currentPosition;
     public Vector3 origPosition;
     public Vector3 startPosition;
+
+    public Vector3 getOffset() { return offset; }
+    public Vector3 getStartPosition() { return startPosition; }
+    public Vector3 getCurrentPosition() { return currentPosition; }
 
 
     /**
@@ -34,6 +39,7 @@ public class CameraShaker {
         checkParameters(shakeRadius, minimumShakeRadius, radiusFallOffFactor);
         this.camera = camera;
         this.offset = new Vector3();
+        this.backgroundShakeOffset = new Vector3();
         this.currentPosition = new Vector3();
         this.origPosition = camera.position.cpy();
         reset();
@@ -61,6 +67,7 @@ public class CameraShaker {
             computeCameraOffset();
             computeCurrentPosition(cameraController, level);
             diminishShake();
+//            camera.position.set(currentPosition);
             if (shakeTimes < 5) {
                 camera.position.set(currentPosition);
                 shakeTimes += 1;
@@ -117,6 +124,8 @@ public class CameraShaker {
             currentPosition.x = origPosition.x + offset.x;
         if (cameraController.isCameraInBound(origPosition.x, origPosition.y + offset.y, level))
             currentPosition.y = origPosition.y + offset.y;
+        backgroundShakeOffset.x = currentPosition.x - origPosition.x;
+        backgroundShakeOffset.y = currentPosition.y - origPosition.y;
     }
 
     private void diminishShake(){

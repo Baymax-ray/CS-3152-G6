@@ -394,6 +394,7 @@ public class Enemy extends CapsuleObstacle {
             case "Fast":
             case "Fly":
             case "FlyRed":
+            case "MOMO":
                 break;
             case "FlyGuardian":
                 this.guardianTime = enemyData.getInt("guardianTime");

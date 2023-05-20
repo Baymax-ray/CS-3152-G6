@@ -236,6 +236,21 @@
                          "name":"Direction",
                          "type":"string",
                          "value":"Up"
+                        }, 
+                        {
+                         "name":"Respawn",
+                         "type":"bool",
+                         "value":true
+                        }, 
+                        {
+                         "name":"RespawnCoordinateX",
+                         "type":"float",
+                         "value":43
+                        }, 
+                        {
+                         "name":"RespawnCoordinateY",
+                         "type":"float",
+                         "value":29
                         }],
                  "rotation":0,
                  "type":"",
@@ -254,6 +269,21 @@
                          "name":"Direction",
                          "type":"string",
                          "value":"Up"
+                        }, 
+                        {
+                         "name":"Respawn",
+                         "type":"bool",
+                         "value":true
+                        }, 
+                        {
+                         "name":"RespawnCoordinateX",
+                         "type":"float",
+                         "value":43
+                        }, 
+                        {
+                         "name":"RespawnCoordinateY",
+                         "type":"float",
+                         "value":29
                         }],
                  "rotation":0,
                  "type":"",
@@ -272,6 +302,21 @@
                          "name":"Direction",
                          "type":"string",
                          "value":"Up"
+                        }, 
+                        {
+                         "name":"Respawn",
+                         "type":"bool",
+                         "value":true
+                        }, 
+                        {
+                         "name":"RespawnCoordinateX",
+                         "type":"float",
+                         "value":43
+                        }, 
+                        {
+                         "name":"RespawnCoordinateY",
+                         "type":"float",
+                         "value":29
                         }],
                  "rotation":0,
                  "type":"",
@@ -290,6 +335,21 @@
                          "name":"Direction",
                          "type":"string",
                          "value":"Up"
+                        }, 
+                        {
+                         "name":"Respawn",
+                         "type":"bool",
+                         "value":true
+                        }, 
+                        {
+                         "name":"RespawnCoordinateX",
+                         "type":"float",
+                         "value":43
+                        }, 
+                        {
+                         "name":"RespawnCoordinateY",
+                         "type":"float",
+                         "value":29
                         }],
                  "rotation":0,
                  "type":"",
@@ -308,6 +368,21 @@
                          "name":"Direction",
                          "type":"string",
                          "value":"Up"
+                        }, 
+                        {
+                         "name":"Respawn",
+                         "type":"bool",
+                         "value":true
+                        }, 
+                        {
+                         "name":"RespawnCoordinateX",
+                         "type":"float",
+                         "value":43
+                        }, 
+                        {
+                         "name":"RespawnCoordinateY",
+                         "type":"float",
+                         "value":29
                         }],
                  "rotation":0,
                  "type":"",
@@ -598,7 +673,7 @@
         {
          "name":"backgroundScale",
          "type":"string",
-         "value":"0.2"
+         "value":"0.008"
         }, 
         {
          "name":"camZoneX",

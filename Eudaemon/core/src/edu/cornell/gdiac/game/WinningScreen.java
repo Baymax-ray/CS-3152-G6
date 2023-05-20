@@ -89,7 +89,7 @@ public class WinningScreen implements Screen, InputProcessor, ControllerListener
     /** Whether or not this player mode is still active */
     private boolean active;
 
-    private MenuButton playButton;
+//    private MenuButton playButton;
     private MenuButton quitButton;
 
     private MenuButton hoveredButton;
@@ -105,9 +105,9 @@ public class WinningScreen implements Screen, InputProcessor, ControllerListener
      *
      * @return true if the player is ready to go
      */
-    public boolean restartIsReady() {
-        return playButton.pressState == 2;
-    }
+//    public boolean restartIsReady() {
+//        return playButton.pressState == 2;
+//    }
     public boolean quitIsReady() {
         return quitButton.pressState == 2;
     }
@@ -127,19 +127,19 @@ public class WinningScreen implements Screen, InputProcessor, ControllerListener
         this.canvas  = canvas;
 
         // Load the next two images immediately.
-        background = assets.getEntry( "deathScreen:background", Texture.class );
+        background = assets.getEntry( "winningScreen:background", Texture.class );
         background.setFilter( TextureFilter.Linear, TextureFilter.Linear );
 
-        playButton = new MenuButton(new TextureRegion(assets.getEntry("deathScreen:restart",Texture.class)), ExitCode.START);
+//        playButton = new MenuButton(new TextureRegion(assets.getEntry("deathScreen:restart",Texture.class)), ExitCode.START);
         quitButton = new MenuButton(new TextureRegion(assets.getEntry("deathScreen:quit", Texture.class)), ExitCode.QUIT);
 
-        playButton.up = quitButton;
-        playButton.down = quitButton;
+//        playButton.up = quitButton;
+//        playButton.down = quitButton;
+//
+//        quitButton.up = playButton;
+//        quitButton.down = playButton;
 
-        quitButton.up = playButton;
-        quitButton.down = playButton;
-
-        hoveredButton = playButton;
+        hoveredButton = quitButton;
 
         // Compute the dimensions from the canvas
         resize(canvas.getWidth(),canvas.getHeight());
@@ -174,9 +174,9 @@ public class WinningScreen implements Screen, InputProcessor, ControllerListener
         canvas.setOverlayCamera();
         canvas.begin();
         canvas.draw(background, Color.WHITE, 0, 0, canvas.getWidth(), canvas.getHeight());
-        Color playTint = (playButton.pressState == 1 ? Color.GRAY: Color.WHITE);
+//        Color playTint = (playButton.pressState == 1 ? Color.GRAY: Color.WHITE);
         Color quitTint = (quitButton.pressState == 1 ? Color.GRAY: Color.WHITE);
-        canvas.draw(playButton.texture, playTint, playButton.hitbox.x, playButton.hitbox.y, playButton.hitbox.width, playButton.hitbox.height);
+//        canvas.draw(playButton.texture, playTint, playButton.hitbox.x, playButton.hitbox.y, playButton.hitbox.width, playButton.hitbox.height);
         canvas.draw(quitButton.texture, quitTint, quitButton.hitbox.x, quitButton.hitbox.y, quitButton.hitbox.width, quitButton.hitbox.height);
         canvas.end();
 
@@ -198,7 +198,7 @@ public class WinningScreen implements Screen, InputProcessor, ControllerListener
             menuCooldown = COOLDOWN;
         } else if (menuDown && menuCooldown == 0) {
             if (hoveredButton == null) {
-                hoveredButton = playButton;
+                hoveredButton = quitButton;
             } else {
                 hoveredButton = hoveredButton.down;
             }
@@ -224,9 +224,9 @@ public class WinningScreen implements Screen, InputProcessor, ControllerListener
             draw();
 
             // We are are ready, notify our listener
-            if (restartIsReady() && listener != null) {
-                listener.exitScreen(this, 0);
-            }
+//            if (restartIsReady() && listener != null) {
+//                listener.exitScreen(this, 0);
+//            }
             if(quitIsReady() && listener != null){
                 listener.exitScreen(this, ExitCode.MAIN_MENU);
             }
@@ -238,9 +238,9 @@ public class WinningScreen implements Screen, InputProcessor, ControllerListener
      * Resets the screen so it can be reused
      */
     public void reset() {
-        this.playButton.pressState = 0;
+//        this.playButton.pressState = 0;
         this.quitButton.pressState = 0;
-        this.hoveredButton = playButton;
+        this.hoveredButton = quitButton;
     }
 
     /**
@@ -267,11 +267,11 @@ public class WinningScreen implements Screen, InputProcessor, ControllerListener
             quitButton.hitbox.setCenter(canvas.getWidth()/2.0f, centerY - quitButton.texture.getRegionHeight()*scale*BUTTON_SCALE*2.0f);
         }
 
-        if (playButton != null) {
-            float buttonSpacing = 0.35f;
-            playButton.hitbox.setSize(BUTTON_SCALE * scale * playButton.texture.getRegionWidth(), BUTTON_SCALE * scale * playButton.texture.getRegionHeight());
-            playButton.hitbox.setCenter(canvas.getWidth() / 2.0f, centerY + playButton.texture.getRegionHeight() * scale);
-        }
+//        if (playButton != null) {
+//            float buttonSpacing = 0.35f;
+//            playButton.hitbox.setSize(BUTTON_SCALE * scale * playButton.texture.getRegionWidth(), BUTTON_SCALE * scale * playButton.texture.getRegionHeight());
+//            playButton.hitbox.setCenter(canvas.getWidth() / 2.0f, centerY + playButton.texture.getRegionHeight() * scale);
+//        }
     }
 
     /**
@@ -337,20 +337,19 @@ public class WinningScreen implements Screen, InputProcessor, ControllerListener
      */
     public boolean touchDown(int screenX, int screenY, int pointer, int button) {
         if (!active) return false;
-        if (playButton.pressState == 2) {
-            return true;
-        }
+//        if (playButton.pressState == 2) {
+//            return true;
+//        }
         if(quitButton.pressState == 2){
             return true;
         }
 
         // Flip to match graphics coordinates
         screenY = heightY-screenY;
-
-        if (playButton.hitbox.contains(screenX, screenY) && playButton.pressState == 0) {
-            playButton.pressState = 1;
-            return true;
-        }
+//        if (playButton.hitbox.contains(screenX, screenY) && playButton.pressState == 0) {
+//            playButton.pressState = 1;
+//            return true;
+//        }
         if(quitButton.hitbox.contains(screenX, screenY) && quitButton.pressState == 0){
             quitButton.pressState = 1;
             return true;
@@ -375,10 +374,10 @@ public class WinningScreen implements Screen, InputProcessor, ControllerListener
         // Flip to match graphics coordinates
         screenY = heightY-screenY;
 
-        if (playButton.hitbox.contains(screenX, screenY) && playButton.pressState == 1) {
-            playButton.pressState = 2;
-            return true;
-        }
+//        if (playButton.hitbox.contains(screenX, screenY) && playButton.pressState == 1) {
+//            playButton.pressState = 2;
+//            return true;
+//        }
         if(quitButton.hitbox.contains(screenX, screenY) && quitButton.pressState == 1) {
             quitButton.pressState = 2;
             return true;
@@ -405,10 +404,10 @@ public class WinningScreen implements Screen, InputProcessor, ControllerListener
         ControllerMapping mapping = controller.getMapping();
         if (mapping == null) return false;
 
-        if (playButton.pressState == 0 && buttonCode == mapping.buttonStart ) {
-            playButton.pressState = 1;
-            return true;
-        }
+//        if (playButton.pressState == 0 && buttonCode == mapping.buttonStart ) {
+//            playButton.pressState = 1;
+//            return true;
+//        }
 
         if (hoveredButton != null && hoveredButton.pressState == 0 && buttonCode == mapping.buttonA ) {
             hoveredButton.pressState = 1;
@@ -434,10 +433,10 @@ public class WinningScreen implements Screen, InputProcessor, ControllerListener
         ControllerMapping mapping = controller.getMapping();
         if (mapping == null) return false;
 
-        if (playButton.pressState == 1 && buttonCode == mapping.buttonStart ) {
-            playButton.pressState = 2;
-            return true;
-        }
+//        if (playButton.pressState == 1 && buttonCode == mapping.buttonStart ) {
+//            playButton.pressState = 2;
+//            return true;
+//        }
 
         if (hoveredButton != null && hoveredButton.pressState == 1 && buttonCode == mapping.buttonA ) {
             hoveredButton.pressState = 2;
@@ -526,10 +525,10 @@ public class WinningScreen implements Screen, InputProcessor, ControllerListener
         }
         screenY = heightY - screenY;
         hoveredButton = null;
-        if (playButton.hitbox.contains(screenX, screenY)) {
-            hoveredButton = playButton;
-            return true;
-        }
+//        if (playButton.hitbox.contains(screenX, screenY)) {
+//            hoveredButton = playButton;
+//            return true;
+//        }
         if (quitButton.hitbox.contains(screenX, screenY)) {
             hoveredButton = quitButton;
             return true;
@@ -601,7 +600,7 @@ public class WinningScreen implements Screen, InputProcessor, ControllerListener
             menuUp = value < 0;
             menuDown = value > 0;
         }
-        System.out.println("AHLDHKJDSHFKH");
+
         return true;
     }
 
