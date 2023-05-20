@@ -353,14 +353,14 @@
                         {
                          "name":"StopRelateToSelf",
                          "type":"string",
-                         "value":"-2,-8,-7,-13"
+                         "value":"0,-2,0,1"
                         }],
                  "rotation":0,
                  "type":"Enemy",
                  "visible":true,
                  "width":20.5,
-                 "x":519.75,
-                 "y":1050.25
+                 "x":518.416666666667,
+                 "y":1053.25
                 }, 
                 {
                  "gid":86,
@@ -960,7 +960,7 @@
                         {
                          "name":"Respawn",
                          "type":"bool",
-                         "value":false
+                         "value":true
                         }, 
                         {
                          "name":"RespawnCoordinateX",
@@ -993,7 +993,7 @@
                         {
                          "name":"Respawn",
                          "type":"bool",
-                         "value":false
+                         "value":true
                         }, 
                         {
                          "name":"RespawnCoordinateX",
@@ -1026,7 +1026,7 @@
                         {
                          "name":"Respawn",
                          "type":"bool",
-                         "value":false
+                         "value":true
                         }, 
                         {
                          "name":"RespawnCoordinateX",
@@ -1059,7 +1059,7 @@
                         {
                          "name":"Respawn",
                          "type":"bool",
-                         "value":false
+                         "value":true
                         }, 
                         {
                          "name":"RespawnCoordinateX",
@@ -1092,7 +1092,7 @@
                         {
                          "name":"Respawn",
                          "type":"bool",
-                         "value":false
+                         "value":true
                         }, 
                         {
                          "name":"RespawnCoordinateX",
@@ -1125,7 +1125,7 @@
                         {
                          "name":"Respawn",
                          "type":"bool",
-                         "value":false
+                         "value":true
                         }, 
                         {
                          "name":"RespawnCoordinateX",
@@ -1158,7 +1158,7 @@
                         {
                          "name":"Respawn",
                          "type":"bool",
-                         "value":false
+                         "value":true
                         }, 
                         {
                          "name":"RespawnCoordinateX",
@@ -1191,7 +1191,7 @@
                         {
                          "name":"Respawn",
                          "type":"bool",
-                         "value":false
+                         "value":true
                         }, 
                         {
                          "name":"RespawnCoordinateX",
@@ -1224,7 +1224,7 @@
                         {
                          "name":"Respawn",
                          "type":"bool",
-                         "value":false
+                         "value":true
                         }, 
                         {
                          "name":"RespawnCoordinateX",
