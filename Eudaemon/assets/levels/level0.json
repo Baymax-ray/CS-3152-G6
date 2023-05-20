@@ -516,17 +516,17 @@
                         {
                          "name":"Respawn",
                          "type":"bool",
-                         "value":false
+                         "value":true
                         }, 
                         {
                          "name":"RespawnCoordinateX",
                          "type":"float",
-                         "value":-1
+                         "value":56
                         }, 
                         {
                          "name":"RespawnCoordinateY",
                          "type":"float",
-                         "value":-1
+                         "value":25
                         }],
                  "rotation":0,
                  "type":"",
@@ -534,237 +534,6 @@
                  "width":22.8779,
                  "x":1891.34326381918,
                  "y":860.37223415263
-                }, 
-                {
-                 "gid":87,
-                 "height":22.3413,
-                 "id":192,
-                 "name":"Spike",
-                 "properties":[
-                        {
-                         "name":"Direction",
-                         "type":"string",
-                         "value":"Up"
-                        }, 
-                        {
-                         "name":"Respawn",
-                         "type":"bool",
-                         "value":false
-                        }, 
-                        {
-                         "name":"RespawnCoordinateX",
-                         "type":"float",
-                         "value":-1
-                        }, 
-                        {
-                         "name":"RespawnCoordinateY",
-                         "type":"float",
-                         "value":-1
-                        }],
-                 "rotation":0,
-                 "type":"",
-                 "visible":true,
-                 "width":22.8779,
-                 "x":1925.34326381918,
-                 "y":861.87223415263
-                }, 
-                {
-                 "gid":87,
-                 "height":22.3413,
-                 "id":193,
-                 "name":"Spike",
-                 "properties":[
-                        {
-                         "name":"Direction",
-                         "type":"string",
-                         "value":"Up"
-                        }, 
-                        {
-                         "name":"Respawn",
-                         "type":"bool",
-                         "value":false
-                        }, 
-                        {
-                         "name":"RespawnCoordinateX",
-                         "type":"float",
-                         "value":-1
-                        }, 
-                        {
-                         "name":"RespawnCoordinateY",
-                         "type":"float",
-                         "value":-1
-                        }],
-                 "rotation":0,
-                 "type":"",
-                 "visible":true,
-                 "width":22.8779,
-                 "x":1956.04326381918,
-                 "y":860.87223415263
-                }, 
-                {
-                 "gid":87,
-                 "height":22.3413,
-                 "id":194,
-                 "name":"Spike",
-                 "properties":[
-                        {
-                         "name":"Direction",
-                         "type":"string",
-                         "value":"Up"
-                        }, 
-                        {
-                         "name":"Respawn",
-                         "type":"bool",
-                         "value":false
-                        }, 
-                        {
-                         "name":"RespawnCoordinateX",
-                         "type":"float",
-                         "value":-1
-                        }, 
-                        {
-                         "name":"RespawnCoordinateY",
-                         "type":"float",
-                         "value":-1
-                        }],
-                 "rotation":0,
-                 "type":"",
-                 "visible":true,
-                 "width":22.8779,
-                 "x":1987.46326381918,
-                 "y":860.96223415263
-                }, 
-                {
-                 "gid":87,
-                 "height":22.3413,
-                 "id":195,
-                 "name":"Spike",
-                 "properties":[
-                        {
-                         "name":"Direction",
-                         "type":"string",
-                         "value":"Up"
-                        }, 
-                        {
-                         "name":"Respawn",
-                         "type":"bool",
-                         "value":false
-                        }, 
-                        {
-                         "name":"RespawnCoordinateX",
-                         "type":"float",
-                         "value":-1
-                        }, 
-                        {
-                         "name":"RespawnCoordinateY",
-                         "type":"float",
-                         "value":-1
-                        }],
-                 "rotation":0,
-                 "type":"",
-                 "visible":true,
-                 "width":22.8779,
-                 "x":2018.46823459952,
-                 "y":859.403430440014
-                }, 
-                {
-                 "gid":87,
-                 "height":22.3413,
-                 "id":201,
-                 "name":"Spike",
-                 "properties":[
-                        {
-                         "name":"Direction",
-                         "type":"string",
-                         "value":"Down"
-                        }, 
-                        {
-                         "name":"Respawn",
-                         "type":"bool",
-                         "value":false
-                        }, 
-                        {
-                         "name":"RespawnCoordinateX",
-                         "type":"float",
-                         "value":-1
-                        }, 
-                        {
-                         "name":"RespawnCoordinateY",
-                         "type":"float",
-                         "value":-1
-                        }],
-                 "rotation":0,
-                 "type":"",
-                 "visible":true,
-                 "width":22.8779,
-                 "x":1890.93764937279,
-                 "y":761.310533481313
-                }, 
-                {
-                 "gid":87,
-                 "height":22.3413,
-                 "id":202,
-                 "name":"Spike",
-                 "properties":[
-                        {
-                         "name":"Direction",
-                         "type":"string",
-                         "value":"Down"
-                        }, 
-                        {
-                         "name":"Respawn",
-                         "type":"bool",
-                         "value":false
-                        }, 
-                        {
-                         "name":"RespawnCoordinateX",
-                         "type":"float",
-                         "value":-1
-                        }, 
-                        {
-                         "name":"RespawnCoordinateY",
-                         "type":"float",
-                         "value":-1
-                        }],
-                 "rotation":0,
-                 "type":"",
-                 "visible":true,
-                 "width":22.8779,
-                 "x":1924.4543217688,
-                 "y":762.169935337621
-                }, 
-                {
-                 "gid":87,
-                 "height":22.3413,
-                 "id":203,
-                 "name":"Spike",
-                 "properties":[
-                        {
-                         "name":"Direction",
-                         "type":"string",
-                         "value":"Down"
-                        }, 
-                        {
-                         "name":"Respawn",
-                         "type":"bool",
-                         "value":false
-                        }, 
-                        {
-                         "name":"RespawnCoordinateX",
-                         "type":"float",
-                         "value":-1
-                        }, 
-                        {
-                         "name":"RespawnCoordinateY",
-                         "type":"float",
-                         "value":-1
-                        }],
-                 "rotation":0,
-                 "type":"",
-                 "visible":true,
-                 "width":22.8779,
-                 "x":1956.25219045219,
-                 "y":763.029337193929
                 }, 
                 {
                  "gid":87,
@@ -780,17 +549,17 @@
                         {
                          "name":"Respawn",
                          "type":"bool",
-                         "value":false
+                         "value":true
                         }, 
                         {
                          "name":"RespawnCoordinateX",
                          "type":"float",
-                         "value":-1
+                         "value":56
                         }, 
                         {
                          "name":"RespawnCoordinateY",
                          "type":"float",
-                         "value":-1
+                         "value":25
                         }],
                  "rotation":0,
                  "type":"",
@@ -906,6 +675,237 @@
                  "width":23,
                  "x":2147.83333333333,
                  "y":828.583333333333
+                }, 
+                {
+                 "gid":87,
+                 "height":22.3413,
+                 "id":212,
+                 "name":"Spike",
+                 "properties":[
+                        {
+                         "name":"Direction",
+                         "type":"string",
+                         "value":"Up"
+                        }, 
+                        {
+                         "name":"Respawn",
+                         "type":"bool",
+                         "value":true
+                        }, 
+                        {
+                         "name":"RespawnCoordinateX",
+                         "type":"float",
+                         "value":56
+                        }, 
+                        {
+                         "name":"RespawnCoordinateY",
+                         "type":"float",
+                         "value":25
+                        }],
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":22.8779,
+                 "x":1923.35298479193,
+                 "y":857.793552297536
+                }, 
+                {
+                 "gid":87,
+                 "height":22.3413,
+                 "id":213,
+                 "name":"Spike",
+                 "properties":[
+                        {
+                         "name":"Direction",
+                         "type":"string",
+                         "value":"Up"
+                        }, 
+                        {
+                         "name":"Respawn",
+                         "type":"bool",
+                         "value":true
+                        }, 
+                        {
+                         "name":"RespawnCoordinateX",
+                         "type":"float",
+                         "value":56
+                        }, 
+                        {
+                         "name":"RespawnCoordinateY",
+                         "type":"float",
+                         "value":25
+                        }],
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":22.8779,
+                 "x":1956.24301768197,
+                 "y":859.223553727537
+                }, 
+                {
+                 "gid":87,
+                 "height":22.3413,
+                 "id":214,
+                 "name":"Spike",
+                 "properties":[
+                        {
+                         "name":"Direction",
+                         "type":"string",
+                         "value":"Up"
+                        }, 
+                        {
+                         "name":"Respawn",
+                         "type":"bool",
+                         "value":true
+                        }, 
+                        {
+                         "name":"RespawnCoordinateX",
+                         "type":"float",
+                         "value":56
+                        }, 
+                        {
+                         "name":"RespawnCoordinateY",
+                         "type":"float",
+                         "value":25
+                        }],
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":22.8779,
+                 "x":1988.17971628533,
+                 "y":861.130222300872
+                }, 
+                {
+                 "gid":87,
+                 "height":22.3413,
+                 "id":215,
+                 "name":"Spike",
+                 "properties":[
+                        {
+                         "name":"Direction",
+                         "type":"string",
+                         "value":"Up"
+                        }, 
+                        {
+                         "name":"Respawn",
+                         "type":"bool",
+                         "value":true
+                        }, 
+                        {
+                         "name":"RespawnCoordinateX",
+                         "type":"float",
+                         "value":56
+                        }, 
+                        {
+                         "name":"RespawnCoordinateY",
+                         "type":"float",
+                         "value":25
+                        }],
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":22.8779,
+                 "x":2020.59308203203,
+                 "y":860.176888014205
+                }, 
+                {
+                 "gid":87,
+                 "height":22.3413,
+                 "id":216,
+                 "name":"Spike",
+                 "properties":[
+                        {
+                         "name":"Direction",
+                         "type":"string",
+                         "value":"Down"
+                        }, 
+                        {
+                         "name":"Respawn",
+                         "type":"bool",
+                         "value":true
+                        }, 
+                        {
+                         "name":"RespawnCoordinateX",
+                         "type":"float",
+                         "value":56
+                        }, 
+                        {
+                         "name":"RespawnCoordinateY",
+                         "type":"float",
+                         "value":25
+                        }],
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":22.8779,
+                 "x":1890.93961904524,
+                 "y":764.843459347443
+                }, 
+                {
+                 "gid":87,
+                 "height":22.3413,
+                 "id":217,
+                 "name":"Spike",
+                 "properties":[
+                        {
+                         "name":"Direction",
+                         "type":"string",
+                         "value":"Down"
+                        }, 
+                        {
+                         "name":"Respawn",
+                         "type":"bool",
+                         "value":true
+                        }, 
+                        {
+                         "name":"RespawnCoordinateX",
+                         "type":"float",
+                         "value":56
+                        }, 
+                        {
+                         "name":"RespawnCoordinateY",
+                         "type":"float",
+                         "value":25
+                        }],
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":22.8779,
+                 "x":1926.21298765194,
+                 "y":763.413457917441
+                }, 
+                {
+                 "gid":87,
+                 "height":22.3413,
+                 "id":218,
+                 "name":"Spike",
+                 "properties":[
+                        {
+                         "name":"Direction",
+                         "type":"string",
+                         "value":"Down"
+                        }, 
+                        {
+                         "name":"Respawn",
+                         "type":"bool",
+                         "value":true
+                        }, 
+                        {
+                         "name":"RespawnCoordinateX",
+                         "type":"float",
+                         "value":56
+                        }, 
+                        {
+                         "name":"RespawnCoordinateY",
+                         "type":"float",
+                         "value":25
+                        }],
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":22.8779,
+                 "x":1954.81301625197,
+                 "y":762.460123630774
                 }],
          "opacity":1,
          "properties":[
@@ -920,7 +920,7 @@
          "y":0
         }],
  "nextlayerid":11,
- "nextobjectid":212,
+ "nextobjectid":219,
  "orientation":"orthogonal",
  "properties":[
         {
@@ -969,7 +969,7 @@
          "value":1
         }],
  "renderorder":"right-down",
- "tiledversion":"1.10.1",
+ "tiledversion":"1.10.0",
  "tileheight":32,
  "tilesets":[
         {
