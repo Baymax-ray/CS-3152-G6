@@ -11,6 +11,7 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Affine2;
 import com.badlogic.gdx.math.Matrix4;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.physics.box2d.CircleShape;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
@@ -25,6 +26,7 @@ public class CameraController {
     private final OrthographicCamera camera;
     private CameraShaker cameraShaker;
     private CameraShaker microCameraShaker;
+    private Vector3 backgroundCoordinates;
     private final float shakeRadius;
     private final float minimumShakeRadius;
     private final float microShakeRadius;
@@ -34,6 +36,7 @@ public class CameraController {
     public CameraController(){
         // Set the projection matrix (for proper scaling)
         camera = new OrthographicCamera();
+        backgroundCoordinates = new Vector3();
         camera.setToOrtho(false);
         shakeRadius = 0.15f;
         minimumShakeRadius = 0.015f;
@@ -60,18 +63,26 @@ public class CameraController {
         if (Math.abs(camera.position.x - level.getPlayer().getX()) > camZone_x) {
             if (camera.position.x > level.getPlayer().getX()) {
                 setGameplayCamera(canvas, level.getPlayer().getX()+camZone_x, camera.position.y, level.getCameraWidth(), level.getCameraHeight());
+                backgroundCoordinates = camera.position.cpy();
             }
 
             else {
                 setGameplayCamera(canvas, level.getPlayer().getX()-camZone_x, camera.position.y, level.getCameraWidth(), level.getCameraHeight());
+                backgroundCoordinates = camera.position.cpy();
             }
         }
 
         if (Math.abs(camera.position.y - level.getPlayer().getY()) > camZone_y) {
-            if (camera.position.y > level.getPlayer().getY())
+            if (camera.position.y > level.getPlayer().getY()) {
                 setGameplayCamera(canvas, camera.position.x, level.getPlayer().getY()+camZone_y, level.getCameraWidth(), level.getCameraHeight());
+                backgroundCoordinates = camera.position.cpy();
+            }
 
-            else setGameplayCamera(canvas, camera.position.x, level.getPlayer().getY()-camZone_y, level.getCameraWidth(), level.getCameraHeight());
+
+            else {
+                setGameplayCamera(canvas, camera.position.x, level.getPlayer().getY()-camZone_y, level.getCameraWidth(), level.getCameraHeight());
+                backgroundCoordinates = camera.position.cpy();
+            }
         }
 
         keepCameraInBound(canvas, level);
@@ -119,20 +130,30 @@ public class CameraController {
     public void keepCameraInBound(GameCanvas canvas, Level level) {
 
         //camera left bound
-        if (camera.position.x < level.getCameraWidth()/2)
+        if (camera.position.x < level.getCameraWidth()/2) {
             setGameplayCamera(canvas, level.getCameraWidth()/2, camera.position.y, level.getCameraWidth(), level.getCameraHeight());
+            backgroundCoordinates = camera.position.cpy();
+        }
+
 
         //camera right bound
-        if (camera.position.x + level.getCameraWidth()/2 > level.getWidthInTiles())
+        if (camera.position.x + level.getCameraWidth()/2 > level.getWidthInTiles()) {
             setGameplayCamera(canvas, level.getWidthInTiles() - level.getCameraWidth()/2, camera.position.y, level.getCameraWidth(), level.getCameraHeight());
+            backgroundCoordinates = camera.position.cpy();
+        }
 
         //camera lower bound
-        if (camera.position.y < level.getCameraHeight()/2)
+        if (camera.position.y < level.getCameraHeight()/2) {
             setGameplayCamera(canvas, camera.position.x, level.getCameraHeight()/2, level.getCameraWidth(), level.getCameraHeight());
+            backgroundCoordinates = camera.position.cpy();
+        }
 
         //camera upper bound
-        if (camera.position.y + level.getCameraHeight()/2 > level.getHeightInTiles())
+        if (camera.position.y + level.getCameraHeight()/2 > level.getHeightInTiles()) {
             setGameplayCamera(canvas, camera.position.x, level.getHeightInTiles() - level.getCameraHeight()/2, level.getCameraWidth(), level.getCameraHeight());
+            backgroundCoordinates = camera.position.cpy();
+        }
+
     }
 
     public boolean isCameraInBound(float x, float y, Level level) {
@@ -151,4 +172,6 @@ public class CameraController {
                 microCameraShaker.startShaking();
         }
     }
+
+    public Vector3 getBackgroundCoordinates() { return backgroundCoordinates; }
 }
