@@ -464,7 +464,7 @@ public class Player extends CapsuleObstacle {
             return swordEffectSpriteSheet225;
         }
         else if(direction == 270){
-            return swordEffectSpriteSheet270;
+            return swordEffectSpriteSheet90;
         }
         else if(direction == 315){
             return swordEffectSpriteSheet315;

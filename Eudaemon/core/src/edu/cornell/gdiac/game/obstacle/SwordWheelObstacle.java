@@ -29,6 +29,11 @@ public class SwordWheelObstacle extends WheelObstacle {
     private boolean hasHitWall;
 
     /**
+     * The angle the player is facing when attacking with the sword
+     */
+    private float angle;
+
+    /**
      * Accumulates the ticks elapsed since the animation started.
      */
     int currentTicks;
@@ -67,10 +72,10 @@ public class SwordWheelObstacle extends WheelObstacle {
 
     //</editor-fold>
 
-    public SwordWheelObstacle(float x, float y, float radius, final Player player, float lifespan, float density, Vector2 scale, TextureRegion spriteSheet) {
+    public SwordWheelObstacle(float x, float y, float radius, float angle, final Player player, float lifespan, float density, Vector2 scale, TextureRegion spriteSheet) {
         super(x,y,radius);
         this.player = player;
-
+        this.angle = angle;
         this.hitEnemies = new ObjectSet<>();
 
         setName("sword");
@@ -131,7 +136,31 @@ public class SwordWheelObstacle extends WheelObstacle {
     public void draw(GameCanvas canvas) {
         float sx = 2*getRadius()/this.texture.getRegionWidth(); // size in world coordinates / texture coordinates
         float sy = 2*getRadius()/this.texture.getRegionHeight();
-        canvas.draw(texture, Color.WHITE, origin.x, origin.y, getX(), getY(), getAngle(), sx, sy);
+        if (angle == 0){
+            canvas.draw(texture, Color.WHITE, origin.x, origin.y, getX(), getY(), 0, sx, sy);
+        }
+        else if (angle == 45){
+            canvas.draw(texture, Color.WHITE, origin.x, origin.y, getX(), getY(), 1, sx, sy);
+        }
+        else if (angle == 90){
+            canvas.draw(texture, Color.WHITE, origin.x, origin.y, getX(), getY(), getAngle(), sx, sy);
+        }
+        else if (angle == 135){
+            canvas.draw(texture, Color.WHITE, origin.x, origin.y, getX(), getY(), 2.35f, sx, sy);
+        }
+        else if (angle == 180){
+            canvas.draw(texture, Color.WHITE, origin.x, origin.y, getX(), getY(), getAngle(), -sx, sy);
+        }
+        else if (angle == 225){
+            canvas.draw(texture, Color.WHITE, origin.x, origin.y, getX(), getY(), 3.9f, sx, sy);
+        }
+        else if (angle == 270){
+            canvas.draw(texture, Color.WHITE, origin.x, origin.y, getX(), getY(), getAngle(), sx, -sy);
+        }
+        else if (angle == 315){
+            canvas.draw(texture, Color.WHITE, origin.x, origin.y, getX(), getY(), 5.5f, sx, sy);
+        }
+
     }
 
     @Override
