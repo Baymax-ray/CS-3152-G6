@@ -686,6 +686,7 @@
         "deathScreen:background": "backgrounds/deathScreenBackground.png",
         "deathScreen:restart": "shared/deathRestart.png",
         "deathScreen:quit": "shared/deathExit.png",
+        "winningScreen:background" : "shared/endscene.png",
 
         "settingsScreen:background": "backgrounds/settingsBackground.png",
         "settingsScreen:back": "levelSelect/backArrow.png",
