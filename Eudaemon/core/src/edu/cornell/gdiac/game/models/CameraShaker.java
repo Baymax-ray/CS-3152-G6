@@ -67,15 +67,15 @@ public class CameraShaker {
             computeCameraOffset();
             computeCurrentPosition(cameraController, level);
             diminishShake();
-            camera.position.set(currentPosition);
-//            if (shakeTimes < 5) {
-//                camera.position.set(currentPosition);
-//                shakeTimes += 1;
-//            }
-//            else {
-//                camera.position.set(startPosition);
-//                shakeTimes = 0;
-//            }
+//            camera.position.set(currentPosition);
+            if (shakeTimes < 5) {
+                camera.position.set(currentPosition);
+                shakeTimes += 1;
+            }
+            else {
+                camera.position.set(startPosition);
+                shakeTimes = 0;
+            }
             camera.update();
             timer = 0;
         }
