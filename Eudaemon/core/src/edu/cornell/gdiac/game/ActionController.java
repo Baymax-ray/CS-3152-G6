@@ -103,6 +103,8 @@ public class ActionController {
         addAnimations(player.getSpiritDrainSpriteSheet(), 13, 1, "spiritDrain");
         addAnimations(player.getTransformSpriteSheet(),7, 1, "playerTransform");
         addAnimations(player.getRegainHealthSpriteSheet(), 8, 2, "playerRegainHealth");
+        addAnimations(player.getMomoTexture(), 4, 1, "momoIdle");
+        addAnimations(player.getChiyoTexture(), 5, 1, "chiyoIdle");
     }
 
     /**
@@ -697,13 +699,17 @@ public class ActionController {
                 player.setSyMult(1.2f);
             } else {
                 currentAnimation = "momoIdle";
+                TextureRegion current = (TextureRegion) (animations.get("momoIdle")).getKeyFrame(currentFrame);
+                maxFrame = 8;
+                tickFrameSwitch = 5;
+                player.setTexture(current);
                 audio.stopEffect("wall-slide");
 //                momoRunSound.stop();
 //                soundDictionary.remove(momoRunSound);
                 audio.stopEffect("momo-run");
-                player.setTexture(player.getMomoTexture());
+                //player.setTexture(player.getMomoTexture());
                 player.setOxOffset(0);
-                player.setOyOffset(-220);
+                player.setOyOffset(-47);
                 player.setSxMult(1.2f);
                 player.setSyMult(1.2f);
             }
@@ -788,10 +794,13 @@ public class ActionController {
                 currentAnimation = "chiyoIdle";
 //                chiyoRunSound.stop();
 //                soundDictionary.remove(chiyoRunSound);
+                TextureRegion current = (TextureRegion) (animations.get("chiyoIdle")).getKeyFrame(currentFrame);
+                maxFrame = 8;
+                tickFrameSwitch = 5;
+                player.setTexture(current);
                 audio.stopEffect("chiyo-run");
                 audio.stopEffect("wall-slide");
-                player.setTexture(player.getChiyoTexture());
-                player.setOxOffset(0);
+                player.setOxOffset(20);
                 player.setOyOffset(-29);
                 player.setSxMult(2.3f);
                 player.setSyMult(2.0f);
