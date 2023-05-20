@@ -37,6 +37,7 @@
     "wallSlideVelocity": -0.5,
     "wallJumpCooldownTicks": 60,
     "wallJumpXVelocity": 7.0,
+    "wallJumpYVelocityMult": 1.3,
 
     "jumpCooldown": 10,
     "coyoteTime": 5,

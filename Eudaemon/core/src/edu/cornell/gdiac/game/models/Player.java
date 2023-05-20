@@ -34,6 +34,12 @@ public class Player extends CapsuleObstacle {
      * How much max speed is multiplied by for Chiyo
      */
     private final float chiyoSpeedMult;
+
+    /**
+     * How much the jump height is multiplied by for Chiyo
+     */
+    private final float wallJumpYMult;
+
     private final boolean startsFacingRight;
 
     /**
@@ -585,6 +591,14 @@ public class Player extends CapsuleObstacle {
      */
     public float getWallJumpXVelocity() {
         return wallJumpXVelocity;
+    }
+    /**
+     * Returns the vertical velocity multiplier at which the player jumps off a wall.
+     *
+     * @return the wall jump Y velocity multiplier
+     */
+    public float getWallJumpYMult() {
+        return wallJumpYMult;
     }
 
     /**
@@ -1377,6 +1391,7 @@ public class Player extends CapsuleObstacle {
         this.wallSlideVelocity = playerData.getFloat("wallSlideVelocity");
         this.wallJumpXVelocity = playerData.getFloat("wallJumpXVelocity");
         this.wallJumpCooldownTicks = playerData.getInt("wallJumpCooldownTicks");
+        this.wallJumpYMult = playerData.getFloat("wallJumpYMultiplier");
 
         //Attacking
         this.attackPower = playerData.getInt("attackPower");
