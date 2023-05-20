@@ -32,15 +32,13 @@ import com.badlogic.gdx.controllers.ControllerMapping;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.Texture.TextureFilter;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.utils.Array;
-import com.badlogic.gdx.utils.PerformanceCounter;
 import edu.cornell.gdiac.assets.AssetDirectory;
 import edu.cornell.gdiac.game.models.Settings;
 import edu.cornell.gdiac.util.Controllers;
 import edu.cornell.gdiac.util.ScreenListener;
-import edu.cornell.gdiac.util.XBoxController;
 
 import static java.lang.Math.round;
 
@@ -105,6 +103,8 @@ public class SettingsScreen implements Screen, InputProcessor, ControllerListene
 
 	private MenuButton backButton;
 
+	private MenuButton controlsButton;
+
 	private MenuSlider volumeSlider;
 	private MenuSlider musicSlider;
 	private MenuSlider sfxSlider;
@@ -149,7 +149,7 @@ public class SettingsScreen implements Screen, InputProcessor, ControllerListene
 	 * @param assets  	The asset directory
 	 * @param canvas 	The game canvas to draw to
 	 */
-	public SettingsScreen(AssetDirectory assets, GameCanvas canvas, final Settings settings) {
+	public SettingsScreen(AssetDirectory assets, GameCanvas canvas, final Settings settings, FontTextureLoader fontTextureLoader) {
 		this.canvas  = canvas;
 		this.isFromMainMenu = false;
 		this.settings = settings;
@@ -162,6 +162,8 @@ public class SettingsScreen implements Screen, InputProcessor, ControllerListene
 
 		backButton = new MenuButton(new TextureRegion(assets.getEntry("settingsScreen:back", Texture.class))); // we are not adding the exitCode here, it is determined by `isFromMainMenu`
 		backButton.texture.getTexture().setFilter(TextureFilter.Nearest, TextureFilter.Nearest);
+
+		controlsButton = new MenuButton(new TextureRegion(fontTextureLoader.createFontTexture(assets.getEntry("font:menu", BitmapFont.class), "CONTROLS")), ExitCode.CONTROLS);
 
 		volumeSlider = new MenuSlider(filledBar, unfilledBar, toggle) {
 			@Override
@@ -221,6 +223,7 @@ public class SettingsScreen implements Screen, InputProcessor, ControllerListene
 
 		buttons = new Array<>();
 		buttons.add(backButton);
+		buttons.add(controlsButton);
 		buttons.add(fullScreenOnButton);
 		buttons.add(fullScreenOffButton);
 		buttons.add(screenShakeOnButton);
@@ -267,10 +270,15 @@ public class SettingsScreen implements Screen, InputProcessor, ControllerListene
 		difficultyVeteranButton.up = screenShakeOffButton;
 		difficultyVeteranButton.left = difficultyHardButton;
 
-		volumeSlider.up = backButton;
+		volumeSlider.up = controlsButton;
+		controlsButton.down = volumeSlider;
+		backButton.down = volumeSlider;
+
+
 		fullScreenOnButton.left = backButton;
 		screenShakeOnButton.left = backButton;
 		difficultyNormalButton.left = backButton;
+		controlsButton.left = backButton;
 
 		// Compute the dimensions from the canvas
 		resize(canvas.getWidth(),canvas.getHeight());
@@ -404,6 +412,7 @@ public class SettingsScreen implements Screen, InputProcessor, ControllerListene
 		difficultyHardButton.tint = (settings.isHardDifficulty() ? Color.ORANGE: Color.WHITE);
 		difficultyVeteranButton.tint = (settings.isVeteranDifficulty() ? Color.ORANGE: Color.WHITE);
 		backButton.tint = (backButton.pressState == 1 ? Color.GRAY: Color.WHITE);
+		controlsButton.tint = (controlsButton.pressState == 1 ? Color.ORANGE: Color.WHITE);
 
 		for (MenuButton button : buttons) {
 			canvas.draw(button.texture, button.tint, button.hitbox.x, button.hitbox.y, button.hitbox.width, button.hitbox.height);
@@ -442,8 +451,12 @@ public class SettingsScreen implements Screen, InputProcessor, ControllerListene
 			if (backButton.pressState == 2 && listener != null) {
 				if(isFromMainMenu){listener.exitScreen(this, ExitCode.MAIN_MENU);}
 				else{ listener.exitScreen(this, ExitCode.PAUSE);}
+			}
+			if (controlsButton.pressState == 2 && listener != null) {
+				listener.exitScreen(this, controlsButton.exitCode);
+			}
 		}
-	}}
+	}
 
 
 	/**
@@ -486,6 +499,9 @@ public class SettingsScreen implements Screen, InputProcessor, ControllerListene
 		backButton.hitbox.setSize(10 * backButtonScale, 9 * backButtonScale);
 		backButton.hitbox.setPosition(5 * backButtonScale, canvas.getHeight() - 12 * backButtonScale);
 		backButton.texture.setRegion(5, 4, 10, 9);
+
+		controlsButton.hitbox.setSize(controlsButton.texture.getRegionWidth() * scale, controlsButton.texture.getRegionHeight() * scale);
+		controlsButton.hitbox.setPosition(canvas.getWidth() * 0.8f, canvas.getHeight() - 96 * scale);
 
 		fullScreenOnButton.hitbox.setSize(fullScreenOnButton.texture.getRegionWidth() * scale, fullScreenOnButton.texture.getRegionHeight() * scale);
 		fullScreenOnButton.hitbox.setPosition(canvas.getWidth() / 1.9f, canvas.getHeight() * 0.33f);
