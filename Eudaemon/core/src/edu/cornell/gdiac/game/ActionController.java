@@ -780,7 +780,7 @@ public class ActionController {
                 maxFrame = 7;
                 player.setTexture(current);
                 player.setOxOffset(20);
-                player.setOyOffset(-25);
+                player.setOyOffset(-29);
                 player.setSxMult(2.0f);
                 player.setSyMult(2.0f);
 
