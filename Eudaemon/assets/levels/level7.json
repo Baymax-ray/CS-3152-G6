@@ -1386,29 +1386,6 @@
                  "width":25.2095,
                  "x":1059.9099434924,
                  "y":1692.73808353217
-                }, 
-                {
-                 "gid":86,
-                 "height":25.3939,
-                 "id":217,
-                 "name":"Projectile",
-                 "properties":[
-                        {
-                         "name":"Direction",
-                         "type":"string",
-                         "value":"Right"
-                        }, 
-                        {
-                         "name":"SpriteSheetType",
-                         "type":"string",
-                         "value":"Right"
-                        }],
-                 "rotation":0,
-                 "type":"Enemy",
-                 "visible":true,
-                 "width":25.2095,
-                 "x":610.731157904466,
-                 "y":285.380417733337
                 }],
          "opacity":1,
          "type":"objectgroup",
