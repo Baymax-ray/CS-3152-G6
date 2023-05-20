@@ -126,11 +126,8 @@ public class ActionController {
      */
     private void resolvePlayerActions(EnumSet<Action> playerAction) {
         if (player.shouldRespawn()) {
-            System.out.println("x: " + player.getRespawnPosition().x);
-            System.out.println("y: " + player.getRespawnPosition().y);
-
             player.setX(player.getRespawnPosition().x);
-            player.setY(player.getRespawnPosition().y);
+            player.setY(level.getHeightInTiles() - player.getRespawnPosition().y);
             player.setShouldRespawn(false);
         }
         currentX = player.getX();
