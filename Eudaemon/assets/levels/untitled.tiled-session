@@ -3,16 +3,17 @@
         "height": 4300,
         "width": 2
     },
-    "activeFile": "level3.json",
+    "activeFile": "/Users/neelin2/coding/cs3152/Eudaemon/CS-3152-G6/Eudaemon/assets/EudaemonTileset.json",
     "expandedProjectPaths": [
-        ".",
-        "Templates"
+        "Templates",
+        "."
     ],
     "file.lastUsedOpenFilter": "全部文件 (*)",
     "fileStates": {
         "/Users/neelin2/coding/cs3152/Eudaemon/CS-3152-G6/Eudaemon/assets/EudaemonTileset.json": {
             "dynamicWrapping": true,
-            "scaleInDock": 1
+            "scaleInDock": 1,
+            "scaleInEditor": 2.02
         },
         "C:/Users/neelin2/coding/cs3152/Eudaemon/CS-3152-G6/Eudaemon/assets/EudaemonTileset.json": {
             "scaleInDock": 1
@@ -57,8 +58,8 @@
             "scale": 2.0979,
             "selectedLayer": 3,
             "viewCenter": {
-                "x": 1860.4318604318605,
-                "y": 812.7174793841461
+                "x": 2068.7354020687353,
+                "y": 784.5941179274512
             }
         },
         "level0.tmj": {
@@ -84,11 +85,11 @@
             "expandedObjectLayers": [
                 7
             ],
-            "scale": 0.53675,
+            "scale": 1.4011,
             "selectedLayer": 3,
             "viewCenter": {
-                "x": 801.1178388448998,
-                "y": 640.89427107592
+                "x": 810.7915209478267,
+                "y": 1421.740061380344
             }
         },
         "level1old.json": {
@@ -106,11 +107,11 @@
             "expandedObjectLayers": [
                 7
             ],
-            "scale": 0.5322,
-            "selectedLayer": 2,
+            "scale": 1.0967,
+            "selectedLayer": 3,
             "viewCenter": {
-                "x": 1177.1890266816986,
-                "y": 603.1567080045095
+                "x": 974.7424090453177,
+                "y": 1295.7052977113158
             }
         },
         "level3.json": {
@@ -120,30 +121,30 @@
             "scale": 0.6365,
             "selectedLayer": 3,
             "viewCenter": {
-                "x": 1253.7313432835822,
-                "y": 898.6645718774549
+                "x": 1572.663000785546,
+                "y": 842.1052631578948
             }
         },
         "level4.json": {
             "expandedObjectLayers": [
                 7
             ],
-            "scale": 0.7205,
+            "scale": 1.2176,
             "selectedLayer": 3,
             "viewCenter": {
-                "x": 620.4024982650936,
-                "y": 725.8848022206801
+                "x": 634.0341655716163,
+                "y": 1036.4651773981602
             }
         },
         "level5.json": {
             "expandedObjectLayers": [
                 7
             ],
-            "scale": 0.47,
+            "scale": 0.6856,
             "selectedLayer": 3,
             "viewCenter": {
-                "x": 1661.7021276595744,
-                "y": 770.2127659574467
+                "x": 1026.8378063010503,
+                "y": 666.5694282380397
             }
         },
         "level6.json": {
@@ -153,8 +154,8 @@
             "scale": 1.0062,
             "selectedLayer": 0,
             "viewCenter": {
-                "x": 717.5511826674617,
-                "y": 611.2104949314252
+                "x": 768.2369310276288,
+                "y": 960.0477042337507
             }
         },
         "level7.json": {
@@ -172,22 +173,22 @@
             "expandedObjectLayers": [
                 7
             ],
-            "scale": 0.49815625,
-            "selectedLayer": 3,
+            "scale": 1.6173,
+            "selectedLayer": 0,
             "viewCenter": {
-                "x": 800.9535160905839,
-                "y": 544.0060222068879
+                "x": 1211.8963704940334,
+                "y": 377.1718295925308
             }
         },
         "level9.json": {
             "expandedObjectLayers": [
                 7
             ],
-            "scale": 2.0378,
+            "scale": 1.9547,
             "selectedLayer": 3,
             "viewCenter": {
-                "x": 256.64932770635,
-                "y": 1167.4354696241046
+                "x": 1240.0879930424103,
+                "y": 404.6656775975853
             }
         }
     },
@@ -202,27 +203,29 @@
         "level0.json",
         "level1.json",
         "level3.json",
+        "level2.json",
         "level4.json",
         "level5.json",
         "level6.json",
         "level7.json",
-        "level8.json"
+        "level8.json",
+        "/Users/neelin2/coding/cs3152/Eudaemon/CS-3152-G6/Eudaemon/assets/EudaemonTileset.json"
     ],
     "project": "untitled.tiled-project",
     "property.type": "string",
     "recentFiles": [
+        "/Users/neelin2/coding/cs3152/Eudaemon/CS-3152-G6/Eudaemon/assets/EudaemonTileset.json",
         "level0.json",
         "level1.json",
-        "level8.json",
-        "level7.json",
-        "level6.json",
-        "level5.json",
-        "level4.json",
         "level3.json",
         "level2.json",
+        "level4.json",
+        "level5.json",
+        "level6.json",
+        "level7.json",
+        "level8.json",
         "F:/Programming/School/CS 3152/Eudaemon/CS-3152-G6/Eudaemon/assets/EudaemonTileset.json",
-        "level1old.json",
-        "experimentalLevel1.json"
+        "level1old.json"
     ],
     "tileset.lastUsedFilter": "JSON tileset files (*.tsj *.json)"
 }
