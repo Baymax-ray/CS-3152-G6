@@ -52,6 +52,9 @@ public class ActionController {
     /** The tick of the last time the player wall jumped*/
     private int lastWallJumpTick = 0;
 
+    /** if the jump was a wall jump */
+    private boolean wallJump = false;
+
     /** If the player was facing right during their last walljump*/
     private boolean facingRightDuringLastWallJump;
 
@@ -463,7 +466,10 @@ public class ActionController {
         //jump!
         //include all three situations
         //normal jump, coyote, and jump pressed in air
-        if (!jumpHold) player.setIsJumping(false);
+        if (!jumpHold) {
+            player.setIsJumping(false);
+            wallJump = false;
+        }
         boolean slidingJumpRequirements = player.isSliding() && ((ticks - player.getWallJumpCooldownTicks() > lastWallJumpTick) || (player.isFacingRight() && !facingRightDuringLastWallJump) || (!player.isFacingRight() && facingRightDuringLastWallJump));
         if ((jumpPressed && (slidingJumpRequirements || (player.isGrounded() && player.getJumpCooldownRemaining() == 0))) ||
                 (jumpPressed && player.getCoyoteFramesRemaining() > 0 && player.getJumpCooldownRemaining() == 0) ||
@@ -477,6 +483,7 @@ public class ActionController {
             }
         } else if ((player.isGrounded() && player.getBodyVelocityY() == 0) || player.isSliding()) {
             player.setIsJumping(false);
+            wallJump = false;
         }
 
         if (player.getIsJumping()){
@@ -487,7 +494,20 @@ public class ActionController {
         }
 
         if (jumpHold && player.getIsJumping() && player.getJumpTimeRemaining() > 0) {
-            player.setVelocity(player.getBodyVelocityX(), player.getJumpVelocity());
+            if (wallJump) {
+                float velocity = player.getBodyVelocityX();
+                if (!facingRightDuringLastWallJump && rightPressed){
+                    velocity = Math.max(player.getBodyVelocityX()  - 0.3f, max_speed);
+                }
+                else if (leftPressed && facingRightDuringLastWallJump){
+                    velocity = Math.min(player.getBodyVelocityX()  + 0.3f, -max_speed);
+                }
+                player.setVelocity(velocity, player.getWallJumpYMult() * player.getJumpVelocity());
+            }
+            else {
+                player.setVelocity(player.getBodyVelocityX(), player.getJumpVelocity());
+            }
+
         }
 
         //calculate coyote time
@@ -508,9 +528,9 @@ public class ActionController {
         //#endregion
 
         //#region Wall Slide
-        if (player.isTouchingWallRight() && !player.isGrounded() && rightPressed && player.getTicksSinceGround() > 20 && !player.getIsJumping()){ //player sliding on right wall
+        if (player.isTouchingWallRight() && !player.isGrounded() && rightPressed && player.getTicksSinceGround() > 20 && (ticks > lastWallJumpTick + 6)){ //player sliding on right wall
             player.setSliding(true);
-        } else if (player.isTouchingWallLeft() && !player.isGrounded() && leftPressed && player.getTicksSinceGround() > 20 && !player.getIsJumping()) { //player is sliding on left wall
+        } else if (player.isTouchingWallLeft() && !player.isGrounded() && leftPressed && player.getTicksSinceGround() > 20 && (ticks > lastWallJumpTick + 6)) { //player is sliding on left wall
             player.setSliding(true);
         }
         else{
@@ -847,7 +867,8 @@ public class ActionController {
         //jumpId = playSound( jumpSound, jumpId, 0.5F );
 
         if (player.isSliding()){
-            player.setVelocity((player.isFacingRight() ? -1 : 1) * player.getWallJumpXVelocity(), player.getJumpVelocity());
+            player.setVelocity((player.isFacingRight() ? -1 : 1) * player.getWallJumpXVelocity(), player.getWallJumpYMult() * player.getJumpVelocity());
+            wallJump = true;
         }
         else{
             player.setVelocity(player.getBodyVelocityX(), player.getJumpVelocity());
