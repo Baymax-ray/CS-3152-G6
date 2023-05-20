@@ -180,8 +180,8 @@
                  "type":"Enemy",
                  "visible":true,
                  "width":25.2095,
-                 "x":86.39525,
-                 "y":1176.30305
+                 "x":98.8461414720904,
+                 "y":1180.88542312008
                 }, 
                 {
                  "gid":88,
@@ -204,7 +204,7 @@
                         {
                          "name":"NextLevel",
                          "type":"string",
-                         "value":"level8 "
+                         "value":"level10"
                         }],
                  "rotation":0,
                  "type":"",
@@ -269,7 +269,7 @@
          "value":1
         }],
  "renderorder":"right-down",
- "tiledversion":"1.10.1",
+ "tiledversion":"1.10.0",
  "tileheight":32,
  "tilesets":[
         {
