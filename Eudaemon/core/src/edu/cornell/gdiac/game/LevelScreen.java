@@ -76,6 +76,9 @@ public class LevelScreen implements Screen, SettingsObserver {
                 case "Fast":
                     aiControllers.add(new GoombaAI(i, level));
                     break;
+                case "MOMO":
+                    aiControllers.add(new DumbAI(i, level));
+                    break;
                 default:
                     //should not get here
                     throw new IllegalArgumentException("Enemy type does not exist: "+enemies[i].getType());
