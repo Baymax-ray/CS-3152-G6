@@ -528,7 +528,7 @@ public class LevelSelectScreen implements Screen, InputProcessor, ControllerList
             return true;
         }
 
-        if (hoveredButton.pressState == 0 && buttonCode == mapping.buttonA) {
+        if (hoveredButton != null && hoveredButton.pressState == 0 && buttonCode == mapping.buttonA) {
             hoveredButton.pressState = 1;
             return true;
         }
@@ -559,7 +559,7 @@ public class LevelSelectScreen implements Screen, InputProcessor, ControllerList
             return true;
         }
 
-        if (hoveredButton.pressState == 1 && buttonCode == mapping.buttonA) {
+        if (hoveredButton != null && hoveredButton.pressState == 1 && buttonCode == mapping.buttonA) {
             hoveredButton.pressState = 2;
             return true;
         }
