@@ -8,7 +8,7 @@
  "margin":0,
  "name":"Eudaemon Tilleset",
  "spacing":0,
- "tilecount":282,
+ "tilecount":284,
  "tiledversion":"1.10.1",
  "tileheight":42,
  "tiles":[
@@ -1027,44 +1027,32 @@
          "imagewidth":32
         }, 
         {
-         "id":161,
-         "image":"tiles\/skulls.png",
+         "id":85,
+         "image":"tiles\/EnemiesObjects\/projectile.png",
+         "imageheight":28,
+         "imagewidth":32
+        }, 
+        {
+         "id":335,
+         "image":"tiles\/EnemiesObjects\/TrackingFlyingRed.png",
          "imageheight":32,
          "imagewidth":32
         }, 
         {
-         "id":163,
-         "image":"tiles\/rock.png",
+         "id":87,
+         "image":"tiles\/EnemiesObjects\/momo.png",
          "imageheight":32,
          "imagewidth":32
         }, 
         {
-         "id":162,
-         "image":"tiles\/shrooms.png",
+         "id":336,
+         "image":"tiles\/EnemiesObjects\/exit.png",
          "imageheight":32,
-         "imagewidth":32
+         "imagewidth":25
         }, 
         {
-         "id":133,
-         "image":"tiles\/GrassC.png",
-         "imageheight":32,
-         "imagewidth":32
-        }, 
-        {
-         "id":131,
-         "image":"tiles\/GrassA.png",
-         "imageheight":32,
-         "imagewidth":32
-        }, 
-        {
-         "id":132,
-         "image":"tiles\/GrassB.png",
-         "imageheight":32,
-         "imagewidth":32
-        }, 
-        {
-         "id":82,
-         "image":"tiles\/EnemiesObjects\/goomba.png",
+         "id":86,
+         "image":"tiles\/EnemiesObjects\/spike.png",
          "imageheight":32,
          "imagewidth":32
         }, 
@@ -1081,6 +1069,12 @@
          "imagewidth":29
         }, 
         {
+         "id":82,
+         "image":"tiles\/EnemiesObjects\/goomba.png",
+         "imageheight":32,
+         "imagewidth":32
+        }, 
+        {
          "id":80,
          "image":"tiles\/EnemiesObjects\/flyGuardian.png",
          "imageheight":25,
@@ -1089,6 +1083,12 @@
         {
          "id":88,
          "image":"tiles\/EnemiesObjects\/fly.png",
+         "imageheight":32,
+         "imagewidth":32
+        }, 
+        {
+         "id":283,
+         "image":"tiles\/RedBGConcreteE.png",
          "imageheight":32,
          "imagewidth":32
         }, 
@@ -1381,8 +1381,8 @@
          "imagewidth":32
         }, 
         {
-         "id":283,
-         "image":"tiles\/RedBGConcreteE.png",
+         "id":333,
+         "image":"tiles\/RedMetalPlatformMidsection6.png",
          "imageheight":32,
          "imagewidth":32
         }, 
@@ -1633,12 +1633,6 @@
          "imagewidth":32
         }, 
         {
-         "id":333,
-         "image":"tiles\/RedMetalPlatformMidsection6.png",
-         "imageheight":32,
-         "imagewidth":32
-        }, 
-        {
          "id":329,
          "image":"tiles\/RedMetalPlatformLedgeLeft.png",
          "imageheight":32,
@@ -1651,14 +1645,8 @@
          "imagewidth":32
         }, 
         {
-         "id":86,
-         "image":"tiles\/EnemiesObjects\/spike.png",
-         "imageheight":32,
-         "imagewidth":32
-        }, 
-        {
-         "id":87,
-         "image":"tiles\/EnemiesObjects\/momo.png",
+         "id":162,
+         "image":"tiles\/shrooms.png",
          "imageheight":32,
          "imagewidth":32
         }, 
@@ -1675,22 +1663,22 @@
          "imagewidth":32
         }, 
         {
-         "id":85,
-         "image":"tiles\/EnemiesObjects\/projectile.png",
-         "imageheight":28,
-         "imagewidth":32
-        }, 
-        {
-         "id":335,
-         "image":"tiles\/EnemiesObjects\/TrackingFlyingRed.png",
+         "id":341,
+         "image":"tiles\/rock2.png",
          "imageheight":32,
          "imagewidth":32
         }, 
         {
-         "id":336,
-         "image":"tiles\/EnemiesObjects\/exit.png",
+         "id":163,
+         "image":"tiles\/rock.png",
          "imageheight":32,
-         "imagewidth":25
+         "imagewidth":32
+        }, 
+        {
+         "id":342,
+         "image":"tiles\/stalagtite.png",
+         "imageheight":32,
+         "imagewidth":32
         }, 
         {
          "id":339,
@@ -1701,6 +1689,30 @@
         {
          "id":340,
          "image":"tiles\/entranceD.png",
+         "imageheight":32,
+         "imagewidth":32
+        }, 
+        {
+         "id":161,
+         "image":"tiles\/skulls.png",
+         "imageheight":32,
+         "imagewidth":32
+        }, 
+        {
+         "id":133,
+         "image":"tiles\/GrassC.png",
+         "imageheight":32,
+         "imagewidth":32
+        }, 
+        {
+         "id":132,
+         "image":"tiles\/GrassB.png",
+         "imageheight":32,
+         "imagewidth":32
+        }, 
+        {
+         "id":131,
+         "image":"tiles\/GrassA.png",
          "imageheight":32,
          "imagewidth":32
         }],
