@@ -830,6 +830,8 @@ public class SettingsScreen implements Screen, InputProcessor, ControllerListene
 	 * @return whether to hand the event to other listeners. 
 	 */	
 	public boolean mouseMoved(int screenX, int screenY) {
+//		System.out.println("screenX is: " + screenX);
+//		System.out.println("screenY is: " + screenY);
 		if (!active) return false;
 		if (Gdx.input.isCursorCatched()) {
 			Gdx.input.setCursorCatched(false);

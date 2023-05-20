@@ -42,40 +42,32 @@ public class UIOverlay {
     }
 
     public void draw(GameCanvas canvas, float playerSpirit, float playerHearts) {
-//        float xPos = 74.5F;
-        float vet_xPos = 0.05173611111f*canvas.getWidth();
-        float norm_xPos = 0.0486f*canvas.getWidth();
-        float hard_xPos = 0.0486f*canvas.getWidth();
+        float heart_xPos = 0.0219f*canvas.getWidth();
         if(level.getLevelDifficulty() == 3){
-            canvas.draw(vetUI, Color.WHITE, 0, canvas.getHeight()*0.927f, canvas.getWidth()*0.1534722222f, canvas.getHeight()*0.06f);
+            canvas.draw(vetUI, Color.WHITE, 8f, canvas.getHeight()*0.927f, canvas.getWidth()*0.15469f, canvas.getHeight()*0.07578f);
             for(int i=0; i < playerHearts; i++){
-                canvas.draw(heartRegion, Color.WHITE, vet_xPos,canvas.getHeight()*0.962f, 0.016f*canvas.getWidth(), 0.024f*canvas.getHeight());
-                vet_xPos += 0.042f*canvas.getWidth();
+                canvas.draw(heartRegion, Color.WHITE, heart_xPos,canvas.getHeight()*0.975f, 0.016f*canvas.getWidth(), 0.024f*canvas.getHeight());
+                heart_xPos += 0.0282f*canvas.getWidth();
             }
         }
         else if(level.getLevelDifficulty() == 4){
-            canvas.draw(hardUI, Color.WHITE, 0, canvas.getHeight()*0.927f, canvas.getWidth()*0.1534722222f, canvas.getHeight()*0.06f);
+            canvas.draw(hardUI, Color.WHITE, 8f, canvas.getHeight()*0.927f, canvas.getWidth()*0.15469f, canvas.getHeight()*0.07578f);
             for(int i=0; i < playerHearts; i++){
-                canvas.draw(heartRegion, Color.WHITE, hard_xPos,canvas.getHeight()*0.962f, 0.016f*canvas.getWidth(), 0.024f*canvas.getHeight());
-                hard_xPos += 0.0289f*canvas.getWidth();
+                canvas.draw(heartRegion, Color.WHITE, heart_xPos,canvas.getHeight()*0.975f, 0.016f*canvas.getWidth(), 0.024f*canvas.getHeight());
+                heart_xPos += 0.0282f*canvas.getWidth();
             }
         }
         else{
-            canvas.draw(normalUI, Color.WHITE, 0, canvas.getHeight()*0.927f, canvas.getWidth()*0.1534722222f, canvas.getHeight()*0.06f);
+            canvas.draw(normalUI, Color.WHITE, 8f, canvas.getHeight()*0.927f, canvas.getWidth()*0.15469f, canvas.getHeight()*0.07578f);
             for(int i=0; i < playerHearts; i++){
-                canvas.draw(heartRegion, Color.WHITE, norm_xPos,canvas.getHeight()*0.962f, 0.016f*canvas.getWidth(), 0.024f*canvas.getHeight());
-                norm_xPos += 0.022f*canvas.getWidth();
+                canvas.draw(heartRegion, Color.WHITE, heart_xPos,canvas.getHeight()*0.975f, 0.016f*canvas.getWidth(), 0.024f*canvas.getHeight());
+                heart_xPos += 0.0282f*canvas.getWidth();
             }
         }
-
-//        for(int i=0; i < playerHearts; i++){
-//            canvas.draw(heartRegion, Color.WHITE, xPos,canvas.getHeight()*0.962f, 0.016f*canvas.getWidth(), 0.024f*canvas.getHeight());
-//            xPos += 0.042f*canvas.getWidth();
-//        }
         float spiritPercentage = playerSpirit / 10F;
         int barWidth = (int)(filledSpiritBar.getWidth() * spiritPercentage);
         int barHeight = filledSpiritBar.getHeight();
         TextureRegion croppedBar = new TextureRegion(filledSpiritBar, 0, 0, barWidth, barHeight);
-        canvas.draw(croppedBar, Color.WHITE, 0.05f* canvas.getWidth(), 0.928f*canvas.getHeight(), canvas.getWidth()*0.095f * spiritPercentage, 0.022f*canvas.getHeight());
+        canvas.draw(croppedBar, Color.WHITE, 0.003f* canvas.getWidth(), 0.922f*canvas.getHeight(), canvas.getWidth()*0.156f * spiritPercentage, 0.1f*canvas.getHeight());
     }
 }
