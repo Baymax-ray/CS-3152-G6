@@ -668,12 +668,12 @@
         {
          "name":"backgroundOy",
          "type":"string",
-         "value":"-30"
+         "value":"0"
         }, 
         {
          "name":"backgroundScale",
          "type":"string",
-         "value":"0.008"
+         "value":"0.2"
         }, 
         {
          "name":"camZoneX",
@@ -706,7 +706,7 @@
          "value":1
         }],
  "renderorder":"right-down",
- "tiledversion":"1.10.1",
+ "tiledversion":"1.10.0",
  "tileheight":32,
  "tilesets":[
         {
