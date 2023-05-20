@@ -549,7 +549,7 @@ public class Level {
             String name = tileList.get(i).getString("image").substring(6);
             //Avoiding adding enemies and objects
             if (!(name.substring(0,7).equals("Enemies"))){
-                System.out.println(name);
+//                System.out.println(name);
                 TextureRegion tileTexture = new TextureRegion(assets.getEntry("tiles:" + name, Texture.class));
                 texturePaths.put(t.getInt("id"),tileTexture);
             }
