@@ -3,13 +3,16 @@
         "height": 4300,
         "width": 2
     },
-    "activeFile": "level2.json",
+    "activeFile": "level3.json",
     "expandedProjectPaths": [
-        "Templates",
-        "."
+        ".",
+        "Templates"
     ],
     "file.lastUsedOpenFilter": "全部文件 (*)",
     "fileStates": {
+        "/Users/neelin2/coding/cs3152/Eudaemon/CS-3152-G6/Eudaemon/assets/EudaemonTileset.json": {
+            "scaleInDock": 1
+        },
         "C:/Users/neelin2/coding/cs3152/Eudaemon/CS-3152-G6/Eudaemon/assets/EudaemonTileset.json": {
             "scaleInDock": 1
         },
@@ -50,11 +53,11 @@
             "expandedObjectLayers": [
                 7
             ],
-            "scale": 0.75,
-            "selectedLayer": 2,
+            "scale": 0.6379,
+            "selectedLayer": 3,
             "viewCenter": {
-                "x": 1110,
-                "y": 789.9999999999999
+                "x": 1214.923969274181,
+                "y": 630.1928201912526
             }
         },
         "level0.tmj": {
@@ -69,11 +72,22 @@
             "expandedObjectLayers": [
                 7
             ],
-            "scale": 1,
-            "selectedLayer": 1,
+            "scale": 0.7378,
+            "selectedLayer": 3,
             "viewCenter": {
-                "x": 481.5,
-                "y": 502.5
+                "x": 1199.512062889672,
+                "y": 639.7397668744918
+            }
+        },
+        "level10.json": {
+            "expandedObjectLayers": [
+                7
+            ],
+            "scale": 0.53675,
+            "selectedLayer": 3,
+            "viewCenter": {
+                "x": 801.1178388448998,
+                "y": 640.89427107592
             }
         },
         "level1old.json": {
@@ -91,74 +105,88 @@
             "expandedObjectLayers": [
                 7
             ],
-            "scale": 0.75,
+            "scale": 0.5322,
             "selectedLayer": 2,
             "viewCenter": {
-                "x": 653.9999999999999,
-                "y": 547.3333333333333
+                "x": 1177.1890266816986,
+                "y": 603.1567080045095
             }
         },
         "level3.json": {
             "expandedObjectLayers": [
                 7
             ],
-            "scale": 1,
+            "scale": 0.6365,
             "selectedLayer": 3,
             "viewCenter": {
-                "x": 313.5,
-                "y": 659.5
+                "x": 1135.8994501178322,
+                "y": 507.4626865671642
             }
         },
         "level4.json": {
             "expandedObjectLayers": [
                 7
             ],
-            "scale": 0.667,
+            "scale": 0.8626,
             "selectedLayer": 3,
             "viewCenter": {
-                "x": 534.4827586206897,
-                "y": 435.53223388305844
+                "x": 867.1458381636911,
+                "y": 541.386505912358
             }
         },
         "level5.json": {
             "expandedObjectLayers": [
                 7
             ],
-            "scale": 0.75,
+            "scale": 1.5046,
             "selectedLayer": 3,
             "viewCenter": {
-                "x": 1323.3333333333333,
-                "y": 1102
+                "x": 1982.5867340156851,
+                "y": 609.4643094510169
             }
         },
         "level6.json": {
             "expandedObjectLayers": [
                 7
             ],
-            "scale": 1,
-            "selectedLayer": 2,
+            "scale": 0.9868,
+            "selectedLayer": 3,
             "viewCenter": {
-                "x": 550.5,
-                "y": 643.5
+                "x": 1069.1122821240374,
+                "y": 878.5974868261044
             }
         },
         "level7.json": {
             "expandedObjectLayers": [
                 7
             ],
-            "scale": 0.5,
+            "scale": 0.6307,
             "selectedLayer": 3,
             "viewCenter": {
-                "x": 683,
-                "y": 414
+                "x": 1450.768986840019,
+                "y": 1360.3932138893292
             }
         },
         "level8.json": {
+            "expandedObjectLayers": [
+                7
+            ],
             "scale": 0.49815625,
             "selectedLayer": 3,
             "viewCenter": {
-                "x": 779.875791982937,
-                "y": 636.346527821341
+                "x": 833.071952826046,
+                "y": 636.3465278213412
+            }
+        },
+        "level9.json": {
+            "expandedObjectLayers": [
+                7
+            ],
+            "scale": 2.0378,
+            "selectedLayer": 3,
+            "viewCenter": {
+                "x": 256.64932770635,
+                "y": 1167.4354696241046
             }
         }
     },
@@ -172,29 +200,28 @@
     "openFiles": [
         "level0.json",
         "level1.json",
-        "level2.json",
         "level3.json",
         "level4.json",
         "level5.json",
         "level6.json",
-        "F:/Programming/School/CS 3152/Eudaemon/CS-3152-G6/Eudaemon/assets/EudaemonTileset.json",
-        "level7.json"
+        "level7.json",
+        "level8.json"
     ],
     "project": "untitled.tiled-project",
     "property.type": "string",
     "recentFiles": [
         "level0.json",
-        "level2.json",
         "level1.json",
+        "level8.json",
         "level7.json",
-        "F:/Programming/School/CS 3152/Eudaemon/CS-3152-G6/Eudaemon/assets/EudaemonTileset.json",
         "level6.json",
         "level5.json",
         "level4.json",
         "level3.json",
+        "level2.json",
+        "F:/Programming/School/CS 3152/Eudaemon/CS-3152-G6/Eudaemon/assets/EudaemonTileset.json",
         "level1old.json",
-        "experimentalLevel1.json",
-        "level0.tmj"
+        "experimentalLevel1.json"
     ],
     "tileset.lastUsedFilter": "JSON tileset files (*.tsj *.json)"
 }

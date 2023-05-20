@@ -95,8 +95,8 @@ public class GameRoot extends Game implements ScreenListener {
 		if (screen == mainMenuScreen) {
 
 			if (exitCode == ExitCode.START) {
-				state.resetCurrentLevel();
 				state.setCurrentLevel(state.getSettings().getNumLevelsAvailable() - 1);
+				state.resetCurrentLevel();
 				levelScreen.dispose();
 				levelScreen = new LevelScreen(state.getCurrentLevel(), state.getActionBindings(), assets, state.getSettings());
 				levelScreen.setScreenListener(this);
@@ -176,18 +176,17 @@ public class GameRoot extends Game implements ScreenListener {
 			}
 			if (exitCode == ExitCode.LOSE) {
 				levelScreen.pause();
-				levelScreen.dispose();
 				deathScreen.reset();
 				setScreen(deathScreen);
 			}
 
 			if (exitCode == ExitCode.WIN) {
 				screen.pause();
-				levelScreen.dispose();
 				state.unlockNextLevel();
 				state.getSettings().save();
 				this.state.setCurrentLevel(state.getCurrentLevel().getExit().getNextLevel());
 				this.state.resetCurrentLevel();
+				levelScreen.dispose();
 				levelScreen = new LevelScreen(this.state.getCurrentLevel(), this.state.getActionBindings(), assets, state.getSettings());
 				levelScreen.setScreenListener(this);
 				levelScreen.setCanvas(canvas);
@@ -208,9 +207,18 @@ public class GameRoot extends Game implements ScreenListener {
 				mainMenuScreen.reset();
 				setScreen(mainMenuScreen);
 			}
-			if(exitCode == ExitCode.START){
+			if(exitCode == ExitCode.START && !state.getSettings().getSettingsChanged()){
 				escapeMenu.pause();
 				levelScreen.resume();
+				setScreen(levelScreen);
+			}
+			if(exitCode == ExitCode.START && state.getSettings().getSettingsChanged()){
+				this.state.resetCurrentLevel();
+				if (levelScreen != null) levelScreen.dispose();
+				levelScreen = new LevelScreen(this.state.getCurrentLevel(), this.state.getActionBindings(), assets, state.getSettings());
+				levelScreen.setScreenListener(this);
+				levelScreen.setCanvas(canvas);
+				state.getSettings().setSettingsChanged(false);
 				setScreen(levelScreen);
 			}
 			if(exitCode == ExitCode.SETTINGS){

@@ -117,6 +117,9 @@ public class SettingsScreen implements Screen, InputProcessor, ControllerListene
 	private MenuButton fullScreenOnButton;
 	private MenuButton fullScreenOffButton;
 
+	private MenuButton screenShakeOnButton;
+	private MenuButton screenShakeOffButton;
+
 	private Array<MenuButton> buttons;
 
 	private Array<MenuSlider> sliders;
@@ -210,6 +213,8 @@ public class SettingsScreen implements Screen, InputProcessor, ControllerListene
 
 		fullScreenOnButton = new MenuButton(new TextureRegion(assets.getEntry("settingsScreen:settingsOn", Texture.class)));
 		fullScreenOffButton = new MenuButton(new TextureRegion(assets.getEntry("settingsScreen:settingsOff", Texture.class)));
+		screenShakeOnButton = new MenuButton(new TextureRegion(assets.getEntry("settingsScreen:settingsOn", Texture.class)));
+		screenShakeOffButton = new MenuButton(new TextureRegion(assets.getEntry("settingsScreen:settingsOff", Texture.class)));
 		difficultyNormalButton = new MenuButton(new TextureRegion(assets.getEntry("settingsScreen:normal", Texture.class)));
 		difficultyHardButton = new MenuButton(new TextureRegion(assets.getEntry("settingsScreen:hard", Texture.class)));
 		difficultyVeteranButton = new MenuButton(new TextureRegion(assets.getEntry("settingsScreen:vet", Texture.class)));
@@ -218,6 +223,8 @@ public class SettingsScreen implements Screen, InputProcessor, ControllerListene
 		buttons.add(backButton);
 		buttons.add(fullScreenOnButton);
 		buttons.add(fullScreenOffButton);
+		buttons.add(screenShakeOnButton);
+		buttons.add(screenShakeOffButton);
 		buttons.add(difficultyNormalButton);
 		buttons.add(difficultyHardButton);
 		buttons.add(difficultyVeteranButton);
@@ -240,21 +247,29 @@ public class SettingsScreen implements Screen, InputProcessor, ControllerListene
 
 		fullScreenOnButton.up = brightnessSlider;
 		fullScreenOnButton.right = fullScreenOffButton;
-		fullScreenOnButton.down = difficultyNormalButton;
+		fullScreenOnButton.down = screenShakeOnButton;
 		fullScreenOffButton.up = brightnessSlider;
 		fullScreenOffButton.left = fullScreenOnButton;
-		fullScreenOffButton.down = difficultyHardButton;
+		fullScreenOffButton.down = screenShakeOffButton;
 
-		difficultyNormalButton.up = fullScreenOnButton;
+		screenShakeOnButton.up = fullScreenOnButton;
+		screenShakeOnButton.right = fullScreenOffButton;
+		screenShakeOnButton.down = difficultyHardButton;
+		screenShakeOffButton.up = fullScreenOffButton;
+		screenShakeOffButton.left = screenShakeOnButton;
+		screenShakeOffButton.down = difficultyHardButton;
+
+		difficultyNormalButton.up = screenShakeOnButton;
 		difficultyNormalButton.right = difficultyHardButton;
-		difficultyHardButton.up = fullScreenOffButton;
+		difficultyHardButton.up = screenShakeOffButton;
 		difficultyHardButton.left = difficultyNormalButton;
 		difficultyHardButton.right = difficultyVeteranButton;
-		difficultyVeteranButton.up = fullScreenOffButton;
+		difficultyVeteranButton.up = screenShakeOffButton;
 		difficultyVeteranButton.left = difficultyHardButton;
 
 		volumeSlider.up = backButton;
 		fullScreenOnButton.left = backButton;
+		screenShakeOnButton.left = backButton;
 		difficultyNormalButton.left = backButton;
 
 		// Compute the dimensions from the canvas
@@ -287,6 +302,14 @@ public class SettingsScreen implements Screen, InputProcessor, ControllerListene
 		if (fullScreenOffButton.pressState == 2) {
 			settings.setFullscreen(false);
 			fullScreenOffButton.pressState = 0;
+		}
+		if (screenShakeOnButton.pressState == 2) {
+			settings.setScreenShake(true);
+			screenShakeOnButton.pressState = 0;
+		}
+		if (screenShakeOffButton.pressState == 2) {
+			settings.setScreenShake(false);
+			screenShakeOffButton.pressState = 0;
 		}
 		if (difficultyNormalButton.pressState == 2) {
 			settings.setNormalDifficulty();
@@ -373,6 +396,9 @@ public class SettingsScreen implements Screen, InputProcessor, ControllerListene
 
 		fullScreenOnButton.tint = (settings.isFullscreen()) ? Color.ORANGE : Color.WHITE;
 		fullScreenOffButton.tint = (!settings.isFullscreen()) ? Color.ORANGE : Color.WHITE;
+
+		screenShakeOnButton.tint = (settings.isScreenShake()) ? Color.ORANGE : Color.WHITE;
+		screenShakeOffButton.tint = (!settings.isScreenShake()) ? Color.ORANGE : Color.WHITE;
 
 		difficultyNormalButton.tint = (settings.isNormalDifficulty() ? Color.ORANGE: Color.WHITE);
 		difficultyHardButton.tint = (settings.isHardDifficulty() ? Color.ORANGE: Color.WHITE);
@@ -466,6 +492,12 @@ public class SettingsScreen implements Screen, InputProcessor, ControllerListene
 
 		fullScreenOffButton.hitbox.setSize(fullScreenOffButton.texture.getRegionWidth() * scale, fullScreenOffButton.texture.getRegionHeight() * scale);
 		fullScreenOffButton.hitbox.setPosition(canvas.getWidth() / 1.7f, canvas.getHeight() * 0.33f);
+
+		screenShakeOnButton.hitbox.setSize(screenShakeOnButton.texture.getRegionWidth() * scale, screenShakeOnButton.texture.getRegionHeight() * scale);
+		screenShakeOnButton.hitbox.setPosition(canvas.getWidth() / 1.9f, canvas.getHeight() * 0.25f);
+
+		screenShakeOffButton.hitbox.setSize(screenShakeOffButton.texture.getRegionWidth() * scale, screenShakeOffButton.texture.getRegionHeight() * scale);
+		screenShakeOffButton.hitbox.setPosition(canvas.getWidth() / 1.7f, canvas.getHeight() * 0.25f);
 
 		difficultyNormalButton.hitbox.setSize(difficultyNormalButton.texture.getRegionWidth() * scale, difficultyNormalButton.texture.getRegionHeight() * scale);
 		difficultyNormalButton.hitbox.setPosition((canvas.getWidth() / 1.9f), canvas.getHeight() * 0.16f);
@@ -798,6 +830,8 @@ public class SettingsScreen implements Screen, InputProcessor, ControllerListene
 	 * @return whether to hand the event to other listeners. 
 	 */	
 	public boolean mouseMoved(int screenX, int screenY) {
+//		System.out.println("screenX is: " + screenX);
+//		System.out.println("screenY is: " + screenY);
 		if (!active) return false;
 		if (Gdx.input.isCursorCatched()) {
 			Gdx.input.setCursorCatched(false);

@@ -501,7 +501,7 @@ public class EscapeMenu implements Screen, InputProcessor, ControllerListener {
 		menuUp = keycode == Input.Keys.UP;
 		menuDown = keycode == Input.Keys.DOWN;
 
-		if (keycode == Input.Keys.ENTER && hoveredButton.pressState == 0) {
+		if (keycode == Input.Keys.ENTER && hoveredButton != null&& hoveredButton.pressState == 0) {
 			hoveredButton.pressState = 1;
 			return true;
 		}

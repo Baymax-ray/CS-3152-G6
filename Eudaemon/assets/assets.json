@@ -379,6 +379,7 @@
         "platform:combo_keyboardN+W_controllerButtonLeft+joystickUp": "platform/combo_keyboardN+W_controllerButtonLeft+joystickUp.png",
         "platform:combo_keyboardM_controllerButtonUp": "platform/combo_keyboardM_controllerButtonUp.png",
         "platform:combo_keyboardA+D_joystickLeftRight": "platform/combo_keyboardA+D_joystickLeftRight.png",
+        "platform:wallJumpTutorial": "platform/wallJumpTutorial.png",
 
         "tiles:DeepDirt1x1A.png": "tiles/DeepDirt1x1A.png",
         "tiles:DeepDirt1x1B.png": "tiles/DeepDirt1x1B.png",
@@ -682,9 +683,9 @@
         "escapeMenu:resume": "shared/escapeResume.png",
         "escapeMenu:settings": "shared/escapeSettings.png",
 
-        "deathScreen:background": "backgrounds/tempDeathScreen.png",
-        "deathScreen:restart": "shared/restartButton.png",
-        "deathScreen:quit": "shared/quitButton.png",
+        "deathScreen:background": "backgrounds/deathScreenBackground.png",
+        "deathScreen:restart": "shared/deathRestart.png",
+        "deathScreen:quit": "shared/deathExit.png",
 
         "settingsScreen:background": "backgrounds/settingsBackground.png",
         "settingsScreen:back": "levelSelect/backArrow.png",
@@ -710,6 +711,9 @@
         "level5": "levels/level5.json",
         "level6": "levels/level6.json",
         "level7": "levels/level7.json",
+        "level8": "levels/level8.json",
+        "level9": "levels/level9.json",
+        "level10": "levels/level10.json",
         "tileset": "EudaemonTileset.json"
     },
     "sounds" : {
@@ -726,7 +730,8 @@
         "effect:temp-small-impact":  "audio/temp-small-impact.mp3/",
         "effect:temp-sword-killing": "audio/temp-sword-killing.mp3",
         "effect:temp-non-killing": "audio/temp-non-killing-sound.mp3",
-        "effect:temp-wall-slide": "audio/temp-wall-slide.mp3"
+        "effect:temp-wall-slide": "audio/temp-wall-slide.mp3",
+        "effect:temp-player-damage": "audio/temp-player-damage.mp3"
     },
     "fonts": {
         "shared:retro": {

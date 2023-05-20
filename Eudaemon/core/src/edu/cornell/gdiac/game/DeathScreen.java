@@ -65,9 +65,9 @@ public class DeathScreen implements Screen, InputProcessor, ControllerListener {
 	/** Ratio of the bar width to the screen */
 	private static final float BAR_WIDTH_RATIO  = 0.66f;
 	/** Ration of the bar height to the screen */
-	private static final float BAR_HEIGHT_RATIO = 0.25f;
+	private static final float BAR_HEIGHT_RATIO = 0.5f;
 	/** Height of the progress bar */
-	private static final float BUTTON_SCALE  = 0.20f;
+	private static final float BUTTON_SCALE  = 0.50f;
 
 	/** Reference to GameCanvas created by the root */
 	private GameCanvas canvas;
@@ -264,13 +264,13 @@ public class DeathScreen implements Screen, InputProcessor, ControllerListener {
 		heightY = height;
 		if(quitButton != null){
 			quitButton.hitbox.setSize(BUTTON_SCALE *scale*quitButton.texture.getRegionWidth(),BUTTON_SCALE * scale * quitButton.texture.getRegionHeight());
-			quitButton.hitbox.setCenter(canvas.getWidth()/2.0f, centerY + quitButton.texture.getRegionHeight()*scale *0.05f);
+			quitButton.hitbox.setCenter(canvas.getWidth()/2.0f, centerY - quitButton.texture.getRegionHeight()*scale*BUTTON_SCALE*2.0f);
 		}
 
 		if (playButton != null) {
 			float buttonSpacing = 0.35f;
 			playButton.hitbox.setSize(BUTTON_SCALE * scale * playButton.texture.getRegionWidth(), BUTTON_SCALE * scale * playButton.texture.getRegionHeight());
-			playButton.hitbox.setCenter(canvas.getWidth() / 2.0f, centerY + playButton.texture.getRegionHeight() * buttonSpacing * scale);
+			playButton.hitbox.setCenter(canvas.getWidth() / 2.0f, centerY + playButton.texture.getRegionHeight() * scale);
 		}
 	}
 

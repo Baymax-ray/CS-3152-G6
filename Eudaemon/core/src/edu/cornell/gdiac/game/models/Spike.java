@@ -1,7 +1,5 @@
 package edu.cornell.gdiac.game.models;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.*;
 import com.badlogic.gdx.graphics.*;
@@ -12,8 +10,6 @@ import com.badlogic.gdx.utils.JsonValue;
 import edu.cornell.gdiac.assets.AssetDirectory;
 import edu.cornell.gdiac.game.*;
 import edu.cornell.gdiac.game.obstacle.*;
-
-import java.util.ArrayList;
 
 public class Spike extends BoxObstacle {
     //#region FINAL FIELDS
@@ -161,7 +157,8 @@ public class Spike extends BoxObstacle {
         float sx = 2.5f * spikeImageWidth / this.texture.getRegionWidth();
         float sy = 2.2f * spikeImageHeight / this.texture.getRegionHeight();
 
-        canvas.draw(this.texture, Color.WHITE, ox, oy, x, y, rotationAngle, sx, sy);
+        if (respawn) canvas.draw(this.texture, Color.PINK, ox, oy, x, y, rotationAngle, sx, sy);
+        else canvas.draw(this.texture, Color.WHITE, ox, oy, x, y, rotationAngle, sx, sy);
     }
 
 
