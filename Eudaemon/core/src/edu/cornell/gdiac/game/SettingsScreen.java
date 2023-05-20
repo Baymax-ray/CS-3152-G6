@@ -304,11 +304,11 @@ public class SettingsScreen implements Screen, InputProcessor, ControllerListene
 	private void update() {
 
 		if (fullScreenOnButton.pressState == 2) {
-			settings.setFullscreen(true);
+//			settings.setFullscreen(true);
 			fullScreenOnButton.pressState = 0;
 		}
 		if (fullScreenOffButton.pressState == 2) {
-			settings.setFullscreen(false);
+//			settings.setFullscreen(false);
 			fullScreenOffButton.pressState = 0;
 		}
 		if (screenShakeOnButton.pressState == 2) {
