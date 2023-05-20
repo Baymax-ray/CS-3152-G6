@@ -17,6 +17,7 @@ public class DesktopLauncher {
 		config.setFullscreenMode(Lwjgl3ApplicationConfiguration.getDisplayMode());
 		config.setForegroundFPS(60);
 		config.setTitle("Eudaemon");
+		config.setWindowIcon();
 		new Lwjgl3Application(new GameRoot(), config);
 	}
 }
