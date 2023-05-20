@@ -43,7 +43,7 @@ public class Settings {
         s.musicVolume = 1;
         s.sfxVolume = 1;
         s.brightness = 1;
-        s.fullscreen = true;
+        s.fullscreen = false;
         s.screenShake = true;
         s.windowedWidth = 800;
         s.windowedHeight = 450;
