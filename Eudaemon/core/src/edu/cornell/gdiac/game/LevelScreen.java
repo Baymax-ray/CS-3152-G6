@@ -56,11 +56,10 @@ public class LevelScreen implements Screen, SettingsObserver {
         for (int i = 0; i < enemies.length; i++) {
             switch (enemies[i].getType()) {
                 case "Goomba":
+                case "Fast":
                     aiControllers.add(new GoombaAI(i, level));
                     break;
                 case "Fly":
-                    aiControllers.add(new FlyAI(i, level));
-                    break;
                 case "FlyRed":
                     aiControllers.add(new FlyAI(i, level));
                     break;
@@ -72,9 +71,6 @@ public class LevelScreen implements Screen, SettingsObserver {
                     break;
                 case "Projectile":
                     aiControllers.add(new ProjectileAI(i, level));
-                    break;
-                case "Fast":
-                    aiControllers.add(new GoombaAI(i, level));
                     break;
                 case "MOMO":
                     aiControllers.add(new DumbAI(i, level));

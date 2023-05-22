@@ -19,8 +19,6 @@ import edu.cornell.gdiac.game.GameCanvas;
 import edu.cornell.gdiac.game.SettingsObserver;
 import edu.cornell.gdiac.game.obstacle.BoxObstacle;
 
-import java.awt.*;
-
 public class TutorialArea extends BoxObstacle implements SettingsObserver {
 
     private TextureRegion tutorialTexture;
