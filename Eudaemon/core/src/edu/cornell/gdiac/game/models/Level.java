@@ -136,16 +136,6 @@ public class Level {
      */
     private boolean debug;
 
-    /**
-     * The x position of the camera in level coordinates
-     */
-    private float cameraX;
-
-    /**
-     * The y position of the camera in level coordinates
-     */
-    private float cameraY;
-
     /**The drawing x-origin of the background */
     private float backgroundOx;
     /** The drawing y-origin of the background */
