@@ -9,6 +9,3 @@ Download:
 [2023 GDIAC Showcase Page](https://gdiac.cs.cornell.edu/gdiac/showcase/gallery/eudaemon/)
 
 [itch.io](https://neelin2.itch.io/eudaemon)
-
-CURRENT BUGS
-Null
